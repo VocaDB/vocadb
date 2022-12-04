@@ -99,6 +99,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="notes">Notes.</param>
 		[HttpDelete("{id:int}")]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public void Delete(int id, string notes = "") =>
 			_service.Delete(id, notes ?? string.Empty);
 

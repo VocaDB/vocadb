@@ -852,6 +852,7 @@ const EventEdit = (): React.ReactElement => {
 					setModel({
 						releaseEventEditStore: new ReleaseEventEditStore(
 							vdb.values,
+							antiforgeryRepo,
 							eventRepo,
 							artistRepo,
 							pvRepo,
@@ -875,6 +876,7 @@ const EventEdit = (): React.ReactElement => {
 			setModel({
 				releaseEventEditStore: new ReleaseEventEditStore(
 					vdb.values,
+					antiforgeryRepo,
 					eventRepo,
 					artistRepo,
 					pvRepo,

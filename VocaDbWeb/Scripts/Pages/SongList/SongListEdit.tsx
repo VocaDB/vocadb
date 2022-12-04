@@ -485,6 +485,7 @@ const SongListEdit = (): React.ReactElement => {
 					setModel({
 						songListEditStore: new SongListEditStore(
 							vdb.values,
+							antiforgeryRepo,
 							songListRepo,
 							songRepo,
 							model,
@@ -503,6 +504,7 @@ const SongListEdit = (): React.ReactElement => {
 			setModel({
 				songListEditStore: new SongListEditStore(
 					vdb.values,
+					antiforgeryRepo,
 					songListRepo,
 					songRepo,
 					defaultModel,

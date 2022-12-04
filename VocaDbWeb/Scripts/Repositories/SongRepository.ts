@@ -654,6 +654,20 @@ export class SongRepository
 			this.urlMapper.mapRelative(`/api/songs/${songId}/with-rating`),
 		);
 	};
+
+	delete = (
+		requestToken: string,
+		{ id, notes }: { id: number; notes: string },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/songs/${id}?${qs.stringify({
+					notes: notes,
+				})}`,
+			),
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface PVEmbedParams {

@@ -932,6 +932,9 @@ const SongEditLayout = observer(
 				<EntryDeletePopup
 					confirmText={t('ViewRes:EntryEdit.ConfirmDelete')}
 					deleteEntryStore={songEditStore.deleteStore}
+					onDelete={(): void =>
+						navigate(EntryUrlMapper.details(EntryType.Song, contract.id))
+					}
 				/>
 			</Layout>
 		);
@@ -968,6 +971,7 @@ const SongEdit = (): React.ReactElement => {
 				setModel({
 					songEditStore: new SongEditStore(
 						vdb.values,
+						antiforgeryRepo,
 						songRepo,
 						artistRepo,
 						pvRepo,

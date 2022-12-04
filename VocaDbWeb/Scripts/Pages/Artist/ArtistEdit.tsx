@@ -39,7 +39,6 @@ import { EntryType } from '@/Models/EntryType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
@@ -747,6 +746,9 @@ const ArtistEditLayout = observer(
 				<EntryDeletePopup
 					confirmText={t('ViewRes:EntryEdit.ConfirmDelete')}
 					deleteEntryStore={artistEditStore.deleteStore}
+					onDelete={(): void =>
+						navigate(EntryUrlMapper.details(EntryType.Artist, contract.id))
+					}
 				/>
 			</Layout>
 		);
@@ -769,8 +771,8 @@ const ArtistEdit = (): React.ReactElement => {
 				setModel({
 					artistEditStore: new ArtistEditStore(
 						vdb.values,
+						antiforgeryRepo,
 						artistRepo,
-						urlMapper,
 						model,
 					),
 				}),

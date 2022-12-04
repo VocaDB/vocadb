@@ -5,19 +5,16 @@ import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { EntryType } from '@/Models/EntryType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
 import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import $ from 'jquery';
 import { pull } from 'lodash-es';
 import {
 	action,
@@ -53,21 +50,7 @@ export class ArtistEditStore {
 	@observable associatedArtists: ArtistForArtistEditStore[];
 	readonly baseVoicebank: BasicEntryLinkStore<ArtistContract>;
 	@observable defaultNameLanguage: string;
-	readonly deleteStore = new DeleteEntryStore(async (notes) => {
-		await $.ajax(
-			this.urlMapper.mapRelative(
-				`api/artists/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
-			),
-			{
-				type: 'DELETE',
-				success: () => {
-					window.location.href = this.urlMapper.mapRelative(
-						EntryUrlMapper.details(EntryType.Artist, this.contract.id),
-					);
-				},
-			},
-		);
-	});
+	readonly deleteStore: DeleteEntryStore;
 	readonly description: EnglishTranslatedStringEditStore;
 	@observable errors?: Record<string, string[]>;
 	@observable groups: ArtistForArtistContract[];
@@ -86,11 +69,20 @@ export class ArtistEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly artistRepo: ArtistRepository,
-		private readonly urlMapper: UrlMapper,
 		readonly contract: ArtistForEditContract,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				artistRepo.delete(requestToken, {
+					id: contract.id,
+					notes: notes,
+				}),
+		);
 
 		this.baseVoicebank = new BasicEntryLinkStore<ArtistContract>((entryId) =>
 			artistRepo.getOne({ id: entryId, lang: values.languagePreference }),

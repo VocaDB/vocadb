@@ -6,11 +6,10 @@ import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { AdminRepository } from '@/Repositories/AdminRepository';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import {
@@ -124,32 +123,8 @@ export class UserDetailsStore {
 	@observable events: ReleaseEventContract[] = [];
 	@observable eventsType =
 		UserEventRelationshipType[UserEventRelationshipType.Attending];
-
-	readonly limitedUserStore = new DeleteEntryStore((notes) => {
-		return this.httpClient
-			.post<void>(
-				this.urlMapper.mapRelative(`/api/users/${this.userId}/status-limited`),
-				{ reason: notes, createReport: true },
-			)
-			.then(() => {
-				window.location.reload();
-			});
-	});
-
-	readonly reportUserStore = new DeleteEntryStore((notes) => {
-		return this.httpClient
-			.post<boolean>(
-				this.urlMapper.mapRelative(`/api/users/${this.userId}/reports`),
-				{ reason: notes, reportType: 'Spamming' },
-			)
-			.then(() => {
-				// TODO: showSuccessMessage
-				runInAction(() => {
-					this.reportUserStore.notes = '';
-				});
-			});
-	}, true);
-
+	readonly limitedUserStore: DeleteEntryStore;
+	readonly reportUserStore: DeleteEntryStore;
 	@observable ratingsByGenreChart?: Options;
 	readonly songLists: UserSongListsStore;
 	readonly sfsCheckDialog: SfsCheckStore;
@@ -160,8 +135,7 @@ export class UserDetailsStore {
 		private readonly userId: number,
 		private readonly lastLoginAddress: string,
 		canEditAllComments: boolean,
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly userRepo: UserRepository,
 		private readonly adminRepo: AdminRepository,
 		tagRepo: TagRepository,
@@ -171,6 +145,22 @@ export class UserDetailsStore {
 		latestComments: CommentContract[],
 	) {
 		makeObservable(this);
+
+		this.limitedUserStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				userRepo.postStatusLimited(requestToken, { id: userId, notes: notes }),
+		);
+
+		this.reportUserStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				userRepo.postReport(requestToken, {
+					id: userId,
+					notes: notes,
+				}),
+			true,
+		);
 
 		this.comments = new EditableCommentsStore(
 			loginManager,
