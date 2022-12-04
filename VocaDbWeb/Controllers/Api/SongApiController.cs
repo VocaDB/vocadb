@@ -53,6 +53,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly SongAggregateQueries _songAggregateQueries;
 		private readonly UserService _userService;
 		private readonly IUserPermissionContext _userPermissionContext;
+		private readonly PVHelper _pvHelper;
 
 		/// <summary>
 		/// Initializes controller.
@@ -64,7 +65,8 @@ namespace VocaDb.Web.Controllers.Api
 			IEntryLinkFactory entryLinkFactory,
 			IUserPermissionContext userPermissionContext,
 			UserService userService,
-			OtherService otherService
+			OtherService otherService,
+			PVHelper pvHelper
 		)
 		{
 			_service = service;
@@ -74,6 +76,7 @@ namespace VocaDb.Web.Controllers.Api
 			_entryLinkFactory = entryLinkFactory;
 			_userPermissionContext = userPermissionContext;
 			_otherService = otherService;
+			_pvHelper = pvHelper;
 		}
 
 		/// <summary>
@@ -669,6 +672,29 @@ namespace VocaDb.Web.Controllers.Api
 			_queries.Merge(id, targetSongId.Value);
 
 			return NoContent();
+		}
+
+		/// <summary>
+		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
+		/// </summary>
+		[HttpGet("{id:int}/with-rating")]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongWithPVPlayerAndVoteContract? PVPlayerWithRating(int id)
+		{
+			var song = _queries.GetSongWithPVAndVote(id, true, WebHelper.GetHostnameForValidHit(Request));
+			var pv = _pvHelper.PrimaryPV(song.PVs!);
+
+			if (pv is null)
+			{
+				return null;
+			}
+
+			return new SongWithPVPlayerAndVoteContract
+			{
+				Song = song,
+				PVService = pv.Service,
+			};
 		}
 #nullable disable
 	}

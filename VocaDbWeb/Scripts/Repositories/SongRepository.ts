@@ -128,17 +128,6 @@ export class SongRepository
 			});
 		};
 
-		this.pvPlayerWithRating = ({
-			songId,
-		}: {
-			songId: number;
-		}): Promise<SongWithPVPlayerAndVoteContract> => {
-			return this.getJSON<SongWithPVPlayerAndVoteContract>(
-				this.urlMapper.mapRelative('/PVPlayerWithRating'),
-				{ songId: songId },
-			);
-		};
-
 		this.songListsForSong = ({
 			songId,
 		}: {
@@ -511,12 +500,6 @@ export class SongRepository
 		);
 	};
 
-	pvPlayerWithRating: ({
-		songId,
-	}: {
-		songId: number;
-	}) => Promise<SongWithPVPlayerAndVoteContract>;
-
 	//songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
 	songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
@@ -659,6 +642,16 @@ export class SongRepository
 					requestVerificationToken: requestToken,
 				},
 			},
+		);
+	};
+
+	pvPlayerWithRating = ({
+		songId,
+	}: {
+		songId: number;
+	}): Promise<SongWithPVPlayerAndVoteContract> => {
+		return this.httpClient.get<SongWithPVPlayerAndVoteContract>(
+			this.urlMapper.mapRelative(`/api/songs/${songId}/with-rating`),
 		);
 	};
 }

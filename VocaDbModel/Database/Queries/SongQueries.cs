@@ -670,7 +670,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(session =>
 			{
 				var song = session.Load<Song>(songId);
-				FavoriteSongForUser vote = null;
+				FavoriteSongForUser? vote = null;
 
 				if (PermissionContext.IsLoggedIn)
 				{

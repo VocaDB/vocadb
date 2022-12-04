@@ -331,25 +331,6 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		/// <summary>
-		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
-		/// </summary>
-		public async Task<ActionResult> PVPlayerWithRating(int songId = InvalidId)
-		{
-			if (songId == InvalidId)
-				return NoId();
-
-			var song = _queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
-			var pv = _pvHelper.PrimaryPV(song.PVs);
-
-			if (pv == null)
-				return new EmptyResult();
-
-			var view = await RenderPartialViewToStringAsync("PVs/_PVEmbedDynamic", pv);
-
-			return LowercaseJson(new SongWithPVPlayerAndVoteContract { Song = song, PlayerHtml = view, PVService = pv.Service });
-		}
-
 		[Obsolete("Will be removed")]
 		public ActionResult PVRedirect(PVService service, string pvId)
 		{
