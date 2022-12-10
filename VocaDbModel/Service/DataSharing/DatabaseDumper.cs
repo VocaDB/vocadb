@@ -62,7 +62,7 @@ public sealed class DatabaseDumper
 {
 	private sealed class Loader
 	{
-		private const int MaxEntries = 100;
+		private const int MaxEntries = 1000;
 		private readonly IPackageCreator _packageCreator;
 		private readonly ISession _session;
 
