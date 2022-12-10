@@ -19,59 +19,7 @@ namespace VocaDb.Model.Service.DataSharing;
 
 public interface IPackageCreator
 {
-	void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac);
-}
-
-[Obsolete]
-public sealed class XmlPackageCreator : IPackageCreator
-{
-	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-	private readonly Package _package;
-	private readonly Action _cleanup;
-
-	public XmlPackageCreator(Package package, Action cleanup)
-	{
-		_package = package;
-		_cleanup = cleanup;
-	}
-
-	private void DumpXml<T>(T[] contract, int id, string folder)
-	{
-		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
-
-		if (_package.PartExists(partUri))
-		{
-			s_log.Warn("Duplicate path: {0}", partUri);
-			return;
-		}
-
-		var packagePart = _package.CreatePart(partUri, MediaTypeNames.Text.Xml, CompressionOption.Normal);
-
-		var data = XmlHelper.SerializeToXml(contract);
-
-		using var stream = packagePart.GetStream();
-		data.Save(stream);
-	}
-
-	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
-	{
-		bool run = true;
-		int start = 0;
-
-		while (run)
-		{
-			var entries = loadFunc(start);
-			var contracts = entries.Select(fac).ToArray();
-			DumpXml(contracts, start, folder);
-
-			start += contracts.Length;
-			run = entries.Any();
-
-			// Cleanup
-			_cleanup();
-			GC.Collect();
-		}
-	}
+	void Dump<T>(T[] contract, int id, string folder);
 }
 
 public sealed class JsonPackageCreator : IPackageCreator
@@ -86,7 +34,7 @@ public sealed class JsonPackageCreator : IPackageCreator
 		_cleanup = cleanup;
 	}
 
-	private void DumpJson<T>(T[] contract, int id, string folder)
+	public void Dump<T>(T[] contract, int id, string folder)
 	{
 		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.json", UriKind.Relative));
 
@@ -103,26 +51,10 @@ public sealed class JsonPackageCreator : IPackageCreator
 		using var stream = packagePart.GetStream();
 		using var writer = new StreamWriter(stream);
 		writer.Write(data);
-	}
 
-	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
-	{
-		bool run = true;
-		int start = 0;
-
-		while (run)
-		{
-			var entries = loadFunc(start);
-			var contracts = entries.Select(fac).ToArray();
-			DumpJson(contracts, start, folder);
-
-			start += contracts.Length;
-			run = entries.Any();
-
-			// Cleanup
-			_cleanup();
-			GC.Collect();
-		}
+		// Cleanup
+		_cleanup();
+		GC.Collect();
 	}
 }
 
@@ -134,30 +66,43 @@ public sealed class DatabaseDumper
 		private readonly IPackageCreator _packageCreator;
 		private readonly ISession _session;
 
-		private static TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
-		{
-			return session.Query<TEntry>().Where(a => !a.Deleted).Skip(first).Take(max).ToArray();
-		}
-
-		private static TEntry[] Load<TEntry>(ISession session, int first, int max) where TEntry : IEntryWithIntId
-		{
-			return session.Query<TEntry>().Skip(first).Take(max).ToArray();
-		}
-
 		public Loader(ISession session, IPackageCreator packageCreator)
 		{
 			_session = session;
 			_packageCreator = packageCreator;
 		}
 
-		public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
+		private void DumpChunked<TEntry, TContract>(int[] ids, string folder, Func<TEntry, TContract> fac)
+			where TEntry : class, IEntryWithIntId
+			where TContract : class/* TODO: , IEntryContract */
 		{
-			_packageCreator.Dump(start => LoadSkipDeleted<TEntry>(_session, start, MaxEntries), folder, fac);
+			var idChunks = ids.Chunk(MaxEntries);
+			foreach (var (chunk, index) in idChunks.Select((chunk, index) => (chunk, index)))
+			{
+				var contracts = _session.Query<TEntry>()
+					.Where(entry => chunk.Contains(entry.Id))
+					.Select(fac)
+					.ToArray();
+				_packageCreator.Dump(contracts, MaxEntries * index, folder);
+			}
 		}
 
-		public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
+		public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac)
+			where TEntry : class, IEntryWithIntId
+			where TContract : class/* TODO: , IEntryContract */
 		{
-			_packageCreator.Dump(start => Load<TEntry>(_session, start, MaxEntries), folder, fac);
+
+			var ids = _session.Query<TEntry>().Select(entry => entry.Id).ToArray();
+			DumpChunked(ids, folder, fac);
+		}
+
+		public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac)
+			where TEntry : class, IDeletableEntry
+			where TContract : class/* TODO: , IEntryContract */
+		{
+
+			var ids = _session.Query<TEntry>().Where(entry => !entry.Deleted).Select(entry => entry.Id).ToArray();
+			DumpChunked(ids, folder, fac);
 		}
 	}
 
