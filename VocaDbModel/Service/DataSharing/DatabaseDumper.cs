@@ -1,7 +1,9 @@
 using System.IO.Packaging;
 using System.Net.Mime;
+using System.Runtime.Serialization;
 using NHibernate;
 using NLog;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -106,16 +108,97 @@ public sealed class DatabaseDumper
 		}
 	}
 
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed record ArchivedTagUsageContract
+	{
+		[DataMember]
+		public int Count { get; init; }
+
+		[DataMember]
+		public ObjectRefContract Tag { get; init; }
+
+		public ArchivedTagUsageContract(TagUsage tagUsage)
+		{
+			Count = tagUsage.Count;
+			Tag = ObjectRefContract.Create(tagUsage.Tag);
+		}
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed class ArchivedArtistContractWithTags : ArchivedArtistContract
+	{
+		[DataMember]
+		public ArchivedTagUsageContract[] Tags { get; init; }
+
+		public ArchivedArtistContractWithTags(Artist artist)
+			: base(artist, new ArtistDiff())
+		{
+			Tags = artist.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
+		}
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed class ArchivedAlbumContractWithTags : ArchivedAlbumContract
+	{
+		[DataMember]
+		public ArchivedTagUsageContract[] Tags { get; init; }
+
+		public ArchivedAlbumContractWithTags(Album album)
+			: base(album, new AlbumDiff())
+		{
+			Tags = album.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
+		}
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed class ArchivedSongContractWithTags : ArchivedSongContract
+	{
+		[DataMember]
+		public ArchivedTagUsageContract[] Tags { get; init; }
+
+		public ArchivedSongContractWithTags(Song song)
+			: base(song, new SongDiff())
+		{
+			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
+		}
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed class ArchivedEventSeriesContractWithTags : ArchivedEventSeriesContract
+	{
+		[DataMember]
+		public ArchivedTagUsageContract[] Tags { get; init; }
+
+		public ArchivedEventSeriesContractWithTags(ReleaseEventSeries releaseEventSeries)
+			: base(releaseEventSeries, new ReleaseEventSeriesDiff())
+		{
+			Tags = releaseEventSeries.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
+		}
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	private sealed class ArchivedEventContractWithTags : ArchivedEventContract
+	{
+		[DataMember]
+		public ArchivedTagUsageContract[] Tags { get; init; }
+
+		public ArchivedEventContractWithTags(ReleaseEvent releaseEvent)
+			: base(releaseEvent, new ReleaseEventDiff())
+		{
+			Tags = releaseEvent.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
+		}
+	}
+
 	public void Create(string path, ISession session)
 	{
 		using var package = Package.Open(path, FileMode.Create);
 		var packageCreator = new JsonPackageCreator(package, session.Clear);
 		var loader = new Loader(session, packageCreator);
-		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
-		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
-		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContract(a, new SongDiff()));
-		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a, new ReleaseEventSeriesDiff()));
-		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a, new ReleaseEventDiff()));
+		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContractWithTags(a));
+		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContractWithTags(a));
+		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContractWithTags(a));
+		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContractWithTags(a));
+		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContractWithTags(a));
 		loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
 	}
 }
