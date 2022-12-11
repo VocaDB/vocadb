@@ -1,4 +1,6 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Utils;
 
@@ -62,6 +64,7 @@ public class ArchivedEventSeriesContract
 	public string[]? Aliases { get; init; }
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public EventCategory Category { get; set; }
 
 	[DataMember]

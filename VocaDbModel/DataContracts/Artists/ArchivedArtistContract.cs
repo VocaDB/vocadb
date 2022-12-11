@@ -1,4 +1,6 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
 
@@ -74,6 +76,7 @@ public class ArchivedArtistContract
 	}
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public ArtistType ArtistType { get; set; }
 
 	[DataMember]
