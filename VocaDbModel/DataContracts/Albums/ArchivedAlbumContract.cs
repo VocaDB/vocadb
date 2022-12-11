@@ -2,6 +2,7 @@ using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Utils;
@@ -118,6 +119,7 @@ public class ArchivedAlbumContract
 	public AlbumDiscPropertiesContract[]? Discs { get; set; }
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public DiscType DiscType { get; set; }
 
 	[DataMember]

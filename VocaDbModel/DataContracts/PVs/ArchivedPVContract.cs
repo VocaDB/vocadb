@@ -1,4 +1,6 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
@@ -58,9 +60,11 @@ public class ArchivedPVContract
 	public string PVId { get; init; }
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public PVService Service { get; init; }
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public PVType PVType { get; init; }
 
 	[DataMember]
