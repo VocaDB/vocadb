@@ -668,6 +668,29 @@ export class SongRepository
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/songs/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface PVEmbedParams {

@@ -359,6 +359,50 @@ export class ReleaseEventRepository extends BaseRepository {
 			this.urlMapper.mapRelative('/api/releaseEvents/by-venue'),
 		);
 	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/releaseEvents/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	updateSeriesVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/releaseEventSeries/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{ hidden: hidden },
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface EventQueryParams extends CommonQueryParams {

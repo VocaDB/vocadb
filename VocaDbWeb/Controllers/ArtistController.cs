@@ -8,7 +8,6 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -200,13 +199,6 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = Service.GetArtist(id);
 			return Content(contract.Name);
-		}
-
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult Versions(int id)

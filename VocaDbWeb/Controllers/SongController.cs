@@ -418,13 +418,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id });
 		}
 
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-		}
-
 		/// <summary>
 		/// Refresh PV metadata.
 		/// </summary>

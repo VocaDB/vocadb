@@ -697,6 +697,18 @@ namespace VocaDb.Web.Controllers.Api
 				PVService = pv.Service,
 			};
 		}
+
+		[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
+			_queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

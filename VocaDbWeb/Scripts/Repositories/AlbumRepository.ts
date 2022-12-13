@@ -457,6 +457,29 @@ export class AlbumRepository
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/albums/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface AlbumQueryParams extends CommonQueryParams {

@@ -308,6 +308,29 @@ export class TagRepository extends BaseRepository {
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/tags/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface TagQueryParams extends CommonQueryParams {

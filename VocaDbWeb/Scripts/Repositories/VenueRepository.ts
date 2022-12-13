@@ -137,6 +137,29 @@ export class VenueRepository extends BaseRepository {
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/venues/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export const venueRepo = new VenueRepository(httpClient, urlMapper);

@@ -280,13 +280,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Deleted");
 		}
 
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedAlbumVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-		}
-
 		public ActionResult UsersWithAlbumInCollection(int albumId = InvalidId)
 		{
 			if (albumId == InvalidId)

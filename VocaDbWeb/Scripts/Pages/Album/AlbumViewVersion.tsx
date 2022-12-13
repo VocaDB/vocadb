@@ -11,6 +11,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
@@ -121,15 +122,18 @@ const AlbumViewVersionLayout = observer(
 							(contract.archivedVersion.hidden ? (
 								<JQueryUIButton
 									as="a"
-									href={`/Album/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: false,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
+											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await albumRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-unlocked' }}
@@ -139,13 +143,16 @@ const AlbumViewVersionLayout = observer(
 							) : (
 								<JQueryUIButton
 									as="a"
-									href={`/Album/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: true,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
-										if (!window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											e.preventDefault();
+									onClick={async (e): Promise<void> => {
+										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await albumRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-locked' }}
