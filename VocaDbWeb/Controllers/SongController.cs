@@ -379,15 +379,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = id });
 		}
 
-		public ActionResult RevertToVersion(int archivedSongVersionId)
-		{
-			var result = _queries.RevertToVersion(archivedSongVersionId);
-
-			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
-
-			return RedirectToAction("Edit", new { id = result.Id });
-		}
-
 		public string ThumbUrl(int id)
 		{
 			return _queries.GetSong(id, s => s.GetThumbUrl());

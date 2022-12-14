@@ -17,10 +17,14 @@ import { ArchivedSongStore } from '@/Stores/Song/ArchivedSongStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 
 interface SongViewVersionLayoutProps {
 	contract: ArchivedSongVersionDetailsContract;
@@ -41,6 +45,8 @@ const SongViewVersionLayout = observer(
 		const changedFieldNames = useChangedFieldNames();
 
 		useLocationStateStore(archivedSongStore);
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout
@@ -83,18 +89,19 @@ const SongViewVersionLayout = observer(
 							contract.archivedVersion.version < contract.song.version - 1 && (
 								<JQueryUIButton
 									as="a"
-									href={
-										`/Song/RevertToVersion?${qs.stringify({
-											archivedSongVersionId: contract.archivedVersion.id,
-										})}` /* TODO: Convert to POST. */
-									}
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(
+											window.confirm(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											const id = await songRepo.revertToVersion(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+											});
+
+											navigate(`/Song/Edit/${id}`);
 										}
 									}}
 									icons={{ primary: 'ui-icon-arrowrefresh-1-w' }}

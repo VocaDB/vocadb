@@ -444,6 +444,18 @@ namespace VocaDb.Web.Controllers.Api
 
 			return NoContent();
 		}
+
+		[HttpPost("versions/{archivedVersionId:int}/revert")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> RevertToVersion(int archivedVersionId)
+		{
+			var result = await _queries.RevertToVersion(archivedVersionId);
+
+			return result.Id;
+		}
 #nullable disable
 	}
 }

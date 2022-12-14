@@ -691,6 +691,23 @@ export class SongRepository
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	revertToVersion = (
+		requestToken: string,
+		{
+			archivedVersionId,
+		}: {
+			archivedVersionId: number;
+		},
+	): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(
+				`/api/songs/versions/${archivedVersionId}/revert`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface PVEmbedParams {

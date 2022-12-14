@@ -99,15 +99,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = id });
 		}
 
-		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId)
-		{
-			var result = await _queries.RevertToVersion(archivedArtistVersionId);
-
-			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
-
-			return RedirectToAction("Edit", new { id = result.Id });
-		}
-
 		[HttpPost]
 		public ActionResult FindDuplicate(string term1, string term2, string term3, string linkUrl)
 		{

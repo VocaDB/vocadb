@@ -410,6 +410,23 @@ export class ArtistRepository
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
+
+	revertToVersion = (
+		requestToken: string,
+		{
+			archivedVersionId,
+		}: {
+			archivedVersionId: number;
+		},
+	): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(
+				`/api/artists/versions/${archivedVersionId}/revert`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
