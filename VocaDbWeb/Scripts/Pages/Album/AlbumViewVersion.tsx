@@ -11,15 +11,20 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 
 interface AlbumViewVersionLayoutProps {
 	contract: ArchivedAlbumVersionDetailsContract;
@@ -40,6 +45,8 @@ const AlbumViewVersionLayout = observer(
 		const changedFieldNames = useChangedFieldNames();
 
 		useLocationStateStore(archivedAlbumStore);
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout
@@ -82,18 +89,19 @@ const AlbumViewVersionLayout = observer(
 							contract.archivedVersion.version < contract.album.version - 1 && (
 								<JQueryUIButton
 									as="a"
-									href={
-										`/Album/RevertToVersion?${qs.stringify({
-											archivedAlbumVersionId: contract.archivedVersion.id,
-										})}` /* TODO: Convert to POST. */
-									}
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(
+											window.confirm(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											const id = await albumRepo.revertToVersion(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+											});
+
+											navigate(`/Album/Edit/${id}`);
 										}
 									}}
 									icons={{ primary: 'ui-icon-arrowrefresh-1-w' }}
@@ -121,15 +129,18 @@ const AlbumViewVersionLayout = observer(
 							(contract.archivedVersion.hidden ? (
 								<JQueryUIButton
 									as="a"
-									href={`/Album/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: false,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
+											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await albumRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-unlocked' }}
@@ -139,13 +150,16 @@ const AlbumViewVersionLayout = observer(
 							) : (
 								<JQueryUIButton
 									as="a"
-									href={`/Album/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: true,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
-										if (!window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											e.preventDefault();
+									onClick={async (e): Promise<void> => {
+										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await albumRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-locked' }}

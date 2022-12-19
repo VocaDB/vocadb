@@ -432,6 +432,30 @@ namespace VocaDb.Web.Controllers.Api
 
 			return NoContent();
 		}
+
+		[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
+			_queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
+
+			return NoContent();
+		}
+
+		[HttpPost("versions/{archivedVersionId:int}/revert")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> RevertToVersion(int archivedVersionId)
+		{
+			var result = await _queries.RevertToVersion(archivedVersionId);
+
+			return result.Id;
+		}
 #nullable disable
 	}
 }

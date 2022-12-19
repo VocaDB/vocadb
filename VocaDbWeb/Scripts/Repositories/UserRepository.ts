@@ -851,21 +851,24 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	create = ({
-		email,
-		entryTime,
-		extra,
-		password,
-		recaptchaResponse,
-		userName,
-	}: {
-		email: string;
-		entryTime: Date;
-		extra: string;
-		password: string;
-		recaptchaResponse: string;
-		userName: string;
-	}): Promise<void> => {
+	create = (
+		requestToken: string,
+		{
+			email,
+			entryTime,
+			extra,
+			password,
+			recaptchaResponse,
+			userName,
+		}: {
+			email: string;
+			entryTime: Date;
+			extra: string;
+			password: string;
+			recaptchaResponse: string;
+			userName: string;
+		},
+	): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/register'),
 			{
@@ -877,6 +880,7 @@ export class UserRepository implements ICommentRepository {
 				password: password,
 				userName: userName,
 			},
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
@@ -887,26 +891,26 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/users/${contract.id}`),
 			contract,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	login = ({
-		keepLoggedIn,
-		password,
-		userName,
-	}: {
-		keepLoggedIn: boolean;
-		password: string;
-		userName: string;
-	}): Promise<void> => {
+	login = (
+		requestToken: string,
+		{
+			keepLoggedIn,
+			password,
+			userName,
+		}: {
+			keepLoggedIn: boolean;
+			password: string;
+			userName: string;
+		},
+	): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/login'),
 			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
@@ -946,6 +950,29 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/reports`),
 			{ reason: notes, reportType: 'Spamming' },
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	forgotPassword = (
+		requestToken: string,
+		{
+			email,
+			recaptchaResponse,
+			username,
+		}: {
+			email: string;
+			recaptchaResponse: string;
+			username: string;
+		},
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/forgot-password'),
+			{
+				email: email,
+				'g-recaptcha-response': recaptchaResponse,
+				username: username,
+			},
 			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};

@@ -4,6 +4,7 @@ using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using NHibernate.SqlCommand;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -696,6 +697,30 @@ namespace VocaDb.Web.Controllers.Api
 				Song = song,
 				PVService = pv.Service,
 			};
+		}
+
+		[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
+			_queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
+
+			return NoContent();
+		}
+
+		[HttpPost("versions/{archivedVersionId:int}/revert")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> RevertToVersion(int archivedVersionId)
+		{
+			var result = _queries.RevertToVersion(archivedVersionId);
+
+			return result.Id;
 		}
 #nullable disable
 	}

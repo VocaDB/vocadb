@@ -3,19 +3,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers
 {
@@ -232,20 +228,6 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View("React/Index");
-		}
-
-		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewSeriesVersion", new { id = archivedVersionId });
-		}
-
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedReleaseEventVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId)
