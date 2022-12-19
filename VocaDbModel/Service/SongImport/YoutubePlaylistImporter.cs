@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.SongImport
 
 			if (!match.Success)
 			{
-				s_log.Warn("Youtube URL not regonized: {0}", url);
+				s_log.Warn($"Youtube URL not regonized: {url.Replace(Environment.NewLine, "")}");
 				throw new UnableToImportException($"Youtube URL not regonized: {url}");
 			}
 

@@ -34,17 +34,17 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (WebException x)
 			{
-				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, $"Unable to load Vimeo URL {url.Replace(Environment.NewLine, "")}");
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (HttpRequestException x)
 			{
-				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, $"Unable to load Vimeo URL {url.Replace(Environment.NewLine, "")}");
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (JsonSerializationException x)
 			{
-				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, $"Unable to load Vimeo URL {url.Replace(Environment.NewLine, "")}");
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 

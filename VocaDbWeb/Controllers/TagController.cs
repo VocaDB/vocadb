@@ -85,7 +85,7 @@ namespace VocaDb.Web.Controllers
 
 			if (tagId == InvalidId)
 			{
-				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.GetTypedHeaders().Referer);
+				s_log.Info($"Tag not found: {id.Replace(Environment.NewLine, "")}, referrer {Request.GetTypedHeaders().Referer}");
 				return NotFound();
 			}
 

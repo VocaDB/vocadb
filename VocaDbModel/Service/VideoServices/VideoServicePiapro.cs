@@ -43,7 +43,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (PiaproException x)
 			{
-				s_log.Warn(x, "Unable to load Piapro URL {0}", url);
+				s_log.Warn(x, $"Unable to load Piapro URL {url.Replace(Environment.NewLine, "")}");
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));
 			}
 

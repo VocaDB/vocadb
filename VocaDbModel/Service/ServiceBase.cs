@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service
 
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-			return $"'{who}' {doingWhat}";
+			return $"'{who}' {doingWhat.Replace(Environment.NewLine, "")}";
 		}
 
 		protected User GetLoggedUser(ISession session)
