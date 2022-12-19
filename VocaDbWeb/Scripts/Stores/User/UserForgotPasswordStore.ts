@@ -1,16 +1,13 @@
-import { userRepo } from '@/Repositories/UserRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-export class UserCreateStore {
-	private readonly entryTime = new Date();
+export class UserForgotPasswordStore {
 	@observable email = '';
 	@observable errors?: Record<string, string[]>;
-	@observable extra = '';
-	@observable password = '';
 	@observable submitting = false;
-	@observable userName = '';
+	@observable username = '';
 
-	constructor() {
+	constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
 
@@ -21,13 +18,10 @@ export class UserCreateStore {
 		this.submitting = true;
 
 		try {
-			await userRepo.create(requestToken, {
+			await this.userRepo.forgotPassword(requestToken, {
 				email: this.email,
-				entryTime: this.entryTime,
-				extra: this.extra,
-				password: this.password,
 				recaptchaResponse: recaptchaResponse,
-				userName: this.userName,
+				username: this.username,
 			});
 		} catch (error: any) {
 			if (error.response) {
