@@ -1194,7 +1194,7 @@ namespace VocaDb.Web.Controllers.Api
 			}
 			catch (UserNotFoundException)
 			{
-				s_log.Info("User not found: {0}", model.Username);
+				s_log.Info($"User not found: {model.Username.Replace(Environment.NewLine, "")}");
 				return BadRequest();
 			}
 		}
