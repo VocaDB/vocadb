@@ -56,8 +56,8 @@ const RatedSongs = observer(
 											new AutoplayContext(
 												PlayQueueRepositoryType.RatedSongs,
 												ratedSongsStore.queryParams,
+												false,
 											),
-											false,
 										);
 									}}
 									title="Play" /* LOC */
@@ -74,8 +74,8 @@ const RatedSongs = observer(
 											new AutoplayContext(
 												PlayQueueRepositoryType.RatedSongs,
 												ratedSongsStore.queryParams,
+												true,
 											),
-											true,
 										);
 									}}
 									title="Shuffle and play" /* LOC */

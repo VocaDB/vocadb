@@ -443,8 +443,8 @@ const SongListDetailsLayout = observer(
 										new AutoplayContext(
 											PlayQueueRepositoryType.SongList,
 											songListStore.queryParams,
+											false,
 										),
-										false,
 									);
 								}}
 								title="Play" /* LOC */
@@ -460,8 +460,8 @@ const SongListDetailsLayout = observer(
 										new AutoplayContext(
 											PlayQueueRepositoryType.SongList,
 											songListStore.queryParams,
+											true,
 										),
-										true,
 									);
 								}}
 								title="Shuffle and play" /* LOC */

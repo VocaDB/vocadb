@@ -216,8 +216,8 @@ const SearchIndex = observer(
 													new AutoplayContext(
 														PlayQueueRepositoryType.Songs,
 														searchStore.songSearchStore.queryParams,
+														false,
 													),
-													false,
 												);
 											}}
 											title="Play" /* LOC */
@@ -234,8 +234,8 @@ const SearchIndex = observer(
 													new AutoplayContext(
 														PlayQueueRepositoryType.Songs,
 														searchStore.songSearchStore.queryParams,
+														true,
 													),
-													true,
 												);
 											}}
 											title="Shuffle and play" /* LOC */

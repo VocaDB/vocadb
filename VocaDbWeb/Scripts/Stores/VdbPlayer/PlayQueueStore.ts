@@ -48,8 +48,11 @@ export interface PlayQueueLocalStorageState {
 	shuffle?: boolean;
 	items?: PlayQueueItemContract[];
 	currentIndex?: number;
-	repositoryType?: PlayQueueRepositoryType;
-	queryParams?: PlayQueueRepositoryQueryParams;
+	autoplayContext?: {
+		repositoryType: PlayQueueRepositoryType;
+		queryParams: PlayQueueRepositoryQueryParams;
+		shuffle: boolean;
+	};
 	totalCount?: number;
 	page?: number;
 }
@@ -117,6 +120,7 @@ export class AutoplayContext<
 	constructor(
 		readonly repositoryType: PlayQueueRepositoryType,
 		readonly queryParams: TQueryParams,
+		readonly shuffle: boolean,
 	) {}
 }
 
@@ -160,8 +164,7 @@ export class PlayQueueStore
 			shuffle: this.shuffle,
 			items: this.items.map((item) => item.toContract()),
 			currentIndex: this.currentIndex,
-			repositoryType: this.autoplayContext?.repositoryType,
-			queryParams: this.autoplayContext?.queryParams,
+			autoplayContext: this.autoplayContext,
 			totalCount: this.paging.totalItems,
 			page: this.paging.page,
 		};
@@ -171,10 +174,13 @@ export class PlayQueueStore
 		this.shuffle = value.shuffle ?? false;
 		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
 		this.currentIndex = value.currentIndex;
-		this.autoplayContext =
-			value.repositoryType && value.queryParams
-				? new AutoplayContext(value.repositoryType, value.queryParams)
-				: undefined;
+		this.autoplayContext = value.autoplayContext
+			? new AutoplayContext(
+					value.autoplayContext.repositoryType,
+					value.autoplayContext.queryParams,
+					value.autoplayContext.shuffle,
+			  )
+			: undefined;
 		this.paging.totalItems = value.totalCount ?? 0;
 		this.paging.page = value.page ?? 1;
 	}
@@ -213,9 +219,13 @@ export class PlayQueueStore
 		);
 	}
 
+	@computed private get shuffleAndPlay(): boolean {
+		return this.autoplayContext !== undefined && this.autoplayContext.shuffle;
+	}
+
 	@computed get hasMoreItems(): boolean {
-		if (this.shuffle) {
-			return this.autoplayContext !== undefined;
+		if (this.shuffleAndPlay) {
+			return true;
 		} else {
 			return !this.paging.isLastPage;
 		}
@@ -656,7 +666,7 @@ export class PlayQueueStore
 		const { repositoryType, queryParams } = this.autoplayContext;
 
 		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
-		const pagingProps = this.shuffle
+		const pagingProps = this.autoplayContext.shuffle
 			? {
 					start: this.getRandomSongIndex(),
 					maxEntries: 1,
@@ -692,7 +702,7 @@ export class PlayQueueStore
 			return;
 		}
 
-		if (!this.shuffle) {
+		if (!this.shuffleAndPlay) {
 			this.paging.nextPage();
 		}
 
@@ -733,12 +743,10 @@ export class PlayQueueStore
 		TQueryParams extends PlayQueueRepositoryQueryParams
 	>(
 		autoplayContext: AutoplayContext<TQueryParams>,
-		shuffle: boolean,
 	): Promise<void> => {
 		this.clear();
 
 		this.autoplayContext = autoplayContext;
-		this.shuffle = shuffle;
 
 		await this.updateResultsWithTotalCount();
 

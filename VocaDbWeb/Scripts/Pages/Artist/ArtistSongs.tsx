@@ -48,8 +48,8 @@ const ArtistSongs = observer(
 										new AutoplayContext(
 											PlayQueueRepositoryType.Songs,
 											songsStore.queryParams,
+											false,
 										),
-										false,
 									);
 								}}
 								title="Play" /* LOC */
@@ -65,8 +65,8 @@ const ArtistSongs = observer(
 										new AutoplayContext(
 											PlayQueueRepositoryType.Songs,
 											songsStore.queryParams,
+											true,
 										),
-										true,
 									);
 								}}
 								title="Shuffle and play" /* LOC */
