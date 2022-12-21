@@ -23,8 +23,8 @@ export interface HttpClientError<T = ErrorResponse> extends Error {
 }
 
 export class HttpClient {
-	delete = async <T>(url: string): Promise<T> => {
-		const response = await axios.delete<T>(url);
+	delete = async <T>(url: string, config?: { headers?: any }): Promise<T> => {
+		const response = await axios.delete<T>(url, config);
 		return response.data;
 	};
 

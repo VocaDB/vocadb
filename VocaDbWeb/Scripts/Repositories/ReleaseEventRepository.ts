@@ -19,6 +19,7 @@ import {
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
+import qs from 'qs';
 
 export enum ReleaseEventOptionalField {
 	'AdditionalNames' = 'AdditionalNames',
@@ -64,39 +65,49 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	delete = ({
-		id,
-		notes,
-		hardDelete,
-	}: {
-		id: number;
-		notes: string;
-		hardDelete: boolean;
-	}): Promise<void> => {
+	delete = (
+		requestToken: string,
+		{
+			id,
+			notes,
+			hardDelete,
+		}: {
+			id: number;
+			notes: string;
+			hardDelete: boolean;
+		},
+	): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
-				`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-					notes,
-				)}`,
+				`/api/releaseEvents/${id}?${qs.stringify({
+					hardDelete: hardDelete,
+					notes: notes,
+				})}`,
 			),
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	deleteSeries = ({
-		id,
-		notes,
-		hardDelete,
-	}: {
-		id: number;
-		notes: string;
-		hardDelete: boolean;
-	}): Promise<void> => {
+	deleteSeries = (
+		requestToken: string,
+		{
+			id,
+			notes,
+			hardDelete,
+		}: {
+			id: number;
+			notes: string;
+			hardDelete: boolean;
+		},
+	): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
-				`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-					notes,
-				)}`,
+				`/api/releaseEventSeries/${id}?${qs.stringify({
+					hardDelete: hardDelete,
+					notes: notes,
+				})}`,
 			),
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
@@ -346,6 +357,50 @@ export class ReleaseEventRepository extends BaseRepository {
 	getByVenue = (): Promise<VenueForApiContract[]> => {
 		return this.httpClient.get<VenueForApiContract[]>(
 			this.urlMapper.mapRelative('/api/releaseEvents/by-venue'),
+		);
+	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/releaseEvents/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	updateSeriesVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/releaseEventSeries/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{ hidden: hidden },
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

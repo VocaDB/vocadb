@@ -442,6 +442,61 @@ export class AlbumRepository
 			},
 		);
 	};
+
+	delete = (
+		requestToken: string,
+		{ id, notes }: { id: number; notes: string },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/albums/${id}?${qs.stringify({
+					id: id,
+					notes: notes,
+				})}`,
+			),
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/albums/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	revertToVersion = (
+		requestToken: string,
+		{
+			archivedVersionId,
+		}: {
+			archivedVersionId: number;
+		},
+	): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(
+				`/api/albums/versions/${archivedVersionId}/revert`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface AlbumQueryParams extends CommonQueryParams {

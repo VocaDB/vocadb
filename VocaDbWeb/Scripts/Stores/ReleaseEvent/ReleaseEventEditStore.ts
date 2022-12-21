@@ -7,6 +7,7 @@ import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -49,13 +50,7 @@ export class ReleaseEventEditStore {
 	// Event date. This should always be in UTC.
 	@observable date?: Date;
 	@observable defaultNameLanguage: ContentLanguageSelection;
-	readonly deleteStore = new DeleteEntryStore((notes) =>
-		this.eventRepo.delete({
-			id: this.contract.id,
-			notes: notes,
-			hardDelete: false,
-		}),
-	);
+	readonly deleteStore: DeleteEntryStore;
 	@observable description: string;
 	@observable endDate?: Date;
 	@observable errors?: Record<string, string[]>;
@@ -68,19 +63,14 @@ export class ReleaseEventEditStore {
 	readonly songList: BasicEntryLinkStore<SongListBaseContract>;
 	@observable status: EntryStatus;
 	@observable submitting = false;
-	readonly trashStore = new DeleteEntryStore((notes) =>
-		this.eventRepo.delete({
-			id: this.contract.id,
-			notes: notes,
-			hardDelete: true,
-		}),
-	);
+	readonly trashStore: DeleteEntryStore;
 	readonly venue: BasicEntryLinkStore<VenueForApiContract>;
 	@observable venueName: string;
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
 		private readonly values: GlobalValues,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly eventRepo: ReleaseEventRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
@@ -91,6 +81,26 @@ export class ReleaseEventEditStore {
 		readonly contract: ReleaseEventForEditContract,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				this.eventRepo.delete(requestToken, {
+					id: this.contract.id,
+					notes: notes,
+					hardDelete: false,
+				}),
+		);
+
+		this.trashStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				this.eventRepo.delete(requestToken, {
+					id: this.contract.id,
+					notes: notes,
+					hardDelete: true,
+				}),
+		);
 
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
 		this.series = new BasicEntryLinkStore((entryId) =>

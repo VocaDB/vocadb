@@ -3,6 +3,7 @@ import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContr
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -39,13 +40,7 @@ export class SongInListEditStore {
 }
 
 export class SongListEditStore {
-	readonly deleteStore = new DeleteEntryStore((notes) =>
-		this.songListRepo.delete({
-			id: this.contract.id,
-			notes: notes,
-			hardDelete: false,
-		}),
-	);
+	readonly deleteStore: DeleteEntryStore;
 	@observable description: string;
 	@observable errors?: Record<string, string[]>;
 	@observable eventDateDate?: Date;
@@ -54,22 +49,37 @@ export class SongListEditStore {
 	@observable songLinks: SongInListEditStore[];
 	@observable status: EntryStatus;
 	@observable submitting = false;
-	readonly trashStore = new DeleteEntryStore((notes) =>
-		this.songListRepo.delete({
-			id: this.contract.id,
-			notes: notes,
-			hardDelete: true,
-		}),
-	);
+	readonly trashStore: DeleteEntryStore;
 	@observable updateNotes = '';
 
 	constructor(
 		private readonly values: GlobalValues,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		readonly contract: SongListForEditContract,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				this.songListRepo.delete(requestToken, {
+					id: this.contract.id,
+					notes: notes,
+					hardDelete: false,
+				}),
+		);
+
+		this.trashStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				this.songListRepo.delete(requestToken, {
+					id: this.contract.id,
+					notes: notes,
+					hardDelete: true,
+				}),
+		);
 
 		this.songLinks = [];
 

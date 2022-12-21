@@ -331,25 +331,6 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		/// <summary>
-		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
-		/// </summary>
-		public async Task<ActionResult> PVPlayerWithRating(int songId = InvalidId)
-		{
-			if (songId == InvalidId)
-				return NoId();
-
-			var song = _queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
-			var pv = _pvHelper.PrimaryPV(song.PVs);
-
-			if (pv == null)
-				return new EmptyResult();
-
-			var view = await RenderPartialViewToStringAsync("PVs/_PVEmbedDynamic", pv);
-
-			return LowercaseJson(new SongWithPVPlayerAndVoteContract { Song = song, PlayerHtml = view, PVService = pv.Service });
-		}
-
 		[Obsolete("Will be removed")]
 		public ActionResult PVRedirect(PVService service, string pvId)
 		{
@@ -398,15 +379,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = id });
 		}
 
-		public ActionResult RevertToVersion(int archivedSongVersionId)
-		{
-			var result = _queries.RevertToVersion(archivedSongVersionId);
-
-			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
-
-			return RedirectToAction("Edit", new { id = result.Id });
-		}
-
 		public string ThumbUrl(int id)
 		{
 			return _queries.GetSong(id, s => s.GetThumbUrl());
@@ -435,13 +407,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetSuccessMessage("Thumbnail refreshed");
 
 			return RedirectToAction("Details", new { id });
-		}
-
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		/// <summary>

@@ -238,15 +238,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = id });
 		}
 
-		public ActionResult RevertToVersion(int archivedAlbumVersionId)
-		{
-			var result = _queries.RevertToVersion(archivedAlbumVersionId);
-
-			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
-
-			return RedirectToAction("Edit", new { id = result.Id });
-		}
-
 		[Authorize]
 		public ActionResult Deleted()
 		{
@@ -278,13 +269,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage("Entry moved to trash");
 
 			return RedirectToAction("Deleted");
-		}
-
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedAlbumVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult UsersWithAlbumInCollection(int albumId = InvalidId)

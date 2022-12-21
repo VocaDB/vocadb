@@ -13,6 +13,7 @@ import { SongOptionalField } from '@/Repositories/SongRepository';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
 export interface SongListGetSongsQueryParams {
 	listId: number;
@@ -40,21 +41,26 @@ export class SongListRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	delete = ({
-		id,
-		notes,
-		hardDelete,
-	}: {
-		id: number;
-		notes: string;
-		hardDelete: boolean;
-	}): Promise<void> => {
+	delete = (
+		requestToken: string,
+		{
+			id,
+			notes,
+			hardDelete,
+		}: {
+			id: number;
+			notes: string;
+			hardDelete: boolean;
+		},
+	): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
-				`/api/songLists/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-					notes,
-				)}`,
+				`/api/songLists/${id}?${qs.stringify({
+					hardDelete: hardDelete,
+					notes: notes,
+				})}`,
 			),
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 

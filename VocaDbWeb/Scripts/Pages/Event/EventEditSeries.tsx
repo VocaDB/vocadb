@@ -419,6 +419,7 @@ const EventEditSeries = (): React.ReactElement => {
 				.then((model) =>
 					setModel({
 						releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
+							antiforgeryRepo,
 							eventRepo,
 							model,
 						),
@@ -435,6 +436,7 @@ const EventEditSeries = (): React.ReactElement => {
 		} else {
 			setModel({
 				releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
+					antiforgeryRepo,
 					eventRepo,
 					defaultModel,
 				),

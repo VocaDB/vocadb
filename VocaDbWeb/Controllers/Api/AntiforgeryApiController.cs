@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Web.Code.Security;
@@ -23,7 +22,6 @@ public class AntiforgeryApiController : ApiController
 	// This is to prevent third-party AJAX requests from getting hold of a CSRF token.
 	// See also https://michaelzanggl.com/articles/csrf-tokens-for-spas/.
 	[HttpGet("token")]
-	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 	[IgnoreAntiforgeryToken]
 	[ApiExplorerSettings(IgnoreApi = true)]

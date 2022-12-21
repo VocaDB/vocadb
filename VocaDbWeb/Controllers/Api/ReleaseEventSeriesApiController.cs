@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
@@ -45,6 +46,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </param>
 		[HttpDelete("{id:int}")]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
 			notes ??= string.Empty;
@@ -144,6 +146,18 @@ namespace VocaDb.Web.Controllers.Api
 				ModelState.AddModelError("Names", x.Message);
 				return ValidationProblem(ModelState);
 			}
+		}
+
+		[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
+			_queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
+
+			return NoContent();
 		}
 #nullable disable
 	}

@@ -7,7 +7,6 @@ using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
@@ -17,7 +16,6 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
-using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers
 {
@@ -87,7 +85,7 @@ namespace VocaDb.Web.Controllers
 
 			if (tagId == InvalidId)
 			{
-				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.GetTypedHeaders().Referer);
+				s_log.Info($"Tag not found: {id.Replace(Environment.NewLine, "")}, referrer {Request.GetTypedHeaders().Referer}");
 				return NotFound();
 			}
 
@@ -175,13 +173,6 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Merge()
 		{
 			return View("React/Index");
-		}
-
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
-
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult Versions(int id = InvalidId)

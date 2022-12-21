@@ -48,6 +48,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </param>
 		[HttpDelete("{id:int}")]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
 			notes ??= string.Empty;
@@ -168,6 +169,18 @@ namespace VocaDb.Web.Controllers.Api
 			var id = _queries.Update(contract);
 
 			return id;
+		}
+
+		[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
+			_queries.UpdateVersionVisibility<ArchivedVenueVersion>(archivedVersionId, hidden);
+
+			return NoContent();
 		}
 #nullable disable
 	}

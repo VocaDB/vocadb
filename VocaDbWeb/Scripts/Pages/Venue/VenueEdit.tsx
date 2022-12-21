@@ -399,7 +399,13 @@ const VenueEdit = (): React.ReactElement => {
 			venueRepo
 				.getForEdit({ id: Number(id) })
 				.then((model) =>
-					setModel({ venueEditStore: new VenueEditStore(venueRepo, model) }),
+					setModel({
+						venueEditStore: new VenueEditStore(
+							antiforgeryRepo,
+							venueRepo,
+							model,
+						),
+					}),
 				)
 				.catch((error) => {
 					if (error.response) {
@@ -410,7 +416,13 @@ const VenueEdit = (): React.ReactElement => {
 					throw error;
 				});
 		} else {
-			setModel({ venueEditStore: new VenueEditStore(venueRepo, defaultModel) });
+			setModel({
+				venueEditStore: new VenueEditStore(
+					antiforgeryRepo,
+					venueRepo,
+					defaultModel,
+				),
+			});
 		}
 	}, [id]);
 

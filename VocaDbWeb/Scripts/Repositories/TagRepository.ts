@@ -288,6 +288,49 @@ export class TagRepository extends BaseRepository {
 			},
 		);
 	};
+
+	delete = (
+		requestToken: string,
+		{
+			id,
+			notes,
+			hardDelete,
+		}: { id: number; notes: string; hardDelete: boolean },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/tags/${id}?${qs.stringify({
+					id: id,
+					notes: notes,
+					hardDelete: hardDelete,
+				})}`,
+			),
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	updateVersionVisibility = (
+		requestToken: string,
+		{
+			archivedVersionId,
+			hidden,
+		}: {
+			archivedVersionId: number;
+			hidden: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/tags/versions/${archivedVersionId}/update-visibility?${qs.stringify(
+					{
+						hidden: hidden,
+					},
+				)}`,
+			),
+			undefined,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface TagQueryParams extends CommonQueryParams {

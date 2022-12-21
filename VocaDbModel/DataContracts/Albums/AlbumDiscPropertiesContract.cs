@@ -1,6 +1,8 @@
 #nullable disable
 
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums
@@ -29,6 +31,7 @@ namespace VocaDb.Model.DataContracts.Albums
 		public int Id { get; init; }
 
 		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
 		public DiscMediaType MediaType { get; init; }
 
 		[DataMember]

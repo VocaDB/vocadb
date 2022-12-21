@@ -1123,6 +1123,9 @@ const AlbumEditLayout = observer(
 				<EntryDeletePopup
 					confirmText={t('ViewRes:EntryEdit.ConfirmDelete')}
 					deleteEntryStore={albumEditStore.deleteStore}
+					onDelete={(): void =>
+						navigate(EntryUrlMapper.details(EntryType.Album, contract.id))
+					}
 				/>
 			</Layout>
 		);
@@ -1159,6 +1162,7 @@ const AlbumEdit = (): React.ReactElement => {
 				setModel({
 					albumEditStore: new AlbumEditStore(
 						vdb.values,
+						antiforgeryRepo,
 						albumRepo,
 						songRepo,
 						artistRepo,

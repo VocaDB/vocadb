@@ -4,9 +4,9 @@ import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { EntryType } from '@/Models/EntryType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -14,7 +14,6 @@ import {
 	SongOptionalField,
 	SongRepository,
 } from '@/Repositories/SongRepository';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumDiscPropertiesListEditStore } from '@/Stores/Album/AlbumDiscPropertiesListEditStore';
@@ -29,7 +28,6 @@ import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import $ from 'jquery';
 import { isEmpty, isNumber, pull, some } from 'lodash-es';
 import {
 	action,
@@ -109,21 +107,7 @@ export class AlbumEditStore {
 	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
 	@observable catalogNumber: string;
 	@observable defaultNameLanguage: string;
-	readonly deleteStore = new DeleteEntryStore(async (notes) => {
-		await $.ajax(
-			this.urlMapper.mapRelative(
-				`api/albums/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
-			),
-			{
-				type: 'DELETE',
-				success: () => {
-					window.location.href = this.urlMapper.mapRelative(
-						EntryUrlMapper.details(EntryType.Album, this.contract.id),
-					);
-				},
-			},
-		);
-	});
+	readonly deleteStore: DeleteEntryStore;
 	readonly description: EnglishTranslatedStringEditStore;
 	// Album disc type.
 	@observable discType: AlbumType;
@@ -156,18 +140,28 @@ export class AlbumEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly albumRepo: AlbumRepository,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
 		eventRepo: ReleaseEventRepository,
-		private readonly urlMapper: UrlMapper,
+		urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
 		webLinkCategories: WebLinkCategory[],
 		readonly contract: AlbumForEditContract,
 		canBulkDeletePVs: boolean,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				albumRepo.delete(requestToken, {
+					id: contract.id,
+					notes: notes,
+				}),
+		);
 
 		this.releaseEvent = new BasicEntryLinkStore<ReleaseEventContract>(
 			(entryId) => eventRepo.getOne({ id: entryId }),

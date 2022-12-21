@@ -173,7 +173,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				s_log.Warn("Unable to download album post '" + url + "'", x);
+				s_log.Warn($"Unable to download album post '{url.Replace(Environment.NewLine, "")}'", x);
 				throw;
 			}
 

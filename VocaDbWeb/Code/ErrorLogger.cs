@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Net;
 using AngleSharp.Io;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -28,7 +26,7 @@ namespace VocaDb.Web.Code
 		/// <param name="code">HTTP response code.</param>
 		/// <param name="msg">Optional simple message, usually exception message.</param>
 		/// <param name="level">Logging level, optional.</param>
-		public static void LogHttpError(HttpRequest request, int code, string msg = null, LogLevel level = null)
+		public static void LogHttpError(HttpRequest request, int code, string? msg = null, LogLevel? level = null)
 		{
 			if (string.IsNullOrEmpty(msg))
 				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
@@ -36,12 +34,12 @@ namespace VocaDb.Web.Code
 				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
 		}
 
-		public static void LogException(HttpRequest request, Exception ex, LogLevel level = null)
+		public static void LogException(HttpRequest request, Exception ex, LogLevel? level = null)
 		{
 			s_log.Log(level ?? LogLevel.Error, ex, RequestInfo("Exception for", request));
 		}
 
-		public static void LogMessage(HttpRequest request, string msg, LogLevel level = null)
+		public static void LogMessage(HttpRequest request, string msg, LogLevel? level = null)
 		{
 			s_log.Log(level ?? LogLevel.Error, RequestInfo(msg + " for", request));
 		}
@@ -50,9 +48,9 @@ namespace VocaDb.Web.Code
 		{
 			var userHostAddress = request.HttpContext.Connection.RemoteIpAddress;
 			var userHostName = request.GetTypedHeaders().Host;
-			var httpMethod = request.Method;
+			var httpMethod = request.Method.Replace(Environment.NewLine, "");
 			var pathAndQuery = request.GetEncodedPathAndQuery();
-			var userAgent = request.Headers[HeaderNames.UserAgent];
+			var userAgent = request.Headers[HeaderNames.UserAgent].ToString().Replace(Environment.NewLine, "");
 			var urlReferrer = request.GetTypedHeaders().Referer;
 			return $"{msg} '{userHostAddress}' [{userHostName}], URL {httpMethod} '{pathAndQuery}', UA '{userAgent}', referrer '{urlReferrer}'";
 		}

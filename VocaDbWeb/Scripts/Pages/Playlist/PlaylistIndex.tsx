@@ -9,10 +9,10 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { VdbPlayerEntryLink } from '@/Components/VdbPlayer/VdbPlayerEntryLink';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
@@ -22,7 +22,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
 
 interface SkipListEditProps {
@@ -208,8 +207,8 @@ const PlaylistTableRow = observer(
 				</td>
 				<td style={{ width: '80px' }}>
 					{item.entry.urlThumb && (
-						<Link
-							to={EntryUrlMapper.details_entry(item.entry)}
+						<VdbPlayerEntryLink
+							entry={item.entry}
 							title={item.entry.additionalNames}
 						>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -219,7 +218,7 @@ const PlaylistTableRow = observer(
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>
-						</Link>
+						</VdbPlayerEntryLink>
 					)}
 				</td>
 				<td>
@@ -244,12 +243,12 @@ const PlaylistTableRow = observer(
 						</Button>{' '}
 						<PlaylistTableRowDropdown item={item} />
 					</div>
-					<Link
-						to={EntryUrlMapper.details_entry(item.entry)}
+					<VdbPlayerEntryLink
+						entry={item.entry}
 						title={item.entry.additionalNames}
 					>
 						{item.entry.name}
-					</Link>{' '}
+					</VdbPlayerEntryLink>{' '}
 					{item.entry.entryType === 'Song' /* TODO: enum */ &&
 						item.entry.songType && (
 							<>
