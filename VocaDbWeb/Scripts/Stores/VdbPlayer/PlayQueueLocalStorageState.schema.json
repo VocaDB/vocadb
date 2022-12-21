@@ -429,6 +429,10 @@
 			],
 			"type": "object"
 		},
+		"PlayQueueRepositoryType": {
+			"enum": ["RatedSongs", "SongList", "Songs"],
+			"type": "string"
+		},
 		"PlayQueueSongContract": {
 			"properties": {
 				"additionalNames": {
@@ -784,6 +788,31 @@
 		}
 	},
 	"properties": {
+		"autoplayContext": {
+			"properties": {
+				"queryParams": {
+					"anyOf": [
+						{
+							"$ref": "#/definitions/SongListGetSongsQueryParams"
+						},
+						{
+							"$ref": "#/definitions/UserGetRatedSongsListQueryParams"
+						},
+						{
+							"$ref": "#/definitions/SongGetListQueryParams"
+						}
+					]
+				},
+				"repositoryType": {
+					"$ref": "#/definitions/PlayQueueRepositoryType"
+				},
+				"shuffle": {
+					"type": "boolean"
+				}
+			},
+			"required": ["queryParams", "repositoryType", "shuffle"],
+			"type": "object"
+		},
 		"currentIndex": {
 			"type": "number"
 		},
@@ -796,25 +825,8 @@
 		"page": {
 			"type": "number"
 		},
-		"queryParams": {
-			"anyOf": [
-				{
-					"$ref": "#/definitions/SongListGetSongsQueryParams"
-				},
-				{
-					"$ref": "#/definitions/UserGetRatedSongsListQueryParams"
-				},
-				{
-					"$ref": "#/definitions/SongGetListQueryParams"
-				}
-			]
-		},
 		"repeat": {
 			"enum": ["All", "Off", "One"],
-			"type": "string"
-		},
-		"repositoryType": {
-			"enum": ["RatedSongs", "SongList", "Songs"],
 			"type": "string"
 		},
 		"shuffle": {
