@@ -78,8 +78,9 @@ const PlayerCenterControls = observer(
 			<ButtonGroup>
 				<Button
 					variant="inverse"
-					title={`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOC */}
+					title={`Coming soon!` /* TODO: Remove. */}
 					onClick={playQueue.toggleShuffle}
+					disabled={true /* TODO: Remove. */}
 					className={classNames('hidden-phone', playQueue.shuffle && 'active')}
 				>
 					<i className="icon-random icon-white" />
@@ -330,7 +331,9 @@ const PlayerRightControls = observer(
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleShuffle}
+							disabled={true /* TODO: Remove. */}
 							className="visible-phone"
+							title="Coming soon!" /* TODO: Remove. */
 						>
 							{`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOC */}
 						</Dropdown.Item>
