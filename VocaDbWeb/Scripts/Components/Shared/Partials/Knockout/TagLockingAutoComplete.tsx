@@ -2,6 +2,7 @@ import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete
 import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -13,7 +14,7 @@ interface TagLockingAutoCompleteProps {
 	tagFilter?: (entry: TagApiContract) => boolean;
 	clearValue?: boolean;
 	allowAliases?: boolean;
-	tagTarget?: any /* TODO */;
+	tagTarget?: TagTargetType;
 }
 
 // Locking autocomplete for tag selection. Allows selection of one (existing) tag. When tag is selected, clear button is displayed.

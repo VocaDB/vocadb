@@ -3,9 +3,9 @@ import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
 import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
-import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { LoginManager } from '@/Models/LoginManager';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -107,7 +107,7 @@ export class ArtistDetailsStore {
 						.updateArtistTags({ artistId: artistId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			EntryType.Artist,
+			TagTargetType.Artist,
 			() => artistRepo.getTagSuggestions({ artistId: artistId }),
 		);
 

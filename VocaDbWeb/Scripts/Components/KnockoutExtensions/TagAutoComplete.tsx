@@ -3,6 +3,7 @@ import {
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { functions } from '@/Shared/GlobalFunctions';
 import { useVdb } from '@/VdbContext';
 import React from 'react';
@@ -13,7 +14,7 @@ interface TagAutoCompleteProps
 	tagFilter?: (entry: TagApiContract) => boolean;
 	clearValue?: boolean;
 	allowAliases?: boolean;
-	tagTarget?: any /* TODO */;
+	tagTarget?: TagTargetType;
 }
 
 export const TagAutoComplete = React.forwardRef<

@@ -4,10 +4,10 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
-import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import type { SongListGetSongsQueryParams } from '@/Repositories/SongListRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
@@ -149,7 +149,7 @@ export class SongListStore implements LocationStateStore<SongListRouteParams> {
 					this.tagUsages.updateTagUsages(usages);
 				},
 			},
-			EntryType.SongList,
+			TagTargetType.SongList,
 		);
 
 		this.tagFilters = new TagFilters(values, tagRepo);

@@ -133,6 +133,7 @@ export enum PlayMethod {
 
 export class PlayQueueStore
 	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
+	@observable interacted = false;
 	@observable items: PlayQueueItem[] = [];
 	@observable currentId?: number;
 	@observable repeat = RepeatMode.Off;
@@ -284,7 +285,13 @@ export class PlayQueueStore
 		);
 	}
 
+	@action private interact = (): void => {
+		this.interacted = true;
+	};
+
 	@action clear = (): void => {
+		this.interact();
+
 		this.currentIndex = undefined;
 		this.items = [];
 
@@ -300,6 +307,8 @@ export class PlayQueueStore
 	};
 
 	@action setCurrentItem = (item: PlayQueueItem | undefined): void => {
+		this.interact();
+
 		this.currentId = item?.id;
 	};
 
@@ -358,6 +367,9 @@ export class PlayQueueStore
 
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
+
+		this.interact();
+
 		this.items.splice(currentIndex, 0, ...items);
 		this.currentIndex = currentIndex;
 	};
@@ -385,6 +397,8 @@ export class PlayQueueStore
 
 		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
 		if (this.currentItem !== currentItem) {
+			this.interact();
+
 			if (isLastItem) {
 				if (this.hasMoreItems) {
 					await this.loadMore();
@@ -650,6 +664,8 @@ export class PlayQueueStore
 
 		if (!this.hasPreviousItem) return;
 
+		this.interact();
+
 		this.currentIndex--;
 
 		if (this.shouldSkipCurrentItem) {
@@ -714,6 +730,8 @@ export class PlayQueueStore
 
 		if (!this.hasNextItem) return;
 
+		this.interact();
+
 		if (this.isLastItem && this.hasMoreItems) {
 			await this.loadMore();
 		}
@@ -760,6 +778,8 @@ export class PlayQueueStore
 	@action switchPV = (pv: PVContract): void => {
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
+
+		this.interact();
 
 		const { entry, currentTime } = this.items[currentIndex];
 		const newItem = new PlayQueueItem(entry, pv.id, currentTime);
