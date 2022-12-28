@@ -425,7 +425,13 @@ const EmbedPVWrapper = observer(
 			VdbPlayerConsole.error('error', event);
 		}, []);
 
-		const handleLoaded = React.useCallback(() => diva.play(), [diva]);
+		const handleLoaded = React.useCallback(() => {
+			if (!playQueue.interacted) {
+				return;
+			}
+
+			diva.play();
+		}, [playQueue, diva]);
 
 		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
 			vdbPlayer,
