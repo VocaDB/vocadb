@@ -367,6 +367,9 @@ export class PlayQueueStore
 
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
+
+		this.interact();
+
 		this.items.splice(currentIndex, 0, ...items);
 		this.currentIndex = currentIndex;
 	};
