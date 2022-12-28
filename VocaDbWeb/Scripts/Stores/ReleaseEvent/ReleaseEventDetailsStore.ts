@@ -4,6 +4,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { CommentRepository } from '@/Repositories/CommentRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -87,7 +88,7 @@ export class ReleaseEventDetailsStore {
 						.updateEventTags({ eventId: this.eventId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			EntryType.ReleaseEvent,
+			TagTargetType.Event,
 		);
 
 		this.tagUsages = new TagListStore(tagUsages);

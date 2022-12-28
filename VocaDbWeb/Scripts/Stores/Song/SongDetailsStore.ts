@@ -6,10 +6,10 @@ import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
-import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import {
 	SongOptionalField,
@@ -300,7 +300,7 @@ export class SongDetailsStore {
 						.updateSongTags({ songId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			EntryType.Song,
+			TagTargetType.Song,
 			() => songRepo.getTagSuggestions({ songId: this.id }),
 		);
 
