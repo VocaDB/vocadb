@@ -1,7 +1,7 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
-import { EntryType } from '@/Models/EntryType';
+import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { trim } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
@@ -31,7 +31,7 @@ export class TagsEditStore {
 
 	constructor(
 		private readonly repo: ITagSelectionsRepository,
-		readonly target?: EntryType,
+		readonly target?: TagTargetType,
 		readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {
 		makeObservable(this);
