@@ -5,6 +5,7 @@ import Navbar from '@/Bootstrap/Navbar';
 import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { ShowRandomPageButton } from '@/Components/Shared/ShowRandomPageButton';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
@@ -97,6 +98,8 @@ export const GlobalSearchBox = observer(
 
 		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
+
+		const vdbPlayer = useVdbPlayer();
 
 		const setLanguagePreferenceCookie = React.useCallback(
 			(languagePreference: ContentLanguagePreference): boolean => {
@@ -475,6 +478,16 @@ export const GlobalSearchBox = observer(
 								{t(`Resources:ContentLanguageSelectionNames.${lp}`)}
 							</Dropdown.Item>
 						))}
+						<Dropdown.Divider />
+						{vdbPlayer.bottomBarEnabled ? (
+							<Dropdown.Item onClick={vdbPlayer.hideBottomBar}>
+								Hide bottom bar{/* TODO: localize */}
+							</Dropdown.Item>
+						) : (
+							<Dropdown.Item onClick={vdbPlayer.showBottomBar}>
+								Show bottom bar{/* TODO: localize */}
+							</Dropdown.Item>
+						)}
 					</Dropdown.Menu>
 				</Dropdown>
 				{vdb.values.loggedUser && (

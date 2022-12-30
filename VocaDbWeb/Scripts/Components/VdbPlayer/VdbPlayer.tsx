@@ -659,6 +659,7 @@ export const VdbPlayer = observer(
 		const vdbPlayer = useVdbPlayer();
 		const playQueue = usePlayQueue();
 
+		useLocalStorageStateStore('VdbPlayerStore', vdbPlayer);
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
 		useLocalStorageStateStore('SkipListStore', playQueue.skipList);
 
