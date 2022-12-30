@@ -22,7 +22,7 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
@@ -263,7 +263,7 @@ const SongListDetailsLayout = observer(
 			ImageSize.Original,
 		);
 
-		const { playQueue } = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<Layout

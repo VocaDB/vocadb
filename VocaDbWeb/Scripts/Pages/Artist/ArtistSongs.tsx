@@ -1,7 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
@@ -30,7 +30,7 @@ const ArtistSongs = observer(
 
 		useLocationStateStore(songsStore);
 
-		const { playQueue } = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<ArtistDetailsTabs
@@ -40,7 +40,7 @@ const ArtistSongs = observer(
 			>
 				<div className="clearfix">
 					<div className="pull-right">
-						<SongSearchDropdown songSearchStore={songsStore} />{' '}
+						<SongSearchDropdown songSearchStore={songsStore} />
 						<ButtonGroup>
 							<Button
 								onClick={async (): Promise<void> => {

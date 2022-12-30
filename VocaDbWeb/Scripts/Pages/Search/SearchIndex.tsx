@@ -9,7 +9,7 @@ import {
 	SongSearchDropdown,
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -100,7 +100,7 @@ const SearchIndex = observer(
 
 		useLocationStateStore(searchStore);
 
-		const { playQueue } = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<Layout pageTitle={undefined} ready={true}>

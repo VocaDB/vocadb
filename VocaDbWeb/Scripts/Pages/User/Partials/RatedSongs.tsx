@@ -6,7 +6,7 @@ import { RatedSongsSearchDropdown } from '@/Components/Shared/Partials/Knockout/
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -31,7 +31,7 @@ const RatedSongs = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		const { playQueue } = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<>
