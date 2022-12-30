@@ -126,7 +126,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 	class BilibiliResponseDataOwner
 	{
-		public int Mid { get; init; }
+		public long Mid { get; init; }
 		public string Name { get; init; } = default!;
 	}
 }
