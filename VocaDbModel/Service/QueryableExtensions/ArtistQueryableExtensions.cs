@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;

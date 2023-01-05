@@ -1,10 +1,8 @@
 #nullable disable
 
-using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Web.Controllers;
-using VocaDb.Web.Models.Artist;
 
 namespace VocaDb.Tests.Web.Controllers
 {

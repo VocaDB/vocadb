@@ -1,4 +1,3 @@
-using System;
 using VocaDb.Web.Resources.Views.Shared;
 
 namespace VocaDb.Web.Code

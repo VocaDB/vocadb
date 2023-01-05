@@ -1,5 +1,3 @@
-using System.IO;
-using Microsoft.AspNetCore.Http;
 using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web

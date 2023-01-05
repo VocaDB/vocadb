@@ -4,7 +4,6 @@ using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate.SqlCommand;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;

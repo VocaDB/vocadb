@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtensions

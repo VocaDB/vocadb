@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;

@@ -1,8 +1,6 @@
-using System;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using VocaDb.Model.Service.Security;
 using VocaDb.Web.Helpers;

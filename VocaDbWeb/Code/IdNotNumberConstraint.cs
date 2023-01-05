@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-
 namespace VocaDb.Web.Code
 {
 	public class IdNotNumberConstraint : IRouteConstraint

@@ -1,5 +1,3 @@
-using System;
-
 namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoParseException : Exception

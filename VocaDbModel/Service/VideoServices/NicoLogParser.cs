@@ -1,17 +1,12 @@
-using System;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 using NLog;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 	public class NicoLogParser : IVideoServiceParser {
 		public Task<VideoTitleParseResult> GetTitleAsync(string id) => NicoLogHelper.GetVideoTitleParseResultAsync(id);
 	}

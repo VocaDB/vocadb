@@ -1,4 +1,3 @@
-using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;

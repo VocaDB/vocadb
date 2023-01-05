@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Service;
 using VocaDb.Web.Code.Security;
