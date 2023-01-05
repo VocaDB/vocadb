@@ -301,11 +301,11 @@ public class AdminController : ControllerBase
 	}
 
 	[Authorize]
-	public ActionResult ViewSysLog()
+	public async Task<ActionResult> ViewSysLog()
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
-		var logContents = new LogFileReader().GetLatestLogFileContents();
+		var logContents = await new LogFileReader().GetLatestLogFileContents();
 
 		PageProperties.Title = "View system log";
 
