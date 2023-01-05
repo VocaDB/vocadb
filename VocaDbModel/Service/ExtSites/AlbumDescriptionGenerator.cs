@@ -5,50 +5,49 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Service.ExtSites
+namespace VocaDb.Model.Service.ExtSites;
+
+public class AlbumDescriptionGenerator
 {
-	public class AlbumDescriptionGenerator
+	private void AddBasicDescription(StringBuilder sb, AlbumContract album, Func<DiscType, string?> albumTypeNames)
 	{
-		private void AddBasicDescription(StringBuilder sb, AlbumContract album, Func<DiscType, string?> albumTypeNames)
+		var typeName = albumTypeNames(album.DiscType);
+
+		sb.Append(typeName);
+
+		if (!album.ReleaseDate.IsEmpty)
 		{
-			var typeName = albumTypeNames(album.DiscType);
+			var date = OptionalDateTime.Create(album.ReleaseDate).ToString(CultureInfo.InvariantCulture);
+			sb.AppendFormat(", released {0}", date);
+		}
+	}
 
-			sb.Append(typeName);
+	public string GenerateDescription(AlbumContract album, Func<DiscType, string?> albumTypeNames)
+	{
+		var sb = new StringBuilder();
+		AddBasicDescription(sb, album, albumTypeNames);
+		sb.Append(".");
+		return sb.ToString();
+	}
 
-			if (!album.ReleaseDate.IsEmpty)
+	public string GenerateDescription(AlbumDetailsContract album, Func<DiscType, string?> albumTypeNames)
+	{
+		var sb = new StringBuilder();
+
+		AddBasicDescription(sb, album, albumTypeNames);
+
+		if (album.Songs.Any())
+		{
+			sb.AppendFormat(", {0} track(s)", album.Songs.Length);
+
+			if (album.TotalLength != TimeSpan.Zero)
 			{
-				var date = OptionalDateTime.Create(album.ReleaseDate).ToString(CultureInfo.InvariantCulture);
-				sb.AppendFormat(", released {0}", date);
+				sb.AppendFormat(" ({0})", DateTimeHelper.FormatMinSec(album.TotalLength));
 			}
 		}
 
-		public string GenerateDescription(AlbumContract album, Func<DiscType, string?> albumTypeNames)
-		{
-			var sb = new StringBuilder();
-			AddBasicDescription(sb, album, albumTypeNames);
-			sb.Append(".");
-			return sb.ToString();
-		}
+		sb.Append(".");
 
-		public string GenerateDescription(AlbumDetailsContract album, Func<DiscType, string?> albumTypeNames)
-		{
-			var sb = new StringBuilder();
-
-			AddBasicDescription(sb, album, albumTypeNames);
-
-			if (album.Songs.Any())
-			{
-				sb.AppendFormat(", {0} track(s)", album.Songs.Length);
-
-				if (album.TotalLength != TimeSpan.Zero)
-				{
-					sb.AppendFormat(" ({0})", DateTimeHelper.FormatMinSec(album.TotalLength));
-				}
-			}
-
-			sb.Append(".");
-
-			return sb.ToString();
-		}
+		return sb.ToString();
 	}
 }

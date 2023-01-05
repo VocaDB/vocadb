@@ -6,126 +6,125 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.DataContracts.Venues
+namespace VocaDb.Model.DataContracts.Venues;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class VenueForApiContract : IEntryWithStatus
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class VenueForApiContract : IEntryWithStatus
+	EntryType IEntryBase.EntryType => EntryType.Venue;
+#nullable enable
+	string IEntryBase.DefaultName => Name;
+#nullable disable
+
+	/// <summary>
+	/// Comma-separated list of all other names that aren't the display name.
+	/// </summary>
+	[DataMember(EmitDefaultValue = false)]
+	public string AdditionalNames { get; init; }
+
+#nullable enable
+	/// <summary>
+	/// Venue address, without country, for example "2-1, Nakase, Mihama-ku, Chiba-city, 261-8550".
+	/// </summary>
+	[DataMember]
+	public string Address { get; init; }
+
+	/// <summary>
+	/// The two-letter code defined in ISO 3166 for the country/region.
+	/// </summary>
+	[DataMember]
+	public string AddressCountryCode { get; init; }
+#nullable disable
+
+	[DataMember]
+	public OptionalGeoPointContract Coordinates { get; init; }
+
+	[DataMember]
+	public bool Deleted { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public string Description { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public ReleaseEventContract[] Events { get; init; }
+
+	[DataMember]
+	public int Id { get; set; }
+
+#nullable enable
+	[DataMember]
+	public string Name { get; init; }
+#nullable disable
+
+	/// <summary>
+	/// List of all names for this entry. Optional field.
+	/// </summary>
+	[DataMember(EmitDefaultValue = false)]
+	public LocalizedStringContract[] Names { get; init; }
+
+	[DataMember]
+	public EntryStatus Status { get; init; }
+
+	[DataMember]
+	public int Version { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public WebLinkForApiContract[] WebLinks { get; init; }
+
+	public VenueForApiContract() { }
+
+#nullable enable
+	public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields)
 	{
-		EntryType IEntryBase.EntryType => EntryType.Venue;
-#nullable enable
-		string IEntryBase.DefaultName => Name;
-#nullable disable
+		ParamIs.NotNull(() => venue);
 
-		/// <summary>
-		/// Comma-separated list of all other names that aren't the display name.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; init; }
+		Id = venue.Id;
+		Address = venue.Address;
+		AddressCountryCode = venue.AddressCountryCode;
+		Coordinates = new OptionalGeoPointContract(venue.Coordinates);
+		Deleted = venue.Deleted;
+		Name = venue.TranslatedName[languagePreference];
+		Status = venue.Status;
+		Version = venue.Version;
 
-#nullable enable
-		/// <summary>
-		/// Venue address, without country, for example "2-1, Nakase, Mihama-ku, Chiba-city, 261-8550".
-		/// </summary>
-		[DataMember]
-		public string Address { get; init; }
-
-		/// <summary>
-		/// The two-letter code defined in ISO 3166 for the country/region.
-		/// </summary>
-		[DataMember]
-		public string AddressCountryCode { get; init; }
-#nullable disable
-
-		[DataMember]
-		public OptionalGeoPointContract Coordinates { get; init; }
-
-		[DataMember]
-		public bool Deleted { get; init; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; init; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventContract[] Events { get; init; }
-
-		[DataMember]
-		public int Id { get; set; }
-
-#nullable enable
-		[DataMember]
-		public string Name { get; init; }
-#nullable disable
-
-		/// <summary>
-		/// List of all names for this entry. Optional field.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; init; }
-
-		[DataMember]
-		public EntryStatus Status { get; init; }
-
-		[DataMember]
-		public int Version { get; init; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; init; }
-
-		public VenueForApiContract() { }
-
-#nullable enable
-		public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields)
+		if (fields.HasFlag(VenueOptionalFields.AdditionalNames))
 		{
-			ParamIs.NotNull(() => venue);
-
-			Id = venue.Id;
-			Address = venue.Address;
-			AddressCountryCode = venue.AddressCountryCode;
-			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
-			Deleted = venue.Deleted;
-			Name = venue.TranslatedName[languagePreference];
-			Status = venue.Status;
-			Version = venue.Version;
-
-			if (fields.HasFlag(VenueOptionalFields.AdditionalNames))
-			{
-				AdditionalNames = venue.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-			}
-
-			if (fields.HasFlag(VenueOptionalFields.Description))
-			{
-				Description = venue.Description;
-			}
-
-			if (fields.HasFlag(VenueOptionalFields.Events))
-			{
-				Events = venue.Events.OrderBy(e => e.Date.DateTime).ThenBy(e => e.SeriesNumber).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
-			}
-
-			if (fields.HasFlag(VenueOptionalFields.Names))
-			{
-				Names = venue.Names.Select(n => new LocalizedStringContract(n)).ToArray();
-			}
-
-			if (fields.HasFlag(VenueOptionalFields.WebLinks))
-			{
-				WebLinks = venue.WebLinks.Links
-					.OrderBy(w => w.DescriptionOrUrl)
-					.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
-					.ToArray();
-			}
+			AdditionalNames = venue.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 		}
-#nullable disable
-	}
 
-	[Flags]
-	public enum VenueOptionalFields
-	{
-		None = 0,
-		AdditionalNames = 1 << 0,
-		Description = 1 << 1,
-		Events = 1 << 2,
-		Names = 1 << 3,
-		WebLinks = 1 << 4,
+		if (fields.HasFlag(VenueOptionalFields.Description))
+		{
+			Description = venue.Description;
+		}
+
+		if (fields.HasFlag(VenueOptionalFields.Events))
+		{
+			Events = venue.Events.OrderBy(e => e.Date.DateTime).ThenBy(e => e.SeriesNumber).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
+		}
+
+		if (fields.HasFlag(VenueOptionalFields.Names))
+		{
+			Names = venue.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+		}
+
+		if (fields.HasFlag(VenueOptionalFields.WebLinks))
+		{
+			WebLinks = venue.WebLinks.Links
+				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
+				.ToArray();
+		}
 	}
+#nullable disable
+}
+
+[Flags]
+public enum VenueOptionalFields
+{
+	None = 0,
+	AdditionalNames = 1 << 0,
+	Description = 1 << 1,
+	Events = 1 << 2,
+	Names = 1 << 3,
+	WebLinks = 1 << 4,
 }

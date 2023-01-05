@@ -1,13 +1,12 @@
-namespace VocaDb.Model.Service.VideoServices
+namespace VocaDb.Model.Service.VideoServices;
+
+public class VideoParseException : Exception
 {
-	public class VideoParseException : Exception
-	{
-		public VideoParseException() { }
+	public VideoParseException() { }
 
-		public VideoParseException(string? message)
-			: base(message) { }
+	public VideoParseException(string? message)
+		: base(message) { }
 
-		public VideoParseException(string? message, Exception? innerException)
-			: base(message, innerException) { }
-	}
+	public VideoParseException(string? message, Exception? innerException)
+		: base(message, innerException) { }
 }

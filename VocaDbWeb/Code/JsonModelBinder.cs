@@ -1,47 +1,46 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code
+namespace VocaDb.Web.Code;
+
+using NLog;
+
+public class JsonModelBinder : IModelBinder
 {
-	using NLog;
+	private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 
-	public class JsonModelBinder : IModelBinder
+	// Code from: https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-5.0
+	public Task BindModelAsync(ModelBindingContext bindingContext)
 	{
-		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
+		if (bindingContext == null)
+			throw new ArgumentNullException(nameof(bindingContext));
 
-		// Code from: https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-5.0
-		public Task BindModelAsync(ModelBindingContext bindingContext)
-		{
-			if (bindingContext == null)
-				throw new ArgumentNullException(nameof(bindingContext));
+		var modelName = bindingContext.ModelName;
 
-			var modelName = bindingContext.ModelName;
-
-			var valueProviderResult = bindingContext.ValueProvider.GetValue(modelName);
-			if (valueProviderResult == ValueProviderResult.None)
-				return Task.CompletedTask;
-
-			bindingContext.ModelState.SetModelValue(modelName, valueProviderResult);
-
-			var value = valueProviderResult.FirstValue;
-			if (string.IsNullOrEmpty(value))
-				return Task.CompletedTask;
-
-			object obj;
-
-			try
-			{
-				obj = JsonConvert.DeserializeObject(value, bindingContext.ModelMetadata.ModelType, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-			}
-			catch (JsonReaderException x)
-			{
-				s_log.Error(x, "Unable to process JSON, content is " + value);
-				throw;
-			}
-
-			bindingContext.Result = ModelBindingResult.Success(obj);
-
+		var valueProviderResult = bindingContext.ValueProvider.GetValue(modelName);
+		if (valueProviderResult == ValueProviderResult.None)
 			return Task.CompletedTask;
+
+		bindingContext.ModelState.SetModelValue(modelName, valueProviderResult);
+
+		var value = valueProviderResult.FirstValue;
+		if (string.IsNullOrEmpty(value))
+			return Task.CompletedTask;
+
+		object obj;
+
+		try
+		{
+			obj = JsonConvert.DeserializeObject(value, bindingContext.ModelMetadata.ModelType, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 		}
+		catch (JsonReaderException x)
+		{
+			s_log.Error(x, "Unable to process JSON, content is " + value);
+			throw;
+		}
+
+		bindingContext.Result = ModelBindingResult.Success(obj);
+
+		return Task.CompletedTask;
 	}
 }

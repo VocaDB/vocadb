@@ -1,59 +1,58 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Globalization
+namespace VocaDb.Model.Domain.Globalization;
+
+public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class
 {
-	public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class
+	private TEntry _entry;
+
+	public EntryName() { }
+
+	public EntryName(TEntry entry, ILocalizedString localizedString)
+		: base(localizedString.Value, localizedString.Language)
 	{
-		private TEntry _entry;
+		Entry = entry;
+	}
 
-		public EntryName() { }
-
-		public EntryName(TEntry entry, ILocalizedString localizedString)
-			: base(localizedString.Value, localizedString.Language)
+	public virtual TEntry Entry
+	{
+		get => _entry;
+		set
 		{
-			Entry = entry;
+			ParamIs.NotNull(() => value);
+			_entry = value;
 		}
-
-		public virtual TEntry Entry
-		{
-			get => _entry;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_entry = value;
-			}
-		}
+	}
 
 #nullable enable
-		public virtual bool Equals(EntryName<TEntry>? another)
-		{
-			if (another == null)
-				return false;
+	public virtual bool Equals(EntryName<TEntry>? another)
+	{
+		if (another == null)
+			return false;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		if (ReferenceEquals(this, another))
+			return true;
 
-			if (Id == 0)
-				return false;
+		if (Id == 0)
+			return false;
 
-			return Id == another.Id;
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as EntryName<TEntry>);
-		}
-
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
-
-		public override string ToString()
-		{
-			return $"name '{Value}' for {Entry}";
-		}
-#nullable disable
+		return Id == another.Id;
 	}
+
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as EntryName<TEntry>);
+	}
+
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
+
+	public override string ToString()
+	{
+		return $"name '{Value}' for {Entry}";
+	}
+#nullable disable
 }

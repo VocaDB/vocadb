@@ -4,51 +4,50 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Database.Queries
+namespace VocaDb.Model.Database.Queries;
+
+public sealed class WebhookQueries
 {
-	public sealed class WebhookQueries
+	private readonly IUserPermissionContext _permissionContext;
+	private readonly IRepository _repo;
+
+	public WebhookQueries(IUserPermissionContext permissionContext, IRepository repo)
 	{
-		private readonly IUserPermissionContext _permissionContext;
-		private readonly IRepository _repo;
+		_permissionContext = permissionContext;
+		_repo = repo;
+	}
 
-		public WebhookQueries(IUserPermissionContext permissionContext, IRepository repo)
+	public WebhookContract[] GetWebhooks()
+	{
+		_permissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+
+		return _repo.HandleQuery(ctx =>
 		{
-			_permissionContext = permissionContext;
-			_repo = repo;
-		}
+			return ctx.Query<Webhook>()
+				.ToArray()
+				.Select(w => new WebhookContract(w))
+				.ToArray();
+		});
+	}
 
-		public WebhookContract[] GetWebhooks()
+	public void UpdateWebhooks(WebhookContract[] webhooks)
+	{
+		_permissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+
+		_repo.HandleTransaction(ctx =>
 		{
-			_permissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+			ctx.AuditLogger.SysLog("updating webhooks");
 
-			return _repo.HandleQuery(ctx =>
-			{
-				return ctx.Query<Webhook>()
-					.ToArray()
-					.Select(w => new WebhookContract(w))
-					.ToArray();
-			});
-		}
+			var existing = ctx.Query<Webhook>().ToList();
+			var diff = CollectionHelper.Sync(
+				existing,
+				webhooks,
+				equality: (left, right) => left.Url == right.Url && left.WebhookEvents == right.WebhookEvents,
+				create: t => new Webhook(t.Url, t.WebhookEvents));
 
-		public void UpdateWebhooks(WebhookContract[] webhooks)
-		{
-			_permissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+			ctx.OfType<Webhook>().Sync(diff);
 
-			_repo.HandleTransaction(ctx =>
-			{
-				ctx.AuditLogger.SysLog("updating webhooks");
-
-				var existing = ctx.Query<Webhook>().ToList();
-				var diff = CollectionHelper.Sync(
-					existing,
-					webhooks,
-					equality: (left, right) => left.Url == right.Url && left.WebhookEvents == right.WebhookEvents,
-					create: t => new Webhook(t.Url, t.WebhookEvents));
-
-				ctx.OfType<Webhook>().Sync(diff);
-
-				ctx.AuditLogger.AuditLog($"updated webhooks");
-			});
-		}
+			ctx.AuditLogger.AuditLog($"updated webhooks");
+		});
 	}
 }

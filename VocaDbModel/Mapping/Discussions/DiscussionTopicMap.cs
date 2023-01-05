@@ -3,27 +3,26 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Mapping.Discussions
+namespace VocaDb.Model.Mapping.Discussions;
+
+public class DiscussionTopicMap : ClassMap<DiscussionTopic>
 {
-	public class DiscussionTopicMap : ClassMap<DiscussionTopic>
+	public DiscussionTopicMap()
 	{
-		public DiscussionTopicMap()
-		{
-			Schema("discussions");
-			Table("DiscussionTopics");
-			Cache.ReadWrite();
+		Schema("discussions");
+		Table("DiscussionTopics");
+		Cache.ReadWrite();
 
-			Id(m => m.Id);
+		Id(m => m.Id);
 
-			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Locked).Not.Nullable();
-			Map(m => m.Pinned).Not.Nullable();
-			Map(m => m.Name).Not.Nullable().Length(200);
+		Map(m => m.Created).Not.Nullable();
+		Map(m => m.Deleted).Not.Nullable();
+		Map(m => m.Locked).Not.Nullable();
+		Map(m => m.Pinned).Not.Nullable();
+		Map(m => m.Name).Not.Nullable().Length(200);
 
-			References(m => m.Folder).Not.Nullable();
+		References(m => m.Folder).Not.Nullable();
 
-			HasMany(m => m.AllComments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-		}
+		HasMany(m => m.AllComments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 	}
 }

@@ -3,20 +3,19 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Service.Translations
+namespace VocaDb.Model.Service.Translations;
+
+public interface IEnumTranslations
 {
-	public interface IEnumTranslations
-	{
-		TranslateableEnum<AlbumReportType> AlbumReportTypeNames { get; }
+	TranslateableEnum<AlbumReportType> AlbumReportTypeNames { get; }
 
-		TranslateableEnum<ArtistReportType> ArtistReportTypeNames { get; }
+	TranslateableEnum<ArtistReportType> ArtistReportTypeNames { get; }
 
-		TranslateableEnum<SongReportType> SongReportTypeNames { get; }
+	TranslateableEnum<SongReportType> SongReportTypeNames { get; }
 
-		TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum;
+	TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum;
 
-		string? Translation<TEnum>(TEnum val) where TEnum : struct, Enum;
+	string? Translation<TEnum>(TEnum val) where TEnum : struct, Enum;
 
-		string? Translation<TEnum>(TEnum val, CultureInfo? culture) where TEnum : struct, Enum;
-	}
+	string? Translation<TEnum>(TEnum val, CultureInfo? culture) where TEnum : struct, Enum;
 }

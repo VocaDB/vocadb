@@ -2,24 +2,23 @@
 
 using VocaDb.Model.Service.Security.StopForumSpam;
 
-namespace VocaDb.Tests.TestSupport
+namespace VocaDb.Tests.TestSupport;
+
+public class FakeStopForumSpamClient : IStopForumSpamClient
 {
-	public class FakeStopForumSpamClient : IStopForumSpamClient
+	public FakeStopForumSpamClient()
 	{
-		public FakeStopForumSpamClient()
-		{
-			Response = new SFSResponseContract();
-		}
-
-		public SFSResponseContract Response { get; set; }
-
-		private SFSResponseContract CallApi(string ip)
-		{
-			if (Response != null)
-				Response.IP = ip;
-			return Response;
-		}
-
-		public Task<SFSResponseContract> CallApiAsync(string ip) => Task.FromResult(CallApi(ip));
+		Response = new SFSResponseContract();
 	}
+
+	public SFSResponseContract Response { get; set; }
+
+	private SFSResponseContract CallApi(string ip)
+	{
+		if (Response != null)
+			Response.IP = ip;
+		return Response;
+	}
+
+	public Task<SFSResponseContract> CallApiAsync(string ip) => Task.FromResult(CallApi(ip));
 }

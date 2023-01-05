@@ -2,12 +2,11 @@
 
 using System.Xml.Linq;
 
-namespace VocaDb.Model.Domain.Versioning
-{
-	public interface IArchivedObjectVersion : IDatabaseObject
-	{
-		XDocument Data { get; }
+namespace VocaDb.Model.Domain.Versioning;
 
-		bool Hidden { get; set; }
-	}
+public interface IArchivedObjectVersion : IDatabaseObject
+{
+	XDocument Data { get; }
+
+	bool Hidden { get; set; }
 }

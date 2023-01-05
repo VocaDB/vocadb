@@ -1,9 +1,8 @@
 #nullable disable
 
-namespace VocaDb.Tests.TestSupport
+namespace VocaDb.Tests.TestSupport;
+
+public static class TestCategories
 {
-	public static class TestCategories
-	{
-		public const string Database = "Database";
-	}
+	public const string Database = "Database";
 }

@@ -1,39 +1,38 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Security
+namespace VocaDb.Model.Domain.Security;
+
+public class AgentLoginData
 {
-	public class AgentLoginData
+	public AgentLoginData(string name)
 	{
-		public AgentLoginData(string name)
-		{
-			ParamIs.NotNullOrEmpty(() => name);
+		ParamIs.NotNullOrEmpty(() => name);
 
-			Name = name;
-		}
+		Name = name;
+	}
 
-		public AgentLoginData(User user)
-		{
-			ParamIs.NotNull(() => user);
+	public AgentLoginData(User user)
+	{
+		ParamIs.NotNull(() => user);
 
-			Name = user.Name;
-			User = user;
-		}
+		Name = user.Name;
+		User = user;
+	}
 
-		public AgentLoginData(User? user, string name)
-		{
-			User = user;
-			Name = name;
-		}
+	public AgentLoginData(User? user, string name)
+	{
+		User = user;
+		Name = name;
+	}
 
-		public string Name { get; private set; }
+	public string Name { get; private set; }
 
-		public User? User { get; private set; }
+	public User? User { get; private set; }
 
-		public string UserNameOrFallback => User != null ? User.Name : Name;
+	public string UserNameOrFallback => User != null ? User.Name : Name;
 
-		public override string ToString()
-		{
-			return User != null ? User.ToString() : Name;
-		}
+	public override string ToString()
+	{
+		return User != null ? User.ToString() : Name;
 	}
 }

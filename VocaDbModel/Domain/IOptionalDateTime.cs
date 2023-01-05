@@ -1,11 +1,10 @@
-namespace VocaDb.Model.Domain
+namespace VocaDb.Model.Domain;
+
+public interface IOptionalDateTime
 {
-	public interface IOptionalDateTime
-	{
-		int? Day { get; }
+	int? Day { get; }
 
-		int? Month { get; }
+	int? Month { get; }
 
-		int? Year { get; }
-	}
+	int? Year { get; }
 }

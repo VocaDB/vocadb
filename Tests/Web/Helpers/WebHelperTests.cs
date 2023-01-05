@@ -5,52 +5,51 @@ using Microsoft.Net.Http.Headers;
 using Moq;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Helpers
+namespace VocaDb.Tests.Web.Helpers;
+
+[TestClass]
+public class WebHelperTests
 {
-	[TestClass]
-	public class WebHelperTests
+	private void TestGetInterfaceCultureName(string expected, params string[] input)
 	{
-		private void TestGetInterfaceCultureName(string expected, params string[] input)
+		var requestMock = new Mock<HttpRequest>();
+		requestMock.SetupGet(m => m.Headers).Returns(new HeaderDictionary
 		{
-			var requestMock = new Mock<HttpRequest>();
-			requestMock.SetupGet(m => m.Headers).Returns(new HeaderDictionary
-			{
-				{ HeaderNames.AcceptLanguage, input }
-			});
+			{ HeaderNames.AcceptLanguage, input }
+		});
 
-			var result = WebHelper.GetInterfaceCultureName(requestMock.Object);
+		var result = WebHelper.GetInterfaceCultureName(requestMock.Object);
 
-			result.Should().Be(expected, "result");
-		}
+		result.Should().Be(expected, "result");
+	}
 
-		[TestMethod]
-		public void GetInterfaceCultureName_Valid()
-		{
-			TestGetInterfaceCultureName("en-US", "no-NO", "en-US");
-		}
+	[TestMethod]
+	public void GetInterfaceCultureName_Valid()
+	{
+		TestGetInterfaceCultureName("en-US", "no-NO", "en-US");
+	}
 
-		[TestMethod]
-		public void GetInterfaceCultureName_OnlyLanguage()
-		{
-			TestGetInterfaceCultureName("en", "no", "en");
-		}
+	[TestMethod]
+	public void GetInterfaceCultureName_OnlyLanguage()
+	{
+		TestGetInterfaceCultureName("en", "no", "en");
+	}
 
-		[TestMethod]
-		public void GetInterfaceCultureName_NoMatch()
-		{
-			TestGetInterfaceCultureName(string.Empty, "no-NO");
-		}
+	[TestMethod]
+	public void GetInterfaceCultureName_NoMatch()
+	{
+		TestGetInterfaceCultureName(string.Empty, "no-NO");
+	}
 
-		[TestMethod]
-		public void GetInterfaceCultureName_Invalid()
-		{
-			TestGetInterfaceCultureName(string.Empty, "not-valid");
-		}
+	[TestMethod]
+	public void GetInterfaceCultureName_Invalid()
+	{
+		TestGetInterfaceCultureName(string.Empty, "not-valid");
+	}
 
-		[TestMethod]
-		public void GetInterfaceCultureName_Empty()
-		{
-			TestGetInterfaceCultureName(string.Empty);
-		}
+	[TestMethod]
+	public void GetInterfaceCultureName_Empty()
+	{
+		TestGetInterfaceCultureName(string.Empty);
 	}
 }

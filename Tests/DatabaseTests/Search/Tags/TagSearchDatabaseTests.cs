@@ -10,72 +10,71 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DatabaseTests.Search.Tags
+namespace VocaDb.Tests.DatabaseTests.Search.Tags;
+
+[TestClass]
+public class TagSearchDatabaseTests
 {
-	[TestClass]
-	public class TagSearchDatabaseTests
+	private readonly DatabaseTestContext _context = new();
+	private readonly TagQueryParams _queryParams = new()
 	{
-		private readonly DatabaseTestContext _context = new();
-		private readonly TagQueryParams _queryParams = new()
+		SortRule = TagSortRule.Name,
+		Common = new CommonSearchParams(),
+		Paging = new PagingProperties(0, 100, true)
+	};
+	private TestDatabase Db => TestContainerManager.TestDatabase;
+
+	private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
+	{
+		result.Items.Any(s => s.Equals(expected)).Should().BeTrue($"Found {expected}");
+	}
+
+	private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+		bool onlyMinimalFields = false)
+	{
+		return _context.RunTest(querySource =>
 		{
-			SortRule = TagSortRule.Name,
-			Common = new CommonSearchParams(),
-			Paging = new PagingProperties(0, 100, true)
-		};
-		private TestDatabase Db => TestContainerManager.TestDatabase;
+			var search = new TagSearch(querySource.OfType<Tag>(), languagePreference);
 
-		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
-		{
-			result.Items.Any(s => s.Equals(expected)).Should().BeTrue($"Found {expected}");
-		}
+			var watch = new Stopwatch();
+			watch.Start();
 
-		private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			bool onlyMinimalFields = false)
-		{
-			return _context.RunTest(querySource =>
-			{
-				var search = new TagSearch(querySource.OfType<Tag>(), languagePreference);
+			var result = search.Find(_queryParams, onlyMinimalFields);
 
-				var watch = new Stopwatch();
-				watch.Start();
+			Console.WriteLine("Test finished in {0}ms", watch.ElapsedMilliseconds);
 
-				var result = search.Find(_queryParams, onlyMinimalFields);
+			return result;
+		});
+	}
 
-				Console.WriteLine("Test finished in {0}ms", watch.ElapsedMilliseconds);
+	/// <summary>
+	/// List all (no filters).
+	/// </summary>
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public void ListAll()
+	{
+		var result = CallFind();
 
-				return result;
-			});
-		}
+		result.Items.Length.Should().Be(4, "Number of results");
+		result.TotalCount.Should().Be(4, "Total result count");
+		AssertHasTag(result, Db.Tag);
+		AssertHasTag(result, Db.Tag2);
+		AssertHasTag(result, Db.Tag3);
+	}
 
-		/// <summary>
-		/// List all (no filters).
-		/// </summary>
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void ListAll()
-		{
-			var result = CallFind();
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public void ListAll_MinimalFields()
+	{
+		var result = CallFind(onlyMinimalFields: true);
 
-			result.Items.Length.Should().Be(4, "Number of results");
-			result.TotalCount.Should().Be(4, "Total result count");
-			AssertHasTag(result, Db.Tag);
-			AssertHasTag(result, Db.Tag2);
-			AssertHasTag(result, Db.Tag3);
-		}
+		result.Items.Length.Should().Be(4, "Number of results");
+		result.TotalCount.Should().Be(4, "Total result count");
 
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void ListAll_MinimalFields()
-		{
-			var result = CallFind(onlyMinimalFields: true);
-
-			result.Items.Length.Should().Be(4, "Number of results");
-			result.TotalCount.Should().Be(4, "Total result count");
-
-			var sampleTag = result.Items[0];
-			sampleTag.TranslatedName.Should().NotBeNull("Translated name");
-			sampleTag.TranslatedName.Default.Should().Be("alternative rock", "Sample tag default name");
-			sampleTag.TranslatedName.DefaultLanguage.Should().Be(ContentLanguageSelection.English, "Sample tag default language");
-		}
+		var sampleTag = result.Items[0];
+		sampleTag.TranslatedName.Should().NotBeNull("Translated name");
+		sampleTag.TranslatedName.Default.Should().Be("alternative rock", "Sample tag default name");
+		sampleTag.TranslatedName.DefaultLanguage.Should().Be(ContentLanguageSelection.English, "Sample tag default language");
 	}
 }

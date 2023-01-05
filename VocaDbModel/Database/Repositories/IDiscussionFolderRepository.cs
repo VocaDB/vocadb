@@ -2,9 +2,8 @@
 
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Database.Repositories
+namespace VocaDb.Model.Database.Repositories;
+
+public interface IDiscussionFolderRepository : IRepository<DiscussionFolder>
 {
-	public interface IDiscussionFolderRepository : IRepository<DiscussionFolder>
-	{
-	}
 }

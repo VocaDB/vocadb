@@ -2,9 +2,9 @@
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using VocaDb.Model.Utils;
-namespace VocaDb.Model.Helpers
-{
-	public partial class ActiveModel
+namespace VocaDb.Model.Helpers;
+
+public partial class ActiveModel
     {
         /// <summary>
         /// model input class for ActiveModel.
@@ -69,4 +69,3 @@ namespace VocaDb.Model.Helpers
             return mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
         }
     }
-}

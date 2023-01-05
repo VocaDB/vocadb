@@ -9,163 +9,162 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Service.Queries
+namespace VocaDb.Model.Service.Queries;
+
+public class TagUsageQueries
 {
-	public class TagUsageQueries
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private readonly IUserPermissionContext _permissionContext;
+
+	private bool IsValid(TagBaseContract? contract)
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-		private readonly IUserPermissionContext _permissionContext;
+		if (contract == null)
+			return false;
 
-		private bool IsValid(TagBaseContract? contract)
+		if (HasId(contract))
+			return true;
+
+		return !string.IsNullOrEmpty(contract.Name);
+	}
+
+	private bool HasId(TagBaseContract contract)
+	{
+		return contract.Id > 0;
+	}
+
+	public TagUsageQueries(IUserPermissionContext permissionContext)
+	{
+		_permissionContext = permissionContext;
+	}
+
+	public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(
+		int entryId,
+		TagBaseContract[] tags,
+		bool onlyAdd,
+		IRepository<User> repository,
+		IEntryLinkFactory entryLinkFactory,
+		IEnumTranslations enumTranslations,
+		Func<TEntry, TagManager<TTag>> tagFunc,
+		Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory
+	)
+		where TEntry : class, IEntryWithNames, IEntryWithTags, IEntryWithStatus
+		where TTag : TagUsage
+	{
+		ParamIs.NotNull(() => tags);
+
+		_permissionContext.VerifyPermission(PermissionToken.EditTags);
+
+		tags = tags.Where(IsValid).ToArray();
+
+		if (onlyAdd && !tags.Any())
+			return Array.Empty<TagUsageForApiContract>();
+
+		return await repository.HandleTransactionAsync(async ctx =>
 		{
-			if (contract == null)
-				return false;
+			var entry = await ctx.LoadAsync<TEntry>(entryId);
 
-			if (HasId(contract))
-				return true;
+			EntryPermissionManager.VerifyEditTagsForEntry(_permissionContext, entry);
 
-			return !string.IsNullOrEmpty(contract.Name);
-		}
+			// Tags are primarily added by Id, secondarily by translated name.
+			// First separate given tags for tag IDs and tag names
+			var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
+			var translatedTagNames = tags.Where(t => !HasId(t) && !string.IsNullOrEmpty(t.Name)).Select(t => t.Name).ToArray();
 
-		private bool HasId(TagBaseContract contract)
-		{
-			return contract.Id > 0;
-		}
+			// Load existing tags by name and ID.
+			var tagsFromIds = await ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).VdbToListAsync();
 
-		public TagUsageQueries(IUserPermissionContext permissionContext)
-		{
-			_permissionContext = permissionContext;
-		}
+			var tagsFromNames = await ctx.Query<Tag>().WhereHasName(translatedTagNames).VdbToListAsync();
 
-		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(
-			int entryId,
-			TagBaseContract[] tags,
-			bool onlyAdd,
-			IRepository<User> repository,
-			IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations,
-			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory
-		)
-			where TEntry : class, IEntryWithNames, IEntryWithTags, IEntryWithStatus
-			where TTag : TagUsage
-		{
-			ParamIs.NotNull(() => tags);
+			// Figure out tags that don't exist yet (no ID and no matching name).
+			var newTagNames = translatedTagNames.Except(tagsFromNames.SelectMany(t => t.Names.AllValues), StringComparer.InvariantCultureIgnoreCase).ToArray();
 
-			_permissionContext.VerifyPermission(PermissionToken.EditTags);
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(_permissionContext);
+			var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
+			var newTags = await tagFactory.CreateTagsAsync(newTagNames);
 
-			tags = tags.Where(IsValid).ToArray();
+			// Get the final list of tag names with translations
+			var appliedTags = tagsFromNames
+				.Concat(tagsFromIds)
+				.Where(t => _permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
+				.Concat(newTags)
+				.Distinct()
+				.ToArray();
 
-			if (onlyAdd && !tags.Any())
-				return Array.Empty<TagUsageForApiContract>();
+			var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			var tagNames = appliedTags.Select(t => t.DefaultName);
+			await ctx.AuditLogger.AuditLogAsync($"tagging {entryLinkFactory.CreateEntryLink(entry)} with {string.Join(", ", tagNames)}", user);
+
+			var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
+
+			if (entry.AllowNotifications)
 			{
-				var entry = await ctx.LoadAsync<TEntry>(entryId);
+				await new FollowedTagNotifier().SendNotificationsAsync(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+			}
 
-				EntryPermissionManager.VerifyEditTagsForEntry(_permissionContext, entry);
+			var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
+			var tagCtx = ctx.OfType<Tag>();
 
-				// Tags are primarily added by Id, secondarily by translated name.
-				// First separate given tags for tag IDs and tag names
-				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
-				var translatedTagNames = tags.Where(t => !HasId(t) && !string.IsNullOrEmpty(t.Name)).Select(t => t.Name).ToArray();
+			foreach (var tag in updatedTags)
+				await tagCtx.UpdateAsync(tag);
 
-				// Load existing tags by name and ID.
-				var tagsFromIds = await ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).VdbToListAsync();
+			RecomputeTagUsagesCounts(tagCtx, updatedTags);
 
-				var tagsFromNames = await ctx.Query<Tag>().WhereHasName(translatedTagNames).VdbToListAsync();
+			ctx.AuditLogger.SysLog("finished tagging");
 
-				// Figure out tags that don't exist yet (no ID and no matching name).
-				var newTagNames = translatedTagNames.Except(tagsFromNames.SelectMany(t => t.Names.AllValues), StringComparer.InvariantCultureIgnoreCase).ToArray();
+			return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, _permissionContext.LanguagePreference)).ToArray();
+		});
+	}
 
-				var user = await ctx.OfType<User>().GetLoggedUserAsync(_permissionContext);
-				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
-				var newTags = await tagFactory.CreateTagsAsync(newTagNames);
-
-				// Get the final list of tag names with translations
-				var appliedTags = tagsFromNames
-					.Concat(tagsFromIds)
-					.Where(t => _permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
-					.Concat(newTags)
-					.Distinct()
-					.ToArray();
-
-				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
-
-				var tagNames = appliedTags.Select(t => t.DefaultName);
-				await ctx.AuditLogger.AuditLogAsync($"tagging {entryLinkFactory.CreateEntryLink(entry)} with {string.Join(", ", tagNames)}", user);
-
-				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
-
-				if (entry.AllowNotifications)
-				{
-					await new FollowedTagNotifier().SendNotificationsAsync(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
-				}
-
-				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
-				var tagCtx = ctx.OfType<Tag>();
-
-				foreach (var tag in updatedTags)
-					await tagCtx.UpdateAsync(tag);
-
-				RecomputeTagUsagesCounts(tagCtx, updatedTags);
-
-				ctx.AuditLogger.SysLog("finished tagging");
-
-				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, _permissionContext.LanguagePreference)).ToArray();
-			});
-		}
-
-		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository)
-			where TUsage : TagUsage
-			where TEntry : class, IDatabaseObject
+	public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository)
+		where TUsage : TagUsage
+		where TEntry : class, IDatabaseObject
+	{
+		return repository.HandleTransaction(ctx =>
 		{
-			return repository.HandleTransaction(ctx =>
-			{
-				ctx.AuditLogger.SysLog($"deleting tag usage with Id {tagUsageId}");
+			ctx.AuditLogger.SysLog($"deleting tag usage with Id {tagUsageId}");
 
-				var tagUsage = ctx.Load<TUsage>(tagUsageId);
+			var tagUsage = ctx.Load<TUsage>(tagUsageId);
 
-				EntryPermissionManager.VerifyAccess(_permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
+			EntryPermissionManager.VerifyAccess(_permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
 
-				tagUsage.Delete();
-				ctx.Delete(tagUsage);
-				ctx.Update(tagUsage.Tag);
+			tagUsage.Delete();
+			ctx.Delete(tagUsage);
+			ctx.Update(tagUsage.Tag);
 
-				ctx.AuditLogger.AuditLog($"removed {tagUsage}");
-				ctx.AuditLogger.SysLog("Usage count for " + tagUsage.Tag + " is now " + tagUsage.Tag.UsageCount);
+			ctx.AuditLogger.AuditLog($"removed {tagUsage}");
+			ctx.AuditLogger.SysLog("Usage count for " + tagUsage.Tag + " is now " + tagUsage.Tag.UsageCount);
 
-				return tagUsage.EntryBase.Id;
-			});
-		}
+			return tagUsage.EntryBase.Id;
+		});
+	}
 
-		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds)
+	private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds)
+	{
+		// Note: these counts are not up to date in tests, only when querying the real DB
+		var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new
 		{
-			// Note: these counts are not up to date in tests, only when querying the real DB
-			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new
-			{
-				Id = t.Id,
-				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count
-					+ t.AllSongTagUsages.Count + t.AllEventTagUsages.Count
-					+ t.AllEventSeriesTagUsages.Count + t.AllSongListTagUsages.Count
-			}).ToDictionary(t => t.Id, t => t.Count);
+			Id = t.Id,
+			Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count
+				+ t.AllSongTagUsages.Count + t.AllEventTagUsages.Count
+				+ t.AllEventSeriesTagUsages.Count + t.AllSongListTagUsages.Count
+		}).ToDictionary(t => t.Id, t => t.Count);
 
-			return result;
-		}
+		return result;
+	}
 
-		private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags)
+	private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags)
+	{
+		var ids = tags.Select(t => t.Id).ToArray();
+		var usages = GetActualTagUsageCounts(ctx, ids);
+
+		foreach (var tag in tags)
 		{
-			var ids = tags.Select(t => t.Id).ToArray();
-			var usages = GetActualTagUsageCounts(ctx, ids);
-
-			foreach (var tag in tags)
+			if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id])
 			{
-				if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id])
-				{
-					// This is expected for tests
-					// TODO: come up with a proper fix that works for tests and the real DB
-					s_log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
-				}
+				// This is expected for tests
+				// TODO: come up with a proper fix that works for tests and the real DB
+				s_log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
 			}
 		}
 	}

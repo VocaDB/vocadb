@@ -1,9 +1,8 @@
 #nullable disable
 
-namespace VocaDb.Model.Service.VideoServices.Youtube
+namespace VocaDb.Model.Service.VideoServices.Youtube;
+
+public class YoutubePageInfo
 {
-	public class YoutubePageInfo
-	{
-		public int? TotalResults { get; set; }
-	}
+	public int? TotalResults { get; set; }
 }

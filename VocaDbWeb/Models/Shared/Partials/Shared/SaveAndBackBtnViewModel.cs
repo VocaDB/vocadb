@@ -1,14 +1,13 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared
-{
-	public class SaveAndBackBtnViewModel
-	{
-		public SaveAndBackBtnViewModel(string backAction)
-		{
-			BackAction = backAction;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.Shared;
 
-		public string BackAction { get; set; }
+public class SaveAndBackBtnViewModel
+{
+	public SaveAndBackBtnViewModel(string backAction)
+	{
+		BackAction = backAction;
 	}
+
+	public string BackAction { get; set; }
 }

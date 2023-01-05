@@ -1,100 +1,99 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Service.Security
+namespace VocaDb.Model.Service.Security;
+
+public interface IHostCollection
 {
-	public interface IHostCollection
+	IReadOnlyCollection<string> Hosts { get; }
+	bool Contains(string host);
+}
+
+/// <summary>
+/// Thread-safe collection of hostnames.
+/// </summary>
+public class HostCollection : IHostCollection
+{
+	private HashSet<string> _ips;
+	private readonly ReaderWriterLockSlim _readerWriterLock = new();
+
+	public HostCollection()
 	{
-		IReadOnlyCollection<string> Hosts { get; }
-		bool Contains(string host);
+		_ips = new HashSet<string>();
 	}
 
-	/// <summary>
-	/// Thread-safe collection of hostnames.
-	/// </summary>
-	public class HostCollection : IHostCollection
+	public HostCollection(IEnumerable<string> ips)
 	{
-		private HashSet<string> _ips;
-		private readonly ReaderWriterLockSlim _readerWriterLock = new();
+		_ips = new HashSet<string>(ips);
+	}
 
-		public HostCollection()
+	public void Add(string host)
+	{
+		_readerWriterLock.EnterWriteLock();
+		try
 		{
-			_ips = new HashSet<string>();
+			_ips.Add(host);
 		}
+		finally
+		{
+			_readerWriterLock.ExitWriteLock();
+		}
+	}
 
-		public HostCollection(IEnumerable<string> ips)
+	public void Reset(IEnumerable<string> ips)
+	{
+		_readerWriterLock.EnterWriteLock();
+		try
 		{
 			_ips = new HashSet<string>(ips);
 		}
-
-		public void Add(string host)
+		finally
 		{
-			_readerWriterLock.EnterWriteLock();
-			try
-			{
-				_ips.Add(host);
-			}
-			finally
-			{
-				_readerWriterLock.ExitWriteLock();
-			}
+			_readerWriterLock.ExitWriteLock();
 		}
+	}
 
-		public void Reset(IEnumerable<string> ips)
+	public bool Contains(string host)
+	{
+		_readerWriterLock.EnterReadLock();
+		try
 		{
-			_readerWriterLock.EnterWriteLock();
-			try
-			{
-				_ips = new HashSet<string>(ips);
-			}
-			finally
-			{
-				_readerWriterLock.ExitWriteLock();
-			}
+			return _ips.Contains(host);
 		}
+		finally
+		{
+			_readerWriterLock.ExitReadLock();
+		}
+	}
 
-		public bool Contains(string host)
+	public void Remove(string host)
+	{
+		_readerWriterLock.EnterWriteLock();
+		try
+		{
+			_ips.Remove(host);
+		}
+		finally
+		{
+			_readerWriterLock.ExitWriteLock();
+		}
+	}
+
+	public string[] Hosts
+	{
+		get
 		{
 			_readerWriterLock.EnterReadLock();
 			try
 			{
-				return _ips.Contains(host);
+				return _ips.ToArray();
 			}
 			finally
 			{
 				_readerWriterLock.ExitReadLock();
 			}
 		}
-
-		public void Remove(string host)
-		{
-			_readerWriterLock.EnterWriteLock();
-			try
-			{
-				_ips.Remove(host);
-			}
-			finally
-			{
-				_readerWriterLock.ExitWriteLock();
-			}
-		}
-
-		public string[] Hosts
-		{
-			get
-			{
-				_readerWriterLock.EnterReadLock();
-				try
-				{
-					return _ips.ToArray();
-				}
-				finally
-				{
-					_readerWriterLock.ExitReadLock();
-				}
-			}
-		}
-
-		IReadOnlyCollection<string> IHostCollection.Hosts => Hosts;
 	}
+
+	IReadOnlyCollection<string> IHostCollection.Hosts => Hosts;
 }

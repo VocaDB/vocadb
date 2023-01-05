@@ -1,119 +1,118 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Domain.Users
+namespace VocaDb.Model.Domain.Users;
+
+public interface IArtistForUser : IArtistLink
 {
-	public interface IArtistForUser : IArtistLink
+	new Artist Artist { get; }
+}
+
+/// <summary>
+/// User following an artist.
+/// </summary>
+/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
+public class ArtistForUser : IArtistForUser, IEntryWithIntId
+{
+	private Artist _artist;
+	private User _user;
+
+#nullable disable
+	public ArtistForUser()
 	{
-		new Artist Artist { get; }
+		SiteNotifications = true;
+	}
+#nullable enable
+
+	public ArtistForUser(User user, Artist artist)
+		: this()
+	{
+		User = user;
+		Artist = artist;
+	}
+
+	public virtual int Id { get; set; }
+
+	public virtual Artist Artist
+	{
+		get => _artist;
+		[MemberNotNull(nameof(_artist))]
+		set
+		{
+			ParamIs.NotNull(() => value);
+			_artist = value;
+		}
 	}
 
 	/// <summary>
-	/// User following an artist.
+	/// Send email notification to user for new songs/albums.
 	/// </summary>
-	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
-	public class ArtistForUser : IArtistForUser, IEntryWithIntId
+	public virtual bool EmailNotifications { get; set; }
+
+	/// <summary>
+	/// On-site notifications for new songs/albums.
+	/// </summary>
+	public virtual bool SiteNotifications { get; set; }
+
+	public virtual User User
 	{
-		private Artist _artist;
-		private User _user;
-
-#nullable disable
-		public ArtistForUser()
+		get => _user;
+		[MemberNotNull(nameof(_user))]
+		set
 		{
-			SiteNotifications = true;
+			ParamIs.NotNull(() => value);
+			_user = value;
 		}
-#nullable enable
+	}
 
-		public ArtistForUser(User user, Artist artist)
-			: this()
-		{
-			User = user;
-			Artist = artist;
-		}
+	/// <summary>
+	/// Deletes this link and performs any necessary bookkeeping.
+	/// Link will be removed from collections on both sides and ratings will be updated.
+	/// </summary>
+	public virtual void Delete()
+	{
+		User.AllArtists.Remove(this);
+		Artist.Users.Remove(this);
+	}
 
-		public virtual int Id { get; set; }
+	public virtual bool Equals(ArtistForUser? another)
+	{
+		if (another == null)
+			return false;
 
-		public virtual Artist Artist
-		{
-			get => _artist;
-			[MemberNotNull(nameof(_artist))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_artist = value;
-			}
-		}
+		if (ReferenceEquals(this, another))
+			return true;
 
-		/// <summary>
-		/// Send email notification to user for new songs/albums.
-		/// </summary>
-		public virtual bool EmailNotifications { get; set; }
+		if (Id == 0)
+			return false;
 
-		/// <summary>
-		/// On-site notifications for new songs/albums.
-		/// </summary>
-		public virtual bool SiteNotifications { get; set; }
+		return Id == another.Id;
+	}
 
-		public virtual User User
-		{
-			get => _user;
-			[MemberNotNull(nameof(_user))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_user = value;
-			}
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as ArtistForUser);
+	}
 
-		/// <summary>
-		/// Deletes this link and performs any necessary bookkeeping.
-		/// Link will be removed from collections on both sides and ratings will be updated.
-		/// </summary>
-		public virtual void Delete()
-		{
-			User.AllArtists.Remove(this);
-			Artist.Users.Remove(this);
-		}
+	public override int GetHashCode()
+	{
+		return Id.GetHashCode();
+	}
 
-		public virtual bool Equals(ArtistForUser? another)
-		{
-			if (another == null)
-				return false;
+	public virtual void Move(Artist target)
+	{
+		ParamIs.NotNull(() => target);
 
-			if (ReferenceEquals(this, another))
-				return true;
+		if (target.Equals(Artist))
+			return;
 
-			if (Id == 0)
-				return false;
+		Artist.Users.Remove(this);
+		Artist = target;
+		target.Users.Add(this);
+	}
 
-			return Id == another.Id;
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as ArtistForUser);
-		}
-
-		public override int GetHashCode()
-		{
-			return Id.GetHashCode();
-		}
-
-		public virtual void Move(Artist target)
-		{
-			ParamIs.NotNull(() => target);
-
-			if (target.Equals(Artist))
-				return;
-
-			Artist.Users.Remove(this);
-			Artist = target;
-			target.Users.Add(this);
-		}
-
-		public override string ToString()
-		{
-			return $"{User} following {Artist}";
-		}
+	public override string ToString()
+	{
+		return $"{User} following {Artist}";
 	}
 }

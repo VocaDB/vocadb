@@ -17,311 +17,310 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Admin;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+public class AdminController : ControllerBase
 {
-	public class AdminController : ControllerBase
+	private readonly IPRuleManager _ipRuleManager;
+	private readonly ISessionFactory _sessionFactory;
+	private AdminService Service { get; set; }
+	private readonly OtherService _otherService;
+
+	public AdminController(
+		AdminService service,
+		OtherService otherService,
+		IPRuleManager ipRuleManager,
+		ISessionFactory sessionFactory
+	)
 	{
-		private readonly IPRuleManager _ipRuleManager;
-		private readonly ISessionFactory _sessionFactory;
-		private AdminService Service { get; set; }
-		private readonly OtherService _otherService;
+		Service = service;
+		_otherService = otherService;
+		_ipRuleManager = ipRuleManager;
+		_sessionFactory = sessionFactory;
+	}
 
-		public AdminController(
-			AdminService service,
-			OtherService otherService,
-			IPRuleManager ipRuleManager,
-			ISessionFactory sessionFactory
-		)
+	[Authorize]
+	public ActionResult ActiveEdits()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+		var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
+
+		PageProperties.Title = "Active editors";
+
+		return View(items);
+	}
+
+	[Authorize]
+	public async Task<ActionResult> CheckSFS(string ip)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
+
+		var result = await new StopForumSpamClient().CallApiAsync(ip);
+
+		if (result == null)
+			return new EmptyResult();
+
+		return PartialView("Partials/_SFSCheckResponse", result);
+	}
+
+	[Authorize]
+	public ActionResult ClearCaches()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+		var cache = MemoryCache.Default;
+
+		foreach (var item in cache)
 		{
-			Service = service;
-			_otherService = otherService;
-			_ipRuleManager = ipRuleManager;
-			_sessionFactory = sessionFactory;
+			cache.Remove(item.Key);
 		}
 
-		[Authorize]
-		public ActionResult ActiveEdits()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+		return RedirectToAction("Index");
+	}
 
-			var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
+	public ActionResult CleanupOldLogEntries()
+	{
+		var count = Service.CleanupOldLogEntries();
 
-			PageProperties.Title = "Active editors";
+		TempData.SetStatusMessage("Cleanup complete - " + count + " entries removed.");
 
-			return View(items);
-		}
+		return RedirectToAction("Index");
+	}
 
-		[Authorize]
-		public async Task<ActionResult> CheckSFS(string ip)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
+	public ActionResult CreateMissingThumbs()
+	{
+		Service.CreateMissingThumbs();
 
-			var result = await new StopForumSpamClient().CallApiAsync(ip);
+		TempData.SetStatusMessage("Operation completed");
 
-			if (result == null)
-				return new EmptyResult();
+		return RedirectToAction("Index");
+	}
 
-			return PartialView("Partials/_SFSCheckResponse", result);
-		}
+	public ActionResult CreateJsonDump()
+	{
+		Service.CreateJsonDump();
 
-		[Authorize]
-		public ActionResult ClearCaches()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+		TempData.SetStatusMessage("Dump created");
 
-			var cache = MemoryCache.Default;
+		return RedirectToAction("Index");
+	}
 
-			foreach (var item in cache)
-			{
-				cache.Remove(item.Key);
-			}
+	[Authorize]
+	public ActionResult DeleteEntryReport(int id)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
-			return RedirectToAction("Index");
-		}
+		Service.DeleteEntryReports(new[] { id });
+		TempData.SetStatusMessage("Reports deleted");
 
-		public ActionResult CleanupOldLogEntries()
-		{
-			var count = Service.CleanupOldLogEntries();
+		return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
+	}
 
-			TempData.SetStatusMessage("Cleanup complete - " + count + " entries removed.");
+	[Authorize]
+	public ActionResult DeletePVsByAuthor(string author)
+	{
+		var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
 
-			return RedirectToAction("Index");
-		}
+		TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
 
-		public ActionResult CreateMissingThumbs()
-		{
-			Service.CreateMissingThumbs();
+		return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, Array.Empty<PVForSongContract>()));
+	}
 
-			TempData.SetStatusMessage("Operation completed");
+	//
+	// GET: /Admin/
+	[Authorize]
+	public ActionResult Index()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
-			return RedirectToAction("Index");
-		}
+		PageProperties.Title = "Site management";
 
-		public ActionResult CreateJsonDump()
-		{
-			Service.CreateJsonDump();
+		return View("React/Index");
+	}
 
-			TempData.SetStatusMessage("Dump created");
+	public ActionResult GeneratePictureThumbs()
+	{
+		var count = Service.GeneratePictureThumbs();
 
-			return RedirectToAction("Index");
-		}
+		TempData.SetStatusMessage(count + " picture thumbnails recreated.");
 
-		[Authorize]
-		public ActionResult DeleteEntryReport(int id)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
+		return RedirectToAction("Index");
+	}
 
-			Service.DeleteEntryReports(new[] { id });
-			TempData.SetStatusMessage("Reports deleted");
+	[Authorize]
+	public ActionResult ManageIPRules()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
-		}
+		PageProperties.Title = "Manage blocked IPs";
 
-		[Authorize]
-		public ActionResult DeletePVsByAuthor(string author)
-		{
-			var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
+		return View("React/Index");
+	}
 
-			TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
+	[Authorize]
+	public ActionResult ManageEntryTagMappings()
+	{
+		PageProperties.Title = "Manage entry type to tag mappings";
 
-			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, Array.Empty<PVForSongContract>()));
-		}
+		return View("React/Index");
+	}
 
-		//
-		// GET: /Admin/
-		[Authorize]
-		public ActionResult Index()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+	[Authorize]
+	public ActionResult ManageTagMappings()
+	{
+		PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-			PageProperties.Title = "Site management";
+		return View("React/Index");
+	}
 
-			return View("React/Index");
-		}
+	public ActionResult PVAuthorNames(string term)
+	{
+		var authors = Service.FindPVAuthorNames(term);
 
-		public ActionResult GeneratePictureThumbs()
-		{
-			var count = Service.GeneratePictureThumbs();
+		return Json(authors);
+	}
 
-			TempData.SetStatusMessage(count + " picture thumbnails recreated.");
+	[Authorize]
+	public ActionResult PVsByAuthor(string author, int maxResults = 50)
+	{
+		var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
-			return RedirectToAction("Index");
-		}
+		var model = new PVsByAuthor(author ?? string.Empty, songs);
 
-		[Authorize]
-		public ActionResult ManageIPRules()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
+		PageProperties.Title = "PVs by author";
 
-			PageProperties.Title = "Manage blocked IPs";
+		return View(model);
+	}
 
-			return View("React/Index");
-		}
+	public ActionResult RefreshDbCache()
+	{
+		DatabaseHelper.ClearSecondLevelCache(_sessionFactory);
 
-		[Authorize]
-		public ActionResult ManageEntryTagMappings()
-		{
-			PageProperties.Title = "Manage entry type to tag mappings";
+		return RedirectToAction("Index");
+	}
 
-			return View("React/Index");
-		}
+	public ActionResult UpdateAdditionalNames()
+	{
+		Service.UpdateAdditionalNames();
+		TempData.SetStatusMessage("Updated additional names strings");
+		return RedirectToAction("Index");
+	}
 
-		[Authorize]
-		public ActionResult ManageTagMappings()
-		{
-			PageProperties.Title = "Manage NicoNicoDouga tag mappings";
+	public ActionResult UpdateAlbumRatingTotals()
+	{
+		Service.UpdateAlbumRatingTotals();
+		TempData.SetStatusMessage("Updated album rating totals");
+		return RedirectToAction("Index");
+	}
 
-			return View("React/Index");
-		}
+	public ActionResult UpdateArtistStrings()
+	{
+		Service.UpdateArtistStrings();
 
-		public ActionResult PVAuthorNames(string term)
-		{
-			var authors = Service.FindPVAuthorNames(term);
+		return RedirectToAction("Index");
+	}
 
-			return Json(authors);
-		}
+	public ActionResult UpdateLinkCategories()
+	{
+		Service.UpdateWebLinkCategories();
+		TempData.SetStatusMessage("Updated link categories");
 
-		[Authorize]
-		public ActionResult PVsByAuthor(string author, int maxResults = 50)
-		{
-			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
+		return RedirectToAction("Index");
+	}
 
-			var model = new PVsByAuthor(author ?? string.Empty, songs);
+	public ActionResult UpdateNicoIds()
+	{
+		Service.UpdateNicoIds();
 
-			PageProperties.Title = "PVs by author";
+		return RedirectToAction("Index");
+	}
 
-			return View(model);
-		}
+	public ActionResult UpdateNormalizedEmailAddresses()
+	{
+		Service.UpdateNormalizedEmailAddresses();
 
-		public ActionResult RefreshDbCache()
-		{
-			DatabaseHelper.ClearSecondLevelCache(_sessionFactory);
+		return RedirectToAction("Index");
+	}
 
-			return RedirectToAction("Index");
-		}
+	public ActionResult UpdatePVIcons()
+	{
+		Service.UpdatePVIcons();
 
-		public ActionResult UpdateAdditionalNames()
-		{
-			Service.UpdateAdditionalNames();
-			TempData.SetStatusMessage("Updated additional names strings");
-			return RedirectToAction("Index");
-		}
+		return RedirectToAction("Index");
+	}
 
-		public ActionResult UpdateAlbumRatingTotals()
-		{
-			Service.UpdateAlbumRatingTotals();
-			TempData.SetStatusMessage("Updated album rating totals");
-			return RedirectToAction("Index");
-		}
+	public ActionResult UpdateSongFavoritedTimes()
+	{
+		Service.UpdateSongFavoritedTimes();
+		TempData.SetStatusMessage("Updated favorited song counts");
+		return RedirectToAction("Index");
+	}
 
-		public ActionResult UpdateArtistStrings()
-		{
-			Service.UpdateArtistStrings();
+	[Authorize]
+	public ActionResult UpdateTagVoteCounts()
+	{
+		var count = Service.UpdateTagVoteCounts();
+		TempData.SetStatusMessage($"Updated tag vote counts, {count} corrections made");
+		return RedirectToAction("Index");
+	}
 
-			return RedirectToAction("Index");
-		}
+	[Authorize]
+	public ActionResult DeployWebsite()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-		public ActionResult UpdateLinkCategories()
-		{
-			Service.UpdateWebLinkCategories();
-			TempData.SetStatusMessage("Updated link categories");
+		var deployFile = Path.Combine(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~"), "..", "..", "..", "deploy.cmd");
 
-			return RedirectToAction("Index");
-		}
+		Process.Start(deployFile, "doNotPause");
 
-		public ActionResult UpdateNicoIds()
-		{
-			Service.UpdateNicoIds();
+		return RedirectToAction("Index");
+	}
 
-			return RedirectToAction("Index");
-		}
+	[Authorize]
+	public ActionResult ViewAuditLog()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
-		public ActionResult UpdateNormalizedEmailAddresses()
-		{
-			Service.UpdateNormalizedEmailAddresses();
+		PageProperties.Title = "View audit log";
 
-			return RedirectToAction("Index");
-		}
+		return View("React/Index");
+	}
 
-		public ActionResult UpdatePVIcons()
-		{
-			Service.UpdatePVIcons();
+	[Authorize]
+	public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open)
+	{
+		ViewBag.ReportStatus = status;
+		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
-			return RedirectToAction("Index");
-		}
+		var reports = Service.GetEntryReports(status);
 
-		public ActionResult UpdateSongFavoritedTimes()
-		{
-			Service.UpdateSongFavoritedTimes();
-			TempData.SetStatusMessage("Updated favorited song counts");
-			return RedirectToAction("Index");
-		}
+		PageProperties.Title = "View entry reports";
 
-		[Authorize]
-		public ActionResult UpdateTagVoteCounts()
-		{
-			var count = Service.UpdateTagVoteCounts();
-			TempData.SetStatusMessage($"Updated tag vote counts, {count} corrections made");
-			return RedirectToAction("Index");
-		}
+		return View(reports);
+	}
 
-		[Authorize]
-		public ActionResult DeployWebsite()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+	[Authorize]
+	public ActionResult ViewSysLog()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
-			var deployFile = Path.Combine(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~"), "..", "..", "..", "deploy.cmd");
+		var logContents = new LogFileReader().GetLatestLogFileContents();
 
-			Process.Start(deployFile, "doNotPause");
+		PageProperties.Title = "View system log";
 
-			return RedirectToAction("Index");
-		}
+		return Content(logContents, "text/plain");
 
-		[Authorize]
-		public ActionResult ViewAuditLog()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
+		//return View(new ViewSysLog(logContents));
+	}
 
-			PageProperties.Title = "View audit log";
+	[Authorize]
+	public IActionResult ManageWebhooks()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
 
-			return View("React/Index");
-		}
+		PageProperties.Title = "Manage webhooks";
 
-		[Authorize]
-		public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open)
-		{
-			ViewBag.ReportStatus = status;
-			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-			var reports = Service.GetEntryReports(status);
-
-			PageProperties.Title = "View entry reports";
-
-			return View(reports);
-		}
-
-		[Authorize]
-		public ActionResult ViewSysLog()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
-
-			var logContents = new LogFileReader().GetLatestLogFileContents();
-
-			PageProperties.Title = "View system log";
-
-			return Content(logContents, "text/plain");
-
-			//return View(new ViewSysLog(logContents));
-		}
-
-		[Authorize]
-		public IActionResult ManageWebhooks()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
-
-			PageProperties.Title = "Manage webhooks";
-
-			return View("React/Index");
-		}
+		return View("React/Index");
 	}
 }

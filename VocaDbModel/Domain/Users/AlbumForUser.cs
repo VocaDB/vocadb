@@ -2,105 +2,104 @@
 
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.Domain.Users
+namespace VocaDb.Model.Domain.Users;
+
+public class AlbumForUser : IAlbumLink, IEntryWithIntId
 {
-	public class AlbumForUser : IAlbumLink, IEntryWithIntId
+	public const int NotRated = 0;
+
+	private Album _album;
+	private User _user;
+
+	public AlbumForUser()
 	{
-		public const int NotRated = 0;
+		MediaType = MediaType.PhysicalDisc;
+		Rating = NotRated;
+		PurchaseStatus = PurchaseStatus.Owned;
+	}
 
-		private Album _album;
-		private User _user;
+	public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, int rating)
+		: this()
+	{
+		User = user;
+		Album = album;
+		PurchaseStatus = status;
+		MediaType = mediaType;
+		Rating = rating;
+	}
 
-		public AlbumForUser()
+	public virtual Album Album
+	{
+		get => _album;
+		set
 		{
-			MediaType = MediaType.PhysicalDisc;
-			Rating = NotRated;
-			PurchaseStatus = PurchaseStatus.Owned;
+			ParamIs.NotNull(() => value);
+			_album = value;
 		}
+	}
 
-		public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, int rating)
-			: this()
+	public virtual int Id { get; set; }
+
+	public virtual MediaType MediaType { get; set; }
+
+	public virtual PurchaseStatus PurchaseStatus { get; set; }
+
+	/// <summary>
+	/// Rating score, 0-5 (0 = no rating).
+	/// </summary>
+	public virtual int Rating { get; set; }
+
+	public virtual User User
+	{
+		get => _user;
+		set
 		{
-			User = user;
-			Album = album;
-			PurchaseStatus = status;
-			MediaType = mediaType;
-			Rating = rating;
+			ParamIs.NotNull(() => value);
+			_user = value;
 		}
+	}
 
-		public virtual Album Album
-		{
-			get => _album;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_album = value;
-			}
-		}
-
-		public virtual int Id { get; set; }
-
-		public virtual MediaType MediaType { get; set; }
-
-		public virtual PurchaseStatus PurchaseStatus { get; set; }
-
-		/// <summary>
-		/// Rating score, 0-5 (0 = no rating).
-		/// </summary>
-		public virtual int Rating { get; set; }
-
-		public virtual User User
-		{
-			get => _user;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_user = value;
-			}
-		}
-
-		/// <summary>
-		/// Deletes this link and performs any necessary bookkeeping.
-		/// Link will be removed from collections on both sides and ratings will be updated.
-		/// </summary>
-		public virtual void Delete()
-		{
-			Album.UserCollections.Remove(this);
-			User.AllAlbums.Remove(this);
-			Album.UpdateRatingTotals();
-		}
+	/// <summary>
+	/// Deletes this link and performs any necessary bookkeeping.
+	/// Link will be removed from collections on both sides and ratings will be updated.
+	/// </summary>
+	public virtual void Delete()
+	{
+		Album.UserCollections.Remove(this);
+		User.AllAlbums.Remove(this);
+		Album.UpdateRatingTotals();
+	}
 
 #nullable enable
-		public virtual bool Equals(AlbumForUser? another)
-		{
-			if (another == null)
-				return false;
+	public virtual bool Equals(AlbumForUser? another)
+	{
+		if (another == null)
+			return false;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		if (ReferenceEquals(this, another))
+			return true;
 
-			return Id == another.Id;
-		}
-
-		public override bool Equals(object? obj) => Equals(obj as AlbumForUser);
-
-		public override int GetHashCode() => base.GetHashCode();
-
-		public virtual void Move(Album target)
-		{
-			ParamIs.NotNull(() => target);
-
-			if (target.Equals(Album))
-				return;
-
-			Album.UserCollections.Remove(this);
-			_album.UpdateRatingTotals();
-			Album = target;
-			target.UserCollections.Add(this);
-			target.UpdateRatingTotals();
-		}
-
-		public override string ToString() => $"{Album} for {User}";
-#nullable disable
+		return Id == another.Id;
 	}
+
+	public override bool Equals(object? obj) => Equals(obj as AlbumForUser);
+
+	public override int GetHashCode() => base.GetHashCode();
+
+	public virtual void Move(Album target)
+	{
+		ParamIs.NotNull(() => target);
+
+		if (target.Equals(Album))
+			return;
+
+		Album.UserCollections.Remove(this);
+		_album.UpdateRatingTotals();
+		Album = target;
+		target.UserCollections.Add(this);
+		target.UpdateRatingTotals();
+	}
+
+	public override string ToString() => $"{Album} for {User}";
+#nullable disable
 }

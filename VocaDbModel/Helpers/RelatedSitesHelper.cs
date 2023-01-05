@@ -1,18 +1,17 @@
 using System.Text.RegularExpressions;
 
-namespace VocaDb.Model.Helpers
+namespace VocaDb.Model.Helpers;
+
+public static class RelatedSitesHelper
 {
-	public static class RelatedSitesHelper
+	private static readonly Regex relatedSiteUrlRegex = new(@"^https?://((utaitedb\.net)|(vocadb\.net)|(touhoudb\.com))\/((Song\/Details)|S)\/\d+",
+		RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
+	public static bool IsRelatedSite(string? url)
 	{
-		private static readonly Regex relatedSiteUrlRegex = new(@"^https?://((utaitedb\.net)|(vocadb\.net)|(touhoudb\.com))\/((Song\/Details)|S)\/\d+",
-			RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+		if (string.IsNullOrEmpty(url))
+			return false;
 
-		public static bool IsRelatedSite(string? url)
-		{
-			if (string.IsNullOrEmpty(url))
-				return false;
-
-			return relatedSiteUrlRegex.IsMatch(url);
-		}
+		return relatedSiteUrlRegex.IsMatch(url);
 	}
 }

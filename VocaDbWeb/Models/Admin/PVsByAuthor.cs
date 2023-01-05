@@ -3,23 +3,22 @@
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Web.Models.Admin
+namespace VocaDb.Web.Models.Admin;
+
+public class PVsByAuthor
 {
-	public class PVsByAuthor
+	public PVsByAuthor() { }
+
+	public PVsByAuthor(string author, IEnumerable<PVForSongContract> pvs)
 	{
-		public PVsByAuthor() { }
+		ParamIs.NotNull(() => author);
+		ParamIs.NotNull(() => pvs);
 
-		public PVsByAuthor(string author, IEnumerable<PVForSongContract> pvs)
-		{
-			ParamIs.NotNull(() => author);
-			ParamIs.NotNull(() => pvs);
-
-			Author = author;
-			PVs = pvs.ToArray();
-		}
-
-		public string Author { get; set; }
-
-		public PVForSongContract[] PVs { get; set; }
+		Author = author;
+		PVs = pvs.ToArray();
 	}
+
+	public string Author { get; set; }
+
+	public PVForSongContract[] PVs { get; set; }
 }

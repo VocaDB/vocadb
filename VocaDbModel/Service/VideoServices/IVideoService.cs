@@ -1,15 +1,14 @@
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.Service.VideoServices
+namespace VocaDb.Model.Service.VideoServices;
+
+public interface IVideoService
 {
-	public interface IVideoService
-	{
-		IEnumerable<string> GetUserProfileUrls(string authorId);
+	IEnumerable<string> GetUserProfileUrls(string authorId);
 
-		bool IsValidFor(string url);
+	bool IsValidFor(string url);
 
-		bool IsValidFor(PVService service);
+	bool IsValidFor(PVService service);
 
-		Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle);
-	}
+	Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle);
 }

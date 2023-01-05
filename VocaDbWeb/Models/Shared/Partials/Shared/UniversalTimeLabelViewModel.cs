@@ -1,15 +1,14 @@
 #nullable disable
 
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared
-{
-	public class UniversalTimeLabelViewModel
-	{
-		public UniversalTimeLabelViewModel(DateTime dateTime)
-		{
-			DateTime = dateTime;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.Shared;
 
-		public DateTime DateTime { get; set; }
+public class UniversalTimeLabelViewModel
+{
+	public UniversalTimeLabelViewModel(DateTime dateTime)
+	{
+		DateTime = dateTime;
 	}
+
+	public DateTime DateTime { get; set; }
 }

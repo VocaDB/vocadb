@@ -3,119 +3,118 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Comments;
 
-namespace VocaDb.Model.Mapping
+namespace VocaDb.Model.Mapping;
+
+public class CommentMap : ClassMap<Comment>
 {
-	public class CommentMap : ClassMap<Comment>
+	protected CommentMap()
 	{
-		protected CommentMap()
-		{
-			// Code from: https://stackoverflow.com/questions/25938174/how-to-use-nhibernate-discriminatesubclassesoncolumn-and-references-for-the-same/25972593#25972593
-			Map(m => m.CommentType, "[EntryType]").ReadOnly().Access.None();
-			// Code from: https://stackoverflow.com/questions/6870467/fluentnhibernate-subclassmap-issue-discriminator-fail/6915355#6915355
-			// See also: https://stackoverflow.com/questions/26372382/how-can-i-use-fluent-nhibernate-to-discriminate-on-a-column-of-a-parent-relation/26375330#26375330
-			DiscriminateSubClassesOnColumn("[EntryType]").AlwaysSelectWithValue();
-			Table("Comments");
-			Id(m => m.Id);
-			Cache.ReadWrite();
+		// Code from: https://stackoverflow.com/questions/25938174/how-to-use-nhibernate-discriminatesubclassesoncolumn-and-references-for-the-same/25972593#25972593
+		Map(m => m.CommentType, "[EntryType]").ReadOnly().Access.None();
+		// Code from: https://stackoverflow.com/questions/6870467/fluentnhibernate-subclassmap-issue-discriminator-fail/6915355#6915355
+		// See also: https://stackoverflow.com/questions/26372382/how-can-i-use-fluent-nhibernate-to-discriminate-on-a-column-of-a-parent-relation/26375330#26375330
+		DiscriminateSubClassesOnColumn("[EntryType]").AlwaysSelectWithValue();
+		Table("Comments");
+		Id(m => m.Id);
+		Cache.ReadWrite();
 
-			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Message).Length(int.MaxValue).Not.Nullable();
+		Map(m => m.Created).Not.Nullable();
+		Map(m => m.Deleted).Not.Nullable();
+		Map(m => m.Message).Length(int.MaxValue).Not.Nullable();
 
-			References(m => m.Author).Not.Nullable();
-		}
+		References(m => m.Author).Not.Nullable();
 	}
+}
 
-	public class AlbumCommentMap : SubclassMap<AlbumComment>
+public class AlbumCommentMap : SubclassMap<AlbumComment>
+{
+	public AlbumCommentMap()
 	{
-		public AlbumCommentMap()
-		{
-			DiscriminatorValue(nameof(AlbumComment));
+		DiscriminatorValue(nameof(AlbumComment));
 
-			References(m => m.EntryForComment).Column("[Album]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Album]").Nullable();
 	}
+}
 
-	public class ArtistCommentMap : SubclassMap<ArtistComment>
+public class ArtistCommentMap : SubclassMap<ArtistComment>
+{
+	public ArtistCommentMap()
 	{
-		public ArtistCommentMap()
-		{
-			DiscriminatorValue(nameof(ArtistComment));
+		DiscriminatorValue(nameof(ArtistComment));
 
-			References(m => m.EntryForComment).Column("[Artist]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Artist]").Nullable();
 	}
+}
 
-	public class DiscussionCommentMap : SubclassMap<DiscussionComment>
+public class DiscussionCommentMap : SubclassMap<DiscussionComment>
+{
+	public DiscussionCommentMap()
 	{
-		public DiscussionCommentMap()
-		{
-			DiscriminatorValue(nameof(DiscussionComment));
+		DiscriminatorValue(nameof(DiscussionComment));
 
-			References(m => m.EntryForComment).Column("[Topic]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Topic]").Nullable();
 	}
+}
 
-	public class ReleaseEventCommentMap : SubclassMap<ReleaseEventComment>
+public class ReleaseEventCommentMap : SubclassMap<ReleaseEventComment>
+{
+	public ReleaseEventCommentMap()
 	{
-		public ReleaseEventCommentMap()
-		{
-			DiscriminatorValue(nameof(ReleaseEventComment));
+		DiscriminatorValue(nameof(ReleaseEventComment));
 
-			References(m => m.EntryForComment).Column("[ReleaseEvent]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[ReleaseEvent]").Nullable();
 	}
+}
 
-	public class SongCommentMap : SubclassMap<SongComment>
+public class SongCommentMap : SubclassMap<SongComment>
+{
+	public SongCommentMap()
 	{
-		public SongCommentMap()
-		{
-			DiscriminatorValue(nameof(SongComment));
+		DiscriminatorValue(nameof(SongComment));
 
-			References(m => m.EntryForComment).Column("[Song]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Song]").Nullable();
 	}
+}
 
-	public class SongListCommentMap : SubclassMap<SongListComment>
+public class SongListCommentMap : SubclassMap<SongListComment>
+{
+	public SongListCommentMap()
 	{
-		public SongListCommentMap()
-		{
-			DiscriminatorValue(nameof(SongListComment));
+		DiscriminatorValue(nameof(SongListComment));
 
-			References(m => m.EntryForComment).Column("SongList").Nullable();
-		}
+		References(m => m.EntryForComment).Column("SongList").Nullable();
 	}
+}
 
-	public class TagCommentMap : SubclassMap<TagComment>
+public class TagCommentMap : SubclassMap<TagComment>
+{
+	public TagCommentMap()
 	{
-		public TagCommentMap()
-		{
-			DiscriminatorValue(nameof(TagComment));
+		DiscriminatorValue(nameof(TagComment));
 
-			References(m => m.EntryForComment).Column("[Tag]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Tag]").Nullable();
 	}
+}
 
-	public class UserCommentMap : SubclassMap<UserComment>
+public class UserCommentMap : SubclassMap<UserComment>
+{
+	public UserCommentMap()
 	{
-		public UserCommentMap()
-		{
-			DiscriminatorValue(nameof(UserComment));
+		DiscriminatorValue(nameof(UserComment));
 
-			References(m => m.EntryForComment).Column("[User]").Nullable();
-		}
+		References(m => m.EntryForComment).Column("[User]").Nullable();
 	}
+}
 
-	public class AlbumReviewMap : SubclassMap<AlbumReview>
+public class AlbumReviewMap : SubclassMap<AlbumReview>
+{
+	public AlbumReviewMap()
 	{
-		public AlbumReviewMap()
-		{
-			DiscriminatorValue(nameof(AlbumReview));
+		DiscriminatorValue(nameof(AlbumReview));
 
-			Map(m => m.LanguageCode).Nullable();
-			Map(m => m.Title).Nullable();
+		Map(m => m.LanguageCode).Nullable();
+		Map(m => m.Title).Nullable();
 
-			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
-		}
+		References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
 	}
 }

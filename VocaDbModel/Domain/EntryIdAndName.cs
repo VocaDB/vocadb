@@ -1,18 +1,17 @@
 #nullable disable
 
-namespace VocaDb.Model.Domain
-{
-	public class EntryIdAndName
-	{
-		public int Id { get; set; }
+namespace VocaDb.Model.Domain;
 
-		public string Name { get; set; }
+public class EntryIdAndName
+{
+	public int Id { get; set; }
+
+	public string Name { get; set; }
 
 #nullable enable
-		public override string ToString()
-		{
-			return $"{Name} [{Id}]";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"{Name} [{Id}]";
 	}
+#nullable disable
 }

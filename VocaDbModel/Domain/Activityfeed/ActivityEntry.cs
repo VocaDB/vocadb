@@ -3,77 +3,76 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Activityfeed
+namespace VocaDb.Model.Domain.Activityfeed;
+
+/// <summary>
+/// Activity entries are primarily shown in the activity feed on the front page, 
+/// but they are also used for statistics such as the number of edits per user.
+/// They can be divided into two main operations: create and update.
+/// Entry-specific subclasses contain more detailed information about the activity.
+/// Consecutive activity entries by the same user for the same entry are merged.
+/// </summary>
+public abstract class ActivityEntry : IEntryWithIntId
 {
-	/// <summary>
-	/// Activity entries are primarily shown in the activity feed on the front page, 
-	/// but they are also used for statistics such as the number of edits per user.
-	/// They can be divided into two main operations: create and update.
-	/// Entry-specific subclasses contain more detailed information about the activity.
-	/// Consecutive activity entries by the same user for the same entry are merged.
-	/// </summary>
-	public abstract class ActivityEntry : IEntryWithIntId
+	private User _author;
+
+	protected ActivityEntry()
 	{
-		private User _author;
+		CreateDate = DateTime.Now;
+	}
 
-		protected ActivityEntry()
+	protected ActivityEntry(User author, EntryEditEvent editEvent)
+		: this()
+	{
+		Author = author;
+		EditEvent = editEvent;
+	}
+
+	/// <summary>
+	/// Archived entry version. Can be null.
+	/// </summary>
+	public abstract ArchivedObjectVersion ArchivedVersionBase { get; }
+
+	public virtual User Author
+	{
+		get => _author;
+		set
 		{
-			CreateDate = DateTime.Now;
+			ParamIs.NotNull(() => value);
+			_author = value;
 		}
+	}
 
-		protected ActivityEntry(User author, EntryEditEvent editEvent)
-			: this()
-		{
-			Author = author;
-			EditEvent = editEvent;
-		}
+	public virtual DateTime CreateDate { get; set; }
 
-		/// <summary>
-		/// Archived entry version. Can be null.
-		/// </summary>
-		public abstract ArchivedObjectVersion ArchivedVersionBase { get; }
+	public virtual EntryEditEvent EditEvent { get; set; }
 
-		public virtual User Author
-		{
-			get => _author;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_author = value;
-			}
-		}
+	/// <summary>
+	/// Entry. Cannot be null.
+	/// </summary>
+	public abstract IEntryWithNames EntryBase { get; }
 
-		public virtual DateTime CreateDate { get; set; }
+	public abstract EntryType EntryType { get; }
 
-		public virtual EntryEditEvent EditEvent { get; set; }
+	public virtual int Id { get; set; }
 
-		/// <summary>
-		/// Entry. Cannot be null.
-		/// </summary>
-		public abstract IEntryWithNames EntryBase { get; }
-
-		public abstract EntryType EntryType { get; }
-
-		public virtual int Id { get; set; }
-
-		public virtual bool IsDuplicate(ActivityEntry entry) => Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase);
+	public virtual bool IsDuplicate(ActivityEntry entry) => Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase);
 
 #nullable enable
-		public override string ToString() => $"activity entry ({EditEvent}) for {EntryBase}";
+	public override string ToString() => $"activity entry ({EditEvent}) for {EntryBase}";
 #nullable disable
-	}
+}
 
-	/// <summary>
-	/// Common entry edit events
-	/// </summary>
-	public enum EntryEditEvent
-	{
-		Created = 1,
+/// <summary>
+/// Common entry edit events
+/// </summary>
+public enum EntryEditEvent
+{
+	Created = 1,
 
-		Updated = 2,
+	Updated = 2,
 
-		Deleted = 3,
+	Deleted = 3,
 
-		Restored = 4
-	}
+	Restored = 4
 }

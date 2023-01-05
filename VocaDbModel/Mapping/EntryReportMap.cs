@@ -10,108 +10,107 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.Mapping
+namespace VocaDb.Model.Mapping;
+
+public class EntryReportMap : ClassMap<EntryReport>
 {
-	public class EntryReportMap : ClassMap<EntryReport>
+	public EntryReportMap()
 	{
-		public EntryReportMap()
-		{
-			Id(m => m.Id);
-			DiscriminateSubClassesOnColumn("[EntryType]");
+		Id(m => m.Id);
+		DiscriminateSubClassesOnColumn("[EntryType]");
 
-			Map(m => m.ClosedAt).Nullable();
-			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Hostname).Length(50).Not.Nullable();
-			Map(m => m.Notes).Length(EntryReport.MaxNotesLength).Not.Nullable();
-			Map(m => m.Status).Not.Nullable();
-			Map(m => m.VersionNumber).Nullable();
+		Map(m => m.ClosedAt).Nullable();
+		Map(m => m.Created).Not.Nullable();
+		Map(m => m.Hostname).Length(50).Not.Nullable();
+		Map(m => m.Notes).Length(EntryReport.MaxNotesLength).Not.Nullable();
+		Map(m => m.Status).Not.Nullable();
+		Map(m => m.VersionNumber).Nullable();
 
-			References(m => m.ClosedBy).Nullable();
-			References(m => m.User).Nullable();
-		}
+		References(m => m.ClosedBy).Nullable();
+		References(m => m.User).Nullable();
 	}
+}
 
-	public class AlbumReportMap : SubclassMap<AlbumReport>
+public class AlbumReportMap : SubclassMap<AlbumReport>
+{
+	public AlbumReportMap()
 	{
-		public AlbumReportMap()
-		{
-			DiscriminatorValue("Album");
+		DiscriminatorValue("Album");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Album").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Album").Not.Nullable();
 	}
+}
 
-	public class ArtistReportMap : SubclassMap<ArtistReport>
+public class ArtistReportMap : SubclassMap<ArtistReport>
+{
+	public ArtistReportMap()
 	{
-		public ArtistReportMap()
-		{
-			DiscriminatorValue("Artist");
+		DiscriminatorValue("Artist");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Artist").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Artist").Not.Nullable();
 	}
+}
 
-	public class EventReportMap : SubclassMap<EventReport>
+public class EventReportMap : SubclassMap<EventReport>
+{
+	public EventReportMap()
 	{
-		public EventReportMap()
-		{
-			DiscriminatorValue("Event");
+		DiscriminatorValue("Event");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Event").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Event").Not.Nullable();
 	}
+}
 
-	public class SongReportMap : SubclassMap<SongReport>
+public class SongReportMap : SubclassMap<SongReport>
+{
+	public SongReportMap()
 	{
-		public SongReportMap()
-		{
-			DiscriminatorValue("Song");
+		DiscriminatorValue("Song");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Song").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Song").Not.Nullable();
 	}
+}
 
-	public class TagReportMap : SubclassMap<TagReport>
+public class TagReportMap : SubclassMap<TagReport>
+{
+	public TagReportMap()
 	{
-		public TagReportMap()
-		{
-			DiscriminatorValue("Tag");
+		DiscriminatorValue("Tag");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Tag").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Tag").Not.Nullable();
 	}
+}
 
-	public class UserReportMap : SubclassMap<UserReport>
+public class UserReportMap : SubclassMap<UserReport>
+{
+	public UserReportMap()
 	{
-		public UserReportMap()
-		{
-			DiscriminatorValue("User");
+		DiscriminatorValue("User");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("ReportedUser").Not.Nullable();
-		}
+		References(m => m.Entry).Column("ReportedUser").Not.Nullable();
 	}
+}
 
-	public class VenueReportMap : SubclassMap<VenueReport>
+public class VenueReportMap : SubclassMap<VenueReport>
+{
+	public VenueReportMap()
 	{
-		public VenueReportMap()
-		{
-			DiscriminatorValue("Venue");
+		DiscriminatorValue("Venue");
 
-			Map(m => m.ReportType).Not.Nullable();
+		Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Entry).Column("Venue").Not.Nullable();
-		}
+		References(m => m.Entry).Column("Venue").Not.Nullable();
 	}
 }

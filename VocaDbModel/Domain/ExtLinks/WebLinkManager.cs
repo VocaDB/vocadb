@@ -1,35 +1,34 @@
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.ExtLinks
+namespace VocaDb.Model.Domain.ExtLinks;
+
+public class WebLinkManager<T> where T : WebLink
 {
-	public class WebLinkManager<T> where T : WebLink
+	private IList<T> _links = new List<T>();
+
+	public virtual bool HasLink(string url)
 	{
-		private IList<T> _links = new List<T>();
+		return Links.Any(l => l.Url == url);
+	}
 
-		public virtual bool HasLink(string url)
+	public virtual IList<T> Links
+	{
+		get => _links;
+		set
 		{
-			return Links.Any(l => l.Url == url);
+			ParamIs.NotNull(() => value);
+			_links = value;
 		}
+	}
 
-		public virtual IList<T> Links
-		{
-			get => _links;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_links = value;
-			}
-		}
+	public CollectionDiffWithValue<T, T> Sync(IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	{
+		return WebLink.Sync(Links, newLinks, webLinkFactory);
+	}
 
-		public CollectionDiffWithValue<T, T> Sync(IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
-		{
-			return WebLink.Sync(Links, newLinks, webLinkFactory);
-		}
-
-		public CollectionDiff<T, T> SyncByValue(IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
-		{
-			return WebLink.SyncByValue(oldLinks: Links, newLinks, webLinkFactory);
-		}
+	public CollectionDiff<T, T> SyncByValue(IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	{
+		return WebLink.SyncByValue(oldLinks: Links, newLinks, webLinkFactory);
 	}
 }

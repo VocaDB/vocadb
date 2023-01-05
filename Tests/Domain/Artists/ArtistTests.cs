@@ -1,10 +1,9 @@
 #nullable disable
 
 
-namespace VocaDb.Tests.Domain.Artists
+namespace VocaDb.Tests.Domain.Artists;
+
+[TestClass]
+public class ArtistTests
 {
-	[TestClass]
-	public class ArtistTests
-	{
-	}
 }

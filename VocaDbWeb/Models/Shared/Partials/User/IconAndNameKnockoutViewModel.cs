@@ -1,20 +1,19 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.User
+namespace VocaDb.Web.Models.Shared.Partials.User;
+
+public class IconAndNameKnockoutViewModel
 {
-	public class IconAndNameKnockoutViewModel
+	public IconAndNameKnockoutViewModel(string iconBinding, string nameBinding, int size = 20)
 	{
-		public IconAndNameKnockoutViewModel(string iconBinding, string nameBinding, int size = 20)
-		{
-			IconBinding = iconBinding;
-			NameBinding = nameBinding;
-			Size = size;
-		}
-
-		public string IconBinding { get; set; }
-
-		public string NameBinding { get; set; }
-
-		public int Size { get; set; }
+		IconBinding = iconBinding;
+		NameBinding = nameBinding;
+		Size = size;
 	}
+
+	public string IconBinding { get; set; }
+
+	public string NameBinding { get; set; }
+
+	public int Size { get; set; }
 }

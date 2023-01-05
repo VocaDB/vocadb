@@ -6,248 +6,247 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
 
-namespace VocaDb.Model.Database.Repositories
+namespace VocaDb.Model.Database.Repositories;
+
+/// <summary>
+/// Extension methods for <see cref="IDatabaseContext"/>.
+/// </summary>
+public static class IDatabaseContextExtensions
 {
-	/// <summary>
-	/// Extension methods for <see cref="IDatabaseContext"/>.
-	/// </summary>
-	public static class IDatabaseContextExtensions
+	public static AgentLoginData CreateAgentLoginData<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
 	{
-		public static AgentLoginData CreateAgentLoginData<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
+		if (user != null)
+			return new AgentLoginData(user);
+
+		if (permissionContext.IsLoggedIn)
 		{
-			if (user != null)
-				return new AgentLoginData(user);
-
-			if (permissionContext.IsLoggedIn)
-			{
-				user = ctx.OfType<User>().GetLoggedUser(permissionContext);
-				return new AgentLoginData(user);
-			}
-			else
-			{
-				return new AgentLoginData(permissionContext.Name);
-			}
+			user = ctx.OfType<User>().GetLoggedUser(permissionContext);
+			return new AgentLoginData(user);
 		}
-
-		public static async Task<AgentLoginData> CreateAgentLoginDataAsync<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
+		else
 		{
-			if (user != null)
-				return new AgentLoginData(user);
-
-			if (permissionContext.IsLoggedIn)
-			{
-				user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
-				return new AgentLoginData(user);
-			}
-			else
-			{
-				return new AgentLoginData(permissionContext.Name);
-			}
+			return new AgentLoginData(permissionContext.Name);
 		}
+	}
 
-		public static void Delete<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+	public static async Task<AgentLoginData> CreateAgentLoginDataAsync<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
+	{
+		if (user != null)
+			return new AgentLoginData(user);
+
+		if (permissionContext.IsLoggedIn)
 		{
-			ctx.OfType<T>().Delete(obj);
+			user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
+			return new AgentLoginData(user);
 		}
-
-		public static Task DeleteAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+		else
 		{
-			return ctx.OfType<T>().DeleteAsync(obj);
+			return new AgentLoginData(permissionContext.Name);
 		}
+	}
 
-		public static void Delete<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
-		{
-			ctx.OfType<T2>().Delete(obj);
-		}
+	public static void Delete<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+	{
+		ctx.OfType<T>().Delete(obj);
+	}
 
-		public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs)
-			where T2 : class, IDatabaseObject
-		{
-			var ctxTyped = ctx.OfType<T2>();
+	public static Task DeleteAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+	{
+		return ctx.OfType<T>().DeleteAsync(obj);
+	}
 
-			foreach (var obj in objs)
-				ctxTyped.Delete(obj);
-		}
+	public static void Delete<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
+	{
+		ctx.OfType<T2>().Delete(obj);
+	}
 
-		public static User GetLoggedUser(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
-		{
-			permissionContext.VerifyLogin();
+	public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs)
+		where T2 : class, IDatabaseObject
+	{
+		var ctxTyped = ctx.OfType<T2>();
 
-			return ctx.Load(permissionContext.LoggedUserId);
-		}
+		foreach (var obj in objs)
+			ctxTyped.Delete(obj);
+	}
 
-		public static async Task<User> GetLoggedUserAsync(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
-		{
-			permissionContext.VerifyLogin();
+	public static User GetLoggedUser(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
+	{
+		permissionContext.VerifyLogin();
 
-			return await ctx.LoadAsync(permissionContext.LoggedUserId);
-		}
+		return ctx.Load(permissionContext.LoggedUserId);
+	}
 
-		public static User GetLoggedUserOrNull(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
-		{
-			return (permissionContext.LoggedUser != null ? ctx.Load(permissionContext.LoggedUser.Id) : null);
-		}
+	public static async Task<User> GetLoggedUserAsync(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
+	{
+		permissionContext.VerifyLogin();
 
-		public static T2 Load<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
-			=> ctx.OfType<T2>().Load(id);
+		return await ctx.LoadAsync(permissionContext.LoggedUserId);
+	}
 
-		public static Task<T2> LoadAsync<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
-			=> ctx.OfType<T2>().LoadAsync(id);
+	public static User GetLoggedUserOrNull(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
+	{
+		return (permissionContext.LoggedUser != null ? ctx.Load(permissionContext.LoggedUser.Id) : null);
+	}
 
-		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) where T2 : class, IDatabaseObject
-			=> ctx.OfType<T2>().Load(id);
+	public static T2 Load<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().Load(id);
 
-		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId entry) where T : class, IDatabaseObject
-			=> ctx.Load<T>(entry.Id);
+	public static Task<T2> LoadAsync<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().LoadAsync(id);
 
-		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : class, IEntryWithReadOnlyIntId
-			=> ctx.OfType<T2>().Query().WhereIdIn(ids);
+	public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().Load(id);
 
-		/// <summary>
-		/// Loads an entry based on a reference, or returns null if the reference is null or points to an entry that shouldn't exist (Id is 0).
-		/// </summary>
-		/// <typeparam name="T">Type of entry to be loaded.</typeparam>
-		/// <param name="ctx">Repository context. Cannot be null.</param>
-		/// <param name="entry">Entry reference. Can be null in which case null is returned.</param>
-		/// <returns>Reference to the loaded entry. Can be null if <paramref name="entry"/> is null or Id is 0.</returns>
-		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
-		{
-			return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default;
-		}
+	public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId entry) where T : class, IDatabaseObject
+		=> ctx.Load<T>(entry.Id);
 
-		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
-		{
-			return entry != null && entry.Id != 0 ? await ctx.LoadAsync(entry.Id) : default;
-		}
+	public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : class, IEntryWithReadOnlyIntId
+		=> ctx.OfType<T2>().Query().WhereIdIn(ids);
 
-		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id)
-		{
-			return id != 0 ? ctx.Load(id) : default;
-		}
+	/// <summary>
+	/// Loads an entry based on a reference, or returns null if the reference is null or points to an entry that shouldn't exist (Id is 0).
+	/// </summary>
+	/// <typeparam name="T">Type of entry to be loaded.</typeparam>
+	/// <param name="ctx">Repository context. Cannot be null.</param>
+	/// <param name="entry">Entry reference. Can be null in which case null is returned.</param>
+	/// <returns>Reference to the loaded entry. Can be null if <paramref name="entry"/> is null or Id is 0.</returns>
+	public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
+	{
+		return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default;
+	}
 
-		public static T NullSafeLoad<T>(this IDatabaseContext ctx, int id) where T : class, IDatabaseObject
-		{
-			return id != 0 ? ctx.Load<T>(id) : default;
-		}
+	public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
+	{
+		return entry != null && entry.Id != 0 ? await ctx.LoadAsync(entry.Id) : default;
+	}
+
+	public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id)
+	{
+		return id != 0 ? ctx.Load(id) : default;
+	}
+
+	public static T NullSafeLoad<T>(this IDatabaseContext ctx, int id) where T : class, IDatabaseObject
+	{
+		return id != 0 ? ctx.Load<T>(id) : default;
+	}
 
 #nullable enable
-		public static T? NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
-		{
-			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default;
-		}
+	public static T? NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
+	{
+		return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default;
+	}
 
-		public static async Task<T?> NullSafeLoadAsync<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
-		{
-			return entry != null && entry.Id != 0 ? await ctx.LoadAsync<T>(entry.Id) : default;
-		}
+	public static async Task<T?> NullSafeLoadAsync<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
+	{
+		return entry != null && entry.Id != 0 ? await ctx.LoadAsync<T>(entry.Id) : default;
+	}
 
-		private static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
-		{
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => diff);
+	private static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
+	{
+		ParamIs.NotNull(() => ctx);
+		ParamIs.NotNull(() => diff);
 
-			foreach (var n in diff.Removed)
-				ctx.Delete(n);
+		foreach (var n in diff.Removed)
+			ctx.Delete(n);
 
-			foreach (var n in diff.Added)
-				ctx.Save(n);
+		foreach (var n in diff.Added)
+			ctx.Save(n);
 
-			foreach (var n in diff.Unchanged)
-				ctx.Update(n);
-		}
+		foreach (var n in diff.Unchanged)
+			ctx.Update(n);
+	}
 
-		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
-		{
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => diff);
+	public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
+	{
+		ParamIs.NotNull(() => ctx);
+		ParamIs.NotNull(() => diff);
 
-			foreach (var n in diff.Removed)
-				await ctx.DeleteAsync(n);
+		foreach (var n in diff.Removed)
+			await ctx.DeleteAsync(n);
 
-			foreach (var n in diff.Added)
-				await ctx.SaveAsync(n);
+		foreach (var n in diff.Added)
+			await ctx.SaveAsync(n);
 
-			foreach (var n in diff.Unchanged)
-				await ctx.UpdateAsync(n);
-		}
+		foreach (var n in diff.Unchanged)
+			await ctx.UpdateAsync(n);
+	}
 
-		/// <summary>
-		/// Synchronizes the given changes to database, meaning calls
-		/// insert, update and delete as appropriate.
-		/// </summary>
-		/// <typeparam name="T">Context type.</typeparam>
-		/// <typeparam name="T2">Element type.</typeparam>
-		/// <param name="ctx">Database context.</param>
-		/// <param name="diff">Element diff.</param>
-		/// <returns><paramref name="diff"/></returns>
-		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
-			where T2 : class, IDatabaseObject
-		{
-			ParamIs.NotNull(() => ctx);
+	/// <summary>
+	/// Synchronizes the given changes to database, meaning calls
+	/// insert, update and delete as appropriate.
+	/// </summary>
+	/// <typeparam name="T">Context type.</typeparam>
+	/// <typeparam name="T2">Element type.</typeparam>
+	/// <param name="ctx">Database context.</param>
+	/// <param name="diff">Element diff.</param>
+	/// <returns><paramref name="diff"/></returns>
+	public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
+		where T2 : class, IDatabaseObject
+	{
+		ParamIs.NotNull(() => ctx);
 
-			Sync<T2>(ctx.OfType<T2>(), diff);
-			return diff;
-		}
+		Sync<T2>(ctx.OfType<T2>(), diff);
+		return diff;
+	}
 
-		public static async Task<CollectionDiff<T2, T2>> SyncAsync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
-			where T2 : class, IDatabaseObject
-		{
-			ParamIs.NotNull(() => ctx);
+	public static async Task<CollectionDiff<T2, T2>> SyncAsync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
+		where T2 : class, IDatabaseObject
+	{
+		ParamIs.NotNull(() => ctx);
 
-			await SyncAsync<T2>(ctx.OfType<T2>(), diff);
-			return diff;
-		}
+		await SyncAsync<T2>(ctx.OfType<T2>(), diff);
+		return diff;
+	}
 
-		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
-		{
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => diff);
+	public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
+	{
+		ParamIs.NotNull(() => ctx);
+		ParamIs.NotNull(() => diff);
 
-			foreach (var n in diff.Removed)
-				ctx.Delete(n);
+		foreach (var n in diff.Removed)
+			ctx.Delete(n);
 
-			foreach (var n in diff.Added)
-				ctx.Save(n);
+		foreach (var n in diff.Added)
+			ctx.Save(n);
 
-			foreach (var n in diff.Edited)
-				ctx.Update(n);
-		}
+		foreach (var n in diff.Edited)
+			ctx.Update(n);
+	}
 
-		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
-		{
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => diff);
+	public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
+	{
+		ParamIs.NotNull(() => ctx);
+		ParamIs.NotNull(() => diff);
 
-			foreach (var n in diff.Removed)
-				await ctx.DeleteAsync(n);
+		foreach (var n in diff.Removed)
+			await ctx.DeleteAsync(n);
 
-			foreach (var n in diff.Added)
-				await ctx.SaveAsync(n);
+		foreach (var n in diff.Added)
+			await ctx.SaveAsync(n);
 
-			foreach (var n in diff.Edited)
-				await ctx.UpdateAsync(n);
-		}
+		foreach (var n in diff.Edited)
+			await ctx.UpdateAsync(n);
+	}
 #nullable disable
 
-		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
-			ctx.OfType<T2>().Save(obj);
+	public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
+		ctx.OfType<T2>().Save(obj);
 
-		public static Task<T2> SaveAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
-			ctx.OfType<T2>().SaveAsync(obj);
+	public static Task<T2> SaveAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
+		ctx.OfType<T2>().SaveAsync(obj);
 
-		public static T Save<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
-			=> ctx.OfType<T>().Save(obj);
+	public static T Save<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+		=> ctx.OfType<T>().Save(obj);
 
-		public static Task<T> SaveAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
-			=> ctx.OfType<T>().SaveAsync(obj);
+	public static Task<T> SaveAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+		=> ctx.OfType<T>().SaveAsync(obj);
 
-		public static void Update<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
-			=> ctx.OfType<T>().Update(obj);
+	public static void Update<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+		=> ctx.OfType<T>().Update(obj);
 
-		public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
-			=> ctx.OfType<T2>().Update(obj);
+	public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().Update(obj);
 
-		public static Task UpdateAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
-			=> ctx.OfType<T2>().UpdateAsync(obj);
-	}
+	public static Task UpdateAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().UpdateAsync(obj);
 }

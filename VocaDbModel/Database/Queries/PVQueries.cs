@@ -7,48 +7,47 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Model.Database.Queries
+namespace VocaDb.Model.Database.Queries;
+
+public class PVQueries
 {
-	public class PVQueries
+	private readonly IRepository _repository;
+
+	public PVQueries(IRepository repository)
 	{
-		private readonly IRepository _repository;
+		_repository = repository;
+	}
 
-		public PVQueries(IRepository repository)
+	public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
+		PVService? service = null,
+		int maxResults = 10, bool getTotalCount = false,
+		ContentLanguagePreference lang = ContentLanguagePreference.Default)
+	{
+		return _repository.HandleQuery(db =>
 		{
-			_repository = repository;
-		}
+			var query = db.Query<PVForSong>();
 
-		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
-			PVService? service = null,
-			int maxResults = 10, bool getTotalCount = false,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
-		{
-			return _repository.HandleQuery(db =>
+			if (!string.IsNullOrEmpty(name))
 			{
-				var query = db.Query<PVForSong>();
+				query = query.Where(pv => pv.Name == name);
+			}
 
-				if (!string.IsNullOrEmpty(name))
-				{
-					query = query.Where(pv => pv.Name == name);
-				}
+			if (!string.IsNullOrEmpty(author))
+			{
+				query = query.Where(pv => pv.Author == author);
+			}
 
-				if (!string.IsNullOrEmpty(author))
-				{
-					query = query.Where(pv => pv.Author == author);
-				}
+			if (service.HasValue)
+			{
+				query = query.Where(pv => pv.Service == service);
+			}
 
-				if (service.HasValue)
-				{
-					query = query.Where(pv => pv.Service == service);
-				}
+			var count = getTotalCount ? query.Count() : 0;
 
-				var count = getTotalCount ? query.Count() : 0;
+			query = query.Take(maxResults);
 
-				query = query.Take(maxResults);
-
-				var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
-				return PartialFindResult.Create(results, count);
-			});
-		}
+			var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
+			return PartialFindResult.Create(results, count);
+		});
 	}
 }

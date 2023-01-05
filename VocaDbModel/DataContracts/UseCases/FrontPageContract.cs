@@ -12,45 +12,44 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.UseCases
+namespace VocaDb.Model.DataContracts.UseCases;
+
+public class FrontPageContract
 {
-	public class FrontPageContract
+	public FrontPageContract() { }
+
+	public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
+		AlbumForApiContract[] newAlbums,
+		ReleaseEventForApiContract[] newEvents,
+		IEnumerable<EntryWithCommentsContract> recentComments,
+		AlbumForApiContract[] topAlbums, Song[] newSongs,
+		SongVoteRating firstSongRating,
+		ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext,
+		EntryForApiContractFactory entryForApiContractFactory)
 	{
-		public FrontPageContract() { }
+		ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
+			entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference),
+			 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
+		NewAlbums = newAlbums;
+		NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
+		RecentComments = recentComments.ToArray();
+		TopAlbums = topAlbums;
+		NewEvents = newEvents;
 
-		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
-			AlbumForApiContract[] newAlbums,
-			ReleaseEventForApiContract[] newEvents,
-			IEnumerable<EntryWithCommentsContract> recentComments,
-			AlbumForApiContract[] topAlbums, Song[] newSongs,
-			SongVoteRating firstSongRating,
-			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext,
-			EntryForApiContractFactory entryForApiContractFactory)
-		{
-			ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
-				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference),
-				 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
-			NewAlbums = newAlbums;
-			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
-			RecentComments = recentComments.ToArray();
-			TopAlbums = topAlbums;
-			NewEvents = newEvents;
-
-			FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
-		}
-
-		public ActivityEntryForApiContract[] ActivityEntries { get; init; }
-
-		public SongWithPVAndVoteContract FirstSong { get; init; }
-
-		public AlbumForApiContract[] NewAlbums { get; init; }
-
-		public ReleaseEventForApiContract[] NewEvents { get; init; }
-
-		public SongWithPVAndVoteContract[] NewSongs { get; init; }
-
-		public EntryWithCommentsContract[] RecentComments { get; init; }
-
-		public AlbumForApiContract[] TopAlbums { get; init; }
+		FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
 	}
+
+	public ActivityEntryForApiContract[] ActivityEntries { get; init; }
+
+	public SongWithPVAndVoteContract FirstSong { get; init; }
+
+	public AlbumForApiContract[] NewAlbums { get; init; }
+
+	public ReleaseEventForApiContract[] NewEvents { get; init; }
+
+	public SongWithPVAndVoteContract[] NewSongs { get; init; }
+
+	public EntryWithCommentsContract[] RecentComments { get; init; }
+
+	public AlbumForApiContract[] TopAlbums { get; init; }
 }

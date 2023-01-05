@@ -1,14 +1,13 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.Song
-{
-	public class SongTypesDropdownKnockoutViewModel
-	{
-		public SongTypesDropdownKnockoutViewModel(string binding)
-		{
-			Binding = binding;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.Song;
 
-		public string Binding { get; set; }
+public class SongTypesDropdownKnockoutViewModel
+{
+	public SongTypesDropdownKnockoutViewModel(string binding)
+	{
+		Binding = binding;
 	}
+
+	public string Binding { get; set; }
 }

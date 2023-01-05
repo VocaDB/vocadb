@@ -3,15 +3,14 @@
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.DataContracts.Albums
+namespace VocaDb.Model.DataContracts.Albums;
+
+[Obsolete]
+public class CreateAlbumContract
 {
-	[Obsolete]
-	public class CreateAlbumContract
-	{
-		public ArtistContract[] Artists { get; init; }
+	public ArtistContract[] Artists { get; init; }
 
-		public DiscType DiscType { get; init; }
+	public DiscType DiscType { get; init; }
 
-		public LocalizedStringContract[] Names { get; init; }
-	}
+	public LocalizedStringContract[] Names { get; init; }
 }

@@ -1,11 +1,10 @@
 #nullable disable
 
-namespace VocaDb.Model.Domain.Web
+namespace VocaDb.Model.Domain.Web;
+
+public interface IHttpPostedFile
 {
-	public interface IHttpPostedFile
-	{
-		string ContentType { get; }
-		string FileName { get; }
-		void SaveAs(string path);
-	}
+	string ContentType { get; }
+	string FileName { get; }
+	void SaveAs(string path);
 }

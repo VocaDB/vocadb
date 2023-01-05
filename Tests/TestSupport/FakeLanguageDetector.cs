@@ -2,13 +2,12 @@
 
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Tests.TestSupport
+namespace VocaDb.Tests.TestSupport;
+
+public class FakeLanguageDetector : ILanguageDetector
 {
-	public class FakeLanguageDetector : ILanguageDetector
+	public ContentLanguageSelection Detect(string str, ContentLanguageSelection def)
 	{
-		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def)
-		{
-			return def;
-		}
+		return def;
 	}
 }

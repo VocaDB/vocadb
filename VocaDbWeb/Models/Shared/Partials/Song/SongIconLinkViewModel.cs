@@ -2,18 +2,17 @@
 
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Song
+namespace VocaDb.Web.Models.Shared.Partials.Song;
+
+public class SongIconLinkViewModel
 {
-	public class SongIconLinkViewModel
+	public SongIconLinkViewModel(SongContract song, int? albumId = null)
 	{
-		public SongIconLinkViewModel(SongContract song, int? albumId = null)
-		{
-			Song = song;
-			AlbumId = albumId;
-		}
-
-		public SongContract Song { get; set; }
-
-		public int? AlbumId { get; set; }
+		Song = song;
+		AlbumId = albumId;
 	}
+
+	public SongContract Song { get; set; }
+
+	public int? AlbumId { get; set; }
 }

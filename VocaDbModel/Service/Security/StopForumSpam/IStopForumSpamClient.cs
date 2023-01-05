@@ -1,10 +1,9 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Service.Security.StopForumSpam
+namespace VocaDb.Model.Service.Security.StopForumSpam;
+
+public interface IStopForumSpamClient
 {
-	public interface IStopForumSpamClient
-	{
-		Task<SFSResponseContract> CallApiAsync(string ip);
-	}
+	Task<SFSResponseContract> CallApiAsync(string ip);
 }

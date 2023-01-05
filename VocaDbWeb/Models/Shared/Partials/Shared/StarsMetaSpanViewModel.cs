@@ -1,17 +1,16 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared
+namespace VocaDb.Web.Models.Shared.Partials.Shared;
+
+public class StarsMetaSpanViewModel
 {
-	public class StarsMetaSpanViewModel
+	public StarsMetaSpanViewModel(double current, int max)
 	{
-		public StarsMetaSpanViewModel(double current, int max)
-		{
-			Current = current;
-			Max = max;
-		}
-
-		public double Current { get; set; }
-
-		public int Max { get; set; }
+		Current = current;
+		Max = max;
 	}
+
+	public double Current { get; set; }
+
+	public int Max { get; set; }
 }

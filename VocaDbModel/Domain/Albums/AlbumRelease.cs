@@ -1,54 +1,53 @@
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.Domain.Albums
+namespace VocaDb.Model.Domain.Albums;
+
+public class AlbumRelease : IAlbumRelease
 {
-	public class AlbumRelease : IAlbumRelease
+	private string? _catNum;
+
+	public AlbumRelease() { }
+
+	public AlbumRelease(IAlbumRelease contract, ReleaseEvent? releaseEvent)
 	{
-		private string? _catNum;
+		ParamIs.NotNull(() => contract);
 
-		public AlbumRelease() { }
+		CatNum = contract.CatNum;
 
-		public AlbumRelease(IAlbumRelease contract, ReleaseEvent? releaseEvent)
+		ReleaseDate = contract.ReleaseDate != null
+			? OptionalDateTime.Create(contract.ReleaseDate)
+			: null;
+
+		ReleaseEvent = releaseEvent;
+	}
+
+	public virtual string? CatNum
+	{
+		get => _catNum;
+		set => _catNum = value;
+	}
+
+	public virtual bool IsEmpty
+	{
+		get
 		{
-			ParamIs.NotNull(() => contract);
-
-			CatNum = contract.CatNum;
-
-			ReleaseDate = contract.ReleaseDate != null
-				? OptionalDateTime.Create(contract.ReleaseDate)
-				: null;
-
-			ReleaseEvent = releaseEvent;
+			return string.IsNullOrEmpty(CatNum)
+				&& ReleaseEvent == null
+				&& (ReleaseDate == null || ReleaseDate.IsEmpty);
 		}
+	}
 
-		public virtual string? CatNum
-		{
-			get => _catNum;
-			set => _catNum = value;
-		}
+	public virtual OptionalDateTime? ReleaseDate { get; set; }
 
-		public virtual bool IsEmpty
-		{
-			get
-			{
-				return string.IsNullOrEmpty(CatNum)
-					&& ReleaseEvent == null
-					&& (ReleaseDate == null || ReleaseDate.IsEmpty);
-			}
-		}
+	IOptionalDateTime? IAlbumRelease.ReleaseDate => ReleaseDate;
 
-		public virtual OptionalDateTime? ReleaseDate { get; set; }
+	public virtual ReleaseEvent? ReleaseEvent { get; set; }
 
-		IOptionalDateTime? IAlbumRelease.ReleaseDate => ReleaseDate;
+	public virtual bool Equals(AlbumRelease? another)
+	{
+		if (another == null)
+			return IsEmpty;
 
-		public virtual ReleaseEvent? ReleaseEvent { get; set; }
-
-		public virtual bool Equals(AlbumRelease? another)
-		{
-			if (another == null)
-				return IsEmpty;
-
-			return Equals(CatNum, another.CatNum) && Equals(ReleaseDate, another.ReleaseDate) && Equals(ReleaseEvent, another.ReleaseEvent);
-		}
+		return Equals(CatNum, another.CatNum) && Equals(ReleaseDate, another.ReleaseDate) && Equals(ReleaseEvent, another.ReleaseEvent);
 	}
 }
