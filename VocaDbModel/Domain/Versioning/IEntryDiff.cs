@@ -1,15 +1,14 @@
-namespace VocaDb.Model.Domain.Versioning
+namespace VocaDb.Model.Domain.Versioning;
+
+public interface IEntryDiff
 {
-	public interface IEntryDiff
-	{
-		string[] ChangedFieldNames { get; }
+	string[] ChangedFieldNames { get; }
 
-		/// <summary>
-		/// Comma-separated list of the names of the changed fields.
-		/// For example "Artists,MainPicture,Names".
-		/// </summary>
-		string ChangedFieldsString { get; }
+	/// <summary>
+	/// Comma-separated list of the names of the changed fields.
+	/// For example "Artists,MainPicture,Names".
+	/// </summary>
+	string ChangedFieldsString { get; }
 
-		bool IsSnapshot { get; }
-	}
+	bool IsSnapshot { get; }
 }

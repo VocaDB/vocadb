@@ -1,14 +1,13 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared
-{
-	public class ValidationSummaryDivViewModel
-	{
-		public ValidationSummaryDivViewModel(string message)
-		{
-			Message = message;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.Shared;
 
-		public string Message { get; set; }
+public class ValidationSummaryDivViewModel
+{
+	public ValidationSummaryDivViewModel(string message)
+	{
+		Message = message;
 	}
+
+	public string Message { get; set; }
 }

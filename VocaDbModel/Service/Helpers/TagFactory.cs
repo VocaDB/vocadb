@@ -7,31 +7,30 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Queries;
 
-namespace VocaDb.Model.Service.Helpers
+namespace VocaDb.Model.Service.Helpers;
+
+public class TagFactoryRepository : ITagFactory
 {
-	public class TagFactoryRepository : ITagFactory
+	private readonly AgentLoginData _loginData;
+	private readonly IDatabaseContext<Tag> _ctx;
+
+	public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData)
 	{
-		private readonly AgentLoginData _loginData;
-		private readonly IDatabaseContext<Tag> _ctx;
+		_ctx = ctx;
+		_loginData = loginData;
+	}
 
-		public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData)
-		{
-			_ctx = ctx;
-			_loginData = loginData;
-		}
+	public async Task<Tag> CreateTagAsync(string englishName)
+	{
+		var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
+		await _ctx.SaveAsync(tag);
 
-		public async Task<Tag> CreateTagAsync(string englishName)
-		{
-			var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
-			await _ctx.SaveAsync(tag);
+		var archived = ArchivedTagVersion.Create(tag, new TagDiff(), _loginData, EntryEditEvent.Created, string.Empty);
+		await _ctx.SaveAsync(archived);
 
-			var archived = ArchivedTagVersion.Create(tag, new TagDiff(), _loginData, EntryEditEvent.Created, string.Empty);
-			await _ctx.SaveAsync(archived);
+		var activityEntry = new TagActivityEntry(tag, EntryEditEvent.Created, _loginData.User, archived);
+		await new ActivityEntryQueries(_ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntryAsync(activityEntry);
 
-			var activityEntry = new TagActivityEntry(tag, EntryEditEvent.Created, _loginData.User, archived);
-			await new ActivityEntryQueries(_ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntryAsync(activityEntry);
-
-			return tag;
-		}
+		return tag;
 	}
 }

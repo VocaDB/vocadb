@@ -2,15 +2,14 @@
 
 using System.Runtime.Serialization;
 
-namespace VocaDb.Model.Service.Security.StopForumSpam
-{
-	[DataContract]
-	public class SFSResultContract
-	{
-		[DataMember]
-		public bool Success { get; set; }
+namespace VocaDb.Model.Service.Security.StopForumSpam;
 
-		[DataMember]
-		public SFSResponseContract IP { get; set; }
-	}
+[DataContract]
+public class SFSResultContract
+{
+	[DataMember]
+	public bool Success { get; set; }
+
+	[DataMember]
+	public SFSResponseContract IP { get; set; }
 }

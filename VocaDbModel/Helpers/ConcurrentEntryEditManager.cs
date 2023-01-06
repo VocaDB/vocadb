@@ -3,99 +3,98 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Helpers
+namespace VocaDb.Model.Helpers;
+
+/// <summary>
+/// Manages concurrent entry edits.
+/// </summary>
+public class ConcurrentEntryEditManager
 {
-	/// <summary>
-	/// Manages concurrent entry edits.
-	/// </summary>
-	public class ConcurrentEntryEditManager
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private static readonly ConcurrentEntryEditManager s_staticInstance = new();
+
+	public static readonly EntryEditDataContract Nothing = new();
+
+	public static IEnumerable<KeyValuePair<EntryRef, EntryEditDataContract>> Editors => s_staticInstance._editors;
+
+	public static EntryEditDataContract CheckConcurrentEdits(EntryRef entry, IUser user)
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-		private static readonly ConcurrentEntryEditManager s_staticInstance = new();
+		return s_staticInstance.CheckConcurrentEditsInst(entry, user);
+	}
 
-		public static readonly EntryEditDataContract Nothing = new();
+	private readonly Dictionary<EntryRef, EntryEditDataContract> _editors = new();
 
-		public static IEnumerable<KeyValuePair<EntryRef, EntryEditDataContract>> Editors => s_staticInstance._editors;
+	private void ClearExpiredUsages()
+	{
+		var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(3);
 
-		public static EntryEditDataContract CheckConcurrentEdits(EntryRef entry, IUser user)
+		lock (_editors)
 		{
-			return s_staticInstance.CheckConcurrentEditsInst(entry, user);
+			var expired = _editors
+				.Where(e => e.Value.Time < cutoffDate)
+				.Select(e => e.Key)
+				.ToArray();
+
+			foreach (var e in expired)
+				_editors.Remove(e);
 		}
+	}
 
-		private readonly Dictionary<EntryRef, EntryEditDataContract> _editors = new();
+	private void AddOrUpdate(EntryRef entry, IUser user)
+	{
+		ParamIs.NotNull(() => entry);
+		ParamIs.NotNull(() => user);
 
-		private void ClearExpiredUsages()
+		lock (_editors)
 		{
-			var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(3);
-
-			lock (_editors)
+			if (_editors.ContainsKey(entry))
+				_editors[entry].Refresh(user);
+			else
 			{
-				var expired = _editors
-					.Where(e => e.Value.Time < cutoffDate)
-					.Select(e => e.Key)
-					.ToArray();
-
-				foreach (var e in expired)
-					_editors.Remove(e);
+				s_log.Debug("{0} starting to edit {1}", user, entry);
+				_editors.Add(entry, CreateEntryEditData(user));
 			}
 		}
+	}
 
-		private void AddOrUpdate(EntryRef entry, IUser user)
+	private EntryEditDataContract GetEditor(EntryRef entry)
+	{
+		ParamIs.NotNull(() => entry);
+
+		lock (_editors)
 		{
-			ParamIs.NotNull(() => entry);
-			ParamIs.NotNull(() => user);
-
-			lock (_editors)
-			{
-				if (_editors.ContainsKey(entry))
-					_editors[entry].Refresh(user);
-				else
-				{
-					s_log.Debug("{0} starting to edit {1}", user, entry);
-					_editors.Add(entry, CreateEntryEditData(user));
-				}
-			}
+			if (_editors.ContainsKey(entry))
+				return _editors[entry];
 		}
 
-		private EntryEditDataContract GetEditor(EntryRef entry)
-		{
-			ParamIs.NotNull(() => entry);
+		return Nothing;
+	}
 
-			lock (_editors)
-			{
-				if (_editors.ContainsKey(entry))
-					return _editors[entry];
-			}
+	/// <summary>
+	/// Checks for concurrent edits.
+	/// </summary>
+	/// <param name="entry">Entry to be checked. Cannot be null.</param>
+	/// <param name="user">User attempting to edit the entry. Cannot be null.</param>
+	/// <returns>Edit data for the active editor. Cannot be null.</returns>
+	public EntryEditDataContract CheckConcurrentEditsInst(EntryRef entry, IUser user)
+	{
+		ParamIs.NotNull(() => entry);
+		ParamIs.NotNull(() => user);
 
-			return Nothing;
-		}
+		ClearExpiredUsages();
 
-		/// <summary>
-		/// Checks for concurrent edits.
-		/// </summary>
-		/// <param name="entry">Entry to be checked. Cannot be null.</param>
-		/// <param name="user">User attempting to edit the entry. Cannot be null.</param>
-		/// <returns>Edit data for the active editor. Cannot be null.</returns>
-		public EntryEditDataContract CheckConcurrentEditsInst(EntryRef entry, IUser user)
-		{
-			ParamIs.NotNull(() => entry);
-			ParamIs.NotNull(() => user);
+		var editor = GetEditor(entry);
 
-			ClearExpiredUsages();
+		if (editor.UserId != Nothing.UserId && editor.UserId != user.Id)
+			return editor;
 
-			var editor = GetEditor(entry);
+		AddOrUpdate(entry, user);
 
-			if (editor.UserId != Nothing.UserId && editor.UserId != user.Id)
-				return editor;
+		return Nothing;
+	}
 
-			AddOrUpdate(entry, user);
-
-			return Nothing;
-		}
-
-		public virtual EntryEditDataContract CreateEntryEditData(IUser user)
-		{
-			return new EntryEditDataContract(user);
-		}
+	public virtual EntryEditDataContract CreateEntryEditData(IUser user)
+	{
+		return new EntryEditDataContract(user);
 	}
 }

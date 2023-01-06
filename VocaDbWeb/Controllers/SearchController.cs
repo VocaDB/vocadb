@@ -17,218 +17,217 @@ using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Web.Models.Search;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+public class SearchController : ControllerBase
 {
-	public class SearchController : ControllerBase
-	{
-		private readonly AlbumService _albumService;
-		private readonly ArtistService _artistService;
-		private readonly EntryQueries _entryQueries;
-		private readonly EventQueries _eventQueries;
-		private readonly OtherService _services;
-		private readonly SongService _songService;
-		private readonly SongListQueries _songListQueries;
-		private readonly TagQueries _tagQueries;
-		private readonly IUserPermissionContext _permissionContext;
+	private readonly AlbumService _albumService;
+	private readonly ArtistService _artistService;
+	private readonly EntryQueries _entryQueries;
+	private readonly EventQueries _eventQueries;
+	private readonly OtherService _services;
+	private readonly SongService _songService;
+	private readonly SongListQueries _songListQueries;
+	private readonly TagQueries _tagQueries;
+	private readonly IUserPermissionContext _permissionContext;
 
 #nullable enable
-		private ActionResult RedirectToAlbum(int id)
-		{
-			return RedirectToAction("Details", "Album", new { id });
-		}
+	private ActionResult RedirectToAlbum(int id)
+	{
+		return RedirectToAction("Details", "Album", new { id });
+	}
 
-		private ActionResult RedirectToArtist(int id)
-		{
-			return RedirectToAction("Details", "Artist", new { id });
-		}
+	private ActionResult RedirectToArtist(int id)
+	{
+		return RedirectToAction("Details", "Artist", new { id });
+	}
 
-		private ActionResult RedirectToReleaseEvent(int id, string? urlSlug)
-		{
-			return RedirectToAction("Details", "Event", new { id, urlSlug });
-		}
+	private ActionResult RedirectToReleaseEvent(int id, string? urlSlug)
+	{
+		return RedirectToAction("Details", "Event", new { id, urlSlug });
+	}
 
-		private ActionResult RedirectToSong(int id)
-		{
-			return RedirectToAction("Details", "Song", new { id });
-		}
+	private ActionResult RedirectToSong(int id)
+	{
+		return RedirectToAction("Details", "Song", new { id });
+	}
 
-		private ActionResult RedirectToSongList(int id)
-		{
-			return RedirectToAction("Details", "SongList", new { id });
-		}
+	private ActionResult RedirectToSongList(int id)
+	{
+		return RedirectToAction("Details", "SongList", new { id });
+	}
 
-		private ActionResult RedirectToTag(int id, string? urlSlug)
-		{
-			return RedirectToAction("DetailsById", "Tag", new { id, urlSlug });
-		}
+	private ActionResult RedirectToTag(int id, string? urlSlug)
+	{
+		return RedirectToAction("DetailsById", "Tag", new { id, urlSlug });
+	}
 
-		private ActionResult? TryRedirect(string filter, EntryType searchType)
-		{
-			var textQuery = SearchTextQuery.Create(filter);
-			var artistTextQuery = ArtistSearchTextQuery.Create(filter);
+	private ActionResult? TryRedirect(string filter, EntryType searchType)
+	{
+		var textQuery = SearchTextQuery.Create(filter);
+		var artistTextQuery = ArtistSearchTextQuery.Create(filter);
 
-			switch (searchType)
-			{
-				case EntryType.Undefined:
+		switch (searchType)
+		{
+			case EntryType.Undefined:
+				{
+					var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 1, true, EntrySortRule.Name,
+						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default,
+						searchTags: true, searchEvents: true);
+
+					if (result.TotalCount == 1)
 					{
-						var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 1, true, EntrySortRule.Name,
-							NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default,
-							searchTags: true, searchEvents: true);
+						var item = result.Items.First();
+						var entryId = item.Id;
 
-						if (result.TotalCount == 1)
+						switch (item.EntryType)
 						{
-							var item = result.Items.First();
-							var entryId = item.Id;
-
-							switch (item.EntryType)
-							{
-								case EntryType.Album:
-									return RedirectToAlbum(entryId);
-								case EntryType.Artist:
-									return RedirectToArtist(entryId);
-								case EntryType.ReleaseEvent:
-									return RedirectToReleaseEvent(entryId, item.UrlSlug);
-								case EntryType.Song:
-									return RedirectToSong(entryId);
-								case EntryType.Tag:
-									return RedirectToTag(entryId, item.UrlSlug);
-							}
+							case EntryType.Album:
+								return RedirectToAlbum(entryId);
+							case EntryType.Artist:
+								return RedirectToArtist(entryId);
+							case EntryType.ReleaseEvent:
+								return RedirectToReleaseEvent(entryId, item.UrlSlug);
+							case EntryType.Song:
+								return RedirectToSong(entryId);
+							case EntryType.Tag:
+								return RedirectToTag(entryId, item.UrlSlug);
 						}
 					}
-					break;
+				}
+				break;
 
-				case EntryType.Artist:
-					var artist = _artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, ArtistSortRule.None, false)
-					{
-						LanguagePreference = PermissionContext.LanguagePreference
-					});
-					if (artist.Items.Length == 1)
-					{
-						return RedirectToArtist(artist.Items[0].Id);
-					}
-					break;
+			case EntryType.Artist:
+				var artist = _artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, ArtistSortRule.None, false)
+				{
+					LanguagePreference = PermissionContext.LanguagePreference
+				});
+				if (artist.Items.Length == 1)
+				{
+					return RedirectToArtist(artist.Items[0].Id);
+				}
+				break;
 
-				case EntryType.Album:
-					var album = _albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, AlbumSortRule.None, false)
-					{
-						LanguagePreference = PermissionContext.LanguagePreference
-					});
-					if (album.Items.Length == 1)
-					{
-						return RedirectToAlbum(album.Items[0].Id);
-					}
-					break;
+			case EntryType.Album:
+				var album = _albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, AlbumSortRule.None, false)
+				{
+					LanguagePreference = PermissionContext.LanguagePreference
+				});
+				if (album.Items.Length == 1)
+				{
+					return RedirectToAlbum(album.Items[0].Id);
+				}
+				break;
 
-				case EntryType.ReleaseEvent:
-					var queryParams = new EventQueryParams
-					{
-						TextQuery = textQuery,
-						Paging = new PagingProperties(0, 2, false)
-					};
-					var ev = _eventQueries.Find(s => new { s.Id, s.UrlSlug }, queryParams);
-					if (ev.Items.Length == 1)
-					{
-						return RedirectToReleaseEvent(ev.Items[0].Id, ev.Items[0].UrlSlug);
-					}
-					break;
+			case EntryType.ReleaseEvent:
+				var queryParams = new EventQueryParams
+				{
+					TextQuery = textQuery,
+					Paging = new PagingProperties(0, 2, false)
+				};
+				var ev = _eventQueries.Find(s => new { s.Id, s.UrlSlug }, queryParams);
+				if (ev.Items.Length == 1)
+				{
+					return RedirectToReleaseEvent(ev.Items[0].Id, ev.Items[0].UrlSlug);
+				}
+				break;
 
-				case EntryType.Song:
-					var song = _songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, SongSortRule.None, false, false, null)
-					{
-						LanguagePreference = PermissionContext.LanguagePreference
-					});
-					if (song.Items.Length == 1)
-					{
-						return RedirectToSong(song.Items[0].Id);
-					}
-					break;
+			case EntryType.Song:
+				var song = _songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, SongSortRule.None, false, false, null)
+				{
+					LanguagePreference = PermissionContext.LanguagePreference
+				});
+				if (song.Items.Length == 1)
+				{
+					return RedirectToSong(song.Items[0].Id);
+				}
+				break;
 
-				case EntryType.SongList:
-					var list = _songListQueries.Find(s => s.Id, new SongListQueryParams { TextQuery = textQuery, Paging = new PagingProperties(0, 2, false), SortRule = SongListSortRule.Name });
-					if (list.Items.Length == 1)
-					{
-						return RedirectToSongList(list.Items[0]);
-					}
-					return RedirectToAction("Featured", "SongList");
+			case EntryType.SongList:
+				var list = _songListQueries.Find(s => s.Id, new SongListQueryParams { TextQuery = textQuery, Paging = new PagingProperties(0, 2, false), SortRule = SongListSortRule.Name });
+				if (list.Items.Length == 1)
+				{
+					return RedirectToSongList(list.Items[0]);
+				}
+				return RedirectToAction("Featured", "SongList");
 
-				case EntryType.Tag:
-					var tags = _tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2))
-					{
-						AllowChildren = true,
-						LanguagePreference = PermissionContext.LanguagePreference
-					}, TagOptionalFields.None, _permissionContext.LanguagePreference);
-					if (tags.Items.Length == 1)
-					{
-						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
-					}
-					break;
+			case EntryType.Tag:
+				var tags = _tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2))
+				{
+					AllowChildren = true,
+					LanguagePreference = PermissionContext.LanguagePreference
+				}, TagOptionalFields.None, _permissionContext.LanguagePreference);
+				if (tags.Items.Length == 1)
+				{
+					return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
+				}
+				break;
 
-				default:
-					{
-						var action = "Index";
-						var controller = searchType.ToString();
-						return RedirectToAction(action, controller, new { filter });
-					}
-			}
-
-			return null;
+			default:
+				{
+					var action = "Index";
+					var controller = searchType.ToString();
+					return RedirectToAction(action, controller, new { filter });
+				}
 		}
+
+		return null;
+	}
 #nullable disable
 
-		public SearchController(
-			OtherService services,
-			ArtistService artistService,
-			AlbumService albumService,
-			SongService songService,
-			SongListQueries songListQueries,
-			TagQueries tagQueries,
-			EventQueries eventQueries,
-			EntryQueries entryQueries,
-			IUserPermissionContext permissionContext
-		)
+	public SearchController(
+		OtherService services,
+		ArtistService artistService,
+		AlbumService albumService,
+		SongService songService,
+		SongListQueries songListQueries,
+		TagQueries tagQueries,
+		EventQueries eventQueries,
+		EntryQueries entryQueries,
+		IUserPermissionContext permissionContext
+	)
+	{
+		_services = services;
+		_artistService = artistService;
+		_albumService = albumService;
+		_songService = songService;
+		_songListQueries = songListQueries;
+		_tagQueries = tagQueries;
+		_eventQueries = eventQueries;
+		_entryQueries = entryQueries;
+		_permissionContext = permissionContext;
+	}
+
+	public ActionResult Index(SearchIndexViewModel viewModel)
+	{
+		if (viewModel == null)
+			viewModel = new SearchIndexViewModel();
+
+		var filter = viewModel.filter;
+		filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
+
+		if (viewModel.allowRedirect && !string.IsNullOrEmpty(filter))
 		{
-			_services = services;
-			_artistService = artistService;
-			_albumService = albumService;
-			_songService = songService;
-			_songListQueries = songListQueries;
-			_tagQueries = tagQueries;
-			_eventQueries = eventQueries;
-			_entryQueries = entryQueries;
-			_permissionContext = permissionContext;
+			var redirectResult = TryRedirect(filter, viewModel.searchType);
+
+			if (redirectResult != null)
+				return redirectResult;
 		}
 
-		public ActionResult Index(SearchIndexViewModel viewModel)
+		if (!string.IsNullOrEmpty(viewModel.tag))
 		{
-			if (viewModel == null)
-				viewModel = new SearchIndexViewModel();
-
-			var filter = viewModel.filter;
-			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
-
-			if (viewModel.allowRedirect && !string.IsNullOrEmpty(filter))
-			{
-				var redirectResult = TryRedirect(filter, viewModel.searchType);
-
-				if (redirectResult != null)
-					return redirectResult;
-			}
-
-			if (!string.IsNullOrEmpty(viewModel.tag))
-			{
-				viewModel.tagId = new[] { _tagQueries.GetTagIdByName(viewModel.tag) };
-			}
-
-			viewModel.filter = filter;
-
-			SetSearchEntryType(viewModel.searchType);
-
-			return View("React/Index");
+			viewModel.tagId = new[] { _tagQueries.GetTagIdByName(viewModel.tag) };
 		}
 
-		public ActionResult Radio()
-		{
-			return Index(new SearchIndexViewModel(EntryType.Song) { minScore = 1, sort = "AdditionDate", viewMode = "PlayList", autoplay = true, shuffle = true });
-		}
+		viewModel.filter = filter;
+
+		SetSearchEntryType(viewModel.searchType);
+
+		return View("React/Index");
+	}
+
+	public ActionResult Radio()
+	{
+		return Index(new SearchIndexViewModel(EntryType.Song) { minScore = 1, sort = "AdditionDate", viewMode = "PlayList", autoplay = true, shuffle = true });
 	}
 }

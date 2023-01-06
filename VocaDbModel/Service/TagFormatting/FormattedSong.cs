@@ -1,9 +1,8 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Service.TagFormatting
+namespace VocaDb.Model.Service.TagFormatting;
+
+public class FormattedSong : Dictionary<string, string>
 {
-	public class FormattedSong : Dictionary<string, string>
-	{
-	}
 }

@@ -2,13 +2,12 @@
 
 using Newtonsoft.Json.Converters;
 
-namespace VocaDb.Web.Code.Highcharts
+namespace VocaDb.Web.Code.Highcharts;
+
+public class CamelCaseStringEnumConverter : StringEnumConverter
 {
-	public class CamelCaseStringEnumConverter : StringEnumConverter
+	public CamelCaseStringEnumConverter()
 	{
-		public CamelCaseStringEnumConverter()
-		{
-			CamelCaseText = true;
-		}
+		CamelCaseText = true;
 	}
 }

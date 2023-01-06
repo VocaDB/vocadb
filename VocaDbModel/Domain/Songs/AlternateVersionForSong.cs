@@ -1,41 +1,40 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Songs
+namespace VocaDb.Model.Domain.Songs;
+
+public class AlternateVersionForSong
 {
-	public class AlternateVersionForSong
+	private Song _derived;
+	private Song _original;
+
+	public AlternateVersionForSong() { }
+
+	public AlternateVersionForSong(Song original, Song derived)
 	{
-		private Song _derived;
-		private Song _original;
+		Original = original;
+		Derived = derived;
+	}
 
-		public AlternateVersionForSong() { }
-
-		public AlternateVersionForSong(Song original, Song derived)
+	public virtual Song Derived
+	{
+		get => _derived;
+		set
 		{
-			Original = original;
-			Derived = derived;
+			ParamIs.NotNull(() => value);
+			_derived = value;
 		}
+	}
 
-		public virtual Song Derived
+	public virtual int Id { get; set; }
+
+	public virtual Song Original
+	{
+		get => _original;
+		set
 		{
-			get => _derived;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_derived = value;
-			}
-		}
-
-		public virtual int Id { get; set; }
-
-		public virtual Song Original
-		{
-			get => _original;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_original = value;
-			}
+			ParamIs.NotNull(() => value);
+			_original = value;
 		}
 	}
 }

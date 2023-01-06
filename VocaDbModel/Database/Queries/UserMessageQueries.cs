@@ -8,126 +8,125 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 
-namespace VocaDb.Model.Database.Queries
+namespace VocaDb.Model.Database.Queries;
+
+/// <summary>
+/// Queries for <see cref="UserMessage"/>.
+/// </summary>
+public class UserMessageQueries : QueriesBase<IUserMessageRepository, UserMessage>
 {
-	/// <summary>
-	/// Queries for <see cref="UserMessage"/>.
-	/// </summary>
-	public class UserMessageQueries : QueriesBase<IUserMessageRepository, UserMessage>
+	public UserMessageQueries(IUserMessageRepository repository, IUserPermissionContext permissionContext)
+		: base(repository, permissionContext) { }
+
+	private void DoDelete(IDatabaseContext ctx, UserMessage msg)
 	{
-		public UserMessageQueries(IUserMessageRepository repository, IUserPermissionContext permissionContext)
-			: base(repository, permissionContext) { }
+		VerifyResourceAccess(msg.User);
 
-		private void DoDelete(IDatabaseContext ctx, UserMessage msg)
+		msg.Sender?.SentMessages.Remove(msg);
+		msg.Receiver.ReceivedMessages.Remove(msg);
+		ctx.Delete(msg);
+	}
+
+	/// <summary>
+	/// Permanently deletes a message by Id.
+	/// </summary>
+	/// <param name="messageId">Id of the message to be deleted.</param>
+	public void Delete(int messageId)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+		_repository.HandleTransaction(ctx =>
 		{
-			VerifyResourceAccess(msg.User);
+			var msg = ctx.Load(messageId);
 
-			msg.Sender?.SentMessages.Remove(msg);
-			msg.Receiver.ReceivedMessages.Remove(msg);
-			ctx.Delete(msg);
+			DoDelete(ctx, msg);
+
+			ctx.AuditLogger.SysLog($"deleted {msg}");
+		});
+	}
+
+	/// <summary>
+	/// Permanently deletes multiple messages by ID.
+	/// </summary>
+	/// <param name="messageIds">List of IDs of the messages to be deleted.</param>
+	public void Delete(int[] messageIds)
+	{
+		if (messageIds.Length == 1)
+		{
+			Delete(messageIds.First());
+			return;
 		}
 
-		/// <summary>
-		/// Permanently deletes a message by Id.
-		/// </summary>
-		/// <param name="messageId">Id of the message to be deleted.</param>
-		public void Delete(int messageId)
+		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+		_repository.HandleTransaction(ctx =>
 		{
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+			var messages = ctx.LoadMultiple<UserMessage>(messageIds);
 
-			_repository.HandleTransaction(ctx =>
+			foreach (var msg in messages)
 			{
-				var msg = ctx.Load(messageId);
-
 				DoDelete(ctx, msg);
-
-				ctx.AuditLogger.SysLog($"deleted {msg}");
-			});
-		}
-
-		/// <summary>
-		/// Permanently deletes multiple messages by ID.
-		/// </summary>
-		/// <param name="messageIds">List of IDs of the messages to be deleted.</param>
-		public void Delete(int[] messageIds)
-		{
-			if (messageIds.Length == 1)
-			{
-				Delete(messageIds.First());
-				return;
 			}
 
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+			ctx.AuditLogger.SysLog($"deleted {messageIds.Length} messages");
+		});
+	}
 
-			_repository.HandleTransaction(ctx =>
-			{
-				var messages = ctx.LoadMultiple<UserMessage>(messageIds);
+	public UserMessageContract Get(int messageId, IUserIconFactory iconFactory)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-				foreach (var msg in messages)
-				{
-					DoDelete(ctx, msg);
-				}
-
-				ctx.AuditLogger.SysLog($"deleted {messageIds.Length} messages");
-			});
-		}
-
-		public UserMessageContract Get(int messageId, IUserIconFactory iconFactory)
+		return _repository.HandleTransaction(ctx =>
 		{
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+			var msg = ctx.Load(messageId);
 
-			return _repository.HandleTransaction(ctx =>
+			VerifyResourceAccess(msg.User);
+
+			if (!msg.Read && PermissionContext.LoggedUserId == msg.Receiver.Id)
 			{
-				var msg = ctx.Load(messageId);
+				msg.Read = true;
+				ctx.Update(msg);
+			}
 
-				VerifyResourceAccess(msg.User);
+			return new UserMessageContract(msg, iconFactory, includeBody: true);
+		});
+	}
 
-				if (!msg.Read && PermissionContext.LoggedUserId == msg.Receiver.Id)
-				{
-					msg.Read = true;
-					ctx.Update(msg);
-				}
+	public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType,
+		bool unread, int? anotherUserId, IUserIconFactory iconFactory)
+	{
+		PermissionContext.VerifyResourceAccess(new[] { id });
 
-				return new UserMessageContract(msg, iconFactory, includeBody: true);
-			});
-		}
-
-		public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType,
-			bool unread, int? anotherUserId, IUserIconFactory iconFactory)
+		return HandleQuery(ctx =>
 		{
-			PermissionContext.VerifyResourceAccess(new[] { id });
+			var query = ctx.Query()
+				.Where(u => u.User.Id == id)
+				.WhereInboxIs(inboxType, unread)
+				.WhereIsUnread(unread);
 
-			return HandleQuery(ctx =>
+			if (anotherUserId.HasValue)
 			{
-				var query = ctx.Query()
-					.Where(u => u.User.Id == id)
-					.WhereInboxIs(inboxType, unread)
-					.WhereIsUnread(unread);
-
-				if (anotherUserId.HasValue)
+				if (inboxType == UserInboxType.Received)
 				{
-					if (inboxType == UserInboxType.Received)
-					{
-						query = query.Where(m => m.Sender.Id == anotherUserId);
-					}
-					else if (inboxType == UserInboxType.Sent)
-					{
-						query = query.Where(m => m.Receiver.Id == anotherUserId);
-					}
+					query = query.Where(m => m.Sender.Id == anotherUserId);
 				}
+				else if (inboxType == UserInboxType.Sent)
+				{
+					query = query.Where(m => m.Receiver.Id == anotherUserId);
+				}
+			}
 
 
-				var messages = query
-					.OrderByDescending(m => m.Created)
-					.Paged(paging, true)
-					.ToArray()
-					.Select(m => new UserMessageContract(m, iconFactory))
-					.ToArray();
+			var messages = query
+				.OrderByDescending(m => m.Created)
+				.Paged(paging, true)
+				.ToArray()
+				.Select(m => new UserMessageContract(m, iconFactory))
+				.ToArray();
 
-				var count = paging.GetTotalCount ? query.Count() : 0;
+			var count = paging.GetTotalCount ? query.Count() : 0;
 
-				return new PartialFindResult<UserMessageContract>(messages, count);
-			});
-		}
+			return new PartialFindResult<UserMessageContract>(messages, count);
+		});
 	}
 }

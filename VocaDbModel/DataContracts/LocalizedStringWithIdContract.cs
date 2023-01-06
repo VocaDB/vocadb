@@ -3,27 +3,26 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts
+namespace VocaDb.Model.DataContracts;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class LocalizedStringWithIdContract : LocalizedStringContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class LocalizedStringWithIdContract : LocalizedStringContract
+	public LocalizedStringWithIdContract() { }
+
+	public LocalizedStringWithIdContract(LocalizedStringWithId str)
+		: base(str)
 	{
-		public LocalizedStringWithIdContract() { }
+		Id = str.Id;
+	}
 
-		public LocalizedStringWithIdContract(LocalizedStringWithId str)
-			: base(str)
-		{
-			Id = str.Id;
-		}
-
-		[DataMember]
-		public int Id { get; init; }
+	[DataMember]
+	public int Id { get; init; }
 
 #nullable enable
-		public override string ToString()
-		{
-			return $"Localized string '{Value}' in {Language} [{Id}]";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"Localized string '{Value}' in {Language} [{Id}]";
 	}
+#nullable disable
 }

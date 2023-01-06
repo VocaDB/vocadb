@@ -6,47 +6,46 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+public class HelpController : ControllerBase
 {
-	public class HelpController : ControllerBase
+	private readonly VdbConfigManager _config;
+	private readonly TagQueries _tagQueries;
+
+	public HelpController(VdbConfigManager config, TagQueries tagQueries)
 	{
-		private readonly VdbConfigManager _config;
-		private readonly TagQueries _tagQueries;
+		_config = config;
+		_tagQueries = tagQueries;
+	}
 
-		public HelpController(VdbConfigManager config, TagQueries tagQueries)
+	//
+	// GET: /Help/
+
+	public ActionResult Index()
+	{
+		if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
+			return View("React/Index");
+
+		ViewBag.FreeTagId = _config.SpecialTags.Free;
+		ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
+
+		switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
 		{
-			_config = config;
-			_tagQueries = tagQueries;
-		}
+			case "ja":
+				PageProperties.Title = "サポート / DBについて";
 
-		//
-		// GET: /Help/
-
-		public ActionResult Index()
-		{
-			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
 				return View("React/Index");
 
-			ViewBag.FreeTagId = _config.SpecialTags.Free;
-			ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
+			case "zh":
+				PageProperties.Title = "Help / About";
 
-			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
-			{
-				case "ja":
-					PageProperties.Title = "サポート / DBについて";
+				return View("React/Index");
 
-					return View("React/Index");
+			default:
+				PageProperties.Title = "Help / About";
 
-				case "zh":
-					PageProperties.Title = "Help / About";
-
-					return View("React/Index");
-
-				default:
-					PageProperties.Title = "Help / About";
-
-					return View("React/Index");
-			}
+				return View("React/Index");
 		}
 	}
 }

@@ -4,82 +4,81 @@ using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service.Security
+namespace VocaDb.Model.Service.Security;
+
+/// <summary>
+/// Manages IP rules. 
+/// Currently this means IPs banned through the admin or automatically.
+/// </summary>
+public class IPRuleManager
 {
-	/// <summary>
-	/// Manages IP rules. 
-	/// Currently this means IPs banned through the admin or automatically.
-	/// </summary>
-	public class IPRuleManager
+	private static readonly string s_lockStr = "lock";
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+
+	public IPRuleManager()
 	{
-		private static readonly string s_lockStr = "lock";
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		_permBannedIPs = new HostCollection();
+	}
 
-		public IPRuleManager()
+	public IPRuleManager(IEnumerable<string> ips)
+	{
+		_permBannedIPs = new HostCollection(ips);
+	}
+
+	private readonly HostCollection _permBannedIPs;
+	private readonly HostCollection _tempBannedIPs = new();
+
+	public IHostCollection PermBannedIPs => _permBannedIPs;
+
+	/// <summary>
+	/// Temporarily banned IPs. These are persisted in memory and are cleared on application restart.
+	/// </summary>
+	public IHostCollection TempBannedIPs => _tempBannedIPs;
+
+	public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule)
+	{
+		if (ipRule == null)
+			throw new ArgumentNullException(nameof(ipRule));
+
+		lock (s_lockStr)
 		{
-			_permBannedIPs = new HostCollection();
+			if (_permBannedIPs.Contains(ipRule.Address))
+				return false;
+
+			db.Save(ipRule);
+
+			_permBannedIPs.Add(ipRule.Address);
+			return true;
 		}
+	}
 
-		public IPRuleManager(IEnumerable<string> ips)
-		{
-			_permBannedIPs = new HostCollection(ips);
-		}
+	public bool AddPermBannedIP(IDatabaseContext db, string host, string notes)
+		=> AddPermBannedIP(db, new IPRule(host, notes));
 
-		private readonly HostCollection _permBannedIPs;
-		private readonly HostCollection _tempBannedIPs = new();
+	public void AddTempBannedIP(string host, string reason = "")
+	{
+		s_log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
+		_tempBannedIPs.Add(host);
+	}
 
-		public IHostCollection PermBannedIPs => _permBannedIPs;
+	/// <summary>
+	/// Tests whether a host address is allowed.
+	/// Both permanent and temporary rules are checked.
+	/// </summary>
+	/// <param name="hostAddress">Host address (IP).</param>
+	/// <returns>True if the host is allowed access (not banned).</returns>
+	public bool IsAllowed(string hostAddress)
+	{
+		return !_permBannedIPs.Contains(hostAddress) && !_tempBannedIPs.Contains(hostAddress);
+	}
 
-		/// <summary>
-		/// Temporarily banned IPs. These are persisted in memory and are cleared on application restart.
-		/// </summary>
-		public IHostCollection TempBannedIPs => _tempBannedIPs;
+	public void RemovePermBannedIP(string address)
+	{
+		_permBannedIPs.Remove(address);
+	}
 
-		public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule)
-		{
-			if (ipRule == null)
-				throw new ArgumentNullException(nameof(ipRule));
-
-			lock (s_lockStr)
-			{
-				if (_permBannedIPs.Contains(ipRule.Address))
-					return false;
-
-				db.Save(ipRule);
-
-				_permBannedIPs.Add(ipRule.Address);
-				return true;
-			}
-		}
-
-		public bool AddPermBannedIP(IDatabaseContext db, string host, string notes)
-			=> AddPermBannedIP(db, new IPRule(host, notes));
-
-		public void AddTempBannedIP(string host, string reason = "")
-		{
-			s_log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
-			_tempBannedIPs.Add(host);
-		}
-
-		/// <summary>
-		/// Tests whether a host address is allowed.
-		/// Both permanent and temporary rules are checked.
-		/// </summary>
-		/// <param name="hostAddress">Host address (IP).</param>
-		/// <returns>True if the host is allowed access (not banned).</returns>
-		public bool IsAllowed(string hostAddress)
-		{
-			return !_permBannedIPs.Contains(hostAddress) && !_tempBannedIPs.Contains(hostAddress);
-		}
-
-		public void RemovePermBannedIP(string address)
-		{
-			_permBannedIPs.Remove(address);
-		}
-
-		public void Reset(IEnumerable<string> ips)
-		{
-			_permBannedIPs.Reset(ips);
-		}
+	public void Reset(IEnumerable<string> ips)
+	{
+		_permBannedIPs.Reset(ips);
 	}
 }

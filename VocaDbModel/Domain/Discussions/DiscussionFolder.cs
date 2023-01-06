@@ -2,78 +2,77 @@
 
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Discussions
+namespace VocaDb.Model.Domain.Discussions;
+
+public class DiscussionFolder : IEntryWithIntId
 {
-	public class DiscussionFolder : IEntryWithIntId
+	private string _description;
+	private string _title;
+	private IList<DiscussionTopic> _topics = new List<DiscussionTopic>();
+
+	public DiscussionFolder()
 	{
-		private string _description;
-		private string _title;
-		private IList<DiscussionTopic> _topics = new List<DiscussionTopic>();
+		Description = string.Empty;
+	}
 
-		public DiscussionFolder()
+	public DiscussionFolder(string title)
+		: this()
+	{
+		Name = title;
+	}
+
+	/// <summary>
+	/// List of topics for this folder.
+	/// This list includes deleted topics.
+	/// </summary>
+	public virtual IList<DiscussionTopic> AllTopics
+	{
+		get => _topics;
+		set
 		{
-			Description = string.Empty;
+			ParamIs.NotNull(() => value);
+			_topics = value;
 		}
+	}
 
-		public DiscussionFolder(string title)
-			: this()
+	public virtual bool Deleted { get; set; }
+
+	public virtual string Description
+	{
+		get => _description;
+		set
 		{
-			Name = title;
+			ParamIs.NotNull(() => value);
+			_description = value;
 		}
+	}
 
-		/// <summary>
-		/// List of topics for this folder.
-		/// This list includes deleted topics.
-		/// </summary>
-		public virtual IList<DiscussionTopic> AllTopics
+	public virtual int Id { get; set; }
+
+	public virtual string Name
+	{
+		get => _title;
+		set
 		{
-			get => _topics;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_topics = value;
-			}
+			ParamIs.NotNull(() => value);
+			_title = value;
 		}
+	}
 
-		public virtual bool Deleted { get; set; }
+	public virtual UserGroupId RequiredGroup { get; set; }
 
-		public virtual string Description
-		{
-			get => _description;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_description = value;
-			}
-		}
+	public virtual int SortIndex { get; set; }
 
-		public virtual int Id { get; set; }
-
-		public virtual string Name
-		{
-			get => _title;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_title = value;
-			}
-		}
-
-		public virtual UserGroupId RequiredGroup { get; set; }
-
-		public virtual int SortIndex { get; set; }
-
-		/// <summary>
-		/// List of discussion topics for this folder.
-		/// This list does not include deleted topics.
-		/// </summary>
-		public virtual IEnumerable<DiscussionTopic> Topics => AllTopics.Where(t => !t.Deleted);
+	/// <summary>
+	/// List of discussion topics for this folder.
+	/// This list does not include deleted topics.
+	/// </summary>
+	public virtual IEnumerable<DiscussionTopic> Topics => AllTopics.Where(t => !t.Deleted);
 
 #nullable enable
-		public override string ToString()
-		{
-			return $"Discussion folder '{Name}' [{Id}]";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"Discussion folder '{Name}' [{Id}]";
 	}
+#nullable disable
 }

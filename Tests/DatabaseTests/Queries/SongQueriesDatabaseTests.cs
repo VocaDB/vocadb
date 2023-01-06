@@ -4,7 +4,6 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -15,124 +14,123 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.DatabaseTests.Queries
+namespace VocaDb.Tests.DatabaseTests.Queries;
+
+/// <summary>
+/// Database tests for <see cref="SongQueries"/>.
+/// </summary>
+[TestClass]
+public class SongQueriesDatabaseTests
 {
-	/// <summary>
-	/// Database tests for <see cref="SongQueries"/>.
-	/// </summary>
-	[TestClass]
-	public class SongQueriesDatabaseTests
+	private readonly DatabaseTestContext<ISongRepository> _context = new();
+	private readonly FakePermissionContext _userContext;
+	private TestDatabase Db => TestContainerManager.TestDatabase;
+
+	public SongQueriesDatabaseTests()
 	{
-		private readonly DatabaseTestContext<ISongRepository> _context = new();
-		private readonly FakePermissionContext _userContext;
-		private TestDatabase Db => TestContainerManager.TestDatabase;
+		_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+	}
 
-		public SongQueriesDatabaseTests()
+	private SongQueries Queries(ISongRepository repository)
+	{
+		return new SongQueries(
+			repository,
+			_userContext,
+			new FakeEntryLinkFactory(),
+			new FakePVParser(),
+			new FakeUserMessageMailer(),
+			new FakeLanguageDetector(),
+			new FakeUserIconFactory(),
+			new EnumTranslations(),
+			new InMemoryImagePersister(),
+			new FakeObjectCache(),
+			new VdbConfigManager(),
+			new EntrySubTypeNameFactory(),
+			new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+			new FakeDiscordWebhookNotifier()
+		);
+	}
+
+	private async Task<SongForEditForApiContract> Update(SongForEditForApiContract contract)
+	{
+		return await _context.RunTestAsync(async repository =>
 		{
-			_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
-		}
+			var queries = Queries(repository);
 
-		private SongQueries Queries(ISongRepository repository)
+			var updated = await queries.UpdateBasicProperties(contract);
+
+			return queries.GetSongForEdit(updated.Id);
+		});
+	}
+
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public async Task Update_ReleaseEvent_Remove()
+	{
+		// Preconditions (arrange)
+		Db.Song.ReleaseEvent.Should().NotBeNull("ReleaseEvent");
+		Db.ReleaseEvent.AllSongs.Contains(Db.Song).Should().BeTrue("Release event has song");
+
+		// Act
+		var contract = new SongForEditForApiContract(Db.Song, ContentLanguagePreference.English, _userContext)
 		{
-			return new SongQueries(
-				repository,
-				_userContext,
-				new FakeEntryLinkFactory(),
-				new FakePVParser(),
-				new FakeUserMessageMailer(),
-				new FakeLanguageDetector(),
-				new FakeUserIconFactory(),
-				new EnumTranslations(),
-				new InMemoryImagePersister(),
-				new FakeObjectCache(),
-				new VdbConfigManager(),
-				new EntrySubTypeNameFactory(),
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
-				new FakeDiscordWebhookNotifier()
-			);
-		}
+			ReleaseEvent = null
+		};
 
-		private async Task<SongForEditForApiContract> Update(SongForEditForApiContract contract)
+		await _context.RunTestAsync(async repository =>
 		{
-			return await _context.RunTestAsync(async repository =>
-			{
-				var queries = Queries(repository);
+			var queries = Queries(repository);
 
-				var updated = await queries.UpdateBasicProperties(contract);
+			var updated = await queries.UpdateBasicProperties(contract);
 
-				return queries.GetSongForEdit(updated.Id);
-			});
-		}
+			// Assert
+			updated.ReleaseEvent.Should().BeNull("Release event was cleared");
+			var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(Db.ReleaseEvent.Id));
+			releaseEvent.AllSongs.Count.Should().Be(0, "Song was removed from event");
+		});
+	}
 
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public async Task Update_ReleaseEvent_Remove()
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public async Task Update_ReleaseEvent_Change()
+	{
+		await _context.RunTestAsync(async repository =>
 		{
-			// Preconditions (arrange)
-			Db.Song.ReleaseEvent.Should().NotBeNull("ReleaseEvent");
-			Db.ReleaseEvent.AllSongs.Contains(Db.Song).Should().BeTrue("Release event has song");
+			var queries = Queries(repository);
+
+			var newEvent = repository.HandleTransaction(ctx => new ReleaseEventForApiContract(
+				rel: ctx.Save(CreateEntry.ReleaseEvent("Mikumas")),
+				languagePreference: ContentLanguagePreference.English,
+				fields: ReleaseEventOptionalFields.None,
+				thumbPersister: null
+			));
 
 			// Act
 			var contract = new SongForEditForApiContract(Db.Song, ContentLanguagePreference.English, _userContext)
 			{
-				ReleaseEvent = null
+				ReleaseEvent = newEvent
 			};
 
-			await _context.RunTestAsync(async repository =>
-			{
-				var queries = Queries(repository);
+			var updated = await queries.UpdateBasicProperties(contract);
 
-				var updated = await queries.UpdateBasicProperties(contract);
+			// Assert
+			updated.ReleaseEvent?.Id.Should().Be(newEvent.Id, "Release event was changed");
+			var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(newEvent.Id));
+			releaseEvent.AllSongs.Count.Should().Be(1, "Song was added to event");
+		});
+	}
 
-				// Assert
-				updated.ReleaseEvent.Should().BeNull("Release event was cleared");
-				var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(Db.ReleaseEvent.Id));
-				releaseEvent.AllSongs.Count.Should().Be(0, "Song was removed from event");
-			});
-		}
-
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public async Task Update_ReleaseEvent_Change()
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public async Task Update_Lyrics()
+	{
+		var contract = new SongForEditForApiContract(Db.Song2, ContentLanguagePreference.English, _userContext)
 		{
-			await _context.RunTestAsync(async repository =>
-			{
-				var queries = Queries(repository);
+			Lyrics = new[] { CreateEntry.LyricsForSongContract(TranslationType.Original) }
+		};
 
-				var newEvent = repository.HandleTransaction(ctx => new ReleaseEventForApiContract(
-					rel: ctx.Save(CreateEntry.ReleaseEvent("Mikumas")),
-					languagePreference: ContentLanguagePreference.English,
-					fields: ReleaseEventOptionalFields.None,
-					thumbPersister: null
-				));
+		var song = await Update(contract);
 
-				// Act
-				var contract = new SongForEditForApiContract(Db.Song, ContentLanguagePreference.English, _userContext)
-				{
-					ReleaseEvent = newEvent
-				};
-
-				var updated = await queries.UpdateBasicProperties(contract);
-
-				// Assert
-				updated.ReleaseEvent?.Id.Should().Be(newEvent.Id, "Release event was changed");
-				var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(newEvent.Id));
-				releaseEvent.AllSongs.Count.Should().Be(1, "Song was added to event");
-			});
-		}
-
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public async Task Update_Lyrics()
-		{
-			var contract = new SongForEditForApiContract(Db.Song2, ContentLanguagePreference.English, _userContext)
-			{
-				Lyrics = new[] { CreateEntry.LyricsForSongContract(TranslationType.Original) }
-			};
-
-			var song = await Update(contract);
-
-			song.Lyrics.Length.Should().Be(1, "Lyrics created");
-		}
+		song.Lyrics.Length.Should().Be(1, "Lyrics created");
 	}
 }

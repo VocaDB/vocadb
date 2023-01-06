@@ -2,56 +2,55 @@
 
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Albums
+namespace VocaDb.Model.Domain.Albums;
+
+public class AlbumName : LocalizedStringWithId
 {
-	public class AlbumName : LocalizedStringWithId
+	private Album _album;
+
+	public AlbumName() { }
+
+	public AlbumName(Album album, LocalizedString localizedString)
+		: base(localizedString.Value, localizedString.Language)
 	{
-		private Album _album;
+		Album = album;
+	}
 
-		public AlbumName() { }
-
-		public AlbumName(Album album, LocalizedString localizedString)
-			: base(localizedString.Value, localizedString.Language)
+	public virtual Album Album
+	{
+		get => _album;
+		set
 		{
-			Album = album;
+			ParamIs.NotNull(() => value);
+			_album = value;
 		}
-
-		public virtual Album Album
-		{
-			get => _album;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_album = value;
-			}
-		}
+	}
 
 #nullable enable
-		public virtual bool Equals(AlbumName? another)
-		{
-			if (another == null)
-				return false;
+	public virtual bool Equals(AlbumName? another)
+	{
+		if (another == null)
+			return false;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		if (ReferenceEquals(this, another))
+			return true;
 
-			return Id == another.Id;
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as AlbumName);
-		}
-
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
-
-		public override string ToString()
-		{
-			return $"name '{Value}' for {Album}";
-		}
-#nullable disable
+		return Id == another.Id;
 	}
+
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as AlbumName);
+	}
+
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
+
+	public override string ToString()
+	{
+		return $"name '{Value}' for {Album}";
+	}
+#nullable disable
 }

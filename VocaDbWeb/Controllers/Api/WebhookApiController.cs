@@ -7,40 +7,39 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
-namespace VocaDb.Web.Controllers.Api
+namespace VocaDb.Web.Controllers.Api;
+
+[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+[Authorize]
+[ApiExplorerSettings(IgnoreApi = true)]
+[Route("api/webhooks")]
+[ApiController]
+public class WebhookApiController : ApiController
 {
-	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[Authorize]
-	[ApiExplorerSettings(IgnoreApi = true)]
-	[Route("api/webhooks")]
-	[ApiController]
-	public class WebhookApiController : ApiController
+	private readonly IUserPermissionContext _userContext;
+	private readonly WebhookQueries _queries;
+
+	public WebhookApiController(IUserPermissionContext userContext, WebhookQueries queries)
 	{
-		private readonly IUserPermissionContext _userContext;
-		private readonly WebhookQueries _queries;
+		_userContext = userContext;
+		_queries = queries;
+	}
 
-		public WebhookApiController(IUserPermissionContext userContext, WebhookQueries queries)
-		{
-			_userContext = userContext;
-			_queries = queries;
-		}
+	[HttpGet("")]
+	public WebhookContract[] GetWebhooks()
+	{
+		_userContext.VerifyPermission(PermissionToken.ManageWebhooks);
 
-		[HttpGet("")]
-		public WebhookContract[] GetWebhooks()
-		{
-			_userContext.VerifyPermission(PermissionToken.ManageWebhooks);
+		return _queries.GetWebhooks();
+	}
 
-			return _queries.GetWebhooks();
-		}
+	[HttpPut("")]
+	public IActionResult PutWebhooks([FromBody] IEnumerable<WebhookContract> webhooks)
+	{
+		_userContext.VerifyPermission(PermissionToken.ManageWebhooks);
 
-		[HttpPut("")]
-		public IActionResult PutWebhooks([FromBody] IEnumerable<WebhookContract> webhooks)
-		{
-			_userContext.VerifyPermission(PermissionToken.ManageWebhooks);
+		_queries.UpdateWebhooks(webhooks.ToArray());
 
-			_queries.UpdateWebhooks(webhooks.ToArray());
-
-			return NoContent();
-		}
+		return NoContent();
 	}
 }

@@ -2,12 +2,11 @@
 
 using System.Runtime.Serialization;
 
-namespace VocaDb.SiteMapGenerator.VocaDb.DataContracts
+namespace VocaDb.SiteMapGenerator.VocaDb.DataContracts;
+
+[DataContract]
+public class PartialFindResult<T>
 {
-	[DataContract]
-	public class PartialFindResult<T>
-	{
-		[DataMember]
-		public T[] Items { get; set; }
-	}
+	[DataMember]
+	public T[] Items { get; set; }
 }

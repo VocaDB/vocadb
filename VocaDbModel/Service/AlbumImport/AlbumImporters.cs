@@ -1,30 +1,29 @@
-namespace VocaDb.Model.Service.AlbumImport
+namespace VocaDb.Model.Service.AlbumImport;
+
+public class AlbumImporters
 {
-	public class AlbumImporters
+	private readonly IAlbumImporter[] _importers;
+
+	public AlbumImporters()
+		: this(new WebPictureDownloader()) { }
+
+	public AlbumImporters(IPictureDownloader pictureDownloader)
 	{
-		private readonly IAlbumImporter[] _importers;
+		_importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
+	}
 
-		public AlbumImporters()
-			: this(new WebPictureDownloader()) { }
+	public IAlbumImporter? FindImporter(string url)
+	{
+		return _importers.FirstOrDefault(i => i.IsValidFor(url));
+	}
 
-		public AlbumImporters(IPictureDownloader pictureDownloader)
-		{
-			_importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
-		}
+	public AlbumImportResult ImportOne(string url)
+	{
+		var importer = FindImporter(url);
 
-		public IAlbumImporter? FindImporter(string url)
-		{
-			return _importers.FirstOrDefault(i => i.IsValidFor(url));
-		}
+		if (importer == null)
+			return new AlbumImportResult { Message = "URL not recognized" };
 
-		public AlbumImportResult ImportOne(string url)
-		{
-			var importer = FindImporter(url);
-
-			if (importer == null)
-				return new AlbumImportResult { Message = "URL not recognized" };
-
-			return importer.ImportOne(url);
-		}
+		return importer.ImportOne(url);
 	}
 }

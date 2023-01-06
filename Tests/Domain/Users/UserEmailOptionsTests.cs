@@ -1,17 +1,16 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Users
+namespace VocaDb.Tests.Domain.Users;
+
+[TestClass]
+public class UserEmailOptionsTests
 {
-	[TestClass]
-	public class UserEmailOptionsTests
+	[DataRow(0, UserEmailOptions.NoEmail)]
+	[DataRow(1, UserEmailOptions.PrivateMessagesFromAdmins)]
+	[DataRow(2, UserEmailOptions.PrivateMessagesFromAll)]
+	[TestMethod]
+	public void Value(int expected, UserEmailOptions actual)
 	{
-		[DataRow(0, UserEmailOptions.NoEmail)]
-		[DataRow(1, UserEmailOptions.PrivateMessagesFromAdmins)]
-		[DataRow(2, UserEmailOptions.PrivateMessagesFromAll)]
-		[TestMethod]
-		public void Value(int expected, UserEmailOptions actual)
-		{
-			((int)actual).Should().Be(expected);
-		}
+		((int)actual).Should().Be(expected);
 	}
 }

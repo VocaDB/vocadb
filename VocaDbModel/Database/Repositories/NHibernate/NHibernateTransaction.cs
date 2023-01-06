@@ -2,26 +2,25 @@
 
 using NHibernate;
 
-namespace VocaDb.Model.Database.Repositories.NHibernate
+namespace VocaDb.Model.Database.Repositories.NHibernate;
+
+public class NHibernateTransaction : IMinimalTransaction
 {
-	public class NHibernateTransaction : IMinimalTransaction
-	{
-		private readonly ITransaction _tx;
+	private readonly ITransaction _tx;
 
 #nullable enable
-		public NHibernateTransaction(ITransaction tx)
-		{
-			ParamIs.NotNull(() => tx);
-			_tx = tx;
-		}
+	public NHibernateTransaction(ITransaction tx)
+	{
+		ParamIs.NotNull(() => tx);
+		_tx = tx;
+	}
 #nullable disable
 
-		public void Dispose() => _tx.Dispose();
+	public void Dispose() => _tx.Dispose();
 
-		public void Commit() => _tx.Commit();
+	public void Commit() => _tx.Commit();
 
-		public Task CommitAsync() => _tx.CommitAsync();
+	public Task CommitAsync() => _tx.CommitAsync();
 
-		public void Rollback() => _tx.Rollback();
-	}
+	public void Rollback() => _tx.Rollback();
 }

@@ -2,39 +2,38 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+public class CommentController : ControllerBase
 {
-	public class CommentController : ControllerBase
+	private readonly OtherService _otherService;
+	private readonly UserService _userService;
+
+	public CommentController(OtherService otherService, UserService userService)
 	{
-		private readonly OtherService _otherService;
-		private readonly UserService _userService;
+		_otherService = otherService;
+		_userService = userService;
+	}
 
-		public CommentController(OtherService otherService, UserService userService)
+	//
+	// GET: /Comment/
+
+	public ActionResult Index(int? userId = null)
+	{
+		if (userId.HasValue)
 		{
-			_otherService = otherService;
-			_userService = userService;
+			var user = _userService.GetUser(userId.Value);
+
+			PageProperties.Title = "Comments - " + user.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
+			return View("React/Index");
 		}
-
-		//
-		// GET: /Comment/
-
-		public ActionResult Index(int? userId = null)
+		else
 		{
-			if (userId.HasValue)
-			{
-				var user = _userService.GetUser(userId.Value);
+			PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
 
-				PageProperties.Title = "Comments - " + user.Name;
-				PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
-
-				return View("React/Index");
-			}
-			else
-			{
-				PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
-
-				return View("React/Index");
-			}
+			return View("React/Index");
 		}
 	}
 }

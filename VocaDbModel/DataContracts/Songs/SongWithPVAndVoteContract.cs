@@ -7,27 +7,26 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs
+namespace VocaDb.Model.DataContracts.Songs;
+
+[Obsolete]
+[DataContract]
+public class SongWithPVAndVoteContract : SongContract
 {
-	[Obsolete]
-	[DataContract]
-	public class SongWithPVAndVoteContract : SongContract
+	public SongWithPVAndVoteContract(Song song, SongVoteRating vote, ContentLanguagePreference languagePreference, bool includePVs = true)
+		: base(song, languagePreference)
 	{
-		public SongWithPVAndVoteContract(Song song, SongVoteRating vote, ContentLanguagePreference languagePreference, bool includePVs = true)
-			: base(song, languagePreference)
+		if (includePVs)
 		{
-			if (includePVs)
-			{
-				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			}
-			Vote = vote;
+			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 		}
-
-		[DataMember(Name = "pvs")]
-		public PVContract[] PVs { get; init; }
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public SongVoteRating Vote { get; init; }
+		Vote = vote;
 	}
+
+	[DataMember(Name = "pvs")]
+	public PVContract[] PVs { get; init; }
+
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public SongVoteRating Vote { get; init; }
 }

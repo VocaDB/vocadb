@@ -1,91 +1,90 @@
 using System.Collections;
 
-namespace VocaDb.Model.Domain.Security
+namespace VocaDb.Model.Domain.Security;
+
+public interface IPermissionCollection : IEnumerable<PermissionToken>
 {
-	public interface IPermissionCollection : IEnumerable<PermissionToken>
+	bool Has(PermissionToken flag);
+}
+
+public class PermissionCollection : IPermissionCollection
+{
+	public static PermissionCollection operator +(PermissionCollection left, PermissionCollection right)
 	{
-		bool Has(PermissionToken flag);
+		return left.Merge(right);
 	}
 
-	public class PermissionCollection : IPermissionCollection
+	public static readonly PermissionCollection Empty = new();
+
+	private ISet<PermissionToken> _permissions;
+
+	public void AddAll(IEnumerable<PermissionToken> flags)
 	{
-		public static PermissionCollection operator +(PermissionCollection left, PermissionCollection right)
+		foreach (var flag in flags)
+			_permissions.Add(flag);
+	}
+
+	public PermissionCollection()
+	{
+		_permissions = new HashSet<PermissionToken>();
+	}
+
+	public PermissionCollection(IEnumerable<PermissionToken> permissions)
+	{
+		_permissions = new HashSet<PermissionToken>();
+		AddAll(permissions);
+	}
+
+	public PermissionCollection(ICollection<PermissionToken> permissions)
+	{
+		_permissions = new HashSet<PermissionToken>(permissions);
+	}
+
+	public void Add(PermissionToken permissionToken)
+	{
+		_permissions.Add(permissionToken);
+	}
+
+	public ISet<PermissionToken> Permissions
+	{
+		get => _permissions;
+		protected set
 		{
-			return left.Merge(right);
+			ParamIs.NotNull(() => value);
+			_permissions = value;
 		}
+	}
 
-		public static readonly PermissionCollection Empty = new();
+	public IEnumerable<PermissionToken> PermissionTokens => _permissions;
 
-		private ISet<PermissionToken> _permissions;
+	public IEnumerator<PermissionToken> GetEnumerator()
+	{
+		return PermissionTokens.GetEnumerator();
+	}
 
-		public void AddAll(IEnumerable<PermissionToken> flags)
-		{
-			foreach (var flag in flags)
-				_permissions.Add(flag);
-		}
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return GetEnumerator();
+	}
 
-		public PermissionCollection()
-		{
-			_permissions = new HashSet<PermissionToken>();
-		}
+	public bool Has(PermissionToken flag)
+	{
+		return flag == PermissionToken.Nothing || _permissions.Contains(flag);
+	}
 
-		public PermissionCollection(IEnumerable<PermissionToken> permissions)
-		{
-			_permissions = new HashSet<PermissionToken>();
-			AddAll(permissions);
-		}
+	public PermissionCollection Merge(PermissionCollection collection)
+	{
+		ParamIs.NotNull(() => collection);
 
-		public PermissionCollection(ICollection<PermissionToken> permissions)
-		{
-			_permissions = new HashSet<PermissionToken>(permissions);
-		}
+		if (!collection.Permissions.Any())
+			return this;
 
-		public void Add(PermissionToken permissionToken)
-		{
-			_permissions.Add(permissionToken);
-		}
+		return new PermissionCollection(Permissions.Concat(collection.Permissions));
+	}
 
-		public ISet<PermissionToken> Permissions
-		{
-			get => _permissions;
-			protected set
-			{
-				ParamIs.NotNull(() => value);
-				_permissions = value;
-			}
-		}
-
-		public IEnumerable<PermissionToken> PermissionTokens => _permissions;
-
-		public IEnumerator<PermissionToken> GetEnumerator()
-		{
-			return PermissionTokens.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		public bool Has(PermissionToken flag)
-		{
-			return flag == PermissionToken.Nothing || _permissions.Contains(flag);
-		}
-
-		public PermissionCollection Merge(PermissionCollection collection)
-		{
-			ParamIs.NotNull(() => collection);
-
-			if (!collection.Permissions.Any())
-				return this;
-
-			return new PermissionCollection(Permissions.Concat(collection.Permissions));
-		}
-
-		public PermissionCollection Merge(IPermissionCollection collection)
-		{
-			ParamIs.NotNull(() => collection);
-			return new PermissionCollection(this.Concat(collection));
-		}
+	public PermissionCollection Merge(IPermissionCollection collection)
+	{
+		ParamIs.NotNull(() => collection);
+		return new PermissionCollection(this.Concat(collection));
 	}
 }

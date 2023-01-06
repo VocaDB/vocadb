@@ -5,23 +5,22 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Artists
+namespace VocaDb.Model.DataContracts.Artists;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class ArtistForArtistForApiContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForArtistForApiContract
+	public ArtistForArtistForApiContract() { }
+
+	public ArtistForArtistForApiContract(ArtistForArtist link, LinkDirection direction, ContentLanguagePreference languagePreference)
 	{
-		public ArtistForArtistForApiContract() { }
-
-		public ArtistForArtistForApiContract(ArtistForArtist link, LinkDirection direction, ContentLanguagePreference languagePreference)
-		{
-			Artist = new ArtistContract(link.GetArtist(direction), languagePreference);
-			LinkType = link.LinkType;
-		}
-
-		[DataMember]
-		public ArtistContract Artist { get; init; }
-
-		[DataMember]
-		public ArtistLinkType LinkType { get; init; }
+		Artist = new ArtistContract(link.GetArtist(direction), languagePreference);
+		LinkType = link.LinkType;
 	}
+
+	[DataMember]
+	public ArtistContract Artist { get; init; }
+
+	[DataMember]
+	public ArtistLinkType LinkType { get; init; }
 }

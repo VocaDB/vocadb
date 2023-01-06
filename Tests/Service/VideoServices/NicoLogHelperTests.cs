@@ -1,18 +1,17 @@
 using HtmlAgilityPack;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Tests.Service.VideoServices
-{
+namespace VocaDb.Tests.Service.VideoServices;
 
-	/// <summary>
-	/// Unit tests for <see cref="NicoLogHelper"/>.
-	/// </summary>
-	[TestClass]
-	public class NicoLogHelperTests {
+/// <summary>
+/// Unit tests for <see cref="NicoLogHelper"/>.
+/// </summary>
+[TestClass]
+public class NicoLogHelperTests {
 
-		[TestMethod]
-		public void ParsePage_Test() {
-			var samplePage = @"<!DOCTYPE html>
+	[TestMethod]
+	public void ParsePage_Test() {
+		var samplePage = @"<!DOCTYPE html>
 									<html lang=""ja"">
 									<head>
 									<meta charset=""utf-8"">
@@ -164,19 +163,18 @@ namespace VocaDb.Tests.Service.VideoServices
 									</body>
 									</html>";
 
-			var samplePageHtml = new HtmlDocument();
-			samplePageHtml.LoadHtml(samplePage);
-			var result = NicoLogHelper.ParsePage(samplePageHtml);
+		var samplePageHtml = new HtmlDocument();
+		samplePageHtml.LoadHtml(samplePage);
+		var result = NicoLogHelper.ParsePage(samplePageHtml);
 
-			result.Title.Should().Be("琴葉茜の闇ゲー#185 「木シミュレーター（2023年版）」");
-			result.Author.Should().Be("moco78");
-			result.AuthorId.Should().Be("1594318");
-			result.LengthSeconds.Should().Be(239);
-			result.UploadDate.Should().Be(new DateTime(2022, 4, 3, 18, 0, 0));
-			result.Tags.Should().BeEquivalentTo("ゲーム", "ゲーム", "VOICEROID実況プレイ", "琴葉茜実況プレイ", "琴葉茜・葵実況プレイ", "琴葉茜", "結月ゆかり実況プレイ", "Tree_Simulator", "tree_simulator_2023", "虚無ゲー", "ゲー無", "マリオとワリオ");
-			result.ThumbUrl.Should().Be("https://nicovideo.cdn.nimg.jp/thumbnails/40268860/40268860.66068857");
-		}
-
+		result.Title.Should().Be("琴葉茜の闇ゲー#185 「木シミュレーター（2023年版）」");
+		result.Author.Should().Be("moco78");
+		result.AuthorId.Should().Be("1594318");
+		result.LengthSeconds.Should().Be(239);
+		result.UploadDate.Should().Be(new DateTime(2022, 4, 3, 18, 0, 0));
+		result.Tags.Should().BeEquivalentTo("ゲーム", "ゲーム", "VOICEROID実況プレイ", "琴葉茜実況プレイ", "琴葉茜・葵実況プレイ", "琴葉茜", "結月ゆかり実況プレイ", "Tree_Simulator", "tree_simulator_2023", "虚無ゲー", "ゲー無", "マリオとワリオ");
+		result.ThumbUrl.Should().Be("https://nicovideo.cdn.nimg.jp/thumbnails/40268860/40268860.66068857");
 	}
 
 }
+

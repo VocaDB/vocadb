@@ -1,9 +1,8 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Images
+namespace VocaDb.Model.Domain.Images;
+
+public interface IEntryPictureFilePersister : IEntryImagePersister
 {
-	public interface IEntryPictureFilePersister : IEntryImagePersister
-	{
-	}
 }

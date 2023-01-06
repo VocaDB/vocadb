@@ -1,56 +1,55 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Security
+namespace VocaDb.Model.Domain.Security;
+
+public class IPRule : IEntryWithIntId
 {
-	public class IPRule : IEntryWithIntId
+	private string _address;
+	private string _notes;
+
+	public IPRule()
 	{
-		private string _address;
-		private string _notes;
+		_address = string.Empty;
+		Created = DateTime.Now;
+		Notes = string.Empty;
+	}
 
-		public IPRule()
+	public IPRule(string address, string notes = "")
+	{
+		Address = address;
+		Notes = notes;
+		Created = DateTime.Now;
+	}
+
+	public virtual string Address
+	{
+		get => _address;
+		set
 		{
-			_address = string.Empty;
-			Created = DateTime.Now;
-			Notes = string.Empty;
+			ParamIs.NotNull(() => value);
+			_address = value;
 		}
+	}
 
-		public IPRule(string address, string notes = "")
+	public virtual DateTime Created { get; set; }
+
+	public virtual int Id { get; set; }
+
+	public virtual string Notes
+	{
+		get => _notes;
+		set
 		{
-			Address = address;
-			Notes = notes;
-			Created = DateTime.Now;
+			ParamIs.NotNull(() => value);
+			_notes = value;
 		}
-
-		public virtual string Address
-		{
-			get => _address;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_address = value;
-			}
-		}
-
-		public virtual DateTime Created { get; set; }
-
-		public virtual int Id { get; set; }
-
-		public virtual string Notes
-		{
-			get => _notes;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_notes = value;
-			}
-		}
+	}
 
 #nullable enable
-		public override string ToString()
-		{
-			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"IPRule for {Address}, created at {Created}, notes {Notes}";
 	}
+#nullable disable
 }

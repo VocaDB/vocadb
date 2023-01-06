@@ -2,51 +2,50 @@
 
 using System.Runtime.Serialization;
 
-namespace VocaDb.Model.Service.Security.StopForumSpam
+namespace VocaDb.Model.Service.Security.StopForumSpam;
+
+[DataContract]
+public class SFSResponseContract
 {
-	[DataContract]
-	public class SFSResponseContract
+	/// <summary>
+	/// Confidence threshold when user is considered spammer.
+	/// </summary>
+	public const double ConfidenceTreshold = 75d;
+
+	/// <summary>
+	/// IP/email appears in SFS database.
+	/// </summary>
+	[DataMember]
+	public bool Appears { get; set; }
+
+	public SFSCheckResultType Conclusion
 	{
-		/// <summary>
-		/// Confidence threshold when user is considered spammer.
-		/// </summary>
-		public const double ConfidenceTreshold = 75d;
-
-		/// <summary>
-		/// IP/email appears in SFS database.
-		/// </summary>
-		[DataMember]
-		public bool Appears { get; set; }
-
-		public SFSCheckResultType Conclusion
+		get
 		{
-			get
-			{
-				if (Appears && Confidence > ConfidenceTreshold)
-					return SFSCheckResultType.Malicious;
-				if (Appears)
-					return SFSCheckResultType.Uncertain;
-				return SFSCheckResultType.Harmless;
-			}
+			if (Appears && Confidence > ConfidenceTreshold)
+				return SFSCheckResultType.Malicious;
+			if (Appears)
+				return SFSCheckResultType.Uncertain;
+			return SFSCheckResultType.Harmless;
 		}
-
-		/// <summary>
-		/// Conficence percentage that user is a spammer.
-		/// Range 0-100.
-		/// </summary>
-		[DataMember]
-		public double Confidence { get; set; }
-
-		/// <summary>
-		/// Number of times IP/email has been recorded in SFS database.
-		/// </summary>
-		[DataMember]
-		public int Frequency { get; set; }
-
-		[DataMember]
-		public string IP { get; set; }
-
-		[DataMember]
-		public DateTime LastSeen { get; set; }
 	}
+
+	/// <summary>
+	/// Conficence percentage that user is a spammer.
+	/// Range 0-100.
+	/// </summary>
+	[DataMember]
+	public double Confidence { get; set; }
+
+	/// <summary>
+	/// Number of times IP/email has been recorded in SFS database.
+	/// </summary>
+	[DataMember]
+	public int Frequency { get; set; }
+
+	[DataMember]
+	public string IP { get; set; }
+
+	[DataMember]
+	public DateTime LastSeen { get; set; }
 }

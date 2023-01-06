@@ -1,9 +1,8 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared
+namespace VocaDb.Web.Models.Shared;
+
+public class NamesEditorViewModel
 {
-	public class NamesEditorViewModel
-	{
-		public bool ShowAliases { get; set; } = true;
-	}
+	public bool ShowAliases { get; set; } = true;
 }

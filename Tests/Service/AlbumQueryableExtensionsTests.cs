@@ -3,24 +3,23 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Tests.DatabaseTests;
 
-namespace VocaDb.Tests.Service
+namespace VocaDb.Tests.Service;
+
+[TestClass]
+public class AlbumQueryableExtensionsTests
 {
-	[TestClass]
-	public class AlbumQueryableExtensionsTests
+	private readonly DatabaseTestContext<IDatabaseContext> _context = new();
+
+	[TestMethod]
+	public void WhereHasReleaseYear()
 	{
-		private readonly DatabaseTestContext<IDatabaseContext> _context = new();
-
-		[TestMethod]
-		public void WhereHasReleaseYear()
+		var albums = _context.RunTest(ctx =>
 		{
-			var albums = _context.RunTest(ctx =>
-			{
-				return ctx.Query<Album>().WhereHasReleaseYear().ToArray();
-			});
+			return ctx.Query<Album>().WhereHasReleaseYear().ToArray();
+		});
 
-			albums.Length.Should().Be(2, "Number of albums returned");
-			albums.Any(a => a.DefaultName == "Re:package" && a.OriginalReleaseDate.Year == 2008).Should().BeTrue("Found 'Re:package' album");
-			albums.Any(a => a.DefaultName == "Re:MIKUS" && a.OriginalReleaseDate.Year == 2009).Should().BeTrue("Found 'Re:MIKUS' album");
-		}
+		albums.Length.Should().Be(2, "Number of albums returned");
+		albums.Any(a => a.DefaultName == "Re:package" && a.OriginalReleaseDate.Year == 2008).Should().BeTrue("Found 'Re:package' album");
+		albums.Any(a => a.DefaultName == "Re:MIKUS" && a.OriginalReleaseDate.Year == 2009).Should().BeTrue("Found 'Re:MIKUS' album");
 	}
 }

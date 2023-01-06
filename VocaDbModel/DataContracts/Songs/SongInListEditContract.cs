@@ -4,24 +4,23 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs
+namespace VocaDb.Model.DataContracts.Songs;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class SongInListEditContract : SongInListForApiContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongInListEditContract : SongInListForApiContract
-	{
-		public SongInListEditContract() { }
+	public SongInListEditContract() { }
 
 #nullable enable
-		public SongInListEditContract(SongInList songInList, ContentLanguagePreference languagePreference)
-			: base(songInList, languagePreference, SongOptionalFields.AdditionalNames)
-		{
-			ParamIs.NotNull(() => songInList);
+	public SongInListEditContract(SongInList songInList, ContentLanguagePreference languagePreference)
+		: base(songInList, languagePreference, SongOptionalFields.AdditionalNames)
+	{
+		ParamIs.NotNull(() => songInList);
 
-			SongInListId = songInList.Id;
-		}
+		SongInListId = songInList.Id;
+	}
 #nullable disable
 
-		[DataMember]
-		public int SongInListId { get; init; }
-	}
+	[DataMember]
+	public int SongInListId { get; init; }
 }
