@@ -5,7 +5,7 @@ namespace VocaDb.Web.Code.Security;
 
 public class LogFileReader
 {
-	public string GetLatestLogFileContents()
+	public async Task<string> GetLatestLogFileContents()
 	{
 		var fileTarget = (FileTarget?)LogManager.Configuration.ConfiguredNamedTargets.FirstOrDefault(t => t is FileTarget);
 
@@ -19,6 +19,9 @@ public class LogFileReader
 		if (latestFile == null || !File.Exists(latestFile))
 			return string.Empty;
 
-		return File.ReadAllText(latestFile);
+		// https://github.com/VocaDB/vocadb/issues/1289#issuecomment-1371174365
+		using var fileStream = new FileStream(latestFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+		using var streamReader = new StreamReader(fileStream);
+		return await streamReader.ReadToEndAsync();
 	}
 }
