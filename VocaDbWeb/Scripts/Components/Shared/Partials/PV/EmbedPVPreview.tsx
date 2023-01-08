@@ -1,6 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
+import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import {
 	usePlayQueue,
 	useVdbPlayer,
@@ -107,22 +108,18 @@ export const EmbedPVPreviewButtons = React.memo(
 	},
 );
 
-interface EmbedPVPreviewProps {
+interface EmbedPVPreviewButtonsWrapperProps {
 	entry: EntryContract;
 	pv: PVContract;
-	width?: number;
-	height?: number;
 	allowInline?: boolean;
 }
 
-export const EmbedPVPreview = observer(
+const EmbedPVPreviewButtonsWrapper = observer(
 	({
 		entry,
 		pv,
-		width = 560,
-		height = 315,
 		allowInline,
-	}: EmbedPVPreviewProps): React.ReactElement => {
+	}: EmbedPVPreviewButtonsWrapperProps): React.ReactElement => {
 		const embedPVPreviewRef = React.useRef<HTMLDivElement>(undefined!);
 		const vdbPlayer = useVdbPlayer();
 		const playQueue = usePlayQueue();
@@ -172,6 +169,34 @@ export const EmbedPVPreview = observer(
 		}, [playQueue, handleResize]);
 
 		return (
+			<div css={{ width: '100%', height: '100%' }} ref={embedPVPreviewRef}>
+				{(vdbPlayer.playerBounds === undefined ||
+					pv.id !== playQueue.currentItem?.pv.id) && (
+					<EmbedPVPreviewButtons onPlay={handlePlay} />
+				)}
+			</div>
+		);
+	},
+);
+
+interface EmbedPVPreviewProps {
+	entry: EntryContract;
+	pv: PVContract;
+	width?: number;
+	height?: number;
+	allowInline?: boolean;
+}
+
+export const EmbedPVPreview = observer(
+	({
+		entry,
+		pv,
+		width = 560,
+		height = 315,
+		allowInline,
+	}: EmbedPVPreviewProps): React.ReactElement => {
+		const vdbPlayer = useVdbPlayer();
+		return (
 			<div
 				className="pv-embed-preview"
 				css={{
@@ -182,7 +207,6 @@ export const EmbedPVPreview = observer(
 					width: '100%',
 					aspectRatio: '16 / 9',
 				}}
-				ref={embedPVPreviewRef}
 			>
 				<div
 					css={{
@@ -196,11 +220,22 @@ export const EmbedPVPreview = observer(
 						backgroundImage: `url(${entry.mainPicture?.urlOriginal})`,
 					}}
 				/>
-
-				{(vdbPlayer.playerBounds === undefined ||
-					pv.id !== playQueue.currentItem?.pv.id) && (
-					<EmbedPVPreviewButtons onPlay={handlePlay} />
-				)}
+				<div
+					css={{
+						position: 'absolute',
+						inset: 0,
+					}}
+				>
+					{vdbPlayer.bottomBarEnabled ? (
+						<EmbedPVPreviewButtonsWrapper
+							entry={entry}
+							pv={pv}
+							allowInline={allowInline}
+						/>
+					) : (
+						<EmbedPV pv={pv} width="100%" height="100%" />
+					)}
+				</div>
 			</div>
 		);
 	},

@@ -1,4 +1,5 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
+import { EmbedNico } from '@/Components/Shared/Partials/PV/EmbedNico';
 import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { CookieConsentBanner } from '@/Components/VdbPlayer/CookieConsentBanner';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
@@ -66,7 +67,7 @@ const useAcceptCookies = (
 
 	const key = `${service}.acceptCookies`;
 
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		const item = window.localStorage.getItem(key);
 
 		setAccepted(item === 'true');
@@ -87,7 +88,7 @@ interface EmbedPVProps {
 	pv: PVContract;
 	width?: number | string;
 	height?: number | string;
-	options: PlayerOptions;
+	options?: PlayerOptions;
 }
 
 export const EmbedPV = React.memo(
@@ -100,7 +101,6 @@ export const EmbedPV = React.memo(
 		VdbPlayerConsole.debug('EmbedPV');
 
 		const { service, pvId } = pv;
-
 		const { accepted, handleLoadVideo, handleDoNotAskAgain } = useAcceptCookies(
 			service,
 		);
@@ -148,22 +148,26 @@ export const EmbedPV = React.memo(
 				break;
 		}
 
-		switch (service) {
-			case PVService.File:
-			case PVService.LocalFile:
-			case PVService.NicoNicoDouga:
-			case PVService.Piapro:
-			case PVService.SoundCloud:
-			case PVService.Vimeo:
-			case PVService.Youtube:
-				return (
-					<NostalgicDiva
-						type={playerTypes[service]}
-						videoId={VideoServiceHelper.getVideoId(pv)!}
-						options={options}
-					/>
-				);
+		if (options !== undefined) {
+			switch (service) {
+				case PVService.File:
+				case PVService.LocalFile:
+				case PVService.NicoNicoDouga:
+				case PVService.Piapro:
+				case PVService.SoundCloud:
+				case PVService.Vimeo:
+				case PVService.Youtube:
+					return (
+						<NostalgicDiva
+							type={playerTypes[service]}
+							videoId={VideoServiceHelper.getVideoId(pv)!}
+							options={options}
+						/>
+					);
+			}
+		}
 
+		switch (service) {
 			case PVService.Bandcamp:
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
@@ -177,6 +181,79 @@ export const EmbedPV = React.memo(
 
 			case PVService.Bilibili:
 				return <EmbedBili pv={pv} width={width} height={height} />;
+
+			case PVService.File:
+			case PVService.LocalFile:
+				return isAudio(pv.url) ? (
+					<audio
+						controls
+						controlsList="nodownload"
+						src={pv.url}
+						css={{ width: width, height: height }}
+					/>
+				) : (
+					<div css={{ width: width, height: height }}>
+						<a href={pv.url}>
+							<img
+								style={{ maxWidth: '100%', maxHeight: '100%' }}
+								src={pv.thumbUrl}
+								alt={pv.name}
+							/>
+						</a>
+					</div>
+				);
+
+			case PVService.NicoNicoDouga:
+				return <EmbedNico pvId={pv.pvId} width={width} height={height} />;
+
+			case PVService.Piapro:
+				return <EmbedPiapro pv={pv} width={width} height={height} />;
+
+			case PVService.SoundCloud:
+				return (
+					// eslint-disable-next-line jsx-a11y/iframe-has-title
+					<iframe
+						width={width}
+						height={typeof height === 'number' ? Math.min(height, 166) : height}
+						scrolling="no"
+						frameBorder="no"
+						src={`https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${
+							pv.pvId.split(' ')[0]
+						}&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700`}
+						key={pv.pvId}
+					/>
+				);
+
+			case PVService.Youtube:
+				return (
+					// eslint-disable-next-line jsx-a11y/iframe-has-title
+					<iframe
+						width={width}
+						height={height}
+						src={`https://www.youtube.com/embed/${pv.pvId}`}
+						frameBorder="0"
+						// @ts-ignore
+						wmode="Opaque"
+						allowFullScreen
+						key={pv.pvId}
+					/>
+				);
+
+			case PVService.Vimeo:
+				return (
+					// eslint-disable-next-line jsx-a11y/iframe-has-title
+					<iframe
+						src={`https://player.vimeo.com/video/${pv.pvId}`}
+						width={width}
+						height={height}
+						frameBorder="0"
+						// @ts-ignore
+						webkitAllowFullScreen
+						mozallowfullscreen
+						allowFullScreen
+						key={pv.pvId}
+					/>
+				);
 
 			case PVService.Creofuga:
 				return (
