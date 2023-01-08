@@ -66,6 +66,14 @@ export class VdbPlayerStore
 				this.percent = 0;
 			},
 		);
+
+		reaction(
+			() => this.bottomBarEnabled,
+			() => {
+				this.playing = false;
+				this.playQueue.interacted = false;
+			},
+		);
 	}
 
 	@computed.struct get localStorageState(): VdbPlayerLocalStorageState {

@@ -678,12 +678,13 @@ export const VdbPlayer = observer(
 			);
 		}, [diva, playQueue]);
 
-		return (
+		return vdbPlayer.bottomBarEnabled ? (
 			<>
 				{!playQueue.isEmpty && <MiniPlayer />}
-
-				{vdbPlayer.bottomBarEnabled && <BottomBar />}
+				<BottomBar />
 			</>
+		) : (
+			<></>
 		);
 	},
 );
