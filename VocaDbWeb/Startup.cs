@@ -80,6 +80,10 @@ public class Startup
 
 		services.AddInMemoryCacheOutput();
 
+		services.AddSwaggerGen();
+		// Code from: https://stackoverflow.com/questions/36452468/swagger-ui-web-api-documentation-present-enums-as-strings/55541764#55541764
+		services.AddSwaggerGenNewtonsoftSupport();
+
 		// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 		services
 			.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -259,6 +263,13 @@ public class Startup
 
 		app.UseHttpsRedirection();
 		app.UseStaticFiles();
+
+		// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
+		app.UseSwagger();
+		app.UseSwaggerUI(c =>
+		{
+			c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
+		});
 
 		app.UseRouting();
 
