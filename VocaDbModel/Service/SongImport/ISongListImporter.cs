@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts.SongImport;
 
 namespace VocaDb.Model.Service.SongImport;
@@ -15,9 +13,10 @@ public interface ISongListImporter
 
 public class SongListImporters
 {
-	private readonly ISongListImporter[] importers = {
+	private readonly ISongListImporter[] importers =
+	{
 		new NicoNicoMyListParser(),
-		new YoutubePlaylistImporter()
+		new YoutubePlaylistImporter(),
 	};
 
 	private ISongListImporter GetImporter(string url)

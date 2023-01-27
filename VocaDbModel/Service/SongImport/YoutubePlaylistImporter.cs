@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Text.RegularExpressions;
 using NLog;
 using VocaDb.Model.DataContracts.SongImport;
@@ -37,13 +35,13 @@ public class YoutubePlaylistImporter : ISongListImporter
 		return id;
 	}
 
-	private async Task<PartialImportedSongs> GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll)
+	private async Task<PartialImportedSongs> GetSongsById(string playlistId, string? pageToken, int maxResults, bool parseAll)
 	{
 		var songs = new List<ImportedSongInListContract>();
 
 		var requestUrl = string.Format(PlaylistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
 
-		YoutubePlaylistItemResponse result;
+		YoutubePlaylistItemResponse? result;
 
 		try
 		{
@@ -79,7 +77,7 @@ public class YoutubePlaylistImporter : ISongListImporter
 		var id = GetId(url);
 
 		var requestUrl = string.Format(PlaylistsFormat, YoutubeApiKey, id);
-		YoutubePlaylistResponse result;
+		YoutubePlaylistResponse? result;
 
 		try
 		{
@@ -123,11 +121,11 @@ public class YoutubePlaylistImporter : ISongListImporter
 	{
 		public uint? Position { get; set; }
 
-		public YoutubeResourceId ResourceId { get; set; }
+		public YoutubeResourceId ResourceId { get; set; } = null!;
 	}
 
 	public class YoutubeResourceId
 	{
-		public string VideoId { get; set; }
+		public string VideoId { get; set; } = null!;
 	}
 }
