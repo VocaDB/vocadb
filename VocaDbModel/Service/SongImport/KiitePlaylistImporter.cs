@@ -1,8 +1,27 @@
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.DataContracts.SongImport;
+using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.SongImport;
+
+file sealed record KiitePlaylistItem(
+	[JsonProperty("song_title")]
+	string SongTitle,
+	[JsonProperty("video_id")]
+	string VideoId,
+	[JsonProperty("video_url")]
+	string VideoUrl
+);
+
+file sealed record KiitePlaylistResponse(
+	string Description,
+	[JsonProperty("list_title")]
+	string ListTitle,
+	KiitePlaylistItem[] Songs
+);
 
 public sealed partial class KiitePlaylistImporter : ISongListImporter
 {
@@ -35,10 +54,44 @@ public sealed partial class KiitePlaylistImporter : ISongListImporter
 		throw new NotImplementedException();
 	}
 
-	public Task<ImportedSongListContract> ParseAsync(string url, bool parseAll)
+	private async static Task<ImportedSongListContract> ParseAsync(string url)
 	{
 		var id = GetId(url);
+		var response = await JsonRequest.ReadObjectAsync<KiitePlaylistResponse>($"https://kiite.jp/api/playlist/{id}")
+			?? throw new InvalidOperationException();
 
-		throw new NotImplementedException();
+		return new ImportedSongListContract(
+			name: response.ListTitle,
+			createDate: DateTime.Now,
+			description: response.Description,
+			songs: new PartialImportedSongs(
+				items: response.Songs
+					.Select((song, index) => new ImportedSongInListContract
+					{
+						Name = song.SongTitle,
+						PVId = song.VideoId,
+						PVService = PVService.NicoNicoDouga,
+						SortIndex = index + 1,
+						Url = song.VideoUrl,
+					})
+					.ToArray(),
+				totalCount: response.Songs.Length,
+				nextPageToken: null
+			),
+			wvrId: 0
+		);
+	}
+
+	public async Task<ImportedSongListContract> ParseAsync(string url, bool parseAll)
+	{
+		try
+		{
+			return await ParseAsync(url);
+		}
+		catch (Exception x)
+		{
+			s_log.Warn(x, "Unable to read Kiite playlist");
+			throw new UnableToImportException("Unable to read Kiite playlist");
+		}
 	}
 }

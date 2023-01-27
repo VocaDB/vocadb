@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 
 namespace VocaDb.Model.DataContracts.SongImport;
@@ -7,10 +5,12 @@ namespace VocaDb.Model.DataContracts.SongImport;
 [DataContract]
 public class ImportedSongListContract
 {
+#nullable disable
 	public ImportedSongListContract()
 	{
 		Description = string.Empty;
 	}
+#nullable enable
 
 	public ImportedSongListContract(string name, DateTime createDate, string description, PartialImportedSongs songs, int wvrId)
 	{
