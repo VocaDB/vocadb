@@ -17,6 +17,7 @@ public class SongListImporters
 	{
 		new NicoNicoMyListParser(),
 		new YoutubePlaylistImporter(),
+		new KiitePlaylistImporter(),
 	};
 
 	private ISongListImporter GetImporter(string url)
