@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
+using AngleSharp.Html.Parser;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.DataContracts.SongImport;
@@ -6,22 +9,6 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.SongImport;
-
-file sealed record KiitePlaylistItem(
-	[JsonProperty("song_title")]
-	string SongTitle,
-	[JsonProperty("video_id")]
-	string VideoId,
-	[JsonProperty("video_url")]
-	string VideoUrl
-);
-
-file sealed record KiitePlaylistResponse(
-	string Description,
-	[JsonProperty("list_title")]
-	string ListTitle,
-	KiitePlaylistItem[] Songs
-);
 
 public sealed partial class KiitePlaylistImporter : ISongListImporter
 {
@@ -54,11 +41,65 @@ public sealed partial class KiitePlaylistImporter : ISongListImporter
 		throw new NotImplementedException();
 	}
 
+	private sealed record KiitePlaylistItem(
+		[JsonProperty("song_title")]
+		string SongTitle,
+		[JsonProperty("video_id")]
+		string VideoId,
+		[JsonProperty("video_url")]
+		string VideoUrl
+	);
+
+	private sealed record KiitePlaylistResponse(
+		string Description,
+		[JsonProperty("list_title")]
+		string ListTitle,
+		KiitePlaylistItem[] Songs
+	);
+
+	private static IEnumerable<KiitePlaylistItem> ParsePlaylistItems(IHtmlDocument document)
+	{
+		static KiitePlaylistItem CreateKiitePlaylistItemFromLiElement(IElement element)
+		{
+			var songTitle = element.Attributes["data-song-title"]?.Value ?? throw new FormatException("Unable to extract song title");
+			var videoId = element.Attributes["data-video-id"]?.Value ?? throw new FormatException("Unable to extract video id");
+
+			return new KiitePlaylistItem(
+				SongTitle: songTitle,
+				VideoId: videoId,
+				VideoUrl: $"https://www.nicovideo.jp/watch/{videoId}"
+			);
+		}
+
+		return document.QuerySelectorAll("ol.playlist.col-playlist > li").Select(CreateKiitePlaylistItemFromLiElement);
+	}
+
+	private static KiitePlaylistResponse ParseHtml(IHtmlDocument document)
+	{
+		var contentDescription = document.QuerySelector("#content-description")?.TextContent ?? throw new FormatException("Unable to extract content description");
+		var description = !string.IsNullOrEmpty(contentDescription)
+			? document.QuerySelector(@"meta[name~=""description""]")?.Attributes["content"]?.Value ?? throw new FormatException("Unable to extract description")
+			: string.Empty;
+		var listTitle = document.QuerySelector("#playlist-info")?.Attributes["data-playlist-title"]?.Value ?? throw new FormatException("Unable to extract playlist title");
+		var items = ParsePlaylistItems(document);
+
+		return new KiitePlaylistResponse(
+			Description: description,
+			ListTitle: listTitle,
+			Songs: items.ToArray()
+		);
+	}
+
 	private async static Task<ImportedSongListContract> ParseAsync(string url)
 	{
 		var id = GetId(url);
-		var response = await JsonRequest.ReadObjectAsync<KiitePlaylistResponse>($"https://kiite.jp/api/playlist/{id}")
-			?? throw new InvalidOperationException();
+		var document = await HtmlRequestHelper.GetStreamAsync($"https://kiite.jp/playlist/{id}", stream =>
+		{
+			var parser = new HtmlParser();
+			var document = parser.ParseDocument(stream);
+			return document;
+		});
+		var response = ParseHtml(document);
 
 		return new ImportedSongListContract(
 			name: response.ListTitle,
