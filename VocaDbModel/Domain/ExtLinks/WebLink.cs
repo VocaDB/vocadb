@@ -6,7 +6,11 @@ namespace VocaDb.Model.Domain.ExtLinks;
 
 public class WebLink : IWebLink, IEntryWithIntId
 {
-	public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	public static CollectionDiffWithValue<T, T> Sync<T>(
+		IList<T> oldLinks,
+		IEnumerable<IWebLinkContract> newLinks,
+		IWebLinkFactory<T> webLinkFactory
+	)
 		where T : WebLink
 	{
 		ParamIs.NotNull(() => oldLinks);
@@ -25,7 +29,9 @@ public class WebLink : IWebLink, IEntryWithIntId
 		foreach (var linkEntry in validLinks)
 		{
 			var entry = linkEntry;
-			var old = (entry.Id != 0 ? oldLinks.FirstOrDefault(n => n.Id == entry.Id) : null);
+			var old = entry.Id != 0
+				? oldLinks.FirstOrDefault(n => n.Id == entry.Id)
+				: null;
 
 			if (old != null)
 			{
@@ -40,7 +46,12 @@ public class WebLink : IWebLink, IEntryWithIntId
 			}
 			else
 			{
-				var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category, linkEntry.Disabled);
+				var n = webLinkFactory.CreateWebLink(
+					linkEntry.Description,
+					linkEntry.Url,
+					linkEntry.Category,
+					linkEntry.Disabled
+				);
 				created.Add(n);
 			}
 		}
@@ -48,7 +59,11 @@ public class WebLink : IWebLink, IEntryWithIntId
 		return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
 	}
 
-	public static CollectionDiff<T, T> SyncByValue<T>(IList<T> oldLinks, IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	public static CollectionDiff<T, T> SyncByValue<T>(
+		IList<T> oldLinks,
+		IEnumerable<ArchivedWebLinkContract> newLinks,
+		IWebLinkFactory<T> webLinkFactory
+	)
 		where T : WebLink
 	{
 		var diff = CollectionHelper.Diff(oldLinks, newLinks, (n1, n2) => n1.ContentEquals(n2));
@@ -61,7 +76,12 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 		foreach (var linkEntry in diff.Added)
 		{
-			var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category, linkEntry.Disabled);
+			var n = webLinkFactory.CreateWebLink(
+				linkEntry.Description,
+				linkEntry.Url,
+				linkEntry.Category,
+				linkEntry.Disabled
+			);
 			created.Add(n);
 		}
 
