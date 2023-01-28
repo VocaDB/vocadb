@@ -670,6 +670,8 @@ public class AdminService : ServiceBase
 			var address = GetOrCreateWebAddress(session, uri, actor);
 			webLink.Address = address;
 			address.IncrementReferenceCount();
+
+			session.Update(webLink);
 		}
 
 		PermissionContext.VerifyPermission(PermissionToken.Admin);
@@ -697,7 +699,7 @@ public class AdminService : ServiceBase
 		}
 
 		var webLinks = GetWebLinks();
-		var chunks = Enumerable.Chunk(webLinks, size: 1000);
+		var chunks = webLinks.Chunk(size: 1000);
 		foreach (var chunk in chunks)
 		{
 			HandleTransaction(session =>
@@ -725,6 +727,8 @@ public class AdminService : ServiceBase
 				}
 			});
 		}
+
+		SysLog("updated web addresses");
 	}
 #nullable disable
 }
