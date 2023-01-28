@@ -1,3 +1,4 @@
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class DeleteEntryStore {
@@ -5,7 +6,11 @@ export class DeleteEntryStore {
 	@observable notes = '';
 
 	constructor(
-		private readonly deleteCallback: (notes: string) => Promise<void>,
+		private readonly antiforgeryRepo: AntiforgeryRepository,
+		private readonly deleteCallback: (
+			requestToken: string,
+			notes: string,
+		) => Promise<void>,
 		readonly notesRequired = false,
 	) {
 		makeObservable(this);
@@ -15,9 +20,12 @@ export class DeleteEntryStore {
 		return !this.notesRequired || !!this.notes;
 	}
 
-	@action deleteEntry = (): Promise<void> => {
+	@action deleteEntry = async (): Promise<void> => {
 		this.dialogVisible = false;
-		return this.deleteCallback(this.notes);
+
+		const requestToken = await this.antiforgeryRepo.getToken();
+
+		return this.deleteCallback(requestToken, this.notes);
 	};
 
 	@action show = (): void => {

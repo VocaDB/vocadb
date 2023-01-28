@@ -2,46 +2,45 @@
 
 using System.Configuration;
 
-namespace VocaDb.Model.Utils.Config
+namespace VocaDb.Model.Utils.Config;
+
+public class SpecialTagsSection : ConfigurationSection, ISpecialTags
 {
-	public class SpecialTagsSection : ConfigurationSection, ISpecialTags
+	private int TagId(string name)
 	{
-		private int TagId(string name)
-		{
-			return Properties.Contains(name) ? (int)this[name] : 0;
-		}
-
-		[ConfigurationProperty("changedLyrics")]
-		public int ChangedLyrics
-		{
-			get => TagId("changedLyrics");
-			set => this["changedLyrics"] = value;
-		}
-
-		[ConfigurationProperty("free")]
-		public int Free
-		{
-			get => TagId("free");
-			set => this["free"] = value;
-		}
-
-		[ConfigurationProperty("shortVersion")]
-		public int ShortVersion
-		{
-			get => TagId("shortVersion");
-			set => this["shortVersion"] = value;
-		}
-
-		[ConfigurationProperty("instrumental")]
-		public int Instrumental
-		{
-			get => TagId("instrumental");
-			set => this["instrumental"] = value;
-		}
+		return Properties.Contains(name) ? (int)this[name] : 0;
 	}
 
-	public interface ISpecialTags
+	[ConfigurationProperty("changedLyrics")]
+	public int ChangedLyrics
 	{
-		int ChangedLyrics { get; }
+		get => TagId("changedLyrics");
+		set => this["changedLyrics"] = value;
 	}
+
+	[ConfigurationProperty("free")]
+	public int Free
+	{
+		get => TagId("free");
+		set => this["free"] = value;
+	}
+
+	[ConfigurationProperty("shortVersion")]
+	public int ShortVersion
+	{
+		get => TagId("shortVersion");
+		set => this["shortVersion"] = value;
+	}
+
+	[ConfigurationProperty("instrumental")]
+	public int Instrumental
+	{
+		get => TagId("instrumental");
+		set => this["instrumental"] = value;
+	}
+}
+
+public interface ISpecialTags
+{
+	int ChangedLyrics { get; }
 }

@@ -1,21 +1,20 @@
 #nullable disable
 
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout
+namespace VocaDb.Web.Models.Shared.Partials.Knockout;
+
+public class EntryValidationMessageViewModel
 {
-	public class EntryValidationMessageViewModel
+	public EntryValidationMessageViewModel(bool draft, Dictionary<string, string> validationMessages, string helpSection)
 	{
-		public EntryValidationMessageViewModel(bool draft, Dictionary<string, string> validationMessages, string helpSection)
-		{
-			Draft = draft;
-			ValidationMessages = validationMessages;
-			HelpSection = helpSection;
-		}
-
-		public bool Draft { get; set; }
-
-		public Dictionary<string, string> ValidationMessages { get; set; }
-
-		public string HelpSection { get; set; }
+		Draft = draft;
+		ValidationMessages = validationMessages;
+		HelpSection = helpSection;
 	}
+
+	public bool Draft { get; set; }
+
+	public Dictionary<string, string> ValidationMessages { get; set; }
+
+	public string HelpSection { get; set; }
 }

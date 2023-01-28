@@ -3,54 +3,53 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.DataContracts
+namespace VocaDb.Model.DataContracts;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class WebLinkForApiContract : IWebLinkWithDescriptionOrUrl, IWebLinkContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class WebLinkForApiContract : IWebLinkWithDescriptionOrUrl, IWebLinkContract
-	{
 #nullable disable
-		public WebLinkForApiContract() { }
+	public WebLinkForApiContract() { }
 #nullable enable
 
-		public WebLinkForApiContract(WebLink webLink, WebLinkOptionalFields fields = WebLinkOptionalFields.None)
-		{
-			ParamIs.NotNull(() => webLink);
-
-			Category = webLink.Category;
-			Description = webLink.Description;
-
-			if (fields.HasFlag(WebLinkOptionalFields.DescriptionOrUrl))
-				DescriptionOrUrl = webLink.DescriptionOrUrl;
-
-			Disabled = webLink.Disabled;
-			Id = webLink.Id;
-			Url = webLink.Url;
-		}
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public WebLinkCategory Category { get; set; }
-
-		[DataMember]
-		public string Description { get; set; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public string? DescriptionOrUrl { get; init; }
-
-		[DataMember]
-		public bool Disabled { get; set; }
-
-		[DataMember]
-		public int Id { get; init; }
-
-		[DataMember]
-		public string Url { get; set; }
-	}
-
-	[Flags]
-	public enum WebLinkOptionalFields
+	public WebLinkForApiContract(WebLink webLink, WebLinkOptionalFields fields = WebLinkOptionalFields.None)
 	{
-		None = 0,
-		DescriptionOrUrl = 1 << 0,
+		ParamIs.NotNull(() => webLink);
+
+		Category = webLink.Category;
+		Description = webLink.Description;
+
+		if (fields.HasFlag(WebLinkOptionalFields.DescriptionOrUrl))
+			DescriptionOrUrl = webLink.DescriptionOrUrl;
+
+		Disabled = webLink.Disabled;
+		Id = webLink.Id;
+		Url = webLink.Url;
 	}
+
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public WebLinkCategory Category { get; set; }
+
+	[DataMember]
+	public string Description { get; set; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public string? DescriptionOrUrl { get; init; }
+
+	[DataMember]
+	public bool Disabled { get; set; }
+
+	[DataMember]
+	public int Id { get; init; }
+
+	[DataMember]
+	public string Url { get; set; }
+}
+
+[Flags]
+public enum WebLinkOptionalFields
+{
+	None = 0,
+	DescriptionOrUrl = 1 << 0,
 }

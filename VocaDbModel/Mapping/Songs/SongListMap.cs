@@ -3,89 +3,88 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs
+namespace VocaDb.Model.Mapping.Songs;
+
+public class SongListMap : ClassMap<SongList>
 {
-	public class SongListMap : ClassMap<SongList>
+	public SongListMap()
 	{
-		public SongListMap()
+		Cache.ReadWrite();
+		Id(m => m.Id);
+
+		Map(m => m.CreateDate).Not.Nullable();
+		Map(m => m.Deleted).Not.Nullable();
+		Map(m => m.Description).Length(4000).Not.Nullable();
+		Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
+		Map(m => m.Name).Length(200).Not.Nullable();
+		Map(m => m.Status).Not.Nullable();
+		Map(m => m.Version).Not.Nullable();
+
+		Component(m => m.ArchivedVersionsManager,
+			c => c.HasMany(m => m.Versions).KeyColumn("[SongList]").Inverse().Cascade.All().OrderBy("Created DESC"));
+
+		Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
+
+		Component(m => m.Tags, c =>
 		{
-			Cache.ReadWrite();
-			Id(m => m.Id);
+			c.HasMany(m => m.Usages).KeyColumn("[SongList]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+		});
 
-			Map(m => m.CreateDate).Not.Nullable();
-			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Description).Length(4000).Not.Nullable();
-			Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
-			Map(m => m.Name).Length(200).Not.Nullable();
-			Map(m => m.Status).Not.Nullable();
-			Map(m => m.Version).Not.Nullable();
+		Component(m => m.Thumb, c =>
+		{
+			c.Map(m => m.Mime).Column("ThumbMime").Length(30);
+			c.ParentReference(m => m.Entry);
+		});
 
-			Component(m => m.ArchivedVersionsManager,
-				c => c.HasMany(m => m.Versions).KeyColumn("[SongList]").Inverse().Cascade.All().OrderBy("Created DESC"));
+		References(m => m.Author).Not.Nullable();
 
-			Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
+		HasMany(m => m.AllSongs)
+			.KeyColumn("[List]")
+			.OrderBy("[Order]")
+			.Inverse().Cascade.AllDeleteOrphan()
+			.Cache.ReadWrite();
 
-			Component(m => m.Tags, c =>
-			{
-				c.HasMany(m => m.Usages).KeyColumn("[SongList]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-			});
+		HasMany(m => m.AllComments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
 
-			Component(m => m.Thumb, c =>
-			{
-				c.Map(m => m.Mime).Column("ThumbMime").Length(30);
-				c.ParentReference(m => m.Entry);
-			});
-
-			References(m => m.Author).Not.Nullable();
-
-			HasMany(m => m.AllSongs)
-				.KeyColumn("[List]")
-				.OrderBy("[Order]")
-				.Inverse().Cascade.AllDeleteOrphan()
-				.Cache.ReadWrite();
-
-			HasMany(m => m.AllComments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
-
-			HasMany(m => m.Events).Inverse().Cache.ReadWrite();
-		}
+		HasMany(m => m.Events).Inverse().Cache.ReadWrite();
 	}
+}
 
-	public class SongInListMap : ClassMap<SongInList>
+public class SongInListMap : ClassMap<SongInList>
+{
+	public SongInListMap()
 	{
-		public SongInListMap()
-		{
-			Table("SongsInLists");
-			Cache.ReadWrite();
-			Id(m => m.Id);
+		Table("SongsInLists");
+		Cache.ReadWrite();
+		Id(m => m.Id);
 
-			Map(m => m.Notes).Length(200).Not.Nullable();
-			Map(m => m.Order).Not.Nullable();
+		Map(m => m.Notes).Length(200).Not.Nullable();
+		Map(m => m.Order).Not.Nullable();
 
-			References(m => m.List).Not.Nullable();
-			References(m => m.Song).Not.Nullable();
-		}
+		References(m => m.List).Not.Nullable();
+		References(m => m.Song).Not.Nullable();
 	}
+}
 
-	public class ArchivedSongListVersionMap : ClassMap<ArchivedSongListVersion>
+public class ArchivedSongListVersionMap : ClassMap<ArchivedSongListVersion>
+{
+	public ArchivedSongListVersionMap()
 	{
-		public ArchivedSongListVersionMap()
+		Id(m => m.Id);
+
+		Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
+		Map(m => m.Created).Not.Nullable();
+		Map(m => m.Hidden).Not.Nullable();
+		Map(m => m.Notes).Length(200).Not.Nullable();
+		Map(m => m.Status).Not.Nullable();
+		Map(m => m.Version).Not.Nullable();
+
+		References(m => m.Author).Not.Nullable();
+		References(m => m.SongList).Not.Nullable();
+
+		Component(m => m.Diff, c =>
 		{
-			Id(m => m.Id);
-
-			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Hidden).Not.Nullable();
-			Map(m => m.Notes).Length(200).Not.Nullable();
-			Map(m => m.Status).Not.Nullable();
-			Map(m => m.Version).Not.Nullable();
-
-			References(m => m.Author).Not.Nullable();
-			References(m => m.SongList).Not.Nullable();
-
-			Component(m => m.Diff, c =>
-			{
-				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
-			});
-		}
+			c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
+		});
 	}
 }

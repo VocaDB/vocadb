@@ -1,13 +1,12 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Songs
-{
-	public class SongHit : GenericEntryHit<Song>
-	{
-		public SongHit() { }
+namespace VocaDb.Model.Domain.Songs;
 
-		public SongHit(Song song, int agent)
-			: base(song, agent) { }
-	}
+public class SongHit : GenericEntryHit<Song>
+{
+	public SongHit() { }
+
+	public SongHit(Song song, int agent)
+		: base(song, agent) { }
 }

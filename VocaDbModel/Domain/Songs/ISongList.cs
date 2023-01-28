@@ -2,12 +2,11 @@
 
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Songs
-{
-	public interface ISongList
-	{
-		IUser Author { get; }
+namespace VocaDb.Model.Domain.Songs;
 
-		bool FeaturedList { get; }
-	}
+public interface ISongList
+{
+	IUser Author { get; }
+
+	bool FeaturedList { get; }
 }

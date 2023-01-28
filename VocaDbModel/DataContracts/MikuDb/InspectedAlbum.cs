@@ -5,64 +5,63 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.MikuDb
+namespace VocaDb.Model.DataContracts.MikuDb;
+
+public class InspectedAlbum
 {
-	public class InspectedAlbum
+	public InspectedAlbum()
 	{
-		public InspectedAlbum()
-		{
-		}
-
-		public InspectedAlbum(MikuDbAlbumContract importedAlbum)
-			: this()
-		{
-			ImportedAlbum = importedAlbum;
-		}
-
-		public InspectedArtist[] Artists { get; set; }
-
-		public AlbumContract[] ExistingAlbums { get; set; }
-
-		public MikuDbAlbumContract ImportedAlbum { get; init; }
-
-		public AlbumContract MergedAlbum { get; set; }
-
-		public int? MergedAlbumId { get; set; }
-
-		public bool MergeTracks { get; set; }
-
-		public ContentLanguageSelection SelectedLanguage { get; init; }
-
-		public InspectedTrack[] Tracks { get; set; }
 	}
 
-	public class InspectedArtist
+	public InspectedAlbum(MikuDbAlbumContract importedAlbum)
+		: this()
 	{
-		public InspectedArtist() { }
-
-		public InspectedArtist(string artistName)
-		{
-			Name = artistName;
-		}
-
-		public ArtistContract ExistingArtist { get; set; }
-
-		public string Name { get; init; }
+		ImportedAlbum = importedAlbum;
 	}
 
-	public class InspectedTrack
+	public InspectedArtist[] Artists { get; set; }
+
+	public AlbumContract[] ExistingAlbums { get; set; }
+
+	public MikuDbAlbumContract ImportedAlbum { get; init; }
+
+	public AlbumContract MergedAlbum { get; set; }
+
+	public int? MergedAlbumId { get; set; }
+
+	public bool MergeTracks { get; set; }
+
+	public ContentLanguageSelection SelectedLanguage { get; init; }
+
+	public InspectedTrack[] Tracks { get; set; }
+}
+
+public class InspectedArtist
+{
+	public InspectedArtist() { }
+
+	public InspectedArtist(string artistName)
 	{
-		public InspectedTrack() { }
-
-		public InspectedTrack(ImportedAlbumTrack importedTrack)
-		{
-			ImportedTrack = importedTrack;
-		}
-
-		public SongContract ExistingSong { get; set; }
-
-		public ImportedAlbumTrack ImportedTrack { get; init; }
-
-		public bool Selected { get; set; }
+		Name = artistName;
 	}
+
+	public ArtistContract ExistingArtist { get; set; }
+
+	public string Name { get; init; }
+}
+
+public class InspectedTrack
+{
+	public InspectedTrack() { }
+
+	public InspectedTrack(ImportedAlbumTrack importedTrack)
+	{
+		ImportedTrack = importedTrack;
+	}
+
+	public SongContract ExistingSong { get; set; }
+
+	public ImportedAlbumTrack ImportedTrack { get; init; }
+
+	public bool Selected { get; set; }
 }

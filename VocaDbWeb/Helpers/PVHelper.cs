@@ -1,34 +1,37 @@
-#nullable disable
-
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Web.Helpers
+namespace VocaDb.Web.Helpers;
+
+public class PVHelper
 {
-	public class PVHelper
+	private readonly LoginManager _manager;
+
+	public PVHelper(LoginManager manager)
 	{
-		private readonly LoginManager _manager;
+		_manager = manager;
+	}
 
-		public PVHelper(LoginManager manager)
-		{
-			_manager = manager;
-		}
+	public LoginManager LoginManager => _manager;
 
-		public LoginManager LoginManager => _manager;
+	private PVService? PreferredVideoService => LoginManager.IsLoggedIn
+		? LoginManager.LoggedUser.PreferredVideoService
+		: null;
 
-		private PVService? PreferredVideoService => LoginManager.IsLoggedIn ? (PVService?)LoginManager.LoggedUser.PreferredVideoService : null;
+	public PVContract[] GetMainPVs(PVContract[] allPvs)
+	{
+		return EnumVal<PVService>.Values
+			.Select(service => VideoServiceHelper.GetPV(allPvs, service))
+			.WhereNotNull()
+			.ToArray();
+	}
 
-		public PVContract[] GetMainPVs(PVContract[] allPvs)
-		{
-			return EnumVal<PVService>.Values.Select(service => VideoServiceHelper.GetPV(allPvs, service)).Where(p => p != null).ToArray();
-		}
-
-		public PVContract PrimaryPV(IEnumerable<PVContract> pvs)
-		{
-			return VideoServiceHelper.PrimaryPV(pvs, PreferredVideoService);
-		}
+	public PVContract? PrimaryPV(IEnumerable<PVContract> pvs)
+	{
+		return VideoServiceHelper.PrimaryPV(pvs, PreferredVideoService);
 	}
 }

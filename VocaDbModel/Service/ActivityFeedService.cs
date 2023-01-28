@@ -7,53 +7,52 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service
+namespace VocaDb.Model.Service;
+
+public class ActivityFeedService : ServiceBase
 {
-	public class ActivityFeedService : ServiceBase
+	private readonly IUserIconFactory _userIconFactory;
+	private readonly EntryForApiContractFactory _entryForApiContractFactory;
+
+	public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+		IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory)
+		: base(sessionFactory, permissionContext, entryLinkFactory)
 	{
-		private readonly IUserIconFactory _userIconFactory;
-		private readonly EntryForApiContractFactory _entryForApiContractFactory;
+		_userIconFactory = userIconFactory;
+		_entryForApiContractFactory = entryForApiContractFactory;
+	}
 
-		public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory)
-			: base(sessionFactory, permissionContext, entryLinkFactory)
+	public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries)
+	{
+		if (!PermissionContext.IsLoggedIn)
+			return new PartialFindResult<ActivityEntryForApiContract>();
+
+		return HandleQuery(session =>
 		{
-			_userIconFactory = userIconFactory;
-			_entryForApiContractFactory = entryForApiContractFactory;
-		}
+			var userId = PermissionContext.LoggedUserId;
 
-		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries)
-		{
-			if (!PermissionContext.IsLoggedIn)
-				return new PartialFindResult<ActivityEntryForApiContract>();
+			var albumEntries = session.Query<AlbumActivityEntry>()
+				.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
+				.OrderByDescending(a => a.CreateDate)
+				.Take(maxEntries)
+				.ToArray();
 
-			return HandleQuery(session =>
-			{
-				var userId = PermissionContext.LoggedUserId;
+			var songEntries = session.Query<SongActivityEntry>()
+				.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
+				.OrderByDescending(a => a.CreateDate)
+				.Take(maxEntries)
+				.ToArray();
 
-				var albumEntries = session.Query<AlbumActivityEntry>()
-					.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-					.OrderByDescending(a => a.CreateDate)
-					.Take(maxEntries)
-					.ToArray();
+			var contracts = albumEntries.Cast<ActivityEntry>()
+				.Concat(songEntries)
+				.OrderByDescending(a => a.CreateDate)
+				.Take(maxEntries)
+				.Select(e => new ActivityEntryForApiContract(e, _entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
+					LanguagePreference), _userIconFactory,
+				PermissionContext, ActivityEntryOptionalFields.None))
+				.ToArray();
 
-				var songEntries = session.Query<SongActivityEntry>()
-					.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-					.OrderByDescending(a => a.CreateDate)
-					.Take(maxEntries)
-					.ToArray();
-
-				var contracts = albumEntries.Cast<ActivityEntry>()
-					.Concat(songEntries)
-					.OrderByDescending(a => a.CreateDate)
-					.Take(maxEntries)
-					.Select(e => new ActivityEntryForApiContract(e, _entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
-						LanguagePreference), _userIconFactory,
-					PermissionContext, ActivityEntryOptionalFields.None))
-					.ToArray();
-
-				return new PartialFindResult<ActivityEntryForApiContract>(contracts, 0);
-			});
-		}
+			return new PartialFindResult<ActivityEntryForApiContract>(contracts, 0);
+		});
 	}
 }

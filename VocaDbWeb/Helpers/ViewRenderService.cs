@@ -8,59 +8,58 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace VocaDb.Web.Helpers
+namespace VocaDb.Web.Helpers;
+
+public interface IViewRenderService
 {
-	public interface IViewRenderService
+	Task<string> RenderToStringAsync(string viewName, object model);
+}
+
+public class ViewRenderService : IViewRenderService
+{
+	private readonly IRazorViewEngine _razorViewEngine;
+	private readonly ITempDataProvider _tempDataProvider;
+	private readonly IServiceProvider _serviceProvider;
+	private readonly IHttpContextAccessor _contextAccessor;
+
+	public ViewRenderService(
+		IRazorViewEngine razorViewEngine,
+		ITempDataProvider tempDataProvider,
+		IServiceProvider serviceProvider,
+		IHttpContextAccessor contextAccessor)
 	{
-		Task<string> RenderToStringAsync(string viewName, object model);
+		_razorViewEngine = razorViewEngine;
+		_tempDataProvider = tempDataProvider;
+		_serviceProvider = serviceProvider;
+		_contextAccessor = contextAccessor;
 	}
 
-	public class ViewRenderService : IViewRenderService
+	public async Task<string> RenderToStringAsync(string viewName, object model)
 	{
-		private readonly IRazorViewEngine _razorViewEngine;
-		private readonly ITempDataProvider _tempDataProvider;
-		private readonly IServiceProvider _serviceProvider;
-		private readonly IHttpContextAccessor _contextAccessor;
+		var httpContext = _contextAccessor.HttpContext ?? new DefaultHttpContext { RequestServices = _serviceProvider };
+		var actionContext = new ActionContext(httpContext, httpContext.GetRouteData(), new ActionDescriptor());
 
-		public ViewRenderService(
-			IRazorViewEngine razorViewEngine,
-			ITempDataProvider tempDataProvider,
-			IServiceProvider serviceProvider,
-			IHttpContextAccessor contextAccessor)
+		using var sw = new StringWriter();
+		var viewResult = _razorViewEngine.FindView(actionContext, viewName, isMainPage: false);
+
+		if (viewResult.View == null)
+			throw new ArgumentNullException($"{viewName} does not match any available view");
+
+		var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
 		{
-			_razorViewEngine = razorViewEngine;
-			_tempDataProvider = tempDataProvider;
-			_serviceProvider = serviceProvider;
-			_contextAccessor = contextAccessor;
-		}
+			Model = model
+		};
 
-		public async Task<string> RenderToStringAsync(string viewName, object model)
-		{
-			var httpContext = _contextAccessor.HttpContext ?? new DefaultHttpContext { RequestServices = _serviceProvider };
-			var actionContext = new ActionContext(httpContext, httpContext.GetRouteData(), new ActionDescriptor());
+		var viewContext = new ViewContext(
+			actionContext,
+			viewResult.View,
+			viewDictionary,
+			new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
+			sw,
+			new HtmlHelperOptions()
+		);
 
-			using var sw = new StringWriter();
-			var viewResult = _razorViewEngine.FindView(actionContext, viewName, isMainPage: false);
-
-			if (viewResult.View == null)
-				throw new ArgumentNullException($"{viewName} does not match any available view");
-
-			var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
-			{
-				Model = model
-			};
-
-			var viewContext = new ViewContext(
-				actionContext,
-				viewResult.View,
-				viewDictionary,
-				new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
-				sw,
-				new HtmlHelperOptions()
-			);
-
-			await viewResult.View.RenderAsync(viewContext);
-			return sw.ToString();
-		}
+		await viewResult.View.RenderAsync(viewContext);
+		return sw.ToString();
 	}
 }

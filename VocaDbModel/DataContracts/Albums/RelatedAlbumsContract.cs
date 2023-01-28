@@ -1,16 +1,15 @@
 #nullable disable
 
 
-namespace VocaDb.Model.DataContracts.Albums
+namespace VocaDb.Model.DataContracts.Albums;
+
+public class RelatedAlbumsContract
 {
-	public class RelatedAlbumsContract
-	{
-		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
+	public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
-		public AlbumContract[] ArtistMatches { get; init; }
+	public AlbumContract[] ArtistMatches { get; init; }
 
-		public AlbumContract[] LikeMatches { get; init; }
+	public AlbumContract[] LikeMatches { get; init; }
 
-		public AlbumContract[] TagMatches { get; init; }
-	}
+	public AlbumContract[] TagMatches { get; init; }
 }

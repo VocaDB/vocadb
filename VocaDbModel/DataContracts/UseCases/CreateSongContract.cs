@@ -3,29 +3,28 @@
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.UseCases
+namespace VocaDb.Model.DataContracts.UseCases;
+
+[Obsolete]
+public class CreateSongContract
 {
-	[Obsolete]
-	public class CreateSongContract
-	{
-		public ArtistForSongContract[] Artists { get; init; }
+	public ArtistForSongContract[] Artists { get; init; }
 
-		public bool Draft { get; init; }
+	public bool Draft { get; init; }
 
-		public LyricsForSongContract[] Lyrics { get; init; }
+	public LyricsForSongContract[] Lyrics { get; init; }
 
-		public LocalizedStringContract[] Names { get; init; }
+	public LocalizedStringContract[] Names { get; init; }
 
-		public SongContract OriginalVersion { get; init; }
+	public SongContract OriginalVersion { get; init; }
 
-		public string[] PVUrls { get; set; }
+	public string[] PVUrls { get; set; }
 
-		public string ReprintPVUrl { get; init; }
+	public string ReprintPVUrl { get; init; }
 
-		public SongType SongType { get; set; }
+	public SongType SongType { get; set; }
 
-		public string UpdateNotes { get; init; }
+	public string UpdateNotes { get; init; }
 
-		public WebLinkContract[] WebLinks { get; init; }
-	}
+	public WebLinkContract[] WebLinks { get; init; }
 }

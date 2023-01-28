@@ -1,12 +1,11 @@
 #nullable disable
 
-namespace VocaDb.Model.Domain.Songs
+namespace VocaDb.Model.Domain.Songs;
+
+/// <summary>
+/// Child entity linked to a song.
+/// </summary>
+public interface ISongLink
 {
-	/// <summary>
-	/// Child entity linked to a song.
-	/// </summary>
-	public interface ISongLink
-	{
-		Song Song { get; set; }
-	}
+	Song Song { get; set; }
 }

@@ -3,13 +3,12 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents
-{
-	public class ArchivedEventVersionContract : ArchivedObjectVersionWithFieldsContract<ReleaseEventEditableFields, EntryEditEvent>
-	{
-		public ArchivedEventVersionContract() { }
+namespace VocaDb.Model.DataContracts.ReleaseEvents;
 
-		public ArchivedEventVersionContract(ArchivedReleaseEventVersion archivedVersion, IUserIconFactory userIconFactory)
-			: base(archivedVersion, userIconFactory, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
-	}
+public class ArchivedEventVersionContract : ArchivedObjectVersionWithFieldsContract<ReleaseEventEditableFields, EntryEditEvent>
+{
+	public ArchivedEventVersionContract() { }
+
+	public ArchivedEventVersionContract(ArchivedReleaseEventVersion archivedVersion, IUserIconFactory userIconFactory)
+		: base(archivedVersion, userIconFactory, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
 }

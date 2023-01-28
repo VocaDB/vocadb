@@ -8,12 +8,23 @@ import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
+import { VdbPlayerEntryLink } from '@/Components/VdbPlayer/VdbPlayerEntryLink';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { EntryType } from '@/Models/EntryType';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { PVService } from '@/Models/PVs/PVService';
+import { PVType } from '@/Models/PVs/PVType';
+import { songRepo } from '@/Repositories/SongRepository';
 import { urlMapper } from '@/Shared/UrlMapper';
+import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
@@ -22,8 +33,169 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
+
+const getByPV = async (
+	pv: PartialPVContract,
+): Promise<{
+	pv: PartialPVContract;
+	song: SongApiContract | undefined;
+}> => {
+	// TODO: Replace with getByPVs.
+	const song = await songRepo.getByPV({
+		pvService: pv.service,
+		pvId: pv.pvId,
+		fields: PlayQueueRepository.songOptionalFields,
+	});
+	return { pv: pv, song: song };
+};
+
+type PartialPVContract = Pick<PVContract, 'service' | 'pvId'>;
+
+interface ImportPlaylistDialogProps {
+	open: boolean;
+	onClose: () => void;
+	pvs: PartialPVContract[];
+	useApi: boolean;
+}
+
+const ImportPlaylistDialog = ({
+	open,
+	onClose,
+	pvs,
+	useApi,
+}: ImportPlaylistDialogProps): React.ReactElement => {
+	const [loading, setLoading] = React.useState(false);
+
+	const playQueue = usePlayQueue();
+	const handleClickAddToPlayQueue = React.useCallback(async (): Promise<void> => {
+		setLoading(true);
+
+		const songs = useApi
+			? await Promise.all(pvs.map(getByPV))
+			: pvs.map((pv) => ({ pv: pv, song: undefined }));
+
+		setLoading(false);
+
+		const items = songs.map(({ pv, song }) => {
+			const pvId = pv.pvId;
+			return song
+				? new PlayQueueItem(
+						{
+							entryType: EntryType.Song,
+							id: song.id,
+							name: song.name,
+							status: song.status,
+							additionalNames: song.additionalNames,
+							urlThumb: song.mainPicture?.urlThumb ?? '',
+							pvs: song.pvs ?? [],
+							artistIds:
+								song.artists
+									?.filter(({ artist }) => artist !== undefined)
+									.map((artist) => artist.artist!.id) ?? [],
+							tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
+							artistString: song.artistString,
+							songType: song.songType,
+						},
+						song.pvs!.find((pv) => pv.pvId === pvId)!.id,
+				  )
+				: new PlayQueueItem(
+						{
+							entryType: EntryType.PV,
+							id: 0,
+							name: pv.pvId,
+							status: EntryStatus.Finished,
+							additionalNames: '',
+							urlThumb: '',
+							pvs: [
+								{
+									service: pv.service,
+									id: 0,
+									pvId: pv.pvId,
+									pvType: PVType.Other,
+								},
+							],
+							artistIds: [],
+							tagIds: [],
+						},
+						0 /* HACK */,
+				  );
+		});
+
+		playQueue.addToPlayQueue(items);
+
+		onClose();
+	}, [playQueue, pvs, useApi, onClose]);
+
+	return (
+		<JQueryUIDialog
+			title="Import playlist" /* LOC */
+			autoOpen={open}
+			width={550}
+			close={onClose}
+			buttons={[
+				{
+					text: 'Add to play queue' /* LOC */,
+					click: handleClickAddToPlayQueue,
+					disabled: loading,
+				},
+				{
+					text: 'Cancel' /* LOC */,
+					click: onClose,
+				},
+			]}
+		>
+			Are you sure you want to add {pvs?.length} song(s) to play queue?
+		</JQueryUIDialog>
+	);
+};
+
+const serviceMap: Record<string, PVService> = {
+	nnd: PVService.NicoNicoDouga,
+	niconico: PVService.NicoNicoDouga,
+	niconicodouga: PVService.NicoNicoDouga,
+	piapro: PVService.Piapro,
+	sc: PVService.SoundCloud,
+	soundcloud: PVService.SoundCloud,
+	vimeo: PVService.Vimeo,
+	yt: PVService.Youtube,
+	youtube: PVService.Youtube,
+};
+
+const tryParsePVString = (pvString: string): PartialPVContract | undefined => {
+	const [serviceString, pvId] = pvString.split(':') as [PVService, string];
+	if (!pvId) return undefined;
+
+	const service = serviceMap[serviceString.toLowerCase()];
+	if (!service) return undefined;
+
+	return { service, pvId };
+};
+
+const ImportPlaylist = (): React.ReactElement => {
+	const { hash } = useLocation();
+	const searchParams = new URLSearchParams(hash.slice(1));
+	const pvsString = searchParams.get('pvs');
+	const useApiString = searchParams.get('useApi');
+	const pvs =
+		pvsString
+			?.split(',')
+			.map((pvString) => tryParsePVString(pvString))
+			.filter((pv): pv is PartialPVContract => pv !== undefined) ?? [];
+	const useApi = useApiString === 'true';
+
+	const navigate = useNavigate();
+
+	return (
+		<ImportPlaylistDialog
+			open={pvs.length > 0}
+			onClose={(): void => navigate('/playlist', { replace: true })}
+			pvs={pvs}
+			useApi={useApi}
+		/>
+	);
+};
 
 interface SkipListEditProps {
 	open: boolean;
@@ -208,8 +380,8 @@ const PlaylistTableRow = observer(
 				</td>
 				<td style={{ width: '80px' }}>
 					{item.entry.urlThumb && (
-						<Link
-							to={EntryUrlMapper.details_entry(item.entry)}
+						<VdbPlayerEntryLink
+							entry={item.entry}
 							title={item.entry.additionalNames}
 						>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -219,7 +391,7 @@ const PlaylistTableRow = observer(
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>
-						</Link>
+						</VdbPlayerEntryLink>
 					)}
 				</td>
 				<td>
@@ -244,12 +416,12 @@ const PlaylistTableRow = observer(
 						</Button>{' '}
 						<PlaylistTableRowDropdown item={item} />
 					</div>
-					<Link
-						to={EntryUrlMapper.details_entry(item.entry)}
+					<VdbPlayerEntryLink
+						entry={item.entry}
 						title={item.entry.additionalNames}
 					>
 						{item.entry.name}
-					</Link>{' '}
+					</VdbPlayerEntryLink>{' '}
 					{item.entry.entryType === 'Song' /* TODO: enum */ &&
 						item.entry.songType && (
 							<>
@@ -415,6 +587,8 @@ const PlaylistIndex = observer(
 					open={skipListDialogOpen}
 					onClose={(): void => setSkipListDialogOpen(false)}
 				/>
+
+				<ImportPlaylist />
 			</Layout>
 		);
 	},

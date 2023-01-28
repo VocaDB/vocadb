@@ -1,43 +1,41 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts.SongImport;
 
-namespace VocaDb.Model.Service.SongImport
+namespace VocaDb.Model.Service.SongImport;
+
+public interface ISongListImporter
 {
-	public interface ISongListImporter
+	Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll);
+
+	Task<ImportedSongListContract> ParseAsync(string url, bool parseAll);
+
+	bool MatchUrl(string url);
+}
+
+public class SongListImporters
+{
+	private readonly ISongListImporter[] importers =
 	{
-		Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll);
+		new NicoNicoMyListParser(),
+		new YoutubePlaylistImporter(),
+	};
 
-		Task<ImportedSongListContract> ParseAsync(string url, bool parseAll);
+	private ISongListImporter GetImporter(string url)
+	{
+		var importer = importers.FirstOrDefault(i => i.MatchUrl(url));
 
-		bool MatchUrl(string url);
+		if (importer == null)
+			throw new UnableToImportException($"URL {url} is not recognized. Check the URL and try again");
+
+		return importer;
 	}
 
-	public class SongListImporters
+	public Task<PartialImportedSongs> GetSongs(string url, string pageToken, int maxResults, bool parseAll)
 	{
-		private readonly ISongListImporter[] importers = {
-			new NicoNicoMyListParser(),
-			new YoutubePlaylistImporter()
-		};
+		return GetImporter(url).GetSongsAsync(url, pageToken, maxResults, parseAll);
+	}
 
-		private ISongListImporter GetImporter(string url)
-		{
-			var importer = importers.FirstOrDefault(i => i.MatchUrl(url));
-
-			if (importer == null)
-				throw new UnableToImportException($"URL {url} is not recognized. Check the URL and try again");
-
-			return importer;
-		}
-
-		public Task<PartialImportedSongs> GetSongs(string url, string pageToken, int maxResults, bool parseAll)
-		{
-			return GetImporter(url).GetSongsAsync(url, pageToken, maxResults, parseAll);
-		}
-
-		public Task<ImportedSongListContract> Parse(string url, bool parseAll)
-		{
-			return GetImporter(url).ParseAsync(url, parseAll);
-		}
+	public Task<ImportedSongListContract> Parse(string url, bool parseAll)
+	{
+		return GetImporter(url).ParseAsync(url, parseAll);
 	}
 }

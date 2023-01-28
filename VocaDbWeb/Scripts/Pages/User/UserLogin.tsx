@@ -2,6 +2,7 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { UserLoginStore } from '@/Stores/User/UserLoginStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
@@ -42,7 +43,9 @@ const UserLoginLayout = observer(
 						e.preventDefault();
 
 						try {
-							await userLoginStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
+
+							await userLoginStore.submit(requestToken);
 
 							// TODO: TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
 
@@ -133,7 +136,9 @@ const UserLoginLayout = observer(
 				{t('ViewRes:Shared.Period')}
 				<br />
 				{t('ViewRes.User:Login.ForgotPassword')}{' '}
-				<a href="/User/ForgotPassword">{t('ViewRes.User:Login.ResetPass')}</a>
+				<Link to="/User/ForgotPassword">
+					{t('ViewRes.User:Login.ResetPass')}
+				</Link>
 				{t('ViewRes:Shared.Period')}
 				<br />
 				<hr />

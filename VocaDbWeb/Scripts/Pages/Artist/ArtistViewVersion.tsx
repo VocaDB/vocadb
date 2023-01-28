@@ -10,16 +10,21 @@ import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/Arc
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedArtistStore } from '@/Stores/Artist/ArchivedArtistStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 
 interface ArtistViewVersionLayoutProps {
 	contract: ArchivedArtistVersionDetailsContract;
@@ -40,6 +45,8 @@ const ArtistViewVersionLayout = observer(
 		const changedFieldNames = useChangedFieldNames();
 
 		useLocationStateStore(archivedArtistStore);
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout
@@ -86,18 +93,22 @@ const ArtistViewVersionLayout = observer(
 								contract.artist.version - 1 && (
 								<JQueryUIButton
 									as="a"
-									href={
-										`/Artist/RevertToVersion?${qs.stringify({
-											archivedArtistVersionId: contract.archivedVersion.id,
-										})}` /* TODO: Convert to POST. */
-									}
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(
+											window.confirm(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											const id = await artistRepo.revertToVersion(
+												requestToken,
+												{
+													archivedVersionId: contract.archivedVersion.id,
+												},
+											);
+
+											navigate(`/Artist/Edit/${id}`);
 										}
 									}}
 									icons={{ primary: 'ui-icon-arrowrefresh-1-w' }}
@@ -125,15 +136,18 @@ const ArtistViewVersionLayout = observer(
 							(contract.archivedVersion.hidden ? (
 								<JQueryUIButton
 									as="a"
-									href={`/Artist/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: false,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
+											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await artistRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-unlocked' }}
@@ -143,13 +157,16 @@ const ArtistViewVersionLayout = observer(
 							) : (
 								<JQueryUIButton
 									as="a"
-									href={`/Artist/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: true,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
-										if (!window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											e.preventDefault();
+									onClick={async (e): Promise<void> => {
+										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await artistRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-locked' }}

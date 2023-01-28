@@ -1,14 +1,13 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.User
-{
-	public class SongVoteRatingsRadioKnockoutViewModel
-	{
-		public SongVoteRatingsRadioKnockoutViewModel(string binding)
-		{
-			Binding = binding;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.User;
 
-		public string Binding { get; set; }
+public class SongVoteRatingsRadioKnockoutViewModel
+{
+	public SongVoteRatingsRadioKnockoutViewModel(string binding)
+	{
+		Binding = binding;
 	}
+
+	public string Binding { get; set; }
 }

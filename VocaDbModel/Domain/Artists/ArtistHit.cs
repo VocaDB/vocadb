@@ -1,10 +1,9 @@
 #nullable disable
 
-namespace VocaDb.Model.Domain.Artists
+namespace VocaDb.Model.Domain.Artists;
+
+public class ArtistHit : GenericEntryHit<Artist>
 {
-	public class ArtistHit : GenericEntryHit<Artist>
-	{
-		public ArtistHit() { }
-		public ArtistHit(Artist entry, int agent) : base(entry, agent) { }
-	}
+	public ArtistHit() { }
+	public ArtistHit(Artist entry, int agent) : base(entry, agent) { }
 }

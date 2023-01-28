@@ -8,7 +8,6 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -20,216 +19,199 @@ using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Artist;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+public class ArtistController : ControllerBase
 {
-	public class ArtistController : ControllerBase
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+
+	private readonly ArtistQueries _queries;
+	private readonly ArtistService _service;
+	private readonly MarkdownParser _markdownParser;
+
+	private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist)
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		return _queries.Get(id, artist => new ArtistEditViewModel(new ArtistContract(artist, PermissionContext.LanguagePreference), PermissionContext,
+			EntryPermissionManager.CanDelete(PermissionContext, artist), editedArtist));
+	}
 
-		private readonly ArtistQueries _queries;
-		private readonly ArtistService _service;
-		private readonly MarkdownParser _markdownParser;
+	public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser)
+	{
+		_service = service;
+		_queries = queries;
+		_markdownParser = markdownParser;
+	}
 
-		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist)
+	private ArtistService Service => _service;
+
+	public ActionResult ArchivedVersionPicture(int id)
+	{
+		var contract = Service.GetArchivedArtistPicture(id);
+
+		return Picture(contract);
+	}
+
+	public ActionResult ArchivedVersionXml(int id = InvalidId)
+	{
+		if (id == InvalidId)
+			return NoId();
+
+		var doc = _queries.GetVersionXml<ArchivedArtistVersion>(id);
+		var content = XmlHelper.SerializeToUTF8XmlString(doc);
+
+		return Xml(content);
+	}
+
+	[HttpPost]
+	[RestrictBannedIP]
+	public async Task<IActionResult> CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
+	{
+		var (created, _) = await _queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+		return created ? NoContent() : BadRequest();
+	}
+
+	[Obsolete]
+	public ActionResult Index(IndexRouteParams routeParams)
+	{
+		return RedirectToAction("Index", "Search", new SearchRouteParams
 		{
-			return _queries.Get(id, artist => new ArtistEditViewModel(new ArtistContract(artist, PermissionContext.LanguagePreference), PermissionContext,
-				EntryPermissionManager.CanDelete(PermissionContext, artist), editedArtist));
-		}
+			searchType = SearchType.Artist,
+			filter = routeParams.filter,
+			sort = routeParams.sort,
+			artistType = routeParams.artistType
+		});
+	}
 
-		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser)
-		{
-			_service = service;
-			_queries = queries;
-			_markdownParser = markdownParser;
-		}
+	[Authorize]
+	public ActionResult RemoveTagUsage(long id)
+	{
+		var artistId = _queries.RemoveTagUsage(id);
+		TempData.SetStatusMessage("Tag usage removed");
 
-		private ArtistService Service => _service;
+		return RedirectToAction("ManageTagUsages", new { id = artistId });
+	}
 
-		public ActionResult ArchivedVersionPicture(int id)
-		{
-			var contract = Service.GetArchivedArtistPicture(id);
+	public ActionResult Restore(int id)
+	{
+		Service.Restore(id);
 
-			return Picture(contract);
-		}
+		return RedirectToAction("Edit", new { id = id });
+	}
 
-		public ActionResult ArchivedVersionXml(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
+	[HttpPost]
+	public ActionResult FindDuplicate(string term1, string term2, string term3, string linkUrl)
+	{
+		var result = _queries.FindDuplicates(new[] { term1, term2, term3 }, linkUrl).Select(e => new DuplicateEntryResultContract<ArtistEditableFields>(e, ArtistEditableFields.Names));
+		return LowercaseJson(result);
+	}
 
-			var doc = _queries.GetVersionXml<ArchivedArtistVersion>(id);
-			var content = XmlHelper.SerializeToUTF8XmlString(doc);
+	//
+	// GET: /Artist/Details/5
 
-			return Xml(content);
-		}
+	public ActionResult Details(int id = InvalidId)
+	{
+		if (id == InvalidId)
+			return NotFound();
 
-		[HttpPost]
-		[RestrictBannedIP]
-		public async Task<IActionResult> CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
-		{
-			var (created, _) = await _queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		WebHelper.VerifyUserAgent(Request);
 
-			return created ? NoContent() : BadRequest();
-		}
+		var model = _queries.GetDetails(id, GetHostnameForValidHit());
 
-		[Obsolete]
-		public ActionResult Index(IndexRouteParams routeParams)
-		{
-			return RedirectToAction("Index", "Search", new SearchRouteParams
-			{
-				searchType = SearchType.Artist,
-				filter = routeParams.filter,
-				sort = routeParams.sort,
-				artistType = routeParams.artistType
-			});
-		}
+		var hasDescription = !model.Description.IsEmpty;
+		var prop = PageProperties;
+		prop.GlobalSearchType = EntryType.Artist;
+		prop.Title = model.Name;
+		prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
+		prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
+		//prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
+		prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
+		prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
+		prop.OpenGraph.ShowTwitterCard = true;
+		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		[Authorize]
-		public ActionResult RemoveTagUsage(long id)
-		{
-			var artistId = _queries.RemoveTagUsage(id);
-			TempData.SetStatusMessage("Tag usage removed");
+		return View("React/Index");
+	}
 
-			return RedirectToAction("ManageTagUsages", new { id = artistId });
-		}
+	public ActionResult Picture(int id = InvalidId)
+	{
+		if (id == InvalidId)
+			return NoId();
 
-		public ActionResult Restore(int id)
-		{
-			Service.Restore(id);
+		var artist = Service.GetArtistPicture(id);
 
-			return RedirectToAction("Edit", new { id = id });
-		}
+		return Picture(artist);
+	}
 
-		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId)
-		{
-			var result = await _queries.RevertToVersion(archivedArtistVersionId);
+	public ActionResult PictureThumb(int id = InvalidId)
+	{
+		if (id == InvalidId)
+			return NoId();
 
-			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
+		var artist = _queries.GetPictureThumb(id);
+		return Picture(artist);
+	}
 
-			return RedirectToAction("Edit", new { id = result.Id });
-		}
-
-		[HttpPost]
-		public ActionResult FindDuplicate(string term1, string term2, string term3, string linkUrl)
-		{
-			var result = _queries.FindDuplicates(new[] { term1, term2, term3 }, linkUrl).Select(e => new DuplicateEntryResultContract<ArtistEditableFields>(e, ArtistEditableFields.Names));
-			return LowercaseJson(result);
-		}
-
-		//
-		// GET: /Artist/Details/5
-
-		public ActionResult Details(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			WebHelper.VerifyUserAgent(Request);
-
-			var model = _queries.GetDetails(id, GetHostnameForValidHit());
-
-			var hasDescription = !model.Description.IsEmpty;
-			var prop = PageProperties;
-			prop.GlobalSearchType = EntryType.Artist;
-			prop.Title = model.Name;
-			prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
-			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
-			//prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
-			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
-			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
-			prop.OpenGraph.ShowTwitterCard = true;
-			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
-
-			return View("React/Index");
-		}
-
-		public ActionResult Picture(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
-
-			var artist = Service.GetArtistPicture(id);
-
-			return Picture(artist);
-		}
-
-		public ActionResult PictureThumb(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
-
-			var artist = _queries.GetPictureThumb(id);
-			return Picture(artist);
-		}
-
-		[Authorize]
-		public ActionResult Create()
-		{
-			return View("React/Index");
-		}
+	[Authorize]
+	public ActionResult Create()
+	{
+		return View("React/Index");
+	}
 
 #nullable enable
-		//
-		// GET: /Artist/Edit/5
-		[Authorize]
-		public ActionResult Edit(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
+	//
+	// GET: /Artist/Edit/5
+	[Authorize]
+	public ActionResult Edit(int id = InvalidId)
+	{
+		if (id == InvalidId)
+			return NoId();
 
-			return View("React/Index");
-		}
+		return View("React/Index");
+	}
 #nullable disable
 
-		[Authorize]
-		public ActionResult ManageTagUsages(int id)
-		{
-			var artist = Service.GetEntryWithTagUsages(id);
+	[Authorize]
+	public ActionResult ManageTagUsages(int id)
+	{
+		var artist = Service.GetEntryWithTagUsages(id);
 
-			PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
+		PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
 
-			return View(artist);
-		}
+		return View(artist);
+	}
 
-		public ActionResult Merge()
-		{
-			return View("React/Index");
-		}
+	public ActionResult Merge()
+	{
+		return View("React/Index");
+	}
 
-		public ActionResult Name(int id)
-		{
-			var contract = Service.GetArtist(id);
-			return Content(contract.Name);
-		}
+	public ActionResult Name(int id)
+	{
+		var contract = Service.GetArtist(id);
+		return Content(contract.Name);
+	}
 
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
-		{
-			_queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
+	public ActionResult Versions(int id)
+	{
+		var contract = Service.GetArtistWithArchivedVersions(id);
 
-			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-		}
+		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		public ActionResult Versions(int id)
-		{
-			var contract = Service.GetArtistWithArchivedVersions(id);
+		return View("React/Index");
+	}
 
-			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
-			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)
+	{
+		if (id == InvalidId)
+			return NoId();
 
-			return View("React/Index");
-		}
+		var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-		public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)
-		{
-			if (id == InvalidId)
-				return NoId();
+		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
-
-			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
-			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
-
-			return View("React/Index");
-		}
+		return View("React/Index");
 	}
 }

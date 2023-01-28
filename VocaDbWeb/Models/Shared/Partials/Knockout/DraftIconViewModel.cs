@@ -1,14 +1,13 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout
-{
-	public class DraftIconViewModel
-	{
-		public DraftIconViewModel(string statusBinding)
-		{
-			StatusBinding = statusBinding;
-		}
+namespace VocaDb.Web.Models.Shared.Partials.Knockout;
 
-		public string StatusBinding { get; set; }
+public class DraftIconViewModel
+{
+	public DraftIconViewModel(string statusBinding)
+	{
+		StatusBinding = statusBinding;
 	}
+
+	public string StatusBinding { get; set; }
 }

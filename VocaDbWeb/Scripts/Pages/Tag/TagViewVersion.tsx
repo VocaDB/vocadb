@@ -10,13 +10,13 @@ import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedT
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
@@ -97,15 +97,18 @@ const TagViewVersionLayout = observer(
 							(contract.archivedVersion.hidden ? (
 								<JQueryUIButton
 									as="a"
-									href={`/Tag/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: false,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
+									onClick={async (e): Promise<void> => {
 										if (
-											!window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
+											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											e.preventDefault();
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await tagRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-unlocked' }}
@@ -115,13 +118,16 @@ const TagViewVersionLayout = observer(
 							) : (
 								<JQueryUIButton
 									as="a"
-									href={`/Tag/UpdateVersionVisibility?${qs.stringify({
-										archivedVersionId: contract.archivedVersion.id,
-										hidden: true,
-									})}`} /* TODO: Convert to POST. */
-									onClick={(e): void => {
-										if (!window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											e.preventDefault();
+									onClick={async (e): Promise<void> => {
+										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await tagRepo.updateVersionVisibility(requestToken, {
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
+
+											window.location.reload();
 										}
 									}}
 									icons={{ primary: 'ui-icon-locked' }}

@@ -9,98 +9,97 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Activityfeed
+namespace VocaDb.Model.Domain.Activityfeed;
+
+public abstract class GenericActivityEntry<TEntry, TArchivedVersion> : ActivityEntry
+	where TEntry : class, IEntryBase, IEntryWithNames
+	where TArchivedVersion : ArchivedObjectVersion
 {
-	public abstract class GenericActivityEntry<TEntry, TArchivedVersion> : ActivityEntry
-		where TEntry : class, IEntryBase, IEntryWithNames
-		where TArchivedVersion : ArchivedObjectVersion
+	private TEntry _entry;
+
+	protected GenericActivityEntry() { }
+
+	protected GenericActivityEntry(TEntry entry, EntryEditEvent editEvent, User author, TArchivedVersion archivedVersion)
+		: base(author, editEvent)
 	{
-		private TEntry _entry;
+		ParamIs.NotNull(() => entry);
 
-		protected GenericActivityEntry() { }
+		Entry = entry;
+		EditEvent = editEvent;
+		ArchivedVersion = archivedVersion;
+	}
 
-		protected GenericActivityEntry(TEntry entry, EntryEditEvent editEvent, User author, TArchivedVersion archivedVersion)
-			: base(author, editEvent)
+	public virtual TArchivedVersion ArchivedVersion { get; set; }
+
+	public override ArchivedObjectVersion ArchivedVersionBase => ArchivedVersion;
+
+	public virtual TEntry Entry
+	{
+		get => _entry;
+		set
 		{
-			ParamIs.NotNull(() => entry);
-
-			Entry = entry;
-			EditEvent = editEvent;
-			ArchivedVersion = archivedVersion;
+			ParamIs.NotNull(() => value);
+			_entry = value;
 		}
-
-		public virtual TArchivedVersion ArchivedVersion { get; set; }
-
-		public override ArchivedObjectVersion ArchivedVersionBase => ArchivedVersion;
-
-		public virtual TEntry Entry
-		{
-			get => _entry;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_entry = value;
-			}
-		}
-
-		public override IEntryWithNames EntryBase => Entry;
-
-		public override EntryType EntryType { get; }
 	}
 
-	public class AlbumActivityEntry : GenericActivityEntry<Album, ArchivedAlbumVersion>
-	{
-		public AlbumActivityEntry() { }
+	public override IEntryWithNames EntryBase => Entry;
 
-		public AlbumActivityEntry(Album album, EntryEditEvent editEvent, User author, ArchivedAlbumVersion archivedVersion)
-			: base(album, editEvent, author, archivedVersion) { }
-	}
+	public override EntryType EntryType { get; }
+}
 
-	public class ArtistActivityEntry : GenericActivityEntry<Artist, ArchivedArtistVersion>
-	{
-		public ArtistActivityEntry() { }
+public class AlbumActivityEntry : GenericActivityEntry<Album, ArchivedAlbumVersion>
+{
+	public AlbumActivityEntry() { }
 
-		public ArtistActivityEntry(Artist artist, EntryEditEvent editEvent, User author, ArchivedArtistVersion archivedVersion)
-			: base(artist, editEvent, author, archivedVersion) { }
-	}
+	public AlbumActivityEntry(Album album, EntryEditEvent editEvent, User author, ArchivedAlbumVersion archivedVersion)
+		: base(album, editEvent, author, archivedVersion) { }
+}
 
-	public class ReleaseEventActivityEntry : GenericActivityEntry<ReleaseEvent, ArchivedReleaseEventVersion>
-	{
-		public ReleaseEventActivityEntry() { }
+public class ArtistActivityEntry : GenericActivityEntry<Artist, ArchivedArtistVersion>
+{
+	public ArtistActivityEntry() { }
 
-		public ReleaseEventActivityEntry(ReleaseEvent releaseEvent, EntryEditEvent editEvent, User author, ArchivedReleaseEventVersion archivedVersion)
-			: base(releaseEvent, editEvent, author, archivedVersion) { }
-	}
+	public ArtistActivityEntry(Artist artist, EntryEditEvent editEvent, User author, ArchivedArtistVersion archivedVersion)
+		: base(artist, editEvent, author, archivedVersion) { }
+}
 
-	public class SongActivityEntry : GenericActivityEntry<Song, ArchivedSongVersion>
-	{
-		public SongActivityEntry() { }
+public class ReleaseEventActivityEntry : GenericActivityEntry<ReleaseEvent, ArchivedReleaseEventVersion>
+{
+	public ReleaseEventActivityEntry() { }
 
-		public SongActivityEntry(Song song, EntryEditEvent editEvent, User author, ArchivedSongVersion archivedVersion)
-			: base(song, editEvent, author, archivedVersion) { }
-	}
+	public ReleaseEventActivityEntry(ReleaseEvent releaseEvent, EntryEditEvent editEvent, User author, ArchivedReleaseEventVersion archivedVersion)
+		: base(releaseEvent, editEvent, author, archivedVersion) { }
+}
 
-	public class SongListActivityEntry : GenericActivityEntry<SongList, ArchivedSongListVersion>
-	{
-		public SongListActivityEntry() { }
+public class SongActivityEntry : GenericActivityEntry<Song, ArchivedSongVersion>
+{
+	public SongActivityEntry() { }
 
-		public SongListActivityEntry(SongList songlist, EntryEditEvent editEvent, User author, ArchivedSongListVersion archivedVersion)
-			: base(songlist, editEvent, author, archivedVersion) { }
-	}
+	public SongActivityEntry(Song song, EntryEditEvent editEvent, User author, ArchivedSongVersion archivedVersion)
+		: base(song, editEvent, author, archivedVersion) { }
+}
 
-	public class TagActivityEntry : GenericActivityEntry<Tag, ArchivedTagVersion>
-	{
-		public TagActivityEntry() { }
+public class SongListActivityEntry : GenericActivityEntry<SongList, ArchivedSongListVersion>
+{
+	public SongListActivityEntry() { }
 
-		public TagActivityEntry(Tag tag, EntryEditEvent editEvent, User author, ArchivedTagVersion archivedVersion)
-			: base(tag, editEvent, author, archivedVersion) { }
-	}
+	public SongListActivityEntry(SongList songlist, EntryEditEvent editEvent, User author, ArchivedSongListVersion archivedVersion)
+		: base(songlist, editEvent, author, archivedVersion) { }
+}
 
-	public class VenueActivityEntry : GenericActivityEntry<Venue, ArchivedVenueVersion>
-	{
-		public VenueActivityEntry() { }
+public class TagActivityEntry : GenericActivityEntry<Tag, ArchivedTagVersion>
+{
+	public TagActivityEntry() { }
 
-		public VenueActivityEntry(Venue venue, EntryEditEvent editEvent, User author, ArchivedVenueVersion archivedVersion)
-			: base(venue, editEvent, author, archivedVersion) { }
-	}
+	public TagActivityEntry(Tag tag, EntryEditEvent editEvent, User author, ArchivedTagVersion archivedVersion)
+		: base(tag, editEvent, author, archivedVersion) { }
+}
+
+public class VenueActivityEntry : GenericActivityEntry<Venue, ArchivedVenueVersion>
+{
+	public VenueActivityEntry() { }
+
+	public VenueActivityEntry(Venue venue, EntryEditEvent editEvent, User author, ArchivedVenueVersion archivedVersion)
+		: base(venue, editEvent, author, archivedVersion) { }
 }

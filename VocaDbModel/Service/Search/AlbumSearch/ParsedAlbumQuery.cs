@@ -1,19 +1,18 @@
 #nullable disable
 
-namespace VocaDb.Model.Service.Search.AlbumSearch
+namespace VocaDb.Model.Service.Search.AlbumSearch;
+
+public class ParsedAlbumQuery
 {
-	public class ParsedAlbumQuery
+	public ParsedAlbumQuery()
 	{
-		public ParsedAlbumQuery()
-		{
-		}
-
-		public int ArtistId { get; set; }
-
-		public string Name { get; set; }
-
-		public string TagName { get; set; }
-
-		public bool HasNameQuery => !string.IsNullOrEmpty(Name);
 	}
+
+	public int ArtistId { get; set; }
+
+	public string Name { get; set; }
+
+	public string TagName { get; set; }
+
+	public bool HasNameQuery => !string.IsNullOrEmpty(Name);
 }

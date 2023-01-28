@@ -14,8 +14,8 @@ import {
 	usePlayQueue,
 	useVdbPlayer,
 } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { VdbPlayerEntryLink } from '@/Components/VdbPlayer/VdbPlayerEntryLink';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { css } from '@emotion/react';
@@ -147,7 +147,7 @@ const EntryInfo = observer(
 	({ entry }: EntryInfoProps): React.ReactElement => {
 		return (
 			<div css={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-				<Link to={EntryUrlMapper.details_entry(entry)} css={{ marginRight: 8 }}>
+				<VdbPlayerEntryLink entry={entry} css={{ marginRight: 8 }}>
 					<div
 						css={{
 							width: 64,
@@ -160,7 +160,7 @@ const EntryInfo = observer(
 							backgroundImage: `url(${entry.urlThumb})`,
 						}}
 					/>
-				</Link>
+				</VdbPlayerEntryLink>
 
 				<div
 					css={{
@@ -170,8 +170,8 @@ const EntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					<Link
-						to={EntryUrlMapper.details_entry(entry)}
+					<VdbPlayerEntryLink
+						entry={entry}
 						css={css`
 							color: white;
 							&:hover {
@@ -187,7 +187,7 @@ const EntryInfo = observer(
 						`}
 					>
 						{entry.name}
-					</Link>
+					</VdbPlayerEntryLink>
 					{(entry.entryType === 'Album' || entry.entryType === 'Song') && (
 						<div css={{ display: 'flex' }}>
 							<span
@@ -379,7 +379,7 @@ const PlayerControls = observer(
 					}}
 				>
 					<div css={{ maxWidth: '100%' }}>
-						{playQueue.currentItem && playQueue.currentItem.entry && (
+						{playQueue.currentItem && (
 							<EntryInfo entry={playQueue.currentItem.entry} />
 						)}
 					</div>
@@ -425,7 +425,13 @@ const EmbedPVWrapper = observer(
 			VdbPlayerConsole.error('error', event);
 		}, []);
 
-		const handleLoaded = React.useCallback(() => diva.play(), [diva]);
+		const handleLoaded = React.useCallback(() => {
+			if (!playQueue.interacted) {
+				return;
+			}
+
+			diva.play();
+		}, [playQueue, diva]);
 
 		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
 			vdbPlayer,
@@ -529,7 +535,7 @@ const MiniPlayer = observer(
 									: 0,
 								width: miniPlayerWidth,
 								height: miniPlayerHeight,
-								zIndex: 3939,
+								zIndex: 998,
 						  }
 						: {
 								position: 'absolute',
@@ -625,7 +631,7 @@ const BottomBar = observer(
 					left: 0,
 					right: 0,
 					bottom: 0,
-					zIndex: 3939,
+					zIndex: 998,
 					backgroundColor: 'rgb(39, 39, 39)',
 					display: 'flex',
 					flexDirection: 'column',

@@ -2,21 +2,20 @@
 
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Artists
+namespace VocaDb.Model.DataContracts.Artists;
+
+[Obsolete]
+public class CreateArtistContract
 {
-	[Obsolete]
-	public class CreateArtistContract
-	{
-		public ArtistType ArtistType { get; init; }
+	public ArtistType ArtistType { get; init; }
 
-		public string Description { get; init; }
+	public string Description { get; init; }
 
-		public bool Draft { get; init; }
+	public bool Draft { get; init; }
 
-		public LocalizedStringContract[] Names { get; init; }
+	public LocalizedStringContract[] Names { get; init; }
 
-		public EntryPictureFileContract PictureData { get; set; }
+	public EntryPictureFileContract PictureData { get; set; }
 
-		public WebLinkContract WebLink { get; init; }
-	}
+	public WebLinkContract WebLink { get; init; }
 }

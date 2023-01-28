@@ -1,12 +1,11 @@
 #nullable disable
 
 
-namespace VocaDb.Model.Domain.Tags
-{
-	public interface ITagUsageFactory<T> where T : TagUsage
-	{
-		T CreateTagUsage(Tag tag);
+namespace VocaDb.Model.Domain.Tags;
 
-		T CreateTagUsage(Tag tag, T usage);
-	}
+public interface ITagUsageFactory<T> where T : TagUsage
+{
+	T CreateTagUsage(Tag tag);
+
+	T CreateTagUsage(Tag tag, T usage);
 }

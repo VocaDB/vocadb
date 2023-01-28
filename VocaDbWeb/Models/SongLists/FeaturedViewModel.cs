@@ -1,9 +1,8 @@
 #nullable disable
 
-namespace VocaDb.Web.Models.SongLists
+namespace VocaDb.Web.Models.SongLists;
+
+public class FeaturedViewModel
 {
-	public class FeaturedViewModel
-	{
-		public int[] TagId { get; set; }
-	}
+	public int[] TagId { get; set; }
 }

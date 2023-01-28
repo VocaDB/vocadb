@@ -48,6 +48,7 @@ const ArtistSongs = observer(
 										new AutoplayContext(
 											PlayQueueRepositoryType.Songs,
 											songsStore.queryParams,
+											false,
 										),
 									);
 								}}
@@ -55,6 +56,23 @@ const ArtistSongs = observer(
 								className="btn-nomargin"
 							>
 								<i className="icon-play noMargin" /> Play{/* LOC */}
+							</Button>
+						</ButtonGroup>
+						<ButtonGroup>
+							<Button
+								onClick={async (): Promise<void> => {
+									await playQueue.startAutoplay(
+										new AutoplayContext(
+											PlayQueueRepositoryType.Songs,
+											songsStore.queryParams,
+											true,
+										),
+									);
+								}}
+								title="Shuffle and play" /* LOC */
+								className="btn-nomargin"
+							>
+								<i className="icon icon-random" /> Shuffle and play{/* LOC */}
 							</Button>
 						</ButtonGroup>
 					</div>

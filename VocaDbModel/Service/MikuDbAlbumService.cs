@@ -23,592 +23,591 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Service
-{
-	public class MikuDbAlbumService : ServiceBase
-	{
-		private readonly AlbumService _albumService;
-		private readonly SongService _songService;
+namespace VocaDb.Model.Service;
 
-		public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			AlbumService albumService, SongService songService)
-			: base(sessionFactory, permissionContext, entryLinkFactory)
+public class MikuDbAlbumService : ServiceBase
+{
+	private readonly AlbumService _albumService;
+	private readonly SongService _songService;
+
+	public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+		AlbumService albumService, SongService songService)
+		: base(sessionFactory, permissionContext, entryLinkFactory)
+	{
+		_albumService = albumService;
+		_songService = songService;
+	}
+
+	private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection,
+		InspectedAlbum acceptedAlbum, int[] selectedSongIds)
+	{
+		Album album;
+		var diff = new AlbumDiff(false);
+		var isNew = acceptedAlbum.MergedAlbum == null;
+
+		if (isNew)
 		{
-			_albumService = albumService;
-			_songService = songService;
+			album = new Album(new LocalizedString(acceptedAlbum.ImportedAlbum.Title, languageSelection));
+
+			if (languageSelection != ContentLanguageSelection.Unspecified)
+				album.Names.SortNames.DefaultLanguage = languageSelection;
+
+			album.DiscType = DiscType.Unknown;
+			diff.Names.Set();
+			session.Save(album);
+		}
+		else
+		{
+			album = session.Load<Album>(acceptedAlbum.MergedAlbum.Id);
+
+			if (!album.Names.HasName(acceptedAlbum.ImportedAlbum.Title))
+			{
+				album.CreateName(acceptedAlbum.ImportedAlbum.Title, languageSelection);
+				diff.Names.Set();
+			}
 		}
 
-		private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection,
-			InspectedAlbum acceptedAlbum, int[] selectedSongIds)
+		foreach (var inspectedArtist in acceptedAlbum.Artists)
 		{
-			Album album;
-			var diff = new AlbumDiff(false);
-			var isNew = acceptedAlbum.MergedAlbum == null;
-
-			if (isNew)
+			if (inspectedArtist.ExistingArtist != null)
 			{
-				album = new Album(new LocalizedString(acceptedAlbum.ImportedAlbum.Title, languageSelection));
+				var artist = session.Load<Artist>(inspectedArtist.ExistingArtist.Id);
 
-				if (languageSelection != ContentLanguageSelection.Unspecified)
-					album.Names.SortNames.DefaultLanguage = languageSelection;
-
-				album.DiscType = DiscType.Unknown;
-				diff.Names.Set();
-				session.Save(album);
-			}
-			else
-			{
-				album = session.Load<Album>(acceptedAlbum.MergedAlbum.Id);
-
-				if (!album.Names.HasName(acceptedAlbum.ImportedAlbum.Title))
+				if (!artist.HasAlbum(album))
 				{
-					album.CreateName(acceptedAlbum.ImportedAlbum.Title, languageSelection);
-					diff.Names.Set();
-				}
-			}
-
-			foreach (var inspectedArtist in acceptedAlbum.Artists)
-			{
-				if (inspectedArtist.ExistingArtist != null)
-				{
-					var artist = session.Load<Artist>(inspectedArtist.ExistingArtist.Id);
-
-					if (!artist.HasAlbum(album))
-					{
-						session.Save(artist.AddAlbum(album));
-						diff.Artists.Set();
-					}
-				}
-				else
-				{
-					album.AddArtist(inspectedArtist.Name, false, ArtistRoles.Default);
+					session.Save(artist.AddAlbum(album));
 					diff.Artists.Set();
 				}
 			}
-
-			if (acceptedAlbum.MergedAlbum == null || acceptedAlbum.MergeTracks)
+			else
 			{
-				foreach (var inspectedTrack in acceptedAlbum.Tracks)
-				{
-					if (AcceptImportedSong(session, importer, album, inspectedTrack, languageSelection, selectedSongIds))
-						diff.Tracks.Set();
-				}
+				album.AddArtist(inspectedArtist.Name, false, ArtistRoles.Default);
+				diff.Artists.Set();
 			}
-
-			var importedAlbum = session.Load<MikuDbAlbum>(acceptedAlbum.ImportedAlbum.Id);
-			importedAlbum.Status = AlbumStatus.Approved;
-
-			if (importedAlbum.CoverPicture != null && album.CoverPictureData == null)
-			{
-				album.CoverPictureData = importedAlbum.CoverPicture;
-				album.CoverPictureMime = importedAlbum.CoverPictureMime;
-
-				// TODO: should generate thumbnail as well
-
-				diff.Cover.Set();
-			}
-
-			if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null)
-			{
-				album.OriginalReleaseDate.Year = acceptedAlbum.ImportedAlbum.Data.ReleaseYear;
-				diff.OriginalRelease.Set();
-			}
-
-			// Add link if not already added a link to that service
-			var sourceUrl = acceptedAlbum.ImportedAlbum.SourceUrl;
-			if (importer != null && !string.IsNullOrEmpty(sourceUrl))
-			{
-				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url)))
-				{
-					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference, disabled: false);
-					diff.WebLinks.Set();
-				}
-			}
-
-			album.UpdateArtistString();
-
-			var importerName = importer != null ? importer.ServiceName : "(unknown)";
-			var archived = _albumService.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb, "Imported from " + importerName);
-
-			AuditLog($"accepted imported album '{acceptedAlbum.ImportedAlbum.Title}'", session);
-			AddEntryEditedEntry(session, album, isNew ? EntryEditEvent.Created : EntryEditEvent.Updated, archived);
-
-
-			session.Update(album);
-			session.Update(importedAlbum);
-
-			return new AlbumContract(album, PermissionContext.LanguagePreference);
 		}
 
-		private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack,
-			ContentLanguageSelection languageSelection, int[] selectedSongIds)
+		if (acceptedAlbum.MergedAlbum == null || acceptedAlbum.MergeTracks)
 		{
-			Song song = null;
-			var diff = new SongDiff(false);
-
-			if (NewTrack(inspectedTrack, selectedSongIds, album))
+			foreach (var inspectedTrack in acceptedAlbum.Tracks)
 			{
-				song = new Song(new LocalizedString(inspectedTrack.ImportedTrack.Title, languageSelection));
-				session.Save(song);
+				if (AcceptImportedSong(session, importer, album, inspectedTrack, languageSelection, selectedSongIds))
+					diff.Tracks.Set();
+			}
+		}
+
+		var importedAlbum = session.Load<MikuDbAlbum>(acceptedAlbum.ImportedAlbum.Id);
+		importedAlbum.Status = AlbumStatus.Approved;
+
+		if (importedAlbum.CoverPicture != null && album.CoverPictureData == null)
+		{
+			album.CoverPictureData = importedAlbum.CoverPicture;
+			album.CoverPictureMime = importedAlbum.CoverPictureMime;
+
+			// TODO: should generate thumbnail as well
+
+			diff.Cover.Set();
+		}
+
+		if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null)
+		{
+			album.OriginalReleaseDate.Year = acceptedAlbum.ImportedAlbum.Data.ReleaseYear;
+			diff.OriginalRelease.Set();
+		}
+
+		// Add link if not already added a link to that service
+		var sourceUrl = acceptedAlbum.ImportedAlbum.SourceUrl;
+		if (importer != null && !string.IsNullOrEmpty(sourceUrl))
+		{
+			if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url)))
+			{
+				album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference, disabled: false);
+				diff.WebLinks.Set();
+			}
+		}
+
+		album.UpdateArtistString();
+
+		var importerName = importer != null ? importer.ServiceName : "(unknown)";
+		var archived = _albumService.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb, "Imported from " + importerName);
+
+		AuditLog($"accepted imported album '{acceptedAlbum.ImportedAlbum.Title}'", session);
+		AddEntryEditedEntry(session, album, isNew ? EntryEditEvent.Created : EntryEditEvent.Updated, archived);
+
+
+		session.Update(album);
+		session.Update(importedAlbum);
+
+		return new AlbumContract(album, PermissionContext.LanguagePreference);
+	}
+
+	private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack,
+		ContentLanguageSelection languageSelection, int[] selectedSongIds)
+	{
+		Song song = null;
+		var diff = new SongDiff(false);
+
+		if (NewTrack(inspectedTrack, selectedSongIds, album))
+		{
+			song = new Song(new LocalizedString(inspectedTrack.ImportedTrack.Title, languageSelection));
+			session.Save(song);
+			album.AddSong(song, inspectedTrack.ImportedTrack.TrackNum, inspectedTrack.ImportedTrack.DiscNum);
+			diff.Names.Set();
+		}
+		else if (selectedSongIds.Contains(inspectedTrack.ExistingSong.Id))
+		{
+			song = session.Load<Song>(inspectedTrack.ExistingSong.Id);
+
+			if (!album.HasSong(song))
 				album.AddSong(song, inspectedTrack.ImportedTrack.TrackNum, inspectedTrack.ImportedTrack.DiscNum);
+
+			var newName = inspectedTrack.ImportedTrack.Title;
+
+			if (!song.Names.HasName(newName) && !song.Names.HasNameForLanguage(languageSelection))
+			{
+				song.CreateName(new LocalizedString(newName, languageSelection));
 				diff.Names.Set();
 			}
-			else if (selectedSongIds.Contains(inspectedTrack.ExistingSong.Id))
+		}
+
+		if (song != null)
+		{
+			if (inspectedTrack.ImportedTrack != null)
 			{
-				song = session.Load<Song>(inspectedTrack.ExistingSong.Id);
-
-				if (!album.HasSong(song))
-					album.AddSong(song, inspectedTrack.ImportedTrack.TrackNum, inspectedTrack.ImportedTrack.DiscNum);
-
-				var newName = inspectedTrack.ImportedTrack.Title;
-
-				if (!song.Names.HasName(newName) && !song.Names.HasNameForLanguage(languageSelection))
+				foreach (var artistName in inspectedTrack.ImportedTrack.ArtistNames)
 				{
-					song.CreateName(new LocalizedString(newName, languageSelection));
-					diff.Names.Set();
+					if (CreateArtist(session, song, artistName, ArtistRoles.Composer))
+						diff.Artists.Set();
 				}
+
+				foreach (var artistName in inspectedTrack.ImportedTrack.VocalistNames)
+				{
+					if (CreateArtist(session, song, artistName, ArtistRoles.Vocalist))
+						diff.Artists.Set();
+				}
+
+				song.UpdateArtistString();
 			}
 
-			if (song != null)
+			if (diff.ChangedFields.Value != SongEditableFields.Nothing)
 			{
-				if (inspectedTrack.ImportedTrack != null)
-				{
-					foreach (var artistName in inspectedTrack.ImportedTrack.ArtistNames)
-					{
-						if (CreateArtist(session, song, artistName, ArtistRoles.Composer))
-							diff.Artists.Set();
-					}
+				var importerName = importer != null ? importer.ServiceName : "(unknown)";
 
-					foreach (var artistName in inspectedTrack.ImportedTrack.VocalistNames)
-					{
-						if (CreateArtist(session, song, artistName, ArtistRoles.Vocalist))
-							diff.Artists.Set();
-					}
-
-					song.UpdateArtistString();
-				}
-
-				if (diff.ChangedFields.Value != SongEditableFields.Nothing)
-				{
-					var importerName = importer != null ? importer.ServiceName : "(unknown)";
-
-					_songService.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
-						$"Auto-imported from {importerName} for album '{album.DefaultName}'");
-				}
-
-				session.Update(song);
-				return true;
+				_songService.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
+					$"Auto-imported from {importerName} for album '{album.DefaultName}'");
 			}
 
-			return false;
+			session.Update(song);
+			return true;
 		}
 
-		private bool CreateArtist(ISession session, Song song, string name, ArtistRoles roles)
+		return false;
+	}
+
+	private bool CreateArtist(ISession session, Song song, string name, ArtistRoles roles)
+	{
+		var artist = FindArtist(session, name);
+		var link = (artist != null ? new ArtistForSong(song, artist, false, roles) : new ArtistForSong(song, name, false, roles));
+
+		if (!song.HasArtistLink(link))
 		{
-			var artist = FindArtist(session, name);
-			var link = (artist != null ? new ArtistForSong(song, artist, false, roles) : new ArtistForSong(song, name, false, roles));
-
-			if (!song.HasArtistLink(link))
-			{
-				song.AllArtists.Add(link);
-				return true;
-			}
-
-			return false;
+			song.AllArtists.Add(link);
+			return true;
 		}
 
-		private List<Album> FindAlbums(ISession session, MikuDbAlbum imported)
-		{
-			var webLinkMatches = session.Query<AlbumWebLink>()
-				.Where(w => w.Url == imported.SourceUrl)
-				.Select(w => w.Entry)
-				.ToArray();
+		return false;
+	}
 
-			var nameMatchDirect = session.Query<Album>()
-				.Where(s => !s.Deleted
-				&& ((s.Names.SortNames.English == imported.Title)
-					|| (s.Names.SortNames.Romaji == imported.Title)
-					|| (s.Names.SortNames.Japanese == imported.Title)))
-				.ToArray();
+	private List<Album> FindAlbums(ISession session, MikuDbAlbum imported)
+	{
+		var webLinkMatches = session.Query<AlbumWebLink>()
+			.Where(w => w.Url == imported.SourceUrl)
+			.Select(w => w.Entry)
+			.ToArray();
 
-			var nameMatchAdditional = session.Query<AlbumName>()
-				.Where(m => !m.Album.Deleted && m.Value == imported.Title)
-				.Select(a => a.Album)
-				.ToArray();
+		var nameMatchDirect = session.Query<Album>()
+			.Where(s => !s.Deleted
+			&& ((s.Names.SortNames.English == imported.Title)
+				|| (s.Names.SortNames.Romaji == imported.Title)
+				|| (s.Names.SortNames.Japanese == imported.Title)))
+			.ToArray();
 
-			return webLinkMatches.Union(nameMatchDirect).Union(nameMatchAdditional).ToList();
-		}
+		var nameMatchAdditional = session.Query<AlbumName>()
+			.Where(m => !m.Album.Deleted && m.Value == imported.Title)
+			.Select(a => a.Album)
+			.ToArray();
 
-		private Artist FindArtist(ISession session, string artistName)
-		{
-			if (string.IsNullOrEmpty(artistName))
-				return null;
+		return webLinkMatches.Union(nameMatchDirect).Union(nameMatchAdditional).ToList();
+	}
 
-			var artistMatch = QueryArtist(session, artistName);
-
-			if (artistMatch == null)
-			{
-				var normalized = artistName.Normalize(NormalizationForm.FormKC);
-				var compositeRegex = new Regex(@"\S+\s?\((.+)\)");  // catch name(name)
-				var match = compositeRegex.Match(normalized);
-
-				if (!match.Success)
-				{
-					compositeRegex = new Regex(@"\S+\s?[/@](.+)");  // catch name/name and name@name
-					match = compositeRegex.Match(normalized);
-				}
-
-				if (match.Success)
-				{
-					var resolvedName = match.Groups[1].Value;
-					artistMatch = QueryArtist(session, resolvedName);
-				}
-			}
-
-			return artistMatch;
-		}
-
-		/// <summary>
-		/// Finds the best match for a song.
-		/// </summary>
-		/// <param name="songs"></param>
-		/// <param name="artists"></param>
-		/// <returns></returns>
-		private Song FindMatch(Song[] songs, IEnumerable<Artist> artists)
-		{
-			if (songs.Length == 0)
-				return null;
-
-			if (songs.Length == 1)
-				return songs.First();
-
-			var match = songs.FirstOrDefault(s => s.Artists.Any(a => a.Artist != null && a.Artist.ArtistType != ArtistType.Vocaloid && artists.Any(a2 => a.Artist.Equals(a2))));
-			return match ?? songs.First();
-		}
-
-		private Song FindSong(ISession session, string songName, IEnumerable<Artist> artists)
-		{
-			var nameMatch = session.Query<SongName>()
-				.Where(m => !m.Song.Deleted && m.Value == songName)
-				.Select(a => a.Song)
-				.ToArray();
-
-			if (nameMatch.Any())
-				return FindMatch(nameMatch, artists);
-
-			var direct = session.Query<Song>()
-				.Where(
-					s => !s.Deleted &&
-					(s.Names.SortNames.English == songName
-						|| s.Names.SortNames.Romaji == songName
-						|| s.Names.SortNames.Japanese == songName))
-				.ToArray();
-
-			if (direct.Any())
-				return FindMatch(direct, artists);
-
+	private Artist FindArtist(ISession session, string artistName)
+	{
+		if (string.IsNullOrEmpty(artistName))
 			return null;
-		}
 
-		private InspectedAlbum[] Inspect(ISession session, ImportedAlbumOptions[] importedAlbumIds)
+		var artistMatch = QueryArtist(session, artistName);
+
+		if (artistMatch == null)
 		{
-			return importedAlbumIds.Select(a => Inspect(session, a)).ToArray();
-		}
+			var normalized = artistName.Normalize(NormalizationForm.FormKC);
+			var compositeRegex = new Regex(@"\S+\s?\((.+)\)");  // catch name(name)
+			var match = compositeRegex.Match(normalized);
 
-		private InspectedAlbum Inspect(ISession session, ImportedAlbumOptions options)
-		{
-			var imported = session.Load<MikuDbAlbum>(options.ImportedDbAlbumId);
-
-			return Inspect(session, imported, options);
-		}
-
-		private InspectedAlbum Inspect(ISession session, MikuDbAlbum imported, ImportedAlbumOptions options)
-		{
-			Album albumMatch;
-			var foundAlbums = FindAlbums(session, imported);
-			switch (options.MergedAlbumId)
+			if (!match.Success)
 			{
-				case null:
-					albumMatch = foundAlbums.FirstOrDefault();
-					break;
-				case 0:
-					albumMatch = null;
-					break;
-				default:
-					albumMatch = session.Load<Album>(options.MergedAlbumId);
-					if (!foundAlbums.Contains(albumMatch))
-						foundAlbums.Add(albumMatch);
-					break;
+				compositeRegex = new Regex(@"\S+\s?[/@](.+)");  // catch name/name and name@name
+				match = compositeRegex.Match(normalized);
 			}
 
-			var importedContract = new MikuDbAlbumContract(imported);
-			var data = importedContract.Data;
-
-			var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : Array.Empty<string>())
-				.Select(a => InspectArtist(session, a))
-				.ToArray();
-
-			var matchedArtists = artists.Where(a => a.ExistingArtist != null).Select(a => a.ExistingArtist).ToArray();
-
-			var tracks = data.Tracks.Select(t => InspectTrack(session, t, matchedArtists, albumMatch)).ToArray();
-
-			var result = new InspectedAlbum(importedContract);
-			result.MergeTracks = options.MergeTracks ?? true;
-
-			if (albumMatch != null)
+			if (match.Success)
 			{
-				result.MergedAlbum = new AlbumContract(albumMatch, PermissionContext.LanguagePreference);
-				result.MergedAlbumId = albumMatch.Id;
+				var resolvedName = match.Groups[1].Value;
+				artistMatch = QueryArtist(session, resolvedName);
 			}
-
-			result.ExistingAlbums = foundAlbums.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference))
-				.Concat(new[] { new AlbumContract { Name = "Nothing" } }).ToArray();
-
-			result.Artists = artists.Select(a => a.InspectedArtist).ToArray();
-			result.Tracks = tracks;
-
-			return result;
 		}
 
-		private ArtistInspectResult InspectArtist(ISession session, string name)
+		return artistMatch;
+	}
+
+	/// <summary>
+	/// Finds the best match for a song.
+	/// </summary>
+	/// <param name="songs"></param>
+	/// <param name="artists"></param>
+	/// <returns></returns>
+	private Song FindMatch(Song[] songs, IEnumerable<Artist> artists)
+	{
+		if (songs.Length == 0)
+			return null;
+
+		if (songs.Length == 1)
+			return songs.First();
+
+		var match = songs.FirstOrDefault(s => s.Artists.Any(a => a.Artist != null && a.Artist.ArtistType != ArtistType.Vocaloid && artists.Any(a2 => a.Artist.Equals(a2))));
+		return match ?? songs.First();
+	}
+
+	private Song FindSong(ISession session, string songName, IEnumerable<Artist> artists)
+	{
+		var nameMatch = session.Query<SongName>()
+			.Where(m => !m.Song.Deleted && m.Value == songName)
+			.Select(a => a.Song)
+			.ToArray();
+
+		if (nameMatch.Any())
+			return FindMatch(nameMatch, artists);
+
+		var direct = session.Query<Song>()
+			.Where(
+				s => !s.Deleted &&
+				(s.Names.SortNames.English == songName
+					|| s.Names.SortNames.Romaji == songName
+					|| s.Names.SortNames.Japanese == songName))
+			.ToArray();
+
+		if (direct.Any())
+			return FindMatch(direct, artists);
+
+		return null;
+	}
+
+	private InspectedAlbum[] Inspect(ISession session, ImportedAlbumOptions[] importedAlbumIds)
+	{
+		return importedAlbumIds.Select(a => Inspect(session, a)).ToArray();
+	}
+
+	private InspectedAlbum Inspect(ISession session, ImportedAlbumOptions options)
+	{
+		var imported = session.Load<MikuDbAlbum>(options.ImportedDbAlbumId);
+
+		return Inspect(session, imported, options);
+	}
+
+	private InspectedAlbum Inspect(ISession session, MikuDbAlbum imported, ImportedAlbumOptions options)
+	{
+		Album albumMatch;
+		var foundAlbums = FindAlbums(session, imported);
+		switch (options.MergedAlbumId)
 		{
-			//var inspected = new InspectedArtist(name);
-
-			var matched = FindArtist(session, name);
-
-			//if (matched != null)
-			//	inspected.ExistingArtist = new ArtistWithAdditionalNamesContract(matched, PermissionContext.LanguagePreference);
-
-			return new ArtistInspectResult(name, matched, PermissionContext.LanguagePreference);
+			case null:
+				albumMatch = foundAlbums.FirstOrDefault();
+				break;
+			case 0:
+				albumMatch = null;
+				break;
+			default:
+				albumMatch = session.Load<Album>(options.MergedAlbumId);
+				if (!foundAlbums.Contains(albumMatch))
+					foundAlbums.Add(albumMatch);
+				break;
 		}
 
-		private InspectedTrack InspectTrack(ISession session, ImportedAlbumTrack importedTrack, IEnumerable<Artist> artists, Album album)
+		var importedContract = new MikuDbAlbumContract(imported);
+		var data = importedContract.Data;
+
+		var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : Array.Empty<string>())
+			.Select(a => InspectArtist(session, a))
+			.ToArray();
+
+		var matchedArtists = artists.Where(a => a.ExistingArtist != null).Select(a => a.ExistingArtist).ToArray();
+
+		var tracks = data.Tracks.Select(t => InspectTrack(session, t, matchedArtists, albumMatch)).ToArray();
+
+		var result = new InspectedAlbum(importedContract);
+		result.MergeTracks = options.MergeTracks ?? true;
+
+		if (albumMatch != null)
 		{
-			var inspected = new InspectedTrack(importedTrack);
-			var existingTrack = album != null ? album.GetSongByTrackNum(importedTrack.DiscNum, importedTrack.TrackNum) : null;
-
-			var existingSong = existingTrack != null && existingTrack.Song != null ? existingTrack.Song
-				: FindSong(session, importedTrack.Title, artists);
-
-			if (existingSong != null)
-				inspected.ExistingSong = new SongContract(existingSong, PermissionContext.LanguagePreference);
-
-			inspected.Selected = existingTrack != null;
-
-			return inspected;
+			result.MergedAlbum = new AlbumContract(albumMatch, PermissionContext.LanguagePreference);
+			result.MergedAlbumId = albumMatch.Id;
 		}
 
-		private bool NewTrack(InspectedTrack inspectedTrack, int[] selectedSongIds, Album album)
-		{
-			if (inspectedTrack.ExistingSong == null)
-				return true;
+		result.ExistingAlbums = foundAlbums.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference))
+			.Concat(new[] { new AlbumContract { Name = "Nothing" } }).ToArray();
 
-			var albumTrack = album.GetSongByTrackNum(inspectedTrack.ImportedTrack.DiscNum, inspectedTrack.ImportedTrack.TrackNum);
-			if (albumTrack != null)
-				return false;
+		result.Artists = artists.Select(a => a.InspectedArtist).ToArray();
+		result.Tracks = tracks;
 
-			return !selectedSongIds.Contains(inspectedTrack.ExistingSong.Id);
-		}
+		return result;
+	}
 
-		private Artist QueryArtist(ISession session, string artistName)
-		{
-			artistName = ArtistHelper.GetCanonizedName(artistName);
+	private ArtistInspectResult InspectArtist(ISession session, string name)
+	{
+		//var inspected = new InspectedArtist(name);
 
-			var artist = session.Query<ArtistName>()
+		var matched = FindArtist(session, name);
+
+		//if (matched != null)
+		//	inspected.ExistingArtist = new ArtistWithAdditionalNamesContract(matched, PermissionContext.LanguagePreference);
+
+		return new ArtistInspectResult(name, matched, PermissionContext.LanguagePreference);
+	}
+
+	private InspectedTrack InspectTrack(ISession session, ImportedAlbumTrack importedTrack, IEnumerable<Artist> artists, Album album)
+	{
+		var inspected = new InspectedTrack(importedTrack);
+		var existingTrack = album != null ? album.GetSongByTrackNum(importedTrack.DiscNum, importedTrack.TrackNum) : null;
+
+		var existingSong = existingTrack != null && existingTrack.Song != null ? existingTrack.Song
+			: FindSong(session, importedTrack.Title, artists);
+
+		if (existingSong != null)
+			inspected.ExistingSong = new SongContract(existingSong, PermissionContext.LanguagePreference);
+
+		inspected.Selected = existingTrack != null;
+
+		return inspected;
+	}
+
+	private bool NewTrack(InspectedTrack inspectedTrack, int[] selectedSongIds, Album album)
+	{
+		if (inspectedTrack.ExistingSong == null)
+			return true;
+
+		var albumTrack = album.GetSongByTrackNum(inspectedTrack.ImportedTrack.DiscNum, inspectedTrack.ImportedTrack.TrackNum);
+		if (albumTrack != null)
+			return false;
+
+		return !selectedSongIds.Contains(inspectedTrack.ExistingSong.Id);
+	}
+
+	private Artist QueryArtist(ISession session, string artistName)
+	{
+		artistName = ArtistHelper.GetCanonizedName(artistName);
+
+		var artist = session.Query<ArtistName>()
+			.Where(m => !m.Artist.Deleted)
+			.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Exact, artistName))
+			.Select(an => an.Artist)
+			.FirstOrDefault();
+
+		if (artist == null)
+			artist = session.Query<ArtistName>()
 				.Where(m => !m.Artist.Deleted)
-				.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Exact, artistName))
+				.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Words, artistName))
 				.Select(an => an.Artist)
 				.FirstOrDefault();
 
-			if (artist == null)
-				artist = session.Query<ArtistName>()
-					.Where(m => !m.Artist.Deleted)
-					.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Words, artistName))
-					.Select(an => an.Artist)
-					.FirstOrDefault();
+		return artist;
+	}
 
-			return artist;
-		}
+	public AlbumContract AcceptImportedAlbum(ImportedAlbumOptions importedAlbum, int[] selectedSongIds)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
-		public AlbumContract AcceptImportedAlbum(ImportedAlbumOptions importedAlbum, int[] selectedSongIds)
+		return HandleTransaction(session =>
 		{
-			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+			var inspected = Inspect(session, importedAlbum);
+			var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
+			var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
-			return HandleTransaction(session =>
+			return album;
+		});
+	}
+
+	public AlbumContract[] AcceptImportedAlbums(ImportedAlbumOptions[] importedAlbumIds, int[] selectedSongIds)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+
+		return HandleTransaction(session =>
+		{
+			var importedAlbums = new List<AlbumContract>(importedAlbumIds.Length);
+
+			foreach (var importedAlbum in importedAlbumIds)
 			{
 				var inspected = Inspect(session, importedAlbum);
 				var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
 				var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
-				return album;
-			});
-		}
+				importedAlbums.Add(album);
+			}
 
-		public AlbumContract[] AcceptImportedAlbums(ImportedAlbumOptions[] importedAlbumIds, int[] selectedSongIds)
+			return importedAlbums.ToArray();
+		});
+	}
+
+	public void Delete(int importedAlbumId)
+	{
+		DeleteEntity<MikuDbAlbum>(importedAlbumId, PermissionToken.MikuDbImport);
+	}
+
+	public MikuDbAlbumContract[] GetAlbums(string title, AlbumStatus status, PagingProperties paging)
+	{
+		return HandleQuery(session => session
+			.Query<MikuDbAlbum>()
+			.Where(a => (string.IsNullOrEmpty(title) || a.Title.Contains(title)) && a.Status == status)
+			.OrderByDescending(a => a.Created)
+			.Skip(paging.Start)
+			.Take(paging.MaxEntries)
+			.ToArray()
+			.Select(a => new MikuDbAlbumContract(a))
+			.ToArray());
+	}
+
+	public PictureContract GetCoverPicture(int id)
+	{
+		return HandleQuery(session =>
 		{
-			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+			var album = session.Load<MikuDbAlbum>(id);
 
-			return HandleTransaction(session =>
+			if (album.CoverPicture != null)
+				return new PictureContract(album.CoverPicture, album.CoverPictureMime);
+			else
+				return null;
+		});
+	}
+
+	public int ImportNew()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+
+		MikuDbAlbumContract[] existing = HandleQuery(session => session.Query<MikuDbAlbum>().Select(a => new MikuDbAlbumContract(a)).ToArray());
+
+		var importer = new MikuDbAlbumImporter(existing);
+		var imported = importer.ImportNew();
+
+		return HandleTransaction(session =>
+		{
+			AuditLog("importing new albums from " + importer.ServiceName, session);
+
+			//var all = session.Query<MikuDbAlbum>();
+
+			//foreach (var album in all)
+			//	session.Delete(album);
+
+			var newAlbums = new List<MikuDbAlbum>();
+
+			foreach (var contract in imported)
 			{
-				var importedAlbums = new List<AlbumContract>(importedAlbumIds.Length);
+				var newAlbum = new MikuDbAlbum(contract.AlbumContract);
 
-				foreach (var importedAlbum in importedAlbumIds)
-				{
-					var inspected = Inspect(session, importedAlbum);
-					var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
-					var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
-
-					importedAlbums.Add(album);
-				}
-
-				return importedAlbums.ToArray();
-			});
-		}
-
-		public void Delete(int importedAlbumId)
-		{
-			DeleteEntity<MikuDbAlbum>(importedAlbumId, PermissionToken.MikuDbImport);
-		}
-
-		public MikuDbAlbumContract[] GetAlbums(string title, AlbumStatus status, PagingProperties paging)
-		{
-			return HandleQuery(session => session
-				.Query<MikuDbAlbum>()
-				.Where(a => (string.IsNullOrEmpty(title) || a.Title.Contains(title)) && a.Status == status)
-				.OrderByDescending(a => a.Created)
-				.Skip(paging.Start)
-				.Take(paging.MaxEntries)
-				.ToArray()
-				.Select(a => new MikuDbAlbumContract(a))
-				.ToArray());
-		}
-
-		public PictureContract GetCoverPicture(int id)
-		{
-			return HandleQuery(session =>
-			{
-				var album = session.Load<MikuDbAlbum>(id);
-
-				if (album.CoverPicture != null)
-					return new PictureContract(album.CoverPicture, album.CoverPictureMime);
-				else
-					return null;
-			});
-		}
-
-		public int ImportNew()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
-
-			MikuDbAlbumContract[] existing = HandleQuery(session => session.Query<MikuDbAlbum>().Select(a => new MikuDbAlbumContract(a)).ToArray());
-
-			var importer = new MikuDbAlbumImporter(existing);
-			var imported = importer.ImportNew();
-
-			return HandleTransaction(session =>
-			{
-				AuditLog("importing new albums from " + importer.ServiceName, session);
-
-				//var all = session.Query<MikuDbAlbum>();
-
-				//foreach (var album in all)
-				//	session.Delete(album);
-
-				var newAlbums = new List<MikuDbAlbum>();
-
-				foreach (var contract in imported)
-				{
-					var newAlbum = new MikuDbAlbum(contract.AlbumContract);
-
-					session.Save(newAlbum);
-
-					newAlbums.Add(newAlbum);
-				}
-
-				return newAlbums.Count;
-			});
-		}
-
-		public int ImportFromFile(Stream stream)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
-
-			var parser = new AlbumFileParser();
-			var imported = parser.Parse(stream);
-
-			return HandleTransaction(session =>
-			{
-				SysLog($"importing album from file with name '{imported.Title}'");
-
-				var newAlbum = new MikuDbAlbum(imported);
 				session.Save(newAlbum);
 
-				return newAlbum.Id;
-			});
-		}
+				newAlbums.Add(newAlbum);
+			}
 
-		public AlbumImportResult ImportOne(string url)
+			return newAlbums.Count;
+		});
+	}
+
+	public int ImportFromFile(Stream stream)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+
+		var parser = new AlbumFileParser();
+		var imported = parser.Parse(stream);
+
+		return HandleTransaction(session =>
 		{
-			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
+			SysLog($"importing album from file with name '{imported.Title}'");
 
-			var existing = HandleQuery(session => session.Query<MikuDbAlbum>().FirstOrDefault(a => a.SourceUrl == url));
+			var newAlbum = new MikuDbAlbum(imported);
+			session.Save(newAlbum);
 
-			if (existing != null)
-				return new AlbumImportResult { Message = "Album with that URL has already been imported" };
+			return newAlbum.Id;
+		});
+	}
 
-			var imported = new AlbumImporters(new WebPictureDownloader()).ImportOne(url);
+	public AlbumImportResult ImportOne(string url)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
-			if (imported.AlbumContract == null)
-				return imported;
+		var existing = HandleQuery(session => session.Query<MikuDbAlbum>().FirstOrDefault(a => a.SourceUrl == url));
 
-			HandleTransaction(session =>
-			{
-				SysLog($"importing album with URL '{url}'");
+		if (existing != null)
+			return new AlbumImportResult { Message = "Album with that URL has already been imported" };
 
-				var newAlbum = new MikuDbAlbum(imported.AlbumContract);
-				session.Save(newAlbum);
-				imported.AlbumContract.Id = newAlbum.Id;
-			});
+		var imported = new AlbumImporters(new WebPictureDownloader()).ImportOne(url);
 
+		if (imported.AlbumContract == null)
 			return imported;
-		}
+
+		HandleTransaction(session =>
+		{
+			SysLog($"importing album with URL '{url}'");
+
+			var newAlbum = new MikuDbAlbum(imported.AlbumContract);
+			session.Save(newAlbum);
+			imported.AlbumContract.Id = newAlbum.Id;
+		});
+
+		return imported;
+	}
 
 #nullable enable
-		public InspectedAlbum[] Inspect(ImportedAlbumOptions[] importedAlbumIds)
-		{
-			ParamIs.NotNull(() => importedAlbumIds);
+	public InspectedAlbum[] Inspect(ImportedAlbumOptions[] importedAlbumIds)
+	{
+		ParamIs.NotNull(() => importedAlbumIds);
 
-			return HandleQuery(session => Inspect(session, importedAlbumIds));
-		}
+		return HandleQuery(session => Inspect(session, importedAlbumIds));
+	}
 
-		public InspectedAlbum Inspect(ImportedAlbumOptions importedAlbum)
-		{
-			ParamIs.NotNull(() => importedAlbum);
+	public InspectedAlbum Inspect(ImportedAlbumOptions importedAlbum)
+	{
+		ParamIs.NotNull(() => importedAlbum);
 
-			return HandleQuery(session => Inspect(session, importedAlbum));
-		}
+		return HandleQuery(session => Inspect(session, importedAlbum));
+	}
 #nullable disable
 
-		public void SkipAlbum(int importedAlbumId)
-		{
-			UpdateEntity<MikuDbAlbum>(importedAlbumId, a => a.Status = AlbumStatus.Skipped, PermissionToken.MikuDbImport);
-		}
-	}
-
-	public class ArtistInspectResult
+	public void SkipAlbum(int importedAlbumId)
 	{
-		public ArtistInspectResult(string name, Artist existing, ContentLanguagePreference languagePreference)
-		{
-			InspectedArtist = new InspectedArtist(name);
-
-			ExistingArtist = existing;
-
-			if (existing != null)
-				InspectedArtist.ExistingArtist = new ArtistContract(existing, languagePreference);
-		}
-
-		public Artist ExistingArtist { get; set; }
-
-		public InspectedArtist InspectedArtist { get; set; }
+		UpdateEntity<MikuDbAlbum>(importedAlbumId, a => a.Status = AlbumStatus.Skipped, PermissionToken.MikuDbImport);
 	}
+}
+
+public class ArtistInspectResult
+{
+	public ArtistInspectResult(string name, Artist existing, ContentLanguagePreference languagePreference)
+	{
+		InspectedArtist = new InspectedArtist(name);
+
+		ExistingArtist = existing;
+
+		if (existing != null)
+			InspectedArtist.ExistingArtist = new ArtistContract(existing, languagePreference);
+	}
+
+	public Artist ExistingArtist { get; set; }
+
+	public InspectedArtist InspectedArtist { get; set; }
 }

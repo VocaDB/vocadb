@@ -1,4 +1,6 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts;
@@ -21,6 +23,7 @@ public class ArchivedTranslatedStringContract : ITranslatedString
 	}
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public ContentLanguageSelection DefaultLanguage { get; set; }
 
 	[DataMember]

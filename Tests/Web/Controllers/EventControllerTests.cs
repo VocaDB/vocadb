@@ -4,35 +4,34 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
 
-namespace VocaDb.Tests.Web.Controllers
+namespace VocaDb.Tests.Web.Controllers;
+
+/// <summary>
+/// Tests for <see cref="EventController"/>.
+/// </summary>
+[TestClass]
+public class EventControllerTests
 {
-	/// <summary>
-	/// Tests for <see cref="EventController"/>.
-	/// </summary>
-	[TestClass]
-	public class EventControllerTests
+	private EventController _controller;
+
+	[TestInitialize]
+	public void SetUp()
 	{
-		private EventController _controller;
+		_controller = new EventController(
+			queries: null,
+			service: null,
+			enumTranslations: null,
+			entryLinkFactory: new FakeEntryLinkFactory(),
+			thumbPersister: null,
+			markdownParser: null
+		);
+	}
 
-		[TestInitialize]
-		public void SetUp()
-		{
-			_controller = new EventController(
-				queries: null,
-				service: null,
-				enumTranslations: null,
-				entryLinkFactory: new FakeEntryLinkFactory(),
-				thumbPersister: null,
-				markdownParser: null
-			);
-		}
+	[TestMethod]
+	public void Details_NoId()
+	{
+		var result = _controller.Details();
 
-		[TestMethod]
-		public void Details_NoId()
-		{
-			var result = _controller.Details();
-
-			result.Should().BeOfType<NotFoundObjectResult>();
-		}
+		result.Should().BeOfType<NotFoundObjectResult>();
 	}
 }

@@ -4,100 +4,99 @@ using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 
-namespace VocaDb.Model.Mapping.Activityfeed
+namespace VocaDb.Model.Mapping.Activityfeed;
+
+public class ActivityEntryMap : ClassMap<ActivityEntry>
 {
-	public class ActivityEntryMap : ClassMap<ActivityEntry>
+	public ActivityEntryMap()
 	{
-		public ActivityEntryMap()
-		{
-			// Code from: https://stackoverflow.com/questions/25938174/how-to-use-nhibernate-discriminatesubclassesoncolumn-and-references-for-the-same/25972593#25972593
-			Map(m => m.EntryType).ReadOnly().Access.None();
-			DiscriminateSubClassesOnColumn("[EntryType]");
-			Table("ActivityEntries");
-			Id(m => m.Id);
-			Cache.ReadWrite();
+		// Code from: https://stackoverflow.com/questions/25938174/how-to-use-nhibernate-discriminatesubclassesoncolumn-and-references-for-the-same/25972593#25972593
+		Map(m => m.EntryType).ReadOnly().Access.None();
+		DiscriminateSubClassesOnColumn("[EntryType]");
+		Table("ActivityEntries");
+		Id(m => m.Id);
+		Cache.ReadWrite();
 
-			Map(m => m.CreateDate).Not.Nullable();
-			Map(m => m.EditEvent).Not.Nullable();
+		Map(m => m.CreateDate).Not.Nullable();
+		Map(m => m.EditEvent).Not.Nullable();
 
-			References(m => m.Author).Not.Nullable();
-		}
+		References(m => m.Author).Not.Nullable();
 	}
+}
 
-	public class AlbumActivityEntryMap : SubclassMap<AlbumActivityEntry>
+public class AlbumActivityEntryMap : SubclassMap<AlbumActivityEntry>
+{
+	public AlbumActivityEntryMap()
 	{
-		public AlbumActivityEntryMap()
-		{
-			DiscriminatorValue("Album");
+		DiscriminatorValue("Album");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedAlbumVersion]").Nullable();
-			References(m => m.Entry).Column("[Album]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedAlbumVersion]").Nullable();
+		References(m => m.Entry).Column("[Album]").Nullable();
 	}
+}
 
-	public class ArtistActivityEntryMap : SubclassMap<ArtistActivityEntry>
+public class ArtistActivityEntryMap : SubclassMap<ArtistActivityEntry>
+{
+	public ArtistActivityEntryMap()
 	{
-		public ArtistActivityEntryMap()
-		{
-			DiscriminatorValue("Artist");
+		DiscriminatorValue("Artist");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedArtistVersion]").Nullable();
-			References(m => m.Entry).Column("[Artist]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedArtistVersion]").Nullable();
+		References(m => m.Entry).Column("[Artist]").Nullable();
 	}
+}
 
-	public class ReleaseEventActivityEntryMap : SubclassMap<ReleaseEventActivityEntry>
+public class ReleaseEventActivityEntryMap : SubclassMap<ReleaseEventActivityEntry>
+{
+	public ReleaseEventActivityEntryMap()
 	{
-		public ReleaseEventActivityEntryMap()
-		{
-			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
+		DiscriminatorValue(EntryType.ReleaseEvent.ToString());
 
-			References(m => m.ArchivedVersion).Column("[ArchivedReleaseEventVersion]").Nullable();
-			References(m => m.Entry).Column("[ReleaseEvent]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedReleaseEventVersion]").Nullable();
+		References(m => m.Entry).Column("[ReleaseEvent]").Nullable();
 	}
+}
 
-	public class SongActivityEntryMap : SubclassMap<SongActivityEntry>
+public class SongActivityEntryMap : SubclassMap<SongActivityEntry>
+{
+	public SongActivityEntryMap()
 	{
-		public SongActivityEntryMap()
-		{
-			DiscriminatorValue("Song");
+		DiscriminatorValue("Song");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedSongVersion]").Nullable();
-			References(m => m.Entry).Column("[Song]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedSongVersion]").Nullable();
+		References(m => m.Entry).Column("[Song]").Nullable();
 	}
+}
 
-	public class SongListActivityEntryMap : SubclassMap<SongListActivityEntry>
+public class SongListActivityEntryMap : SubclassMap<SongListActivityEntry>
+{
+	public SongListActivityEntryMap()
 	{
-		public SongListActivityEntryMap()
-		{
-			DiscriminatorValue("SongList");
+		DiscriminatorValue("SongList");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedSongListVersion]").Nullable();
-			References(m => m.Entry).Column("[SongList]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedSongListVersion]").Nullable();
+		References(m => m.Entry).Column("[SongList]").Nullable();
 	}
+}
 
-	public class TagActivityEntryMap : SubclassMap<TagActivityEntry>
+public class TagActivityEntryMap : SubclassMap<TagActivityEntry>
+{
+	public TagActivityEntryMap()
 	{
-		public TagActivityEntryMap()
-		{
-			DiscriminatorValue("Tag");
+		DiscriminatorValue("Tag");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedTagVersion]").Nullable();
-			References(m => m.Entry).Column("[Tag]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedTagVersion]").Nullable();
+		References(m => m.Entry).Column("[Tag]").Nullable();
 	}
+}
 
-	public class VenueActivityEntryMap : SubclassMap<VenueActivityEntry>
+public class VenueActivityEntryMap : SubclassMap<VenueActivityEntry>
+{
+	public VenueActivityEntryMap()
 	{
-		public VenueActivityEntryMap()
-		{
-			DiscriminatorValue("Venue");
+		DiscriminatorValue("Venue");
 
-			References(m => m.ArchivedVersion).Column("[ArchivedVenueVersion]").Nullable();
-			References(m => m.Entry).Column("[Venue]").Nullable();
-		}
+		References(m => m.ArchivedVersion).Column("[ArchivedVenueVersion]").Nullable();
+		References(m => m.Entry).Column("[Venue]").Nullable();
 	}
 }

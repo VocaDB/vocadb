@@ -3,46 +3,45 @@
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace VocaDb.Model.Mapping
+namespace VocaDb.Model.Mapping;
+
+public class ClassConventions : IClassConvention, IIdConvention, IReferenceConvention, IPropertyConvention, IHasManyConvention
 {
-	public class ClassConventions : IClassConvention, IIdConvention, IReferenceConvention, IPropertyConvention, IHasManyConvention
+	public static string EscapeColumn(string col) => $"[{col}]";
+
+	public void Apply(IClassInstance instance)
 	{
-		public static string EscapeColumn(string col) => $"[{col}]";
+		instance.Cache.ReadWrite();
+		instance.Schema("dbo");
+		instance.Table(instance.EntityType.Name + "s");
+	}
 
-		public void Apply(IClassInstance instance)
+	public void Apply(IIdentityInstance instance)
+	{
+		instance.Column("Id");
+		if (instance.Type == typeof(int) || instance.Type == typeof(long))
 		{
-			instance.Cache.ReadWrite();
-			instance.Schema("dbo");
-			instance.Table(instance.EntityType.Name + "s");
+			instance.GeneratedBy.Identity();
 		}
+		else
+		{
+			instance.GeneratedBy.Assigned();
+		}
+	}
 
-		public void Apply(IIdentityInstance instance)
-		{
-			instance.Column("Id");
-			if (instance.Type == typeof(int) || instance.Type == typeof(long))
-			{
-				instance.GeneratedBy.Identity();
-			}
-			else
-			{
-				instance.GeneratedBy.Assigned();
-			}
-		}
+	public void Apply(IManyToOneInstance instance)
+	{
+		instance.Column(EscapeColumn(instance.Name));
+	}
 
-		public void Apply(IManyToOneInstance instance)
-		{
-			instance.Column(EscapeColumn(instance.Name));
-		}
+	public void Apply(IPropertyInstance instance)
+	{
+		instance.Column(EscapeColumn(instance.Name));
+	}
 
-		public void Apply(IPropertyInstance instance)
-		{
-			instance.Column(EscapeColumn(instance.Name));
-		}
-
-		public void Apply(IOneToManyCollectionInstance instance)
-		{
-			instance.Key.Column(EscapeColumn(instance.Key.EntityType.Name));
-			//instance.LazyLoad(); // TODO: profile this
-		}
+	public void Apply(IOneToManyCollectionInstance instance)
+	{
+		instance.Key.Column(EscapeColumn(instance.Key.EntityType.Name));
+		//instance.LazyLoad(); // TODO: profile this
 	}
 }

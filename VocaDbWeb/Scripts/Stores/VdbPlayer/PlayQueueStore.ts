@@ -48,8 +48,11 @@ export interface PlayQueueLocalStorageState {
 	shuffle?: boolean;
 	items?: PlayQueueItemContract[];
 	currentIndex?: number;
-	repositoryType?: PlayQueueRepositoryType;
-	queryParams?: PlayQueueRepositoryQueryParams;
+	autoplayContext?: {
+		repositoryType: PlayQueueRepositoryType;
+		queryParams: PlayQueueRepositoryQueryParams;
+		shuffle: boolean;
+	};
 	totalCount?: number;
 	page?: number;
 }
@@ -117,6 +120,7 @@ export class AutoplayContext<
 	constructor(
 		readonly repositoryType: PlayQueueRepositoryType,
 		readonly queryParams: TQueryParams,
+		readonly shuffle: boolean,
 	) {}
 }
 
@@ -129,11 +133,13 @@ export enum PlayMethod {
 
 export class PlayQueueStore
 	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
+	@observable interacted = false;
 	@observable items: PlayQueueItem[] = [];
 	@observable currentId?: number;
 	@observable repeat = RepeatMode.Off;
 	@observable shuffle = false;
 
+	@observable
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
@@ -159,8 +165,7 @@ export class PlayQueueStore
 			shuffle: this.shuffle,
 			items: this.items.map((item) => item.toContract()),
 			currentIndex: this.currentIndex,
-			repositoryType: this.autoplayContext?.repositoryType,
-			queryParams: this.autoplayContext?.queryParams,
+			autoplayContext: this.autoplayContext,
 			totalCount: this.paging.totalItems,
 			page: this.paging.page,
 		};
@@ -170,10 +175,13 @@ export class PlayQueueStore
 		this.shuffle = value.shuffle ?? false;
 		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
 		this.currentIndex = value.currentIndex;
-		this.autoplayContext =
-			value.repositoryType && value.queryParams
-				? new AutoplayContext(value.repositoryType, value.queryParams)
-				: undefined;
+		this.autoplayContext = value.autoplayContext
+			? new AutoplayContext(
+					value.autoplayContext.repositoryType,
+					value.autoplayContext.queryParams,
+					value.autoplayContext.shuffle,
+			  )
+			: undefined;
 		this.paging.totalItems = value.totalCount ?? 0;
 		this.paging.page = value.page ?? 1;
 	}
@@ -212,8 +220,16 @@ export class PlayQueueStore
 		);
 	}
 
+	@computed private get shuffleAndPlay(): boolean {
+		return this.autoplayContext !== undefined && this.autoplayContext.shuffle;
+	}
+
 	@computed get hasMoreItems(): boolean {
-		return !this.paging.isLastPage;
+		if (this.shuffleAndPlay) {
+			return true;
+		} else {
+			return !this.paging.isLastPage;
+		}
 	}
 
 	@computed get hasNextItem(): boolean {
@@ -269,7 +285,13 @@ export class PlayQueueStore
 		);
 	}
 
+	@action private interact = (): void => {
+		this.interacted = true;
+	};
+
 	@action clear = (): void => {
+		this.interact();
+
 		this.currentIndex = undefined;
 		this.items = [];
 
@@ -285,6 +307,8 @@ export class PlayQueueStore
 	};
 
 	@action setCurrentItem = (item: PlayQueueItem | undefined): void => {
+		this.interact();
+
 		this.currentId = item?.id;
 	};
 
@@ -343,6 +367,9 @@ export class PlayQueueStore
 
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
+
+		this.interact();
+
 		this.items.splice(currentIndex, 0, ...items);
 		this.currentIndex = currentIndex;
 	};
@@ -370,6 +397,8 @@ export class PlayQueueStore
 
 		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
 		if (this.currentItem !== currentItem) {
+			this.interact();
+
 			if (isLastItem) {
 				if (this.hasMoreItems) {
 					await this.loadMore();
@@ -635,6 +664,8 @@ export class PlayQueueStore
 
 		if (!this.hasPreviousItem) return;
 
+		this.interact();
+
 		this.currentIndex--;
 
 		if (this.shouldSkipCurrentItem) {
@@ -642,12 +673,22 @@ export class PlayQueueStore
 		}
 	};
 
+	private getRandomSongIndex = (): number => {
+		return Math.floor(Math.random() * this.paging.totalItems);
+	};
+
 	private updateResults = async (getTotalCount: boolean): Promise<void> => {
 		if (!this.autoplayContext) return;
 		const { repositoryType, queryParams } = this.autoplayContext;
 
 		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
-		const pagingProps = this.paging.getPagingProperties(getTotalCount);
+		const pagingProps = this.autoplayContext.shuffle
+			? {
+					start: this.getRandomSongIndex(),
+					maxEntries: 1,
+					getTotalCount: getTotalCount,
+			  }
+			: this.paging.getPagingProperties(getTotalCount);
 		const { items: songs, totalCount } = await playQueueRepo.getSongs({
 			lang: this.values.languagePreference,
 			pagingProps: pagingProps,
@@ -673,9 +714,13 @@ export class PlayQueueStore
 	};
 
 	loadMore = async (): Promise<void> => {
-		if (!this.hasMoreItems) return;
+		if (!this.hasMoreItems) {
+			return;
+		}
 
-		this.paging.nextPage();
+		if (!this.shuffleAndPlay) {
+			this.paging.nextPage();
+		}
 
 		await this.updateResultsWithoutTotalCount();
 	};
@@ -684,6 +729,8 @@ export class PlayQueueStore
 		if (this.currentIndex === undefined) return;
 
 		if (!this.hasNextItem) return;
+
+		this.interact();
 
 		if (this.isLastItem && this.hasMoreItems) {
 			await this.loadMore();
@@ -731,6 +778,8 @@ export class PlayQueueStore
 	@action switchPV = (pv: PVContract): void => {
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
+
+		this.interact();
 
 		const { entry, currentTime } = this.items[currentIndex];
 		const newItem = new PlayQueueItem(entry, pv.id, currentTime);

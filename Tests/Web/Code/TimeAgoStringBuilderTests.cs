@@ -3,75 +3,74 @@
 using VocaDb.Web.Code;
 using VocaDb.Web.Resources.Views.Shared;
 
-namespace VocaDb.Tests.Web.Code
+namespace VocaDb.Tests.Web.Code;
+
+/// <summary>
+/// Unit tests for <see cref="TimeAgoStringBuilder"/>.
+/// </summary>
+[TestClass]
+public class TimeAgoStringBuilderTests
 {
-	/// <summary>
-	/// Unit tests for <see cref="TimeAgoStringBuilder"/>.
-	/// </summary>
-	[TestClass]
-	public class TimeAgoStringBuilderTests
+	private DateTime _now;
+
+	private string FormatExpected(int amount, string suffix)
 	{
-		private DateTime _now;
+		return string.Format(TimeStrings.TimeAgo, amount, suffix);
+	}
 
-		private string FormatExpected(int amount, string suffix)
-		{
-			return string.Format(TimeStrings.TimeAgo, amount, suffix);
-		}
+	private string FormatTimeAgo(TimeSpan ago)
+	{
+		return TimeAgoStringBuilder.FormatTimeAgo(_now, _now - ago);
+	}
 
-		private string FormatTimeAgo(TimeSpan ago)
-		{
-			return TimeAgoStringBuilder.FormatTimeAgo(_now, _now - ago);
-		}
+	[TestInitialize]
+	public void SetUp()
+	{
+		_now = new DateTime(2013, 6, 1, 12, 0, 0);
+	}
 
-		[TestInitialize]
-		public void SetUp()
-		{
-			_now = new DateTime(2013, 6, 1, 12, 0, 0);
-		}
+	[TestMethod]
+	public void Minutes()
+	{
+		var result = FormatTimeAgo(TimeSpan.FromMinutes(5));
+		var expected = FormatExpected(5, TimeStrings.Minutes);
 
-		[TestMethod]
-		public void Minutes()
-		{
-			var result = FormatTimeAgo(TimeSpan.FromMinutes(5));
-			var expected = FormatExpected(5, TimeStrings.Minutes);
+		result.Should().Be(expected, "Result");
+	}
 
-			result.Should().Be(expected, "Result");
-		}
+	[TestMethod]
+	public void Hours()
+	{
+		var result = FormatTimeAgo(TimeSpan.FromHours(3));
+		var expected = FormatExpected(3, TimeStrings.Hours);
 
-		[TestMethod]
-		public void Hours()
-		{
-			var result = FormatTimeAgo(TimeSpan.FromHours(3));
-			var expected = FormatExpected(3, TimeStrings.Hours);
+		result.Should().Be(expected, "Result");
+	}
 
-			result.Should().Be(expected, "Result");
-		}
+	[TestMethod]
+	public void Days()
+	{
+		var result = FormatTimeAgo(TimeSpan.FromDays(10));
+		var expected = FormatExpected(10, TimeStrings.Days);
 
-		[TestMethod]
-		public void Days()
-		{
-			var result = FormatTimeAgo(TimeSpan.FromDays(10));
-			var expected = FormatExpected(10, TimeStrings.Days);
+		result.Should().Be(expected, "Result");
+	}
 
-			result.Should().Be(expected, "Result");
-		}
+	[TestMethod]
+	public void Months()
+	{
+		var result = FormatTimeAgo(TimeSpan.FromDays(70));
+		var expected = FormatExpected(3, TimeStrings.Months);
 
-		[TestMethod]
-		public void Months()
-		{
-			var result = FormatTimeAgo(TimeSpan.FromDays(70));
-			var expected = FormatExpected(3, TimeStrings.Months);
+		result.Should().Be(expected, "Result");
+	}
 
-			result.Should().Be(expected, "Result");
-		}
+	[TestMethod]
+	public void Years()
+	{
+		var result = FormatTimeAgo(TimeSpan.FromDays(730));
+		var expected = FormatExpected(24, TimeStrings.Months);
 
-		[TestMethod]
-		public void Years()
-		{
-			var result = FormatTimeAgo(TimeSpan.FromDays(730));
-			var expected = FormatExpected(24, TimeStrings.Months);
-
-			result.Should().Be(expected, "Result");
-		}
+		result.Should().Be(expected, "Result");
 	}
 }

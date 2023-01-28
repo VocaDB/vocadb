@@ -2,6 +2,7 @@ import Alert from '@/Bootstrap/Alert';
 import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage } from '@/Components/ui';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { UserCreateStore } from '@/Stores/User/UserCreateStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
@@ -41,9 +42,10 @@ const UserCreateLayout = observer(
 							e.preventDefault();
 
 							try {
+								const requestToken = await antiforgeryRepo.getToken();
 								const recaptchaResponse = recaptchaRef.current.getValue() ?? '';
 
-								await userCreateStore.submit(recaptchaResponse);
+								await userCreateStore.submit(requestToken, recaptchaResponse);
 
 								navigate('/');
 

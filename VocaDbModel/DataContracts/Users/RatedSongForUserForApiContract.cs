@@ -7,45 +7,44 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users
+namespace VocaDb.Model.DataContracts.Users;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class RatedSongForUserForApiContract : SongRatingContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class RatedSongForUserForApiContract : SongRatingContract
+	public RatedSongForUserForApiContract() { }
+
+	public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
+		IUserPermissionContext userPermissionContext)
 	{
-		public RatedSongForUserForApiContract() { }
-
-		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
-			IUserPermissionContext userPermissionContext)
+		Date = ratedSong.Date;
+		Rating = ratedSong.Rating;
+		if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings))
 		{
-			Date = ratedSong.Date;
-			Rating = ratedSong.Rating;
-			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings))
-			{
-				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
-			}
+			User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 		}
-
-		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
-		{
-			Date = ratedSong.Date;
-			Rating = ratedSong.Rating;
-			Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
-		}
-
-		[DataMember]
-		public DateTime Date { get; init; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public SongForApiContract Song { get; init; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public UserForApiContract User { get; init; }
 	}
 
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongRatingContract
+	public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 	{
-		[DataMember]
-		public SongVoteRating Rating { get; init; }
+		Date = ratedSong.Date;
+		Rating = ratedSong.Rating;
+		Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
 	}
+
+	[DataMember]
+	public DateTime Date { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public SongForApiContract Song { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public UserForApiContract User { get; init; }
+}
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class SongRatingContract
+{
+	[DataMember]
+	public SongVoteRating Rating { get; init; }
 }

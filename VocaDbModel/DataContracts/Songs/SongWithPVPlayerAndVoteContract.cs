@@ -5,22 +5,21 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.DataContracts.Songs
+namespace VocaDb.Model.DataContracts.Songs;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class SongWithPVPlayerAndVoteContract : SongContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongWithPVPlayerAndVoteContract : SongContract
-	{
-		[DataMember]
-		public string PlayerHtml { get; init; }
+	[DataMember]
+	public string PlayerHtml { get; init; }
 
-		[DataMember]
-		public string PVId { get; init; }
+	[DataMember]
+	public string PVId { get; init; }
 
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public PVService PVService { get; init; }
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public PVService PVService { get; init; }
 
-		[DataMember]
-		public SongWithPVAndVoteForApiContract Song { get; init; }
-	}
+	[DataMember]
+	public SongWithPVAndVoteForApiContract Song { get; init; }
 }

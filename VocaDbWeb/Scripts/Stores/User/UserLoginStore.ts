@@ -12,11 +12,11 @@ export class UserLoginStore {
 		makeObservable(this);
 	}
 
-	@action submit = async (): Promise<void> => {
+	@action submit = async (requestToken: string): Promise<void> => {
 		this.submitting = true;
 
 		try {
-			await userRepo.login({
+			await userRepo.login(requestToken, {
 				keepLoggedIn: this.keepLoggedIn,
 				password: this.password,
 				userName: this.userName,

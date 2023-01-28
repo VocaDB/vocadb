@@ -8,155 +8,154 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Controllers
+namespace VocaDb.Web.Controllers;
+
+using VocaDb.Web.Models.MikuDbAlbums;
+
+public class MikuDbAlbumController : ControllerBase
 {
-	using VocaDb.Web.Models.MikuDbAlbums;
+	private readonly MikuDbAlbumService _service;
 
-	public class MikuDbAlbumController : ControllerBase
+	private MikuDbAlbumService Service => _service;
+
+	public MikuDbAlbumController(MikuDbAlbumService service)
 	{
-		private readonly MikuDbAlbumService _service;
+		_service = service;
+	}
 
-		private MikuDbAlbumService Service => _service;
+	public FileResult CoverPicture(int id)
+	{
+		var pictureData = Service.GetCoverPicture(id);
 
-		public MikuDbAlbumController(MikuDbAlbumService service)
-		{
-			_service = service;
-		}
+		if (pictureData == null)
+			return File("~/Content/unknown.png", "image/png");
 
-		public FileResult CoverPicture(int id)
-		{
-			var pictureData = Service.GetCoverPicture(id);
+		return File(pictureData.Bytes, pictureData.Mime);
+	}
 
-			if (pictureData == null)
-				return File("~/Content/unknown.png", "image/png");
+	//
+	// GET: /MikuDb/
 
-			return File(pictureData.Bytes, pictureData.Mime);
-		}
+	public ActionResult Index(string titleFilter, AlbumStatus? status)
+	{
+		var s = status ?? AlbumStatus.New;
+		var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, EntriesPerPage, false));
+		var model = new Index(albums, titleFilter, s);
 
-		//
-		// GET: /MikuDb/
+		PageProperties.Title = "Imported albums";
 
-		public ActionResult Index(string titleFilter, AlbumStatus? status)
-		{
-			var s = status ?? AlbumStatus.New;
-			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, EntriesPerPage, false));
-			var model = new Index(albums, titleFilter, s);
+		return View(model);
+	}
 
-			PageProperties.Title = "Imported albums";
+	[HttpGet]
+	[Authorize]
+	public ActionResult PrepareForImport(int id)
+	{
+		var result = Service.Inspect(new[] { new ImportedAlbumOptions(id) }).First();
 
-			return View(model);
-		}
+		return View("PrepareForImport", result);
+	}
 
-		[HttpGet]
-		[Authorize]
-		public ActionResult PrepareForImport(int id)
-		{
-			var result = Service.Inspect(new[] { new ImportedAlbumOptions(id) }).First();
+	/*
+	[HttpPost]
+	[Authorize]
+	public ActionResult PrepareForImport(IEnumerable<MikuDbAlbumContract> albums) {
 
-			return View("PrepareForImport", result);
-		}
+		var selectedIds = (albums != null ? albums.Where(a => a.Selected).Select(a => new ImportedAlbumOptions(a.Id)).ToArray() : new ImportedAlbumOptions[] {});
+		var result = Service.Inspect(selectedIds);
 
-		/*
-		[HttpPost]
-		[Authorize]
-		public ActionResult PrepareForImport(IEnumerable<MikuDbAlbumContract> albums) {
+		return View("PrepareForImport", new PrepareAlbumsForImport(result));
+	}*/
 
-			var selectedIds = (albums != null ? albums.Where(a => a.Selected).Select(a => new ImportedAlbumOptions(a.Id)).ToArray() : new ImportedAlbumOptions[] {});
-			var result = Service.Inspect(selectedIds);
-
-			return View("PrepareForImport", new PrepareAlbumsForImport(result));
-		}*/
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult ImportFromFile()
-		{
-			if (Request.Form.Files.Count == 0 || Request.Form.Files[0].Length == 0)
-				return RedirectToAction("Index");
-
-			var file = Request.Form.Files[0];
-			var id = Service.ImportFromFile(file.OpenReadStream());
-
-			return RedirectToAction("PrepareForImport", new { id });
-		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult ImportOne(string AlbumUrl)
-		{
-			var result = Service.ImportOne(AlbumUrl);
-
-			if (result.AlbumContract != null)
-			{
-				TempData.SetSuccessMessage("Album was imported successfully and is ready to be processed.");
-				return RedirectToAction("PrepareForImport", new { id = result.AlbumContract.Id });
-			}
-			else if (!string.IsNullOrEmpty(result.Message))
-			{
-				TempData.SetWarnMessage(result.Message);
-			}
-
+	[HttpPost]
+	[Authorize]
+	public ActionResult ImportFromFile()
+	{
+		if (Request.Form.Files.Count == 0 || Request.Form.Files[0].Length == 0)
 			return RedirectToAction("Index");
-		}
 
-		[Authorize]
-		public ActionResult ImportNew()
+		var file = Request.Form.Files[0];
+		var id = Service.ImportFromFile(file.OpenReadStream());
+
+		return RedirectToAction("PrepareForImport", new { id });
+	}
+
+	[HttpPost]
+	[Authorize]
+	public ActionResult ImportOne(string AlbumUrl)
+	{
+		var result = Service.ImportOne(AlbumUrl);
+
+		if (result.AlbumContract != null)
 		{
-			var count = Service.ImportNew();
-
-			if (count > 0)
-			{
-				TempData.SetSuccessMessage(count + " album(s) were downloaded successfully and are ready to be processed.");
-			}
-			else
-			{
-				TempData.SetWarnMessage("No new albums to download.");
-			}
-
-			return RedirectToAction("Index");
+			TempData.SetSuccessMessage("Album was imported successfully and is ready to be processed.");
+			return RedirectToAction("PrepareForImport", new { id = result.AlbumContract.Id });
 		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult AcceptImported(InspectedAlbum album, string commit)
+		else if (!string.IsNullOrEmpty(result.Message))
 		{
-			if (commit != "Accept")
-			{
-				//var options = albums.Select(a => new ImportedAlbumOptions(a)).ToArray();
-				var options = new ImportedAlbumOptions(album);
-				var inspectResult = Service.Inspect(options);
-
-				return View("PrepareForImport", inspectResult);
-			}
-
-			var ids = new ImportedAlbumOptions(album);
-			var selectedSongIds = (album.Tracks != null ? album.Tracks.Where(t => t.Selected).Select(t => t.ExistingSong.Id).ToArray() : Array.Empty<int>());
-
-			Service.AcceptImportedAlbum(ids, selectedSongIds);
-
-			TempData.SetSuccessMessage("Imported album approved successfully.");
-
-			return RedirectToAction("Index");
+			TempData.SetWarnMessage(result.Message);
 		}
 
-		[Authorize]
-		public ActionResult Delete(int id)
+		return RedirectToAction("Index");
+	}
+
+	[Authorize]
+	public ActionResult ImportNew()
+	{
+		var count = Service.ImportNew();
+
+		if (count > 0)
 		{
-			Service.Delete(id);
-
-			TempData.SetSuccessMessage("Imported album deleted.");
-
-			return RedirectToAction("Index");
+			TempData.SetSuccessMessage(count + " album(s) were downloaded successfully and are ready to be processed.");
 		}
-
-		[Authorize]
-		public ActionResult SkipAlbum(int id)
+		else
 		{
-			Service.SkipAlbum(id);
-
-			TempData.SetSuccessMessage("Imported album rejected.");
-
-			return RedirectToAction("Index");
+			TempData.SetWarnMessage("No new albums to download.");
 		}
+
+		return RedirectToAction("Index");
+	}
+
+	[HttpPost]
+	[Authorize]
+	public ActionResult AcceptImported(InspectedAlbum album, string commit)
+	{
+		if (commit != "Accept")
+		{
+			//var options = albums.Select(a => new ImportedAlbumOptions(a)).ToArray();
+			var options = new ImportedAlbumOptions(album);
+			var inspectResult = Service.Inspect(options);
+
+			return View("PrepareForImport", inspectResult);
+		}
+
+		var ids = new ImportedAlbumOptions(album);
+		var selectedSongIds = (album.Tracks != null ? album.Tracks.Where(t => t.Selected).Select(t => t.ExistingSong.Id).ToArray() : Array.Empty<int>());
+
+		Service.AcceptImportedAlbum(ids, selectedSongIds);
+
+		TempData.SetSuccessMessage("Imported album approved successfully.");
+
+		return RedirectToAction("Index");
+	}
+
+	[Authorize]
+	public ActionResult Delete(int id)
+	{
+		Service.Delete(id);
+
+		TempData.SetSuccessMessage("Imported album deleted.");
+
+		return RedirectToAction("Index");
+	}
+
+	[Authorize]
+	public ActionResult SkipAlbum(int id)
+	{
+		Service.SkipAlbum(id);
+
+		TempData.SetSuccessMessage("Imported album rejected.");
+
+		return RedirectToAction("Index");
 	}
 }

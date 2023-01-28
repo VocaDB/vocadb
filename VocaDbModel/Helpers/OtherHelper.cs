@@ -1,27 +1,26 @@
-namespace VocaDb.Model.Helpers
+namespace VocaDb.Model.Helpers;
+
+public static class OtherHelper
 {
-	public static class OtherHelper
+	public static bool HasCircularReference<T>(T? root, Func<T, T?> accessor) where T : class
 	{
-		public static bool HasCircularReference<T>(T? root, Func<T, T?> accessor) where T : class
-		{
-			return HasObject(root, root, accessor);
-		}
+		return HasObject(root, root, accessor);
+	}
 
-		public static bool HasObject<T>(T? root, T? needle, Func<T, T?> accessor) where T : class
+	public static bool HasObject<T>(T? root, T? needle, Func<T, T?> accessor) where T : class
+	{
+		var current = root;
+		var iterations = 0;
+		while (current != null && ++iterations < 1000)
 		{
-			var current = root;
-			var iterations = 0;
-			while (current != null && ++iterations < 1000)
+			current = accessor(current);
+
+			if (Equals(current, needle))
 			{
-				current = accessor(current);
-
-				if (Equals(current, needle))
-				{
-					return true;
-				}
+				return true;
 			}
-
-			return false;
 		}
+
+		return false;
 	}
 }

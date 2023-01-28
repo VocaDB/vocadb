@@ -5,36 +5,35 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts
+namespace VocaDb.Model.DataContracts;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class EntryRefContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryRefContract
-	{
-		public EntryRefContract() { }
+	public EntryRefContract() { }
 
 #nullable enable
-		public EntryRefContract(IEntryBase entryBase)
-		{
-			ParamIs.NotNull(() => entryBase);
+	public EntryRefContract(IEntryBase entryBase)
+	{
+		ParamIs.NotNull(() => entryBase);
 
-			EntryType = entryBase.EntryType;
-			Id = entryBase.Id;
-		}
+		EntryType = entryBase.EntryType;
+		Id = entryBase.Id;
+	}
 
-		public EntryRefContract(EntryRef entryRef)
-		{
-			ParamIs.NotNull(() => entryRef);
+	public EntryRefContract(EntryRef entryRef)
+	{
+		ParamIs.NotNull(() => entryRef);
 
-			EntryType = entryRef.EntryType;
-			Id = entryRef.Id;
-		}
+		EntryType = entryRef.EntryType;
+		Id = entryRef.Id;
+	}
 #nullable disable
 
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryType EntryType { get; init; }
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public EntryType EntryType { get; init; }
 
-		[DataMember]
-		public int Id { get; set; }
-	}
+	[DataMember]
+	public int Id { get; set; }
 }

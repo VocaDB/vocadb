@@ -7,116 +7,115 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.DatabaseTests.Queries
+namespace VocaDb.Tests.DatabaseTests.Queries;
+
+/// <summary>
+/// Database tests for <see cref="TagQueries"/>.
+/// </summary>
+[TestClass]
+public class TagQueriesDatabaseTests
 {
-	/// <summary>
-	/// Database tests for <see cref="TagQueries"/>.
-	/// </summary>
-	[TestClass]
-	public class TagQueriesDatabaseTests
+	private readonly DatabaseTestContext<ITagRepository> _context = new();
+	private readonly FakePermissionContext _userContext;
+
+	private static TestDatabase Db => TestContainerManager.TestDatabase;
+
+	public TagQueriesDatabaseTests()
 	{
-		private readonly DatabaseTestContext<ITagRepository> _context = new();
-		private readonly FakePermissionContext _userContext;
+		_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+	}
 
-		private static TestDatabase Db => TestContainerManager.TestDatabase;
+	private TagForApiContract Merge(int sourceId, int targetId)
+	{
+		var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-		public TagQueriesDatabaseTests()
+		return _context.RunTest(repository =>
 		{
-			_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
-		}
+			var queries = new TagQueries(
+				repository,
+				permissionContext,
+				new FakeEntryLinkFactory(),
+				new InMemoryImagePersister(),
+				new InMemoryImagePersister(),
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new FakeObjectCache(),
+				new FakeDiscordWebhookNotifier()
+			);
 
-		private TagForApiContract Merge(int sourceId, int targetId)
+			queries.Merge(sourceId, targetId);
+
+			var result = queries.LoadTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+
+			return result;
+		});
+	}
+
+	private TagForEditForApiContract Update(TagForEditForApiContract contract)
+	{
+		var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+
+		return _context.RunTest(repository =>
 		{
-			var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			var queries = new TagQueries(
+				repository,
+				permissionContext,
+				new FakeEntryLinkFactory(),
+				new InMemoryImagePersister(),
+				new InMemoryImagePersister(),
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new FakeObjectCache(),
+				new FakeDiscordWebhookNotifier()
+			);
 
-			return _context.RunTest(repository =>
-			{
-				var queries = new TagQueries(
-					repository,
-					permissionContext,
-					new FakeEntryLinkFactory(),
-					new InMemoryImagePersister(),
-					new InMemoryImagePersister(),
-					new FakeUserIconFactory(),
-					new EnumTranslations(),
-					new FakeObjectCache(),
-					new FakeDiscordWebhookNotifier()
-				);
+			var updated = queries.Update(contract, null);
 
-				queries.Merge(sourceId, targetId);
+			return queries.GetTagForEdit(updated.Id);
+		});
+	}
 
-				var result = queries.LoadTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public void Merge_MoveUsages()
+	{
+		var target = Merge(Db.Tag.Id, Db.Tag2.Id);
 
-				return result;
-			});
-		}
+		target.UsageCount.Should().Be(1, "UsageCount for the target tag");
+	}
 
-		private TagForEditForApiContract Update(TagForEditForApiContract contract)
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public void Update_ReplaceName()
+	{
+		var contract = new TagForEditForApiContract(Db.Tag, false, _userContext, thumbPersister: null);
+		contract.Names[0] = new LocalizedStringWithIdContract
 		{
-			var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			Value = "electronic",
+			Language = ContentLanguageSelection.Japanese
+		};
 
-			return _context.RunTest(repository =>
-			{
-				var queries = new TagQueries(
-					repository,
-					permissionContext,
-					new FakeEntryLinkFactory(),
-					new InMemoryImagePersister(),
-					new InMemoryImagePersister(),
-					new FakeUserIconFactory(),
-					new EnumTranslations(),
-					new FakeObjectCache(),
-					new FakeDiscordWebhookNotifier()
-				);
+		var result = Update(contract);
 
-				var updated = queries.Update(contract, null);
+		result.Names.Length.Should().Be(1, "Number of names");
+		var name = result.Names[0];
+		name.Language.Should().Be(ContentLanguageSelection.Japanese, "Name language");
+		name.Value.Should().Be("electronic", "Name value");
+		name.Id.Should().NotBe(0, "Id was assigned");
+	}
 
-				return queries.GetTagForEdit(updated.Id);
-			});
-		}
+	[TestMethod]
+	[TestCategory(TestCategories.Database)]
+	public void Update_SwapNameTranslations()
+	{
+		var contract = new TagForEditForApiContract(Db.Tag2, false, _userContext, thumbPersister: null);
+		contract.Names[0].Value = "ロック"; // Swap values
+		contract.Names[1].Value = "rock";
 
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void Merge_MoveUsages()
-		{
-			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
+		var result = Update(contract);
 
-			target.UsageCount.Should().Be(1, "UsageCount for the target tag");
-		}
-
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void Update_ReplaceName()
-		{
-			var contract = new TagForEditForApiContract(Db.Tag, false, _userContext, thumbPersister: null);
-			contract.Names[0] = new LocalizedStringWithIdContract
-			{
-				Value = "electronic",
-				Language = ContentLanguageSelection.Japanese
-			};
-
-			var result = Update(contract);
-
-			result.Names.Length.Should().Be(1, "Number of names");
-			var name = result.Names[0];
-			name.Language.Should().Be(ContentLanguageSelection.Japanese, "Name language");
-			name.Value.Should().Be("electronic", "Name value");
-			name.Id.Should().NotBe(0, "Id was assigned");
-		}
-
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void Update_SwapNameTranslations()
-		{
-			var contract = new TagForEditForApiContract(Db.Tag2, false, _userContext, thumbPersister: null);
-			contract.Names[0].Value = "ロック"; // Swap values
-			contract.Names[1].Value = "rock";
-
-			var result = Update(contract);
-
-			result.Names.Length.Should().Be(2, "Number of names");
-			var name = result.Names[0];
-			name.Value.Should().Be("ロック", "Name value");
-		}
+		result.Names.Length.Should().Be(2, "Number of names");
+		var name = result.Names[0];
+		name.Value.Should().Be("ロック", "Name value");
 	}
 }
