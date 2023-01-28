@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -17,12 +16,6 @@ public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class
 #nullable disable
 	protected GenericWebLink() { }
 #nullable enable
-
-	protected GenericWebLink(TEntry entry, WebLinkContract contract)
-		: base(contract)
-	{
-		Entry = entry;
-	}
 
 	protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category, bool disabled)
 		: base(description, url, category, disabled)
@@ -115,9 +108,6 @@ public class TagWebLink : GenericWebLink<Tag>
 {
 	public TagWebLink() { }
 
-	public TagWebLink(Tag tag, WebLinkContract contract)
-		: base(tag, contract) { }
-
 	public TagWebLink(Tag tag, string description, string url, bool disabled)
 		: base(tag, description, url, WebLinkCategory.Other, disabled) { }
 }
@@ -126,8 +116,8 @@ public class UserWebLink : GenericWebLink<User>
 {
 	public UserWebLink() { }
 
-	public UserWebLink(User user, WebLinkContract contract)
-		: base(user, contract) { }
+	public UserWebLink(User user, string description, string url, WebLinkCategory category, bool disabled)
+		: base(user, description, url, category, disabled) { }
 }
 
 public class VenueWebLink : GenericWebLink<Venue>

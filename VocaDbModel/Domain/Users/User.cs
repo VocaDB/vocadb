@@ -638,7 +638,7 @@ public class User :
 	{
 		ParamIs.NotNull(() => contract);
 
-		var link = new UserWebLink(this, contract);
+		var link = new UserWebLink(this, contract.Description, contract.Url, contract.Category, contract.Disabled);
 		WebLinks.Add(link);
 
 		return link;
