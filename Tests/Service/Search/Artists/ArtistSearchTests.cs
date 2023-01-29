@@ -25,7 +25,7 @@ public class ArtistSearchTests
 
 		var artist1 = _db.Save(CreateEntry.Artist(ArtistType.Producer, name: "XenonP"));
 		_db.SaveNames(artist1);
-		_db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official, disabled: false));
+		_db.Save(artist1.CreateWebLink("Twitter", CreateEntry.WebAddress("https://twitter.com/XenonP_XM"), WebLinkCategory.Official, disabled: false));
 		_db.SaveNames(_db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears")));
 		_db.SaveNames(_db.Save(CreateEntry.Artist(ArtistType.Vocaloid, name: "Hatsune Miku")));
 	}
@@ -80,7 +80,7 @@ public class ArtistSearchTests
 	{
 		var artist = _db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
 		_db.SaveNames(artist);
-		_db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official, disabled: false));
+		_db.Save(artist.CreateWebLink("Twitter", CreateEntry.WebAddress("https://twitter.com/Uji_RaychoruiP"), WebLinkCategory.Official, disabled: false));
 
 		var result = _artistSearch.Find(new ArtistQueryParams
 		{

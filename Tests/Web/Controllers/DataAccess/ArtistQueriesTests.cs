@@ -61,7 +61,7 @@ public class ArtistQueriesTests
 		_artist = CreateEntry.Producer(name: "Tripshots");
 		_vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
 		_repository = new FakeArtistRepository(_artist, _vocalist);
-		var weblink = new ArtistWebLink(_artist, "Website", "http://tripshots.net", WebLinkCategory.Official, disabled: false);
+		var weblink = new ArtistWebLink(_artist, "Website", CreateEntry.WebAddress("http://tripshots.net/"), WebLinkCategory.Official, disabled: false);
 		_artist.WebLinks.Add(weblink);
 		_repository.Save(weblink);
 		_repository.SaveNames(_artist, _vocalist);
@@ -193,7 +193,7 @@ public class ArtistQueriesTests
 	[TestMethod]
 	public void FindDuplicates_Link()
 	{
-		var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
+		var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net/");
 
 		result.Should().NotBeNull("result");
 		result.Length.Should().Be(1, "Number of results");
@@ -203,7 +203,7 @@ public class ArtistQueriesTests
 	[TestMethod]
 	public void FindDuplicates_DifferentScheme()
 	{
-		var result = _queries.FindDuplicates(Array.Empty<string>(), "https://tripshots.net");
+		var result = _queries.FindDuplicates(Array.Empty<string>(), "https://tripshots.net/");
 
 		result.Should().NotBeNull("result");
 		result.Length.Should().Be(1, "Number of results");
@@ -223,7 +223,7 @@ public class ArtistQueriesTests
 	public void FindDuplicates_Link_IgnoreDeleted()
 	{
 		_artist.Deleted = true;
-		var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
+		var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net/");
 
 		result.Should().NotBeNull("result");
 		result.Length.Should().Be(0, "Number of results");

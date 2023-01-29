@@ -24,20 +24,20 @@ public class WebLinksTests
 {
 	private static readonly (string Description, string Url)[] s_webLinks = new[]
 	{
-		(Description: string.Empty, Url: "5"),
-		(Description: "4", Url: "0"),
-		(Description: string.Empty, Url: "3"),
-		(Description: "2", Url: "0"),
-		(Description: string.Empty, Url: "1"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/5"),
+		(Description: "https://vocadb.net/Ar/4", Url: "https://vocadb.net/Ar/0"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/3"),
+		(Description: "https://vocadb.net/Ar/2", Url: "https://vocadb.net/Ar/0"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/1"),
 	};
 
 	private static readonly (string Description, string Url)[] s_expected = new[]
 	{
-		(Description: string.Empty, Url: "1"),
-		(Description: "2", Url: "0"),
-		(Description: string.Empty, Url: "3"),
-		(Description: "4", Url: "0"),
-		(Description: string.Empty, Url: "5"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/1"),
+		(Description: "https://vocadb.net/Ar/2", Url: "https://vocadb.net/Ar/0"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/3"),
+		(Description: "https://vocadb.net/Ar/4", Url: "https://vocadb.net/Ar/0"),
+		(Description: string.Empty, Url: "https://vocadb.net/Ar/5"),
 	};
 
 	private IUserPermissionContext _userContext = default!;
@@ -58,7 +58,7 @@ public class WebLinksTests
 		var album = CreateEntry.Album();
 
 		foreach (var (description, url) in s_webLinks)
-			album.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			album.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new AlbumDetailsForApiContract(album, _userContext.LanguagePreference, _userContext, _thumbPersister);
 
@@ -71,7 +71,7 @@ public class WebLinksTests
 		var artist = CreateEntry.Artist(ArtistType.Vocaloid);
 
 		foreach (var (description, url) in s_webLinks)
-			artist.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			artist.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new ArtistDetailsForApiContract(artist, _userContext.LanguagePreference, _userContext, _thumbPersister, _iconFactory);
 
@@ -84,7 +84,7 @@ public class WebLinksTests
 		var series = CreateEntry.EventSeries("Magical Mirai");
 
 		foreach (var (description, url) in s_webLinks)
-			series.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			series.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var seriesContract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _thumbPersister);
 
@@ -93,7 +93,7 @@ public class WebLinksTests
 		var releaseEvent = CreateEntry.SeriesEvent(series, seriesNumber: 1);
 
 		foreach (var (description, url) in s_webLinks)
-			releaseEvent.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			releaseEvent.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new ReleaseEventDetailsForApiContract(
 			releaseEvent,
@@ -119,7 +119,7 @@ public class WebLinksTests
 		var series = CreateEntry.EventSeries("Magical Mirai");
 
 		foreach (var (description, url) in s_webLinks)
-			series.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			series.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _thumbPersister);
 
@@ -132,7 +132,7 @@ public class WebLinksTests
 		var song = CreateEntry.Song();
 
 		foreach (var (description, url) in s_webLinks)
-			song.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			song.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new SongDetailsForApiContract(
 			song,
@@ -153,7 +153,7 @@ public class WebLinksTests
 		var tag = CreateEntry.Tag("rock");
 
 		foreach (var (description, url) in s_webLinks)
-			tag.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			tag.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var stats = new TagStatsForApiContract(
 			_userContext.LanguagePreference,
@@ -193,7 +193,7 @@ public class WebLinksTests
 		var user = CreateEntry.User();
 
 		foreach (var (description, url) in s_webLinks)
-			user.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			user.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new UserDetailsForApiContract(
 			user,
@@ -212,7 +212,7 @@ public class WebLinksTests
 		var venue = CreateEntry.Venue();
 
 		foreach (var (description, url) in s_webLinks)
-			venue.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
+			venue.CreateWebLink(description: description, address: CreateEntry.WebAddress(url), category: WebLinkCategory.Official, disabled: false);
 
 		var contract = new VenueForApiContract(venue, _userContext.LanguagePreference, fields: VenueOptionalFields.WebLinks);
 

@@ -3,6 +3,7 @@
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -158,5 +159,14 @@ public static class CreateEntry
 		venue.CreateName(new LocalizedString(englishName, ContentLanguageSelection.English));
 
 		return venue;
+	}
+
+	public static WebAddress WebAddress(string url)
+	{
+		var uri = new Uri(url);
+		var actor = User();
+		var host = new WebAddressHost(uri.Host, actor);
+		var address = new WebAddress(uri, host, actor);
+		return address;
 	}
 }

@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.Domain.Users;
 
@@ -71,12 +72,12 @@ public class UserTests
 	[TestMethod]
 	public void CreateWebLink()
 	{
-		_user.CreateWebLink(description: "test link", url: "http://www.test.com", category: WebLinkCategory.Other, disabled: false);
+		_user.CreateWebLink(description: "test link", address: CreateEntry.WebAddress("http://www.test.com/"), category: WebLinkCategory.Other, disabled: false);
 
 		_user.WebLinks.Count.Should().Be(1, "Should have one link");
 		var link = _user.WebLinks.First();
 		link.Description.Should().Be("test link", "description");
-		link.Url.Should().Be("http://www.test.com", "url");
+		link.Url.Should().Be("http://www.test.com/", "url");
 		link.Category.Should().Be(WebLinkCategory.Other, "category");
 	}
 }

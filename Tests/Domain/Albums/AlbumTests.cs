@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
+using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.Domain.Albums;
 
@@ -93,12 +94,12 @@ public class AlbumTests
 	[TestMethod]
 	public void CreateWebLink()
 	{
-		_album.CreateWebLink("test link", "http://www.test.com", WebLinkCategory.Other, disabled: false);
+		_album.CreateWebLink("test link", CreateEntry.WebAddress("http://www.test.com/"), WebLinkCategory.Other, disabled: false);
 
 		_album.WebLinks.Count.Should().Be(1, "Should have one link");
 		var link = _album.WebLinks.First();
 		link.Description.Should().Be("test link", "description");
-		link.Url.Should().Be("http://www.test.com", "url");
+		link.Url.Should().Be("http://www.test.com/", "url");
 		link.Category.Should().Be(WebLinkCategory.Other, "category");
 	}
 

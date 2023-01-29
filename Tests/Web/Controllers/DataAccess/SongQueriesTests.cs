@@ -553,7 +553,7 @@ public class SongQueriesTests
 	public async Task FindDuplicates_ParsePVInfo_YouTube()
 	{
 		var artist = _repository.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears"));
-		_repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official, disabled: false));
+		_repository.Save(artist.CreateWebLink("YouTube", CreateEntry.WebAddress("https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA"), WebLinkCategory.Official, disabled: false));
 
 		var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", null, "http://tn.smilevideo.jp/smile?i=32347786", 39);
 		titleParseResult.Author = "Clean Tears";
@@ -943,7 +943,7 @@ public class SongQueriesTests
 		contract.WebLinks = new[] {
 			new WebLinkForApiContract
 			{
-				Url = "http://vocadb.net",
+				Url = "http://vocadb.net/",
 				Description = "VocaDB",
 				Category = WebLinkCategory.Reference,
 				Disabled = false,
@@ -953,7 +953,7 @@ public class SongQueriesTests
 		contract = await _queries.UpdateBasicProperties(contract);
 		var songFromRepo = _repository.Load(contract.Id);
 		songFromRepo.WebLinks.Count.Should().Be(1, "Number of weblinks");
-		songFromRepo.WebLinks[0].Url.Should().Be("http://vocadb.net", "Weblink URL");
+		songFromRepo.WebLinks[0].Url.Should().Be("http://vocadb.net/", "Weblink URL");
 	}
 
 	[TestMethod]
