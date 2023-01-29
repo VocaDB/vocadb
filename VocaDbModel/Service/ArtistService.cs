@@ -219,7 +219,7 @@ public class ArtistService : ServiceBase
 			{
 				var link = target.CreateWebLink(
 					w.Description,
-					null/* TODO: w.Url */,
+					address: WebLink.GetOrCreateWebAddress(session, uri: new Uri(w.Url), actor: SessionHelper.CreateAgentLoginData(session, PermissionContext).User),
 					w.Category,
 					w.Disabled
 				);

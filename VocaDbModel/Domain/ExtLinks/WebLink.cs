@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Users;
@@ -23,7 +24,42 @@ public class WebLink : IWebLink, IEntryWithIntId
 		}
 	}
 
+	// TODO: remove
+	[Obsolete]
+	private static WebAddressHost GetOrCreateWebAddressHost(ISession ctx, Uri uri, User actor)
+	{
+		var host = ctx.Query<WebAddressHost>().FirstOrDefault(host => host.Hostname == uri.Host);
+		if (host is not null)
+		{
+			return host;
+		}
+		else
+		{
+			host = new WebAddressHost(uri.Host, actor);
+			ctx.Save(host);
+			return host;
+		}
+	}
+
 	public static WebAddress GetOrCreateWebAddress(IDatabaseContext ctx, Uri uri, User actor)
+	{
+		var host = GetOrCreateWebAddressHost(ctx, uri, actor);
+		var address = ctx.Query<WebAddress>().FirstOrDefault(address => address.Url == uri.ToString());
+		if (address is not null)
+		{
+			return address;
+		}
+		else
+		{
+			address = new WebAddress(uri, host, actor);
+			ctx.Save(address);
+			return address;
+		}
+	}
+
+	// TODO: remove
+	[Obsolete]
+	public static WebAddress GetOrCreateWebAddress(ISession ctx, Uri uri, User actor)
 	{
 		var host = GetOrCreateWebAddressHost(ctx, uri, actor);
 		var address = ctx.Query<WebAddress>().FirstOrDefault(address => address.Url == uri.ToString());
