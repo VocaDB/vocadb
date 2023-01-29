@@ -634,19 +634,15 @@ public class User :
 		return comment;
 	}
 
-	public virtual UserWebLink CreateWebLink(WebLinkContract contract)
+	public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 	{
-		ParamIs.NotNull(() => contract);
+		ParamIs.NotNull(() => description);
+		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new UserWebLink(this, contract);
+		var link = new UserWebLink(this, description, url, category, disabled);
 		WebLinks.Add(link);
 
 		return link;
-	}
-
-	public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
-	{
-		return CreateWebLink(new WebLinkContract(url, description, category, disabled));
 	}
 
 	public virtual bool Equals(IUser? another)

@@ -1,6 +1,5 @@
 #nullable disable
 
-using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
@@ -72,7 +71,7 @@ public class UserTests
 	[TestMethod]
 	public void CreateWebLink()
 	{
-		_user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other, disabled: false));
+		_user.CreateWebLink(description: "test link", url: "http://www.test.com", category: WebLinkCategory.Other, disabled: false);
 
 		_user.WebLinks.Count.Should().Be(1, "Should have one link");
 		var link = _user.WebLinks.First();
