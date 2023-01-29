@@ -401,7 +401,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 			if (contract.WebLinks != null)
 			{
-				var weblinksDiff = await ctx.SyncAsync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
+				var weblinksDiff = await ctx.SyncAsync(WebLink.Sync(
+					ctx,
+					song.WebLinks,
+					contract.WebLinks,
+					song,
+					await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext)
+				));
 				diff.WebLinks.Set(weblinksDiff.Changed);
 			}
 
@@ -1015,7 +1021,12 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			// Weblinks
 			foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 			{
-				var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
+				var link = target.CreateWebLink(
+					w.Description,
+					WebLink.GetOrCreateWebAddress(ctx, new Uri(w.Url), ctx.OfType<User>().GetLoggedUser(PermissionContext)),
+					w.Category,
+					w.Disabled
+				);
 				ctx.Save(link);
 			}
 
@@ -1210,9 +1221,11 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			if (fullProperties.WebLinks != null)
 			{
 				var webLinkDiff = WebLink.SyncByValue(
+					session,
 					oldLinks: song.WebLinks,
 					newLinks: fullProperties.WebLinks,
-					webLinkFactory: song
+					webLinkFactory: song,
+					actor: session.OfType<User>().GetLoggedUser(PermissionContext)
 				);
 				session.Sync(webLinkDiff);
 			}
@@ -1343,7 +1356,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			if (nameDiff.Changed)
 				diff.Names.Set();
 
-			var webLinkDiff = WebLink.Sync(song.WebLinks, properties.WebLinks, song);
+			var webLinkDiff = WebLink.Sync(
+				ctx,
+				song.WebLinks,
+				properties.WebLinks,
+				song,
+				actor: ctx.OfType<User>().GetLoggedUser(PermissionContext)
+			);
 			await ctx.OfType<SongWebLink>().SyncAsync(webLinkDiff);
 
 			if (webLinkDiff.Changed)

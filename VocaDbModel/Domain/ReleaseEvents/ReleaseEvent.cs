@@ -338,12 +338,11 @@ public class ReleaseEvent :
 		return pv;
 	}
 
-	public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual ReleaseEventWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new ReleaseEventWebLink(this, description, url, category, disabled);
+		var link = new ReleaseEventWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

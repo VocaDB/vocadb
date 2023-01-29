@@ -291,7 +291,12 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 					diff.Coordinates.Set();
 				}
 
-				var webLinkDiff = venue.WebLinks.Sync(contract.WebLinks, venue);
+				var webLinkDiff = venue.WebLinks.Sync(
+					ctx,
+					contract.WebLinks,
+					venue,
+					actor: ctx.OfType<User>().GetLoggedUser(PermissionContext)
+				);
 				ctx.OfType<VenueWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
@@ -354,7 +359,12 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 					venue.Status = contract.Status;
 				}
 
-				var webLinkDiff = venue.WebLinks.Sync(contract.WebLinks, venue);
+				var webLinkDiff = venue.WebLinks.Sync(
+					ctx,
+					contract.WebLinks,
+					venue,
+					actor: ctx.OfType<User>().GetLoggedUser(PermissionContext)
+				);
 				ctx.OfType<VenueWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)

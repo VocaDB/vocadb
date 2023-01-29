@@ -304,12 +304,11 @@ public class Tag :
 		return name;
 	}
 
-	public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual TagWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new TagWebLink(this, description, url, disabled);
+		var link = new TagWebLink(this, description, address, disabled);
 		WebLinks.Links.Add(link);
 
 		return link;

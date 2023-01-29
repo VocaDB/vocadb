@@ -230,7 +230,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 
 			if (contract.WebLink != null)
 			{
-				artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category, contract.WebLink.Disabled);
+				artist.CreateWebLink(
+					contract.WebLink.Description,
+					address: WebLink.GetOrCreateWebAddress(ctx, new Uri(contract.WebLink.Url), actor: await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext)),
+					contract.WebLink.Category,
+					contract.WebLink.Disabled
+				);
 				diff.WebLinks.Set();
 			}
 
@@ -637,9 +642,11 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			if (fullProperties.WebLinks != null)
 			{
 				var webLinkDiff = WebLink.SyncByValue(
+					session,
 					oldLinks: artist.WebLinks,
 					newLinks: fullProperties.WebLinks,
-					webLinkFactory: artist
+					webLinkFactory: artist,
+					actor: await session.OfType<User>().GetLoggedUserAsync(PermissionContext)
 				);
 				await session.SyncAsync(webLinkDiff);
 			}
@@ -727,7 +734,13 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				diff.ReleaseDate.Set();
 			}
 
-			var webLinkDiff = WebLink.Sync(artist.WebLinks, properties.WebLinks, artist);
+			var webLinkDiff = WebLink.Sync(
+				ctx,
+				artist.WebLinks,
+				properties.WebLinks,
+				artist,
+				actor: await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext)
+			);
 			await ctx.OfType<ArtistWebLink>().SyncAsync(webLinkDiff);
 
 			if (webLinkDiff.Changed)

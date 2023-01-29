@@ -436,12 +436,11 @@ public class Artist :
 		return f;
 	}
 
-	public virtual ArtistWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual ArtistWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrWhiteSpace(() => url);
 
-		var link = new ArtistWebLink(this, description, url, category, disabled);
+		var link = new ArtistWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

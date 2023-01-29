@@ -587,12 +587,11 @@ public class Song :
 		return pv;
 	}
 
-	public virtual SongWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual SongWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new SongWebLink(this, description, url, category, disabled);
+		var link = new SongWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

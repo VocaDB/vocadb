@@ -3,7 +3,7 @@ using VocaDb.Model.Domain.Users;
 namespace VocaDb.Model.Domain;
 
 // https://github.com/ycanardeau/yamatouta/blob/ba67503d3ded79c942c7240394faa1931e36f0e4/backend/src/entities/WebAddressHost.ts
-public class WebAddressHost
+public class WebAddressHost : IEntryWithIntId
 {
 	public virtual int Id { get; set; }
 	public virtual string Hostname { get; set; }
@@ -34,7 +34,7 @@ public class WebAddressHost
 }
 
 // https://github.com/ycanardeau/yamatouta/blob/ba67503d3ded79c942c7240394faa1931e36f0e4/backend/src/entities/WebAddress.ts
-public class WebAddress
+public class WebAddress : IEntryWithIntId
 {
 	public virtual int Id { get; set; }
 	public virtual string Url { get; set; }

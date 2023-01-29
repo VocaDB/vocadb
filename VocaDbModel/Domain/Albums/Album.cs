@@ -514,12 +514,11 @@ public class Album :
 		return pv;
 	}
 
-	public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual AlbumWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new AlbumWebLink(this, description, url, category, disabled);
+		var link = new AlbumWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

@@ -120,7 +120,7 @@ public class MikuDbAlbumService : ServiceBase
 		{
 			if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url)))
 			{
-				album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference, disabled: false);
+				album.CreateWebLink(importer.ServiceName, null/* TODO: sourceUrl */, WebLinkCategory.Reference, disabled: false);
 				diff.WebLinks.Set();
 			}
 		}

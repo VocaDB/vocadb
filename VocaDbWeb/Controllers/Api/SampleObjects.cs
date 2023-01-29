@@ -70,7 +70,7 @@ public static class SampleObjects
 			new TagUsageForApiContract { Tag = new TagBaseContract { Name = "electronic" } }
 		},
 		WebLinks = new[] {
-			new WebLinkForApiContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official, disabled: false)),
+			new WebLinkForApiContract(new WebLink("KarenT", null/* TODO: "http://karent.jp/album/29" */, WebLinkCategory.Official, disabled: false)),
 		}
 	};
 

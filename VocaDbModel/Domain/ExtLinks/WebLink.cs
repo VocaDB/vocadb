@@ -1,15 +1,50 @@
 using System.Diagnostics.CodeAnalysis;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ExtLinks;
 
 public class WebLink : IWebLink, IEntryWithIntId
 {
+	private static WebAddressHost GetOrCreateWebAddressHost(IDatabaseContext ctx, Uri uri, User actor)
+	{
+		var host = ctx.Query<WebAddressHost>().FirstOrDefault(host => host.Hostname == uri.Host);
+		if (host is not null)
+		{
+			return host;
+		}
+		else
+		{
+			host = new WebAddressHost(uri.Host, actor);
+			ctx.Save(host);
+			return host;
+		}
+	}
+
+	public static WebAddress GetOrCreateWebAddress(IDatabaseContext ctx, Uri uri, User actor)
+	{
+		var host = GetOrCreateWebAddressHost(ctx, uri, actor);
+		var address = ctx.Query<WebAddress>().FirstOrDefault(address => address.Url == uri.ToString());
+		if (address is not null)
+		{
+			return address;
+		}
+		else
+		{
+			address = new WebAddress(uri, host, actor);
+			ctx.Save(address);
+			return address;
+		}
+	}
+
 	public static CollectionDiffWithValue<T, T> Sync<T>(
+		IDatabaseContext ctx,
 		IList<T> oldLinks,
 		IEnumerable<IWebLinkContract> newLinks,
-		IWebLinkFactory<T> webLinkFactory
+		IWebLinkFactory<T> webLinkFactory,
+		User actor
 	)
 		where T : WebLink
 	{
@@ -20,9 +55,12 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 		T Create(IWebLinkContract newItem)
 		{
+			var address = GetOrCreateWebAddress(ctx, new Uri(newItem.Url), actor);
+			address.IncrementReferenceCount();
+
 			return webLinkFactory.CreateWebLink(
 				newItem.Description,
-				newItem.Url,
+				address,
 				newItem.Category,
 				newItem.Disabled
 			);
@@ -35,7 +73,8 @@ public class WebLink : IWebLink, IEntryWithIntId
 				oldItem.Category = newItem.Category;
 				oldItem.Description = newItem.Description;
 				oldItem.Disabled = newItem.Disabled;
-				oldItem.Url = newItem.Url;
+				var address = GetOrCreateWebAddress(ctx, new Uri(newItem.Url), actor);
+				oldItem.SetAddress(address);
 				return true;
 			}
 
@@ -58,9 +97,11 @@ public class WebLink : IWebLink, IEntryWithIntId
 	}
 
 	public static CollectionDiff<T, T> SyncByValue<T>(
+		IDatabaseContext ctx,
 		IList<T> oldLinks,
 		IEnumerable<ArchivedWebLinkContract> newLinks,
-		IWebLinkFactory<T> webLinkFactory
+		IWebLinkFactory<T> webLinkFactory,
+		User actor
 	)
 		where T : WebLink
 	{
@@ -68,7 +109,7 @@ public class WebLink : IWebLink, IEntryWithIntId
 		{
 			return webLinkFactory.CreateWebLink(
 				newItem.Description,
-				newItem.Url,
+				address: GetOrCreateWebAddress(ctx, new Uri(newItem.Url), actor),
 				newItem.Category,
 				newItem.Disabled
 			);
@@ -76,6 +117,8 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 		void Remove(T oldItem)
 		{
+			oldItem.Address.DecrementReferenceCount();
+
 			oldLinks.Remove(oldItem);
 		}
 
@@ -90,18 +133,18 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 	private string _description;
 	private string _url;
+	private WebAddress _address;
 
 #nullable disable
 	public WebLink() { }
 #nullable enable
 
-	public WebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public WebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrWhiteSpace(() => url);
 
 		Description = description;
-		Url = url;
+		Address = address;
 		Category = category;
 		Disabled = disabled;
 	}
@@ -141,9 +184,6 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 	public virtual int Id { get; set; }
 
-	// TODO: Make non-nullable.
-	public virtual WebAddress? Address { get; set; }
-
 	/// <summary>
 	/// Link URL. Cannot be null or empty.
 	/// </summary>
@@ -158,6 +198,17 @@ public class WebLink : IWebLink, IEntryWithIntId
 		}
 	}
 
+	public virtual WebAddress Address
+	{
+		get => _address;
+		[MemberNotNull(nameof(_address), nameof(_url))]
+		set
+		{
+			_address = value;
+			Url = value.Url;
+		}
+	}
+
 	public virtual bool ContentEquals(IWebLink? other)
 	{
 		if (other == null)
@@ -169,6 +220,15 @@ public class WebLink : IWebLink, IEntryWithIntId
 	public override string ToString()
 	{
 		return $"web link '{Url}'";
+	}
+
+	public virtual void SetAddress(WebAddress address)
+	{
+		Address.DecrementReferenceCount();
+
+		Address = address;
+
+		Address.IncrementReferenceCount();
 	}
 }
 

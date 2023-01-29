@@ -599,7 +599,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					diff.VenueName.Set();
 				}
 
-				var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
+				var weblinksDiff = WebLink.Sync(
+					session,
+					ev.WebLinks,
+					contract.WebLinks,
+					ev,
+					actor: await session.OfType<User>().GetLoggedUserAsync(PermissionContext)
+				);
 
 				if (weblinksDiff.Changed)
 				{
@@ -726,7 +732,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 				ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 				ev.VenueName = contract.VenueName;
 
-				var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
+				var weblinksDiff = WebLink.Sync(
+					session,
+					ev.WebLinks,
+					contract.WebLinks,
+					ev,
+					actor: await session.OfType<User>().GetLoggedUserAsync(PermissionContext)
+				);
 
 				if (weblinksDiff.Changed)
 				{
@@ -824,7 +836,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 				diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
 
-				var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
+				var weblinksDiff = WebLink.Sync(
+					session,
+					series.WebLinks,
+					contract.WebLinks,
+					series,
+					actor: session.OfType<User>().GetLoggedUser(PermissionContext)
+				);
 
 				if (weblinksDiff.Changed)
 				{
@@ -890,7 +908,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					SaveImage(series, pictureData);
 				}
 
-				var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
+				var weblinksDiff = WebLink.Sync(
+					session,
+					series.WebLinks,
+					contract.WebLinks,
+					series,
+					actor: session.OfType<User>().GetLoggedUser(PermissionContext)
+				);
 
 				if (weblinksDiff.Changed)
 				{

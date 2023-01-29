@@ -217,7 +217,12 @@ public class ArtistService : ServiceBase
 
 			foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 			{
-				var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
+				var link = target.CreateWebLink(
+					w.Description,
+					null/* TODO: w.Url */,
+					w.Category,
+					w.Disabled
+				);
 				session.Save(link);
 			}
 

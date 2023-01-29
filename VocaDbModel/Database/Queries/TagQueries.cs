@@ -722,7 +722,12 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			// Weblinks
 			foreach (var w in source.WebLinks.Links.Where(w => !target.WebLinks.HasLink(w.Url)))
 			{
-				var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
+				var link = target.CreateWebLink(
+					w.Description,
+					address: WebLink.GetOrCreateWebAddress(ctx, new Uri(w.Url), actor: ctx.OfType<User>().GetLoggedUser(PermissionContext)),
+					w.Category,
+					w.Disabled
+				);
 				ctx.Save(link);
 				diff.WebLinks.Set();
 			}
@@ -922,7 +927,12 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			ctx.Sync(relatedTagsDiff);
 			diff.RelatedTags.Set(relatedTagsDiff.Changed);
 
-			var webLinkDiff = tag.WebLinks.Sync(contract.WebLinks, tag);
+			var webLinkDiff = tag.WebLinks.Sync(
+				ctx,
+				contract.WebLinks,
+				tag,
+				actor: ctx.OfType<User>().GetLoggedUser(PermissionContext)
+			);
 			ctx.OfType<TagWebLink>().Sync(webLinkDiff);
 
 			if (webLinkDiff.Changed)

@@ -715,7 +715,12 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 			foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 			{
-				var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
+				var link = target.CreateWebLink(
+					w.Description,
+					address: WebLink.GetOrCreateWebAddress(session, new Uri(w.Url), actor: session.OfType<User>().GetLoggedUser(PermissionContext)),
+					w.Category,
+					w.Disabled
+				);
 				session.Save(link);
 			}
 
@@ -913,9 +918,11 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			if (fullProperties.WebLinks != null)
 			{
 				var webLinkDiff = WebLink.SyncByValue(
+					session,
 					oldLinks: album.WebLinks,
 					newLinks: fullProperties.WebLinks,
-					webLinkFactory: album
+					webLinkFactory: album,
+					actor: session.OfType<User>().GetLoggedUser(PermissionContext)
 				);
 				session.Sync(webLinkDiff);
 			}
@@ -994,7 +1001,13 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			if (nameDiff.Changed)
 				diff.Names.Set();
 
-			var webLinkDiff = WebLink.Sync(album.WebLinks, properties.WebLinks, album);
+			var webLinkDiff = WebLink.Sync(
+				session,
+				album.WebLinks,
+				properties.WebLinks,
+				album,
+				actor: await session.OfType<User>().GetLoggedUserAsync(PermissionContext)
+			);
 			session.OfType<AlbumWebLink>().Sync(webLinkDiff);
 
 			if (webLinkDiff.Changed)

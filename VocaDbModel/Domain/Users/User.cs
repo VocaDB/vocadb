@@ -634,12 +634,11 @@ public class User :
 		return comment;
 	}
 
-	public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual UserWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new UserWebLink(this, description, url, category, disabled);
+		var link = new UserWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

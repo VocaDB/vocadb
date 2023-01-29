@@ -17,8 +17,8 @@ public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class
 	protected GenericWebLink() { }
 #nullable enable
 
-	protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category, bool disabled)
-		: base(description, url, category, disabled)
+	protected GenericWebLink(TEntry entry, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(description, address, category, disabled)
 	{
 		Entry = entry;
 	}
@@ -68,62 +68,62 @@ public class AlbumWebLink : GenericWebLink<Album>
 {
 	public AlbumWebLink() { }
 
-	public AlbumWebLink(Album album, string description, string url, WebLinkCategory category, bool disabled)
-		: base(album, description, url, category, disabled) { }
+	public AlbumWebLink(Album album, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(album, description, address, category, disabled) { }
 }
 
 public class ArtistWebLink : GenericWebLink<Artist>
 {
 	public ArtistWebLink() { }
 
-	public ArtistWebLink(Artist artist, string description, string url, WebLinkCategory category, bool disabled)
-		: base(artist, description, url, category, disabled) { }
+	public ArtistWebLink(Artist artist, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(artist, description, address, category, disabled) { }
 }
 
 public class ReleaseEventWebLink : GenericWebLink<ReleaseEvent>
 {
 	public ReleaseEventWebLink() { }
 
-	public ReleaseEventWebLink(ReleaseEvent releaseEvent, string description, string url, WebLinkCategory category, bool disabled)
-		: base(releaseEvent, description, url, category, disabled) { }
+	public ReleaseEventWebLink(ReleaseEvent releaseEvent, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(releaseEvent, description, address, category, disabled) { }
 }
 
 public class ReleaseEventSeriesWebLink : GenericWebLink<ReleaseEventSeries>
 {
 	public ReleaseEventSeriesWebLink() { }
 
-	public ReleaseEventSeriesWebLink(ReleaseEventSeries series, string description, string url, WebLinkCategory category, bool disabled)
-		: base(series, description, url, category, disabled) { }
+	public ReleaseEventSeriesWebLink(ReleaseEventSeries series, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(series, description, address, category, disabled) { }
 }
 
 public class SongWebLink : GenericWebLink<Song>
 {
 	public SongWebLink() { }
 
-	public SongWebLink(Song song, string description, string url, WebLinkCategory category, bool disabled)
-		: base(song, description, url, category, disabled) { }
+	public SongWebLink(Song song, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(song, description, address, category, disabled) { }
 }
 
 public class TagWebLink : GenericWebLink<Tag>
 {
 	public TagWebLink() { }
 
-	public TagWebLink(Tag tag, string description, string url, bool disabled)
-		: base(tag, description, url, WebLinkCategory.Other, disabled) { }
+	public TagWebLink(Tag tag, string description, WebAddress address, bool disabled)
+		: base(tag, description, address, WebLinkCategory.Other, disabled) { }
 }
 
 public class UserWebLink : GenericWebLink<User>
 {
 	public UserWebLink() { }
 
-	public UserWebLink(User user, string description, string url, WebLinkCategory category, bool disabled)
-		: base(user, description, url, category, disabled) { }
+	public UserWebLink(User user, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(user, description, address, category, disabled) { }
 }
 
 public class VenueWebLink : GenericWebLink<Venue>
 {
 	public VenueWebLink() { }
 
-	public VenueWebLink(Venue venue, string description, string url, WebLinkCategory category, bool disabled)
-		: base(venue, description, url, category, disabled) { }
+	public VenueWebLink(Venue venue, string description, WebAddress address, WebLinkCategory category, bool disabled)
+		: base(venue, description, address, category, disabled) { }
 }

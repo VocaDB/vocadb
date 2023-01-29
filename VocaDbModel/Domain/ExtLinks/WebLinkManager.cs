@@ -1,4 +1,6 @@
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ExtLinks;
@@ -22,13 +24,13 @@ public class WebLinkManager<T> where T : WebLink
 		}
 	}
 
-	public CollectionDiffWithValue<T, T> Sync(IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	public CollectionDiffWithValue<T, T> Sync(IDatabaseContext ctx, IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory, User actor)
 	{
-		return WebLink.Sync(Links, newLinks, webLinkFactory);
+		return WebLink.Sync(ctx, Links, newLinks, webLinkFactory, actor);
 	}
 
-	public CollectionDiff<T, T> SyncByValue(IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+	public CollectionDiff<T, T> SyncByValue(IDatabaseContext ctx, IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory, User actor)
 	{
-		return WebLink.SyncByValue(oldLinks: Links, newLinks, webLinkFactory);
+		return WebLink.SyncByValue(ctx, oldLinks: Links, newLinks, webLinkFactory, actor);
 	}
 }

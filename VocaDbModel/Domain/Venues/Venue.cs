@@ -138,12 +138,11 @@ public class Venue :
 		return name;
 	}
 
-	public virtual VenueWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual VenueWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new VenueWebLink(this, description, url, category, disabled);
+		var link = new VenueWebLink(this, description, address, category, disabled);
 		WebLinks.Links.Add(link);
 
 		return link;

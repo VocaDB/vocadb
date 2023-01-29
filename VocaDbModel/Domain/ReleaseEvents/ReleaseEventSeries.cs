@@ -175,12 +175,11 @@ public class ReleaseEventSeries :
 		return archived;
 	}
 
-	public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
+	public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, WebAddress address, WebLinkCategory category, bool disabled)
 	{
 		ParamIs.NotNull(() => description);
-		ParamIs.NotNullOrEmpty(() => url);
 
-		var link = new ReleaseEventSeriesWebLink(this, description, url, category, disabled);
+		var link = new ReleaseEventSeriesWebLink(this, description, address, category, disabled);
 		WebLinks.Add(link);
 
 		return link;

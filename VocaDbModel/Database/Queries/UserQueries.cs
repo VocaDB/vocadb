@@ -2048,7 +2048,13 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			user.SetEmail(email);
 
 			var validWebLinks = contract.WebLinks.Where(w => !string.IsNullOrEmpty(w.Url));
-			var webLinkDiff = WebLink.Sync(user.WebLinks, validWebLinks, user);
+			var webLinkDiff = WebLink.Sync(
+				ctx,
+				user.WebLinks,
+				validWebLinks,
+				user,
+				actor: await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext)
+			);
 			ctx.OfType<UserWebLink>().Sync(webLinkDiff);
 
 			var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages.Distinct(l => l.CultureCode), (l, l2) => l.CultureCode.Equals(l2.CultureCode) && l.Proficiency == l2.Proficiency, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
