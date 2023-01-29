@@ -64,26 +64,28 @@ public class WebLink : IWebLink, IEntryWithIntId
 	)
 		where T : WebLink
 	{
-		var diff = CollectionHelper.Diff(oldLinks, newLinks, (n1, n2) => n1.ContentEquals(n2));
-		var created = new List<T>();
-
-		foreach (var n in diff.Removed)
+		T Create(ArchivedWebLinkContract newItem)
 		{
-			oldLinks.Remove(n);
-		}
-
-		foreach (var linkEntry in diff.Added)
-		{
-			var n = webLinkFactory.CreateWebLink(
-				linkEntry.Description,
-				linkEntry.Url,
-				linkEntry.Category,
-				linkEntry.Disabled
+			return webLinkFactory.CreateWebLink(
+				newItem.Description,
+				newItem.Url,
+				newItem.Category,
+				newItem.Disabled
 			);
-			created.Add(n);
 		}
 
-		return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
+		void Remove(T oldItem)
+		{
+			oldLinks.Remove(oldItem);
+		}
+
+		return CollectionHelper.Sync(
+			oldLinks,
+			newLinks,
+			equality: (n1, n2) => n1.ContentEquals(n2),
+			Create,
+			Remove
+		);
 	}
 
 	private string _description;
