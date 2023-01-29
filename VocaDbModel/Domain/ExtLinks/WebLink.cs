@@ -17,46 +17,44 @@ public class WebLink : IWebLink, IEntryWithIntId
 		ParamIs.NotNull(() => newLinks);
 
 		var validLinks = newLinks.Where(w => !string.IsNullOrWhiteSpace(w.Url)).ToArray();
-		var diff = CollectionHelper.Diff(oldLinks, validLinks, (n1, n2) => n1.Id == n2.Id);
-		var created = new List<T>();
-		var edited = new List<T>();
 
-		foreach (var n in diff.Removed)
+		T Create(IWebLinkContract newItem)
 		{
-			oldLinks.Remove(n);
+			return webLinkFactory.CreateWebLink(
+				newItem.Description,
+				newItem.Url,
+				newItem.Category,
+				newItem.Disabled
+			);
 		}
 
-		foreach (var linkEntry in validLinks)
+		bool Update(T oldItem, IWebLinkContract newItem)
 		{
-			var entry = linkEntry;
-			var old = entry.Id != 0
-				? oldLinks.FirstOrDefault(n => n.Id == entry.Id)
-				: null;
+			if (!oldItem.ContentEquals(newItem))
+			{
+				oldItem.Category = newItem.Category;
+				oldItem.Description = newItem.Description;
+				oldItem.Disabled = newItem.Disabled;
+				oldItem.Url = newItem.Url;
+				return true;
+			}
 
-			if (old != null)
-			{
-				if (!old.ContentEquals(linkEntry))
-				{
-					old.Category = linkEntry.Category;
-					old.Description = linkEntry.Description;
-					old.Disabled = linkEntry.Disabled;
-					old.Url = linkEntry.Url;
-					edited.Add(old);
-				}
-			}
-			else
-			{
-				var n = webLinkFactory.CreateWebLink(
-					linkEntry.Description,
-					linkEntry.Url,
-					linkEntry.Category,
-					linkEntry.Disabled
-				);
-				created.Add(n);
-			}
+			return false;
 		}
 
-		return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
+		void Remove(T oldItem)
+		{
+			oldLinks.Remove(oldItem);
+		}
+
+		return CollectionHelper.SyncWithContent(
+			oldLinks,
+			validLinks,
+			identityEquality: (n1, n2) => n1.Id == n2.Id,
+			Create,
+			Update,
+			Remove
+		);
 	}
 
 	public static CollectionDiff<T, T> SyncByValue<T>(
