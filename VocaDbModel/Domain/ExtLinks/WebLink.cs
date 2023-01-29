@@ -241,6 +241,7 @@ public class WebLink : IWebLink, IEntryWithIntId
 		set
 		{
 			_address = value;
+			// Comment out the following line when updating web addresses.
 			Url = value.Url;
 		}
 	}
