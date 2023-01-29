@@ -275,6 +275,11 @@ public class ReleaseEventApiController : ApiController
 			ModelState.AddModelError("Names", x.Message);
 			return ValidationProblem(ModelState);
 		}
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 	}
 
 	[HttpGet("by-date")]

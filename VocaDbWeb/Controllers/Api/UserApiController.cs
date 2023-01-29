@@ -992,6 +992,11 @@ public class UserApiController : ApiController
 				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			return ValidationProblem(ModelState);
 		}
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 	}
 
 	[HttpGet("{id:int}/for-edit")]

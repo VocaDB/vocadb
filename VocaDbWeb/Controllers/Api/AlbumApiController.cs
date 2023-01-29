@@ -492,6 +492,11 @@ public class AlbumApiController : ApiController
 			ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 			return ValidationProblem(ModelState);
 		}
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 
 		return contract.Id;
 	}

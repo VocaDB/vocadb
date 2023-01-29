@@ -166,9 +166,17 @@ public class VenueApiController : ApiController
 			return ValidationProblem(ModelState);
 		}
 
-		var id = _queries.Update(contract);
+		try
+		{
+			var id = _queries.Update(contract);
 
-		return id;
+			return id;
+		}
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 	}
 
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]

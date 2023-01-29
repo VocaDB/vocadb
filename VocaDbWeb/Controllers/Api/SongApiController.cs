@@ -652,9 +652,17 @@ public class SongApiController : ApiController
 			return ValidationProblem(ModelState);
 		}
 
-		await _queries.UpdateBasicProperties(contract);
+		try
+		{
+			await _queries.UpdateBasicProperties(contract);
 
-		return contract.Id;
+			return contract.Id;
+		}
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 	}
 
 	[HttpPost("{id:int}/merge")]

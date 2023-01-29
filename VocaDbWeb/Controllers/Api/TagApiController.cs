@@ -403,19 +403,22 @@ public class TagApiController : ApiController
 			return ValidationProblem(ModelState);
 		}
 
-		TagBaseContract result;
-
 		try
 		{
-			result = _queries.Update(contract, uploadedPicture);
+			var result = _queries.Update(contract, uploadedPicture);
+
+			return result.Id;
 		}
 		catch (DuplicateTagNameException x)
 		{
 			ModelState.AddModelError("Names", x.Message);
 			return ValidationProblem(ModelState);
 		}
-
-		return result.Id;
+		catch (UriFormatException)
+		{
+			ModelState.AddModelError("WebLinks", "Invalid URI: The format of the URI could not be determined.");
+			return ValidationProblem(ModelState);
+		}
 	}
 
 	[HttpPost("{id:int}/merge")]
