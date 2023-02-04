@@ -160,6 +160,7 @@ public class ArchivedSongContract
 	public ObjectRefContract? ReleaseEvent { get; set; }
 
 	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public SongType SongType { get; set; }
 
 	[DataMember]
