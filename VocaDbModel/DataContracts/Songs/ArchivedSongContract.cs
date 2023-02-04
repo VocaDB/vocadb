@@ -2,6 +2,7 @@ using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils;
