@@ -183,14 +183,6 @@ const UserCreateLayout = observer(
 									</Button>
 								</p>
 
-								<hr />
-								<a href="/User/LoginTwitter">
-									<img
-										src="/Content/Sign-in-with-Twitter-darker.png"
-										alt={t('ViewRes.User:Create.LoginWithTwitter')}
-									/>
-								</a>
-
 								<br />
 								<br />
 								<small>
