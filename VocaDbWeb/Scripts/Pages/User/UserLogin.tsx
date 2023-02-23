@@ -140,18 +140,6 @@ const UserLoginLayout = observer(
 					{t('ViewRes.User:Login.ResetPass')}
 				</Link>
 				{t('ViewRes:Shared.Period')}
-				<br />
-				<hr />
-				<a
-					href={`/User/LoginTwitter?${qs.stringify({
-						returnUrl: returnUrl,
-					})}`}
-				>
-					<img
-						src="/Content/Sign-in-with-Twitter-darker.png"
-						alt={t('ViewRes.User:Login.LoginWithTwitter')}
-					/>
-				</a>
 			</Layout>
 		);
 	},
