@@ -16,11 +16,13 @@ public class VideoServiceBilibili : VideoService
 
 	public static readonly RegexLinkMatcher[] Matchers =
 		{
-			new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.com/video/av(\d+)"),
-			new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.com/video/(BV\w+)"),
+			new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.com/video/av(\d+)"),
+			new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.com/video/(BV\w+)"),
 			new RegexLinkMatcher("acg.tv/av{0}", @"acg.tv/av(\d+)"),
-			new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.tv/video/av(\d+)"),
-			new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.kankanews.com/video/av(\d+)")
+			new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.tv/video/av(\d+)"),
+			new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.kankanews.com/video/av(\d+)"),
+			new RegexLinkMatcher("acg.tv/av{0}", @"b23.tv/av(\d+)"),
+			new RegexLinkMatcher("acg.tv/av{0}", @"b23.tv/(BV\w+)")
 		};
 
 	public VideoServiceBilibili()
