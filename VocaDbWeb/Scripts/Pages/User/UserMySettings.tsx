@@ -703,7 +703,7 @@ const ConnectivitySettingsTabContent = observer(
 
 				<div className="editor-label">Twitter</div>
 				<div className="editor-field">
-					{contract.hasTwitterToken ? (
+					{contract.hasTwitterToken && (
 						<>
 							{contract.twitterName} &nbsp;{' '}
 							<SafeAnchor
@@ -713,13 +713,6 @@ const ConnectivitySettingsTabContent = observer(
 								Disconnect{/* LOC */}
 							</SafeAnchor>
 						</>
-					) : (
-						<SafeAnchor
-							href="/User/ConnectTwitter" /* TODO: Convert to POST. */
-							className="textLink addLink"
-						>
-							{t('ViewRes.User:MySettings.Connect')}
-						</SafeAnchor>
 					)}
 				</div>
 			</>

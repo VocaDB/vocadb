@@ -135,34 +135,6 @@ public class UserController : ControllerBase
 		return View(model);
 	}
 
-	public ActionResult ConnectTwitter()
-	{
-		var props = new AuthenticationProperties
-		{
-			RedirectUri = "User/ConnectTwitterComplete",
-		};
-		return Challenge(props, TwitterDefaults.AuthenticationScheme);
-	}
-
-	public async Task<ActionResult> ConnectTwitterComplete()
-	{
-		var cookie = await HttpContext.AuthenticateAsync(AuthenticationConstants.ExternalCookie);
-
-		var accessToken = cookie.Principal.FindFirst(TwitterClaimTypes.AccessToken).Value;
-
-		int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
-		var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
-
-		if (Service.ConnectTwitter(accessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
-			TempData.SetStatusMessage("Connected successfully");
-		else
-			ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-
-		await HttpContext.SignOutAsync(AuthenticationConstants.ExternalCookie);
-
-		return RedirectToAction("MySettings");
-	}
-
 	public ActionResult EntryEdits(int id = InvalidId, bool onlySubmissions = true)
 	{
 		if (id == InvalidId)

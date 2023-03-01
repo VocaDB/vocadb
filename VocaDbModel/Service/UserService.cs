@@ -121,32 +121,6 @@ public class UserService : QueriesBase<IUserRepository, User>
 		});
 	}
 
-	public bool ConnectTwitter(string authToken, int twitterId, string twitterName, string hostname)
-	{
-		ParamIs.NotNullOrEmpty(() => authToken);
-		ParamIs.NotNullOrEmpty(() => hostname);
-
-		return HandleTransaction(session =>
-		{
-			var user = session.Query<UserOptions>().Where(u => u.TwitterOAuthToken == authToken)
-				.Select(a => a.User).FirstOrDefault();
-
-			if (user != null)
-				return false;
-
-			user = GetLoggedUser(session);
-
-			user.Options.TwitterId = twitterId;
-			user.Options.TwitterName = twitterName;
-			user.Options.TwitterOAuthToken = authToken;
-			session.Update(user);
-
-			AuditLog($"connected to Twitter account '{twitterName}' from {MakeGeoIpToolLink(hostname)}.", session, user);
-
-			return true;
-		});
-	}
-
 	public void DeleteComment(int commentId)
 	{
 		HandleTransaction(session =>
