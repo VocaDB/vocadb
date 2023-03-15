@@ -13,10 +13,5 @@
 }
 else
 {
-	@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
-	var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", Model.PV.PVId);
-	<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0" data="@piaproSwf">
-		<param name="movie" value="@piaproSwf" />
-		<param name="quality" value="high" />
-	</object>
+	<iframe style="border: 0" src="//piapro.jp/html5_player_popup/?id=@(Model.PV.PVId)"></iframe>
 }
