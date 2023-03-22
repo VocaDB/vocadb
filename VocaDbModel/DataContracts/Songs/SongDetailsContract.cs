@@ -22,9 +22,16 @@ public class SongDetailsContract
 {
 	public SongDetailsContract() { }
 
-	public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-		SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, IUserPermissionContext userContext,
-		IAggregatedEntryImageUrlFactory thumbPersister, Tag songTypeTag = null)
+	public SongDetailsContract(
+		Song song,
+		ContentLanguagePreference languagePreference,
+		SongListBaseContract[] pools,
+		ISpecialTags specialTags,
+		IEntryTypeTagRepository entryTypeTags,
+		IUserPermissionContext userContext,
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		Tag songTypeTag = null
+	)
 	{
 		Song = new SongContract(song, languagePreference);
 
