@@ -16,6 +16,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
@@ -45,18 +46,21 @@ public class AlbumApiController : ApiController
 	private readonly OtherService _otherService;
 	private readonly AlbumQueries _queries;
 	private readonly AlbumService _service;
+	private readonly IUserPermissionContext _permissionContext;
 
 	public AlbumApiController(
 		AlbumQueries queries,
 		AlbumService service,
 		OtherService otherService,
-		IAggregatedEntryImageUrlFactory thumbPersister
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		IUserPermissionContext permissionContext
 	)
 	{
 		_queries = queries;
 		_service = service;
 		_otherService = otherService;
 		_thumbPersister = thumbPersister;
+		_permissionContext = permissionContext;
 	}
 
 	/// <summary>
@@ -115,7 +119,10 @@ public class AlbumApiController : ApiController
 		AlbumOptionalFields fields = AlbumOptionalFields.None,
 		SongOptionalFields songFields = SongOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
-	) => _queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, _thumbPersister, fields, songFields));
+	)
+	{
+		return _queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, _permissionContext, _thumbPersister, fields, songFields));
+	}
 
 #nullable enable
 	/// <summary>
@@ -217,7 +224,7 @@ public class AlbumApiController : ApiController
 		};
 		queryParams = queryParams with { Common = queryParams.Common with { EntryStatus = status } };
 
-		var entries = _service.Find(a => new AlbumForApiContract(a, null, lang, _thumbPersister, fields, SongOptionalFields.None), queryParams);
+		var entries = _service.Find(a => new AlbumForApiContract(a, null, lang, _permissionContext, _thumbPersister, fields, SongOptionalFields.None), queryParams);
 
 		return entries;
 	}
@@ -301,7 +308,7 @@ public class AlbumApiController : ApiController
 		int id,
 		SongOptionalFields fields = SongOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
-	) => _service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumForApiContract(s, lang, fields)).ToArray());
+	) => _service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumForApiContract(s, lang, _permissionContext, fields)).ToArray());
 
 	/// <summary>
 	/// Gets tracks for an album formatted using the CSV format string.

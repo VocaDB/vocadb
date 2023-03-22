@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users;
@@ -17,12 +18,15 @@ public class AlbumForUserForApiContract
 	public AlbumForUserForApiContract(
 		AlbumForUser albumForUser,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		AlbumOptionalFields fields,
 		bool shouldShowCollectionStatus,
 		bool includeUser = false)
 	{
-		Album = albumForUser != null ? new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None) : null;
+		Album = albumForUser != null
+			? new AlbumForApiContract(albumForUser.Album, null, languagePreference, permissionContext, thumbPersister, fields, SongOptionalFields.None)
+			: null;
 		Rating = albumForUser?.Rating ?? 0;
 
 		if (shouldShowCollectionStatus)

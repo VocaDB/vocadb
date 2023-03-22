@@ -31,7 +31,13 @@ public class ArtistRelationsQueryTests
 		_repository.Save(_song.AddArtist(_artist));
 		_repository.Save(_song.AddArtist(_voicebank));
 		_repository.Save(_song2.AddArtist(_artist));
-		_query = new ArtistRelationsQuery(_repository.CreateContext(), Model.Domain.Globalization.ContentLanguagePreference.English, new FakeObjectCache(), new InMemoryImagePersister());
+		_query = new ArtistRelationsQuery(
+			_repository.CreateContext(),
+			Model.Domain.Globalization.ContentLanguagePreference.English,
+			new FakePermissionContext(),
+			new FakeObjectCache(),
+			new InMemoryImagePersister()
+		);
 	}
 
 	[TestMethod]

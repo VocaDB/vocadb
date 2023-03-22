@@ -405,6 +405,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 			var stats = new TagStatsForApiContract(
 				languagePreference: LanguagePreference,
+				PermissionContext,
 				thumbStore: _thumbStore,
 				artists: artists.TopUsages,
 				artistCount: artists.TotalCount,

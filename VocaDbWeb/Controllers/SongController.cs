@@ -143,7 +143,13 @@ public class SongController : ControllerBase
 
 		WebHelper.VerifyUserAgent(Request);
 
-		var contract = _queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null, WebHelper.GetUserLanguageCodes(Request));
+		var contract = _queries.GetSongDetails(
+			id,
+			albumId,
+			GetHostnameForValidHit(),
+			null,
+			WebHelper.GetUserLanguageCodes(Request)
+		);
 		var model = new SongDetails(contract, PermissionContext, _pvHelper);
 
 		var hasDescription = !model.Notes.IsEmpty;

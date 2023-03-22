@@ -155,6 +155,7 @@ public sealed record SongDetailsForApiContract
 		Song = new SongForApiContract(
 			song: song,
 			languagePreference: languagePreference,
+			userContext,
 			fields: SongOptionalFields.MainPicture
 		);
 
@@ -165,6 +166,7 @@ public sealed record SongDetailsForApiContract
 			.Select(a => new AlbumForApiContract(
 				album: a,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: thumbPersister,
 				fields: AlbumOptionalFields.None
 			))
@@ -174,6 +176,7 @@ public sealed record SongDetailsForApiContract
 			.Select(s => new SongForApiContract(
 				song: s,
 				languagePreference: languagePreference,
+				userContext,
 				fields: SongOptionalFields.None
 			))
 			.OrderBy(s => s.PublishDate)
@@ -204,6 +207,7 @@ public sealed record SongDetailsForApiContract
 				song: song.OriginalVersion,
 				mergeRecord: null,
 				languagePreference: languagePreference,
+				userContext,
 				fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 			)
 			: null;

@@ -479,7 +479,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.WhereHasType(songTypes)
 				.Take(maxResults)
 				.ToArray()
-				.Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames))
+				.Select(s => new SongForApiContract(s, lang, PermissionContext, SongOptionalFields.AdditionalNames))
 				.ToArray();
 		});
 	}
@@ -502,17 +502,28 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 	}
 
 #nullable enable
-	public SongDetailsContract GetSongDetails(int songId, int albumId, string hostname, ContentLanguagePreference? languagePreference,
-		IEnumerable<OptionalCultureCode> userLanguages)
+	public SongDetailsContract GetSongDetails(
+		int songId,
+		int albumId,
+		string hostname,
+		ContentLanguagePreference? languagePreference,
+		IEnumerable<OptionalCultureCode> userLanguages
+	)
 	{
 		return HandleQuery(session =>
 		{
 			var lang = languagePreference ?? PermissionContext.LanguagePreference;
 			var song = session.Load<Song>(songId);
-			var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId),
-				_config.SpecialTags, new EntryTypeTags(session), PermissionContext, _entryThumbPersister,
+			var contract = new SongDetailsContract(
+				song,
+				lang,
+				GetSongPools(session, songId),
+				_config.SpecialTags,
+				new EntryTypeTags(session),
+				PermissionContext,
+				_entryThumbPersister,
 				GetSongTypeTag(session, song.SongType)
-				);
+			);
 			var user = PermissionContext.LoggedUser;
 
 			if (user != null)
@@ -531,7 +542,9 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 			contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
 			contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
-			contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
+			contract.Suggestions = GetSongSuggestions(session, song)
+				.Select(s => new SongForApiContract(s, lang, PermissionContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
+				.ToArray();
 
 			contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, new OptionalCultureCode(CultureInfo.CurrentUICulture, true), userLanguages,
 				new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(_permissionContext)?.KnownLanguages, false));
@@ -609,6 +622,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.Select(s => new SongForApiContract(
 					song: s,
 					languagePreference: lang,
+					PermissionContext,
 					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.ToArray();
@@ -631,22 +645,23 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 					contract.Album = new AlbumForApiContract(
 						album: album,
 						languagePreference: lang,
+						PermissionContext,
 						thumbPersister: _entryThumbPersister,
 						fields: AlbumOptionalFields.None
 					);
 
-					contract.AlbumSong = new SongInAlbumForApiContract(songInAlbum: track, languagePreference: lang, fields: SongOptionalFields.None);
+					contract.AlbumSong = new SongInAlbumForApiContract(songInAlbum: track, languagePreference: lang, PermissionContext, fields: SongOptionalFields.None);
 
 					var previousIndex = album.PreviousTrackIndex(track.Index);
 					var previous = album.Songs.FirstOrDefault(s => s.Index == previousIndex);
 					contract.PreviousSong = previous is not null && previous.Song is not null
-						? new SongInAlbumForApiContract(songInAlbum: previous, languagePreference: lang, fields: SongOptionalFields.None)
+						? new SongInAlbumForApiContract(songInAlbum: previous, languagePreference: lang, PermissionContext, fields: SongOptionalFields.None)
 						: null;
 
 					var nextIndex = album.NextTrackIndex(track.Index);
 					var next = album.Songs.FirstOrDefault(s => s.Index == nextIndex);
 					contract.NextSong = next is not null && next.Song is not null
-						? new SongInAlbumForApiContract(songInAlbum: next, languagePreference: lang, fields: SongOptionalFields.None)
+						? new SongInAlbumForApiContract(songInAlbum: next, languagePreference: lang, PermissionContext, fields: SongOptionalFields.None)
 						: null;
 				}
 			}
@@ -655,7 +670,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			{
 				var mergeEntry = GetMergeRecord(session, songId);
 				contract.MergedTo = mergeEntry is not null
-					? new SongForApiContract(song: mergeEntry.Target, languagePreference: lang, fields: SongOptionalFields.None)
+					? new SongForApiContract(song: mergeEntry.Target, languagePreference: lang, PermissionContext, fields: SongOptionalFields.None)
 					: null;
 			}
 
@@ -684,7 +699,8 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			return new SongWithPVAndVoteForApiContract(
 				song: song,
 				vote: vote != null ? vote.Rating : SongVoteRating.Nothing,
-				languagePreference: PermissionContext.LanguagePreference
+				languagePreference: PermissionContext.LanguagePreference,
+				PermissionContext
 			);
 		});
 	}
@@ -692,7 +708,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 	public SongForApiContract GetSongForApi(int songId, SongOptionalFields fields, ContentLanguagePreference? lang = null)
 	{
-		return GetSongWithMergeRecord(songId, (song, r) => new SongForApiContract(song, r, lang ?? PermissionContext.LanguagePreference, fields));
+		return GetSongWithMergeRecord(songId, (song, r) => new SongForApiContract(song, r, lang ?? PermissionContext.LanguagePreference, PermissionContext, fields));
 	}
 
 	public T GetSong<T>(int id, Func<Song, T> fac)
@@ -834,7 +850,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.VdbToListAsync();
 
 			var contracts = songs
-				.Select(s => new SongForApiContract(s, null, languagePreference, fields))
+				.Select(s => new SongForApiContract(s, null, languagePreference, PermissionContext, fields))
 				.ToArray();
 
 			return contracts;
@@ -976,15 +992,15 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			return new RelatedSongsContract
 			{
 				ArtistMatches = songs.ArtistMatches
-					.Select(a => new SongForApiContract(a, null, language, fields))
+					.Select(a => new SongForApiContract(a, null, language, PermissionContext, fields))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				LikeMatches = songs.LikeMatches
-					.Select(a => new SongForApiContract(a, null, language, fields))
+					.Select(a => new SongForApiContract(a, null, language, PermissionContext, fields))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				TagMatches = songs.TagMatches
-					.Select(a => new SongForApiContract(a, null, language, fields))
+					.Select(a => new SongForApiContract(a, null, language, PermissionContext, fields))
 					.OrderBy(a => a.Name)
 					.ToArray()
 			};
@@ -1446,8 +1462,14 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 	public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
-	public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, fields)).ToArray());
+	public IEnumerable<SongForApiContract> GetDerived(
+		int id,
+		SongOptionalFields fields = SongOptionalFields.None,
+		ContentLanguagePreference lang = ContentLanguagePreference.Default
+	)
+	{
+		return HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, PermissionContext, fields)).ToArray());
+	}
 
 	public IEnumerable<int> GetIds()
 	{
@@ -1536,7 +1558,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 		{
 			var song = session.Load<Song>(songId);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
+				entry: new SongForApiContract(song, PermissionContext.LanguagePreference, PermissionContext, fields: SongOptionalFields.None),
 				versions: song.ArchivedVersionsManager.Versions
 					.Select(a => ArchivedObjectVersionForApiContract.FromSong(a, _userIconFactory))
 					.OrderByDescending(v => v.Version)

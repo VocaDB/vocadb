@@ -263,9 +263,15 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			var album = await ctx.LoadAsync(albumId);
 
 			return album.UserCollections
-				.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, _imageUrlFactory, AlbumOptionalFields.None,
-					uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection,
-					uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
+				.Select(uc => new AlbumForUserForApiContract(
+					uc,
+					languagePreference,
+					PermissionContext,
+					_imageUrlFactory,
+					AlbumOptionalFields.None,
+					shouldShowCollectionStatus: uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection,
+					includeUser: uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection
+				))
 				.ToArray();
 		});
 	}
@@ -498,6 +504,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					? new AlbumForUserForApiContract(
 						albumForUser: albumForUser,
 						languagePreference: PermissionContext.LanguagePreference,
+						PermissionContext,
 						thumbPersister: null,
 						fields: AlbumOptionalFields.None,
 						shouldShowCollectionStatus: true
@@ -522,6 +529,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					? new AlbumForApiContract(
 						album: mergeEntry.Target,
 						languagePreference: LanguagePreference,
+						PermissionContext,
 						thumbPersister: null,
 						fields: AlbumOptionalFields.None
 					)
@@ -1199,7 +1207,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 		{
 			var album = session.Load<Album>(albumId);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new AlbumForApiContract(album, PermissionContext.LanguagePreference, thumbPersister: null, fields: AlbumOptionalFields.None),
+				entry: new AlbumForApiContract(album, PermissionContext.LanguagePreference, PermissionContext, thumbPersister: null, fields: AlbumOptionalFields.None),
 				versions: album.ArchivedVersionsManager.Versions
 					.Select(a => ArchivedObjectVersionForApiContract.FromAlbum(a, _userIconFactory))
 					.ToArray()

@@ -21,7 +21,7 @@ public class SongListForEditContract : SongListContract
 	{
 		SongLinks = songList.SongLinks
 			.OrderBy(s => s.Order)
-			.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference))
+			.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference, permissionContext))
 			.ToArray();
 	}
 

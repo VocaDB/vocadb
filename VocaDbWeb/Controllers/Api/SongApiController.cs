@@ -388,7 +388,7 @@ public class SongApiController : ApiController
 		};
 		param = param with { Common = param.Common with { EntryStatus = status } };
 
-		var songs = _service.Find(s => new SongForApiContract(s, null, lang, fields), param);
+		var songs = _service.Find(s => new SongForApiContract(s, null, lang, _userPermissionContext, fields), param);
 
 		return songs;
 	}
@@ -444,7 +444,7 @@ public class SongApiController : ApiController
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
 	)
 	{
-		return _service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+		return _service.GetSongWithPV(s => new SongForApiContract(s, null, lang, _userPermissionContext, fields), pvService, pvId);
 	}
 #nullable disable
 

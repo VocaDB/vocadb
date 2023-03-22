@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
@@ -59,6 +60,7 @@ public sealed record TagStatsForApiContract
 
 	public TagStatsForApiContract(
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbStore,
 		IEnumerable<Artist> artists,
 		int artistCount,
@@ -79,6 +81,7 @@ public sealed record TagStatsForApiContract
 			.Select(a => new AlbumForApiContract(
 				album: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				thumbPersister: thumbStore,
 				fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture
 			))
@@ -124,6 +127,7 @@ public sealed record TagStatsForApiContract
 			.Select(a => new SongForApiContract(
 				song: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 			))
 			.ToArray();

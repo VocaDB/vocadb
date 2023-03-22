@@ -68,7 +68,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 
 		var cached = _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () =>
 		{
-			var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, _cache, _imageUrlFactory).GetTopVoicebanks(artist);
+			var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, PermissionContext, _cache, _imageUrlFactory).GetTopVoicebanks(artist);
 
 			return new CachedAdvancedArtistStatsContract
 			{
@@ -377,7 +377,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				}
 			}
 
-			var relations = (new ArtistRelationsQuery(session, LanguagePreference, _cache, _imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
+			var relations = (new ArtistRelationsQuery(session, LanguagePreference, PermissionContext, _cache, _imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
 			contract.LatestAlbums = relations.LatestAlbums;
 			contract.TopAlbums = relations.PopularAlbums;
 			contract.LatestSongs = relations.LatestSongs;
@@ -437,7 +437,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				}
 			}
 
-			var relations = new ArtistRelationsQuery(session, LanguagePreference, _cache, _imageUrlFactory).GetRelations(artist, ArtistRelationsFields.All);
+			var relations = new ArtistRelationsQuery(session, LanguagePreference, PermissionContext, _cache, _imageUrlFactory).GetRelations(artist, ArtistRelationsFields.All);
 			contract.LatestAlbums = relations.LatestAlbums;
 			contract.TopAlbums = relations.PopularAlbums;
 			contract.LatestSongs = relations.LatestSongs;

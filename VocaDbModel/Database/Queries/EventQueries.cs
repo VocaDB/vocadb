@@ -921,25 +921,29 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 	}
 #nullable disable
 
-	public AlbumForApiContract[] GetAlbums(int eventId,
+	public AlbumForApiContract[] GetAlbums(
+		int eventId,
 		AlbumOptionalFields fields = AlbumOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		ContentLanguagePreference lang = ContentLanguagePreference.Default
+	)
 	{
 		return _repository.HandleQuery(ctx =>
 		{
 			var ev = ctx.Load(eventId);
-			return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, _imageUrlFactory, fields, SongOptionalFields.None)).ToArray();
+			return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, PermissionContext, _imageUrlFactory, fields, SongOptionalFields.None)).ToArray();
 		});
 	}
 
-	public SongForApiContract[] GetPublishedSongs(int eventId,
+	public SongForApiContract[] GetPublishedSongs(
+		int eventId,
 		SongOptionalFields fields = SongOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		ContentLanguagePreference lang = ContentLanguagePreference.Default
+	)
 	{
 		return _repository.HandleQuery(ctx =>
 		{
 			var ev = ctx.Load(eventId);
-			return ev.Songs.Select(a => new SongForApiContract(a, lang, fields)).ToArray();
+			return ev.Songs.Select(a => new SongForApiContract(a, lang, PermissionContext, fields)).ToArray();
 		});
 	}
 

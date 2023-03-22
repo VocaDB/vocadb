@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -25,14 +26,17 @@ public class SongForApiContract : IEntryBase
 	public SongForApiContract(
 		Song song,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		SongOptionalFields fields
 	)
-		: this(song, null, languagePreference, fields) { }
+		: this(song, null, languagePreference, permissionContext, fields)
+	{ }
 
 	public SongForApiContract(
 		Song song,
 		SongMergeRecord? mergeRecord,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		SongOptionalFields fields
 	)
 	{

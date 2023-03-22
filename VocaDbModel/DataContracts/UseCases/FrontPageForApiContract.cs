@@ -71,7 +71,8 @@ public sealed record FrontPageForApiContract
 			.Select(s => new SongWithPVAndVoteForApiContract(
 				song: s,
 				vote: SongVoteRating.Nothing,
-				languagePreference: languagePreference
+				languagePreference: languagePreference,
+				permissionContext
 			))
 			.ToArray();
 
@@ -83,7 +84,8 @@ public sealed record FrontPageForApiContract
 			? new SongWithPVAndVoteForApiContract(
 				song: newSongs.First(),
 				vote: firstSongRating,
-				languagePreference: languagePreference
+				languagePreference: languagePreference,
+				permissionContext
 			)
 			: null;
 	}

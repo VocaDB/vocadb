@@ -95,7 +95,7 @@ public class OtherService : ServiceBase
 			.ToArray();
 
 		var popularAlbumContracts = random
-			.Select(a => new AlbumForApiContract(a, null, languagePreference, _thumbPersister, fields, SongOptionalFields.None))
+			.Select(a => new AlbumForApiContract(a, null, languagePreference, PermissionContext, _thumbPersister, fields, SongOptionalFields.None))
 			.ToArray();
 
 		return popularAlbumContracts;
@@ -138,7 +138,7 @@ public class OtherService : ServiceBase
 				.ToArray();
 
 			var newAlbumContracts = upcoming.Reverse().Concat(recent)
-				.Select(a => new AlbumForApiContract(a, null, languagePreference, _thumbPersister, fields, SongOptionalFields.None))
+				.Select(a => new AlbumForApiContract(a, null, languagePreference, PermissionContext, _thumbPersister, fields, SongOptionalFields.None))
 				.ToArray();
 
 			return newAlbumContracts;
@@ -174,7 +174,7 @@ public class OtherService : ServiceBase
 		return await HandleQueryAsync(async session =>
 		{
 			return (await GetHighlightedSongs(session))
-				.Select(s => new SongForApiContract(s, languagePreference, fields))
+				.Select(s => new SongForApiContract(s, languagePreference, PermissionContext, fields))
 				.ToArray();
 		});
 	}

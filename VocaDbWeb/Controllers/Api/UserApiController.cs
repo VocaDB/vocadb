@@ -189,7 +189,7 @@ public class UserApiController : ApiController
 		};
 
 		var albums = _queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) =>
-			new AlbumForUserForApiContract(afu, lang, _thumbPersister, fields, shouldShowCollectionStatus));
+			new AlbumForUserForApiContract(afu, lang, _permissionContext, _thumbPersister, fields, shouldShowCollectionStatus));
 
 		return albums;
 	}
@@ -492,7 +492,7 @@ public class UserApiController : ApiController
 			AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 		};
 
-		var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));
+		var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, _permissionContext, fields));
 		return songs;
 	}
 

@@ -14,6 +14,7 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -41,12 +42,19 @@ public class SongListApiController : ApiController
 	private readonly SongListQueries _queries;
 	private readonly IUserIconFactory _userIconFactory;
 	private readonly IAggregatedEntryImageUrlFactory _entryImagePersister;
+	private readonly IUserPermissionContext _permissionContext;
 
-	public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister)
+	public SongListApiController(
+		SongListQueries queries,
+		IUserIconFactory userIconFactory,
+		IAggregatedEntryImageUrlFactory entryImagePersister,
+		IUserPermissionContext permissionContext
+	)
 	{
 		_queries = queries;
 		_userIconFactory = userIconFactory;
 		_entryImagePersister = entryImagePersister;
+		_permissionContext = permissionContext;
 	}
 
 	/// <summary>
@@ -215,7 +223,7 @@ public class SongListApiController : ApiController
 				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				SongTypes = types,
 			},
-			songInList => new SongInListForApiContract(songInList, lang, fields)
+			songInList => new SongInListForApiContract(songInList, lang, _permissionContext, fields)
 		);
 	}
 #nullable disable

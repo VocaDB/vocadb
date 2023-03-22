@@ -157,6 +157,7 @@ public class WebLinksTests
 
 		var stats = new TagStatsForApiContract(
 			_userContext.LanguagePreference,
+			_userContext,
 			_thumbPersister,
 			artists: Array.Empty<Artist>(),
 			artistCount: 0,

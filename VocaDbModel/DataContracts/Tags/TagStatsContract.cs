@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Tags;
@@ -20,6 +21,7 @@ public class TagStatsContract
 
 	public TagStatsContract(
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbStore,
 		IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
 		IEnumerable<SongList> songLists, int songListCount,
@@ -43,7 +45,7 @@ public class TagStatsContract
 		SongLists = songLists.Select(a => new SongListBaseContract(a)).ToArray();
 		SongListCount = songListCount;
 
-		Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
+		Songs = songs.Select(a => new SongForApiContract(a, languagePreference, permissionContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 		SongCount = songCount;
 
 		FollowerCount = followerCount;

@@ -2,6 +2,7 @@
 
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs;
@@ -12,8 +13,8 @@ public class SongInListEditContract : SongInListForApiContract
 	public SongInListEditContract() { }
 
 #nullable enable
-	public SongInListEditContract(SongInList songInList, ContentLanguagePreference languagePreference)
-		: base(songInList, languagePreference, SongOptionalFields.AdditionalNames)
+	public SongInListEditContract(SongInList songInList, ContentLanguagePreference languagePreference, IUserPermissionContext permissionContext)
+		: base(songInList, languagePreference, permissionContext, SongOptionalFields.AdditionalNames)
 	{
 		ParamIs.NotNull(() => songInList);
 

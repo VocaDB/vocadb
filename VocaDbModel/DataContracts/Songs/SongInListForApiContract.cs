@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs;
@@ -11,11 +12,16 @@ public class SongInListForApiContract
 	public SongInListForApiContract() { }
 #nullable enable
 
-	public SongInListForApiContract(SongInList songInList, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+	public SongInListForApiContract(
+		SongInList songInList,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		SongOptionalFields fields
+	)
 	{
 		Notes = songInList.Notes;
 		Order = songInList.Order;
-		Song = new SongForApiContract(songInList.Song, null, languagePreference, fields);
+		Song = new SongForApiContract(songInList.Song, null, languagePreference, permissionContext, fields);
 	}
 
 	[DataMember]

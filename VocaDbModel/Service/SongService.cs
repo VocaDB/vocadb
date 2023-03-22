@@ -288,8 +288,7 @@ public class SongService : ServiceBase
 
 	public SongContract GetSongWithAdditionalNames(int id)
 	{
-		return HandleQuery(
-			session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
+		return HandleQuery(session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
 	}
 
 	[Obsolete]

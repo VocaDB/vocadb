@@ -147,6 +147,7 @@ public sealed record SongForEditForApiContract
 			? new SongForApiContract(
 				song: song.OriginalVersion,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: SongOptionalFields.None
 			)
 			: null;

@@ -49,7 +49,7 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 				var pv = session.Query<PVForSong>()
 					.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
 
-				var song = pv != null ? new SongForApiContract(pv.Song, null, LanguagePreference, SongOptionalFields.None) : null;
+				var song = pv != null ? new SongForApiContract(pv.Song, null, LanguagePreference, PermissionContext, SongOptionalFields.None) : null;
 
 				entry.MatchedSong = song;
 			}

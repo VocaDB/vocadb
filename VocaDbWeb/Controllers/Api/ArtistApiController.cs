@@ -74,7 +74,7 @@ public class ArtistApiController : ApiController
 
 		if (relations != ArtistRelationsFields.None)
 		{
-			contract.Relations = new ArtistRelationsQuery(ctx, lang, _cache, _thumbPersister).GetRelations(a, relations);
+			contract.Relations = new ArtistRelationsQuery(ctx, lang, _permissionContext, _cache, _thumbPersister).GetRelations(a, relations);
 		}
 
 		return contract;

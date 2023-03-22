@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs;
@@ -14,6 +15,7 @@ public class SongInAlbumForApiContract
 	public SongInAlbumForApiContract(
 		SongInAlbum songInAlbum,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		SongOptionalFields fields,
 		SongVoteRating? rating = null
 	)
@@ -31,6 +33,7 @@ public class SongInAlbumForApiContract
 				song: song,
 				mergeRecord: null,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: fields
 			)
 			: null;

@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -26,6 +27,7 @@ public class ArtistRelationsQuery
 	private readonly IDatabaseContext _ctx;
 	private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 	private readonly ContentLanguagePreference _languagePreference;
+	private readonly IUserPermissionContext _permissionContext;
 
 	private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist)
 	{
@@ -45,7 +47,7 @@ public class ArtistRelationsQuery
 			.Select(s => s.Album)
 			.OrderByReleaseDate(SortDirection.Descending)
 			.Take(6).ToArray()
-			.Select(s => new AlbumForApiContract(s, _languagePreference, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+			.Select(s => new AlbumForApiContract(s, _languagePreference, _permissionContext, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 			.ToArray();
 	}
 
@@ -90,7 +92,7 @@ public class ArtistRelationsQuery
 			.OrderByDescending(s => s.RatingAverageInt)
 			.ThenByDescending(s => s.RatingCount)
 			.Take(6).ToArray()
-			.Select(s => new AlbumForApiContract(s, _languagePreference, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+			.Select(s => new AlbumForApiContract(s, _languagePreference, _permissionContext, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 			.ToArray();
 	}
 
@@ -116,7 +118,7 @@ public class ArtistRelationsQuery
 			.LoadMultiple<Song>(GetLatestSongIds(ctx, artist))
 			.OrderByPublishDate(SortDirection.Descending)
 			.ToArray()
-			.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
+			.Select(s => new SongForApiContract(s, _languagePreference, _permissionContext, s_songFields))
 			.ToArray();
 	}
 
@@ -147,14 +149,21 @@ public class ArtistRelationsQuery
 		return ctx.LoadMultiple<Song>(GetTopSongIds(ctx, artist, latestSongs))
 			.OrderByDescending(s => s.RatingScore)
 			.ToArray()
-			.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
+			.Select(s => new SongForApiContract(s, _languagePreference, _permissionContext, s_songFields))
 			.ToArray();
 	}
 
-	public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IAggregatedEntryImageUrlFactory entryThumbPersister)
+	public ArtistRelationsQuery(
+		IDatabaseContext ctx,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		ObjectCache cache,
+		IAggregatedEntryImageUrlFactory entryThumbPersister
+	)
 	{
 		_ctx = ctx;
 		_languagePreference = languagePreference;
+		_permissionContext = permissionContext;
 		_cache = cache;
 		_entryThumbPersister = entryThumbPersister;
 	}

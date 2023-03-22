@@ -37,6 +37,7 @@ public sealed record ArchivedSongVersionDetailsForApiContract
 		Song = new SongForApiContract(
 			song: archived.Song,
 			languagePreference: permissionContext.LanguagePreference,
+			permissionContext,
 			fields: SongOptionalFields.None
 		);
 		ArchivedVersion = ArchivedObjectVersionForApiContract.FromSong(archived, userIconFactory);

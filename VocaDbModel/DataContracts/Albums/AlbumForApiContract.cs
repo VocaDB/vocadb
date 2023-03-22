@@ -9,6 +9,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums;
 
@@ -24,17 +25,19 @@ public class AlbumForApiContract : IEntryBase
 	public AlbumForApiContract(
 		Album album,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory? thumbPersister,
 		AlbumOptionalFields fields,
 		SongOptionalFields songFields = SongOptionalFields.None
 	) :
-		this(album, null, languagePreference, thumbPersister, fields, songFields)
+		this(album, null, languagePreference, permissionContext, thumbPersister, fields, songFields)
 	{ }
 
 	public AlbumForApiContract(
 		Album album,
 		AlbumMergeRecord? mergeRecord,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory? thumbPersister,
 		AlbumOptionalFields fields,
 		SongOptionalFields songFields
@@ -106,7 +109,7 @@ public class AlbumForApiContract : IEntryBase
 
 		if (fields.HasFlag(AlbumOptionalFields.Tracks))
 		{
-			Tracks = album.Songs.Select(s => new SongInAlbumForApiContract(s, languagePreference, songFields)).ToArray();
+			Tracks = album.Songs.Select(s => new SongInAlbumForApiContract(s, languagePreference, permissionContext, songFields)).ToArray();
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.WebLinks))

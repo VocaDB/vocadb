@@ -14,8 +14,12 @@ public class RatedSongForUserForApiContract : SongRatingContract
 {
 	public RatedSongForUserForApiContract() { }
 
-	public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
-		IUserPermissionContext userPermissionContext)
+	public RatedSongForUserForApiContract(
+		FavoriteSongForUser ratedSong,
+		IUserIconFactory userIconFactory,
+		UserOptionalFields userFields,
+		IUserPermissionContext userPermissionContext
+	)
 	{
 		Date = ratedSong.Date;
 		Rating = ratedSong.Rating;
@@ -25,11 +29,16 @@ public class RatedSongForUserForApiContract : SongRatingContract
 		}
 	}
 
-	public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+	public RatedSongForUserForApiContract(
+		FavoriteSongForUser ratedSong,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		SongOptionalFields fields
+	)
 	{
 		Date = ratedSong.Date;
 		Rating = ratedSong.Rating;
-		Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
+		Song = new SongForApiContract(ratedSong.Song, null, languagePreference, permissionContext, fields);
 	}
 
 	[DataMember]

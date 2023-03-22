@@ -127,6 +127,7 @@ public sealed record ReleaseEventDetailsForApiContract
 			.Select(a => new AlbumForApiContract(
 				album: a,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: thumbPersister,
 				fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture
 			))
@@ -178,6 +179,7 @@ public sealed record ReleaseEventDetailsForApiContract
 				.Select(s => new SongInListForApiContract(
 					songInList: s,
 					languagePreference: languagePreference,
+					userContext,
 					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.ToArray()
@@ -187,6 +189,7 @@ public sealed record ReleaseEventDetailsForApiContract
 			.Select(s => new SongForApiContract(
 				song: s,
 				languagePreference: languagePreference,
+				userContext,
 				fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 			))
 			.OrderBy(s => s.Name)

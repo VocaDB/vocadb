@@ -37,6 +37,7 @@ public sealed record ArchivedAlbumVersionDetailsForApiContract
 		Album = new AlbumForApiContract(
 			album: archived.Album,
 			languagePreference: permissionContext.LanguagePreference,
+			permissionContext,
 			thumbPersister: null,
 			fields: AlbumOptionalFields.None
 		);

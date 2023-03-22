@@ -248,7 +248,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			.Select(a => a.Album)
 			.Take(7)
 			.ToArray()
-			.Select(c => new AlbumForApiContract(c, LanguagePreference, _entryImagePersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+			.Select(c => new AlbumForApiContract(c, LanguagePreference, PermissionContext, _entryImagePersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 			.ToArray();
 
 		details.FollowedArtists = session.Query<ArtistForUser>()
@@ -272,7 +272,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			.Select(c => c.Song)
 			.Take(6)
 			.ToArray()
-			.Select(c => new SongForApiContract(c, LanguagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
+			.Select(c => new SongForApiContract(c, LanguagePreference, PermissionContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 			.ToArray();
 
 		// Correct cached stats if we can determine they're out of date
@@ -368,6 +368,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				.Select(c => new AlbumForApiContract(
 					album: c,
 					languagePreference: LanguagePreference,
+					PermissionContext,
 					thumbPersister: _entryImagePersister,
 					fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture
 				))
@@ -402,6 +403,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				.Select(c => new SongForApiContract(
 					song: c,
 					languagePreference: LanguagePreference,
+					PermissionContext,
 					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.ToArray();
@@ -2186,7 +2188,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	public AlbumForUserForApiContract GetAlbumForUser(int userId, int albumId) => HandleQuery(ctx =>
 	{
 		var albumForUser = ctx.OfType<AlbumForUser>().Query().FirstOrDefault(s => s.Album.Id == albumId && s.User.Id == userId);
-		return new AlbumForUserForApiContract(albumForUser, LanguagePreference, _entryImagePersister, AlbumOptionalFields.None, shouldShowCollectionStatus: true);
+		return new AlbumForUserForApiContract(albumForUser, LanguagePreference, PermissionContext, _entryImagePersister, AlbumOptionalFields.None, shouldShowCollectionStatus: true);
 	});
 
 #nullable enable

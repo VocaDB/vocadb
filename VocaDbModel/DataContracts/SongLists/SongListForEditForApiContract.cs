@@ -68,7 +68,7 @@ public sealed record SongListForEditForApiContract
 		Name = songList.Name;
 		SongLinks = songList.SongLinks
 			.OrderBy(s => s.Order)
-			.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference))
+			.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference, permissionContext))
 			.ToArray();
 		Status = songList.Status;
 		UpdateNotes = string.Empty;

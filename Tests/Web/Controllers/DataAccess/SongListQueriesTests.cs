@@ -37,7 +37,7 @@ public class SongListQueriesTests
 
 	private SongInListEditContract[] SongInListEditContracts(params Song[] songs)
 	{
-		return songs.Select(s => new SongInListEditContract(new SongInList(s, new SongList(), 0, string.Empty), ContentLanguagePreference.Default)).ToArray();
+		return songs.Select(s => new SongInListEditContract(new SongInList(s, new SongList(), 0, string.Empty), ContentLanguagePreference.Default, _permissionContext)).ToArray();
 	}
 
 	private Stream TestImage()

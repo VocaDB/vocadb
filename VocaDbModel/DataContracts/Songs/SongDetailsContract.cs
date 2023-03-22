@@ -47,8 +47,9 @@ public class SongDetailsContract
 		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 		LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
 		Notes = song.Notes;
-		OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ?
-			new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
+		OriginalVersion = song.OriginalVersion != null && !song.OriginalVersion.Deleted
+			? new SongForApiContract(song.OriginalVersion, null, languagePreference, userContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)
+			: null;
 
 		PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;

@@ -57,7 +57,7 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 			.ToArray();
 
 		Songs = releaseEvent.Songs
-			.Select(s => new SongForApiContract(s, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
+			.Select(s => new SongForApiContract(s, languagePreference, userContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 			.OrderBy(s => s.Name)
 			.ToArray();
 

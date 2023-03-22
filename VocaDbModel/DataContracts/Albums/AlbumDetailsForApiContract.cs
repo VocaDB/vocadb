@@ -187,6 +187,7 @@ public sealed record AlbumDetailsForApiContract
 			.Select(s => new SongInAlbumForApiContract(
 				songInAlbum: s,
 				languagePreference: languagePreference,
+				userContext,
 				fields: SongOptionalFields.None,
 				rating: getSongRating?.Invoke(s.Song)
 			))
