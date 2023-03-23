@@ -11,7 +11,10 @@ public class ReleaseEventSeriesDetailsContract : ReleaseEventSeriesWithEventsCon
 {
 	public ReleaseEventSeriesDetailsContract() { }
 
-	public ReleaseEventSeriesDetailsContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference)
+	public ReleaseEventSeriesDetailsContract(
+		ReleaseEventSeries series,
+		ContentLanguagePreference languagePreference
+	)
 		: base(series, languagePreference)
 	{
 		Tags = series.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();

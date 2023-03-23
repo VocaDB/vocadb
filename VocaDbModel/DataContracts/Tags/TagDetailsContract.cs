@@ -17,9 +17,11 @@ public class TagDetailsContract : TagContract, IEntryWithStatus
 
 	public TagDetailsContract() { }
 
-	public TagDetailsContract(Tag tag,
+	public TagDetailsContract(
+		Tag tag,
 		TagStatsContract stats,
-		ContentLanguagePreference languagePreference)
+		ContentLanguagePreference languagePreference
+	)
 		: base(tag, languagePreference)
 	{
 		AdditionalNames = tag.Names.AdditionalNamesString;

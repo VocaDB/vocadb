@@ -23,8 +23,13 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 		WebLinks = Array.Empty<WebLinkContract>();
 	}
 
-	public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference,
-		IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTagRepository entryTypeTags = null)
+	public ReleaseEventDetailsContract(
+		ReleaseEvent releaseEvent,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext userContext,
+		IUserIconFactory userIconFactory,
+		IEntryTypeTagRepository entryTypeTags = null
+	)
 		: base(releaseEvent, languagePreference, true, true)
 	{
 		ParamIs.NotNull(() => releaseEvent);

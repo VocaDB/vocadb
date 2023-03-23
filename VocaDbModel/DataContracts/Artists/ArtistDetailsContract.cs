@@ -21,8 +21,14 @@ public class ArtistDetailsContract : ArtistContract
 {
 	public ArtistDetailsContract() { }
 
-	public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext,
-		IAggregatedEntryImageUrlFactory imageStore, IUserIconFactory userIconFactory, Tag artistTypeTag = null)
+	public ArtistDetailsContract(
+		Artist artist,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext userContext,
+		IAggregatedEntryImageUrlFactory imageStore,
+		IUserIconFactory userIconFactory,
+		Tag artistTypeTag = null
+	)
 		: base(artist, languagePreference)
 	{
 		AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));

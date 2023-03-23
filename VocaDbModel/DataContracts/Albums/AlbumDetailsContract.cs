@@ -21,8 +21,14 @@ public class AlbumDetailsContract : AlbumContract
 {
 	public AlbumDetailsContract() { }
 
-	public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IAggregatedEntryImageUrlFactory thumbPersister,
-		Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
+	public AlbumDetailsContract(
+		Album album,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext userContext,
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		Func<Song, SongVoteRating?> getSongRating = null,
+		Tag discTypeTag = null
+	)
 		: base(album, languagePreference)
 	{
 		ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
