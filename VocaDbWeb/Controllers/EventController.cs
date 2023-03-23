@@ -92,7 +92,11 @@ public class EventController : ControllerBase
 		PageProperties.Title = ev.Name;
 		PageProperties.Subtitle = subtitle;
 		PageProperties.CanonicalUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
-		PageProperties.OpenGraph.Image = Url.ImageThumb(pictureData, ImageSize.Original);
+		var thumbUrl = Url.ImageThumb(pictureData, ImageSize.Original);
+		if (!string.IsNullOrEmpty(thumbUrl))
+		{
+			PageProperties.OpenGraph.Image = thumbUrl;
+		}
 
 		var descriptionStripped = _markdownParser.GetPlainText(ev.Description);
 
@@ -207,7 +211,11 @@ public class EventController : ControllerBase
 		PageProperties.PageTitle = $"{series.Name} ({subtitle})";
 		PageProperties.Title = series.Name;
 		PageProperties.Subtitle = subtitle;
-		PageProperties.OpenGraph.Image = Url.ImageThumb(series.MainPicture, ImageSize.Original);
+		var thumbUrl = Url.ImageThumb(series.MainPicture, ImageSize.Original);
+		if (!string.IsNullOrEmpty(thumbUrl))
+		{
+			PageProperties.OpenGraph.Image = thumbUrl;
+		}
 
 		var descriptionStripped = _markdownParser.GetPlainText(series.Description);
 

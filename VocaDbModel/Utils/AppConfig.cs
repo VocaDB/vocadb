@@ -15,14 +15,14 @@ public static class AppConfig
 	private static ArtistType[]? s_artistTypes;
 	private static ArtistRoles[]? s_artistRoles;
 	private static SongType[]? s_songTypes;
-#nullable disable
 
 	/// <summary>
 	/// List of roles that can be assigned to artist added to songs and albums.
 	/// The list should be in the correct order.
 	/// The Default role is excluded because it's not a valid selection.
 	/// </summary>
-	private static readonly ArtistRoles[] DefaultValidRoles = {
+	private static readonly ArtistRoles[] DefaultValidRoles =
+	{
 		Domain.Artists.ArtistRoles.Animator,
 		Domain.Artists.ArtistRoles.Arranger,
 		Domain.Artists.ArtistRoles.Composer,
@@ -39,7 +39,8 @@ public static class AppConfig
 		Domain.Artists.ArtistRoles.Other
 	};
 
-	private static readonly DiscType[] DefaultDiscTypes = {
+	private static readonly DiscType[] DefaultDiscTypes =
+	{
 		DiscType.Unknown,
 		DiscType.Album,
 		DiscType.Single,
@@ -64,12 +65,10 @@ public static class AppConfig
 		SongType.Other
 	};
 
-#nullable enable
 	private static string? Val(string key)
 	{
 		return ConfigurationManager.AppSettings[key];
 	}
-#nullable disable
 
 	private static bool Val(string key, bool def)
 	{
@@ -85,7 +84,6 @@ public static class AppConfig
 
 	public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
 
-#nullable enable
 	public static DiscType[] AlbumTypes
 	{
 		get

@@ -117,13 +117,17 @@ public class AlbumController : ControllerBase
 
 		WebHelper.VerifyUserAgent(Request);
 
-		var model = _queries.GetAlbumDetails(id, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty);
+		var model = _queries.GetAlbumDetailsForApi(id, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty);
 
 		var prop = PageProperties;
 		prop.Title = model.Name;
 		//prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 		prop.GlobalSearchType = EntryType.Album;
-		prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
+		var thumbUrl = Url.ImageThumb(model.MainPicture, Model.Domain.Images.ImageSize.Original);
+		if (!string.IsNullOrEmpty(thumbUrl))
+		{
+			prop.OpenGraph.Image = thumbUrl;
+		}
 		prop.OpenGraph.Type = OpenGraphTypes.Album;
 		prop.OpenGraph.ShowTwitterCard = true;
 
@@ -142,7 +146,7 @@ public class AlbumController : ControllerBase
 		PageProperties.PageTitle = titleAndArtist;
 		PageProperties.Subtitle = $"{model.ArtistString} ({Translate.DiscTypeName(model.DiscType)})";
 
-		prop.Description = !model.Description.IsEmpty ?
+		prop.Description = !string.IsNullOrEmpty(model.Description.Original) ?
 			_markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 			_albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 

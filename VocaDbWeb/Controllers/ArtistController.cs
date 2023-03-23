@@ -116,16 +116,20 @@ public class ArtistController : ControllerBase
 
 		WebHelper.VerifyUserAgent(Request);
 
-		var model = _queries.GetDetails(id, GetHostnameForValidHit());
+		var model = _queries.GetDetailsForApi(id, GetHostnameForValidHit());
 
-		var hasDescription = !model.Description.IsEmpty;
+		var hasDescription = !string.IsNullOrEmpty(model.Description.Original);
 		var prop = PageProperties;
 		prop.GlobalSearchType = EntryType.Artist;
 		prop.Title = model.Name;
 		prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
 		prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
 		//prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
-		prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
+		var thumbUrl = Url.ImageThumb(model.MainPicture, Model.Domain.Images.ImageSize.Original);
+		if (!string.IsNullOrEmpty(thumbUrl))
+		{
+			prop.OpenGraph.Image = thumbUrl;
+		}
 		prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 		prop.OpenGraph.ShowTwitterCard = true;
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;

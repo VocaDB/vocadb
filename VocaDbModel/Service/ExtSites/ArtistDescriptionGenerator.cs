@@ -7,7 +7,7 @@ namespace VocaDb.Model.Service.ExtSites;
 
 public class ArtistDescriptionGenerator
 {
-	private void AddVoicebankDetails(StringBuilder sb, ArtistDetailsContract artist)
+	private void AddVoicebankDetails(StringBuilder sb, ArtistDetailsForApiContract artist)
 	{
 		if (artist.ReleaseDate.HasValue)
 		{
@@ -20,7 +20,7 @@ public class ArtistDescriptionGenerator
 		}
 	}
 
-	public string GenerateDescription(ArtistDetailsContract artist, string? original, TranslateableEnum<ArtistType> artistTypeNames)
+	public string GenerateDescription(ArtistDetailsForApiContract artist, string? original, TranslateableEnum<ArtistType> artistTypeNames)
 	{
 		var sb = new StringBuilder(original);
 
