@@ -22,10 +22,19 @@ public class SongForApiContract : IEntryBase
 	public SongForApiContract() { }
 #nullable enable
 
-	public SongForApiContract(Song song, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+	public SongForApiContract(
+		Song song,
+		ContentLanguagePreference languagePreference,
+		SongOptionalFields fields
+	)
 		: this(song, null, languagePreference, fields) { }
 
-	public SongForApiContract(Song song, SongMergeRecord? mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+	public SongForApiContract(
+		Song song,
+		SongMergeRecord? mergeRecord,
+		ContentLanguagePreference languagePreference,
+		SongOptionalFields fields
+	)
 	{
 		ArtistString = song.ArtistString[languagePreference];
 		CreateDate = song.CreateDate;

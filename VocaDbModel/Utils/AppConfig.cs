@@ -225,7 +225,7 @@ public static class AppConfig
 
 	public static string SoundCloudClientId => Val("SoundCloudClientId");
 
-	public static string SoundCloudClientSecret = Val("SoundCloudClientSecret");
+	public static string SoundCloudClientSecret => Val("SoundCloudClientSecret");
 
 #nullable enable
 	public static string StaticContentPath => Val("StaticContentPath");
@@ -242,6 +242,6 @@ public static class AppConfig
 	public static string VimeoApiKey => Val("VimeoApiKey");
 
 #nullable enable
-	public static string? MLNetActiveModelPath = Val(nameof(MLNetActiveModelPath));
+	public static string? MLNetActiveModelPath => Val(nameof(MLNetActiveModelPath));
 #nullable disable
 }
