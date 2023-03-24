@@ -115,6 +115,7 @@ public class SongQueriesTests
 
 		_user = CreateEntry.User(id: 1, name: "Miku");
 		_user.GroupId = UserGroupId.Trusted;
+		_user.AdditionalPermissions.Add(PermissionToken.ViewLyrics);
 		_user2 = CreateEntry.User(id: 2, name: "Rin", email: "rin@vocadb.net");
 		_user3 = CreateEntry.User(id: 3, name: "Luka", email: "luka@vocadb.net");
 		_repository.Add(_user, _user2);

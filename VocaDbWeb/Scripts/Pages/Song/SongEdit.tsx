@@ -885,15 +885,17 @@ const SongEditLayout = observer(
 							<PVsTabContent songEditStore={songEditStore} />
 						</JQueryUITab>
 
-						<JQueryUITab
-							eventKey="lyrics"
-							title={t('ViewRes.Song:Edit.TabLyrics')}
-						>
-							<LyricsTabContent
-								songEditStore={songEditStore}
-								lyricsForSongListEditStore={songEditStore.lyrics}
-							/>
-						</JQueryUITab>
+						{loginManager.canViewLyrics && (
+							<JQueryUITab
+								eventKey="lyrics"
+								title={t('ViewRes.Song:Edit.TabLyrics')}
+							>
+								<LyricsTabContent
+									songEditStore={songEditStore}
+									lyricsForSongListEditStore={songEditStore.lyrics}
+								/>
+							</JQueryUITab>
+						)}
 					</JQueryUITabs>
 					<br />
 

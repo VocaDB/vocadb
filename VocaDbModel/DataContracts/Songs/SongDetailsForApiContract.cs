@@ -194,9 +194,11 @@ public sealed record SongDetailsForApiContract
 		Deleted = song.Deleted;
 		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 
-		LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags)
-			.Select(l => new LyricsForSongContract(l, false))
-			.ToArray();
+		LyricsFromParents = userContext.HasPermission(PermissionToken.ViewLyrics)
+			? song.GetLyricsFromParents(specialTags, entryTypeTags)
+				.Select(l => new LyricsForSongContract(l, false))
+				.ToArray()
+			: Array.Empty<LyricsForSongContract>();
 
 		MaxMilliBpm = song.MaxMilliBpm;
 		MinMilliBpm = song.MinMilliBpm;

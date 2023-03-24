@@ -112,7 +112,11 @@ public sealed record SongForEditForApiContract
 		WebLinks = Array.Empty<WebLinkForApiContract>();
 	}
 
-	public SongForEditForApiContract(Song song, ContentLanguagePreference languagePreference, IUserPermissionContext permissionContext)
+	public SongForEditForApiContract(
+		Song song,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext
+	)
 	{
 		var firstAlbum = song.Albums
 			.Where(a => a.Album.OriginalReleaseDate.IsFullDate)
@@ -133,9 +137,11 @@ public sealed record SongForEditForApiContract
 		HasAlbums = song.Albums.Any();
 		Id = song.Id;
 		LengthSeconds = song.LengthSeconds;
-		Lyrics = song.Lyrics
-			.Select(l => new LyricsForSongContract(l))
-			.ToArray();
+		Lyrics = permissionContext.HasPermission(PermissionToken.ViewLyrics)
+			? song.Lyrics
+				.Select(l => new LyricsForSongContract(l))
+				.ToArray()
+			: Array.Empty<LyricsForSongContract>();
 		MaxMilliBpm = song.MaxMilliBpm;
 		MinMilliBpm = song.MinMilliBpm;
 		Name = song.Names.SortNames[languagePreference];

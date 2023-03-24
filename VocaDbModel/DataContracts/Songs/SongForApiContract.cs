@@ -68,7 +68,11 @@ public class SongForApiContract : IEntryBase
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).ToArray();
 
 		if (fields.HasFlag(SongOptionalFields.Lyrics))
-			Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
+		{
+			Lyrics = permissionContext.HasPermission(PermissionToken.ViewLyrics)
+				? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray()
+				: Array.Empty<LyricsForSongContract>();
+		}
 
 		if (fields.HasFlag(SongOptionalFields.MainPicture))
 		{
