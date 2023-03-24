@@ -98,14 +98,17 @@ public class MikuDbAlbumService : ServiceBase
 		var importedAlbum = session.Load<MikuDbAlbum>(acceptedAlbum.ImportedAlbum.Id);
 		importedAlbum.Status = AlbumStatus.Approved;
 
-		if (importedAlbum.CoverPicture != null && album.CoverPictureData == null)
+		if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 		{
-			album.CoverPictureData = importedAlbum.CoverPicture;
-			album.CoverPictureMime = importedAlbum.CoverPictureMime;
+			if (importedAlbum.CoverPicture != null && album.CoverPictureData == null)
+			{
+				album.CoverPictureData = importedAlbum.CoverPicture;
+				album.CoverPictureMime = importedAlbum.CoverPictureMime;
 
-			// TODO: should generate thumbnail as well
+				// TODO: should generate thumbnail as well
 
-			diff.Cover.Set();
+				diff.Cover.Set();
+			}
 		}
 
 		if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null)

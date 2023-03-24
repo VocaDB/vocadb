@@ -84,7 +84,9 @@ public class AlbumForApiContract : IEntryBase
 
 		if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && album.Thumb != null)
 		{
-			MainPicture = new EntryThumbForApiContract(album.Thumb, thumbPersister);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(album.Thumb, thumbPersister)
+				: null;
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.Names))

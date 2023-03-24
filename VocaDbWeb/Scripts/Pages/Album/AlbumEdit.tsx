@@ -140,38 +140,42 @@ const BasicInfoTabContent = observer(
 					<NamesEditor namesEditStore={albumEditStore.names} />
 				</div>
 
-				<div className="editor-label">
-					<label>{t('ViewRes.Album:Edit.BaMainCoverPicture')}</label>
-				</div>
-				<div className="editor-field">
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<img
-										src={`/Album/CoverPictureThumb/${albumEditStore.contract.id}`}
-										alt={t('ViewRes.Album:Edit.ImagePreview')}
-										className="coverPic"
-									/>
-								</td>
-								<td>
-									<p>
-										{t('ViewRes.Album:Edit.BaPictureInfo', {
-											0: ImageHelper.allowedExtensions.join(', '),
-											1: ImageHelper.maxImageSizeMB,
-										})}
-									</p>
-									<input
-										type="file"
-										id="coverPicUpload"
-										name="coverPicUpload"
-										ref={coverPicUploadRef}
-									/>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				{loginManager.canViewCoverArtImages && (
+					<>
+						<div className="editor-label">
+							<label>{t('ViewRes.Album:Edit.BaMainCoverPicture')}</label>
+						</div>
+						<div className="editor-field">
+							<table>
+								<tbody>
+									<tr>
+										<td>
+											<img
+												src={`/Album/CoverPictureThumb/${albumEditStore.contract.id}`}
+												alt={t('ViewRes.Album:Edit.ImagePreview')}
+												className="coverPic"
+											/>
+										</td>
+										<td>
+											<p>
+												{t('ViewRes.Album:Edit.BaPictureInfo', {
+													0: ImageHelper.allowedExtensions.join(', '),
+													1: ImageHelper.maxImageSizeMB,
+												})}
+											</p>
+											<input
+												type="file"
+												id="coverPicUpload"
+												name="coverPicUpload"
+												ref={coverPicUploadRef}
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</>
+				)}
 
 				<div className="editor-label">
 					<label>{t('ViewRes.Album:Edit.BaDescription')}</label>{' '}
@@ -1033,12 +1037,14 @@ const AlbumEditLayout = observer(
 							<TracksTabContent albumEditStore={albumEditStore} />
 						</JQueryUITab>
 
-						<JQueryUITab
-							eventKey="pics"
-							title={t('ViewRes.Album:Edit.PicturesTab')}
-						>
-							<PicturesTabContent albumEditStore={albumEditStore} />
-						</JQueryUITab>
+						{loginManager.canViewCoverArtImages && (
+							<JQueryUITab
+								eventKey="pics"
+								title={t('ViewRes.Album:Edit.PicturesTab')}
+							>
+								<PicturesTabContent albumEditStore={albumEditStore} />
+							</JQueryUITab>
+						)}
 
 						<JQueryUITab
 							eventKey="pvs"

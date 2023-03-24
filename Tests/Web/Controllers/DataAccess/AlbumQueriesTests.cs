@@ -110,6 +110,7 @@ public class AlbumQueriesTests
 		foreach (var name in _album.Names)
 			Save(name);
 		_user = CreateEntry.User(1, "Miku");
+		_user.AdditionalPermissions.Add(PermissionToken.ViewCoverArtImages);
 		_user.GroupId = UserGroupId.Moderator;
 		_user2 = CreateEntry.User(2, "Luka");
 		Save(_user, _user2);

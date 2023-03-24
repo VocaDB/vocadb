@@ -1,5 +1,6 @@
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import AlbumBasicInfo from '@/Pages/Album/AlbumBasicInfo';
 import AlbumDiscussion from '@/Pages/Album/AlbumDiscussion';
@@ -33,6 +34,8 @@ export const AlbumDetailsTabs = React.memo(
 		tab,
 		children,
 	}: AlbumDetailsTabsProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Album']);
 
 		return (
@@ -70,18 +73,20 @@ export const AlbumDetailsTabs = React.memo(
 							})`}
 						</Link>
 					</JQueryUINavItemComponent>
-					<JQueryUINavItemComponent active={tab === 'pictures'}>
-						<Link
-							to={`${EntryUrlMapper.details(
-								EntryType.Album,
-								model.id,
-							)}/pictures`}
-						>
-							{`${t('ViewRes:EntryDetails.PicturesTab')} (${
-								model.pictures.length + 1
-							})`}
-						</Link>
-					</JQueryUINavItemComponent>
+					{loginManager.canViewCoverArtImages && (
+						<JQueryUINavItemComponent active={tab === 'pictures'}>
+							<Link
+								to={`${EntryUrlMapper.details(
+									EntryType.Album,
+									model.id,
+								)}/pictures`}
+							>
+								{`${t('ViewRes:EntryDetails.PicturesTab')} (${
+									model.pictures.length + 1
+								})`}
+							</Link>
+						</JQueryUINavItemComponent>
+					)}
 					<JQueryUINavItemComponent active={tab === 'related'}>
 						<Link
 							to={`${EntryUrlMapper.details(
@@ -121,6 +126,8 @@ const AlbumDetailsRoutes = ({
 	model,
 	albumDetailsStore,
 }: AlbumDetailsRoutesProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	return (
 		<Routes>
 			<Route
@@ -138,12 +145,17 @@ const AlbumDetailsRoutes = ({
 					<AlbumReviews model={model} albumDetailsStore={albumDetailsStore} />
 				}
 			/>
-			<Route
-				path="pictures"
-				element={
-					<AlbumPictures model={model} albumDetailsStore={albumDetailsStore} />
-				}
-			/>
+			{loginManager.canViewCoverArtImages && (
+				<Route
+					path="pictures"
+					element={
+						<AlbumPictures
+							model={model}
+							albumDetailsStore={albumDetailsStore}
+						/>
+					}
+				/>
+			)}
 			<Route
 				path="related"
 				element={

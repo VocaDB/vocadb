@@ -638,11 +638,14 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					await session.UpdateAsync(ev);
 				}
 
-				if (pictureData != null)
+				if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 				{
-					diff.MainPicture.Set();
-					SaveImage(ev, pictureData);
-					await session.UpdateAsync(ev);
+					if (pictureData != null)
+					{
+						diff.MainPicture.Set();
+						SaveImage(ev, pictureData);
+						await session.UpdateAsync(ev);
+					}
 				}
 
 				var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
@@ -751,10 +754,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 				if (artistDiff.Changed)
 					diff.Artists.Set();
 
-				if (pictureData != null)
+				if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 				{
-					diff.MainPicture.Set();
-					SaveImage(ev, pictureData);
+					if (pictureData != null)
+					{
+						diff.MainPicture.Set();
+						SaveImage(ev, pictureData);
+					}
 				}
 
 				await session.UpdateAsync(ev);
@@ -838,11 +844,14 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 				}
 
-				if (pictureData != null)
+				if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 				{
-					diff.Picture.Set();
-					SaveImage(series, pictureData);
-					session.Update(series);
+					if (pictureData != null)
+					{
+						diff.Picture.Set();
+						SaveImage(series, pictureData);
+						session.Update(series);
+					}
 				}
 
 				session.Update(series);
@@ -890,10 +899,13 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					series.Status = contract.Status;
 				}
 
-				if (pictureData != null)
+				if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 				{
-					diff.Picture.Set();
-					SaveImage(series, pictureData);
+					if (pictureData != null)
+					{
+						diff.Picture.Set();
+						SaveImage(series, pictureData);
+					}
 				}
 
 				var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
@@ -1012,6 +1024,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		return HandleQuery(session => new ReleaseEventSeriesForEditForApiContract(
 			series: session.Load<ReleaseEventSeries>(id),
 			languagePreference: LanguagePreference,
+			PermissionContext,
 			thumbPersister: _imageUrlFactory
 		));
 	}

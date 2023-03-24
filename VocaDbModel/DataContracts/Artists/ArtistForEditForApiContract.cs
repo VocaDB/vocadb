@@ -116,9 +116,11 @@ public sealed record ArtistForEditForApiContract
 			.Select(n => new LocalizedStringWithIdContract(n))
 			.ToArray();
 		PictureMime = artist.PictureMime;
-		Pictures = artist.Pictures
-			.Select(p => new EntryPictureFileContract(p, imageStore))
-			.ToList();
+		Pictures = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+			? artist.Pictures
+				.Select(p => new EntryPictureFileContract(p, imageStore))
+				.ToList()
+			: Array.Empty<EntryPictureFileContract>();
 		ReleaseDate = artist.ReleaseDate.DateTime;
 		Status = artist.Status;
 		UpdateNotes = string.Empty;

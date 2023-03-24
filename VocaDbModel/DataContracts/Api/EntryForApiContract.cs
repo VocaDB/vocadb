@@ -74,7 +74,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null)
 		{
-			MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister)
+				: null;
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Names))
@@ -110,7 +112,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null)
 		{
-			MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister)
+				: null;
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Names))
@@ -151,7 +155,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture))
 		{
-			MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister)
+				: null;
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
@@ -225,7 +231,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null)
 		{
-			MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes)
+				: null;
 		}
 	}
 
@@ -244,7 +252,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null)
 		{
-			MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes)
+				: null;
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.WebLinks))

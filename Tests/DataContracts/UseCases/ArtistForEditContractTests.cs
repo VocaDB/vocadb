@@ -19,7 +19,7 @@ public class ArtistForEditContractTests
 		artist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 		artist.AddGroup(illustrator, ArtistLinkType.Manager);
 
-		var result = new ArtistForEditContract(artist, ContentLanguagePreference.Default, new InMemoryImagePersister());
+		var result = new ArtistForEditContract(artist, ContentLanguagePreference.Default, new FakePermissionContext(), new InMemoryImagePersister());
 
 		result.Illustrator?.Id.Should().Be(illustrator.Id, "Illustrator");
 		result.AssociatedArtists.Length.Should().Be(1, "Illustrator is included in the associated artists list");

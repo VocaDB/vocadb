@@ -57,9 +57,11 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 				.ToArray();
 		}
 
-		if (fields.HasFlag(SongListOptionalFields.MainPicture))
+		if (fields.HasFlag(SongListOptionalFields.MainPicture) && list.Thumb != null)
 		{
-			MainPicture = list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister) : null;
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(list.Thumb, imagePersister)
+				: null;
 		}
 
 		if (fields.HasFlag(SongListOptionalFields.Tags))

@@ -3,6 +3,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents;
 
@@ -50,6 +51,7 @@ public sealed record ReleaseEventSeriesForEditForApiContract
 	public ReleaseEventSeriesForEditForApiContract(
 		ReleaseEventSeries series,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory? thumbPersister
 	)
 	{
@@ -59,7 +61,7 @@ public sealed record ReleaseEventSeriesForEditForApiContract
 		Description = series.Description;
 		Id = series.Id;
 		MainPicture = thumbPersister is not null
-			? EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister)
+			? (permissionContext.HasPermission(PermissionToken.ViewCoverArtImages) ? EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister) : null)
 			: null;
 		Name = series.TranslatedName[languagePreference];
 		Names = series.Names

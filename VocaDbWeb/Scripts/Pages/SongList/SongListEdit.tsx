@@ -145,29 +145,33 @@ const PropertiesTabContent = observer(
 					/>
 				</div>
 
-				<div className="editor-label">
-					{t('ViewRes.SongList:Edit.Thumbnail')}
-				</div>
-				<div className="editor-field">
-					<div className="media">
-						{thumbUrl && (
-							<img
-								className="pull-left media-object"
-								src={thumbUrl}
-								alt="Thumb" /* LOC */
-							/>
-						)}
-						<div className="media-body">
-							<ImageUploadMessage />
-							<input
-								type="file"
-								id="thumbPicUpload"
-								name="thumbPicUpload"
-								ref={thumbPicUploadRef}
-							/>
+				{loginManager.canViewCoverArtImages && (
+					<>
+						<div className="editor-label">
+							{t('ViewRes.SongList:Edit.Thumbnail')}
 						</div>
-					</div>
-				</div>
+						<div className="editor-field">
+							<div className="media">
+								{thumbUrl && (
+									<img
+										className="pull-left media-object"
+										src={thumbUrl}
+										alt="Thumb" /* LOC */
+									/>
+								)}
+								<div className="media-body">
+									<ImageUploadMessage />
+									<input
+										type="file"
+										id="thumbPicUpload"
+										name="thumbPicUpload"
+										ref={thumbPicUploadRef}
+									/>
+								</div>
+							</div>
+						</div>
+					</>
+				)}
 
 				<div className="editor-label">
 					<HelpLabel
