@@ -47,9 +47,17 @@ public class ActivityFeedService : ServiceBase
 				.Concat(songEntries)
 				.OrderByDescending(a => a.CreateDate)
 				.Take(maxEntries)
-				.Select(e => new ActivityEntryForApiContract(e, _entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
-					LanguagePreference), _userIconFactory,
-				PermissionContext, ActivityEntryOptionalFields.None))
+				.Select(e => new ActivityEntryForApiContract(
+					e,
+					_entryForApiContractFactory.Create(
+						e.EntryBase,
+						EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
+						LanguagePreference
+					),
+					_userIconFactory,
+					PermissionContext,
+					ActivityEntryOptionalFields.None
+				))
 				.ToArray();
 
 			return new PartialFindResult<ActivityEntryForApiContract>(contracts, 0);

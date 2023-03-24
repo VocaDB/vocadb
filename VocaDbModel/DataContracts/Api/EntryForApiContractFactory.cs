@@ -1,8 +1,7 @@
-#nullable disable
-
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Api;
 
@@ -12,14 +11,23 @@ namespace VocaDb.Model.DataContracts.Api;
 public class EntryForApiContractFactory
 {
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
+	private readonly IUserPermissionContext _permissionContext;
 
-	public EntryForApiContractFactory(IAggregatedEntryImageUrlFactory thumbPersister)
+	public EntryForApiContractFactory(
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		IUserPermissionContext permissionContext
+	)
 	{
 		_thumbPersister = thumbPersister;
+		_permissionContext = permissionContext;
 	}
 
-	public EntryForApiContract Create(IEntryWithNames entry, EntryOptionalFields includedFields, ContentLanguagePreference languagePreference)
+	public EntryForApiContract Create(
+		IEntryWithNames entry,
+		EntryOptionalFields includedFields,
+		ContentLanguagePreference languagePreference
+	)
 	{
-		return EntryForApiContract.Create(entry, languagePreference, _thumbPersister, includedFields);
+		return EntryForApiContract.Create(entry, languagePreference, _permissionContext, _thumbPersister, includedFields);
 	}
 }

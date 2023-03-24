@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
@@ -23,6 +24,7 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 	public SongListForApiContract(
 		SongList list,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IUserIconFactory userIconFactory,
 		IAggregatedEntryImageUrlFactory imagePersister,
 		SongListOptionalFields fields

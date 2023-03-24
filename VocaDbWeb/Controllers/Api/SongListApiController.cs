@@ -147,7 +147,17 @@ public class SongListApiController : ApiController
 			ChildTags = childTags
 		};
 
-		return _queries.Find(s => new SongListForApiContract(s, lang, _userIconFactory, _entryImagePersister, fields), queryParams);
+		return _queries.Find(
+			s => new SongListForApiContract(
+				s,
+				lang,
+				_permissionContext,
+				_userIconFactory,
+				_entryImagePersister,
+				fields
+			),
+			queryParams
+		);
 	}
 #nullable disable
 

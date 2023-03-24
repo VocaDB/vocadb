@@ -138,6 +138,7 @@ public abstract record UserDetailsForApiContractBase
 		User user,
 		IUserIconFactory iconFactory,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister
 	)
 	{
@@ -164,6 +165,7 @@ public abstract record UserDetailsForApiContractBase
 			.Select(a => new ArtistForUserForApiContract(
 				artistForUser: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				thumbPersister: thumbPersister,
 				includedFields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture
 			))
@@ -213,7 +215,7 @@ public sealed record UserDetailsForApiContract : UserDetailsForApiContractBase
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		IUserPermissionContext permissionContext
 	)
-		: base(user, iconFactory, languagePreference, thumbPersister)
+		: base(user, iconFactory, languagePreference, permissionContext, thumbPersister)
 	{
 		if (permissionContext.HasPermission(PermissionToken.ManageUserPermissions))
 		{

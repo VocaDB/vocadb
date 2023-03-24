@@ -170,6 +170,7 @@ public sealed record AlbumDetailsForApiContract
 			? new ArtistForApiContract(
 				artist: author,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: thumbPersister,
 				includedFields: ArtistOptionalFields.MainPicture
 			)

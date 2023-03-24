@@ -265,8 +265,10 @@ public class UserApiController : ApiController
 			TextQuery = textQuery
 		};
 
-		var artists = _queries.GetArtists(queryParams, afu =>
-			new ArtistForUserForApiContract(afu, lang, _thumbPersister, fields));
+		var artists = _queries.GetArtists(
+			queryParams,
+			afu => new ArtistForUserForApiContract(afu, lang, _permissionContext, _thumbPersister, fields)
+		);
 
 		return artists;
 	}

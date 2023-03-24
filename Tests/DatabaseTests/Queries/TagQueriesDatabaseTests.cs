@@ -45,7 +45,7 @@ public class TagQueriesDatabaseTests
 
 			queries.Merge(sourceId, targetId);
 
-			var result = queries.LoadTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+			var result = queries.LoadTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, _userContext, TagOptionalFields.None));
 
 			return result;
 		});

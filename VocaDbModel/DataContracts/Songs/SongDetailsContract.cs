@@ -55,7 +55,15 @@ public class SongDetailsContract
 		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
 		PersonalDescriptionText = song.PersonalDescriptionText;
 		var author = song.PersonalDescriptionAuthor;
-		PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, ArtistOptionalFields.MainPicture) : null;
+		PersonalDescriptionAuthor = author != null
+			? new ArtistForApiContract(
+				author,
+				languagePreference,
+				userContext,
+				thumbPersister,
+				ArtistOptionalFields.MainPicture
+			)
+			: null;
 		SongTypeTag = songTypeTag != null ? new TagBaseContract(songTypeTag, languagePreference) : null;
 		SubjectsFromParents = song.GetCharactersFromParents().Select(c => new ArtistForSongContract(c, languagePreference)).ToArray();
 		Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();

@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users;
@@ -47,7 +48,8 @@ public sealed record UserForEditForApiContract
 
 	public UserForEditForApiContract(
 		User user,
-		ContentLanguagePreference languagePreference
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext
 	)
 	{
 		AdditionalPermissions = user.AdditionalPermissions.PermissionTokens
@@ -60,6 +62,7 @@ public sealed record UserForEditForApiContract
 			.Select(a => new ArtistForUserForApiContract(
 				artistForUser: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				thumbPersister: null,
 				includedFields: Artists.ArtistOptionalFields.None
 			))

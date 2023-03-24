@@ -107,7 +107,9 @@ public class CommentQueries
 				.ToArray()
 				.Select(c => new CommentForApiContract(c, _userIconFactory)
 				{
-					Entry = fields.HasFlag(CommentOptionalFields.Entry) ? _entryForApiContractFactory.Create(c.Entry, entryFields, lang) : null,
+					Entry = fields.HasFlag(CommentOptionalFields.Entry)
+						? _entryForApiContractFactory.Create(c.Entry, entryFields, lang)
+						: null,
 				})
 				.ToArray();
 

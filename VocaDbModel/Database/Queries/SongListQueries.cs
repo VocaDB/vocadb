@@ -231,6 +231,7 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 			return new SongListForApiContract(
 				list: ctx.Load(listId),
 				languagePreference: LanguagePreference,
+				PermissionContext,
 				userIconFactory: _userIconFactory,
 				imagePersister: _thumbStore,
 				fields: SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags
@@ -274,7 +275,14 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 		{
 			var songList = session.Load(id);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new SongListForApiContract(songList, PermissionContext.LanguagePreference, _userIconFactory, imagePersister: null, fields: SongListOptionalFields.None),
+				entry: new SongListForApiContract(
+					songList,
+					PermissionContext.LanguagePreference,
+					PermissionContext,
+					_userIconFactory,
+					imagePersister: null,
+					fields: SongListOptionalFields.None
+				),
 				versions: songList.ArchivedVersionsManager.Versions
 					.Select(a => ArchivedObjectVersionForApiContract.FromSongList(a, _userIconFactory))
 					.ToArray()

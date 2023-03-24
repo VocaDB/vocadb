@@ -37,6 +37,7 @@ public sealed record ArchivedArtistVersionDetailsForApiContract
 		Artist = new ArtistForApiContract(
 			artist: archived.Artist,
 			languagePreference: permissionContext.LanguagePreference,
+			permissionContext,
 			thumbPersister: null,
 			includedFields: ArtistOptionalFields.None
 		);

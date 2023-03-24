@@ -383,6 +383,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				.Select(c => new ArtistForApiContract(
 					artist: c,
 					languagePreference: LanguagePreference,
+					PermissionContext,
 					thumbPersister: _entryImagePersister,
 					includedFields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture
 				))
@@ -1307,7 +1308,14 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 			var items = query.OrderBy(queryParams.SortRule)
 				.Paged(queryParams.Paging)
-				.Select(s => new SongListForApiContract(s, LanguagePreference, _userIconFactory, _entryImagePersister, fields))
+				.Select(s => new SongListForApiContract(
+					s,
+					LanguagePreference,
+					PermissionContext,
+					_userIconFactory,
+					_entryImagePersister,
+					fields
+				))
 				.ToArray();
 
 			var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
@@ -2182,7 +2190,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	public ArtistForUserForApiContract GetArtistForUser(int userId, int artistId) => HandleQuery(ctx =>
 	{
 		var artistForUser = ctx.OfType<ArtistForUser>().Query().FirstOrDefault(s => s.Artist.Id == artistId && s.User.Id == userId);
-		return new ArtistForUserForApiContract(artistForUser, LanguagePreference, _entryImagePersister, ArtistOptionalFields.None);
+		return new ArtistForUserForApiContract(artistForUser, LanguagePreference, PermissionContext, _entryImagePersister, ArtistOptionalFields.None);
 	});
 
 	public AlbumForUserForApiContract GetAlbumForUser(int userId, int albumId) => HandleQuery(ctx =>
@@ -2204,7 +2212,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-		return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference));
+		return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference, PermissionContext));
 	}
 #nullable disable
 }

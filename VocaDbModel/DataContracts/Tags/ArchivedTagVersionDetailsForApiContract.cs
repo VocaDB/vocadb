@@ -37,6 +37,7 @@ public sealed record ArchivedTagVersionDetailsForApiContract
 		Tag = new TagForApiContract(
 			tag: archived.Tag,
 			languagePreference: permissionContext.LanguagePreference,
+			permissionContext,
 			optionalFields: TagOptionalFields.None
 		);
 		ArchivedVersion = ArchivedObjectVersionForApiContract.FromTag(archived, userIconFactory);

@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -37,13 +38,20 @@ public class TagApiController : ApiController
 {
 	private const int AbsoluteMax = 100;
 	private const int DefaultMax = 10;
+
 	private readonly TagQueries _queries;
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
+	private readonly IUserPermissionContext _permissionContext;
 
-	public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
+	public TagApiController(
+		TagQueries queries,
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		IUserPermissionContext permissionContext
+	)
 	{
 		_queries = queries;
 		_thumbPersister = thumbPersister;
+		_permissionContext = permissionContext;
 	}
 
 	/// <summary>
@@ -97,7 +105,16 @@ public class TagApiController : ApiController
 		int id,
 		TagOptionalFields fields = TagOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
-	) => _queries.LoadTag(id, t => new TagForApiContract(t, _thumbPersister, lang, fields));
+	)
+	{
+		return _queries.LoadTag(id, t => new TagForApiContract(
+			t,
+			_thumbPersister,
+			lang,
+			_permissionContext,
+			fields
+		));
+	}
 
 	/// <summary>
 	/// DEPRECATED. Gets a tag by name.
@@ -115,7 +132,16 @@ public class TagApiController : ApiController
 		string name,
 		TagOptionalFields fields = TagOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
-	) => _queries.GetTagByName(name, t => new TagForApiContract(t, _thumbPersister, lang, fields));
+	)
+	{
+		return _queries.GetTagByName(name, t => new TagForApiContract(
+			t,
+			_thumbPersister,
+			lang,
+			_permissionContext,
+			fields
+		));
+	}
 
 	/// <summary>
 	/// Gets a list of tag category names.

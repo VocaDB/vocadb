@@ -280,8 +280,14 @@ public class OtherService : ServiceBase
 			.OrderByDescending(c => c.Created)
 			.Take(maxComments);
 
-		var contracts = CreateEntryWithCommentsContract(combined, c => _entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, LanguagePreference))
-			.ToArray();
+		var contracts = CreateEntryWithCommentsContract(
+			combined,
+			c => _entryForApiContractFactory.Create(
+				c.Entry,
+				EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
+				LanguagePreference
+			)
+		).ToArray();
 
 		return contracts;
 	}

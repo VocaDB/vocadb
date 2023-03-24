@@ -126,9 +126,15 @@ public class ActivityEntryQueries
 				.Take(maxResults)
 				.ToArray()
 				.Where(a => !a.EntryBase.Deleted)
-				.Select(a => new ActivityEntryForApiContract(a,
-					fields.HasFlag(ActivityEntryOptionalFields.Entry) ? _entryForApiContractFactory.Create(a.EntryBase, entryFields, lang) : null,
-					_userIconFactory, _permissionContext, fields))
+				.Select(a => new ActivityEntryForApiContract(
+					a,
+					fields.HasFlag(ActivityEntryOptionalFields.Entry)
+						? _entryForApiContractFactory.Create(a.EntryBase, entryFields, lang)
+						: null,
+					_userIconFactory,
+					_permissionContext,
+					fields
+				))
 				.ToArray();
 
 			var count = getTotalCount ? query.Count() : 0;

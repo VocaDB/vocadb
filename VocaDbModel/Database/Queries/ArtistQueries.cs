@@ -457,6 +457,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					? new ArtistForApiContract(
 						artist: mergeEntry.Target,
 						languagePreference: LanguagePreference,
+						PermissionContext,
 						thumbPersister: null,
 						includedFields: ArtistOptionalFields.None
 					)
@@ -825,7 +826,13 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 		{
 			var artist = session.Load<Artist>(artistId);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new ArtistForApiContract(artist, PermissionContext.LanguagePreference, thumbPersister: null, includedFields: ArtistOptionalFields.None),
+				entry: new ArtistForApiContract(
+					artist,
+					PermissionContext.LanguagePreference,
+					PermissionContext,
+					thumbPersister: null,
+					includedFields: ArtistOptionalFields.None
+				),
 				versions: artist.ArchivedVersionsManager.Versions
 					.Select(a => ArchivedObjectVersionForApiContract.FromArtist(a, _userIconFactory))
 					.ToArray()

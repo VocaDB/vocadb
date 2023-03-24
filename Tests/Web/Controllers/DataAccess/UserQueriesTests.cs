@@ -700,7 +700,7 @@ public class UserQueriesTests
 		LoggedUser.GroupId = UserGroupId.Admin;
 		_permissionContext.RefreshLoggedUser(_repository);
 
-		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default, _permissionContext)
 		{
 			AdditionalPermissions = new[]
 			{
@@ -720,7 +720,7 @@ public class UserQueriesTests
 		_permissionContext.RefreshLoggedUser(_repository);
 
 		var oldName = _userWithoutEmail.Name;
-		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default, _permissionContext)
 		{
 			Name = "HatsuneMiku",
 		};
@@ -742,7 +742,7 @@ public class UserQueriesTests
 		LoggedUser.GroupId = UserGroupId.Admin;
 		_permissionContext.RefreshLoggedUser(_repository);
 
-		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default, _permissionContext)
 		{
 			Name = _userWithEmail.Name,
 		};
@@ -756,7 +756,7 @@ public class UserQueriesTests
 		LoggedUser.GroupId = UserGroupId.Admin;
 		_permissionContext.RefreshLoggedUser(_repository);
 
-		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default, _permissionContext)
 		{
 			Name = "Miku!",
 		};
@@ -767,7 +767,7 @@ public class UserQueriesTests
 	[TestMethod]
 	public void UpdateUser_NotAllowed()
 	{
-		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default);
+		var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default, _permissionContext);
 		Invoking(() => _data.UpdateUser(contract)).Should().Throw<NotAllowedException>();
 	}
 

@@ -262,13 +262,14 @@ public class AdminService : ServiceBase
 			var entryLoader = new Queries.EntryQueries();
 			return editors
 				.Select(i =>
-					(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, EntryOptionalFields.None),
+					(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, PermissionContext, null, EntryOptionalFields.None),
 					new ServerOnlyUserContract(ctx.Load<User>(i.Value.UserId)),
 					i.Value.Time))
 				.ToArray();
 		});
 	}
 
+#nullable enable
 	public EntryReportContract[] GetEntryReports(ReportStatus status)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
@@ -281,11 +282,20 @@ public class AdminService : ServiceBase
 				.OrderBy(EntryReportSortRule.CloseDate)
 				.Take(200)
 				.ToArray();
-			var fac = new EntryForApiContractFactory(null);
-			return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
-				_enumTranslations, _userIconFactory)).ToArray();
+			var fac = new EntryForApiContractFactory(null, PermissionContext);
+			return reports.Select(r => new EntryReportContract(
+				r,
+				fac.Create(
+					r.EntryBase,
+					EntryOptionalFields.AdditionalNames,
+					LanguagePreference
+				),
+				_enumTranslations,
+				_userIconFactory
+			)).ToArray();
 		});
 	}
+#nullable disable
 
 	public int GeneratePictureThumbs()
 	{

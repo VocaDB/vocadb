@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
@@ -19,6 +20,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public static EntryForApiContract Create(
 		IEntryWithNames entry,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
@@ -27,13 +29,13 @@ public class EntryForApiContract : IEntryWithIntId
 
 		return entry.EntryType switch
 		{
-			EntryType.Album => new EntryForApiContract((Album)entry, languagePreference, thumbPersister, includedFields),
-			EntryType.Artist => new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, includedFields),
+			EntryType.Album => new EntryForApiContract((Album)entry, languagePreference, permissionContext, thumbPersister, includedFields),
+			EntryType.Artist => new EntryForApiContract((Artist)entry, languagePreference, permissionContext, thumbPersister, includedFields),
 			EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference),
-			EntryType.ReleaseEvent => new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, includedFields),
+			EntryType.ReleaseEvent => new EntryForApiContract((ReleaseEvent)entry, languagePreference, permissionContext, thumbPersister, includedFields),
 			EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, includedFields),
-			EntryType.SongList => new EntryForApiContract((SongList)entry, thumbPersister, includedFields),
-			EntryType.Tag => new EntryForApiContract((Tag)entry, languagePreference, thumbPersister, includedFields),
+			EntryType.SongList => new EntryForApiContract((SongList)entry, permissionContext, thumbPersister, includedFields),
+			EntryType.Tag => new EntryForApiContract((Tag)entry, languagePreference, permissionContext, thumbPersister, includedFields),
 			_ => new EntryForApiContract(entry, languagePreference, includedFields),
 		};
 	}
@@ -59,6 +61,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		Artist artist,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
@@ -93,6 +96,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		Album album,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
@@ -133,6 +137,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		ReleaseEvent releaseEvent,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
@@ -162,7 +167,11 @@ public class EntryForApiContract : IEntryWithIntId
 		CreateDate = topic.Created;
 	}
 
-	public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
+	public EntryForApiContract(
+		Song song,
+		ContentLanguagePreference languagePreference,
+		EntryOptionalFields includedFields
+	)
 		: this((IEntryWithNames)song, languagePreference, includedFields)
 	{
 		ActivityDate = song.PublishDate.DateTime;
@@ -204,6 +213,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 	public EntryForApiContract(
 		SongList songList,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
@@ -222,6 +232,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		Tag tag,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)

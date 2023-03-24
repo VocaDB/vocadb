@@ -159,7 +159,7 @@ public class ArtistService : ServiceBase
 				.Select(l => l.Entry)
 				.Distinct()
 				.ToArray()
-				.Select(a => new ArtistForApiContract(a, languagePreference, null, ArtistOptionalFields.WebLinks))
+				.Select(a => new ArtistForApiContract(a, languagePreference, PermissionContext, null, ArtistOptionalFields.WebLinks))
 				.ToArray();
 
 			return contracts;

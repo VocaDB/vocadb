@@ -9,6 +9,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Artists;
 
@@ -22,6 +23,7 @@ public class ArtistForApiContract
 	public ArtistForApiContract(
 		Artist artist,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory? thumbPersister,
 		ArtistOptionalFields includedFields
 	)

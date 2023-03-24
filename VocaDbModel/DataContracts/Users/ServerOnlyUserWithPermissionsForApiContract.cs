@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users;
@@ -49,7 +50,12 @@ public sealed record ServerOnlyUserWithPermissionsForApiContract
 		OwnedArtistEntries = Array.Empty<ArtistForUserForApiContract>();
 	}
 
-	public ServerOnlyUserWithPermissionsForApiContract(User user, ContentLanguagePreference languagePreference, bool getPublicCollection = false)
+	public ServerOnlyUserWithPermissionsForApiContract(
+		User user,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		bool getPublicCollection = false
+	)
 	{
 		Active = user.Active;
 		AdditionalPermissions = user.AdditionalPermissions.PermissionTokens
@@ -66,6 +72,7 @@ public sealed record ServerOnlyUserWithPermissionsForApiContract
 			.Select(a => new ArtistForUserForApiContract(
 				artistForUser: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				thumbPersister: null,
 				includedFields: Artists.ArtistOptionalFields.None
 			))

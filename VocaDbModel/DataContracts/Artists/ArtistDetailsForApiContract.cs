@@ -183,6 +183,7 @@ public sealed record ArtistDetailsForApiContract
 			? new ArtistForApiContract(
 				artist: artist.BaseVoicebank,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			)
@@ -220,6 +221,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -230,6 +232,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -243,6 +246,7 @@ public sealed record ArtistDetailsForApiContract
 				.Select(c => new ArtistForApiContract(
 					artist: c,
 					languagePreference: languagePreference,
+					userContext,
 					thumbPersister: null,
 					includedFields: ArtistOptionalFields.None
 				))
@@ -263,6 +267,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -274,6 +279,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -285,6 +291,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -295,6 +302,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -306,6 +314,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -317,6 +326,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: imageStore,
 				includedFields: ArtistOptionalFields.MainPicture
 			))
@@ -333,6 +343,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))
@@ -344,6 +355,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(g => new ArtistForApiContract(
 				artist: g,
 				languagePreference: languagePreference,
+				userContext,
 				thumbPersister: null,
 				includedFields: ArtistOptionalFields.None
 			))

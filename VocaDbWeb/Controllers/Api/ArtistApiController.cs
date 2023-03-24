@@ -70,7 +70,7 @@ public class ArtistApiController : ApiController
 		IDatabaseContext<Artist> ctx
 	)
 	{
-		var contract = new ArtistForApiContract(a, lang, _thumbPersister, fields);
+		var contract = new ArtistForApiContract(a, lang, _permissionContext, _thumbPersister, fields);
 
 		if (relations != ArtistRelationsFields.None)
 		{
@@ -200,7 +200,7 @@ public class ArtistApiController : ApiController
 		};
 		param = param with { Common = param.Common with { EntryStatus = status } };
 
-		var artists = _service.FindArtists(s => new ArtistForApiContract(s, lang, _thumbPersister, fields), param);
+		var artists = _service.FindArtists(s => new ArtistForApiContract(s, lang, _permissionContext, _thumbPersister, fields), param);
 
 		return artists;
 	}

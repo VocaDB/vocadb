@@ -315,8 +315,17 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 		ContentLanguagePreference lang
 	)
 	{
-		return Find(tag => new TagForApiContract(
-			tag, _thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+		return Find(
+			tag => new TagForApiContract(
+				tag,
+				_thumbStore,
+				lang,
+				PermissionContext,
+				optionalFields
+			),
+			queryParams,
+			optionalFields == TagOptionalFields.None
+		);
 	}
 
 	public string[] FindCategories(SearchTextQuery textQuery)
@@ -593,7 +602,13 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 	public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersionsForApi(int id)
 	{
 		return LoadTag(id, tag => EntryWithArchivedVersionsForApiContract.Create(
-			entry: new TagForApiContract(tag, thumbPersister: null, LanguagePreference, optionalFields: TagOptionalFields.None),
+			entry: new TagForApiContract(
+				tag,
+				thumbPersister: null,
+				LanguagePreference,
+				PermissionContext,
+				optionalFields: TagOptionalFields.None
+			),
 			versions: tag.ArchivedVersionsManager.Versions
 				.Select(a => ArchivedObjectVersionForApiContract.FromTag(a, _userIconFactory))
 				.ToArray()
@@ -1007,9 +1022,14 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 	public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
-	public TagForApiContract[] GetChildTags(int tagId,
+	public TagForApiContract[] GetChildTags(
+		int tagId,
 		TagOptionalFields fields = TagOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, _thumbStore, lang, fields)).ToArray());
+		ContentLanguagePreference lang = ContentLanguagePreference.Default
+	)
+	{
+		return HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, _thumbStore, lang, PermissionContext, fields)).ToArray());
+	}
 
 	public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
 		int maxResults = 15,

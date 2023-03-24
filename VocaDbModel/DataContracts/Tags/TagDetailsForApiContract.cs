@@ -92,6 +92,7 @@ public sealed record TagStatsForApiContract
 			.Select(a => new ArtistForApiContract(
 				artist: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				thumbPersister: thumbStore,
 				includedFields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture
 			))

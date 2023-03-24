@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags;
@@ -19,13 +20,15 @@ public class TagForApiContract
 	public TagForApiContract(
 		Tag tag,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		TagOptionalFields optionalFields
-	) : this(tag, null, languagePreference, optionalFields) { }
+	) : this(tag, null, languagePreference, permissionContext, optionalFields) { }
 
 	public TagForApiContract(
 		Tag tag,
 		IAggregatedEntryImageUrlFactory? thumbPersister,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		TagOptionalFields optionalFields
 	)
 	{

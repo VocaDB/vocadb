@@ -24,12 +24,23 @@ public class FrontPageContract
 		IEnumerable<EntryWithCommentsContract> recentComments,
 		AlbumForApiContract[] topAlbums, Song[] newSongs,
 		SongVoteRating firstSongRating,
-		ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext,
-		EntryForApiContractFactory entryForApiContractFactory)
+		ContentLanguagePreference languagePreference,
+		IUserIconFactory userIconFactory,
+		IUserPermissionContext permissionContext,
+		EntryForApiContractFactory entryForApiContractFactory
+	)
 	{
-		ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
-			entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference),
-			 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
+		ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(
+			e,
+			entryForApiContractFactory.Create(
+				e.EntryBase,
+				EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
+				languagePreference
+			),
+			userIconFactory,
+			permissionContext,
+			ActivityEntryOptionalFields.None
+		)).ToArray();
 		NewAlbums = newAlbums;
 		NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
 		RecentComments = recentComments.ToArray();
