@@ -86,7 +86,13 @@ public class SongQueriesTests
 		_repository.Save(song2);
 
 		var contract = EditContract();
-		contract.ReleaseEvent = new ReleaseEventForApiContract(_releaseEvent, ContentLanguagePreference.English, ReleaseEventOptionalFields.None, thumbPersister: null);
+		contract.ReleaseEvent = new ReleaseEventForApiContract(
+			_releaseEvent,
+			ContentLanguagePreference.English,
+			_permissionContext,
+			ReleaseEventOptionalFields.None,
+			thumbPersister: null
+		);
 
 		await _queries.UpdateBasicProperties(contract);
 
@@ -107,7 +113,13 @@ public class SongQueriesTests
 		song2.ReleaseEvent = relEvent;
 
 		var contract = EditContract();
-		contract.ReleaseEvent = new ReleaseEventForApiContract(_releaseEvent, ContentLanguagePreference.English, ReleaseEventOptionalFields.None, thumbPersister: null);
+		contract.ReleaseEvent = new ReleaseEventForApiContract(
+			_releaseEvent,
+			ContentLanguagePreference.English,
+			_permissionContext,
+			ReleaseEventOptionalFields.None,
+			thumbPersister: null
+		);
 
 		await _queries.UpdateBasicProperties(contract);
 

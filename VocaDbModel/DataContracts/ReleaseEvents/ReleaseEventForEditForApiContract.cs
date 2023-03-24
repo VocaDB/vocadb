@@ -127,6 +127,7 @@ public sealed record ReleaseEventForEditForApiContract
 			? new ReleaseEventSeriesForApiContract(
 				series: releaseEvent.Series,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: ReleaseEventSeriesOptionalFields.None,
 				thumbPersister: null
 			)

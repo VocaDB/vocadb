@@ -99,7 +99,15 @@ public class AlbumForApiContract : IEntryBase
 
 		if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent))
 		{
-			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
+			ReleaseEvent = album.OriginalReleaseEvent != null
+				? new ReleaseEventForApiContract(
+					album.OriginalReleaseEvent,
+					languagePreference,
+					permissionContext,
+					ReleaseEventOptionalFields.None,
+					thumbPersister
+				)
+				: null;
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.Tags))

@@ -137,7 +137,7 @@ public class MikuDbAlbumService : ServiceBase
 		session.Update(album);
 		session.Update(importedAlbum);
 
-		return new AlbumContract(album, PermissionContext.LanguagePreference);
+		return new AlbumContract(album, PermissionContext.LanguagePreference, PermissionContext);
 	}
 
 	private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack,
@@ -357,12 +357,14 @@ public class MikuDbAlbumService : ServiceBase
 
 		if (albumMatch != null)
 		{
-			result.MergedAlbum = new AlbumContract(albumMatch, PermissionContext.LanguagePreference);
+			result.MergedAlbum = new AlbumContract(albumMatch, PermissionContext.LanguagePreference, PermissionContext);
 			result.MergedAlbumId = albumMatch.Id;
 		}
 
-		result.ExistingAlbums = foundAlbums.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference))
-			.Concat(new[] { new AlbumContract { Name = "Nothing" } }).ToArray();
+		result.ExistingAlbums = foundAlbums
+			.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference, PermissionContext))
+			.Concat(new[] { new AlbumContract { Name = "Nothing" } })
+			.ToArray();
 
 		result.Artists = artists.Select(a => a.InspectedArtist).ToArray();
 		result.Tracks = tracks;

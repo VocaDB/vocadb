@@ -982,7 +982,13 @@ public class SongQueriesTests
 	public async Task Update_ReleaseEvent_ExistingEvent_Selected()
 	{
 		var contract = EditContract();
-		contract.ReleaseEvent = new ReleaseEventForApiContract(_releaseEvent, ContentLanguagePreference.English, ReleaseEventOptionalFields.None, thumbPersister: null);
+		contract.ReleaseEvent = new ReleaseEventForApiContract(
+			_releaseEvent,
+			ContentLanguagePreference.English,
+			_permissionContext,
+			ReleaseEventOptionalFields.None,
+			thumbPersister: null
+		);
 
 		await _queries.UpdateBasicProperties(contract);
 

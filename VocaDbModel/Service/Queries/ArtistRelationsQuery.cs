@@ -65,9 +65,13 @@ public class ArtistRelationsQuery
 				.WhereDateIsBetween(begin: null, end: DateTime.Today.AddMonths(6))
 				.OrderByDate(SortDirection.Descending)
 				.Take(3).ToArray()
-				.Select(s => new ReleaseEventForApiContract(s, _languagePreference,
+				.Select(s => new ReleaseEventForApiContract(
+					s,
+					_languagePreference,
+					_permissionContext,
 					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue,
-					_entryThumbPersister))
+					_entryThumbPersister
+				))
 				.ToArray();
 		});
 	}

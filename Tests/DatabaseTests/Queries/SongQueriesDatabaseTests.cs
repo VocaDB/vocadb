@@ -101,6 +101,7 @@ public class SongQueriesDatabaseTests
 			var newEvent = repository.HandleTransaction(ctx => new ReleaseEventForApiContract(
 				rel: ctx.Save(CreateEntry.ReleaseEvent("Mikumas")),
 				languagePreference: ContentLanguagePreference.English,
+				_userContext,
 				fields: ReleaseEventOptionalFields.None,
 				thumbPersister: null
 			));

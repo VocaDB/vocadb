@@ -8,6 +8,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents;
 
@@ -25,6 +26,7 @@ public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 	public ReleaseEventForApiContract(
 		ReleaseEvent rel,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		ReleaseEventOptionalFields fields,
 		IAggregatedEntryImageUrlFactory? thumbPersister
 	)

@@ -230,6 +230,7 @@ public sealed record SongDetailsForApiContract
 			? new ReleaseEventForApiContract(
 				rel: song.ReleaseEvent,
 				languagePreference: languagePreference,
+				userContext,
 				fields: ReleaseEventOptionalFields.None,
 				thumbPersister: thumbPersister
 			)

@@ -4,6 +4,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents;
 
@@ -49,6 +50,7 @@ public sealed record ReleaseEventSeriesDetailsForApiContract
 	public ReleaseEventSeriesDetailsForApiContract(
 		ReleaseEventSeries series,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		IAggregatedEntryImageUrlFactory thumbPersister
 	)
 	{
@@ -63,6 +65,7 @@ public sealed record ReleaseEventSeriesDetailsForApiContract
 			.Select(e => new ReleaseEventForApiContract(
 				rel: e,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: ReleaseEventOptionalFields.None,
 				thumbPersister: thumbPersister
 			))

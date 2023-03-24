@@ -163,7 +163,11 @@ public sealed record AlbumDetailsForApiContract
 		Name = album.TranslatedName[languagePreference];
 
 		OriginalRelease = album.OriginalRelease is not null
-			? new AlbumReleaseContract(release: album.OriginalRelease, languagePreference: languagePreference)
+			? new AlbumReleaseContract(
+				release: album.OriginalRelease,
+				languagePreference: languagePreference,
+				userContext
+			)
 			: null;
 
 		PersonalDescriptionAuthor = album.PersonalDescriptionAuthor is { } author

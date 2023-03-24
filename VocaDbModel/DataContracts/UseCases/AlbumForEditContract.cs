@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.UseCases;
 
@@ -17,8 +18,13 @@ public class AlbumForEditContract : AlbumContract
 {
 	public AlbumForEditContract() { }
 
-	public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
-		: base(album, languagePreference)
+	public AlbumForEditContract(
+		Album album,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		IAggregatedEntryImageUrlFactory imageStore
+	)
+		: base(album, languagePreference, permissionContext)
 	{
 		ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 		DefaultNameLanguage = album.TranslatedName.DefaultLanguage;
@@ -26,7 +32,13 @@ public class AlbumForEditContract : AlbumContract
 		Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray();
 		Identifiers = album.Identifiers.Select(i => i.Value).ToArray();
 		Names = album.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-		OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
+		OriginalRelease = album.OriginalRelease != null
+			? new AlbumReleaseContract(
+				album.OriginalRelease,
+				languagePreference,
+				permissionContext
+			)
+			: null;
 		Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList();
 		PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 		Songs = album.Songs

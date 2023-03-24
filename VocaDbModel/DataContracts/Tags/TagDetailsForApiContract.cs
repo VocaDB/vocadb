@@ -103,6 +103,7 @@ public sealed record TagStatsForApiContract
 			.Select(a => new ReleaseEventSeriesForApiContract(
 				series: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: ReleaseEventSeriesOptionalFields.AdditionalNames | ReleaseEventSeriesOptionalFields.MainPicture,
 				thumbPersister: thumbStore
 			))
@@ -113,6 +114,7 @@ public sealed record TagStatsForApiContract
 			.Select(a => new ReleaseEventForApiContract(
 				rel: a,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Venue,
 				thumbPersister: thumbStore
 			))

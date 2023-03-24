@@ -345,7 +345,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 			await _followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
 
-			return new AlbumContract(album, PermissionContext.LanguagePreference);
+			return new AlbumContract(album, PermissionContext.LanguagePreference, PermissionContext);
 		});
 	}
 
@@ -411,7 +411,14 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				var albumForUser = session.Query<AlbumForUser>()
 					.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
 
-				contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference, _userIconFactory) : null);
+				contract.AlbumForUser = albumForUser != null
+					? new AlbumForUserContract(
+						albumForUser,
+						PermissionContext.LanguagePreference,
+						PermissionContext,
+						_userIconFactory
+					)
+					: null;
 			}
 
 			contract.LatestComments = session.Query<AlbumComment>()
@@ -426,7 +433,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			if (album.Deleted)
 			{
 				var mergeEntry = GetMergeRecord(session, id);
-				contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference) : null);
+				contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference, PermissionContext) : null);
 			}
 
 			if (user != null || !string.IsNullOrEmpty(hostname))
@@ -628,17 +635,17 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			{
 				ArtistMatches =
 					albums.ArtistMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
+					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				LikeMatches =
 					albums.LikeMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
+					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				TagMatches =
 					albums.TagMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
+					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
 					.OrderBy(a => a.Name)
 					.ToArray()
 			};

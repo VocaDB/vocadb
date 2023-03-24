@@ -62,7 +62,7 @@ public class SongForApiContract : IEntryBase
 		}
 
 		if (fields.HasFlag(SongOptionalFields.Albums))
-			Albums = song.OnAlbums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
+			Albums = song.OnAlbums.Select(a => new AlbumContract(a, languagePreference, permissionContext)).ToArray();
 
 		if (fields.HasFlag(SongOptionalFields.Artists))
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).ToArray();
@@ -95,7 +95,13 @@ public class SongForApiContract : IEntryBase
 
 		if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null)
 		{
-			ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null);
+			ReleaseEvent = new ReleaseEventForApiContract(
+				song.ReleaseEvent,
+				languagePreference,
+				permissionContext,
+				ReleaseEventOptionalFields.None,
+				null
+			);
 		}
 
 		if (fields.HasFlag(SongOptionalFields.Tags))

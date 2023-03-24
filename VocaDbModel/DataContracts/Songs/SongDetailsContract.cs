@@ -36,7 +36,10 @@ public class SongDetailsContract
 		Song = new SongContract(song, languagePreference);
 
 		AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-		Albums = song.OnAlbums.OrderBy(a => a.OriginalReleaseDate.SortableDateTime).Select(a => new AlbumContract(a, languagePreference)).ToArray();
+		Albums = song.OnAlbums
+			.OrderBy(a => a.OriginalReleaseDate.SortableDateTime)
+			.Select(a => new AlbumContract(a, languagePreference, userContext))
+			.ToArray();
 		AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference, getThumbUrl: false)).OrderBy(s => s.PublishDate).ToArray();
 		Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 		ArtistString = song.ArtistString[languagePreference];
@@ -52,7 +55,15 @@ public class SongDetailsContract
 			: null;
 
 		PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
+		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted
+			? new ReleaseEventForApiContract(
+				song.ReleaseEvent,
+				languagePreference,
+				userContext,
+				ReleaseEventOptionalFields.None,
+				thumbPersister
+			)
+			: null;
 		PersonalDescriptionText = song.PersonalDescriptionText;
 		var author = song.PersonalDescriptionAuthor;
 		PersonalDescriptionAuthor = author != null

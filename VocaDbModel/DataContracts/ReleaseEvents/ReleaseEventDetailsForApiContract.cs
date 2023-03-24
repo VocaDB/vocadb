@@ -157,6 +157,7 @@ public sealed record ReleaseEventDetailsForApiContract
 			? new ReleaseEventSeriesForApiContract(
 				series: series,
 				languagePreference: languagePreference,
+				userContext,
 				fields:
 					ReleaseEventSeriesOptionalFields.AdditionalNames |
 					ReleaseEventSeriesOptionalFields.Description |

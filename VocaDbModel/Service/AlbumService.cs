@@ -86,7 +86,7 @@ public class AlbumService : ServiceBase
 
 	public PartialFindResult<AlbumContract> Find(AlbumQueryParams queryParams)
 	{
-		return Find(s => new AlbumContract(s, LanguagePreference), queryParams);
+		return Find(s => new AlbumContract(s, LanguagePreference, PermissionContext), queryParams);
 	}
 
 	public PartialFindResult<AlbumContract> Find(
@@ -157,7 +157,7 @@ public class AlbumService : ServiceBase
 
 	public AlbumContract GetAlbum(int id)
 	{
-		return GetAlbum(id, a => new AlbumContract(a, PermissionContext.LanguagePreference));
+		return GetAlbum(id, a => new AlbumContract(a, PermissionContext.LanguagePreference, PermissionContext));
 	}
 
 	public AlbumContract GetAlbumByLink(string link)
@@ -166,7 +166,7 @@ public class AlbumService : ServiceBase
 		{
 			var webLink = session.Query<AlbumWebLink>().FirstOrDefault(p => p.Url.Contains(link));
 
-			return (webLink != null ? new AlbumContract(webLink.Entry, PermissionContext.LanguagePreference) : null);
+			return (webLink != null ? new AlbumContract(webLink.Entry, PermissionContext.LanguagePreference, PermissionContext) : null);
 		});
 	}
 
@@ -179,14 +179,21 @@ public class AlbumService : ServiceBase
 	public AlbumContract GetAlbumWithAdditionalNames(int id)
 	{
 		return HandleQuery(session => new AlbumContract(
-			session.Load<Album>(id), PermissionContext.LanguagePreference));
+			session.Load<Album>(id),
+			PermissionContext.LanguagePreference,
+			PermissionContext
+		));
 	}
 
 	[Obsolete]
 	public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
 	{
-		return HandleQuery(session =>
-			new AlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference, _userIconFactory));
+		return HandleQuery(session => new AlbumWithArchivedVersionsContract(
+			session.Load<Album>(albumId),
+			PermissionContext.LanguagePreference,
+			PermissionContext,
+			_userIconFactory
+		));
 	}
 
 	public EntryForPictureDisplayContract GetArchivedAlbumPicture(int archivedVersionId)
@@ -225,7 +232,14 @@ public class AlbumService : ServiceBase
 				.UserCollections
 				.Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 				.OrderBy(u => u.User.Name)
-				.Select(u => new AlbumForUserContract(u, LanguagePreference, _userIconFactory, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
+				.Select(u => new AlbumForUserContract(
+					u,
+					LanguagePreference,
+					PermissionContext,
+					_userIconFactory,
+					includeUser: u.User.Options.PublicAlbumCollection
+				))
+				.ToArray());
 	}
 
 	[Obsolete]

@@ -118,7 +118,11 @@ public sealed record AlbumForEditForApiContract
 			.Select(n => new LocalizedStringWithIdContract(n))
 			.ToArray();
 		OriginalRelease = album.OriginalRelease is not null
-			? new(album.OriginalRelease, languagePreference)
+			? new(
+				album.OriginalRelease,
+				languagePreference,
+				permissionContext
+			)
 			: new();
 		Pictures = album.Pictures
 			.Select(p => new EntryPictureFileContract(p, imageStore))

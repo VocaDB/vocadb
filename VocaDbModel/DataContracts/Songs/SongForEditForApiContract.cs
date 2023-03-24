@@ -159,6 +159,7 @@ public sealed record SongForEditForApiContract
 			? new ReleaseEventForApiContract(
 				rel: song.ReleaseEvent,
 				languagePreference: languagePreference,
+				permissionContext,
 				fields: ReleaseEventOptionalFields.None,
 				thumbPersister: null
 			)

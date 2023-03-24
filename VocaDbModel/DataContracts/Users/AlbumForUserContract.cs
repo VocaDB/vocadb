@@ -3,6 +3,7 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users;
@@ -13,12 +14,21 @@ public class AlbumForUserContract
 	public AlbumForUserContract() { }
 
 #nullable enable
-	public AlbumForUserContract(AlbumForUser albumForUser,
-		ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, bool includeUser = true)
+	public AlbumForUserContract(
+		AlbumForUser albumForUser,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		IUserIconFactory userIconFactory,
+		bool includeUser = true
+	)
 	{
 		ParamIs.NotNull(() => albumForUser);
 
-		Album = new AlbumContract(albumForUser.Album, languagePreference);
+		Album = new AlbumContract(
+			albumForUser.Album,
+			languagePreference,
+			permissionContext
+		);
 		Id = albumForUser.Id;
 		MediaType = albumForUser.MediaType;
 		PurchaseStatus = albumForUser.PurchaseStatus;

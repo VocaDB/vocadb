@@ -37,8 +37,19 @@ public class AlbumController : ControllerBase
 
 	private AlbumEditViewModel CreateAlbumEditViewModel(int id, AlbumForEditContract editedAlbum)
 	{
-		return Service.GetAlbum(id, album => new AlbumEditViewModel(new AlbumContract(album, PermissionContext.LanguagePreference), PermissionContext,
-			EntryPermissionManager.CanDelete(PermissionContext, album), editedAlbum));
+		return Service.GetAlbum(
+			id,
+			album => new AlbumEditViewModel(
+				new AlbumContract(
+					album,
+					PermissionContext.LanguagePreference,
+					PermissionContext
+				),
+				PermissionContext,
+				EntryPermissionManager.CanDelete(PermissionContext, album),
+				editedAlbum
+			)
+		);
 	}
 
 	public AlbumController(

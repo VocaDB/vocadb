@@ -3,6 +3,7 @@
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums;
 
@@ -10,8 +11,13 @@ namespace VocaDb.Model.DataContracts.Albums;
 public class AlbumWithArchivedVersionsContract : AlbumContract
 {
 #nullable enable
-	public AlbumWithArchivedVersionsContract(Album album, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)
-		: base(album, languagePreference)
+	public AlbumWithArchivedVersionsContract(
+		Album album,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		IUserIconFactory userIconFactory
+	)
+		: base(album, languagePreference, permissionContext)
 	{
 		ParamIs.NotNull(() => album);
 

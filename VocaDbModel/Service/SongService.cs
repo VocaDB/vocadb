@@ -147,7 +147,15 @@ public class SongService : ServiceBase
 
 	public PartialFindResult<SongWithAlbumAndPVsContract> FindWithAlbum(SongQueryParams queryParams, bool getPVs)
 	{
-		return Find(s => new SongWithAlbumAndPVsContract(s, PermissionContext.LanguagePreference, getPVs), queryParams);
+		return Find(
+			s => new SongWithAlbumAndPVsContract(
+				s,
+				PermissionContext.LanguagePreference,
+				PermissionContext,
+				getPVs
+			),
+			queryParams
+		);
 	}
 
 	public PartialFindResult<SongContract> FindWithThumbPreferNotNico(SongQueryParams queryParams)
@@ -318,7 +326,14 @@ public class SongService : ServiceBase
 
 	public SongWithAlbumContract GetSongWithPVAndAlbum(PVService service, string pvId)
 	{
-		return GetSongWithPV(s => new SongWithAlbumContract(s, PermissionContext.LanguagePreference), service, pvId);
+		return GetSongWithPV(
+			s => new SongWithAlbumContract(
+				s, PermissionContext.LanguagePreference,
+				PermissionContext
+			),
+			service,
+			pvId
+		);
 	}
 
 	public SongContract[] GetSongs(string filter, int start, int count)

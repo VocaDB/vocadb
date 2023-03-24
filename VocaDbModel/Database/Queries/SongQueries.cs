@@ -557,7 +557,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 				if (track != null)
 				{
-					contract.Album = new DataContracts.Albums.AlbumContract(album, lang);
+					contract.Album = new DataContracts.Albums.AlbumContract(album, lang, PermissionContext);
 
 					contract.AlbumSong = new SongInAlbumContract(track, lang, false);
 

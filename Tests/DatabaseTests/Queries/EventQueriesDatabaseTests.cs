@@ -128,7 +128,13 @@ public class EventQueriesDatabaseTests
 		// Generated name is "Comiket 39", which is already taken
 		var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null)
 		{
-			Series = new ReleaseEventSeriesForApiContract(Db.ReleaseEventSeries, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+			Series = new ReleaseEventSeriesForApiContract(
+				Db.ReleaseEventSeries,
+				ContentLanguagePreference.English,
+				_userContext,
+				ReleaseEventSeriesOptionalFields.None,
+				thumbPersister: null
+			),
 			SeriesNumber = 39
 		};
 

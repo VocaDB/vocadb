@@ -13,6 +13,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
@@ -38,11 +39,17 @@ public class ReleaseEventApiController : ApiController
 	private const int DefaultMax = 10;
 	private readonly EventQueries _queries;
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
+	private readonly IUserPermissionContext _permissionContext;
 
-	public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
+	public ReleaseEventApiController(
+		EventQueries queries,
+		IAggregatedEntryImageUrlFactory thumbPersister,
+		IUserPermissionContext permissionContext
+	)
 	{
 		_queries = queries;
 		_thumbPersister = thumbPersister;
+		_permissionContext = permissionContext;
 	}
 
 	/// <summary>
@@ -173,7 +180,15 @@ public class ReleaseEventApiController : ApiController
 			SortDirection = sortDirection,
 		};
 
-		return _queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, _thumbPersister), queryParams);
+		return _queries.Find(
+			e => new ReleaseEventForApiContract(
+				e,
+				lang,
+				_permissionContext,
+				fields, _thumbPersister
+			),
+			queryParams
+		);
 	}
 #nullable disable
 

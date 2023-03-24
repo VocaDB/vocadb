@@ -12,12 +12,20 @@ public class ArchivedAlbumVersionDetailsContract
 {
 	public ArchivedAlbumVersionDetailsContract() { }
 
-	public ArchivedAlbumVersionDetailsContract(ArchivedAlbumVersion archived, ArchivedAlbumVersion comparedVersion,
-		IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
+	public ArchivedAlbumVersionDetailsContract(
+		ArchivedAlbumVersion archived,
+		ArchivedAlbumVersion comparedVersion,
+		IUserPermissionContext permissionContext,
+		IUserIconFactory userIconFactory
+	)
 	{
 		ParamIs.NotNull(() => archived);
 
-		Album = new AlbumContract(archived.Album, permissionContext.LanguagePreference);
+		Album = new AlbumContract(
+			archived.Album,
+			permissionContext.LanguagePreference,
+			permissionContext
+		);
 		ArchivedVersion = new ArchivedAlbumVersionContract(archived, userIconFactory);
 		ComparedVersion = comparedVersion != null ? new ArchivedAlbumVersionContract(comparedVersion, userIconFactory) : null;
 		Name = Album.Name;

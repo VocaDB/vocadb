@@ -29,7 +29,7 @@ public class AlbumDetailsContract : AlbumContract
 		Func<Song, SongVoteRating?> getSongRating = null,
 		Tag discTypeTag = null
 	)
-		: base(album, languagePreference)
+		: base(album, languagePreference, userContext)
 	{
 		ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 		CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, album);
@@ -37,7 +37,13 @@ public class AlbumDetailsContract : AlbumContract
 		Description = album.Description;
 		Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
 		DiscTypeTypeTag = discTypeTag != null ? new TagBaseContract(discTypeTag, languagePreference) : null;
-		OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
+		OriginalRelease = album.OriginalRelease != null
+			? new AlbumReleaseContract(
+				album.OriginalRelease,
+				languagePreference,
+				userContext
+			)
+			: null;
 		Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, thumbPersister)).ToArray();
 		PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 		Songs = album.Songs

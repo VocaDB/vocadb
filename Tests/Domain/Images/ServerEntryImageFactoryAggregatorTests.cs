@@ -16,6 +16,11 @@ namespace VocaDb.Tests.Domain.Images;
 [TestClass]
 public class ServerEntryImageFactoryAggregatorTests
 {
+	private readonly AlbumContract _albumContract;
+	private readonly FakeDynamicImageUrlFactory _dynamicImageUrlFactory;
+	private readonly ServerEntryImageFactoryAggregator _urlFactory;
+	private readonly InMemoryImagePersisterStore _imageStore;
+
 	public ServerEntryImageFactoryAggregatorTests()
 	{
 		_dynamicImageUrlFactory = new FakeDynamicImageUrlFactory();
@@ -26,11 +31,6 @@ public class ServerEntryImageFactoryAggregatorTests
 		_albumContract = AlbumContract(album);
 		AddImage(_albumContract, ImageSize.Thumb);
 	}
-
-	private readonly AlbumContract _albumContract;
-	private readonly FakeDynamicImageUrlFactory _dynamicImageUrlFactory;
-	private readonly ServerEntryImageFactoryAggregator _urlFactory;
-	private readonly InMemoryImagePersisterStore _imageStore;
 
 	private void AddImage(IEntryImageInformation imageInfo, ImageSize size)
 	{
@@ -48,7 +48,7 @@ public class ServerEntryImageFactoryAggregatorTests
 		url.Should().Be(_imageStore.GetUrl(imageInfo, size), because);
 	}
 
-	private AlbumContract AlbumContract(Album album) => new AlbumContract(album, ContentLanguagePreference.Default);
+	private AlbumContract AlbumContract(Album album) => new AlbumContract(album, ContentLanguagePreference.Default, new FakePermissionContext());
 
 	[TestMethod]
 	public void GetUrl_AlbumOriginalImageExistsInDatabase()

@@ -30,7 +30,7 @@ public class TagStatsContract
 		IEnumerable<ReleaseEvent> events, int eventCount,
 		int followerCount)
 	{
-		Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
+		Albums = albums.Select(a => new AlbumContract(a, languagePreference, permissionContext)).ToArray();
 		AlbumCount = albumCount;
 
 		Artists = artists.Select(a => new ArtistContract(a, languagePreference)).ToArray();
@@ -39,7 +39,13 @@ public class TagStatsContract
 		EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
 		EventSeriesCount = eventSeriesCount;
 
-		Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Venue, thumbStore)).ToArray();
+		Events = events.Select(a => new ReleaseEventForApiContract(
+			a,
+			languagePreference,
+			permissionContext,
+			ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Venue,
+			thumbStore
+		)).ToArray();
 		EventCount = eventCount;
 
 		SongLists = songLists.Select(a => new SongListBaseContract(a)).ToArray();

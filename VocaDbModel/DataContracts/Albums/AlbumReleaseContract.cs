@@ -3,6 +3,7 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums;
 
@@ -22,7 +23,11 @@ public sealed class AlbumReleaseContract : IAlbumRelease
 
 	public AlbumReleaseContract() { }
 
-	public AlbumReleaseContract(AlbumRelease release, ContentLanguagePreference languagePreference)
+	public AlbumReleaseContract(
+		AlbumRelease release,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext
+	)
 	{
 		ParamIs.NotNull(() => release);
 
@@ -33,7 +38,13 @@ public sealed class AlbumReleaseContract : IAlbumRelease
 			: null;
 
 		ReleaseEvent = release.ReleaseEvent != null
-			? new ReleaseEventForApiContract(release.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null)
+			? new ReleaseEventForApiContract(
+				release.ReleaseEvent,
+				languagePreference,
+				permissionContext,
+				ReleaseEventOptionalFields.None,
+				null
+			)
 			: null;
 	}
 }

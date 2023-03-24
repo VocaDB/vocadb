@@ -44,7 +44,17 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 
 		if (fields.HasFlag(SongListOptionalFields.Events))
 		{
-			Events = list.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.Venue, imagePersister)).OrderBy(e => e.Date).ThenBy(e => e.Name).ToArray();
+			Events = list.Events
+				.Select(e => new ReleaseEventForApiContract(
+					e,
+					languagePreference,
+					permissionContext,
+					ReleaseEventOptionalFields.Venue,
+					imagePersister
+				))
+				.OrderBy(e => e.Date)
+				.ThenBy(e => e.Name)
+				.ToArray();
 		}
 
 		if (fields.HasFlag(SongListOptionalFields.MainPicture))

@@ -5,6 +5,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents;
 
@@ -16,6 +17,7 @@ public class ReleaseEventSeriesForApiContract : IEntryWithReadOnlyIntId
 	public ReleaseEventSeriesForApiContract(
 		ReleaseEventSeries series,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		ReleaseEventSeriesOptionalFields fields,
 		IAggregatedEntryImageUrlFactory? thumbPersister
 	)
@@ -39,7 +41,13 @@ public class ReleaseEventSeriesForApiContract : IEntryWithReadOnlyIntId
 
 		if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Events))
 		{
-			Events = series.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.None, thumbPersister)).ToArray();
+			Events = series.Events.Select(e => new ReleaseEventForApiContract(
+				e,
+				languagePreference,
+				permissionContext,
+				ReleaseEventOptionalFields.None,
+				thumbPersister
+			)).ToArray();
 		}
 
 		if (thumbPersister != null && fields.HasFlag(ReleaseEventSeriesOptionalFields.MainPicture))

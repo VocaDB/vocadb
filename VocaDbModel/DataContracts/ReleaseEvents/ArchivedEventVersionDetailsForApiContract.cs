@@ -37,6 +37,7 @@ public sealed record ArchivedEventVersionDetailsForApiContract
 		ReleaseEvent = new ReleaseEventForApiContract(
 			rel: archived.ReleaseEvent,
 			languagePreference: permissionContext.LanguagePreference,
+			permissionContext,
 			fields: ReleaseEventOptionalFields.None,
 			thumbPersister: null
 		);

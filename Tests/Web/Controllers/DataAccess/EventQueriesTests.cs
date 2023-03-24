@@ -107,7 +107,13 @@ public class EventQueriesTests
 		var contract = new ReleaseEventForEditForApiContract
 		{
 			Description = string.Empty,
-			Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+			Series = new ReleaseEventSeriesForApiContract(
+				_series,
+				ContentLanguagePreference.English,
+				_permissionContext,
+				ReleaseEventSeriesOptionalFields.None,
+				thumbPersister: null
+			),
 			SeriesNumber = 2014,
 			SeriesSuffix = "Spring",
 		};
@@ -129,7 +135,13 @@ public class EventQueriesTests
 		var contract = new ReleaseEventForEditForApiContract
 		{
 			Description = string.Empty,
-			Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+			Series = new ReleaseEventSeriesForApiContract(
+				_series,
+				ContentLanguagePreference.English,
+				_permissionContext,
+				ReleaseEventSeriesOptionalFields.None,
+				thumbPersister: null
+			),
 			SeriesNumber = 2014,
 			SeriesSuffix = string.Empty,
 		};
@@ -155,7 +167,13 @@ public class EventQueriesTests
 		var contract = new ReleaseEventForEditForApiContract
 		{
 			Description = string.Empty,
-			Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+			Series = new ReleaseEventSeriesForApiContract(
+				_series,
+				ContentLanguagePreference.English,
+				_permissionContext,
+				ReleaseEventSeriesOptionalFields.None,
+				thumbPersister: null
+			),
 			SeriesNumber = 39,
 			SeriesSuffix = string.Empty,
 		};
@@ -280,7 +298,13 @@ public class EventQueriesTests
 	{
 		var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("M3 39"));
 		var contract = Contract(releaseEvent);
-		contract.Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.Default, ReleaseEventSeriesOptionalFields.None, thumbPersister: null);
+		contract.Series = new ReleaseEventSeriesForApiContract(
+			_series,
+			ContentLanguagePreference.Default,
+			_permissionContext,
+			ReleaseEventSeriesOptionalFields.None,
+			thumbPersister: null
+		);
 
 		await _queries.Update(contract, null);
 

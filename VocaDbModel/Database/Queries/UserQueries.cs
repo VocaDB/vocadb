@@ -1161,7 +1161,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			return user.Events
 				.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 				.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
-				.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, _entryImagePersister))
+				.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, PermissionContext, fields, _entryImagePersister))
 				.ToArray();
 		});
 	}

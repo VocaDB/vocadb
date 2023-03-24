@@ -47,7 +47,7 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 		InheritedCategoryTag = categoryTag != null ? new TagBaseContract(categoryTag, languagePreference) : null;
 
 		Albums = releaseEvent.Albums
-			.Select(a => new AlbumContract(a, languagePreference))
+			.Select(a => new AlbumContract(a, languagePreference, userContext))
 			.OrderBy(a => a.Name)
 			.ToArray();
 

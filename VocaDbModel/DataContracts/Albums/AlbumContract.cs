@@ -8,6 +8,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums;
 
@@ -29,7 +30,11 @@ public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntry
 	public AlbumContract() { }
 
 #nullable enable
-	public AlbumContract(Album album, ContentLanguagePreference languagePreference)
+	public AlbumContract(
+		Album album,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext
+	)
 	{
 		ParamIs.NotNull(() => album);
 
@@ -44,7 +49,15 @@ public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntry
 		RatingAverage = album.RatingAverage;
 		RatingCount = album.RatingCount;
 		ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
-		ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
+		ReleaseEvent = album.OriginalReleaseEvent != null
+			? new ReleaseEventForApiContract(
+				album.OriginalReleaseEvent,
+				languagePreference,
+				permissionContext,
+				ReleaseEventOptionalFields.None,
+				null
+			)
+			: null;
 		Status = album.Status;
 		Version = album.Version;
 	}

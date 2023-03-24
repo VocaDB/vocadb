@@ -184,10 +184,14 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		});
 	}
 
-	public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
-		ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None)
+	public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(
+		SearchTextQuery textQuery,
+		PagingProperties paging,
+		ContentLanguagePreference lang,
+		ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None
+	)
 	{
-		return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, _imageUrlFactory), textQuery, paging);
+		return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, PermissionContext, fields, _imageUrlFactory), textQuery, paging);
 	}
 
 	public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac,
@@ -274,6 +278,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					.Select(s => new ReleaseEventSeriesForApiContract(
 						s,
 						LanguagePreference,
+						PermissionContext,
 						ReleaseEventSeriesOptionalFields.None,
 						null
 					))
@@ -286,7 +291,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 	public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields)
 	{
-		return _repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, _imageUrlFactory));
+		return _repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, PermissionContext, fields, _imageUrlFactory));
 	}
 
 	public VenueForApiContract[] GetReleaseEventsByVenue()
@@ -312,7 +317,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 	public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields)
 	{
-		return _repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, _imageUrlFactory));
+		return _repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, PermissionContext, fields, _imageUrlFactory));
 	}
 
 	[Obsolete]
@@ -404,6 +409,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 			.Select(e => new ReleaseEventForApiContract(
 				rel: e,
 				languagePreference: LanguagePreference,
+				PermissionContext,
 				fields: includeSeries ? ReleaseEventOptionalFields.Series : ReleaseEventOptionalFields.None,
 				thumbPersister: null
 			))
@@ -414,7 +420,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 	public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields)
 	{
-		return _repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, _imageUrlFactory));
+		return _repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, PermissionContext, fields, _imageUrlFactory));
 	}
 
 	private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEvent releaseEvent, string notes)
@@ -965,7 +971,12 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 #nullable enable
 	public ReleaseEventSeriesDetailsForApiContract GetSeriesDetails(int id)
 	{
-		return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(session.Load<ReleaseEventSeries>(id), LanguagePreference, _imageUrlFactory));
+		return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(
+			session.Load<ReleaseEventSeries>(id),
+			LanguagePreference,
+			PermissionContext,
+			_imageUrlFactory
+		));
 	}
 
 	public EntryWithArchivedVersionsForApiContract<ReleaseEventForApiContract> GetReleaseEventWithArchivedVersionsForApi(int id)
@@ -974,7 +985,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		{
 			var ev = session.Load<ReleaseEvent>(id);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new ReleaseEventForApiContract(ev, LanguagePreference, fields: ReleaseEventOptionalFields.None, thumbPersister: null),
+				entry: new ReleaseEventForApiContract(ev, LanguagePreference, PermissionContext, fields: ReleaseEventOptionalFields.None, thumbPersister: null),
 				versions: ev.ArchivedVersionsManager.Versions
 					.Select(a => ArchivedObjectVersionForApiContract.FromReleaseEvent(a, _userIconFactory))
 					.ToArray()
@@ -988,7 +999,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		{
 			var series = session.Load<ReleaseEventSeries>(id);
 			return EntryWithArchivedVersionsForApiContract.Create(
-				entry: new ReleaseEventSeriesForApiContract(series, LanguagePreference, fields: ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+				entry: new ReleaseEventSeriesForApiContract(series, LanguagePreference, PermissionContext, fields: ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 				versions: series.ArchivedVersionsManager.Versions
 					.Select(v => ArchivedObjectVersionForApiContract.FromReleaseEventSeries(v, _userIconFactory))
 					.ToArray()
@@ -1021,6 +1032,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 				series: s,
 				events: allEvents.Where(e => s.Equals(e.Series)),
 				languagePreference: PermissionContext.LanguagePreference,
+				PermissionContext,
 				thumbPersister: _imageUrlFactory
 			));
 			var ungrouped = allEvents
@@ -1034,6 +1046,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					.Select(e => new ReleaseEventForApiContract(
 						rel: e,
 						languagePreference: LanguagePreference,
+						PermissionContext,
 						fields: ReleaseEventOptionalFields.None,
 						thumbPersister: null
 					))

@@ -86,7 +86,7 @@ public class WebLinksTests
 		foreach (var (description, url) in s_webLinks)
 			series.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
 
-		var seriesContract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _thumbPersister);
+		var seriesContract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _userContext, _thumbPersister);
 
 		seriesContract.WebLinks.Select(webLink => (webLink.Description, webLink.Url)).Should().Equal(s_expected);
 
@@ -121,7 +121,7 @@ public class WebLinksTests
 		foreach (var (description, url) in s_webLinks)
 			series.CreateWebLink(description: description, url: url, category: WebLinkCategory.Official, disabled: false);
 
-		var contract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _thumbPersister);
+		var contract = new ReleaseEventSeriesDetailsForApiContract(series, _userContext.LanguagePreference, _userContext, _thumbPersister);
 
 		contract.WebLinks.Select(webLink => (webLink.Description, webLink.Url)).Should().Equal(s_expected);
 	}
