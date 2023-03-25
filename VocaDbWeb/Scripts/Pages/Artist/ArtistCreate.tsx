@@ -9,6 +9,7 @@ import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { ImageHelper } from '@/Helpers/ImageHelper';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -32,6 +33,7 @@ interface ArtistCreateLayoutProps {
 const ArtistCreateLayout = observer(
 	({ artistCreateStore }: ArtistCreateLayoutProps): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const { t, ready } = useTranslation([
 			'Resources',
@@ -308,23 +310,27 @@ const ArtistCreateLayout = observer(
 								</table>
 							</div>
 
-							<div className="editor-label">
-								{t('ViewRes.Artist:Create.Picture')}
-							</div>
-							<div className="editor-field">
-								<p>
-									{t('ViewRes:EntryCreate.PictureInfo', {
-										0: ImageHelper.allowedExtensions.join(', '),
-										1: ImageHelper.maxImageSizeMB,
-									})}
-								</p>
-								<input
-									type="file"
-									id="pictureUpload"
-									name="pictureUpload"
-									ref={pictureUploadRef}
-								/>
-							</div>
+							{loginManager.canViewCoverArtImages && (
+								<>
+									<div className="editor-label">
+										{t('ViewRes.Artist:Create.Picture')}
+									</div>
+									<div className="editor-field">
+										<p>
+											{t('ViewRes:EntryCreate.PictureInfo', {
+												0: ImageHelper.allowedExtensions.join(', '),
+												1: ImageHelper.maxImageSizeMB,
+											})}
+										</p>
+										<input
+											type="file"
+											id="pictureUpload"
+											name="pictureUpload"
+											ref={pictureUploadRef}
+										/>
+									</div>
+								</>
+							)}
 
 							<br />
 							<p>
