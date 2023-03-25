@@ -124,16 +124,12 @@ export class VideoServiceHelper {
 		PVService.File,
 		PVService.LocalFile,
 		PVService.NicoNicoDouga,
-		PVService.Piapro,
 		PVService.Vimeo,
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
 
 	static canAutoplayPV = (pv: PVContract): boolean => {
-		if (pv.service === PVService.Piapro)
-			return VideoServiceHelper.getPiaproTimestamp(pv) !== undefined;
-
 		return VideoServiceHelper.autoplayServices.includes(pv.service);
 	};
 

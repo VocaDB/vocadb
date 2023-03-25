@@ -10,20 +10,20 @@ interface EmbedPiaproProps {
 export const EmbedPiapro = React.memo(
 	({ pv, width, height }: EmbedPiaproProps): React.ReactElement => {
 		return (
-			// <object> embed instead of iframe because iframe doesn't work with flash disabled
-			<object
-				type="application/x-shockwave-flash"
-				width={width ?? 340}
-				height={height ?? 80}
-				style={{ border: 0 }}
-				data={`//piapro.jp/modpub/swf/player03_h.swf?030503&id=${pv.pvId}&c=1`}
-			>
-				<param
-					name="movie"
-					value={`//piapro.jp/modpub/swf/player03_h.swf?030503&id=${pv.pvId}&c=1`}
+			<a href={pv.url} target="_blank" rel="noreferrer">
+				<div
+					css={{
+						width: '100%',
+						height: '100%',
+						backgroundColor: 'rgb(28, 28, 28)',
+						backgroundSize: 'cover',
+						backgroundPosition: 'center',
+					}}
+					style={{
+						backgroundImage: `url(/Content/banners/bnr_piapro468x120.jpg)`,
+					}}
 				/>
-				<param name="quality" value="high" />
-			</object>
+			</a>
 		);
 	},
 );

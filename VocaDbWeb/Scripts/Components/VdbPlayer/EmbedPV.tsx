@@ -42,14 +42,16 @@ const isAudio = (filename?: string): boolean => !isImage(filename);
 const playerTypes: Record<
 	Exclude<
 		PVService,
-		PVService.Bilibili | PVService.Creofuga | PVService.Bandcamp
+		| PVService.Piapro
+		| PVService.Bilibili
+		| PVService.Creofuga
+		| PVService.Bandcamp
 	>,
 	PlayerType
 > = {
 	[PVService.File]: 'Audio',
 	[PVService.LocalFile]: 'Audio',
 	[PVService.NicoNicoDouga]: 'Niconico',
-	[PVService.Piapro]: 'Audio',
 	[PVService.SoundCloud]: 'SoundCloud',
 	[PVService.Vimeo]: 'Vimeo',
 	[PVService.Youtube]: 'YouTube',
@@ -139,20 +141,12 @@ export const EmbedPV = React.memo(
 				}
 
 				break;
-
-			case PVService.Piapro:
-				if (VideoServiceHelper.getPiaproTimestamp(pv) === undefined) {
-					return <EmbedPiapro pv={pv} width={width} height={height} />;
-				}
-
-				break;
 		}
 
 		switch (service) {
 			case PVService.File:
 			case PVService.LocalFile:
 			case PVService.NicoNicoDouga:
-			case PVService.Piapro:
 			case PVService.SoundCloud:
 			case PVService.Vimeo:
 			case PVService.Youtube:
@@ -190,6 +184,9 @@ export const EmbedPV = React.memo(
 						key={pvId}
 					/>
 				);
+
+			case PVService.Piapro:
+				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			default:
 				return <></>;
