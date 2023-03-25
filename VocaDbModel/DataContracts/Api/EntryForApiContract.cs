@@ -124,7 +124,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.PVs))
 		{
-			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
+				.Select(p => new PVContract(p))
+				.ToArray();
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Tags))
@@ -176,6 +178,7 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		Song song,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		EntryOptionalFields includedFields
 	)
 		: this((IEntryWithNames)song, languagePreference, includedFields)
@@ -203,7 +206,9 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.PVs))
 		{
-			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+				.Select(p => new PVContract(p))
+				.ToArray();
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Tags))

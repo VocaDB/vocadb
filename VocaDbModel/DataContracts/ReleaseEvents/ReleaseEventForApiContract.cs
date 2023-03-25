@@ -77,7 +77,9 @@ public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 
 		if (fields.HasFlag(ReleaseEventOptionalFields.PVs))
 		{
-			PVs = rel.PVs.Select(p => new PVContract(pv: p)).ToArray();
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? rel.PVs : rel.OriginalPVs)
+				.Select(p => new PVContract(pv: p))
+				.ToArray();
 		}
 
 		if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries)

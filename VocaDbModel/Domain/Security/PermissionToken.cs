@@ -88,6 +88,7 @@ public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken
 	public static readonly PermissionToken ViewDisabledUsers = New("a3f8af3c-f39c-419c-a895-f3f73e7fa253", nameof(ViewDisabledUsers));
 	public static readonly PermissionToken ViewLyrics = New("a89d90f5-5aa1-4ad7-b02c-fdef3dcd0e19", nameof(ViewLyrics));
 	public static readonly PermissionToken ViewCoverArtImages = New("6828e4e4-f4ee-4208-910f-0a3c913fb771", nameof(ViewCoverArtImages));
+	public static readonly PermissionToken ViewOtherPVs = New("c1bfdb49-d77e-4876-a94d-b51107593ea6", nameof(ViewOtherPVs));
 
 	/// <summary>
 	/// All tokens except Nothing

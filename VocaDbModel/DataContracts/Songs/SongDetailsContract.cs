@@ -56,7 +56,9 @@ public class SongDetailsContract
 			? new SongForApiContract(song.OriginalVersion, null, languagePreference, userContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)
 			: null;
 
-		PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+			.Select(p => new PVContract(p))
+			.ToArray();
 		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted
 			? new ReleaseEventForApiContract(
 				song.ReleaseEvent,

@@ -95,7 +95,11 @@ public class SongForApiContract : IEntryBase
 			OriginalVersionId = song.OriginalVersion.Id;
 
 		if (fields.HasFlag(SongOptionalFields.PVs))
-			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+		{
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+				.Select(p => new PVContract(p))
+				.ToArray();
+		}
 
 		if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null)
 		{

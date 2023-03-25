@@ -1,6 +1,7 @@
 import { useRegionNames } from '@/Components/useRegionNames';
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
@@ -608,17 +609,25 @@ export const SongTypeDropdownList = React.memo(
 
 export const PVTypeDescriptionsDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources']);
+
+		const pvTypes = React.useMemo(
+			() =>
+				loginManager.canViewOtherPVs
+					? Object.values(PVType)
+					: [PVType.Original],
+			[loginManager],
+		);
 
 		return (
 			<select {...props}>
-				{Object.values(PVType)
-					.filter((pvType) => isNaN(Number(pvType)))
-					.map((pvType) => (
-						<option value={pvType} key={pvType}>
-							{t(`Resources:PVTypeDescriptions.${pvType}`)}
-						</option>
-					))}
+				{pvTypes.map((pvType) => (
+					<option value={pvType} key={pvType}>
+						{t(`Resources:PVTypeDescriptions.${pvType}`)}
+					</option>
+				))}
 			</select>
 		);
 	},

@@ -47,7 +47,9 @@ public class AlbumDetailsContract : AlbumContract
 		Pictures = userContext.HasPermission(PermissionToken.ViewCoverArtImages)
 			? album.Pictures.Select(p => new EntryPictureFileContract(p, thumbPersister)).ToArray()
 			: Array.Empty<EntryPictureFileContract>();
-		PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
+			.Select(p => new PVContract(p))
+			.ToArray();
 		Songs = album.Songs
 			.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)
 			.Select(s => new SongInAlbumContract(s, languagePreference, false, rating: getSongRating?.Invoke(s.Song)))

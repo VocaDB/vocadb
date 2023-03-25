@@ -96,7 +96,9 @@ public class AlbumForApiContract : IEntryBase
 
 		if (fields.HasFlag(AlbumOptionalFields.PVs))
 		{
-			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
+				.Select(p => new PVContract(p))
+				.ToArray();
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent))

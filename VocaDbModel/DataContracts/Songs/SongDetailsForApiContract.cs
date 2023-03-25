@@ -226,7 +226,9 @@ public sealed record SongDetailsForApiContract
 
 		PersonalDescriptionText = song.PersonalDescriptionText;
 		Pools = pools;
-		PVs = song.PVs.Select(p => new PVContract(pv: p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+			.Select(p => new PVContract(pv: p))
+			.ToArray();
 
 		ReleaseEvent = song.ReleaseEvent is not null && !song.ReleaseEvent.Deleted
 			? new ReleaseEventForApiContract(

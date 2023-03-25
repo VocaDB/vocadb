@@ -184,7 +184,9 @@ public sealed record AlbumDetailsForApiContract
 		Pictures = userContext.HasPermission(PermissionToken.ViewCoverArtImages)
 			? album.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: thumbPersister, name: p.Name)).ToArray()
 			: Array.Empty<EntryThumbForApiContract>();
-		PVs = album.PVs.Select(p => new PVContract(pv: p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
+			.Select(p => new PVContract(pv: p))
+			.ToArray();
 		RatingAverage = album.RatingAverage;
 		RatingCount = album.RatingCount;
 

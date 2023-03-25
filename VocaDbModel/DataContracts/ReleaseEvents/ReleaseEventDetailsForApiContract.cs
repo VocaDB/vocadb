@@ -153,7 +153,9 @@ public sealed record ReleaseEventDetailsForApiContract
 			? EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister)
 			: null;
 		Name = releaseEvent.TranslatedName[languagePreference];
-		PVs = releaseEvent.PVs.Select(p => new PVContract(pv: p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? releaseEvent.PVs : releaseEvent.OriginalPVs)
+			.Select(p => new PVContract(pv: p))
+			.ToArray();
 
 		Series = releaseEvent.Series is ReleaseEventSeries series
 			? new ReleaseEventSeriesForApiContract(
