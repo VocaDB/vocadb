@@ -16,6 +16,7 @@ import {
 } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { VdbPlayerEntryLink } from '@/Components/VdbPlayer/VdbPlayerEntryLink';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { css } from '@emotion/react';
@@ -255,6 +256,10 @@ const PlayerRightControls = observer(
 		const vdbPlayer = useVdbPlayer();
 		const playQueue = usePlayQueue();
 
+		const handlePause = React.useCallback(async () => {
+			await diva.pause();
+		}, [diva]);
+
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const { currentTime } = playQueue;
 			if (currentTime !== undefined) {
@@ -314,6 +319,23 @@ const PlayerRightControls = observer(
 						</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
+						{playQueue.currentItem !== undefined &&
+							playQueue.currentItem.pv.service !== PVService.File &&
+							playQueue.currentItem.pv.service !== PVService.LocalFile && (
+								<>
+									<Dropdown.Item
+										as="a"
+										href={playQueue.currentItem.pv.url}
+										target="_blank"
+										rel="noreferrer"
+										onClick={handlePause}
+									>
+										Watch on {playQueue.currentItem.pv.service}
+										{/* LOC */}
+									</Dropdown.Item>
+									<Dropdown.Divider />
+								</>
+							)}
 						<Dropdown.Item as={Link} to="/playlist" className="visible-phone">
 							Show play queue{/* LOC */}
 						</Dropdown.Item>
