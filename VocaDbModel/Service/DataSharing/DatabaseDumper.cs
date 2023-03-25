@@ -133,6 +133,8 @@ public sealed class DatabaseDumper
 		public ArchivedArtistContractWithTags(Artist artist)
 			: base(artist, new ArtistDiff())
 		{
+			MainPictureMime = null;
+			Pictures = null;
 			Tags = artist.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -146,6 +148,9 @@ public sealed class DatabaseDumper
 		public ArchivedAlbumContractWithTags(Album album)
 			: base(album, new AlbumDiff())
 		{
+			MainPictureMime = null;
+			Pictures = null;
+			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = album.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -159,6 +164,8 @@ public sealed class DatabaseDumper
 		public ArchivedSongContractWithTags(Song song)
 			: base(song, new SongDiff())
 		{
+			Lyrics = null;
+			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -172,6 +179,7 @@ public sealed class DatabaseDumper
 		public ArchivedEventSeriesContractWithTags(ReleaseEventSeries releaseEventSeries)
 			: base(releaseEventSeries, new ReleaseEventSeriesDiff())
 		{
+			MainPictureMime = null;
 			Tags = releaseEventSeries.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -185,6 +193,8 @@ public sealed class DatabaseDumper
 		public ArchivedEventContractWithTags(ReleaseEvent releaseEvent)
 			: base(releaseEvent, new ReleaseEventDiff())
 		{
+			MainPictureMime = null;
+			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = releaseEvent.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
