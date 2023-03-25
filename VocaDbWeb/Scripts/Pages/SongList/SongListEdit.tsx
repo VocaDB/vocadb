@@ -285,6 +285,8 @@ interface SongListEditLayoutProps {
 
 const SongListEditLayout = observer(
 	({ songListEditStore }: SongListEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.SongList']);
 
 		const contract = songListEditStore.contract;
