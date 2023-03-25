@@ -31,18 +31,23 @@ public class EntryForApiContract : IEntryWithIntId
 		{
 			EntryType.Album => new EntryForApiContract((Album)entry, languagePreference, permissionContext, thumbPersister, includedFields),
 			EntryType.Artist => new EntryForApiContract((Artist)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference),
+			EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference, permissionContext),
 			EntryType.ReleaseEvent => new EntryForApiContract((ReleaseEvent)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, includedFields),
+			EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, permissionContext, includedFields),
 			EntryType.SongList => new EntryForApiContract((SongList)entry, permissionContext, thumbPersister, includedFields),
 			EntryType.Tag => new EntryForApiContract((Tag)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			_ => new EntryForApiContract(entry, languagePreference, includedFields),
+			_ => new EntryForApiContract(entry, languagePreference, permissionContext, includedFields),
 		};
 	}
 
 	public EntryForApiContract() { }
 
-	private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)
+	private EntryForApiContract(
+		IEntryWithNames entry,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		EntryOptionalFields fields
+	)
 	{
 		EntryType = entry.EntryType;
 		Id = entry.Id;
@@ -65,7 +70,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(artist, languagePreference, includedFields)
+		: this(artist, languagePreference, permissionContext, includedFields)
 	{
 		ActivityDate = artist.ReleaseDate;
 		ArtistType = artist.ArtistType;
@@ -102,7 +107,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(album, languagePreference, includedFields)
+		: this(album, languagePreference, permissionContext, includedFields)
 	{
 		ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 		ArtistString = album.ArtistString[languagePreference];
@@ -147,7 +152,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(releaseEvent, languagePreference, includedFields)
+		: this(releaseEvent, languagePreference, permissionContext, includedFields)
 	{
 		ActivityDate = releaseEvent.Date.DateTime;
 		EventCategory = releaseEvent.InheritedCategory;
@@ -169,8 +174,12 @@ public class EntryForApiContract : IEntryWithIntId
 	}
 
 	// Only used for recent comments atm.
-	public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
-		: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None)
+	public EntryForApiContract(
+		DiscussionTopic topic,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext
+	)
+		: this((IEntryWithNames)topic, languagePreference, permissionContext, EntryOptionalFields.None)
 	{
 		CreateDate = topic.Created;
 	}
@@ -181,7 +190,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IUserPermissionContext permissionContext,
 		EntryOptionalFields includedFields
 	)
-		: this((IEntryWithNames)song, languagePreference, includedFields)
+		: this((IEntryWithNames)song, languagePreference, permissionContext, includedFields)
 	{
 		ActivityDate = song.PublishDate.DateTime;
 		ArtistString = song.ArtistString[languagePreference];
@@ -228,7 +237,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(songList, ContentLanguagePreference.Default, includedFields)
+		: this(songList, ContentLanguagePreference.Default, permissionContext, includedFields)
 	{
 		ActivityDate = songList.EventDate;
 		CreateDate = songList.CreateDate;
@@ -249,7 +258,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(tag, languagePreference, includedFields)
+		: this(tag, languagePreference, permissionContext, includedFields)
 	{
 		CreateDate = tag.CreateDate;
 		Status = tag.Status;
