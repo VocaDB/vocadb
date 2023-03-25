@@ -380,8 +380,9 @@ const SongListEditLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const thumbPicUpload =
-								thumbPicUploadRef.current.files?.item(0) ?? undefined;
+							const thumbPicUpload = loginManager.canViewCoverArtImages
+								? thumbPicUploadRef.current.files?.item(0) ?? undefined
+								: undefined;
 
 							const id = await songListEditStore.submit(
 								requestToken,

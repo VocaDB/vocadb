@@ -971,8 +971,9 @@ const AlbumEditLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const coverPicUpload =
-								coverPicUploadRef.current.files?.item(0) ?? undefined;
+							const coverPicUpload = loginManager.canViewCoverArtImages
+								? coverPicUploadRef.current.files?.item(0) ?? undefined
+								: undefined;
 
 							// TODO: Use useRef.
 							const pictureUpload = map(

@@ -72,8 +72,9 @@ const ArtistCreateLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const pictureUpload =
-								pictureUploadRef.current.files?.item(0) ?? undefined;
+							const pictureUpload = loginManager.canViewCoverArtImages
+								? pictureUploadRef.current.files?.item(0) ?? undefined
+								: undefined;
 
 							const id = await artistCreateStore.submit(
 								requestToken,
