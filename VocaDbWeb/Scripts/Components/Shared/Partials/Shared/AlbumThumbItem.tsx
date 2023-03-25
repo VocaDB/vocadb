@@ -65,6 +65,7 @@ export const AlbumThumbItem = React.memo(
 			>
 				{(hover || isOpen) && (
 					<EmbedPVPreviewButtons
+						pv={undefined}
 						onPlay={handlePlay}
 						onToggle={(isOpen): void => setIsOpen(isOpen)}
 					/>

@@ -16,7 +16,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 interface EmbedPVPreviewDropdownProps {
-	pv: PVContract;
+	pv: PVContract | undefined;
 	onPlay: (method: PlayMethod) => void;
 	onToggle?: (
 		isOpen: boolean,
@@ -63,21 +63,23 @@ const EmbedPVPreviewDropdown = React.memo(
 					</span>
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
-					{pv.service !== PVService.File && pv.service !== PVService.LocalFile && (
-						<>
-							<Dropdown.Item
-								as="a"
-								href={pv.url}
-								target="_blank"
-								rel="noreferrer"
-								onClick={handlePause}
-							>
-								Watch on {pv.service}
-								{/* LOC */}
-							</Dropdown.Item>
-							<Dropdown.Divider />
-						</>
-					)}
+					{pv !== undefined &&
+						pv.service !== PVService.File &&
+						pv.service !== PVService.LocalFile && (
+							<>
+								<Dropdown.Item
+									as="a"
+									href={pv.url}
+									target="_blank"
+									rel="noreferrer"
+									onClick={handlePause}
+								>
+									Watch on {pv.service}
+									{/* LOC */}
+								</Dropdown.Item>
+								<Dropdown.Divider />
+							</>
+						)}
 					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayFirst)}>
 						Play first{/* LOC */}
 					</Dropdown.Item>
@@ -96,7 +98,7 @@ const EmbedPVPreviewDropdown = React.memo(
 );
 
 interface EmbedPVPreviewButtonsProps {
-	pv: PVContract;
+	pv: PVContract | undefined;
 	onPlay: (method: PlayMethod) => void;
 	onToggle?: (
 		isOpen: boolean,
