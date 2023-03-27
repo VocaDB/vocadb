@@ -225,6 +225,7 @@ public sealed record TagDetailsForApiContract
 		Tag tag,
 		TagStatsForApiContract stats,
 		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
 		int commentCount,
 		CommentForApiContract[] latestComments,
 		bool isFollowing,
@@ -246,7 +247,9 @@ public sealed record TagDetailsForApiContract
 		Id = tag.Id;
 		IsFollowing = isFollowing;
 		LatestComments = latestComments;
-		MainPicture = tag.Thumb is not null ? new EntryThumbForApiContract(tag.Thumb, thumbPersister) : null;
+		MainPicture = tag.Thumb is not null
+			? (permissionContext.HasPermission(PermissionToken.ViewCoverArtImages) ? new EntryThumbForApiContract(tag.Thumb, thumbPersister) : null)
+			: null;
 		MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 		Name = tag.TranslatedName[languagePreference];
 		Parent = tag.Parent is not null ? new TagBaseContract(tag.Parent, languagePreference) : null;

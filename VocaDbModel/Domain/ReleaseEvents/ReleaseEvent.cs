@@ -223,6 +223,8 @@ public class ReleaseEvent :
 		}
 	}
 
+	public virtual IEnumerable<PVForEvent> OriginalPVs => PVs.Where(pv => pv.PVType == PVType.Original);
+
 	public virtual ReleaseEventSeries? Series
 	{
 		get => _series;

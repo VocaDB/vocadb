@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.UseCases;
 
@@ -15,7 +16,12 @@ public class ArtistForEditContract : ArtistContract
 {
 	public ArtistForEditContract() { }
 
-	public ArtistForEditContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
+	public ArtistForEditContract(
+		Artist artist,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext permissionContext,
+		IAggregatedEntryImageUrlFactory imageStore
+	)
 		: base(artist, languagePreference)
 	{
 		BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
@@ -24,7 +30,9 @@ public class ArtistForEditContract : ArtistContract
 		Groups = artist.Groups.Where(g => g.LinkType == ArtistLinkType.Group).Select(g => new ArtistForArtistContract(g, languagePreference)).OrderBy(g => g.Parent.Name).ToArray();
 		Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, Domain.LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 		Names = artist.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-		Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList();
+		Pictures = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+			? artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList()
+			: Array.Empty<EntryPictureFileContract>();
 		UpdateNotes = string.Empty;
 		VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, Domain.LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 		WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();

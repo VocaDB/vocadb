@@ -335,7 +335,7 @@ public class EventQueriesTests
 	[TestMethod]
 	public void UpdateSeries_UpdateName_EventsUpdated()
 	{
-		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
+		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, _permissionContext, thumbPersister: null);
 		contract.Names[0].Value = "M3.9";
 
 		var result = _queries.UpdateSeries(contract, null);
@@ -356,7 +356,7 @@ public class EventQueriesTests
 	[TestMethod]
 	public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated()
 	{
-		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null)
+		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, _permissionContext, thumbPersister: null)
 		{
 			DefaultNameLanguage = ContentLanguageSelection.Japanese
 		};
@@ -371,7 +371,7 @@ public class EventQueriesTests
 		var series2 = _repository.SaveWithNames<ReleaseEventSeries, EventSeriesName>(CreateEntry.EventSeries("M3.9"));
 		_repository.SaveWithNames<ReleaseEvent, EventName>(CreateEntry.SeriesEvent(series2, 2013, "Spring"));
 
-		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
+		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, _permissionContext, thumbPersister: null);
 		contract.Names[0].Value = "M3.9";
 
 		Invoking(() => _queries.UpdateSeries(contract, null)).Should().Throw<DuplicateEventNameException>();
@@ -383,7 +383,7 @@ public class EventQueriesTests
 		_user.GroupId = UserGroupId.Limited;
 		_permissionContext.RefreshLoggedUser(_repository);
 
-		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
+		var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, _permissionContext, thumbPersister: null);
 		Invoking(() => _queries.UpdateSeries(contract, null)).Should().Throw<NotAllowedException>();
 	}
 }

@@ -178,6 +178,7 @@ public class WebLinksTests
 			tag,
 			stats,
 			_userContext.LanguagePreference,
+			_userContext,
 			commentCount: 0,
 			latestComments: Array.Empty<CommentForApiContract>(),
 			isFollowing: false,

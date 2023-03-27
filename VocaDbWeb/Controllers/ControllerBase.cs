@@ -77,6 +77,8 @@ public class ControllerBase : Controller
 	{
 		ParamIs.NotNull(() => contract);
 
+		PermissionContext.VerifyPermission(PermissionToken.ViewCoverArtImages);
+
 		var cacheControl = new CacheControlHeaderValue
 		{
 			// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.

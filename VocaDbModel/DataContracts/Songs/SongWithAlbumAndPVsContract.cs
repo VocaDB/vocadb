@@ -20,9 +20,15 @@ public class SongWithAlbumAndPVsContract : SongWithAlbumContract
 		: base(song, languagePreference, permissionContext)
 	{
 		if (getPVs)
-			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+		{
+			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+				.Select(p => new PVContract(p))
+				.ToArray();
+		}
 		else
+		{
 			PVs = Array.Empty<PVContract>();
+		}
 	}
 
 	[DataMember]

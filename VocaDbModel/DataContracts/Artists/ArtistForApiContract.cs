@@ -65,7 +65,9 @@ public class ArtistForApiContract
 
 		if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && artist.Thumb != null)
 		{
-			MainPicture = new EntryThumbForApiContract(artist.Thumb, thumbPersister);
+			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+				? new EntryThumbForApiContract(artist.Thumb, thumbPersister)
+				: null;
 		}
 
 		if (includedFields.HasFlag(ArtistOptionalFields.WebLinks))

@@ -117,7 +117,9 @@ public sealed record ReleaseEventForEditForApiContract
 		Description = releaseEvent.Description;
 		EndDate = releaseEvent.EndDate;
 		Id = releaseEvent.Id;
-		MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister);
+		MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+			? EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister)
+			: null;
 		Name = releaseEvent.TranslatedName[languagePreference];
 		Names = releaseEvent.Names
 			.Select(n => new LocalizedStringWithIdContract(n))

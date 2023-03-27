@@ -71,6 +71,11 @@ public class AlbumController : ControllerBase
 
 	public ActionResult ArchivedVersionCoverPicture(int id = InvalidId)
 	{
+		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+		{
+			return NotFound();
+		}
+
 		if (id == InvalidId)
 			return NoId();
 
@@ -195,6 +200,11 @@ public class AlbumController : ControllerBase
 	//[OutputCache(Duration = pictureCacheDurationSec, Location = OutputCacheLocation.Any, VaryByParam = "id,v")]
 	public ActionResult CoverPicture(int id = InvalidId)
 	{
+		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+		{
+			return NotFound();
+		}
+
 		if (id == InvalidId)
 			return NotFound();
 
@@ -205,6 +215,11 @@ public class AlbumController : ControllerBase
 
 	public ActionResult CoverPictureThumb(int id = InvalidId)
 	{
+		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+		{
+			return NotFound();
+		}
+
 		if (id == InvalidId)
 			return NotFound();
 

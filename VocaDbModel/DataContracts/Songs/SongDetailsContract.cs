@@ -48,13 +48,17 @@ public class SongDetailsContract
 		CreateDate = song.CreateDate;
 		Deleted = song.Deleted;
 		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
-		LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
+		LyricsFromParents = userContext.HasPermission(PermissionToken.ViewLyrics)
+			? song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray()
+			: Array.Empty<LyricsForSongContract>();
 		Notes = song.Notes;
 		OriginalVersion = song.OriginalVersion != null && !song.OriginalVersion.Deleted
 			? new SongForApiContract(song.OriginalVersion, null, languagePreference, userContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)
 			: null;
 
-		PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
+			.Select(p => new PVContract(p))
+			.ToArray();
 		ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted
 			? new ReleaseEventForApiContract(
 				song.ReleaseEvent,

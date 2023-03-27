@@ -405,10 +405,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				diff.WebLinks.Set(weblinksDiff.Changed);
 			}
 
-			if (contract.Lyrics != null && contract.Lyrics.Any())
+			if (PermissionContext.HasPermission(PermissionToken.ViewLyrics))
 			{
-				contract.Lyrics.ForEach(song.CreateLyrics);
-				diff.Lyrics.Set();
+				if (contract.Lyrics != null && contract.Lyrics.Any())
+				{
+					contract.Lyrics.ForEach(song.CreateLyrics);
+					diff.Lyrics.Set();
+				}
 			}
 
 			var instrumentalTagId = new EntryTypeTags(ctx).Instrumental;
@@ -490,10 +493,12 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 		return HandleQuery(ctx => Comments(ctx).GetAll(songId));
 	}
 
+#nullable enable
 	public LyricsForSongContract GetLyrics(int lyricsId)
 	{
 		return HandleQuery(ctx => new LyricsForSongContract(ctx.Load<LyricsForSong>(lyricsId)));
 	}
+#nullable disable
 
 	public SongContract GetSong(int id)
 	{
@@ -1395,11 +1400,14 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 			await UpdatePVs(ctx, song, diff, properties.PVs);
 
-			var lyricsDiff = song.SyncLyrics(properties.Lyrics);
-			await ctx.OfType<LyricsForSong>().SyncAsync(lyricsDiff);
+			if (PermissionContext.HasPermission(PermissionToken.ViewLyrics))
+			{
+				var lyricsDiff = song.SyncLyrics(properties.Lyrics);
+				await ctx.OfType<LyricsForSong>().SyncAsync(lyricsDiff);
 
-			if (lyricsDiff.Changed)
-				diff.Lyrics.Set();
+				if (lyricsDiff.Changed)
+					diff.Lyrics.Set();
+			}
 
 			var newMinMilliBpm = properties.MinMilliBpm;
 			var newMaxMilliBpm = (properties.MaxMilliBpm > properties.MinMilliBpm) ? properties.MaxMilliBpm : properties.MinMilliBpm;

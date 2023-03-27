@@ -25,7 +25,7 @@ public sealed record ArchivedTagVersionDetailsForApiContract
 	public string Name { get; init; }
 
 	[DataMember]
-	public ComparedVersionsForApiContract<ArchivedTagContract> Versions { get; init; }
+	public ComparedVersionsForApiContract<ArchivedTagForApiContract> Versions { get; init; }
 
 	public ArchivedTagVersionDetailsForApiContract(
 		ArchivedTagVersion archived,
@@ -51,7 +51,7 @@ public sealed record ArchivedTagVersionDetailsForApiContract
 			.Select(a => ArchivedObjectVersionForApiContract.FromTag(a, userIconFactory))
 			.ToArray();
 
-		Versions = ComparedVersionsForApiContract.FromTag(archived, comparedVersion);
+		Versions = ComparedVersionsForApiContract.FromTag(archived, comparedVersion, permissionContext);
 	}
 
 	public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);

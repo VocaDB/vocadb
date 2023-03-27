@@ -53,7 +53,9 @@ public sealed record ReleaseEventSeriesWithEventsForApiContract
 			))
 			.ToArray();
 		Id = series.Id;
-		MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister);
+		MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
+			? EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister)
+			: null;
 		Name = series.TranslatedName[languagePreference];
 	}
 }
