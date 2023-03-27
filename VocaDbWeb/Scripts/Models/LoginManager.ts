@@ -73,8 +73,20 @@ export class LoginManager {
 		return !!this.values.lockdownMessage;
 	}
 
+	private static readonly alwaysPermissions = [
+		PermissionToken.ViewLyrics,
+		PermissionToken.ViewCoverArtImages,
+		PermissionToken.ViewOtherPVs,
+	];
+
 	hasPermission = (token: PermissionToken): boolean => {
 		if (token === PermissionToken.Nothing) return true;
+
+		if (this.values.alwaysPermissions) {
+			if (LoginManager.alwaysPermissions.includes(token)) {
+				return true;
+			}
+		}
 
 		if (!this.loggedUser || !this.loggedUser.active) return false;
 

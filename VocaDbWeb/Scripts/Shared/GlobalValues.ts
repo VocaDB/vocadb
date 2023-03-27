@@ -46,4 +46,5 @@ export interface GlobalValues {
 	signupsDisabled: boolean;
 	// TODO Move to .env.
 	reCAPTCHAPublicKey: string;
+	alwaysPermissions: boolean;
 }

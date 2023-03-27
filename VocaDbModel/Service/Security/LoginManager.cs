@@ -73,10 +73,25 @@ public class LoginManager : IUserPermissionContext
 
 	protected IPrincipal User => _context.User;
 
+	private static readonly PermissionToken[] s_alwaysPermissions = new[]
+	{
+		PermissionToken.ViewCoverArtImages,
+		PermissionToken.ViewLyrics,
+		PermissionToken.ViewOtherPVs,
+	};
+
 	public bool HasPermission(PermissionToken token)
 	{
 		if (token == PermissionToken.Nothing)
 			return true;
+
+		if (AppConfig.AlwaysPermissions)
+		{
+			if (s_alwaysPermissions.Contains(token))
+			{
+				return true;
+			}
+		}
 
 		if (!IsLoggedIn || !LoggedUser.Active)
 			return false;

@@ -244,5 +244,7 @@ public static class AppConfig
 
 #nullable enable
 	public static string? MLNetActiveModelPath => Val(nameof(MLNetActiveModelPath));
+
+	public static bool AlwaysPermissions => Val(nameof(AlwaysPermissions), false);
 #nullable disable
 }

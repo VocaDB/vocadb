@@ -77,6 +77,7 @@ public sealed record GlobalValues
 
 	public bool SignupsDisabled { get; init; }
 	public string ReCAPTCHAPublicKey { get; init; }
+	public bool AlwaysPermissions { get; init; }
 
 	public GlobalValues(
 		BrandableStringsManager brandableStrings,
@@ -126,5 +127,6 @@ public sealed record GlobalValues
 
 		SignupsDisabled = AppConfig.SiteSettings.SignupsDisabled;
 		ReCAPTCHAPublicKey = AppConfig.ReCAPTCHAPublicKey;
+		AlwaysPermissions = AppConfig.AlwaysPermissions;
 	}
 }
