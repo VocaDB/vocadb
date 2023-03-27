@@ -78,6 +78,11 @@ public class LoginManager : IUserPermissionContext
 		if (token == PermissionToken.Nothing)
 			return true;
 
+		var alwaysPermissions = new[] { PermissionToken.ViewCoverArtImages, PermissionToken.ViewLyrics, PermissionToken.ViewOtherPVs };
+
+		if (alwaysPermissions.Contains(token))
+			return true;
+
 		if (!IsLoggedIn || !LoggedUser.Active)
 			return false;
 

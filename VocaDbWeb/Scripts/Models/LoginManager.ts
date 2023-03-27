@@ -76,6 +76,11 @@ export class LoginManager {
 	hasPermission = (token: PermissionToken): boolean => {
 		if (token === PermissionToken.Nothing) return true;
 
+		const alwaysPermissions = [ PermissionToken.ViewCoverArtImages, PermissionToken.ViewLyrics, PermissionToken.ViewOtherPVs ];
+
+		if (alwaysPermissions.includes(token))
+			return true;
+
 		if (!this.loggedUser || !this.loggedUser.active) return false;
 
 		if (token === PermissionToken.ManageDatabase && this.lockdownEnabled)
