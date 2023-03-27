@@ -8,7 +8,6 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -343,8 +342,6 @@ public class Album :
 			_pvs = value;
 		}
 	}
-
-	public virtual IEnumerable<PVForAlbum> OriginalPVs => PVs.Where(pv => pv.PVType == PVType.Original);
 
 	/// <summary>
 	/// Rating average as integer, basically the decimal number multiplied by 100.

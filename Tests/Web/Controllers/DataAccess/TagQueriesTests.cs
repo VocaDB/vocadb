@@ -73,7 +73,6 @@ public class TagQueriesTests
 		_tag2 = CreateAndSaveTag("MMD");
 
 		_user = new User("User", "123", "test@test.com", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Moderator };
-		_user.AdditionalPermissions.Add(PermissionToken.ViewCoverArtImages);
 		_repository.Add(_user);
 
 		_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_user, ContentLanguagePreference.Default));

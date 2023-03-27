@@ -63,7 +63,7 @@ public sealed record SongListForEditForApiContract
 		FeaturedCategory = songList.FeaturedCategory;
 		Id = songList.Id;
 		MainPicture = songList.Thumb is not null
-			? (permissionContext.HasPermission(PermissionToken.ViewCoverArtImages) ? new EntryThumbForApiContract(songList.Thumb, imagePersister) : null)
+			? new EntryThumbForApiContract(songList.Thumb, imagePersister)
 			: null;
 		Name = songList.Name;
 		SongLinks = songList.SongLinks

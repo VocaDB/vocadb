@@ -65,9 +65,7 @@ public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 
 		if (thumbPersister is not null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture))
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister)
-				: null;
+			MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister);
 		}
 
 		if (fields.HasFlag(ReleaseEventOptionalFields.Names))
@@ -77,9 +75,7 @@ public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 
 		if (fields.HasFlag(ReleaseEventOptionalFields.PVs))
 		{
-			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? rel.PVs : rel.OriginalPVs)
-				.Select(p => new PVContract(pv: p))
-				.ToArray();
+			PVs = rel.PVs.Select(p => new PVContract(pv: p)).ToArray();
 		}
 
 		if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries)

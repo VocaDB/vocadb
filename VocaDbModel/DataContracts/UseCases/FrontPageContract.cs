@@ -42,24 +42,12 @@ public class FrontPageContract
 			ActivityEntryOptionalFields.None
 		)).ToArray();
 		NewAlbums = newAlbums;
-		NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(
-			s,
-			SongVoteRating.Nothing,
-			languagePreference,
-			permissionContext
-		)).ToArray();
+		NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
 		RecentComments = recentComments.ToArray();
 		TopAlbums = topAlbums;
 		NewEvents = newEvents;
 
-		FirstSong = newSongs.Any()
-			? new SongWithPVAndVoteContract(
-				newSongs.First(),
-				firstSongRating,
-				languagePreference,
-				permissionContext
-			)
-			: null;
+		FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
 	}
 
 	public ActivityEntryForApiContract[] ActivityEntries { get; init; }

@@ -46,11 +46,6 @@ public class ArtistController : ControllerBase
 
 	public ActionResult ArchivedVersionPicture(int id)
 	{
-		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
-		{
-			return NotFound();
-		}
-
 		var contract = Service.GetArchivedArtistPicture(id);
 
 		return Picture(contract);
@@ -144,11 +139,6 @@ public class ArtistController : ControllerBase
 
 	public ActionResult Picture(int id = InvalidId)
 	{
-		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
-		{
-			return NotFound();
-		}
-
 		if (id == InvalidId)
 			return NoId();
 
@@ -159,11 +149,6 @@ public class ArtistController : ControllerBase
 
 	public ActionResult PictureThumb(int id = InvalidId)
 	{
-		if (!PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
-		{
-			return NotFound();
-		}
-
 		if (id == InvalidId)
 			return NoId();
 

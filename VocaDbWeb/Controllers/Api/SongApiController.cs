@@ -404,12 +404,8 @@ public class SongApiController : ApiController
 	/// </remarks>
 	[HttpGet("lyrics/{lyricsId:int}")]
 	[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-	public ActionResult<LyricsForSongContract> GetLyrics(int lyricsId)
-	{
-		return _userPermissionContext.HasPermission(PermissionToken.ViewLyrics)
-			? _queries.GetLyrics(lyricsId)
-			: NotFound();
-	}
+	public LyricsForSongContract GetLyrics(int lyricsId) =>
+		_queries.GetLyrics(lyricsId);
 
 	/// <summary>
 	/// Gets a list of song names. Ideal for autocomplete boxes.

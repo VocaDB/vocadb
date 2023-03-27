@@ -8,7 +8,6 @@ using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Venues;
@@ -53,101 +52,38 @@ public sealed record ComparedVersionsForApiContract<T> where T : class
 
 public static class ComparedVersionsForApiContract
 {
-	public static ComparedVersionsForApiContract<ArchivedAlbumForApiContract> FromAlbum(
-		ArchivedAlbumVersion firstData,
-		ArchivedAlbumVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedAlbumContract> FromAlbum(ArchivedAlbumVersion firstData, ArchivedAlbumVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedAlbumForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedAlbumForApiContract.Create(ArchivedAlbumContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedAlbumContract>.Create(firstData, secondData, ArchivedAlbumContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedArtistForApiContract> FromArtist(
-		ArchivedArtistVersion firstData,
-		ArchivedArtistVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedArtistContract> FromArtist(ArchivedArtistVersion firstData, ArchivedArtistVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedArtistForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedArtistForApiContract.Create(ArchivedArtistContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedArtistContract>.Create(firstData, secondData, ArchivedArtistContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedEventForApiContract> FromReleaseEvent(
-		ArchivedReleaseEventVersion firstData,
-		ArchivedReleaseEventVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedEventContract> FromReleaseEvent(ArchivedReleaseEventVersion firstData, ArchivedReleaseEventVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedEventForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedEventForApiContract.Create(ArchivedEventContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedEventContract>.Create(firstData, secondData, ArchivedEventContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedEventSeriesForApiContract> FromReleaseEventSeries(
-		ArchivedReleaseEventSeriesVersion firstData,
-		ArchivedReleaseEventSeriesVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedEventSeriesContract> FromReleaseEventSeries(ArchivedReleaseEventSeriesVersion firstData, ArchivedReleaseEventSeriesVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedEventSeriesForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedEventSeriesForApiContract.Create(ArchivedEventSeriesContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedEventSeriesContract>.Create(firstData, secondData, ArchivedEventSeriesContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedSongForApiContract> FromSong(
-		ArchivedSongVersion firstData,
-		ArchivedSongVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedSongContract> FromSong(ArchivedSongVersion firstData, ArchivedSongVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedSongForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedSongForApiContract.Create(ArchivedSongContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedSongContract>.Create(firstData, secondData, ArchivedSongContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedTagForApiContract> FromTag(
-		ArchivedTagVersion firstData,
-		ArchivedTagVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedTagContract> FromTag(ArchivedTagVersion firstData, ArchivedTagVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedTagForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedTagForApiContract.Create(ArchivedTagContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedTagContract>.Create(firstData, secondData, ArchivedTagContract.GetAllProperties, d => d.Id);
 	}
 
-	public static ComparedVersionsForApiContract<ArchivedVenueForApiContract> FromVenue(
-		ArchivedVenueVersion firstData,
-		ArchivedVenueVersion? secondData,
-		IUserPermissionContext permissionContext
-	)
+	public static ComparedVersionsForApiContract<ArchivedVenueContract> FromVenue(ArchivedVenueVersion firstData, ArchivedVenueVersion? secondData)
 	{
-		return ComparedVersionsForApiContract<ArchivedVenueForApiContract>.Create(
-			firstData,
-			secondData,
-			version => ArchivedVenueForApiContract.Create(ArchivedVenueContract.GetAllProperties(version), permissionContext),
-			d => d.Id
-		);
+		return ComparedVersionsForApiContract<ArchivedVenueContract>.Create(firstData, secondData, ArchivedVenueContract.GetAllProperties, d => d.Id);
 	}
 }

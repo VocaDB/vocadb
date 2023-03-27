@@ -146,7 +146,7 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 			var songs = songIds.Any() ? ctx.OfType<Song>().Query()
 				.Where(a => songIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, PermissionContext, fields)) : Array.Empty<EntryForApiContract>();
+				.Select(a => new EntryForApiContract(a, lang, fields)) : Array.Empty<EntryForApiContract>();
 
 			var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 				.Where(a => searchedTagIds.Contains(a.Id))

@@ -39,9 +39,7 @@ public class AlbumForEditContract : AlbumContract
 				permissionContext
 			)
 			: null;
-		Pictures = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? album.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList()
-			: Array.Empty<EntryPictureFileContract>();
+		Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList();
 		PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 		Songs = album.Songs
 			.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)

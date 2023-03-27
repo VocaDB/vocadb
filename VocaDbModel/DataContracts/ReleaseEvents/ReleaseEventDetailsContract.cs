@@ -36,9 +36,7 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
 		DefaultNameLanguage = releaseEvent.TranslatedName.DefaultLanguage;
-		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? releaseEvent.PVs : releaseEvent.OriginalPVs)
-			.Select(p => new PVContract(p))
-			.ToArray();
+		PVs = releaseEvent.PVs.Select(p => new PVContract(p)).ToArray();
 		SeriesNumber = releaseEvent.SeriesNumber;
 		SeriesSuffix = releaseEvent.SeriesSuffix;
 		Tags = releaseEvent.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();

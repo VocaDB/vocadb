@@ -157,7 +157,7 @@ public sealed record AlbumDetailsForApiContract
 		Id = album.Id;
 
 		MainPicture = album.Thumb is not null
-			? (userContext.HasPermission(PermissionToken.ViewCoverArtImages) ? new EntryThumbForApiContract(image: album.Thumb, thumbPersister: thumbPersister) : null)
+			? new EntryThumbForApiContract(image: album.Thumb, thumbPersister: thumbPersister)
 			: null;
 
 		Name = album.TranslatedName[languagePreference];
@@ -181,12 +181,8 @@ public sealed record AlbumDetailsForApiContract
 			: null;
 
 		PersonalDescriptionText = album.PersonalDescriptionText;
-		Pictures = userContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? album.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: thumbPersister, name: p.Name)).ToArray()
-			: Array.Empty<EntryThumbForApiContract>();
-		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
-			.Select(p => new PVContract(pv: p))
-			.ToArray();
+		Pictures = album.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: thumbPersister, name: p.Name)).ToArray();
+		PVs = album.PVs.Select(p => new PVContract(pv: p)).ToArray();
 		RatingAverage = album.RatingAverage;
 		RatingCount = album.RatingCount;
 

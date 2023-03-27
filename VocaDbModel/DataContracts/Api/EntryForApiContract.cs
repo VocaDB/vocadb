@@ -31,23 +31,18 @@ public class EntryForApiContract : IEntryWithIntId
 		{
 			EntryType.Album => new EntryForApiContract((Album)entry, languagePreference, permissionContext, thumbPersister, includedFields),
 			EntryType.Artist => new EntryForApiContract((Artist)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference, permissionContext),
+			EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference),
 			EntryType.ReleaseEvent => new EntryForApiContract((ReleaseEvent)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, permissionContext, includedFields),
+			EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, includedFields),
 			EntryType.SongList => new EntryForApiContract((SongList)entry, permissionContext, thumbPersister, includedFields),
 			EntryType.Tag => new EntryForApiContract((Tag)entry, languagePreference, permissionContext, thumbPersister, includedFields),
-			_ => new EntryForApiContract(entry, languagePreference, permissionContext, includedFields),
+			_ => new EntryForApiContract(entry, languagePreference, includedFields),
 		};
 	}
 
 	public EntryForApiContract() { }
 
-	private EntryForApiContract(
-		IEntryWithNames entry,
-		ContentLanguagePreference languagePreference,
-		IUserPermissionContext permissionContext,
-		EntryOptionalFields fields
-	)
+	private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)
 	{
 		EntryType = entry.EntryType;
 		Id = entry.Id;
@@ -70,7 +65,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(artist, languagePreference, permissionContext, includedFields)
+		: this(artist, languagePreference, includedFields)
 	{
 		ActivityDate = artist.ReleaseDate;
 		ArtistType = artist.ArtistType;
@@ -79,9 +74,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister)
-				: null;
+			MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Names))
@@ -107,7 +100,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(album, languagePreference, permissionContext, includedFields)
+		: this(album, languagePreference, includedFields)
 	{
 		ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 		ArtistString = album.ArtistString[languagePreference];
@@ -117,9 +110,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister)
-				: null;
+			MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Names))
@@ -129,9 +120,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.PVs))
 		{
-			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
-				.Select(p => new PVContract(p))
-				.ToArray();
+			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Tags))
@@ -152,7 +141,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(releaseEvent, languagePreference, permissionContext, includedFields)
+		: this(releaseEvent, languagePreference, includedFields)
 	{
 		ActivityDate = releaseEvent.Date.DateTime;
 		EventCategory = releaseEvent.InheritedCategory;
@@ -162,9 +151,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture))
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister)
-				: null;
+			MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister);
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
@@ -174,12 +161,8 @@ public class EntryForApiContract : IEntryWithIntId
 	}
 
 	// Only used for recent comments atm.
-	public EntryForApiContract(
-		DiscussionTopic topic,
-		ContentLanguagePreference languagePreference,
-		IUserPermissionContext permissionContext
-	)
-		: this((IEntryWithNames)topic, languagePreference, permissionContext, EntryOptionalFields.None)
+	public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
+		: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None)
 	{
 		CreateDate = topic.Created;
 	}
@@ -187,10 +170,9 @@ public class EntryForApiContract : IEntryWithIntId
 	public EntryForApiContract(
 		Song song,
 		ContentLanguagePreference languagePreference,
-		IUserPermissionContext permissionContext,
 		EntryOptionalFields includedFields
 	)
-		: this((IEntryWithNames)song, languagePreference, permissionContext, includedFields)
+		: this((IEntryWithNames)song, languagePreference, includedFields)
 	{
 		ActivityDate = song.PublishDate.DateTime;
 		ArtistString = song.ArtistString[languagePreference];
@@ -215,9 +197,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.PVs))
 		{
-			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
-				.Select(p => new PVContract(p))
-				.ToArray();
+			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.Tags))
@@ -237,7 +217,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(songList, ContentLanguagePreference.Default, permissionContext, includedFields)
+		: this(songList, ContentLanguagePreference.Default, includedFields)
 	{
 		ActivityDate = songList.EventDate;
 		CreateDate = songList.CreateDate;
@@ -245,9 +225,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes)
-				: null;
+			MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);
 		}
 	}
 
@@ -258,7 +236,7 @@ public class EntryForApiContract : IEntryWithIntId
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		EntryOptionalFields includedFields
 	)
-		: this(tag, languagePreference, permissionContext, includedFields)
+		: this(tag, languagePreference, includedFields)
 	{
 		CreateDate = tag.CreateDate;
 		Status = tag.Status;
@@ -266,9 +244,7 @@ public class EntryForApiContract : IEntryWithIntId
 
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes)
-				: null;
+			MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes);
 		}
 
 		if (includedFields.HasFlag(EntryOptionalFields.WebLinks))

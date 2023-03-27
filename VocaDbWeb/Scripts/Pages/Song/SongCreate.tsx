@@ -16,7 +16,6 @@ import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { SongHelper } from '@/Helpers/SongHelper';
-import { useLoginManager } from '@/LoginManagerContext';
 import { SongType } from '@/Models/Songs/SongType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
@@ -39,7 +38,6 @@ interface SongCreateLayoutProps {
 const SongCreateLayout = observer(
 	({ songCreateStore }: SongCreateLayoutProps): React.ReactElement => {
 		const vdb = useVdb();
-		const loginManager = useLoginManager();
 
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
@@ -126,32 +124,28 @@ const SongCreateLayout = observer(
 								{/* TODO: ValidationMessageFor */}
 							</div>
 
-							{loginManager.canViewOtherPVs && (
-								<>
-									<div className="editor-label">
-										<label htmlFor="reprintPVUrl">
-											{t('ViewRes.Song:Create.ReprintPV')}
-										</label>
-									</div>
-									<div className="editor-field">
-										<input
-											type="text"
-											id="reprintPVUrl"
-											value={songCreateStore.pv2}
-											onChange={(e): void =>
-												runInAction(() => {
-													songCreateStore.pv2 = e.target.value;
-												})
-											}
-											onBlur={songCreateStore.checkDuplicates}
-											className="span8"
-											maxLength={255}
-											size={30}
-										/>
-										{/* TODO: ValidationMessageFor */}
-									</div>
-								</>
-							)}
+							<div className="editor-label">
+								<label htmlFor="reprintPVUrl">
+									{t('ViewRes.Song:Create.ReprintPV')}
+								</label>
+							</div>
+							<div className="editor-field">
+								<input
+									type="text"
+									id="reprintPVUrl"
+									value={songCreateStore.pv2}
+									onChange={(e): void =>
+										runInAction(() => {
+											songCreateStore.pv2 = e.target.value;
+										})
+									}
+									onBlur={songCreateStore.checkDuplicates}
+									className="span8"
+									maxLength={255}
+									size={30}
+								/>
+								{/* TODO: ValidationMessageFor */}
+							</div>
 
 							<div className="editor-label">
 								{t('ViewRes:EntryCreate.Name')} <RequiredField />

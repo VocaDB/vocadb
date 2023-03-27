@@ -238,22 +238,19 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 
 			await ctx.SaveAsync(artist);
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			if (contract.PictureData != null)
 			{
-				if (contract.PictureData != null)
-				{
-					var pictureData = contract.PictureData;
-					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
-					artist.Picture = new PictureData(parsed);
-					artist.PictureMime = parsed.Mime;
+				var pictureData = contract.PictureData;
+				var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+				artist.Picture = new PictureData(parsed);
+				artist.PictureMime = parsed.Mime;
 
-					pictureData.Id = artist.Id;
-					pictureData.EntryType = EntryType.Artist;
-					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+				pictureData.Id = artist.Id;
+				pictureData.EntryType = EntryType.Artist;
+				var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
-					diff.Picture.Set();
-				}
+				diff.Picture.Set();
 			}
 
 			var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.Created);
@@ -594,33 +591,30 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				objRef: fullProperties.BaseVoicebank
 			);
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			// Picture
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
+
+			if (versionWithPic != null)
 			{
-				// Picture
-				var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
+				artist.Picture = versionWithPic.Picture;
+				artist.PictureMime = versionWithPic.PictureMime;
 
-				if (versionWithPic != null)
+				if (versionWithPic.Picture != null)
 				{
-					artist.Picture = versionWithPic.Picture;
-					artist.PictureMime = versionWithPic.PictureMime;
-
-					if (versionWithPic.Picture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
-						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-					}
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+					using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
+					var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
+					thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 				}
-				else
-				{
-					artist.Picture = null;
-					artist.PictureMime = null;
-				}
-
-				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
-				diff.Picture.Set(!Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic));
 			}
+			else
+			{
+				artist.Picture = null;
+				artist.PictureMime = null;
+			}
+
+			// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
+			diff.Picture.Set(!Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic));
 
 			// Groups
 			DatabaseContextHelper.RestoreObjectRefs(
@@ -691,21 +685,18 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			// Required because of a bug in NHibernate
 			NHibernateUtil.Initialize(artist.Picture);
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			if (pictureData != null)
 			{
-				if (pictureData != null)
-				{
-					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
-					artist.Picture = new PictureData(parsed);
-					artist.PictureMime = parsed.Mime;
+				var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+				artist.Picture = new PictureData(parsed);
+				artist.PictureMime = parsed.Mime;
 
-					pictureData.Id = artist.Id;
-					pictureData.EntryType = EntryType.Artist;
-					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+				pictureData.Id = artist.Id;
+				pictureData.EntryType = EntryType.Artist;
+				var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
-					diff.Picture.Set();
-				}
+				diff.Picture.Set();
 			}
 
 			if (artist.Status != properties.Status)
@@ -779,16 +770,13 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			if (groupsDiff.Changed)
 				diff.Groups.Set();
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
-			{
-				var picsDiff = artist.Pictures.SyncPictures(properties.Pictures, ctx.OfType<User>().GetLoggedUser(permissionContext), artist.CreatePicture);
-				ctx.OfType<ArtistPictureFile>().Sync(picsDiff);
-				var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
-				artist.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
+			var picsDiff = artist.Pictures.SyncPictures(properties.Pictures, ctx.OfType<User>().GetLoggedUser(permissionContext), artist.CreatePicture);
+			ctx.OfType<ArtistPictureFile>().Sync(picsDiff);
+			var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
+			artist.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
-				if (picsDiff.Changed)
-					diff.Pictures.Set();
-			}
+			if (picsDiff.Changed)
+				diff.Pictures.Set();
 
 			var logStr = $"updated properties for artist {_entryLinkFactory.CreateEntryLink(artist)} ({diff.ChangedFieldsString})"
 				+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)

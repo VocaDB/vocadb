@@ -78,7 +78,6 @@ public class TestDatabase
 		session.Save(Album3);
 
 		UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
-		UserWithEditPermissions.AdditionalPermissions.Add(PermissionToken.ViewLyrics);
 		UserWithEditPermissions.AddAlbum(Album, PurchaseStatus.Nothing, MediaType.Other, 0);
 		UserWithEditPermissions.AddAlbum(Album2, PurchaseStatus.Nothing, MediaType.Other, 0);
 		UserWithEditPermissions.AddAlbum(Album3, PurchaseStatus.Nothing, MediaType.Other, 0);

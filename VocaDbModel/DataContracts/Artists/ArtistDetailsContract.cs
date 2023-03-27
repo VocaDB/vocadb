@@ -42,9 +42,7 @@ public class ArtistDetailsContract : ArtistContract
 		LatestAlbums = Array.Empty<AlbumForApiContract>();
 		LatestSongs = Array.Empty<SongForApiContract>();
 		OwnerUsers = artist.OwnerUsers.Select(u => new UserForApiContract(u.User, userIconFactory, UserOptionalFields.MainPicture)).ToArray();
-		Pictures = userContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray()
-			: Array.Empty<EntryPictureFileContract>();
+		Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
 		TopAlbums = Array.Empty<AlbumForApiContract>();
 		TopSongs = Array.Empty<SongForApiContract>();
 		WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();

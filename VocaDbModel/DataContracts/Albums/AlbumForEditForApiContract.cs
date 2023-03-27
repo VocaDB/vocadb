@@ -124,11 +124,9 @@ public sealed record AlbumForEditForApiContract
 				permissionContext
 			)
 			: new();
-		Pictures = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? album.Pictures
-				.Select(p => new EntryPictureFileContract(p, imageStore))
-				.ToList()
-			: Array.Empty<EntryPictureFileContract>();
+		Pictures = album.Pictures
+			.Select(p => new EntryPictureFileContract(p, imageStore))
+			.ToList();
 		PVs = album.PVs
 			.Select(p => new PVContract(p))
 			.ToArray();

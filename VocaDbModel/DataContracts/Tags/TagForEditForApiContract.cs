@@ -85,7 +85,7 @@ public sealed record TagForEditForApiContract
 		HideFromSuggestions = tag.HideFromSuggestions;
 		Id = tag.Id;
 		MainPicture = tag.Thumb is not null && thumbPersister is not null
-			? (userContext.HasPermission(PermissionToken.ViewCoverArtImages) ? new EntryThumbForApiContract(tag.Thumb, thumbPersister) : null)
+			? new EntryThumbForApiContract(tag.Thumb, thumbPersister)
 			: null;
 		Name = tag.TranslatedName[userContext.LanguagePreference];
 		Names = tag.Names

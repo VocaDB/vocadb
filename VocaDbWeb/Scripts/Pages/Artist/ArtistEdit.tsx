@@ -106,43 +106,39 @@ const BasicInfoTabContent = observer(
 					<NamesEditor namesEditStore={artistEditStore.names} />
 				</div>
 
-				{loginManager.canViewCoverArtImages && (
-					<>
-						<div className="editor-label">
-							<label>{t('ViewRes.Artist:Edit.BaMainPicture')}</label>
-						</div>
-						<div className="editor-field">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-											<img
-												src={`/Artist/PictureThumb/${contract.id}`}
-												alt="Artist picture" /* LOC */
-												className="coverPic"
-											/>
-										</td>
-										<td>
-											<p>
-												{t('ViewRes.Artist:Edit.BaPictureInfo', {
-													0: ImageHelper.allowedExtensions.join(', '),
-													1: ImageHelper.maxImageSizeMB,
-												})}
-											</p>
-											<input
-												type="file"
-												id="coverPicUpload"
-												name="coverPicUpload"
-												ref={coverPicUploadRef}
-											/>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</>
-				)}
+				<div className="editor-label">
+					<label>{t('ViewRes.Artist:Edit.BaMainPicture')}</label>
+				</div>
+				<div className="editor-field">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+									<img
+										src={`/Artist/PictureThumb/${contract.id}`}
+										alt="Artist picture" /* LOC */
+										className="coverPic"
+									/>
+								</td>
+								<td>
+									<p>
+										{t('ViewRes.Artist:Edit.BaPictureInfo', {
+											0: ImageHelper.allowedExtensions.join(', '),
+											1: ImageHelper.maxImageSizeMB,
+										})}
+									</p>
+									<input
+										type="file"
+										id="coverPicUpload"
+										name="coverPicUpload"
+										ref={coverPicUploadRef}
+									/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 				<div className="editor-label">
 					<label className="inline-block">
@@ -673,9 +669,8 @@ const ArtistEditLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const coverPicUpload = loginManager.canViewCoverArtImages
-								? coverPicUploadRef.current.files?.item(0) ?? undefined
-								: undefined;
+							const coverPicUpload =
+								coverPicUploadRef.current.files?.item(0) ?? undefined;
 
 							// TODO: Use useRef.
 							const pictureUpload = map(
@@ -719,16 +714,12 @@ const ArtistEditLayout = observer(
 							/>
 						</JQueryUITab>
 
-						{loginManager.canViewCoverArtImages && (
-							<JQueryUITab
-								eventKey="pics"
-								title={t('ViewRes.Artist:Edit.TabAdditionalPictures')}
-							>
-								<AdditionalPicturesTabContent
-									artistEditStore={artistEditStore}
-								/>
-							</JQueryUITab>
-						)}
+						<JQueryUITab
+							eventKey="pics"
+							title={t('ViewRes.Artist:Edit.TabAdditionalPictures')}
+						>
+							<AdditionalPicturesTabContent artistEditStore={artistEditStore} />
+						</JQueryUITab>
 					</JQueryUITabs>
 					<br />
 

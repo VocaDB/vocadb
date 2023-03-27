@@ -386,8 +386,6 @@ public class Song :
 		}
 	}
 
-	public virtual IEnumerable<PVForSong> OriginalPVs => PVs.Where(pv => pv.PVType == PVType.Original);
-
 	/// <summary>
 	/// Bitarray of PV services for this song. Persisted as a bitfield.
 	/// This list does not include disabled PVs.

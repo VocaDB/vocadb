@@ -194,11 +194,9 @@ public sealed record SongDetailsForApiContract
 		Deleted = song.Deleted;
 		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 
-		LyricsFromParents = userContext.HasPermission(PermissionToken.ViewLyrics)
-			? song.GetLyricsFromParents(specialTags, entryTypeTags)
-				.Select(l => new LyricsForSongContract(l, false))
-				.ToArray()
-			: Array.Empty<LyricsForSongContract>();
+		LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags)
+			.Select(l => new LyricsForSongContract(l, false))
+			.ToArray();
 
 		MaxMilliBpm = song.MaxMilliBpm;
 		MinMilliBpm = song.MinMilliBpm;
@@ -226,9 +224,7 @@ public sealed record SongDetailsForApiContract
 
 		PersonalDescriptionText = song.PersonalDescriptionText;
 		Pools = pools;
-		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
-			.Select(p => new PVContract(pv: p))
-			.ToArray();
+		PVs = song.PVs.Select(p => new PVContract(pv: p)).ToArray();
 
 		ReleaseEvent = song.ReleaseEvent is not null && !song.ReleaseEvent.Deleted
 			? new ReleaseEventForApiContract(

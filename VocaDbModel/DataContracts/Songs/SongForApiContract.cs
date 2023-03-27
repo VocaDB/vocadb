@@ -68,11 +68,7 @@ public class SongForApiContract : IEntryBase
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).ToArray();
 
 		if (fields.HasFlag(SongOptionalFields.Lyrics))
-		{
-			Lyrics = permissionContext.HasPermission(PermissionToken.ViewLyrics)
-				? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray()
-				: Array.Empty<LyricsForSongContract>();
-		}
+			Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 
 		if (fields.HasFlag(SongOptionalFields.MainPicture))
 		{
@@ -95,11 +91,7 @@ public class SongForApiContract : IEntryBase
 			OriginalVersionId = song.OriginalVersion.Id;
 
 		if (fields.HasFlag(SongOptionalFields.PVs))
-		{
-			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? song.PVs : song.OriginalPVs)
-				.Select(p => new PVContract(p))
-				.ToArray();
-		}
+			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 		if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null)
 		{

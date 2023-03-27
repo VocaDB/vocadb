@@ -223,6 +223,45 @@ public class SongService : ServiceBase
 		});
 	}
 
+	public LyricsForSongContract GetRandomLyricsForSong(string query)
+	{
+		return HandleQuery(session =>
+		{
+			var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query),
+				Array.Empty<SongType>(), 0, 10, false,
+				SongSortRule.Name, false, true, null)
+			{
+				AdvancedFilters = new[] { new AdvancedSearchFilter { FilterType = AdvancedFilterType.Lyrics, Param = AdvancedSearchFilter.Any } }
+			}).Items;
+
+			if (!songContract.Any())
+				return null;
+
+			var songIds = songContract.Select(s => s.Id).ToArray();
+
+			var songs = session.Query<Song>().Where(s => songIds.Contains(s.Id)).ToArray();
+			var allLyrics = songs.SelectMany(s => s.Lyrics).ToArray();
+
+			if (!allLyrics.Any())
+				return null;
+
+			var lyrics = allLyrics[new Random().Next(allLyrics.Length)];
+
+			return new LyricsForSongContract(lyrics);
+		});
+	}
+
+	public LyricsForSongContract GetRandomSongWithLyricsDetails()
+	{
+		return HandleQuery(session =>
+		{
+			var ids = session.Query<LyricsForSong>().Select(s => s.Id).ToArray();
+			var id = ids[new Random().Next(ids.Length)];
+
+			return new LyricsForSongContract(session.Load<LyricsForSong>(id));
+		});
+	}
+
 	public T GetSong<T>(int id, Func<Song, T> fac)
 	{
 		return HandleQuery(session => fac(session.Load<Song>(id)));

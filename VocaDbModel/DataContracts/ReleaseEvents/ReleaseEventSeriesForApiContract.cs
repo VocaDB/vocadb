@@ -52,9 +52,7 @@ public class ReleaseEventSeriesForApiContract : IEntryWithReadOnlyIntId
 
 		if (thumbPersister != null && fields.HasFlag(ReleaseEventSeriesOptionalFields.MainPicture))
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister)
-				: null;
+			MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister);
 		}
 
 		if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Names))

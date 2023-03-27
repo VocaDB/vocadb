@@ -6,7 +6,6 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.UseCases;
@@ -18,11 +17,7 @@ public class SongForEditContract : SongContract
 	public SongForEditContract() { }
 
 #nullable enable
-	public SongForEditContract(
-		Song song,
-		ContentLanguagePreference languagePreference,
-		IUserPermissionContext permissionContext
-	)
+	public SongForEditContract(Song song, ContentLanguagePreference languagePreference)
 		: base(song, languagePreference)
 	{
 		ParamIs.NotNull(() => song);
@@ -34,9 +29,7 @@ public class SongForEditContract : SongContract
 		Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 		DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
 		HasAlbums = song.Albums.Any();
-		Lyrics = permissionContext.HasPermission(PermissionToken.ViewLyrics)
-			? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray()
-			: Array.Empty<LyricsForSongContract>();
+		Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 		Names = song.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 		Notes = new EnglishTranslatedStringContract(song.Notes);
 		OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);

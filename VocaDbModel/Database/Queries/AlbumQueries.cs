@@ -865,33 +865,30 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			album.DiscType = fullProperties.DiscType;
 			album.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			// Picture
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
+
+			if (versionWithPic != null)
 			{
-				// Picture
-				var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
+				album.CoverPictureData = versionWithPic.CoverPicture;
+				album.CoverPictureMime = versionWithPic.CoverPictureMime;
 
-				if (versionWithPic != null)
+				if (versionWithPic.CoverPicture != null)
 				{
-					album.CoverPictureData = versionWithPic.CoverPicture;
-					album.CoverPictureMime = versionWithPic.CoverPictureMime;
-
-					if (versionWithPic.CoverPicture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
-						var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-					}
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+					using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
+					var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
+					thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 				}
-				else
-				{
-					album.CoverPictureData = null;
-					album.CoverPictureMime = null;
-				}
-
-				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
-				diff.Cover.Set(!Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic));
 			}
+			else
+			{
+				album.CoverPictureData = null;
+				album.CoverPictureMime = null;
+			}
+
+			// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
+			diff.Cover.Set(!Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic));
 
 			// Original release
 			album.OriginalRelease = fullProperties.OriginalRelease != null
@@ -1033,21 +1030,18 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			// Required because of a bug in NHibernate
 			NHibernateUtil.Initialize(album.CoverPictureData);
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			if (pictureData != null)
 			{
-				if (pictureData != null)
-				{
-					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
-					album.CoverPictureData = new PictureData(parsed);
-					album.CoverPictureMime = parsed.Mime;
+				var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+				album.CoverPictureData = new PictureData(parsed);
+				album.CoverPictureMime = parsed.Mime;
 
-					pictureData.Id = album.Id;
-					pictureData.EntryType = EntryType.Album;
-					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.AllThumbs);
+				pictureData.Id = album.Id;
+				pictureData.EntryType = EntryType.Album;
+				var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.AllThumbs);
 
-					diff.Cover.Set();
-				}
+				diff.Cover.Set();
 			}
 
 			if (album.Status != properties.Status)
@@ -1126,16 +1120,13 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				diff.Tracks.Set();
 			}
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
-			{
-				var picsDiff = album.Pictures.SyncPictures(properties.Pictures, session.OfType<User>().GetLoggedUser(PermissionContext), album.CreatePicture);
-				await session.OfType<AlbumPictureFile>().SyncAsync(picsDiff);
-				var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
-				album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
+			var picsDiff = album.Pictures.SyncPictures(properties.Pictures, session.OfType<User>().GetLoggedUser(PermissionContext), album.CreatePicture);
+			await session.OfType<AlbumPictureFile>().SyncAsync(picsDiff);
+			var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
+			album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
-				if (picsDiff.Changed)
-					diff.Pictures.Set();
-			}
+			if (picsDiff.Changed)
+				diff.Pictures.Set();
 
 			var pvDiff = album.SyncPVs(properties.PVs);
 			await session.OfType<PVForAlbum>().SyncAsync(pvDiff);

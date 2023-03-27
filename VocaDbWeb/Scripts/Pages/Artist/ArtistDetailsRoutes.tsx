@@ -1,6 +1,5 @@
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
-import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import ArtistBasicInfo from '@/Pages/Artist/ArtistBasicInfo';
 import ArtistCollaborationAlbums from '@/Pages/Artist/ArtistCollaborationAlbums';
@@ -36,8 +35,6 @@ export const ArtistDetailsTabs = React.memo(
 		tab,
 		children,
 	}: ArtistDetailsTabsProps): React.ReactElement => {
-		const loginManager = useLoginManager();
-
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Artist']);
 
 		return (
@@ -61,19 +58,17 @@ export const ArtistDetailsTabs = React.memo(
 							{t('ViewRes:EntryDetails.DiscussionTab')} ({artist.commentCount})
 						</Link>
 					</JQueryUINavItemComponent>
-					{loginManager.canViewCoverArtImages && (
-						<JQueryUINavItemComponent active={tab === 'pictures'}>
-							<Link
-								to={`${EntryUrlMapper.details(
-									EntryType.Artist,
-									artist.id,
-								)}/pictures`}
-							>
-								{t('ViewRes:EntryDetails.PicturesTab')} (
-								{artist.pictures.length + 1})
-							</Link>
-						</JQueryUINavItemComponent>
-					)}
+					<JQueryUINavItemComponent active={tab === 'pictures'}>
+						<Link
+							to={`${EntryUrlMapper.details(
+								EntryType.Artist,
+								artist.id,
+							)}/pictures`}
+						>
+							{t('ViewRes:EntryDetails.PicturesTab')} (
+							{artist.pictures.length + 1})
+						</Link>
+					</JQueryUINavItemComponent>
 					<JQueryUINavItemComponent active={tab === 'albums'}>
 						<Link
 							to={`${EntryUrlMapper.details(
@@ -136,8 +131,6 @@ const ArtistDetailsRoutes = ({
 	artist,
 	artistDetailsStore,
 }: ArtistDetailsRoutesProps): React.ReactElement => {
-	const loginManager = useLoginManager();
-
 	return (
 		<Routes>
 			<Route
@@ -149,17 +142,15 @@ const ArtistDetailsRoutes = ({
 					/>
 				}
 			/>
-			{loginManager.canViewCoverArtImages && (
-				<Route
-					path="pictures"
-					element={
-						<ArtistPictures
-							artist={artist}
-							artistDetailsStore={artistDetailsStore}
-						/>
-					}
-				/>
-			)}
+			<Route
+				path="pictures"
+				element={
+					<ArtistPictures
+						artist={artist}
+						artistDetailsStore={artistDetailsStore}
+					/>
+				}
+			/>
 			<Route
 				path="albums"
 				element={

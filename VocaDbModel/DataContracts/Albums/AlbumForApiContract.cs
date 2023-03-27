@@ -84,9 +84,7 @@ public class AlbumForApiContract : IEntryBase
 
 		if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && album.Thumb != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(album.Thumb, thumbPersister)
-				: null;
+			MainPicture = new EntryThumbForApiContract(album.Thumb, thumbPersister);
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.Names))
@@ -96,9 +94,7 @@ public class AlbumForApiContract : IEntryBase
 
 		if (fields.HasFlag(AlbumOptionalFields.PVs))
 		{
-			PVs = (permissionContext.HasPermission(PermissionToken.ViewOtherPVs) ? album.PVs : album.OriginalPVs)
-				.Select(p => new PVContract(p))
-				.ToArray();
+			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent))

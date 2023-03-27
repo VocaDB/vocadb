@@ -368,13 +368,10 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 
 				ctx.OfType<SongInList>().Sync(songDiff);
 
-				if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+				if (uploadedFile != null)
 				{
-					if (uploadedFile != null)
-					{
-						diff.Thumbnail.Set();
-						SetThumb(list, uploadedFile);
-					}
+					diff.Thumbnail.Set();
+					SetThumb(list, uploadedFile);
 				}
 
 				ctx.Update(list);

@@ -452,7 +452,6 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 				tag: tag,
 				stats: stats,
 				languagePreference: LanguagePreference,
-				PermissionContext,
 				commentCount: commentCount,
 				latestComments: latestComments,
 				isFollowing: isFollowing,
@@ -953,17 +952,14 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			tag.Status = contract.Status;
 			tag.Targets = (TagTargetTypes)contract.Targets;
 
-			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
+			if (uploadedImage != null)
 			{
-				if (uploadedImage != null)
-				{
-					diff.Picture.Set();
+				diff.Picture.Set();
 
-					var thumb = new EntryThumbMain(tag, uploadedImage.Mime);
-					tag.Thumb = thumb;
-					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
-				}
+				var thumb = new EntryThumbMain(tag, uploadedImage.Mime);
+				tag.Thumb = thumb;
+				var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+				thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 			}
 
 			var logStr = $"updated properties for tag {_entryLinkFactory.CreateEntryLink(tag)} ({diff.ChangedFieldsString})";

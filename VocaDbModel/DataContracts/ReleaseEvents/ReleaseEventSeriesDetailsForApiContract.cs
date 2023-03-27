@@ -72,9 +72,7 @@ public sealed record ReleaseEventSeriesDetailsForApiContract
 			.ToArray();
 
 		Id = series.Id;
-		MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister)
-			: null;
+		MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister);
 		Name = series.TranslatedName[languagePreference];
 		Status = series.Status;
 

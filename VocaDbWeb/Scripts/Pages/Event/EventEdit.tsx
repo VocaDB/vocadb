@@ -337,41 +337,39 @@ const BasicInfoTabContent = observer(
 					</div>
 				)}
 
-				{loginManager.canViewCoverArtImages && (
-					<>
-						<div className="editor-label">
-							<label>Picture{/* LOC */}</label>
-						</div>
-						<div className="editor-field">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-											<img
-												src={UrlHelper.imageThumb(
-													releaseEventEditStore.contract.mainPicture,
-													ImageSize.SmallThumb,
-												)}
-												alt="Picture" /* LOC */
-												className="coverPic"
-											/>
-										</td>
-										<td>
-											<ImageUploadMessage />
-											<input
-												type="file"
-												id="pictureUpload"
-												name="pictureUpload"
-												ref={pictureUploadRef}
-											/>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</>
-				)}
+				<br />
+
+				<div className="editor-label">
+					<label>Picture{/* LOC */}</label>
+				</div>
+				<div className="editor-field">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+									<img
+										src={UrlHelper.imageThumb(
+											releaseEventEditStore.contract.mainPicture,
+											ImageSize.SmallThumb,
+										)}
+										alt="Picture" /* LOC */
+										className="coverPic"
+									/>
+								</td>
+								<td>
+									<ImageUploadMessage />
+									<input
+										type="file"
+										id="pictureUpload"
+										name="pictureUpload"
+										ref={pictureUploadRef}
+									/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 				<div className="editor-label">
 					<HelpLabel
@@ -722,9 +720,8 @@ const EventEditLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const pictureUpload = loginManager.canViewCoverArtImages
-								? pictureUploadRef.current.files?.item(0) ?? undefined
-								: undefined;
+							const pictureUpload =
+								pictureUploadRef.current.files?.item(0) ?? undefined;
 
 							const id = await releaseEventEditStore.submit(
 								requestToken,

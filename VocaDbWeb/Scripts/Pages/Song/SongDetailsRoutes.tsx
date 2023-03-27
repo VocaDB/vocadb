@@ -1,7 +1,6 @@
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
-import { useLoginManager } from '@/LoginManagerContext';
 import SongBasicInfo from '@/Pages/Song/SongBasicInfo';
 import SongDiscussion from '@/Pages/Song/SongDiscussion';
 import SongLyrics from '@/Pages/Song/SongLyrics';
@@ -28,8 +27,6 @@ export const SongDetailsTabs = React.memo(
 		tab,
 		children,
 	}: SongDetailsTabsProps): React.ReactElement => {
-		const loginManager = useLoginManager();
-
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Song',
@@ -79,7 +76,7 @@ export const SongDetailsTabs = React.memo(
 							{t('ViewRes:EntryDetails.BasicInfoTab')}
 						</Link>
 					</JQueryUINavItemComponent>
-					{loginManager.canViewLyrics && model.lyrics.length > 0 && (
+					{model.lyrics.length > 0 && (
 						<JQueryUINavItemComponent active={tab === 'lyrics'}>
 							<Link
 								to={`${EntryUrlMapper.details_song(
@@ -142,18 +139,14 @@ const SongDetailsRoutes = ({
 	model,
 	songDetailsStore,
 }: SongDetailsRoutesProps): React.ReactElement => {
-	const loginManager = useLoginManager();
-
 	return (
 		<Routes>
-			{loginManager.canViewLyrics && (
-				<Route
-					path="lyrics"
-					element={
-						<SongLyrics model={model} songDetailsStore={songDetailsStore} />
-					}
-				/>
-			)}
+			<Route
+				path="lyrics"
+				element={
+					<SongLyrics model={model} songDetailsStore={songDetailsStore} />
+				}
+			/>
 			<Route
 				path="discussion"
 				element={

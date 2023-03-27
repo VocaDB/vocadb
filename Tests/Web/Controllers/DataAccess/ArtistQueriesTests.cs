@@ -67,7 +67,6 @@ public class ArtistQueriesTests
 		_repository.SaveNames(_artist, _vocalist);
 
 		_user = CreateEntry.User(name: "Miku", group: UserGroupId.Moderator);
-		_user.AdditionalPermissions.Add(PermissionToken.ViewCoverArtImages);
 		_user2 = CreateEntry.User(name: "Rin", group: UserGroupId.Regular);
 		_repository.Save(_user);
 		_permissionContext = new FakePermissionContext(_user);

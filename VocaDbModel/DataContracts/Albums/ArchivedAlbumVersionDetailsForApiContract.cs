@@ -25,7 +25,7 @@ public sealed record ArchivedAlbumVersionDetailsForApiContract
 	public string Name { get; init; }
 
 	[DataMember]
-	public ComparedVersionsForApiContract<ArchivedAlbumForApiContract> Versions { get; init; }
+	public ComparedVersionsForApiContract<ArchivedAlbumContract> Versions { get; init; }
 
 	public ArchivedAlbumVersionDetailsForApiContract(
 		ArchivedAlbumVersion archived,
@@ -52,7 +52,7 @@ public sealed record ArchivedAlbumVersionDetailsForApiContract
 			.Select(a => ArchivedObjectVersionForApiContract.FromAlbum(a, userIconFactory))
 			.ToArray();
 
-		Versions = ComparedVersionsForApiContract.FromAlbum(archived, comparedVersion, permissionContext);
+		Versions = ComparedVersionsForApiContract.FromAlbum(archived, comparedVersion);
 	}
 
 	public bool Hidden => ArchivedVersion.Hidden || ComparedVersion is not null && ComparedVersion.Hidden;

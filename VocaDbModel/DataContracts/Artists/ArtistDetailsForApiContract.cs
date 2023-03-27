@@ -197,7 +197,7 @@ public sealed record ArtistDetailsForApiContract
 		Id = artist.Id;
 
 		MainPicture = artist.Thumb is not null
-			? (userContext.HasPermission(PermissionToken.ViewCoverArtImages) ? new EntryThumbForApiContract(image: artist.Thumb, thumbPersister: imageStore) : null)
+			? new EntryThumbForApiContract(image: artist.Thumb, thumbPersister: imageStore)
 			: null;
 
 		Name = artist.TranslatedName[languagePreference];
@@ -206,9 +206,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(u => new UserForApiContract(user: u.User, iconFactory: userIconFactory, optionalFields: UserOptionalFields.MainPicture))
 			.ToArray();
 
-		Pictures = userContext.HasPermission(PermissionToken.ViewCoverArtImages)
-			? artist.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: imageStore, name: p.Name)).ToArray()
-			: Array.Empty<EntryThumbForApiContract>();
+		Pictures = artist.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: imageStore, name: p.Name)).ToArray();
 		ReleaseDate = artist.ReleaseDate.DateTime;
 		Status = artist.Status;
 		Version = artist.Version;

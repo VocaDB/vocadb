@@ -59,9 +59,7 @@ public class TagForApiContract
 
 		if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null && thumbPersister != null)
 		{
-			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(tag.Thumb, thumbPersister)
-				: null;
+			MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister);
 		}
 
 		if (optionalFields.HasFlag(TagOptionalFields.Names))

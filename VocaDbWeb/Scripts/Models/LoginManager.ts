@@ -48,9 +48,6 @@ export enum PermissionToken {
 	CreateDatabaseDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
 	ViewOldUsernames = '452a66b3-baa8-4ad8-8f8a-00655d37be80',
 	ViewDisabledUsers = 'a3f8af3c-f39c-419c-a895-f3f73e7fa253',
-	ViewLyrics = 'a89d90f5-5aa1-4ad7-b02c-fdef3dcd0e19',
-	ViewCoverArtImages = '6828e4e4-f4ee-4208-910f-0a3c913fb771',
-	ViewOtherPVs = 'c1bfdb49-d77e-4876-a94d-b51107593ea6',
 }
 
 // Corresponds to the LoginManager and EntryPermissionManager classes in C#.
@@ -198,18 +195,6 @@ export class LoginManager {
 
 	get canViewOldUsernames(): boolean {
 		return this.hasPermission(PermissionToken.ViewOldUsernames);
-	}
-
-	get canViewLyrics(): boolean {
-		return this.hasPermission(PermissionToken.ViewLyrics);
-	}
-
-	get canViewCoverArtImages(): boolean {
-		return this.hasPermission(PermissionToken.ViewCoverArtImages);
-	}
-
-	get canViewOtherPVs(): boolean {
-		return this.hasPermission(PermissionToken.ViewOtherPVs);
 	}
 
 	private static readonly allPermissions: EntryStatus[] = [

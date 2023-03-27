@@ -140,42 +140,38 @@ const BasicInfoTabContent = observer(
 					<NamesEditor namesEditStore={albumEditStore.names} />
 				</div>
 
-				{loginManager.canViewCoverArtImages && (
-					<>
-						<div className="editor-label">
-							<label>{t('ViewRes.Album:Edit.BaMainCoverPicture')}</label>
-						</div>
-						<div className="editor-field">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<img
-												src={`/Album/CoverPictureThumb/${albumEditStore.contract.id}`}
-												alt={t('ViewRes.Album:Edit.ImagePreview')}
-												className="coverPic"
-											/>
-										</td>
-										<td>
-											<p>
-												{t('ViewRes.Album:Edit.BaPictureInfo', {
-													0: ImageHelper.allowedExtensions.join(', '),
-													1: ImageHelper.maxImageSizeMB,
-												})}
-											</p>
-											<input
-												type="file"
-												id="coverPicUpload"
-												name="coverPicUpload"
-												ref={coverPicUploadRef}
-											/>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</>
-				)}
+				<div className="editor-label">
+					<label>{t('ViewRes.Album:Edit.BaMainCoverPicture')}</label>
+				</div>
+				<div className="editor-field">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<img
+										src={`/Album/CoverPictureThumb/${albumEditStore.contract.id}`}
+										alt={t('ViewRes.Album:Edit.ImagePreview')}
+										className="coverPic"
+									/>
+								</td>
+								<td>
+									<p>
+										{t('ViewRes.Album:Edit.BaPictureInfo', {
+											0: ImageHelper.allowedExtensions.join(', '),
+											1: ImageHelper.maxImageSizeMB,
+										})}
+									</p>
+									<input
+										type="file"
+										id="coverPicUpload"
+										name="coverPicUpload"
+										ref={coverPicUploadRef}
+									/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 				<div className="editor-label">
 					<label>{t('ViewRes.Album:Edit.BaDescription')}</label>{' '}
@@ -971,9 +967,8 @@ const AlbumEditLayout = observer(
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
-							const coverPicUpload = loginManager.canViewCoverArtImages
-								? coverPicUploadRef.current.files?.item(0) ?? undefined
-								: undefined;
+							const coverPicUpload =
+								coverPicUploadRef.current.files?.item(0) ?? undefined;
 
 							// TODO: Use useRef.
 							const pictureUpload = map(
@@ -1038,14 +1033,12 @@ const AlbumEditLayout = observer(
 							<TracksTabContent albumEditStore={albumEditStore} />
 						</JQueryUITab>
 
-						{loginManager.canViewCoverArtImages && (
-							<JQueryUITab
-								eventKey="pics"
-								title={t('ViewRes.Album:Edit.PicturesTab')}
-							>
-								<PicturesTabContent albumEditStore={albumEditStore} />
-							</JQueryUITab>
-						)}
+						<JQueryUITab
+							eventKey="pics"
+							title={t('ViewRes.Album:Edit.PicturesTab')}
+						>
+							<PicturesTabContent albumEditStore={albumEditStore} />
+						</JQueryUITab>
 
 						<JQueryUITab
 							eventKey="pvs"
