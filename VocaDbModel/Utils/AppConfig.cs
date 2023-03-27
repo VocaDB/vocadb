@@ -52,7 +52,8 @@ public static class AppConfig
 		DiscType.Other
 	};
 
-	private static readonly SongType[] DefaultSongTypes = {
+	private static readonly SongType[] DefaultSongTypes =
+	{
 		SongType.Unspecified,
 		SongType.Original,
 		SongType.Remaster,
