@@ -7,10 +7,8 @@ import {
 } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PVService } from '@/Models/PVs/PVService';
 import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
-import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -31,12 +29,6 @@ const EmbedPVPreviewDropdown = React.memo(
 		onPlay,
 		onToggle,
 	}: EmbedPVPreviewDropdownProps): React.ReactElement => {
-		const diva = useNostalgicDiva();
-
-		const handlePause = React.useCallback(async () => {
-			await diva.pause();
-		}, [diva]);
-
 		return (
 			<Dropdown
 				as={ButtonGroup}
@@ -63,23 +55,6 @@ const EmbedPVPreviewDropdown = React.memo(
 					</span>
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
-					{pv !== undefined &&
-						pv.service !== PVService.File &&
-						pv.service !== PVService.LocalFile && (
-							<>
-								<Dropdown.Item
-									as="a"
-									href={pv.url}
-									target="_blank"
-									rel="noreferrer"
-									onClick={handlePause}
-								>
-									Watch on {pv.service}
-									{/* LOC */}
-								</Dropdown.Item>
-								<Dropdown.Divider />
-							</>
-						)}
 					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayFirst)}>
 						Play first{/* LOC */}
 					</Dropdown.Item>
