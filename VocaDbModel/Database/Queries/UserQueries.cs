@@ -579,6 +579,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		return new CommentQueries<UserComment, User>(ctx.OfType<UserComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 	}
 
+#nullable enable
 	/// <summary>
 	/// Attempts to log in a user.
 	/// </summary>
@@ -590,6 +591,12 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	/// <returns>Login attempt result. Cannot be null.</returns>
 	public LoginResult CheckAuthentication(string name, string pass, string hostname, string culture, bool delayFailedLogin)
 	{
+		static string MakeFailedLoginMessage(string hostname, string? message)
+		{
+			var prefix = $"failed login from {MakeGeoIpToolLink(hostname)}";
+			return !string.IsNullOrEmpty(message) ? $"{prefix} - {message}" : prefix;
+		}
+
 		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrEmpty(pass))
 			return LoginResult.CreateError(LoginError.InvalidPassword);
 
@@ -599,8 +606,25 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		{
 			if (IsPoisoned(ctx, lc))
 			{
-				ctx.AuditLogger.SysLog($"failed login from {MakeGeoIpToolLink(hostname)} - account is poisoned.", name);
+				ctx.AuditLogger.SysLog(MakeFailedLoginMessage(hostname, message: "account is poisoned."), name);
 				return LoginResult.CreateError(LoginError.AccountPoisoned);
+			}
+
+			// HACK: Rate limiting based on action in audit log entries.
+			var failedLoginMessagePrefix = MakeFailedLoginMessage(hostname, message: null)
+				// https://stackoverflow.com/questions/3661125/sql-server-like-containing-bracket-characters
+				.Replace("[", "[[]");
+			var failedLoginCutoff = DateTime.Now - TimeSpan.FromHours(1);
+			var recentFailedLoginCount = ctx.Query<AuditLogEntry>()
+				.Count(entry => entry.Time > failedLoginCutoff && entry.Action.StartsWith(failedLoginMessagePrefix));
+			if (recentFailedLoginCount > 10)
+			{
+				ctx.AuditLogger.SysLog(MakeFailedLoginMessage(hostname, message: "too many requests."), name);
+				if (delayFailedLogin)
+				{
+					Thread.Sleep(2000);
+				}
+				return LoginResult.CreateError(LoginError.TooManyRequests);
 			}
 
 			// Attempt to find user by either lowercase username.
@@ -608,7 +632,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 			if (user == null)
 			{
-				ctx.AuditLogger.AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - no user.", name);
+				ctx.AuditLogger.AuditLog(MakeFailedLoginMessage(hostname, message: "no user."), name);
 				if (delayFailedLogin)
 					Thread.Sleep(2000);
 				return LoginResult.CreateError(LoginError.NotFound);
@@ -621,7 +645,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 			if (user.Password != hashed)
 			{
-				ctx.AuditLogger.AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - wrong password.", name);
+				ctx.AuditLogger.AuditLog(MakeFailedLoginMessage(hostname, message: "wrong password."), name);
 				if (delayFailedLogin)
 					Thread.Sleep(2000);
 				return LoginResult.CreateError(LoginError.InvalidPassword);
@@ -637,6 +661,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			return LoginResult.CreateSuccess(new ServerOnlyUserContract(user));
 		});
 	}
+#nullable disable
 
 	public bool CheckPasswordResetRequest(Guid requestId)
 	{

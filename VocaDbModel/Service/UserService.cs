@@ -358,6 +358,8 @@ public enum LoginError
 	InvalidPassword,
 
 	AccountPoisoned,
+
+	TooManyRequests,
 }
 
 public class LoginResult
