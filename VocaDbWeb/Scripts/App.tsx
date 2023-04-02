@@ -11,6 +11,7 @@ import { LoginManagerProvider } from '@/LoginManagerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
 import { VdbProvider } from '@/VdbContext';
 import '@/i18n';
+import { MantineProvider } from '@mantine/core';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
@@ -42,25 +43,27 @@ const AppContainer = (): React.ReactElement => {
 
 const App = (): React.ReactElement => {
 	return (
-		<Compose
-			components={[
-				VdbProvider,
-				LoginManagerProvider,
-				BrowserRouter,
-				NostalgicDivaProvider,
-				VdbPlayerProvider,
-				MutedUsersProvider,
-			]}
-		>
-			<ScrollToTop />
-			<Header />
-			<div css={{ display: 'flex' }}>
-				<LeftMenu />
-				<AppContainer />
-			</div>
-			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
-			<VdbPlayer />
-		</Compose>
+		<MantineProvider withGlobalStyles withNormalizeCSS>
+			<Compose
+				components={[
+					VdbProvider,
+					LoginManagerProvider,
+					BrowserRouter,
+					NostalgicDivaProvider,
+					VdbPlayerProvider,
+					MutedUsersProvider,
+				]}
+			>
+				<ScrollToTop />
+				<Header />
+				<div css={{ display: 'flex' }}>
+					<LeftMenu />
+					<AppContainer />
+				</div>
+				<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
+				<VdbPlayer />
+			</Compose>
+		</MantineProvider>
 	);
 };
 

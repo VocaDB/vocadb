@@ -1,4 +1,3 @@
-import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
 import Navbar from '@/Bootstrap/Navbar';
@@ -31,12 +30,31 @@ import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { useVdb } from '@/VdbContext';
+import {
+	ActionIcon,
+	Anchor,
+	Badge,
+	Button,
+	Group,
+	Indicator,
+	MediaQuery,
+	Menu,
+	TextInput,
+} from '@mantine/core';
+import {
+	IconChevronDown,
+	IconMail,
+	IconSearch,
+	IconUser,
+} from '@tabler/icons-react';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+
+import MantineAutocomplete from './MantineAutocomplete';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -83,6 +101,7 @@ export const GlobalSearchBox = observer(
 	({ topBarStore }: GlobalSearchBoxProps): React.ReactElement => {
 		const vdb = useVdb();
 		const loginManager = useLoginManager();
+		const [searchTerm, setSearchTerm] = useState('');
 
 		const { t } = useTranslation([
 			'Resources',
@@ -94,9 +113,6 @@ export const GlobalSearchBox = observer(
 		const entryTypeName = t(
 			`VocaDb.Web.Resources.Domain:EntryTypeNames.${topBarStore.entryType}`,
 		);
-
-		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
-		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
 		const setLanguagePreferenceCookie = React.useCallback(
 			(languagePreference: ContentLanguagePreference): boolean => {
@@ -283,14 +299,11 @@ export const GlobalSearchBox = observer(
 				[EntryType.User]: tryRedirectUser,
 			};
 
-			await tryRedirectFuncs[topBarStore.entryType](
-				globalSearchTermRef.current.value,
-			);
+			await tryRedirectFuncs[topBarStore.entryType](searchTerm);
 		}, [vdb, topBarStore, navigate]);
 
 		return (
 			<form
-				className="navbar-form form-inline pull-left navbar-search"
 				id="globalSearchBox"
 				onSubmit={async (e): Promise<void> => {
 					e.preventDefault();
@@ -312,14 +325,20 @@ export const GlobalSearchBox = observer(
 				<Navbar.Brand as={Link} to={'/'}>
 					{vdb.values.siteName}
 				</Navbar.Brand>
-				<div className="input-prepend input-append navbar-searchBox">
-					<Dropdown as={ButtonGroup}>
-						<Dropdown.Toggle variant="info" href="#">
-							<span>{entryTypeName}</span> <span className="caret"></span>
-						</Dropdown.Toggle>
-						<Dropdown.Menu>
+				<Group>
+					<Menu>
+						<Menu.Target>
+							<Button
+								color="cyan"
+								size="xs"
+								rightIcon={<IconChevronDown size={16} />}
+							>
+								{entryTypeName}
+							</Button>
+						</Menu.Target>
+						<Menu.Dropdown>
 							{allObjectTypes.map((entryType) => (
-								<Dropdown.Item
+								<Menu.Item
 									onClick={(): void =>
 										runInAction(() => {
 											topBarStore.entryType = entryType;
@@ -328,239 +347,211 @@ export const GlobalSearchBox = observer(
 									key={entryType}
 								>
 									{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
-								</Dropdown.Item>
+								</Menu.Item>
 							))}
-						</Dropdown.Menu>
-					</Dropdown>
-					<JQueryUIAutocomplete
-						type="text"
-						name="globalSearchTerm"
-						className="globalSearchBox search-query"
-						size={50}
-						placeholder={t('ViewRes:Shared.Search')}
-						maxLength={255}
-						source={(
-							request: { term: string },
-							response: (items: string[]) => void,
-						): void => {
-							globalSearchBoxSource(topBarStore.entryType, request.term).then(
-								response,
-							);
-						}}
-						select={(event: Event, ui): void => {
-							globalSearchTermRef.current.value = ui.item.value;
+						</Menu.Dropdown>
+					</Menu>
+					<MantineAutocomplete
+						fetchData={(val) =>
+							globalSearchBoxSource(topBarStore.entryType, val)
+						}
+						onItemSubmit={(item) => {
+							setSearchTerm(item.value);
 							submit();
 						}}
-						ref={globalSearchTermRef}
+						size="xs"
+						rightSection={
+							<ActionIcon
+								radius="xl"
+								size={24}
+								variant="filled"
+								color="cyan"
+								type="submit"
+							>
+								<IconSearch size="1.1rem" stroke={1.5} />
+							</ActionIcon>
+						}
+						rightSectionWidth={34}
 					/>
-					<Button
-						type="submit"
-						variant="info"
-						title={t('ViewRes:Shared.Search')}
-					>
-						<i className="icon-search"></i>
-					</Button>
-				</div>{' '}
-				<ButtonGroup className="navbar-languageBar">
+					{/* <ButtonGroup className="navbar-languageBar">
 					<ShowRandomPageButton
 						entryType={topBarStore.entryType}
 						globalSearchTermRef={globalSearchTermRef}
 					/>
-				</ButtonGroup>{' '}
-				<Dropdown className="navbar-languageBar" as={ButtonGroup}>
-					<Dropdown.Toggle
-						variant="info"
-						href="#"
-						className="navbar-languageBtn"
-					>
-						<i className="icon-user"></i>{' '}
-						<span className="visible-desktop">
-							{t('ViewRes:Layout.Account')}
-						</span>
-						{topBarStore.hasNotifications && (
-							<>
-								{' '}
-								<span className="badge badge-small badge-important">!</span>
-							</>
-						)}{' '}
-						<span className="caret"></span>
-					</Dropdown.Toggle>
-
-					<Dropdown.Menu>
-						{!vdb.values.loggedUser ? (
-							<>
-								<Dropdown.Item
-									as={Link}
-									to="/User/Login" /* TODO: showLoginPopup */
+				</ButtonGroup>{' '} */}
+					<Menu>
+						<Menu.Target>
+							<Indicator disabled={false} color="red" label="!" size={16}>
+								<Button
+									leftIcon={<IconUser size={16} />}
+									color="cyan"
+									size="xs"
 								>
-									{t('ViewRes:Layout.LogIn')}
-								</Dropdown.Item>
-								<Dropdown.Item as={Link} to="/User/Create">
-									{t('ViewRes:Layout.Register')}
-								</Dropdown.Item>
-							</>
-						) : (
-							<>
-								<Dropdown.Item
-									as={Link}
-									to={EntryUrlMapper.details_user_byName(
-										vdb.values.loggedUser.name,
-									)}
-								>
-									{t('ViewRes.User:MySettings.Profile')}
-								</Dropdown.Item>
-								<Dropdown.Item
-									as={Link}
-									to={`${EntryUrlMapper.details_user_byName(
-										vdb.values.loggedUser.name,
-									)}/albums`}
-								>
-									{t('ViewRes:TopBar.MyAlbums')}
-								</Dropdown.Item>
-								<Dropdown.Item
-									as={Link}
-									to={`${EntryUrlMapper.details_user_byName(
-										vdb.values.loggedUser.name,
-									)}/songs`}
-								>
-									{t('ViewRes:TopBar.MySongs')}
-								</Dropdown.Item>
-								<Dropdown.Item as={Link} to="/User/MySettings">
-									{t('ViewRes.User:Details.MySettings')}
-								</Dropdown.Item>
-								{loginManager.canManageEntryReports && (
-									<Dropdown.Item href={'/Admin/ViewEntryReports'}>
-										{t('ViewRes:TopBar.EntryReports')}
-										{topBarStore.reportCount > 0 && (
-											<>
-												{' '}
-												<span className="badge badge-small badge-important">
-													{topBarStore.reportCount}
-												</span>
-											</>
-										)}
-									</Dropdown.Item>
-								)}
-								<Dropdown.Item
-									onClick={async (): Promise<void> => {
-										const requestToken = await antiforgeryRepo.getToken();
-
-										await userRepo.logout(requestToken);
-
-										navigate('/');
-
-										await vdb.refresh();
-									}}
-								>
-									{t('ViewRes:Layout.LogOut')}
-								</Dropdown.Item>
-							</>
-						)}
-						<Dropdown.Divider />
-						<Dropdown.Header>
-							{t('ViewRes.User:MySettings.DefaultLanguageSelection')}
-						</Dropdown.Header>
-						{Object.values(ContentLanguagePreference).map((lp) => (
-							<Dropdown.Item
-								onClick={(): void => {
-									setLanguagePreferenceCookie(lp);
-								}}
-								key={lp}
-							>
-								{lp === vdb.values.languagePreference ? (
-									<i className="menuIcon icon-ok"></i>
-								) : (
-									<i className="menuIcon icon-"></i>
-								)}{' '}
-								{t(`Resources:ContentLanguageSelectionNames.${lp}`)}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
-				{vdb.values.loggedUser && (
-					<>
-						{' '}
-						<Dropdown
-							className="navbar-languageBar"
-							onToggle={topBarStore.ensureMessagesLoaded}
-							as={ButtonGroup}
-						>
-							<Dropdown.Toggle
-								variant="info"
-								href="#"
-								className="navbar-languageBtn"
-							>
-								<i className="icon-envelope"></i>
-								{vdb.values.loggedUser.unreadMessagesCount > 0 && (
-									<>
-										{' '}
-										<span className="badge badge-small badge-important">
-											{vdb.values.loggedUser.unreadMessagesCount}
-										</span>
-									</>
-								)}{' '}
-								<span className="caret"></span>
-							</Dropdown.Toggle>
-
-							<Dropdown.Menu>
-								{vdb.values.loggedUser.unreadMessagesCount > 0 &&
-									!topBarStore.isLoaded && (
-										<Dropdown.ItemText>
-											{t('ViewRes:Shared.Loading')}
-										</Dropdown.ItemText>
-									)}
-								{topBarStore.unreadMessages.map((unreadMessage) => (
-									<Dropdown.Item
-										as={Link}
-										to={`/User/Messages?${qs.stringify({
-											messageId: unreadMessage.id,
-											inbox: unreadMessage.inbox,
-										})}`}
-										key={unreadMessage.id}
+									{/* TODO: Hide this on desktop */}
+									{t('ViewRes:Layout.Account')}
+									<span className="visible-desktop"></span>
+									{/* {topBarStore.hasNotifications && ( */}
+								</Button>
+							</Indicator>
+						</Menu.Target>
+						<Menu.Dropdown>
+							{!vdb.values.loggedUser ? (
+								<>
+									<Menu.Item
+										component={Link}
+										to="/User/Login" /* TODO: showLoginPopup */
 									>
-										<div className="media">
-											<div className="pull-left media-image-usermessage">
-												{unreadMessage.sender ? (
-													// eslint-disable-next-line react/jsx-pascal-case
-													<ProfileIconKnockout_ImageSize
-														imageSize={ImageSize.SmallThumb}
-														user={unreadMessage.sender}
-														size={40}
-													/>
-												) : (
-													<img
-														src="/Content/vocadb_40.png"
-														alt="Notification"
-													/>
-												)}
-											</div>
-											<div className="media-body media-body-usermessage">
-												<span>
-													{unreadMessage.sender
-														? `${unreadMessage.sender?.name} -`
-														: ''}
-												</span>{' '}
-												<small>{unreadMessage.createdFormatted}</small>
-												<br />
-												<span>{unreadMessage.subject}</span>
-											</div>
-										</div>
-									</Dropdown.Item>
-								))}
-								{topBarStore.isLoaded &&
-									topBarStore.unreadMessages.length === 0 && (
-										<Dropdown.ItemText>
-											{t('ViewRes:TopBar.NoUnreadMessages')}
-										</Dropdown.ItemText>
+										{t('ViewRes:Layout.LogIn')}
+									</Menu.Item>
+									<Menu.Item component={Link} to="/User/Create">
+										{t('ViewRes:Layout.Register')}
+									</Menu.Item>
+								</>
+							) : (
+								<>
+									<Menu.Item
+										component={Link}
+										to={EntryUrlMapper.details_user_byName(
+											vdb.values.loggedUser.name,
+										)}
+									>
+										{t('ViewRes.User:MySettings.Profile')}
+									</Menu.Item>
+									<Menu.Item
+										component={Link}
+										to={`${EntryUrlMapper.details_user_byName(
+											vdb.values.loggedUser.name,
+										)}/albums`}
+									>
+										{t('ViewRes:TopBar.MyAlbums')}
+									</Menu.Item>
+									<Menu.Item
+										component={Link}
+										to={`${EntryUrlMapper.details_user_byName(
+											vdb.values.loggedUser.name,
+										)}/songs`}
+									>
+										{t('ViewRes:TopBar.MySongs')}
+									</Menu.Item>
+									<Menu.Item component={Link} to="/User/MySettings">
+										{t('ViewRes.User:Details.MySettings')}
+									</Menu.Item>
+									{loginManager.canManageEntryReports && (
+										<Menu.Item component={Link} to={'/Admin/ViewEntryReports'}>
+											{t('ViewRes:TopBar.EntryReports')}
+											<Badge color="red">{topBarStore.reportCount}</Badge>
+										</Menu.Item>
 									)}
-								<Dropdown.Divider />
-								<Dropdown.Item as={Link} to="/User/Messages">
-									{t('ViewRes:TopBar.ViewAllMessages')}
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</>
-				)}
+									<Menu.Item
+										onClick={async (): Promise<void> => {
+											const requestToken = await antiforgeryRepo.getToken();
+
+											await userRepo.logout(requestToken);
+
+											navigate('/');
+
+											await vdb.refresh();
+										}}
+									>
+										{t('ViewRes:Layout.LogOut')}
+									</Menu.Item>
+								</>
+							)}
+							<Menu.Divider />
+							<Menu.Label>
+								{t('ViewRes.User:MySettings.DefaultLanguageSelection')}
+							</Menu.Label>
+							{Object.values(ContentLanguagePreference).map((lp) => (
+								<Menu.Item
+									onClick={(): void => {
+										setLanguagePreferenceCookie(lp);
+									}}
+									key={lp}
+								>
+									{lp === vdb.values.languagePreference ? (
+										<i className="menuIcon icon-ok"></i>
+									) : (
+										<i className="menuIcon icon-"></i>
+									)}{' '}
+									{t(`Resources:ContentLanguageSelectionNames.${lp}`)}
+								</Menu.Item>
+							))}
+						</Menu.Dropdown>
+					</Menu>
+					{vdb.values.loggedUser && (
+						<>
+							<Menu onChange={topBarStore.ensureMessagesLoaded}>
+								<Menu.Target>
+									<Button
+										leftIcon={<IconMail size={16} />}
+										color="cyan"
+										size="xs"
+									>
+										{vdb.values.loggedUser.unreadMessagesCount > 0 && (
+											<Badge color="red" variant="filled">
+												{vdb.values.loggedUser.unreadMessagesCount}
+											</Badge>
+										)}
+									</Button>
+								</Menu.Target>
+								<Menu.Dropdown>
+									{vdb.values.loggedUser.unreadMessagesCount > 0 &&
+										!topBarStore.isLoaded && (
+											<Menu.Item>{t('ViewRes:Shared.Loading')}</Menu.Item>
+										)}
+									{topBarStore.unreadMessages.map((unreadMessage) => (
+										<Menu.Item
+											component={Link}
+											to={`/User/Messages?${qs.stringify({
+												messageId: unreadMessage.id,
+												inbox: unreadMessage.inbox,
+											})}`}
+											key={unreadMessage.id}
+										>
+											<div className="media">
+												<div className="pull-left media-image-usermessage">
+													{unreadMessage.sender ? (
+														// eslint-disable-next-line react/jsx-pascal-case
+														<ProfileIconKnockout_ImageSize
+															imageSize={ImageSize.SmallThumb}
+															user={unreadMessage.sender}
+															size={40}
+														/>
+													) : (
+														<img
+															src="/Content/vocadb_40.png"
+															alt="Notification"
+														/>
+													)}
+												</div>
+												<div className="media-body media-body-usermessage">
+													<span>
+														{unreadMessage.sender
+															? `${unreadMessage.sender?.name} -`
+															: ''}
+													</span>{' '}
+													<small>{unreadMessage.createdFormatted}</small>
+													<br />
+													<span>{unreadMessage.subject}</span>
+												</div>
+											</div>
+										</Menu.Item>
+									))}
+									{topBarStore.isLoaded &&
+										topBarStore.unreadMessages.length === 0 && (
+											<Menu.Item>
+												{t('ViewRes:TopBar.NoUnreadMessages')}
+											</Menu.Item>
+										)}
+									<Menu.Divider />
+									<Menu.Item component={Link} to="/User/Messages">
+										{t('ViewRes:TopBar.ViewAllMessages')}
+									</Menu.Item>
+								</Menu.Dropdown>
+							</Menu>
+						</>
+					)}
+				</Group>
 				<Navbar.Collapse>
 					<MainNavigationItems />
 				</Navbar.Collapse>
