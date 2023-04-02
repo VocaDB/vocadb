@@ -15,7 +15,7 @@ type MantineAutocompleteProps = {
 const MantineAutocomplete = ({
 	fetchData,
 	...props
-}: MantineAutocompleteProps) => {
+}: MantineAutocompleteProps): JSX.Element => {
 	const [value, setValue] = useState('');
 	const [debounced] = useDebouncedValue(value, 100);
 	const [data, setData] = useState<FetchDataReturn>([]);
@@ -28,7 +28,7 @@ const MantineAutocomplete = ({
 		<Autocomplete
 			{...props}
 			value={value}
-			onChange={(v) => setValue(v)}
+			onChange={(v): void => setValue(v)}
 			data={data ?? []}
 		/>
 	);

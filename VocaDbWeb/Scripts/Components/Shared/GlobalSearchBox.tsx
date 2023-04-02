@@ -1,10 +1,6 @@
-import ButtonGroup from '@/Bootstrap/ButtonGroup';
-import Dropdown from '@/Bootstrap/Dropdown';
 import Navbar from '@/Bootstrap/Navbar';
 import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
-import { ShowRandomPageButton } from '@/Components/Shared/ShowRandomPageButton';
-import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
@@ -32,14 +28,11 @@ import { TopBarStore } from '@/Stores/TopBarStore';
 import { useVdb } from '@/VdbContext';
 import {
 	ActionIcon,
-	Anchor,
 	Badge,
 	Button,
 	Group,
 	Indicator,
-	MediaQuery,
 	Menu,
-	TextInput,
 } from '@mantine/core';
 import {
 	IconChevronDown,
@@ -300,7 +293,7 @@ export const GlobalSearchBox = observer(
 			};
 
 			await tryRedirectFuncs[topBarStore.entryType](searchTerm);
-		}, [vdb, topBarStore, navigate]);
+		}, [vdb, topBarStore, navigate, searchTerm]);
 
 		return (
 			<form
@@ -352,10 +345,10 @@ export const GlobalSearchBox = observer(
 						</Menu.Dropdown>
 					</Menu>
 					<MantineAutocomplete
-						fetchData={(val) =>
+						fetchData={(val): Promise<string[]> =>
 							globalSearchBoxSource(topBarStore.entryType, val)
 						}
-						onItemSubmit={(item) => {
+						onItemSubmit={(item): void => {
 							setSearchTerm(item.value);
 							submit();
 						}}
