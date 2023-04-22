@@ -22,7 +22,7 @@ Add screenshots or mockups here.
 ### Additional context (optional)
 Add any other context or screenshots about the feature request here.
 
-### Checklist
+### Checklist (required)
 
 Fill out the checklist.
 
