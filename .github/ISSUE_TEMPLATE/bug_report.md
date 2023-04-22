@@ -24,7 +24,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 ### Screenshots
-If applicable, add screenshots to help explain your problem.
+If applicable, add screenshots or videos to help explain your problem.
 
 ### Desktop (please complete the following information):
  - OS: [e.g. iOS]
@@ -40,12 +40,14 @@ Add any other context about the problem here.
 
 ### Checklist
 
-Fill out the checklist, using ~~strikethroughs~~ to mark any items that are not applicable.
+Fill out the checklist. Use ~~strikethroughs~~ or leave fields empty if you don't know or are unable to check/test.
 
-- [ ] Users should limit themselves to three or less active issues and PRs at any one time.
-- [ ] Searched **[VocaDB/vocadb](https://github.com/VocaDB/vocadb/issues)** and **[VocaDB/community](https://github.com/VocaDB/community)** for duplicate issues.
+- [ ] Searched **[VocaDB/vocadb](https://github.com/VocaDB/vocadb/issues)** for duplicate issues.
 - [ ] Tested on the **[beta site](https://beta.vocadb.net)**.
-- [ ] Checked in **Chrome**, **Safari**, **Edge** and **Firefox**.
+- [ ] Checked in **Chrome**.
+- [ ] Checked in **Safari**.
+- [ ] Checked in **Edge**.
+- [ ] Checked in **Firefox**.
 - [ ] Checked in **private mode**.
 - [ ] Cleared **browser cache** and **cookies**.
 - [ ] Checked the **DevTools console**.
