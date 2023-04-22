@@ -26,4 +26,4 @@ Add any other context or screenshots about the feature request here.
 
 Fill out the checklist.
 
-- [ ] Searched **[VocaDB/vocadb](https://github.com/VocaDB/vocadb/issues)** and **[VocaDB/community](https://github.com/VocaDB/community)** for duplicate issues.
+- [ ] Searched **[VocaDB/vocadb](https://github.com/VocaDB/vocadb/issues)** for duplicate issues.
