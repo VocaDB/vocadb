@@ -23,5 +23,10 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
 	},
-	"include": ["Scripts"]
+	"include": ["Scripts"],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
 }

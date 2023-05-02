@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # Rider
 .idea/
+
+db/
+docker-compose.yml
