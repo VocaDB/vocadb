@@ -139,7 +139,7 @@ public class ArtistController : ControllerBase
 		prop.OpenGraph.ShowTwitterCard = true;
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Picture(int id = InvalidId)
@@ -174,7 +174,7 @@ public class ArtistController : ControllerBase
 	[Authorize]
 	public ActionResult Create()
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 #nullable enable
@@ -186,7 +186,7 @@ public class ArtistController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 #nullable disable
 
@@ -202,7 +202,7 @@ public class ArtistController : ControllerBase
 
 	public ActionResult Merge()
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Name(int id)
@@ -218,7 +218,7 @@ public class ArtistController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)
@@ -231,6 +231,6 @@ public class ArtistController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }

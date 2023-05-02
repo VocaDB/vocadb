@@ -17,6 +17,8 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
+import "@/styles/css.less"
+
 const AppContainer = (): React.ReactElement => {
 	return (
 		<Container

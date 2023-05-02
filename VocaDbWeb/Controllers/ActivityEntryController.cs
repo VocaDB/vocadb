@@ -36,7 +36,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = Resources.Views.ActivityEntry.IndexStrings.RecentActivity;
 
-		return View("React/Index");
+		return File("index.html", "text/html");
 	}
 }
 

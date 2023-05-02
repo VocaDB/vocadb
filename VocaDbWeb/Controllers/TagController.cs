@@ -71,7 +71,7 @@ public class TagController : ControllerBase
 		PageProperties.OpenGraph.ShowTwitterCard = true;
 		PageProperties.Robots = contract.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	// Kept for now since there's external references.
@@ -145,7 +145,7 @@ public class TagController : ControllerBase
 	[Authorize]
 	public ActionResult Edit(int id)
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 #nullable disable
 
@@ -167,12 +167,12 @@ public class TagController : ControllerBase
 
 		PageProperties.Title = ViewRes.SharedStrings.Tags;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Merge()
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Versions(int id = InvalidId)
@@ -185,7 +185,7 @@ public class TagController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ViewVersion(int id, int? ComparedVersionId)
@@ -195,6 +195,6 @@ public class TagController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }

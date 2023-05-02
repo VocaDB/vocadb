@@ -145,7 +145,7 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = "Entry edits - " + user.Name;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult FavoriteSongs(int id = InvalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
@@ -157,14 +157,14 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = "Songs rated by " + model.User.Name;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ForgotPassword()
 	{
 		PageProperties.Title = ViewRes.User.ForgotPasswordStrings.RequestPasswordReset;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	//
@@ -193,7 +193,7 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = ViewRes.SharedStrings.Users;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 #nullable enable
@@ -204,7 +204,7 @@ public class UserController : ControllerBase
 		//PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
 		PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	//
@@ -252,7 +252,7 @@ public class UserController : ControllerBase
 		PageProperties.Title = ViewRes.User.LoginStrings.Login;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Obsolete("Use /api/users/login instead.")]
@@ -420,7 +420,7 @@ public class UserController : ControllerBase
 		PageProperties.Title = ViewRes.User.CreateStrings.Register;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[HttpPost]
@@ -437,7 +437,7 @@ public class UserController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
@@ -465,7 +465,7 @@ public class UserController : ControllerBase
 	{
 		PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
@@ -473,7 +473,7 @@ public class UserController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 #nullable disable
 
@@ -518,7 +518,7 @@ public class UserController : ControllerBase
 
 	public ActionResult RequestVerification()
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ResetAccesskey()

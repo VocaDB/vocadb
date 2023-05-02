@@ -223,7 +223,7 @@ public class SearchController : ControllerBase
 
 		SetSearchEntryType(viewModel.searchType);
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Radio()

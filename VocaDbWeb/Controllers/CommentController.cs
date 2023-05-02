@@ -27,13 +27,13 @@ public class CommentController : ControllerBase
 			PageProperties.Title = "Comments - " + user.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View("React/Index");
+			return File("index.html", "text/html") ;
 		}
 		else
 		{
 			PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
 
-			return View("React/Index");
+			return File("index.html", "text/html") ;
 		}
 	}
 }

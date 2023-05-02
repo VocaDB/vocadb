@@ -30,7 +30,6 @@
 	<partial name="LayoutPartials/_TwitterCard" model="@(Model)" />
 
 	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />
-	<remikus path="/Content/css.css" />
 	@if (!string.IsNullOrEmpty(stylesheet)) {
 		<link href="@Url.Content("~/Content/Styles/" + stylesheet)" rel="stylesheet" type="text/css" />			
 	}

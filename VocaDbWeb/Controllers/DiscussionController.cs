@@ -8,6 +8,6 @@ public class DiscussionController : ControllerBase
 	{
 		PageProperties.Title = "Discussions";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }

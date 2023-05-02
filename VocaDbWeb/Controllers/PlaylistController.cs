@@ -6,6 +6,6 @@ public class PlaylistController : Controller
 {
 	public IActionResult Index()
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }

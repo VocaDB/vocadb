@@ -103,19 +103,19 @@ public class EventController : ControllerBase
 		PageProperties.Description = descriptionStripped;
 		PageProperties.Robots = ev.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
 	public ActionResult Edit(int? id)
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
 	public ActionResult EditSeries(int? id)
 	{
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 #nullable disable
 
@@ -123,21 +123,21 @@ public class EventController : ControllerBase
 	{
 		PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult EventsBySeries()
 	{
 		PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult EventsByVenue()
 	{
 		PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	//
@@ -147,7 +147,7 @@ public class EventController : ControllerBase
 	{
 		PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
@@ -222,7 +222,7 @@ public class EventController : ControllerBase
 		PageProperties.Description = descriptionStripped;
 		PageProperties.Robots = series.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult SeriesVersions(int id = InvalidId)
@@ -235,7 +235,7 @@ public class EventController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Entry.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId)
@@ -245,7 +245,7 @@ public class EventController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult Versions(int id = InvalidId)
@@ -258,7 +258,7 @@ public class EventController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult ViewVersion(int id, int? ComparedVersionId)
@@ -268,6 +268,6 @@ public class EventController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }
