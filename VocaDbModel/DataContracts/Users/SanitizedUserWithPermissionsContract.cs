@@ -28,6 +28,9 @@ public sealed record SanitizedUserWithPermissionsContract
 	public int UnreadMessagesCount { get; init; }
 
 	[DataMember]
+	public string Stylesheet { get; init; } = string.Empty;
+
+	[DataMember]
 	public bool VerifiedArtist { get; init; }
 
 	[DataMember]
@@ -58,5 +61,6 @@ public sealed record SanitizedUserWithPermissionsContract
 		PreferredVideoService = user.PreferredVideoService;
 		AlbumFormatString = user.AlbumFormatString;
 		GroupId = user.GroupId;
+		Stylesheet = user.Stylesheet;
 	}
 }

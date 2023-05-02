@@ -9,7 +9,7 @@ import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { Compose } from '@/Compose';
 import { LoginManagerProvider } from '@/LoginManagerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
-import { VdbProvider } from '@/VdbContext';
+import { VdbProvider, useVdb } from '@/VdbContext';
 import '@/i18n';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import { ScrollToTop } from '@vocadb/route-sphere';
@@ -19,7 +19,13 @@ import { BrowserRouter } from 'react-router-dom';
 
 import "@/styles/css.less"
 
+const TetoDB = React.lazy(() => import("./styles/tetoDb"))
+const DarkAngel = React.lazy(() => import("./styles/darkAngel"))
+
 const AppContainer = (): React.ReactElement => {
+
+	const vdb = useVdb();
+
 	return (
 		<Container
 			fluid
@@ -38,6 +44,15 @@ const AppContainer = (): React.ReactElement => {
 				</div>
 				<AboutDisclaimer />
 			</div>
+				<React.Suspense fallback={null}>
+					{vdb.values.loggedUser?.stylesheet.toLowerCase().startsWith("darkangel") && (
+						<DarkAngel />
+					)}
+					
+					{vdb.values.loggedUser?.stylesheet.toLowerCase().startsWith("tetodb") && (
+						<TetoDB />
+					)}
+				</React.Suspense>
 		</Container>
 	);
 };
