@@ -65,6 +65,7 @@ public class ErrorController : ControllerBase
 			ErrorLogger.LogHttpError(Request, ErrorLogger.Code_NotFound);
 
 		Response.StatusCode = ErrorLogger.Code_NotFound;
-		return View("NotFound");
+
+		return File("index.html", "text/html");
 	}
 }
