@@ -136,7 +136,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Site management";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult GeneratePictureThumbs()
@@ -155,7 +155,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage blocked IPs";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
@@ -163,7 +163,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage entry type to tag mappings";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
@@ -171,7 +171,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	public ActionResult PVAuthorNames(string term)
@@ -284,7 +284,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View audit log";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 
 	[Authorize]
@@ -321,6 +321,6 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage webhooks";
 
-		return View("React/Index");
+		return File("index.html", "text/html") ;
 	}
 }

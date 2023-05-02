@@ -41,7 +41,7 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
-import '../../../wwwroot/Content/Styles/songlist.less';
+import '@/styles/Styles/songlist.less'
 
 interface SearchCategoryProps {
 	searchStore: SearchStore;

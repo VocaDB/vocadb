@@ -31,7 +31,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import '../../../wwwroot/Content/Styles/songlist.less';
+import '@/styles/Styles/songlist.less'
 
 interface UserDetailsLayoutProps {
 	user: UserDetailsContract;

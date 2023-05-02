@@ -19,4 +19,5 @@ export interface UserWithPermissionsContract {
 	preferredVideoService: PVService;
 	albumFormatString: string;
 	groupId: UserGroup;
+	stylesheet: string
 }
