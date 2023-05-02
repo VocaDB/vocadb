@@ -29,6 +29,7 @@ const createUser = ({
 		preferredVideoService: PVService.NicoNicoDouga,
 		albumFormatString: '',
 		groupId: groupId,
+		stylesheet: ''
 	};
 };
 
