@@ -7,6 +7,7 @@ export default defineConfig({
     build: {
         outDir: 'wwwroot'
     },
+    publicDir: "public",
 	resolve: {
 		alias: {
 			'@': resolve(__dirname, './Scripts'),

@@ -273,7 +273,7 @@ body .rightFrame a.btn-danger:hover {
 }
 
 ul {
-	list-style: url(star5.png);
+	list-style: url(/Content/star5.png);
 }
 
 .tracklist ul {
@@ -626,7 +626,7 @@ div.item {
 	display: inline-block;
 	margin-bottom: 0;
 	cursor: help;
-	background: url('Icons/help.png') no-repeat right;
+	background: url('/Content/Icons/help.png') no-repeat right;
 	padding: 0 20px 0 0;
 	min-height: 16px;
 }

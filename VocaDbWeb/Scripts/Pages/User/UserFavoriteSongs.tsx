@@ -14,7 +14,7 @@ import { useLocationStateStore } from '@vocadb/route-sphere';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import '../../../wwwroot/Content/Styles/songlist.less';
+import '@/styles/Styles/songlist.less'
 
 interface UserFavoriteSongsLayoutProps {
 	user: UserDetailsContract;

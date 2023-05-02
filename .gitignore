@@ -366,3 +366,4 @@ FodyWeavers.xsd
 
 db/
 docker-compose.yml
+wwwroot
