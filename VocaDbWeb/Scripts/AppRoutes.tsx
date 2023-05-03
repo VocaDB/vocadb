@@ -50,7 +50,7 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="Artist/*" element={<ArtistRoutes />} />
 			<Route path="Comment/*" element={<CommentRoutes />} />
 			<Route path="discussion/*" element={<DiscussionRoutes />} />
-			<Route path="Error" element={<ErrorRoutes />} />
+			<Route path="Error/*" element={<ErrorRoutes />} />
 			<Route path="Event/*" element={<EventRoutes />} />
 			<Route path="Help/*" element={<HelpRoutes />} />
 			<Route path="playlist/*" element={<PlaylistRoutes />} />
