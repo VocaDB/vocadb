@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
+import ErrorBadRequest from './ErrorBadRequest';
 import ErrorForbidden from './ErrorForbidden';
 import ErrorNotFound from './ErrorNotFound';
 
@@ -12,6 +13,8 @@ const ErrorIndex = (): React.ReactElement => {
 		return <ErrorNotFound />;
 	} else if (code === '403') {
 		return <ErrorForbidden />;
+	} else if (code === '400') {
+		return <ErrorBadRequest />;
 	}
 
 	return (
