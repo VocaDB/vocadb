@@ -64,4 +64,7 @@ public class ActivityEntryApiController : ApiController
 		ContentLanguagePreference lang = ContentLanguagePreference.Default,
 		ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending
 	) => _queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
+
+	[HttpGet("followedArtistActivity")]
+	public PartialFindResult<ActivityEntryForApiContract> FollowedArtistActivity() => _queries.GetFollowedArtistActivity();
 }
