@@ -83,48 +83,6 @@ public class ActivityEntryQueries
 		return points;
 	}
 
-	public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxResults = DefaultMax)
-	{
-		if (!_permissionContext.IsLoggedIn)
-			return new PartialFindResult<ActivityEntryForApiContract>();
-
-		return _repository.HandleQuery(ctx =>
-		{
-			var userId = _permissionContext.LoggedUserId;
-
-			var albumEntries = ctx.Query<AlbumActivityEntry>()
-				.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-				.OrderByDescending(a => a.CreateDate)
-				.Take(maxResults)
-				.ToArray();
-
-			var songEntries = ctx.Query<SongActivityEntry>()
-				.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-				.OrderByDescending(a => a.CreateDate)
-				.Take(maxResults)
-				.ToArray();
-
-			var contracts = albumEntries.Cast<ActivityEntry>()
-				.Concat(songEntries)
-				.OrderByDescending(a => a.CreateDate)
-				.Take(maxResults)
-				.Select(e => new ActivityEntryForApiContract(
-					e,
-					_entryForApiContractFactory.Create(
-						e.EntryBase,
-						EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
-						_permissionContext.LanguagePreference
-					),
-					_userIconFactory,
-					_permissionContext,
-					ActivityEntryOptionalFields.None
-				))
-				.ToArray();
-
-			return new PartialFindResult<ActivityEntryForApiContract>(contracts, 0);
-		});
-	}
-
 	public PartialFindResult<ActivityEntryForApiContract> GetList(
 		DateTime? before = null,
 		DateTime? since = null,
