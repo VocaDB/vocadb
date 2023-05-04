@@ -158,9 +158,9 @@ const CommentIndex = observer(
 					</li>
 					{loginManager.isLoggedIn && (
 						<li>
-							<a href="/ActivityEntry/FollowedArtistActivity">
+							<Link to="/ActivityEntry/FollowedArtistActivity">
 								Only followed artists
-							</a>
+							</Link>
 						</li>
 					)}
 					<li className="active">
