@@ -27,14 +27,7 @@ const BannerLink = React.memo(
 					functions.trackOutboundLink(e.nativeEvent);
 				}}
 			>
-				<img
-					src={functions.mergeUrls(
-						vdbConfig.staticContentHost,
-						`/banners/${img}`,
-					)}
-					alt={title}
-					title={title}
-				/>
+				<img src={`Content/banners/${img}`} alt={title} title={title} />
 			</a>
 		);
 	},
@@ -109,13 +102,7 @@ export const LeftMenu = observer(
 				<div className="well">
 					<Link to="/">
 						<img
-							src={
-								vdb.values.bannerUrl ??
-								functions.mergeUrls(
-									vdbConfig.staticContentHost,
-									'/img/vocaDB-title.png',
-								)
-							}
+							src={vdb.values.bannerUrl ?? '/Content/vocaDB-title.png'}
 							className="site-logo"
 							alt={vdb.values.siteName}
 							title={vdb.values.siteName}
