@@ -478,7 +478,7 @@ const ArtistsTabContent = observer(
 					</Alert>
 					{songEditStore.hasAlbums && (
 						<Alert variant="info">
-							<span>{t('ViewRes.Song:Edit.ArArtistsNotes')}</span>
+							<span>{t('ViewRes.Song:Edit.ArArtistsNote')}</span>
 						</Alert>
 					)}
 					{songEditStore.validationError_needArtist && (
