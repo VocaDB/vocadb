@@ -115,15 +115,6 @@ public class SongController : ControllerBase
 		});
 	}
 
-	public ActionResult SongListsForSong(int songId = InvalidId)
-	{
-		if (songId == InvalidId)
-			return NoId();
-
-		var lists = _queries.GetPublicSongListsForSong(songId);
-		return PartialView("Partials/_SongInListsDialogContent", lists);
-	}
-
 	public ActionResult SongListsForUser(int ignoreSongId = InvalidId)
 	{
 		if (ignoreSongId == InvalidId)
@@ -185,13 +176,13 @@ public class SongController : ControllerBase
 
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
 	public ActionResult Create(string pvUrl)
 	{
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	//
@@ -199,7 +190,7 @@ public class SongController : ControllerBase
 	[Authorize]
 	public ActionResult Edit(int id, int? albumId = null)
 	{
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[HttpPost]
@@ -282,7 +273,7 @@ public class SongController : ControllerBase
 
 	public ActionResult Merge()
 	{
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	/// <summary>
@@ -357,7 +348,7 @@ public class SongController : ControllerBase
 	{
 		PageProperties.Title = _brandableStringsManager.Song.RankingsTitle;
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult Related(int id = InvalidId)
@@ -438,7 +429,7 @@ public class SongController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult ViewVersion(int id, int? ComparedVersionId)
@@ -448,6 +439,6 @@ public class SongController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 }

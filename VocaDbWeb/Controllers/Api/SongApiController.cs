@@ -564,6 +564,19 @@ public class SongApiController : ApiController
 	public ArchivedSongVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
 		_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
+
+	/// <summary>
+	/// </summary>
+	[HttpGet("songlists")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult<SongListBaseContract[]> GetSongListsForUser(int ignoreSongId = 0)
+	{
+		if (ignoreSongId == 0)
+			return NotFound("No ID specified");
+
+		return _service.GetSongListsForCurrentUser(ignoreSongId);
+	}
+
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

@@ -141,9 +141,12 @@ export class SongRepository
 		}: {
 			ignoreSongId: number;
 		}): Promise<SongListBaseContract[]> => {
-			return this.post<SongListBaseContract[]>('/SongListsForUser', {
-				ignoreSongId: ignoreSongId,
-			});
+			return this.httpClient.get<SongListBaseContract[]>(
+				this.urlMapper.mapRelative('/api/songs/songlists'),
+				{
+					ignoreSongId,
+				},
+			);
 		};
 	}
 
