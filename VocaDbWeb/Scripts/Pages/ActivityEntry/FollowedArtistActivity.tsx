@@ -67,13 +67,6 @@ const ActivityEntryIndex = observer(
 						/>
 					))}
 				</div>
-
-				<hr />
-				<h3>
-					<SafeAnchor onClick={followedArtistActivityListStore.loadMore}>
-						{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.ViewMore')}
-					</SafeAnchor>
-				</h3>
 			</Layout>
 		);
 	},
