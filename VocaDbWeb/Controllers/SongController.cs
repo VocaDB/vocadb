@@ -353,11 +353,7 @@ public class SongController : ControllerBase
 
 	public ActionResult Related(int id = InvalidId)
 	{
-		if (id == InvalidId)
-			return NoId();
-
-		var related = _queries.GetRelatedSongs(id, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl, null);
-		return PartialView("RelatedSongs", related);
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]

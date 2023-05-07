@@ -7,6 +7,7 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
 import { CreateSongContract } from '@/DataContracts/Song/CreateSongContract';
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { RelatedSongs } from '@/DataContracts/Song/RelatedSongs';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
@@ -709,6 +710,21 @@ export class SongRepository
 			),
 			undefined,
 			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	getRelated = ({
+		songId,
+		lang,
+	}: {
+		songId: number;
+		lang: ContentLanguagePreference;
+	}): Promise<RelatedSongs> => {
+		return this.httpClient.get<RelatedSongs>(
+			this.urlMapper.mapRelative(`/api/songs/${songId}/related`),
+			{
+				lang,
+			},
 		);
 	};
 }

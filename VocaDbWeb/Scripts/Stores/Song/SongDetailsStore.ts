@@ -1,4 +1,5 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { RelatedSongs } from '@/DataContracts/Song/RelatedSongs';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongDetailsAjax } from '@/DataContracts/Song/SongDetailsForApi';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
@@ -375,5 +376,12 @@ export class SongDetailsStore {
 
 	@action showAllVersions = (): void => {
 		this.allVersionsVisible = true;
+	};
+
+	getRelated = (): Promise<RelatedSongs> => {
+		return this.songRepo.getRelated({
+			songId: this.id,
+			lang: this.values.languagePreference,
+		});
 	};
 }
