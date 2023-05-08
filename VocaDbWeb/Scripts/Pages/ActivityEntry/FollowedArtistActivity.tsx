@@ -1,10 +1,8 @@
-import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
 import { useLoginManager } from '@/LoginManagerContext';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
-import { ActivityEntryListStore } from '@/Stores/ActivityEntry/ActivityEntryListStore';
 import { FollowedArtistsActivityListStore } from '@/Stores/ActivityEntry/FollowedArtistActivityListStore';
 import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
