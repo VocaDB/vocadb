@@ -115,13 +115,13 @@ public class SongController : ControllerBase
 		});
 	}
 
-	public ActionResult SongListsForUser(int ignoreSongId = InvalidId)
+	public ActionResult SongListsForSong(int songId = InvalidId)
 	{
-		if (ignoreSongId == InvalidId)
+		if (songId == InvalidId)
 			return NoId();
 
-		var result = Service.GetSongListsForCurrentUser(ignoreSongId);
-		return LowercaseJson(result);
+		var lists = _queries.GetPublicSongListsForSong(songId);
+		return PartialView("Partials/_SongInListsDialogContent", lists);
 	}
 
 	//
