@@ -776,7 +776,7 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'youtube.com/',
+			url: 'youtube.com/@',
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
 		},
