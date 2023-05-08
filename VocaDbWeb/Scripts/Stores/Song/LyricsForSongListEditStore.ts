@@ -1,8 +1,8 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { TranslationType } from '@/Models/Globalization/TranslationType';
+import { WebLinkMatcher } from '@/Shared/WebLinkMatcher';
 import { BasicListEditStore } from '@/Stores/BasicListEditStore';
-import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
