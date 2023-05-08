@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
@@ -37,12 +38,12 @@ public static class AlbumQueryableExtensions
 
 	public static IQueryable<Album> OrderBy(
 		this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
-	{
-		EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
-		EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
-		EntrySortRule.ActivityDate => query.OrderByReleaseDate(direction ?? SortDirection.Descending),
-		_ => query,
-	};
+		{
+			EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			EntrySortRule.ActivityDate => query.OrderByReleaseDate(direction ?? SortDirection.Descending),
+			_ => query,
+		};
 
 	public static IQueryable<Album> WhereArtistHasType(this IQueryable<Album> query, ArtistType artistType)
 	{
@@ -230,5 +231,22 @@ public static class AlbumQueryableExtensions
 		AlbumSortRule.ReleaseDate => query.WhereHasReleaseYear(),
 		_ => query,
 	};
+
+	public static IQueryable<Album> WhereHasPVs(this IQueryable<Album> query, PVService? service, string? pvId)
+	{
+		if (service == null || pvId == null)
+			return query;
+
+		return query.Where(s => s.PVs.Any(pv => pv.Service == service && pv.PVId == pvId));
+	}
+
+	public static IQueryable<Album> WhereHasPVs(this IQueryable<Album> query, IPV? pv)
+	{
+		if (pv == null)
+			return query;
+
+		return WhereHasPVs(query, pv.Service, pv.PVId);
+	}
+
 #nullable disable
 }

@@ -1,12 +1,14 @@
 #nullable disable
 
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch;
 
@@ -34,6 +36,7 @@ public class AlbumSearch
 			.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 			.WhereHasTags(queryParams.Tags)
 			.WhereHasTag(parsedQuery.TagName)
+			.WhereHasPVs(parsedQuery.PV)
 			.WhereReleaseDateIsAfter(queryParams.ReleaseDateAfter)
 			.WhereReleaseDateIsBefore(queryParams.ReleaseDateBefore)
 			.WhereSortBy(queryParams.SortRule)
@@ -71,7 +74,26 @@ public class AlbumSearch
 			}
 		}
 
-		return new ParsedAlbumQuery { Name = query.Trim() };
+		return ParseReferenceQuery(query.Trim(), query);
+	}
+
+	private ParsedAlbumQuery ParseReferenceQuery(string trimmed, string query)
+	{
+		if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+		{
+			var videoParseResult = VideoServiceHelper.ParseByUrlAsync(query, false, null, VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo).Result;
+
+			if (videoParseResult.IsOk)
+			{
+				// TODO: Set NicoID
+
+				return new ParsedAlbumQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
+			}
+
+			// TODO: EntryUrlParse
+		}
+
+		return null;
 	}
 
 	public static Album[] SortByIds(IEnumerable<Album> albums, int[] idList)
