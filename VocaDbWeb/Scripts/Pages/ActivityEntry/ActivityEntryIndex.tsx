@@ -42,11 +42,11 @@ const ActivityEntryIndex = observer(
 					</li>
 					{loginManager.isLoggedIn && (
 						<li>
-							<a href="/ActivityEntry/FollowedArtistActivity">
+							<Link to="/ActivityEntry/FollowedArtistActivity">
 								{t(
 									'VocaDb.Web.Resources.Views.ActivityEntry:Index.FollowedArtists',
 								)}
-							</a>
+							</Link>
 						</li>
 					)}
 					<li>

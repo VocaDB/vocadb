@@ -25,10 +25,12 @@ public class ActivityEntryApiController : ApiController
 {
 	private const int DefaultMax = 50;
 	private readonly ActivityEntryQueries _queries;
+	private readonly ActivityFeedService _service;
 
-	public ActivityEntryApiController(ActivityEntryQueries queries)
+	public ActivityEntryApiController(ActivityEntryQueries queries, ActivityFeedService service)
 	{
 		_queries = queries;
+		_service = service;
 	}
 
 	/// <summary>
@@ -64,4 +66,8 @@ public class ActivityEntryApiController : ApiController
 		ContentLanguagePreference lang = ContentLanguagePreference.Default,
 		ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending
 	) => _queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
+
+	[HttpGet("followedArtistActivity")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public PartialFindResult<ActivityEntryForApiContract> FollowedArtistActivity() => _service.GetFollowedArtistActivity(DefaultMax);
 }
