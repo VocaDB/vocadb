@@ -68,5 +68,6 @@ public class ActivityEntryApiController : ApiController
 	) => _queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
 
 	[HttpGet("followedArtistActivity")]
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public PartialFindResult<ActivityEntryForApiContract> FollowedArtistActivity() => _service.GetFollowedArtistActivity(DefaultMax);
 }
