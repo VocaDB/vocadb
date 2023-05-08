@@ -11,6 +11,7 @@ const CommentRoutes = React.lazy(() => import('@/Pages/Comment/CommentRoutes'));
 const DiscussionRoutes = React.lazy(
 	() => import('@/Pages/Discussion/DiscussionRoutes'),
 );
+const ErrorRoutes = React.lazy(() => import('@/Pages/Error/ErrorRoutes'));
 const EventRoutes = React.lazy(() => import('@/Pages/Event/EventRoutes'));
 const HelpRoutes = React.lazy(() => import('@/Pages/Help/HelpRoutes'));
 const HomeRoutes = React.lazy(() => import('@/Pages/Home/HomeRoutes'));
@@ -49,6 +50,7 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="Artist/*" element={<ArtistRoutes />} />
 			<Route path="Comment/*" element={<CommentRoutes />} />
 			<Route path="discussion/*" element={<DiscussionRoutes />} />
+			<Route path="Error/*" element={<ErrorRoutes />} />
 			<Route path="Event/*" element={<EventRoutes />} />
 			<Route path="Help/*" element={<HelpRoutes />} />
 			<Route path="playlist/*" element={<PlaylistRoutes />} />

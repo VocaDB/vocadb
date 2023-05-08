@@ -350,7 +350,7 @@ const BasicInfoTabContent = observer(
 												)}
 												{songEditStore.suggestedPublishDate.source ===
 													'Album' && (
-													<span>{t('ViewRes.Song:Edit.BaUserAlbumDate')}</span>
+													<span>{t('ViewRes.Song:Edit.BaUseAlbumDate')}</span>
 												)}{' '}
 												<span>
 													{songEditStore.suggestedPublishDate.date.format('L')}
