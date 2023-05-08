@@ -22,7 +22,14 @@ i18n
 			backendOptions: [
 				{
 					expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
-					versions: {},
+					versions: {
+						de: 'v1',
+						es: 'v1',
+						fi: 'v1',
+						ja: 'v1',
+						en: 'v1',
+						ru: 'v1',
+					},
 				},
 			],
 		},
