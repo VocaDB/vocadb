@@ -61,7 +61,6 @@
 		"@restart/ui": "^0.2.3",
 		"@vocadb/nostalgic-diva": "^1.3.0-rc.8",
 		"@vocadb/route-sphere": "^2.0.0-rc.8",
-		"@vocadb/web-link-matcher": "^1.0.0",
 		"ajv": "^8.6.2",
 		"ajv-formats": "^2.1.1",
 		"axios": "^0.21.2",
