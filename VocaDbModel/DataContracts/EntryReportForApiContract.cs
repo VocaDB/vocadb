@@ -1,10 +1,8 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts;
 
@@ -39,7 +37,7 @@ public sealed record EntryReportForApiContract
 	public UserForApiContract? User { get; init; }
 
 	[DataMember]
-	public ArchivedObjectVersionContract? Version { get; init; }
+	public ArchivedObjectVersionForApiContract? Version { get; init; }
 
 	public EntryReportForApiContract(EntryReport report, EntryForApiContract entry, IUserIconFactory userIconFactory)
 	{
@@ -53,6 +51,6 @@ public sealed record EntryReportForApiContract
 		Notes = report.Notes;
 		ReportTypeName = report.ReportTypeName();
 		User = (report.User != null ? new UserForApiContract(report.User, userIconFactory, UserOptionalFields.MainPicture) : null);
-		Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase, userIconFactory) : null);
+		Version = (report.VersionBase != null) ? new ArchivedObjectVersionForApiContract(report.VersionBase, false, "", userIconFactory) : null;
 	}
 }
