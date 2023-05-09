@@ -23,6 +23,7 @@ namespace VocaDb.Model.Service;
 
 public class AlbumService : ServiceBase
 {
+	private readonly IEntryUrlParser _entryUrlParser;
 	private readonly IUserIconFactory _userIconFactory;
 
 	// ReSharper disable UnusedMember.Local
@@ -31,13 +32,14 @@ public class AlbumService : ServiceBase
 
 	private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams)
 	{
-		return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference).Find(queryParams);
+		return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, _entryUrlParser).Find(queryParams);
 	}
 
-	public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IUserIconFactory userIconFactory)
+	public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IUserIconFactory userIconFactory, IEntryUrlParser entryUrlParser)
 		: base(sessionFactory, permissionContext, entryLinkFactory)
 	{
 		_userIconFactory = userIconFactory;
+		_entryUrlParser = entryUrlParser;
 	}
 
 	public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "")

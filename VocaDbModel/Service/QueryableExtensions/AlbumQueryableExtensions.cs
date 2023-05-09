@@ -45,6 +45,14 @@ public static class AlbumQueryableExtensions
 			_ => query,
 		};
 
+	public static IQueryable<Album> WhereIdIs(this IQueryable<Album> query, int id)
+	{
+		if (id == 0)
+			return query;
+
+		return query.Where(a => a.Id == id);
+	}
+
 	public static IQueryable<Album> WhereArtistHasType(this IQueryable<Album> query, ArtistType artistType)
 	{
 		return query.WhereArtistHasType<Album, ArtistForAlbum>(artistType);
