@@ -74,6 +74,8 @@ public abstract class EntryReport : IEntryWithIntId
 
 	public virtual ReportStatus Status { get; set; }
 
+	public abstract string ReportTypeName();
+
 	public abstract string? TranslatedReportTypeName(IEnumTranslations enumTranslations);
 
 	public abstract string? TranslatedReportTypeName(IEnumTranslations enumTranslations, CultureInfo? culture);

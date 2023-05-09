@@ -41,6 +41,13 @@ public abstract class GenericEntryReport<TEntry, TReport> : EntryReport, IEntryL
 		}
 	}
 
+	// TODO: Refactor this hacky code
+	public override string ReportTypeName()
+	{
+		var converter = new Newtonsoft.Json.Converters.StringEnumConverter();
+		return Newtonsoft.Json.JsonConvert.SerializeObject(ReportType,  converter).Trim('"').Trim('\'');
+	}
+
 	public override string ToString()
 	{
 		return $"Entry report '{ReportType}' for {EntryBase} [{Id}]";

@@ -31,6 +31,8 @@ namespace VocaDb.Model.Service;
 
 public class AdminService : ServiceBase
 {
+	private readonly IUserPermissionContext _permissionContext;
+	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 	private readonly IEnumTranslations _enumTranslations;
 	private readonly IUserIconFactory _userIconFactory;
 
@@ -40,11 +42,12 @@ public class AdminService : ServiceBase
 	}
 
 	public AdminService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-		IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
-		: base(sessionFactory, permissionContext, entryLinkFactory)
+		IEnumTranslations enumTranslations, IUserIconFactory userIconFactory,
+		IAggregatedEntryImageUrlFactory thumbPersister) : base(sessionFactory, permissionContext, entryLinkFactory)
 	{
 		_enumTranslations = enumTranslations;
 		_userIconFactory = userIconFactory;
+		_thumbPersister = thumbPersister;
 	}
 
 	public int CleanupOldLogEntries()
@@ -270,7 +273,7 @@ public class AdminService : ServiceBase
 	}
 
 #nullable enable
-	public EntryReportContract[] GetEntryReports(ReportStatus status)
+	public EntryReportForApiContract[] GetEntryReports(ReportStatus status)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
@@ -282,15 +285,14 @@ public class AdminService : ServiceBase
 				.OrderBy(EntryReportSortRule.CloseDate)
 				.Take(200)
 				.ToArray();
-			var fac = new EntryForApiContractFactory(null, PermissionContext);
-			return reports.Select(r => new EntryReportContract(
+			var fac = new EntryForApiContractFactory(_thumbPersister, _permissionContext);
+			return reports.Select(r => new EntryReportForApiContract(
 				r,
 				fac.Create(
 					r.EntryBase,
 					EntryOptionalFields.AdditionalNames,
 					LanguagePreference
 				),
-				_enumTranslations,
 				_userIconFactory
 			)).ToArray();
 		});
