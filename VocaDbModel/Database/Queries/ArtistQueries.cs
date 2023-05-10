@@ -52,6 +52,8 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 	class CachedAdvancedArtistStatsContract
 	{
 		public TopStatContract<TranslatedArtistContract>[] TopVocaloids { get; set; }
+		
+		public TopStatContract<OptionalCultureCode>[] TopLanguages { get; init; }
 	}
 
 #nullable enable
@@ -69,10 +71,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 		var cached = _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () =>
 		{
 			var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, PermissionContext, _cache, _imageUrlFactory).GetTopVoicebanks(artist);
+			var topLanguages = new ArtistRelationsQuery(ctx, LanguagePreference, PermissionContext, _cache, _imageUrlFactory).GetTopLanguages(artist);
 
 			return new CachedAdvancedArtistStatsContract
 			{
-				TopVocaloids = topVocaloids
+				TopVocaloids = topVocaloids,
+				TopLanguages = topLanguages
 			};
 		});
 
@@ -82,7 +86,8 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			{
 				Data = new ArtistContract(v.Data, LanguagePreference),
 				Count = v.Count
-			}).ToArray()
+			}).ToArray(),
+			TopLanguages = cached.TopLanguages
 		};
 	}
 
