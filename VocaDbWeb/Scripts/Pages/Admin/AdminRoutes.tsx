@@ -14,6 +14,9 @@ const AdminManageTagMappings = React.lazy(
 );
 const AdminManageWebhooks = React.lazy(() => import('./AdminManageWebhooks'));
 const AdminViewAuditLog = React.lazy(() => import('./AdminViewAuditLog'));
+const AdminViewEntryReports = React.lazy(
+	() => import('./AdminManageEntryReports'),
+);
 
 const AdminRoutes = (): React.ReactElement => {
 	return (
@@ -27,6 +30,7 @@ const AdminRoutes = (): React.ReactElement => {
 			<Route path="ManageTagMappings" element={<AdminManageTagMappings />} />
 			<Route path="ManageWebhooks" element={<AdminManageWebhooks />} />
 			<Route path="ViewAuditLog" element={<AdminViewAuditLog />} />
+			<Route path="ViewEntryReports" element={<AdminViewEntryReports />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

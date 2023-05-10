@@ -297,7 +297,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View entry reports";
 
-		return View(reports);
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
