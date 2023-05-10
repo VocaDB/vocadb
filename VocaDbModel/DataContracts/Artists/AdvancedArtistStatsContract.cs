@@ -1,5 +1,7 @@
 #nullable disable
 
+using VocaDb.Model.Domain.Globalization;
+
 namespace VocaDb.Model.DataContracts.Artists;
 
 /// <summary>
@@ -11,6 +13,8 @@ public class AdvancedArtistStatsContract
 	/// "Mostly uses"
 	/// </summary>
 	public TopStatContract<ArtistContract>[] TopVocaloids { get; init; }
+
+	public TopStatContract<OptionalCultureCode>[] TopLanguages { get; init; }
 }
 
 public class TopStatContract<T>
