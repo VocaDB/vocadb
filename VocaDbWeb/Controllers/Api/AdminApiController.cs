@@ -73,7 +73,18 @@ public class AdminApiController : ApiController
 		);
 	}
 
-	[HttpGet("entry-reports")]
+	[HttpGet("reports")]
 	public EntryReportForApiContract[] GetEntryReports(ReportStatus status) => 
 		_adminService.GetEntryReports(status);
+
+	[HttpDelete("reports/{id:int}")]
+	[ValidateAntiForgeryToken]
+	public ActionResult DeleteEntryReport(int id)
+	{
+		_userContext.VerifyPermission(PermissionToken.ManageEntryReports);
+
+		_adminService.DeleteEntryReports(new[] { id });
+
+		return NoContent();
+	}
 }

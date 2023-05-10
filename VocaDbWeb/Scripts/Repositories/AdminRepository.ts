@@ -102,9 +102,23 @@ export class AdminRepository {
 
 	getEntryReports = (status?: ReportStatus): Promise<EntryReportContract[]> => {
 		return this.httpClient.get<EntryReportContract[]>(
-			this.urlMapper.mapRelative('/api/admin/entry-reports'),
+			this.urlMapper.mapRelative('/api/admin/reports'),
 			{
 				status,
+			},
+		);
+	};
+
+	deleteEntryReport = (
+		requestToken: string,
+		{ id }: { id: number },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(`/api/admin/reports/${id}`),
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
 			},
 		);
 	};

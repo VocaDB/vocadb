@@ -107,17 +107,6 @@ public class AdminController : ControllerBase
 	}
 
 	[Authorize]
-	public ActionResult DeleteEntryReport(int id)
-	{
-		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-		Service.DeleteEntryReports(new[] { id });
-		TempData.SetStatusMessage("Reports deleted");
-
-		return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
-	}
-
-	[Authorize]
 	public ActionResult DeletePVsByAuthor(string author)
 	{
 		var count = Service.DeletePVsByAuthor(author, PVService.Youtube);

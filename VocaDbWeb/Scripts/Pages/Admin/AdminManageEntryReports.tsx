@@ -75,7 +75,7 @@ const AdminViewEntryReports = observer(
 			adminRepo.getEntryReports(status).then((resp) => setEntryReports(resp));
 		}, []);
 
-		const changeStatus = (status: ReportStatus) => {
+		const changeStatus = (status: ReportStatus): void => {
 			adminRepo.getEntryReports(status).then((resp) => {
 				setEntryReports(resp);
 				setParams({ status });
@@ -88,16 +88,16 @@ const AdminViewEntryReports = observer(
 			<Layout pageTitle={title} title={title} ready={true}>
 				<ul className="nav nav-pills">
 					<li className={classNames(status === ReportStatus.Open && 'active')}>
-						<a onClick={() => changeStatus(ReportStatus.Open)}>
+						<SafeAnchor onClick={(): void => changeStatus(ReportStatus.Open)}>
 							Open{/* LOC */}
-						</a>
+						</SafeAnchor>
 					</li>
 					<li
 						className={classNames(status === ReportStatus.Closed && 'active')}
 					>
-						<a onClick={() => changeStatus(ReportStatus.Closed)}>
+						<SafeAnchor onClick={(): void => changeStatus(ReportStatus.Closed)}>
 							Closed{/* LOC */}
-						</a>
+						</SafeAnchor>
 					</li>
 				</ul>
 				<table className="table table-striped">
