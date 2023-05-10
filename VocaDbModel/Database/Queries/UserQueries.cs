@@ -1430,17 +1430,17 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 	public void DeleteArtistTag(long tagUsageId)
 	{
-		new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, _repository);
 	}
 	
 	public void DeleteEventTag(long tagUsageId)
 	{
-		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, _repository);
 	}
 
 	public void DeleteAlbumTag(long tagUsageId)
 	{
-		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
 	}
 
 	public UserForApiContract GetUser(int id, UserOptionalFields fields)

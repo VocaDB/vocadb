@@ -6,6 +6,7 @@ import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
@@ -285,6 +286,16 @@ export class AlbumRepository
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
+		);
+	};
+
+	getTagUsages = ({
+		albumId,
+	}: {
+		albumId: number;
+	}): Promise<EntryWithTagUsagesForApiContract> => {
+		return this.httpClient.get<EntryWithTagUsagesForApiContract>(
+			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagUsages`),
 		);
 	};
 

@@ -786,6 +786,20 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
+	deleteTag = ({
+		entryType,
+		tagUsageId,
+	}: {
+		entryType: EntryType;
+		tagUsageId: number;
+	}): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/users/current/${entryType}Tags/${tagUsageId}`,
+			),
+		);
+	};
+
 	// Updates user setting.
 	// userId: user ID.
 	// settingName: name of the setting to be updated, for example 'showChatBox'.
