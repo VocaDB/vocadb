@@ -472,10 +472,14 @@ public class SongApiController : ApiController
 	) =>
 		_songAggregateQueries.SongsOverTime(timeUnit, true, null, artistId, tagId);
 
-	[ApiExplorerSettings(IgnoreApi = true)]
 	[HttpGet("{id:int}/tagSuggestions")]
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<IEnumerable<TagUsageForApiContract>> GetTagSuggestions(int id) =>
 		await _queries.GetTagSuggestionsAsync(id);
+	
+	[HttpGet("{id:int}/tagUsages")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);
 
 	/// <summary>
 	/// Gets top rated songs.

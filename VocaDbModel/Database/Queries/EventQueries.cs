@@ -248,12 +248,12 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		});
 	}
 
-	public EntryWithTagUsagesContract GetEntryWithTagUsages(int eventId)
+	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int eventId)
 	{
 		return HandleQuery(session =>
 		{
 			var releaseEvent = session.Load<ReleaseEvent>(eventId);
-			return new EntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+			return new EntryWithTagUsagesForApiContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 		});
 	}
 
@@ -500,10 +500,10 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 		});
 	}
 
-	public int RemoveTagUsage(long tagUsageId)
-	{
-		return new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, _repository);
-	}
+	// public int RemoveTagUsage(long tagUsageId)
+	// {
+	// 	return new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, _repository);
+	// }
 
 	public void Restore(int eventId)
 	{

@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.UseCases;
 
+[Obsolete]
 public class EntryWithTagUsagesContract : EntryBaseContract
 {
 	public EntryWithTagUsagesContract() { }

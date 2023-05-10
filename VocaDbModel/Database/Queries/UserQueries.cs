@@ -1423,6 +1423,26 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		});
 	}
 
+	public void DeleteSongTag(long tagUsageId)
+	{
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
+	}
+
+	public void DeleteArtistTag(long tagUsageId)
+	{
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
+	}
+	
+	public void DeleteEventTag(long tagUsageId)
+	{
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
+	}
+
+	public void DeleteAlbumTag(long tagUsageId)
+	{
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
+	}
+
 	public UserForApiContract GetUser(int id, UserOptionalFields fields)
 	{
 		return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), _userIconFactory, fields));

@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags;
 
+[Obsolete]
 public class TagUsageWithVotesContract
 {
 	public TagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)

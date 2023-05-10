@@ -230,7 +230,11 @@ public class ArtistApiController : ApiController
 	[HttpGet("{id:int}/tagSuggestions")]
 	public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) =>
 		_queries.GetTagSuggestions(id);
-
+	
+	[HttpGet("{id:int}/tagUsages")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);
+	
 	[HttpGet("versions")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public EntryIdAndVersionContract[] GetVersions() =>
