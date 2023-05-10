@@ -31,7 +31,7 @@ public sealed record EntryReportForApiContract
 	public string Notes { get; init; }
 
 	[DataMember]
-	public string? ReportTypeName { get; init; }
+	public string ReportTypeName { get; init; }
 
 	[DataMember]
 	public UserForApiContract? User { get; init; }
