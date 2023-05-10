@@ -26,6 +26,7 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
 import { useVdb } from '@/VdbContext';
+import '@/styles/Styles/songlist.less';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -33,8 +34,6 @@ import NProgress from 'nprogress';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-import '@/styles/Styles/songlist.less'
 
 interface AlbumOptionsProps {
 	albumSearchStore: AlbumSearchStore;

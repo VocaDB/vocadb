@@ -4,6 +4,7 @@ import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
 import { CreateArtistContract } from '@/DataContracts/Artist/CreateArtistContract';
+import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
@@ -234,6 +235,16 @@ export class ArtistRepository
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/artists/${artistId}/tagSuggestions`),
+		);
+	};
+
+	getTagUsages = ({
+		artistId,
+	}: {
+		artistId: number;
+	}): Promise<EntryWithTagUsagesForApiContract> => {
+		return this.httpClient.get<EntryWithTagUsagesForApiContract>(
+			this.urlMapper.mapRelative(`/api/artists/${artistId}/tagUsages`),
 		);
 	};
 

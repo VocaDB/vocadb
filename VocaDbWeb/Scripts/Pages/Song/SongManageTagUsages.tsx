@@ -4,29 +4,27 @@ import { TagUsagesManageTable } from '@/Components/Shared/Partials/Tag/TagUsages
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { albumRepo } from '@/Repositories/AlbumRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-const AlbumManageTagUsages = (): React.ReactElement => {
+const SongManageTagUsages = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 	const { id } = useParams();
-	const [album, setAlbum] = useState<
+	const [song, setSong] = useState<
 		EntryWithTagUsagesForApiContract | undefined
 	>(undefined);
 
-	const title = `Manage tag usages - ${album?.defaultName}`; /* LOCALIZE */
+	const title = `Manage tag usages - ${song?.defaultName}`; /* LOCALIZE */
 	useVdbTitle(title);
 
 	useEffect(() => {
-		albumRepo
-			.getTagUsages({ albumId: Number(id) })
-			.then((resp) => setAlbum(resp));
+		songRepo.getTagUsages({ songId: Number(id) }).then((resp) => setSong(resp));
 	}, [id]);
 
-	if (!album) {
+	if (!song) {
 		return <></>;
 	}
 
@@ -37,33 +35,33 @@ const AlbumManageTagUsages = (): React.ReactElement => {
 			ready={true}
 			parents={
 				<>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Album' }} divider>
-						{t('ViewRes:Shared.Albums')}
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Song' }} divider>
+						{t('ViewRes:Shared.Songs')}
 					</Breadcrumb.Item>
 					<Breadcrumb.Item
 						linkAs={Link}
 						linkProps={{
-							to: EntryUrlMapper.details(EntryType.Album, album.id),
+							to: EntryUrlMapper.details(EntryType.Song, song.id),
 						}}
 					>
-						{album.defaultName}
+						{song.defaultName}
 					</Breadcrumb.Item>
 				</>
 			}
 		>
 			<TagUsagesManageTable
-				entryType={EntryType.Album}
-				tagUsages={album.tagUsages}
+				entryType={EntryType.Song}
+				tagUsages={song.tagUsages}
 				setTagUsages={(tagUsages): void =>
-					setAlbum({
-						...album,
+					setSong({
+						...song,
 						tagUsages,
 					})
 				}
-				canRemove={album.canRemoveTagUsages}
+				canRemove={song.canRemoveTagUsages}
 			/>
 		</Layout>
 	);
 };
 
-export default AlbumManageTagUsages;
+export default SongManageTagUsages;

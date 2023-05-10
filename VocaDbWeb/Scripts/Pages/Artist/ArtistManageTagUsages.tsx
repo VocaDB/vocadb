@@ -4,29 +4,29 @@ import { TagUsagesManageTable } from '@/Components/Shared/Partials/Tag/TagUsages
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-const AlbumManageTagUsages = (): React.ReactElement => {
+const ArtistManageTagUsages = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 	const { id } = useParams();
-	const [album, setAlbum] = useState<
+	const [artist, setArtist] = useState<
 		EntryWithTagUsagesForApiContract | undefined
 	>(undefined);
 
-	const title = `Manage tag usages - ${album?.defaultName}`; /* LOCALIZE */
+	const title = `Manage tag usages - ${artist?.defaultName}`; /* LOCALIZE */
 	useVdbTitle(title);
 
 	useEffect(() => {
-		albumRepo
-			.getTagUsages({ albumId: Number(id) })
-			.then((resp) => setAlbum(resp));
+		artistRepo
+			.getTagUsages({ artistId: Number(id) })
+			.then((resp) => setArtist(resp));
 	}, [id]);
 
-	if (!album) {
+	if (!artist) {
 		return <></>;
 	}
 
@@ -37,33 +37,33 @@ const AlbumManageTagUsages = (): React.ReactElement => {
 			ready={true}
 			parents={
 				<>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Album' }} divider>
-						{t('ViewRes:Shared.Albums')}
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Artist' }} divider>
+						{t('ViewRes:Shared.Artists')}
 					</Breadcrumb.Item>
 					<Breadcrumb.Item
 						linkAs={Link}
 						linkProps={{
-							to: EntryUrlMapper.details(EntryType.Album, album.id),
+							to: EntryUrlMapper.details(EntryType.Artist, artist.id),
 						}}
 					>
-						{album.defaultName}
+						{artist.defaultName}
 					</Breadcrumb.Item>
 				</>
 			}
 		>
 			<TagUsagesManageTable
-				entryType={EntryType.Album}
-				tagUsages={album.tagUsages}
+				entryType={EntryType.Artist}
+				tagUsages={artist.tagUsages}
 				setTagUsages={(tagUsages): void =>
-					setAlbum({
-						...album,
+					setArtist({
+						...artist,
 						tagUsages,
 					})
 				}
-				canRemove={album.canRemoveTagUsages}
+				canRemove={artist.canRemoveTagUsages}
 			/>
 		</Layout>
 	);
 };
 
-export default AlbumManageTagUsages;
+export default ArtistManageTagUsages;

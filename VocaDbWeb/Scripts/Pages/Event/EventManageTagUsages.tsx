@@ -4,29 +4,29 @@ import { TagUsagesManageTable } from '@/Components/Shared/Partials/Tag/TagUsages
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { albumRepo } from '@/Repositories/AlbumRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-const AlbumManageTagUsages = (): React.ReactElement => {
+const EventManageTagUsages = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 	const { id } = useParams();
-	const [album, setAlbum] = useState<
+	const [event, setEvent] = useState<
 		EntryWithTagUsagesForApiContract | undefined
 	>(undefined);
 
-	const title = `Manage tag usages - ${album?.defaultName}`; /* LOCALIZE */
+	const title = `Manage tag usages - ${event?.defaultName}`; /* LOCALIZE */
 	useVdbTitle(title);
 
 	useEffect(() => {
-		albumRepo
-			.getTagUsages({ albumId: Number(id) })
-			.then((resp) => setAlbum(resp));
+		eventRepo
+			.getTagUsages({ eventId: Number(id) })
+			.then((resp) => setEvent(resp));
 	}, [id]);
 
-	if (!album) {
+	if (!event) {
 		return <></>;
 	}
 
@@ -37,33 +37,33 @@ const AlbumManageTagUsages = (): React.ReactElement => {
 			ready={true}
 			parents={
 				<>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Album' }} divider>
-						{t('ViewRes:Shared.Albums')}
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Event' }} divider>
+						{t('ViewRes:Shared.ReleaseEvents')}
 					</Breadcrumb.Item>
 					<Breadcrumb.Item
 						linkAs={Link}
 						linkProps={{
-							to: EntryUrlMapper.details(EntryType.Album, album.id),
+							to: EntryUrlMapper.details(EntryType.ReleaseEvent, event.id),
 						}}
 					>
-						{album.defaultName}
+						{event.defaultName}
 					</Breadcrumb.Item>
 				</>
 			}
 		>
 			<TagUsagesManageTable
-				entryType={EntryType.Album}
-				tagUsages={album.tagUsages}
+				entryType={EntryType.ReleaseEvent}
+				tagUsages={event.tagUsages}
 				setTagUsages={(tagUsages): void =>
-					setAlbum({
-						...album,
+					setEvent({
+						...event,
 						tagUsages,
 					})
 				}
-				canRemove={album.canRemoveTagUsages}
+				canRemove={event.canRemoveTagUsages}
 			/>
 		</Layout>
 	);
 };
 
-export default AlbumManageTagUsages;
+export default EventManageTagUsages;
