@@ -499,12 +499,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 			ctx.AuditLogger.AuditLog($"moved {entry} to trash");
 		});
 	}
-
-	// public int RemoveTagUsage(long tagUsageId)
-	// {
-	// 	return new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, _repository);
-	// }
-
+	
 	public void Restore(int eventId)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
