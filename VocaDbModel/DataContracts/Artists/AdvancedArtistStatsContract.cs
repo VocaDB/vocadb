@@ -1,7 +1,5 @@
 #nullable disable
 
-using VocaDb.Model.Domain.Globalization;
-
 namespace VocaDb.Model.DataContracts.Artists;
 
 /// <summary>
