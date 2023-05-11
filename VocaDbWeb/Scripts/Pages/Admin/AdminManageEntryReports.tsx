@@ -15,11 +15,13 @@ import { useSearchParams } from 'react-router-dom';
 
 interface AdminViewEntryReportParams {
 	entryReport: EntryReportContract;
+	onReportDelete: (report: EntryReportContract) => any;
 	status: ReportStatus;
 }
 
 const AdminViewEntryReport = ({
 	entryReport,
+	onReportDelete,
 	status,
 }: AdminViewEntryReportParams): React.ReactElement => {
 	return (
@@ -27,7 +29,10 @@ const AdminViewEntryReport = ({
 			<td>{entryReport.created}</td>
 			<td>
 				{entryReport.user && (
-					<UserIconLink_UserForApiContract user={entryReport.user} />
+					<>
+						{/* eslint-disable-next-line react/jsx-pascal-case */}
+						<UserIconLink_UserForApiContract user={entryReport.user} />
+					</>
 				)}
 				{!entryReport.user && <p>System</p>}
 			</td>
@@ -41,11 +46,8 @@ const AdminViewEntryReport = ({
 			{status === ReportStatus.Open && (
 				<td>
 					<SafeAnchor
-						onClick={async (): Promise<void> => {
-							const requestToken = await antiforgeryRepo.getToken();
-							await adminRepo.deleteEntryReport(requestToken, {
-								id: entryReport.id,
-							});
+						onClick={(): void => {
+							onReportDelete(entryReport);
 						}}
 						className="textLink deleteLink"
 					>
@@ -56,6 +58,7 @@ const AdminViewEntryReport = ({
 			{status === ReportStatus.Closed && entryReport.closedBy && (
 				<>
 					<td>
+						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<UserIconLink_UserForApiContract user={entryReport.closedBy} />
 					</td>
 					<td>{entryReport.closedAt}</td>
@@ -73,7 +76,7 @@ const AdminViewEntryReports = observer(
 
 		useEffect(() => {
 			adminRepo.getEntryReports(status).then((resp) => setEntryReports(resp));
-		}, []);
+		}, [status]);
 
 		const changeStatus = (status: ReportStatus): void => {
 			adminRepo.getEntryReports(status).then((resp) => {
@@ -126,6 +129,19 @@ const AdminViewEntryReports = observer(
 							<AdminViewEntryReport
 								key={index}
 								entryReport={entryReport}
+								onReportDelete={(rep): void => {
+									antiforgeryRepo.getToken().then((token) => {
+										adminRepo
+											.deleteEntryReport(token, {
+												id: rep.id,
+											})
+											.then(() => {
+												setEntryReports(
+													entryReports.filter((r) => r.id !== rep.id),
+												);
+											});
+									});
+								}}
 								status={status}
 							/>
 						))}
