@@ -588,21 +588,6 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 		});
 	}
 
-	public string FavLang(int songId)
-	{
-		return HandleQuery(session => {
-			var song = session.Load<Song>(songId);
-			song.Lyrics
-				.Where(l => l.TranslationType == TranslationType.Original)
-				.GroupBy(l => l.CultureCode)
-				.Select(l => (l.Count(), l.First().CultureCode))
-				.OrderBy(l => l.Item1)
-				.ToArray();
-
-			return "test";
-		});
-	}
-
 	public SongDetailsForApiContract GetSongDetailsForApi(
 		int songId,
 		int albumId,
