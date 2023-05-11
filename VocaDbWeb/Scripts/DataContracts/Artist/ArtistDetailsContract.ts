@@ -19,6 +19,7 @@ interface TopStatContract<T> {
 
 interface AdvancedArtistStatsContract {
 	topVocaloids: TopStatContract<ArtistApiContract>[];
+	topLanguages: TopStatContract<string>[];
 }
 
 interface PersonalArtistStatsContract {

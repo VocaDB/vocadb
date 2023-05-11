@@ -7,6 +7,7 @@ import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeL
 import { LatestCommentsKnockout } from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
 import { EnglishTranslatedString } from '@/Components/Shared/Partials/EnglishTranslatedString';
 import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
+import { LanguageFlag } from '@/Components/Shared/Partials/Html/LanguageFlag';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
@@ -421,19 +422,37 @@ const ArtistBasicInfo = observer(
 												</Link>
 											</>
 										)}
-									{artist.advancedStats &&
-										artist.advancedStats.topVocaloids.length > 0 && (
-											<p>
-												{t('ViewRes.Artist:Details.MostlyUses')}{' '}
-												<ArtistLinkList
-													artists={artist.advancedStats.topVocaloids.map(
-														(a) => a.data,
+									{artist.advancedStats && (
+										<>
+											{artist.advancedStats.topVocaloids.length > 0 && (
+												<p>
+													{t('ViewRes.Artist:Details.MostlyUses')}{' '}
+													<ArtistLinkList
+														artists={artist.advancedStats.topVocaloids.map(
+															(a) => a.data,
+														)}
+														typeLabel={true}
+														tooltip={true}
+													/>
+												</p>
+											)}
+											{artist.advancedStats.topLanguages.length > 0 && (
+												<p>
+													{t('ViewRes.Artist:Details.MostUsedLanguages')}{' '}
+													{artist.advancedStats.topLanguages.map(
+														(code, index) => (
+															<>
+																<LanguageFlag
+																	languageCode={code.data}
+																	key={index}
+																/>{' '}
+															</>
+														),
 													)}
-													typeLabel={true}
-													tooltip={true}
-												/>
-											</p>
-										)}
+												</p>
+											)}
+										</>
+									)}
 								</td>
 							</tr>
 
