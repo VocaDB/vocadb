@@ -52,8 +52,8 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 	class CachedAdvancedArtistStatsContract
 	{
 		public TopStatContract<TranslatedArtistContract>[] TopVocaloids { get; set; }
-		
-		public TopStatContract<OptionalCultureCode>[] TopLanguages { get; init; }
+
+		public TopStatContract<string>[] TopLanguages { get; init; }
 	}
 
 #nullable enable
