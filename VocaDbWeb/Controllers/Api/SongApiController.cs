@@ -240,7 +240,7 @@ public class SongApiController : ApiController
 		int maxResults = 3
 	)
 	{
-		return _queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+		return _queries.GetByNames(names, songTypes ?? new SongType[0], ignoreIds, lang, maxResults);
 	}
 #nullable disable
 
