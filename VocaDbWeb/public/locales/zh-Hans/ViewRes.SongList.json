@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Date": "Date: {{0}}.",
+    "DefaultSortRule": "Default",
+    "Details": "Details",
+    "Events": "Events",
+    "Export": "Export",
+    "Playlist": "Playlist",
+    "Preview": "Preview",
+    "ShowTags": "Show tags",
+    "SongList": "Song list",
+    "Songs": "song(s)"
+  },
+  "Edit": {
+    "AddSong": "Add song",
+    "ConfirmDelete": "Are you sure you want to delete this list?",
+    "CreateTitle": "Create a songlist",
+    "Description": "Description",
+    "EditTitle": "Edit list - {{0}}",
+    "EventDate": "Event date",
+    "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
+    "FeaturedCategory": "Featured category",
+    "Name": "Name",
+    "RemoveFromList": "Remove from list",
+    "Status": "Entry status",
+    "TabProperties": "Properties",
+    "TabSongs": "Songs",
+    "Thumbnail": "Thumbnail",
+    "UnableToSave": "Unable to save list"
+  },
+  "Featured": {
+    "Import": "Import from YouTube or NicoNico",
+    "SortBy": "Sort by"
+  }
+}
