@@ -6,16 +6,26 @@
     "InvalidInfo": "Virheellistä tai puuttuvaa tietoa",
     "MaliciousIP": "Haitallinen IP",
     "Other": "Muu (määrittele lisätiedoissa)",
-    "OwnershipClaim": "Omistusvaatimus"
+    "OwnershipClaim": "Omistusvaatimus",
+    "RemovePermissions": "Restricted editing",
+    "Spamming": "Spamming"
   },
   "EntryTypeNames": {
     "Album": "Albumi",
     "Artist": "Artisti",
+    "DiscussionTopic": "Topic",
+    "PV": "PV",
     "ReleaseEvent": "Tapahtuma",
+    "ReleaseEventSeries": "Event series",
     "Song": "Kappale",
     "SongList": "Kappalelista",
     "Tag": "Tunniste",
     "Undefined": "Mitä tahansa",
-    "User": "Käyttäjä"
+    "User": "Käyttäjä",
+    "Venue": "Venue"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Entry report",
+    "User": "User"
   }
 }
