@@ -1,4 +1,8 @@
 {
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Importado automaticamente",
     "Created": "Creado",
@@ -70,6 +74,7 @@
     "OriginalName": "Nombre original",
     "Picture": "Imagen principal",
     "Pictures": "Imágenes",
+    "ReleaseDate": "Voicebank release date",
     "Status": "Estado",
     "WebLinks": "Links externos"
   },
@@ -88,6 +93,7 @@
     "Mixer": "Mezclador",
     "Other": "Otro",
     "Publisher": "Publicador",
+    "VocalDataProvider": "Vocal data provider",
     "Vocalist": "Vocalista",
     "VoiceManipulator": "Manipulador de voz"
   },
@@ -96,15 +102,21 @@
     "AdditionDateAsc": "Fecha de adición (en orden ascendente)",
     "FollowerCount": "Numero de seguidores",
     "Name": "Nombre",
+    "ReleaseDate": "Voicebank release date",
     "SongCount": "Número de canciones",
     "SongRating": "Rating total"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
   },
   "CommonMessages": {
     "EntryDeleted": "Esta entrada ha sido eliminada, aunque se muestra como temporalmente accesible, no se muestra ningún listado.",
     "EntryMergedTo": "Esta entrada ha sido fusionada con",
     "EntryStatusExplanation": "Borrador = A esta entrada le falta información indispensable. Este estado indica que estas solicitando información adicional para ser añadida o corregida.<br />\nTerminada = Esta entrada esta completada integramente con la información fundamental, pero aún no ha sido verificada por una fuente confiable.<br />\nAprobada = Esta entrada ha sido verificada y aprobada por una fuente confiable. Las entradas oficiales solo pueden ser editadas por fuentes oficiales.",
     "Locked": "Esta entrada esta asegurada, solo moderadores pueden editarla.",
-    "NameLanguageHelp": "Escoge el idioma para este nombre. \"Original\" es el nombre en su idioma nativo (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original."
+    "NameLanguageHelp": "Escoge el idioma para este nombre. \"Original\" es el nombre en su idioma nativo (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original.",
+    "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Idioma original",
@@ -125,6 +137,7 @@
   "EntryEditEventNames": {
     "Created": "Creado",
     "Deleted": "Eliminado",
+    "Restored": "Restored",
     "Updated": "Actualizado"
   },
   "EntryStatusNames": {
@@ -136,6 +149,8 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Acceso al menú de gestión",
     "Admin": "Tareas de administración en base de datos",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
     "ApproveEntries": "Aprobar entradas",
     "BulkDeletePVs": "Abultar PVs eliminados",
     "CreateComments": "Crear comentarios",
@@ -143,9 +158,11 @@
     "DeleteEntries": "Borrar entradas",
     "DesignatedStaff": "Miembro de staff designado",
     "DisableUsers": "Deshabilitar usuarios",
+    "EditAllSongLists": "Edit all song lists",
     "EditFeaturedLists": "Gestionar listas de canciones implementadas",
     "EditNews": "Gestionar noticias",
     "EditProfile": "Editar perfil personal",
+    "EditTags": "Edit tags",
     "LockEntries": "Asegurar entradas",
     "ManageDatabase": "Gestionar base de datos",
     "ManageEntryReports": "Gestionar entradas repost",
@@ -157,9 +174,15 @@
     "MoveToTrash": "Mover a la basura",
     "Nothing": "Nada",
     "ReadRecentComments": "Leer comentarios recientes",
+    "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Remover usos de etiqueta",
     "RestoreRevisions": "Restaurar revisiones",
-    "ViewAuditLog": "Ver registro de eventos"
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "Ver registro de eventos",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "Original (oficial/subida autorizada)",
@@ -175,12 +198,22 @@
     "RatingDate": "Fecha de rating"
   },
   "ReleaseEventEditableFieldNames": {
+    "Artists": "Artists",
+    "Category": "Category",
     "Date": "Fecha",
     "Description": "Descripción",
-    "Name": "Nombre",
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
     "Series": "Serie",
     "SeriesNumber": "Edición",
-    "SeriesSuffix": "Sufijo de serie"
+    "SeriesSuffix": "Sufijo de serie",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Importado automaticamente",
@@ -206,7 +239,9 @@
     "PVs": "PVs",
     "SongType": "Tipo de canción",
     "Status": "Estado",
-    "WebLinks": "Links externos"
+    "WebLinks": "Links externos",
+    "ReleaseEvent": "Release event",
+    "Bpm": "BPM"
   },
   "SongListEditableFieldNames": {
     "Description": "Descripción",
@@ -230,7 +265,8 @@
     "Name": "Nombre",
     "None": "Nada",
     "PublishDate": "Fecha de publicación",
-    "RatingScore": "Puntuación de rating"
+    "RatingScore": "Puntuación de rating",
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorito",
@@ -247,6 +283,7 @@
     "Picture": "Imagen",
     "RelatedTags": "Etiquetas relacionadas",
     "Status": "Estado",
+    "Targets": "Targets",
     "WebLinks": "Links externos"
   },
   "UserEmailOptionsNames": {
@@ -261,6 +298,16 @@
     "Nothing": "Nada",
     "Regular": "Usuario regular",
     "Trusted": "Usuario verificado como fuente confiable"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Comercial",
