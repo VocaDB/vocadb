@@ -1,14 +1,31 @@
 {
   "Details": {
+    "AliasedTo": "Aliased to",
+    "Aliases": "Aliases",
     "AllAlbums": "Kaikki albumit",
     "AllArtists": "Kaikki artistit",
+    "AllEntries": "All entries",
+    "AllEvents": "All events",
+    "AllSongLists": "All song lists",
     "AllSongs": "Kaikki kappaleet",
+    "AssociatedEntryType": "Associated entry type",
     "Category": "Kategoria",
+    "Children": "Children",
+    "EventSeries": "Event series",
+    "FollowCount": "Followed by {{0}} user(s)",
+    "FollowTag": "Follow tag",
+    "MappedTags": "The following NicoNico tags are mapped to this tag",
     "Overview": "Yleiskuva",
+    "RelatedTags": "Related tags",
+    "Siblings": "Siblings",
     "Tag": "Tägi",
     "TagDetails": "Tägin tiedot",
     "TopAlbums": "Suosituimmat albumit",
     "TopArtists": "Suosituimmat artistit",
-    "TopSongs": "Suosituimmat kappaleet"
+    "TopEvents": "Top events",
+    "TopSongs": "Suosituimmat kappaleet",
+    "Translations": "Translations",
+    "UnfollowTag": "Unfollow tag",
+    "ValidFor": "Valid for"
   }
 }
