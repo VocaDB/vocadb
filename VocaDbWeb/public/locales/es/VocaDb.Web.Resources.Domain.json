@@ -13,11 +13,19 @@
   "EntryTypeNames": {
     "Album": "Álbum",
     "Artist": "Artista",
+    "DiscussionTopic": "Topic",
+    "PV": "PV",
     "ReleaseEvent": "Evento",
+    "ReleaseEventSeries": "Event series",
     "Song": "Canción",
     "SongList": "Lista de canciones",
     "Tag": "Etiqueta",
     "Undefined": "Cualquier contenido",
-    "User": "Usuario"
+    "User": "Usuario",
+    "Venue": "Venue"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Entry report",
+    "User": "User"
   }
 }
