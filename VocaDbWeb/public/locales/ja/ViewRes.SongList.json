@@ -1,27 +1,35 @@
 {
   "Details": {
+    "Date": "日付：{{0}}",
+    "DefaultSortRule": "既定",
     "Details": "詳細",
+    "Events": "Events",
+    "Export": "エクスポート",
     "Playlist": "プレイリスト",
     "Preview": "プレビュ",
     "ShowTags": "タグを表示する",
     "SongList": "曲目リスト",
-    "Songs": "曲",
-    "Date": "日付：{{0}}",
-    "Export": "エクスポート",
-    "DefaultSortRule": "既定"
+    "Songs": "曲"
   },
   "Edit": {
+    "AddSong": "Add song",
     "ConfirmDelete": "このリストを本当に削除しますか？",
     "CreateTitle": "曲リストを作成",
     "Description": "説明",
     "EditTitle": "リスト編集　-　{{0}}",
+    "EventDate": "イベントの日付",
+    "EventDateHelp": "コンサートやランキングのリストに日付を設定することができます。",
+    "FeaturedCategory": "特集カテゴリー",
     "Name": "名前",
+    "RemoveFromList": "Remove from list",
+    "Status": "項目ステータス",
     "TabProperties": "プロパティ",
     "TabSongs": "曲",
     "Thumbnail": "サムネール",
-    "FeaturedCategory": "特集カテゴリー",
-    "EventDate": "イベントの日付",
-    "EventDateHelp": "コンサートやランキングのリストに日付を設定することができます。",
-    "Status": "項目ステータス"
+    "UnableToSave": "Unable to save list"
+  },
+  "Featured": {
+    "Import": "Import from YouTube or NicoNico",
+    "SortBy": "Sort by"
   }
 }
