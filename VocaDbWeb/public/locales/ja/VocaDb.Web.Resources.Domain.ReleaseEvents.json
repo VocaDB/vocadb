@@ -1,13 +1,43 @@
 {
+  "ArtistEventRoleNames": {
+    "Dancer": "Dancer",
+    "Default": "Default",
+    "DJ": "DJ",
+    "Instrumentalist": "Instrumentalist",
+    "Organizer": "Organizer",
+    "Other": "Other",
+    "OtherPerformer": "Other performer",
+    "Promoter": "Promoter",
+    "VJ": "VJ",
+    "Vocalist": "Vocalist",
+    "VoiceManipulator": "Voice manipulator"
+  },
   "EventCategoryNames": {
     "AlbumRelease": "アルバム発売記念",
     "Anniversary": "キャラクター発売記念日",
     "Club": "クラブ",
     "Concert": "コンサート",
     "Contest": "コンテスト",
-	"Festival": "祭",
+    "Festival": "祭",
     "Convention": "集会",
     "Other": "その他",
     "Unspecified": "カテゴリー無し"
+  },
+  "EventSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Date": "Date",
+    "Name": "Name",
+    "SeriesName": "Series",
+    "VenueName": "Venue"
+  },
+  "ReleaseEventSeriesEditableFieldNames": {
+    "Category": "Category",
+    "Description": "Description",
+    "Name": "Name",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Picture": "Main picture",
+    "Status": "Status",
+    "WebLinks": "External links"
   }
 }
