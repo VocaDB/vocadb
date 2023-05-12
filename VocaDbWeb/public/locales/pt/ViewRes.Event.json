@@ -1,14 +1,26 @@
 {
   "Details": {
+    "Albums": "Albums",
+    "Attending": "Attending",
+    "Category": "Category",
     "Event": "Evento",
     "OccurrenceDate": "Data de ocorrência",
-    "Series": "Série"
+    "PVs": "PVs",
+    "RemoveAttendance": "Remove from my events",
+    "Series": "Série",
+    "SongList": "Setlist",
+    "Songs": "Songs",
+    "UserAttending": "I'm attending",
+    "UserInterested": "I'm interested",
+    "Venue": "Venue"
   },
   "EventsBySeries": {
     "CreateEvent": "Criar evento",
     "CreateSeries": "Criar uma série",
+    "CreateVenue": "Create venue",
     "ViewByDate": "Por data",
     "ViewBySeries": "Por série",
+    "ViewByVenue": "All by venue",
     "ViewList": "Lista"
   },
   "Find": {
