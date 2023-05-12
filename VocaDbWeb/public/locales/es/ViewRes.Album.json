@@ -53,7 +53,18 @@
     "ReleaseDateIsInThePast": "(Ya lanzado)",
     "TotalLength": "duración total {{0}}",
     "HiddenCollections": "+ {{0}} escondidas",
-    "Illustrators": "Ilustradores"
+    "Illustrators": "Ilustradores",
+    "ReviewAlreadySubmitted": "You have already submitted a review in this language. Multiple reviews in the same language are not allowed.",
+    "ReviewLanguage": "Language",
+    "ReviewPost": "Post",
+    "ReviewPreview": "Preview",
+    "ReviewText": "Review (minimum 50 characters)",
+    "ReviewTitle": "Title (optional)",
+    "ReviewWrite": "Write review",
+    "ReviewLoginToReview": "Log in to post a review",
+    "LatestReview": "Latest review",
+    "ReviewsTab": "Reviews",
+    "ViewAllReviews": "View all reviews ({{0}})"
   },
   "Edit": {
     "AddNew": "Añadir pistas",
@@ -98,7 +109,16 @@
     "PvURL": "URL:",
     "TrackPropertiesTitle": "Propiedades de la canción",
     "ArtistsForSong": "Artistas por canción {{0}}",
-    "BaDiscTypeExplanation": "Si no estas seguro de que tipo usar, checa como los artistas clasifican/denominan al album. Para descripciones mas elaboradas, puedes consultar en Wikipedia, Discogs o Musicbrainz."
+    "BaDiscTypeExplanation": "Si no estas seguro de que tipo usar, checa como los artistas clasifican/denominan al album. Para descripciones mas elaboradas, puedes consultar en Wikipedia, Discogs o Musicbrainz.",
+    "BaBarcode": "Barcode",
+    "DiAddRow": "Add row",
+    "DiAudio": "Audio",
+    "DiName": "Name",
+    "DiNote": "If the album contains multiple discs you may define extra properties for those discs here.\n\t\t\t\tYou may specify disc name and type. Name is optional - if not specified, the default \"Disc #\" will be used, where \"#\" is the disc number.",
+    "DiscsTab": "Discs",
+    "DiType": "Type",
+    "DiVideo": "Video",
+    "TrNextDisc": "Next disc"
   },
   "TopRated": {
     "Average": "promedio",
