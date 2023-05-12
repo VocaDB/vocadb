@@ -1,5 +1,13 @@
 {
   "EnglishTranslatedString": {
-    "ShowFullDescription": "查看完整描述"
+    "Original": "Original",
+    "ShowFullDescription": "查看完整描述",
+    "Translated": "Translated"
+  },
+  "PlayList": {
+    "Autoplay": "Autoplay",
+    "AutoplayNote": "Autoplay is supported only for YouTube and SoundCloud",
+    "NextSong": "Next song",
+    "Shuffle": "Shuffle"
   }
 }
