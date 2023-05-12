@@ -2,15 +2,30 @@
   "Album": {
     "AddedToCollection": "Добавлено в коллекцию.",
     "AddToTracks": "Добавить к трекам",
-    "RemoveFromTracks": "Удалить из треков"
+    "RemoveFromTracks": "Удалить из треков",
+    "AddNewSong": "Add new song called '{{0}}'",
+    "Download": "Download"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "draft status",
+    "ExactTitleFilter": "exact title '{{0}}'",
+    "FilterPre": "Filtering by",
+    "StartsWithTitleFilter": "starting with title '{{0}}'",
+    "TitleFilter": "title '{{0}}'"
   },
   "Shared": {
+    "AddExtraArtist": "Add custom artist named '{0}'",
     "ReportSent": "Замечание отправлено. Спасибо!",
     "Save": "Сохранить",
-    "ThanksForRating": "Спасибо за оценку!"
+    "ThanksForRating": "Спасибо за оценку!",
+    "UnableToSendReport": "Unable to send report."
   },
   "Song": {
     "AddedToList": "Добавлено в список",
+    "ArtistFilter": "artist '{{0}}'",
+    "OnlyWithPVsFilter": "PVs only",
+    "SinceFilter": "newer than {{0}}",
+    "SongTypeFilter": "song type '{{0}}'",
     "ThanksForRating": "Спасибо за оценку!"
   }
 }
