@@ -1,5 +1,9 @@
 {
   "Index": {
-    "Comments": "Kommentare"
+    "AllActivity": "All activity",
+    "Comments": "Kommentare",
+    "FollowedArtists": "Only followed artists",
+    "RecentActivity": "Recent activity",
+    "ViewMore": "View more"
   }
 }
