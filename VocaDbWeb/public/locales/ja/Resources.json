@@ -1,13 +1,17 @@
 {
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自動インポート",
     "Created": "作成",
+    "Deleted": "削除",
     "Merged": "別項目とマージされた",
     "PropertiesUpdated": "プロパティー更新",
+    "Restored": "リストア",
     "Reverted": "以前のバージョンに戻された",
-    "Unknown": "不明",
-    "Deleted": "削除",
-    "Restored": "リストア"
+    "Unknown": "不明"
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "なし",
@@ -15,13 +19,15 @@
     "Owned": "所有した",
     "Wishlisted": "ウィッシュリストに入れた"
   },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
+  },
   "AlbumEditableFieldNames": {
     "Artists": "アーティスト",
-    "Barcode": "バーコード",
     "Cover": "ジャケット",
     "Description": "詳細",
     "DiscType": "ディスクタイプ",
-    "Identifiers": "識別子",
     "Names": "名前",
     "Nothing": "なし",
     "OriginalName": "オリジナル名",
@@ -30,7 +36,10 @@
     "PVs": "PV",
     "Status": "ステータス",
     "Tracks": "トラック",
-    "WebLinks": "外部リンク"
+    "WebLinks": "外部リンク",
+    "Barcode": "バーコード",
+    "Identifiers": "識別子",
+    "Discs": "Discs"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "デジタルダウンロード",
@@ -47,12 +56,12 @@
   },
   "ArtistArchiveReasonNames": {
     "Created": "作成",
-    "Merged": "別項目とマージされた",
-    "Reverted": "以前のバージョンに戻された",
-    "Unknown": "不明",
-    "PropertiesUpdated": "プロパティー更新",
     "Deleted": "削除",
-    "Restored": "リストア"
+    "Merged": "別項目とマージされた",
+    "PropertiesUpdated": "プロパティー更新",
+    "Restored": "リストア",
+    "Reverted": "以前のバージョンに戻された",
+    "Unknown": "不明"
   },
   "ArtistEditableFieldNames": {
     "Albums": "アルバム",
@@ -62,44 +71,52 @@
     "Groups": "グループ",
     "Names": "名前",
     "Nothing": "なし",
+    "OriginalName": "Original name",
     "Picture": "主な画像",
     "Pictures": "画像",
+    "ReleaseDate": "Voicebank release date",
     "Status": "ステータス",
-    "WebLinks": "外部リンク",
-    "OriginalName": ""
+    "WebLinks": "外部リンク"
   },
   "ArtistRoleNames": {
     "Animator": "動画",
     "Arranger": "編曲",
+    "Chorus": "コーラス",
     "Composer": "作曲",
     "Default": "Default",
     "Distributor": "配給",
+    "Encoder": "エンコード",
     "Illustrator": "イラスト",
     "Instrumentalist": "演奏",
     "Lyricist": "作詞",
     "Mastering": "マスタリング",
+    "Mixer": "ミキシング",
     "Other": "その他",
     "Publisher": "出版",
+    "VocalDataProvider": "Vocal data provider",
     "Vocalist": "ボーカル",
-    "VoiceManipulator": "調声",
-    "Chorus": "コーラス",
-    "Encoder": "エンコード",
-    "Mixer": "ミキシング"
+    "VoiceManipulator": "調声"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "追加された日時（降順）",
     "AdditionDateAsc": "追加された日時（昇順）",
     "FollowerCount": "フォロワー数",
     "Name": "アーティスト名",
+    "ReleaseDate": "Voicebank release date",
     "SongCount": "曲数",
     "SongRating": "総評価数"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
   },
   "CommonMessages": {
     "EntryDeleted": "この項目は削除されました。一時的アクセスは可能ですが、検索などには表示されません。",
     "EntryMergedTo": "この項目はマージされました：",
     "EntryStatusExplanation": "下書き：項目は必須情報が抜けています。<br/>\n完成した：項目は全て必須情報がありますが、信用されたユーザーに見直しされていません。<br/>\n承認された：項目は信用されたユーザーに見直され、承認されています。承認された項目は信用されたユーザーしか編集できません。",
     "Locked": "この項目はロックされています。モデレーターしか編集できません。",
-    "NameLanguageHelp": ""
+    "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
+    "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
     "Default": "原言語",
@@ -119,6 +136,8 @@
   },
   "EntryEditEventNames": {
     "Created": "作成",
+    "Deleted": "Deleted",
+    "Restored": "Restored",
     "Updated": "更新"
   },
   "EntryStatusNames": {
@@ -128,15 +147,42 @@
     "Locked": "ロック"
   },
   "PermissionTokenNames": {
-    "ViewAuditLog": "イベントログを観察",
-    "Nothing": "なし",
-    "MoveToTrash": "ゴミ箱に移動",
-    "MikuDbImport": "アルバムインポート",
-    "MergeEntries": "項目をマージ",
-    "ManageUserPermissions": "ユーザー権利の管理",
+    "AccessManageMenu": "Access manage menu",
+    "Admin": "Database admin tasks",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
+    "ApproveEntries": "Approve entries",
+    "BulkDeletePVs": "Bulk delete PVs",
+    "CreateComments": "Create comments",
+    "DeleteComments": "Delete comments",
+    "DeleteEntries": "Delete entries",
+    "DesignatedStaff": "Designated staff member",
+    "DisableUsers": "Disable users",
+    "EditAllSongLists": "Edit all song lists",
+    "EditFeaturedLists": "Manage featured songlists",
+    "EditNews": "Manage news",
+    "EditProfile": "Edit personal profile",
+    "EditTags": "Edit tags",
+    "LockEntries": "Lock entries",
+    "ManageDatabase": "Manage database",
+    "ManageEntryReports": "Manage entry reports",
+    "ManageEventSeries": "Manage event series",
     "ManageIPRules": "IPルールの管理",
+    "ManageUserPermissions": "ユーザー権利の管理",
+    "MergeEntries": "項目をマージ",
+    "MikuDbImport": "アルバムインポート",
+    "MoveToTrash": "ゴミ箱に移動",
+    "Nothing": "なし",
     "ReadRecentComments": "最近のコメントを読む",
-    "RemoveTagUsages": "タグ使用を削除"
+    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveTagUsages": "タグ使用を削除",
+    "RestoreRevisions": "Restore revisions",
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "イベントログを観察",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "オリジナル（公式・許可されたアップロード）",
@@ -148,25 +194,36 @@
     "Other": "その他",
     "Reprint": "増刷"
   },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Rating date"
+  },
   "ReleaseEventEditableFieldNames": {
     "Artists": "アーティスト",
     "Category": "カテゴリ",
     "Date": "日時",
     "Description": "概要",
-    "Name": "名前",
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
     "Series": "シリーズ",
     "SeriesNumber": "シリーズ番号",
-    "SeriesSuffix": "接尾辞"
+    "SeriesSuffix": "接尾辞",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
   },
   "SongArchiveReasonNames": {
-    "Unknown": "不明",
-    "Reverted": "以前のバージョンに戻された",
     "AutoImportedFromMikuDb": "自動インポート",
     "Created": "作成",
+    "Deleted": "削除",
     "Merged": "別項目とマージされた",
     "PropertiesUpdated": "プロパティー更新",
-    "Deleted": "削除",
-    "Restored": "レストア"
+    "Restored": "レストア",
+    "Reverted": "以前のバージョンに戻された",
+    "Unknown": "不明"
   },
   "SongEditableFieldNames": {
     "Artists": "アーティスト",
@@ -176,49 +233,58 @@
     "Names": "名前",
     "Notes": "メモ",
     "Nothing": "なし",
-    "OriginalName": "",
+    "OriginalName": "Original name",
+    "OriginalVersion": "オリジナルバージョン",
+    "PublishDate": "公開日",
     "PVs": "PV",
     "SongType": "曲タイプ",
     "Status": "ステータス",
     "WebLinks": "外部リンク",
-    "OriginalVersion": "オリジナルバージョン",
-    "PublishDate": "公開日"
+    "ReleaseEvent": "Release event",
+    "Bpm": "BPM"
   },
   "SongListEditableFieldNames": {
-    "Thumbnail": "サムネール",
-    "Songs": "曲",
-    "Name": "名前",
-    "FeaturedCategory": "注目カテゴリー",
     "Description": "説明",
     "EventDate": "イベント日",
-    "Status": "ステータス"
+    "FeaturedCategory": "注目カテゴリー",
+    "Name": "名前",
+    "Songs": "曲",
+    "Status": "ステータス",
+    "Thumbnail": "サムネール"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "コンサートのセットリスト",
     "Nothing": "なし",
     "Other": "その他",
-    "VocaloidRanking": "ボカロランキング",
-    "Pools": "プール"
+    "Pools": "プール",
+    "VocaloidRanking": "ボカロランキング"
   },
   "SongSortRuleNames": {
     "AdditionDate": "追加日時",
     "FavoritedTimes": "お気に入り登録された数",
     "Name": "名称",
-    "RatingScore": "評価点数",
     "None": "なし",
-    "PublishDate": "公開日"
+    "PublishDate": "公開日",
+    "RatingScore": "評価点数",
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "お気に入りに追加",
     "Like": "いいね"
   },
   "TagEditableFieldNames": {
-    "Status": "ステータス",
-    "Picture": "画像",
+    "AliasedTo": "別名",
     "CategoryName": "カテゴリー",
-    "Parent": "親",
     "Description": "説明",
-    "AliasedTo": "別名"
+    "HideFromSuggestions": "Hide from suggestions",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Parent": "親",
+    "Picture": "画像",
+    "RelatedTags": "Related tags",
+    "Status": "ステータス",
+    "Targets": "Targets",
+    "WebLinks": "External links"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "プライベートメッセージの通知なし",
@@ -232,6 +298,16 @@
     "Nothing": "なし",
     "Regular": "通常のユーザー",
     "Trusted": "信頼されたユーザー"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "商業",
