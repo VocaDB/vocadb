@@ -8,6 +8,7 @@
     "EntrySong": "música",
     "EntrySongList": "lista de músicas",
     "EntryTag": "tag",
+    "EntryVenue": "venue",
     "Someone": "Um contribuidor",
     "Updated": "atualizado {{0}}"
   },
@@ -22,6 +23,8 @@
     "EntryValidationNoErrors": "Esta página contém todas as informações necessárias.",
     "EntryValidationNoErrorsDraft": "Esta página contém todas as informações necessárias para ser marcada como acabada.",
     "EntryValidationWarningDetails": "Detalhes",
+    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "IsSupportedForFormatting": "is supported for formatting",
     "NameLangTitle": "Idioma",
     "NameNewRow": "Nova linha",
     "NameValueTitle": "Nome (obrigatório)",
@@ -37,7 +40,8 @@
     "UploadPictureInfo": "Tipos permitidos: {{0}}. Tamanho máximo é {{1}} MB. Por favor respeito os direitos de autor e mencione a fonte da imagem nas notas, se possível.",
     "WebLinkCategoryTitle": "Categoria",
     "WebLinkDescriptionTitle": "Descrição",
-    "WebLinkNewRow": "Nova linha"
+    "WebLinkNewRow": "Nova linha",
+    "WebLinkUrlTitle": "URL"
   },
   "SongHelpers": {
     "FromAlbum": "Do álbum"
