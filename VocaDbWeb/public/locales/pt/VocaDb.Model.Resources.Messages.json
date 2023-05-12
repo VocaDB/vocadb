@@ -7,6 +7,7 @@
     "AccountCreatedSubject": "Bem-vindo a {{0}}, por favor verifique o seu email.",
     "PasswordResetBody": "Você (ou alguém que conhece o seu email) pediu uma mudança de password no VocaDB. Pode fazê-lo em {{0}}. Se não pediu para mudar a password, ignore esta mensagem.",
     "PasswordResetSubject": "Mudança de password requisitada.",
-    "VerifyEmailBody": "Por favor verifique o seguinte link para validar o seu email, em {{0}}.\n{{1}}?token={{2}}"
+    "VerifyEmailBody": "Por favor verifique o seguinte link para validar o seu email, em {{0}}.\n{{1}}?token={{2}}",
+    "VerifyEmailSubject": "Verify your email at {{0}}."
   }
 }
