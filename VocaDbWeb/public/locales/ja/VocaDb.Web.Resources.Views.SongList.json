@@ -1,6 +1,7 @@
 {
   "Import": {
     "Accept": "リスト作成",
+    "InvalidUrlError": "ニコニコマイリス、RSS フィード、Youtube プレイリストのURLを指定してください。",
     "ItemsLoaded": "ロードされています",
     "ListDescription": "概要",
     "ListName": "名",
@@ -9,20 +10,22 @@
     "NicoPV": "インポートしたPV",
     "OnlyRanked": "ランク付けされた曲だけ含む",
     "Order": "順序",
+    "ParseAll": "Include all songs in the list (not just ranked)",
     "Process": "処理",
+    "SongMissing": "未登録",
     "SongsInList": "リストの曲",
     "SongsMissingError": "曲の一部はVocaDBに登録されていません。リストに追加する前に、すべての曲を登録してください。",
+    "Submit": "Submit",
     "Title": "ニコニコ動画のマイリストかYouTubeのプレイリストから曲のリストを作る",
     "TotalSongs": "曲数",
-    "UrlLabel": "プレイリスト/マイリストURL",
-    "VocaDbEntry": "VocaDBのページ",
-    "SongMissing": "未登録",
     "UnableToParse": "リンクが処理できませんでした。",
-    "InvalidUrlError": "ニコニコマイリス、RSS フィード、Youtube プレイリストのURLを指定してください。"
+    "UrlDescription": "Can be any NicoNico MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "UrlLabel": "プレイリスト/マイリストURL",
+    "VocaDbEntry": "VocaDBのページ"
   },
   "SongListSortRuleNames": {
+    "CreateDate": "作成日",
     "Date": "イベントの日付",
-    "Name": "名前",
-    "CreateDate": "作成日"
+    "Name": "名前"
   }
 }
