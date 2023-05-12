@@ -375,8 +375,8 @@ const EventDetailsLayout = observer(
 										<>
 											{' '}
 											<JQueryUIButton
-												as="a"
-												href={`/Event/ManageTagUsages/${event.id}`}
+												as={Link}
+												to={`/Event/ManageTagUsages/${event.id}`}
 												icons={{ primary: 'ui-icon-wrench' }}
 											>
 												{t('ViewRes:EntryDetails.ManageTags')}

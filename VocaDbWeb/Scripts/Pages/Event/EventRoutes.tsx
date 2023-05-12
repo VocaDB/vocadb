@@ -9,6 +9,7 @@ const EventEditSeries = React.lazy(() => import('./EventEditSeries'));
 const EventEventsByDate = React.lazy(() => import('./EventEventsByDate'));
 const EventEventsBySeries = React.lazy(() => import('./EventEventsBySeries'));
 const EventEventsByVenue = React.lazy(() => import('./EventEventsByVenue'));
+const EventManageTagUsages = React.lazy(() => import('./EventManageTagUsages'));
 const EventSeriesDetails = React.lazy(() => import('./EventSeriesDetails'));
 const EventSeriesVersions = React.lazy(() => import('./EventSeriesVersions'));
 const EventVersions = React.lazy(() => import('./EventVersions'));
@@ -29,6 +30,7 @@ const EventRoutes = (): React.ReactElement => {
 			<Route path="EventsByDate" element={<EventEventsByDate />} />
 			<Route path="EventsBySeries" element={<EventEventsBySeries />} />
 			<Route path="EventsByVenue" element={<EventEventsByVenue />} />
+			<Route path="ManageTagUsages/:id" element={<EventManageTagUsages />} />
 			<Route path="SeriesDetails/:id" element={<EventSeriesDetails />} />
 			<Route path="SeriesVersions/:id" element={<EventSeriesVersions />} />
 			<Route path="Versions/:id" element={<EventVersions />} />

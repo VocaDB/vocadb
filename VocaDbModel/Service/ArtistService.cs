@@ -166,12 +166,12 @@ public class ArtistService : ServiceBase
 		});
 	}
 
-	public EntryWithTagUsagesContract GetEntryWithTagUsages(int artistId)
+	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int artistId)
 	{
 		return HandleQuery(session =>
 		{
 			var artist = session.Load<Artist>(artistId);
-			return new EntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+			return new EntryWithTagUsagesForApiContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 		});
 	}
 

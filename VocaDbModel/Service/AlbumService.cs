@@ -217,12 +217,12 @@ public class AlbumService : ServiceBase
 			EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference));
 	}
 
-	public EntryWithTagUsagesContract GetEntryWithTagUsages(int albumId)
+	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int albumId)
 	{
 		return HandleQuery(session =>
 		{
 			var album = session.Load<Album>(albumId);
-			return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+			return new EntryWithTagUsagesForApiContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 		});
 	}
 

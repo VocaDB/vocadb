@@ -1,5 +1,6 @@
 import { CountPerDayContract } from '@/DataContracts/Aggregate/CountPerDayContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
@@ -471,6 +472,16 @@ export class SongRepository
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/tagSuggestions`),
+		);
+	};
+
+	getTagUsages = ({
+		songId,
+	}: {
+		songId: number;
+	}): Promise<EntryWithTagUsagesForApiContract> => {
+		return this.httpClient.get<EntryWithTagUsagesForApiContract>(
+			this.urlMapper.mapRelative(`/api/songs/${songId}/tagUsages`),
 		);
 	};
 

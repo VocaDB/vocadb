@@ -619,6 +619,37 @@ public class UserApiController : ApiController
 	public TagSelectionContract[] GetSongTags(int songId) =>
 		_queries.GetSongTagSelections(songId, _permissionContext.LoggedUserId);
 
+	[HttpDelete("current/songTags/{tagUsageId:long}")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult RemoveSongTagUsage(long tagUsageId) {
+		_queries.DeleteSongTag(tagUsageId);
+		return NoContent();
+	}
+
+	[HttpDelete("current/artistTags/{tagUsageId:long}")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult RemoveArtistTagUsage(long tagUsageId) {
+		_queries.DeleteArtistTag(tagUsageId);
+		return NoContent();
+	}
+	
+	[HttpDelete("current/albumTags/{tagUsageId:long}")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult RemoveAlbumTagUsage(long tagUsageId) {
+		_queries.DeleteAlbumTag(tagUsageId);
+		return NoContent();
+	}
+	
+	[HttpDelete("current/eventTags/{tagUsageId:long}")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult RemoveEventTagUsage(long tagUsageId) {
+		_queries.DeleteEventTag(tagUsageId);
+		return NoContent();
+	}
 	/// <summary>
 	/// Add or update collection status, media type and rating for a specific album, for the currently logged in user.
 	/// </summary>

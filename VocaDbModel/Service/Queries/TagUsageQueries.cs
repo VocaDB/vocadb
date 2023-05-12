@@ -116,7 +116,7 @@ public class TagUsageQueries
 		});
 	}
 
-	public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository)
+	public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<User> repository)
 		where TUsage : TagUsage
 		where TEntry : class, IDatabaseObject
 	{
