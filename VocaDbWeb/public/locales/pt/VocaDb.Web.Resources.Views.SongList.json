@@ -20,6 +20,7 @@
     "TotalSongs": "Todas as músicas",
     "UnableToParse": "Erro em mostrar a lista",
     "UrlDescription": "Pode ser qualquer NicoNico MyList, por exemplo http://www.nicovideo.jp/mylist/1234567, ou YouTube playlist, por exemplo https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "UrlLabel": "Playlist/Mylist URL",
     "VocaDbEntry": "Página de música no VocaDB"
   },
   "SongListSortRuleNames": {
