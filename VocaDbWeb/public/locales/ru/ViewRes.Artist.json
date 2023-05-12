@@ -77,5 +77,6 @@
     "PiPictureDescription": "Picture description",
     "PiPicturesNote": "Please only upload pictures relevant to this artist, nothing else.",
     "TabAdditionalPictures": "Additional pictures"
-  }
+  },
+  "MostUsedLanguages": "Most used language(s):"
 }
