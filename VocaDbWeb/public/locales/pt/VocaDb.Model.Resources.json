@@ -9,6 +9,17 @@
     "NeedType": "O tipo de música precisa de ser especificado.",
     "UnspecifiedNames": "O álbum precisa de um nome primário."
   },
+  "ArtistCategoriesNames": {
+    "Animator": "Animator",
+    "Band": "Band",
+    "Circle": "Circle",
+    "Illustrator": "Illustrator",
+    "Label": "Label",
+    "Other": "Other",
+    "Producer": "Producer",
+    "Subject": "Subject",
+    "Vocalist": "Vocalist"
+  },
   "ArtistTypeNames": {
     "Circle": "Círculo",
     "Label": "Editora",
@@ -25,11 +36,16 @@
     "OtherVoiceSynthesizer": "Outro sintetizador de voz",
     "Band": "Banda",
     "Utaite": "Utaite",
-    "CeVIO": "CeVIO"
+    "CeVIO": "CeVIO",
+    "Vocalist": "Vocalist",
+    "Character": "Character",
+    "SynthesizerV": "Synthesizer V",
+    "CoverArtist": "Cover artist"
   },
   "ArtistValidationErrors": {
     "NeedReferences": "O artista precisa de uma descrição OU pelo menos um link externo de referência.",
     "NeedType": "O tipo de artista precisa de ser especificado.",
+    "UnnecessaryPName": "There is no need to add artist name both with and without the P suffix.",
     "UnspecifiedNames": "O artista precisa de um nome primário."
   },
   "ExtSites": {
@@ -44,6 +60,8 @@
     "NeedReferences": "A música precisa de notas, PVs ou links de referência.",
     "NeedType": "O tipo de música precisa de ser especificado.",
     "NonInstrumentalSongNeedsVocalists": "Esta música não tem vocalistas. ",
+    "RedundantEvent": "The same release event does not need to be specified for both the song and album.",
+    "RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
     "UnspecifiedNames": "A música precisa de um nome primário."
   }
 }
