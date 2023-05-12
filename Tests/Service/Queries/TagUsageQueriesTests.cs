@@ -218,7 +218,7 @@ public class TagUsageQueriesTests
 		var usage = _repository.Save(_entry.AddTag(tag).Result);
 		_repository.Save(_entry.AddTag(tag2).Result);
 
-		_queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<Song>());
+		_queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<User>());
 
 		_entry.Tags.Usages.Count.Should().Be(1, "Number of tag usages for entry");
 		tag.UsageCount.Should().Be(0, "Number of usages for tag");
