@@ -8,9 +8,15 @@
     "NewArtistExternalLink": "外部リンク（アーティストのウェブサイト、初音ミクwiki、ニコ動マイリスト、等）"
   },
   "HomeRes": {
+    "SiteDescription": "VocaDBはボーカロイドアーティスト、アルバム、曲情報の複言語音楽データベースです。",
     "Welcome": "ボカロデータベースへようこそ！",
-    "WelcomeSubtitle": "ボカロアーティストやディスコグラフィーやPVの協調データベース",
-    "SiteDescription": "VocaDBはボーカロイドアーティスト、アルバム、曲情報の複言語音楽データベースです。"
+    "WelcomeSubtitle": "ボカロアーティストやディスコグラフィーやPVの協調データベース"
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid Database"
   },
   "SongRes": {
     "NewSongInfo": "曲を登録する前に、既に登録済みでないかを確認して下さい。タイトルとアーティストのフィールドには記入が必要です。できる限り、オリジナル動画のリンクを提供してください。<br /><br />ボーカルがボーカロイドでない曲の登録は、収録されているアルバムに他にボーカロイド曲がある場合に限ります。UTAUなど音声合成ソフトも許可されていますが、人間カバー（歌ってみた）は許可されていません。",
