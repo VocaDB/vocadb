@@ -13,7 +13,6 @@ export interface EntryReportContract {
 	closedAt?: string;
 	created: string;
 	entry: EntryContract;
-	hostname: string;
 	id: number;
 	notes: string;
 	reportTypeName: string;

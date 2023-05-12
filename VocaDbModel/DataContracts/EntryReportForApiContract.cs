@@ -22,9 +22,6 @@ public sealed record EntryReportForApiContract
 	public EntryForApiContract Entry { get; init; }
 
 	[DataMember]
-	public string Hostname { get; init; }
-
-	[DataMember]
 	public int Id { get; init; }
 
 	[DataMember]
@@ -46,7 +43,6 @@ public sealed record EntryReportForApiContract
 		ClosedBy = report.ClosedBy != null ? new UserForApiContract(report.ClosedBy, userIconFactory, UserOptionalFields.MainPicture) : null;
 		Created = report.Created;
 		Entry = entry;
-		Hostname = report.Hostname;
 		Id = report.Id;
 		Notes = report.Notes;
 		ReportTypeName = report.ReportTypeName();
