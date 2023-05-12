@@ -13,6 +13,7 @@
     "Captcha": "Captcha",
     "CaptchaInvalid": "el captcha es inválido.",
     "DoRegister": "Registrarse",
+    "DuplicateUserWarning": "Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.",
     "Email": "Correo electrónico (requerido obligatoriamente)",
     "EmailIsRequired": "Se requiere que ingreses tu correo electrónico.",
     "EmailNote": "Tu dirección de correo electrónicono no será mostrada a otros usuarios, asegurate de que es válida. La necesitaras en caso de que llegues a olvidar tu contraseña. Dado que VocaDB utiliza gravatar para enlazar tu foto de perfil, el correo electrónico que utilices debe ser el mismo que tu cuenta de gravatar (si no tienes, crea una). Tambien puedes cambiar de dirección de correo electrónico posteriormente.",
@@ -34,6 +35,7 @@
     "Active": "Activo(a)",
     "AdditionalPermissions": "Permisos adicionales",
     "ArtistVerificationPage": "Página de verificación del artista",
+    "Attending": "Attending",
     "CollectionTab": "Colección",
     "Comments": "Comentarios",
     "CommentsMade": "Comentarios",
@@ -49,6 +51,9 @@
     "FavoriteTags": "Mis etiquetas preferidas",
     "FollowedArtistsTab": "Artistas seguidos",
     "ImportSongList": "Importar de YouTube o NicoNico",
+    "Interested": "Interested",
+    "KnownLanguagesMessage": "Please let us know which languages you are familiar with. You can enter this information under <a>\"My settings\", \"Profile\"</a>, \"Languages I know\". We can use this information to determine how to contact you when needed.",
+    "LanguagesIKnow": "Languages I know",
     "LastLogin": "Ultima sesión",
     "Level": "Nivel",
     "Location": "Ubicación",
@@ -60,6 +65,7 @@
     "Overview": "Vista previa",
     "PossibleProducerMessage": "¿A caso eres un artista (por ejemplo un productor, animador, ilustrador, etc...) trabajando con Vocaloid/UTAU?\nSi es así, por favor ve el <a>Página de verificación del artista</a>.",
     "Power": "Poder",
+    "ReportSpamming": "Report user for spamming",
     "SetAvatar": "Cambia tu avatar via gravatar.com",
     "SomeAlbumsILike": "Algunos albumes que me han gustado",
     "SomeArtistsIFollow": "Algunos artistas que sigo",
@@ -78,7 +84,12 @@
     "VerifiedAccount": "Artista verificado",
     "VerifiedEmail": "Correo electrónico verificado",
     "VerifiedOwner": "Dueño verificado",
+    "Veteran": "{{0}} veteran",
     "VisibleOnlyToMe": "Visible únicamente para mi y para el staff."
+  },
+  "EntryEdits": {
+    "EntryType": "Type",
+    "OnlyAdditions": "Only additions"
   },
   "FavoriteSongs": {
     "GroupByRating": "Grupo en base a rating"
@@ -94,6 +105,8 @@
     "UsernameIsRequired": "Se requiere el nombre de usuario"
   },
   "Index": {
+    "Group": "Group",
+    "KnowsLanguage": "Knows language",
     "ShowDisabledUsers": "Mostrar las cuentas deshabilitadas",
     "VerifiedArtists": "Cuentas de artistas"
   },
@@ -147,6 +160,7 @@
     "AccessKey": "Código de acceso",
     "AccessKeyDescription": "El código de acceso lo puedes usar para iniciar sesión en tu cuenta de VocaDB desde otros servicios sin utilizar/revelar tu contraseña actual.\n\t\t\t\tPuedes volver a generar un código de acceso cuando quieras (Considera que esto va a invalidar el código anterior).\n\t\t\t\t¡Manten tu código de acceso en secreto! Si sospechas que alguien mas ha descubierto tu código de acceso, reestablecelo inmediatamente.",
     "AccountSettings": "Configuración de cuenta",
+    "AddKnownLanguage": "Add row",
     "AnonymousActivity": "Permitir que mi nombre de usuario sea mostrado en la lista de actividad reciente.",
     "Automatic": "(Automatico)",
     "ChangePassword": "Cambiar contraseña",
@@ -178,6 +192,7 @@
     "ReallyReset": "¿Realmente deseas resetear el código?",
     "Reset": "Reestablecer",
     "SettingsUpdated": "Configuración guardada",
+    "Theme": "Theme",
     "UnableToSave": "No se han podido guardar los cambios, corrige los errores e inténtalo de nuevo.",
     "UnreadNotificationsToKeep": "Número máximo de notificaciones sin ver retenidas",
     "Username": "Nombre de usuario"
@@ -191,12 +206,14 @@
   },
   "RequestVerification": {
     "ArtistTitle": "Entrada del artista que soy y/o represento (requerido)",
-    "Info": "<p>\n\t\t\tSi eres un productor, ilustrador, animador o cualquier tipo de productor de contenido artístico para música y videos Vocaloid,\n\t\t\to cabeza/representador de un círculo productor, favor de llenar este formato para solicitar tu verificación (la cual sera revisada posteriormente por alguien en el staff).\n\t\t</p>\n\t\t<p>\n\t\t\tUna vez realizada la verificación, tu nombre de usuario será mostrado en tu entrada de artista y viceversa.\n\t\t\tSe requiere que nos proporciones una prueba para corruborar y legitimizar tu identidad como artista de la entrada correspondiente, de lo contrario no será tomada en cuenta.\n\t\t\tPor ejemplo, publicar un link o una nota en tu twitter, blog o cualquier medio de presencia en linea referenciando/etiquetando a VocaDB es una forma valida para comprobar que eres quien dices ser.\n\t\t\tIgualmente, deben existir al menos una o dos canciones de tu autoría y/o colaboración (Vocaloid o UTAU) registradas en nuestra base de datos - si no las hay las puedes subir tu mismo.\n\t\t</p>\n\t\t<p>\n\t\t\tDespues de realizada tu verificación, podrás editar la entrada acerca de ti.\n\t\t\tPor ahora la protección de la verificación se reserva a tu entrada como artista - las entradas de canciones y albumes incluidas en ese amparo.\n\t\t</p>\n\t\t<p>\n\t\t\tConsidera que dependiendo las circunstancias nos reservamos el derecho de rechazar tu solicitud de verificación. Las razones pueden ser cualquiera de las antes mencionadas.\n\t\t\tEn el supuesto caso de que tu solicitud sea rechazada, y las razones de esta no sean tan evidentes, vamos a intentar contactarte para corregir y poner en orden cualquier detalle y de ser el caso repitas el proceso de verificación.\n\t\t</p>",
     "Login": "Iniciar sesión",
     "MessageTitle": "Solicitar mensaje (requerido)",
+    "NoPrivateMessage": "The proof is provided in the URL below",
     "NotLoggedInMessage": "Lo sentimos, necesitas <1>Iniciar sesión</1> o <2>Registrarse</2> para utilizar esta función.",
     "PageTitle": "Solicitar verificación de cuenta",
+    "PrivateMessage": "I will submit the proof in a private message",
     "Send": "Enviar solicitud",
-    "Signup": "Registrarse"
+    "Signup": "Registrarse",
+    "URL": "Link to proof, for example a tweet (required)"
   }
 }
