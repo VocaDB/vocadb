@@ -1,9 +1,15 @@
 {
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
+    "Deleted": "Deleted",
     "Merged": "Zusammengefügt von einer anderen Einreichung",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
+    "Restored": "Restored",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -12,6 +18,10 @@
     "Ordered": "Bestellt",
     "Owned": "Im Besitz",
     "Wishlisted": "Auf der Wunschliste"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
   },
   "AlbumEditableFieldNames": {
     "Artists": "Künstler",
@@ -26,7 +36,10 @@
     "PVs": "PVs",
     "Status": "Status",
     "Tracks": "Songs",
-    "WebLinks": "Externe Links\n"
+    "WebLinks": "Externe Links\n",
+    "Barcode": "Barcode",
+    "Identifiers": "Identifiers",
+    "Discs": "Discs"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "Digitaler Download",
@@ -43,14 +56,17 @@
   },
   "ArtistArchiveReasonNames": {
     "Created": "Erstellt",
+    "Deleted": "Deleted",
     "Merged": "Von einer anderen Einreichung zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
+    "Restored": "Restored",
     "Reverted": "Zu einer früheren Revision zurückgekehrt",
     "Unknown": "Unbekannt"
   },
   "ArtistEditableFieldNames": {
     "Albums": "Alben",
     "ArtistType": "Art des Künstlers",
+    "BaseVoicebank": "Base voicebank",
     "Description": "Beschreibung",
     "Groups": "Gruppen",
     "Names": "Namen",
@@ -58,6 +74,7 @@
     "OriginalName": "Originaler Name",
     "Picture": "Hauptbild",
     "Pictures": "Bilder",
+    "ReleaseDate": "Voicebank release date",
     "Status": "Status",
     "WebLinks": "Externe Links"
   },
@@ -76,22 +93,30 @@
     "Mixer": "Mixer",
     "Other": "Andere",
     "Publisher": "Publisher",
+    "VocalDataProvider": "Vocal data provider",
     "Vocalist": "Sänger",
     "VoiceManipulator": "Stimmenmanipulator"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Hinzufügungsdatum (absteigend)",
     "AdditionDateAsc": "Hinzufügungsdatum (aufsteigend)",
+    "FollowerCount": "Number of followers",
     "Name": "Name",
+    "ReleaseDate": "Voicebank release date",
     "SongCount": "Anzahl Songs",
     "SongRating": "Insgesamte Songbewertung"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
   },
   "CommonMessages": {
     "EntryDeleted": "Dieser Eintrag wurde gelöscht. Er ist zwar temporär noch abrufbar, aber wird nicht mehr aufgelistet.",
     "EntryMergedTo": "Dieser Eintrag wurde zusammengeführt zu",
     "EntryStatusExplanation": "Entwurf = Einreichung, bei der einige wesentliche Informationen noch immer fehlen. Dieser Status lässt darauf schließen, dass du zusätzliche Informationen anforderst, die hinzugefügt oder korrigiert werden sollen.<br />\nAbgeschlossen = Dieser Einreichung hat alle notwendigen Informationen, aber wurde noch nicht von einem vertrauenswürdigen Benutzer überprüft.<br />\nGenehmigt = Diese Einreichung wurde geprüft und von einem vertrauenswürdigen Benutzer genehmigt. Genehmigte Einreichungen können nur von einem vertrauenswürdigen Benutzer bearbeitet werden.",
     "Locked": "Diese Einreichung ist gesperrt. Das bedeutet, dass nur Moderatoren Änderungen daran vornehmen können.",
-    "NameLanguageHelp": "Wähle die Sprache für den Namen. \"Original\" ist der Name in seiner ursprünglichen Sprache, sofern es sich hierbei nicht um Englisch handelt, z.B. Japanisch. Wenn Englisch die ursprüngliche Sprache ist, füge den Namen nicht in die \"Original\"-Sprache ein."
+    "NameLanguageHelp": "Wähle die Sprache für den Namen. \"Original\" ist der Name in seiner ursprünglichen Sprache, sofern es sich hierbei nicht um Englisch handelt, z.B. Japanisch. Wenn Englisch die ursprüngliche Sprache ist, füge den Namen nicht in die \"Original\"-Sprache ein.",
+    "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Original",
@@ -111,6 +136,8 @@
   },
   "EntryEditEventNames": {
     "Created": "Erstellt",
+    "Deleted": "Deleted",
+    "Restored": "Restored",
     "Updated": "Aktualisiert"
   },
   "EntryStatusNames": {
@@ -122,6 +149,8 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Zugriff verwalten-Menü",
     "Admin": "Administrative Datenbankaufgaben",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
     "ApproveEntries": "Genehmigte Einreichungen",
     "BulkDeletePVs": "Mehrere PVs löschen",
     "CreateComments": "Kommentar erstellen",
@@ -129,9 +158,11 @@
     "DeleteEntries": "Einreichungen löschen",
     "DesignatedStaff": "Festgelegter Mitarbeiter",
     "DisableUsers": "Benutzer deaktivieren",
+    "EditAllSongLists": "Edit all song lists",
     "EditFeaturedLists": "Songlisten verwalten",
     "EditNews": "Neuigkeiten verwalten",
     "EditProfile": "Persönliches Profil bearbeiten",
+    "EditTags": "Edit tags",
     "LockEntries": "Einreichungen sperren",
     "ManageDatabase": "Datenbank verwalten",
     "ManageEntryReports": "Berichte zu Einreichungen verwalten",
@@ -143,9 +174,15 @@
     "MoveToTrash": "In den Papierkorb verschieben",
     "Nothing": "Nichts",
     "ReadRecentComments": "Neuesten Kommentare lesen",
+    "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Schlagwortverwendungen löschen",
     "RestoreRevisions": "Revisionen ansehen",
-    "ViewAuditLog": "Ereignisprotokoll ansehen"
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "Ereignisprotokoll ansehen",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "Original (offizieller/autorisierter Upload)",
@@ -157,18 +194,34 @@
     "Other": "Anderes",
     "Reprint": "Kopie"
   },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Rating date"
+  },
   "ReleaseEventEditableFieldNames": {
+    "Artists": "Artists",
+    "Category": "Category",
     "Date": "Datum",
     "Description": "Beschreibung",
-    "Name": "Name",
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
+    "Series": "Series",
     "SeriesNumber": "Anzahl Events",
-    "SeriesSuffix": "Seriensuffix"
+    "SeriesSuffix": "Seriensuffix",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
+    "Deleted": "Deleted",
     "Merged": "Von einem anderen Eintrag zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
+    "Restored": "Restored",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -182,11 +235,22 @@
     "Nothing": "Nichts",
     "OriginalName": "Originaler Name",
     "OriginalVersion": "Originale Version",
+    "PublishDate": "Publish date",
     "PVs": "PVs",
     "SongType": "Art des Songs",
     "Status": "Status",
     "WebLinks": "Externe Links",
-    "ReleaseEvent": "Erscheinungs Event"
+    "ReleaseEvent": "Erscheinungs Event",
+    "Bpm": "BPM"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Description",
+    "EventDate": "Event date",
+    "FeaturedCategory": "Featured category",
+    "Name": "Name",
+    "Songs": "Songs",
+    "Status": "Status",
+    "Thumbnail": "Thumbnail"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Konzert-Setliste",
@@ -200,7 +264,9 @@
     "FavoritedTimes": "Anzahl der Favorisierungen",
     "Name": "Name",
     "None": "Nichts",
-    "RatingScore": "Bewertungspunktzahl"
+    "PublishDate": "Publish date",
+    "RatingScore": "Bewertungspunktzahl",
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorisieren",
@@ -210,9 +276,15 @@
     "AliasedTo": "Als Alias von",
     "CategoryName": "Kategorie",
     "Description": "Beschreibung",
+    "HideFromSuggestions": "Hide from suggestions",
+    "Names": "Names",
+    "OriginalName": "Default name language",
     "Parent": "Übergeordnetes Schlagwort\n",
     "Picture": "Bild",
-    "Status": "Status"
+    "RelatedTags": "Related tags",
+    "Status": "Status",
+    "Targets": "Targets",
+    "WebLinks": "External links"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Keine privaten Nachrichten",
@@ -226,6 +298,16 @@
     "Nothing": "Nichts",
     "Regular": "Regulärer Benutzer",
     "Trusted": "Vertrauenswürdiger Benutzer"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Kommerziell",
