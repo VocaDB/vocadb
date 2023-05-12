@@ -63,7 +63,7 @@ public class AlbumSearchTests
 
 		_queryParams = new AlbumQueryParams();
 
-		_search = new Model.Service.Search.AlbumSearch.AlbumSearch(_querySource, ContentLanguagePreference.Default);
+		_search = new Model.Service.Search.AlbumSearch.AlbumSearch(_querySource, ContentLanguagePreference.Default, new EntryUrlParser());
 	}
 
 	/// <summary>

@@ -1,17 +1,20 @@
 #nullable disable
 
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch;
 
 public class AlbumSearch
 {
+	private readonly IEntryUrlParser _entryUrlParser;
 	private readonly IDatabaseContext _querySource;
 
 	private ContentLanguagePreference LanguagePreference { get; }
@@ -23,7 +26,6 @@ public class AlbumSearch
 	{
 		var artistIds = EntryIdsCollection.CreateWithFallback(queryParams.ArtistParticipation.ArtistIds.Ids, parsedQuery.ArtistId);
 		var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
-
 		var query = Query<Album>()
 			.WhereIsDeleted(queryParams.Deleted)
 			.WhereHasName(textQuery, allowCatNum: true)
@@ -34,6 +36,8 @@ public class AlbumSearch
 			.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 			.WhereHasTags(queryParams.Tags)
 			.WhereHasTag(parsedQuery.TagName)
+			.WhereHasPVs(parsedQuery.PV)
+			.WhereIdIs(parsedQuery.Id)
 			.WhereReleaseDateIsAfter(queryParams.ReleaseDateAfter)
 			.WhereReleaseDateIsBefore(queryParams.ReleaseDateBefore)
 			.WhereSortBy(queryParams.SortRule)
@@ -51,8 +55,10 @@ public class AlbumSearch
 		.FirstOrDefault();
 	}
 
-	private ParsedAlbumQuery ParseTextQuery(string query)
+	private ParsedAlbumQuery ParseTextQuery(SearchTextQuery textQuery)
 	{
+		var query = textQuery.OriginalQuery;
+
 		if (string.IsNullOrWhiteSpace(query))
 			return new ParsedAlbumQuery();
 
@@ -71,7 +77,27 @@ public class AlbumSearch
 			}
 		}
 
-		return new ParsedAlbumQuery { Name = query.Trim() };
+		return ParseReferenceQuery(query.Trim(), query) ?? new ParsedAlbumQuery { Name = query };
+	}
+
+	private ParsedAlbumQuery ParseReferenceQuery(string trimmed, string query)
+	{
+		if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+		{
+			var videoParseResult = VideoServiceHelper.ParseByUrlAsync(query, false, null, VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo).Result;
+
+			if (videoParseResult.IsOk)
+			{
+				return new ParsedAlbumQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
+			}
+
+			var entryId = _entryUrlParser.Parse(trimmed, allowRelative: false);
+
+			if (entryId.EntryType == EntryType.Album)
+				return new ParsedAlbumQuery { Id = entryId.Id };
+		}
+
+		return null;
 	}
 
 	public static Album[] SortByIds(IEnumerable<Album> albums, int[] idList)
@@ -160,16 +186,17 @@ public class AlbumSearch
 		return _querySource.Query<T>();
 	}
 
-	public AlbumSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference)
+	public AlbumSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
 	{
 		_querySource = querySource;
 		LanguagePreference = languagePreference;
+		_entryUrlParser = entryUrlParser;
 	}
 
 	public PartialFindResult<Album> Find(AlbumQueryParams queryParams)
 	{
 		var query = queryParams.Common.Query ?? string.Empty;
-		var parsedQuery = ParseTextQuery(query);
+		var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
 		var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
 			&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
