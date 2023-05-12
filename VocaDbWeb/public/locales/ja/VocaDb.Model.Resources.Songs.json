@@ -1,16 +1,17 @@
 {
   "SongTypeNames": {
+    "Arrangement": "編曲",
     "Cover": "カバー曲",
     "DramaPV": "ドラマ",
+    "Illustration": "Illustration",
     "Instrumental": "インストゥルメンタル",
+    "Live": "ライブ収録",
     "Mashup": "マッシュアップ",
     "MusicPV": "音楽PV",
     "Original": "オリジナル曲",
     "Other": "その他",
     "Remaster": "リマスター",
     "Remix": "リミックス",
-    "Unspecified": "指定なし",
-    "Live": "ライブ収録",
-    "Arrangement": "編曲"
+    "Unspecified": "指定なし"
   }
 }
