@@ -1,9 +1,15 @@
 {
   "ActivityFeedHelper": {
     "At": "в",
-    "ByArtist": "от",
-    "ByUser": "пользователем",
     "CreatedNew": "Добавлено {{0}}:",
+    "EntryAlbum": "album",
+    "EntryArtist": "artist",
+    "EntryReleaseEvent": "event",
+    "EntrySong": "song",
+    "EntrySongList": "song list",
+    "EntryTag": "tag",
+    "EntryVenue": "venue",
+    "Someone": "A contributor",
     "Updated": "Обновлено {{0}}:"
   },
   "AlbumHelpers": {
@@ -13,6 +19,16 @@
     "Added": "добавил",
     "DraftIconTitle": "Эта запись - черновик.",
     "DraftMessage": "Эта запись - черновик. Вы можете помочь, отредактировав её и добавив недостающую информацию.",
+    "EntryIsMissingInformation": "This entry is missing the following information:",
+    "EntryValidationNoErrors": "This entry contains all the required information.",
+    "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
+    "EntryValidationWarningDetails": "Details",
+    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "IsSupportedForFormatting": "is supported for formatting",
+    "NameLangTitle": "Language",
+    "NameNewRow": "New row",
+    "NameValueTitle": "Name (required)",
+    "ReturnWithoutSaving": "Return without saving",
     "SaveChanges": "Сохранить изменения",
     "SeeGuide": "справкой",
     "SeeGuidePost": "для получения более подробной информации.",
@@ -21,9 +37,13 @@
     "StatusDescriptionDraft": "Черновикам не хватает основной информации.",
     "StatusDescriptionFinished": "Завершённые записи содержат всю основную инфомацию, но ещё не были проверены.",
     "StatusDescriptionLocked": "Заблокированные записи могут быть отредактированными только пользователем с правами модератора.",
+    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
     "WebLinkCategoryTitle": "Категория",
     "WebLinkDescriptionTitle": "Описание",
     "WebLinkNewRow": "Добавить строку",
     "WebLinkUrlTitle": "URL (обязательно)"
+  },
+  "SongHelpers": {
+    "FromAlbum": "From album"
   }
 }
