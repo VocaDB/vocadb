@@ -1432,7 +1432,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	{
 		new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, _repository);
 	}
-	
+
 	public void DeleteEventTag(long tagUsageId)
 	{
 		new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, _repository);

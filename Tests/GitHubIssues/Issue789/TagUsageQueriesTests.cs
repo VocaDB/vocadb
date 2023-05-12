@@ -170,7 +170,7 @@ public class TagUsageQueriesTests
 		var usage = _repository.Save(_entry.AddTag(tag).Result);
 		_repository.Save(_entry.AddTag(tag2).Result);
 
-		Invoking(() => _queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<Song>())).Should().Throw<NotAllowedException>();
+		Invoking(() => _queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<User>())).Should().Throw<NotAllowedException>();
 	}
 
 	[TestMethod]

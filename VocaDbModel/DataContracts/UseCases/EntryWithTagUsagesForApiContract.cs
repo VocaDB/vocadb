@@ -9,29 +9,31 @@ using VocaDb.Model.Domain.Tags;
 namespace VocaDb.Model.DataContracts.UseCases;
 
 [DataContract(Namespace = Schemas.VocaDb)]
-public sealed record EntryWithTagUsagesForApiContract: IEntryWithIntId {
-    public EntryWithTagUsagesForApiContract(
-        IEntryWithStatus entry,
-        IEnumerable<TagUsage> tagUsages,
-        ContentLanguagePreference languagePreference,
-        IUserPermissionContext userContext,
-        IUserIconFactory userIconFactory
-    )  {
-        CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, entry);
-        TagUsages = tagUsages.Select(u => new TagUsageWithVotesForApiContract(u, languagePreference, userIconFactory)).ToArray();
-        DefaultName = entry.DefaultName;
-        Id = entry.Id;
-    }
+public sealed record EntryWithTagUsagesForApiContract : IEntryWithIntId
+{
+	public EntryWithTagUsagesForApiContract(
+		IEntryWithStatus entry,
+		IEnumerable<TagUsage> tagUsages,
+		ContentLanguagePreference languagePreference,
+		IUserPermissionContext userContext,
+		IUserIconFactory userIconFactory
+	)
+	{
+		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, entry);
+		TagUsages = tagUsages.Select(u => new TagUsageWithVotesForApiContract(u, languagePreference, userIconFactory)).ToArray();
+		DefaultName = entry.DefaultName;
+		Id = entry.Id;
+	}
 
-    [DataMember]
-    public int Id { get; set; }
+	[DataMember]
+	public int Id { get; set; }
 
-    [DataMember]
-    public string DefaultName { get; init; }
+	[DataMember]
+	public string DefaultName { get; init; }
 
-    [DataMember]
-    public bool CanRemoveTagUsages { get; init; }
+	[DataMember]
+	public bool CanRemoveTagUsages { get; init; }
 
-    [DataMember]
-    public TagUsageWithVotesForApiContract[] TagUsages { get; init; }
+	[DataMember]
+	public TagUsageWithVotesForApiContract[] TagUsages { get; init; }
 }
