@@ -1,6 +1,18 @@
 {
   "Index": {
+    "Author": "Author",
     "Comments": "Kommentare",
-    "Discussions": "Diskussionen"
+    "Created": "Created",
+    "Discussions": "Diskussionen",
+    "DoPost": "Post",
+    "Folder": "Folder",
+    "LastComment": "Last comment",
+    "LastTopic": "Last topic",
+    "PostContent": "Content",
+    "Preview": "Preview",
+    "RecentTopics": "Recent topics",
+    "Topic": "Topic",
+    "Topics": "Topics",
+    "WriteNewPost": "Write a new post"
   }
 }

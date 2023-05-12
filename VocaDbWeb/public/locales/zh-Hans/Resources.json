@@ -1,9 +1,45 @@
 {
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-imported",
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
+    "Unknown": "Unknown"
+  },
   "AlbumCollectionStatusNames": {
     "Nothing": "Nothing",
     "Ordered": "已预订",
     "Owned": "持有",
     "Wishlisted": "想要"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Artists",
+    "Cover": "Cover",
+    "Description": "Description",
+    "DiscType": "Album type",
+    "Names": "Names",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "OriginalRelease": "Original release",
+    "Pictures": "Pictures",
+    "PVs": "PVs",
+    "Status": "Status",
+    "Tracks": "Tracks",
+    "WebLinks": "External links",
+    "Barcode": "Barcode",
+    "Identifiers": "Identifiers",
+    "Discs": "Discs"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "数据下载",
@@ -17,6 +53,30 @@
     "RatingAverage": "平均得分",
     "RatingTotal": "总分",
     "ReleaseDate": "发布时间"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted to an earlier revision",
+    "Unknown": "Unknown"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Albums",
+    "ArtistType": "Artist type",
+    "BaseVoicebank": "Base voicebank",
+    "Description": "Description",
+    "Groups": "Groups",
+    "Names": "Names",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "Picture": "Main picture",
+    "Pictures": "Pictures",
+    "ReleaseDate": "Voicebank release date",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "ArtistRoleNames": {
     "Animator": "视频制作人",
@@ -33,11 +93,30 @@
     "Mixer": "混音",
     "Other": "其他",
     "Publisher": "发布者",
+    "VocalDataProvider": "Vocal data provider",
     "Vocalist": "歌手",
     "VoiceManipulator": "调声"
   },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Addition date (descending)",
+    "AdditionDateAsc": "Addition date (ascending)",
+    "FollowerCount": "Number of followers",
+    "Name": "Name",
+    "ReleaseDate": "Voicebank release date",
+    "SongCount": "Number of songs",
+    "SongRating": "Total song rating"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "CommonMessages": {
-    "EntryStatusExplanation": "草稿：表示词条缺少一些必要的信息或需要被更正。<br />\n已完成：表示词条包含了所有必要的信息，但未经过信任用户的核准。<br />\n已核准：表示词条已经过信任用户的核准。经过核准后的词条只能由信任用户进行编辑。"
+    "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
+    "EntryMergedTo": "This entry was merged to",
+    "EntryStatusExplanation": "草稿：表示词条缺少一些必要的信息或需要被更正。<br />\n已完成：表示词条包含了所有必要的信息，但未经过信任用户的核准。<br />\n已核准：表示词条已经过信任用户的核准。经过核准后的词条只能由信任用户进行编辑。",
+    "Locked": "This entry is locked, meaning that only moderators are allowed to edit it.",
+    "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
+    "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
     "Default": "原语言",
@@ -46,11 +125,64 @@
     "Romaji": "罗马字",
     "Unspecified": "未定义"
   },
+  "DiscTypeDescriptions": {
+    "Album": "Album that consists mostly of previously unpublished songs.",
+    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
+    "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "Other": "For albums that don't fit into anything above.",
+    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
+    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+  },
+  "EntryEditEventNames": {
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Restored": "Restored",
+    "Updated": "Updated"
+  },
   "EntryStatusNames": {
     "Approved": "已核准",
     "Draft": "草稿",
     "Finished": "已完成",
     "Locked": "已锁定"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Access manage menu",
+    "Admin": "Database admin tasks",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
+    "ApproveEntries": "Approve entries",
+    "BulkDeletePVs": "Bulk delete PVs",
+    "CreateComments": "Create comments",
+    "DeleteComments": "Delete comments",
+    "DeleteEntries": "Delete entries",
+    "DesignatedStaff": "Designated staff member",
+    "DisableUsers": "Disable users",
+    "EditAllSongLists": "Edit all song lists",
+    "EditFeaturedLists": "Manage featured songlists",
+    "EditNews": "Manage news",
+    "EditProfile": "Edit personal profile",
+    "EditTags": "Edit tags",
+    "LockEntries": "Lock entries",
+    "ManageDatabase": "Manage database",
+    "ManageEntryReports": "Manage entry reports",
+    "ManageEventSeries": "Manage event series",
+    "ManageIPRules": "Manage IP rules",
+    "ManageUserPermissions": "Manage user permissions",
+    "MergeEntries": "Merge entries",
+    "MikuDbImport": "Album import",
+    "MoveToTrash": "Move to trash",
+    "Nothing": "Nothing",
+    "ReadRecentComments": "Read recent comments",
+    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveTagUsages": "Remove tag usages",
+    "RestoreRevisions": "Restore revisions",
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "View event log",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "官方上传",
@@ -62,6 +194,103 @@
     "Other": "其他",
     "Reprint": "转载"
   },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Rating date"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Artists": "Artists",
+    "Category": "Category",
+    "Date": "Date",
+    "Description": "Description",
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
+    "Series": "Series",
+    "SeriesNumber": "Series number",
+    "SeriesSuffix": "Series suffix",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-imported",
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
+    "Unknown": "Unknown"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Artists",
+    "Groups": "Groups",
+    "Length": "Duration",
+    "Lyrics": "Lyrics",
+    "Names": "Names",
+    "Notes": "Description",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "OriginalVersion": "Original version",
+    "PublishDate": "Publish date",
+    "PVs": "PVs",
+    "SongType": "Song type",
+    "Status": "Status",
+    "WebLinks": "External links",
+    "ReleaseEvent": "Release event",
+    "Bpm": "BPM"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Description",
+    "EventDate": "Event date",
+    "FeaturedCategory": "Featured category",
+    "Name": "Name",
+    "Songs": "Songs",
+    "Status": "Status",
+    "Thumbnail": "Thumbnail"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Concert setlists",
+    "Nothing": "Nothing",
+    "Other": "Other",
+    "Pools": "Pools",
+    "VocaloidRanking": "Vocaloid rankings"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "FavoritedTimes": "Times favorited",
+    "Name": "Name",
+    "None": "Nothing",
+    "PublishDate": "Publish date",
+    "RatingScore": "Rating score",
+    "TagUsageCount": "Tag usage count"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Favorite",
+    "Like": "Like"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "Aliased to",
+    "CategoryName": "Category",
+    "Description": "Description",
+    "HideFromSuggestions": "Hide from suggestions",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Parent": "Parent",
+    "Picture": "Picture",
+    "RelatedTags": "Related tags",
+    "Status": "Status",
+    "Targets": "Targets",
+    "WebLinks": "External links"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "No private messages",
+    "PrivateMessagesFromAdmins": "Private messages from admins",
+    "PrivateMessagesFromAll": "Private messages from everybody"
+  },
   "UserGroupNames": {
     "Admin": "站长",
     "Limited": "受限用户",
@@ -69,6 +298,16 @@
     "Nothing": "Nothing",
     "Regular": "普通用户",
     "Trusted": "信任用户"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "商业的",

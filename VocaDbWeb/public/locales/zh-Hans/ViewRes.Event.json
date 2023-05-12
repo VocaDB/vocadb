@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Albums": "Albums",
+    "Attending": "Attending",
+    "Category": "Category",
+    "Event": "Event",
+    "OccurrenceDate": "Date",
+    "PVs": "PVs",
+    "RemoveAttendance": "Remove from my events",
+    "Series": "Series",
+    "SongList": "Setlist",
+    "Songs": "Songs",
+    "UserAttending": "I'm attending",
+    "UserInterested": "I'm interested",
+    "Venue": "Venue"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "Create event",
+    "CreateSeries": "Create series",
+    "CreateVenue": "Create venue",
+    "ViewByDate": "All by date",
+    "ViewBySeries": "All by series",
+    "ViewByVenue": "All by venue",
+    "ViewList": "Upcoming"
+  },
+  "Find": {
+    "CreateEvent": "Create event",
+    "EventNotFound": "Sorry, an event with this name could not be found. It probably hasn't been added to the database yet.",
+    "FindEvent": "Find event",
+    "Number": "number",
+    "Series": "Series",
+    "UngroupedEventNamed": "Ungrouped event named:",
+    "YouMayAddTheEvent": "You may add the event to the database."
+  }
+}

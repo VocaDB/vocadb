@@ -1,9 +1,16 @@
 {
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Альбомы, автомагически импортированные из MikuDB",
     "Created": "Создано",
+    "Deleted": "Deleted",
     "Merged": "Создано объединением с другой записью",
     "PropertiesUpdated": "Свойства обновлены",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
     "Unknown": "Неизвестно"
   },
   "AlbumCollectionStatusNames": {
@@ -11,6 +18,10 @@
     "Ordered": "Заказанный",
     "Owned": "Купленный",
     "Wishlisted": "Желаемый"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
   },
   "AlbumEditableFieldNames": {
     "Artists": "Артисты",
@@ -25,23 +36,37 @@
     "PVs": "Видео",
     "Status": "Статус",
     "Tracks": "Песни",
-    "WebLinks": "Внешние ссылки"
+    "WebLinks": "Внешние ссылки",
+    "Barcode": "Barcode",
+    "Identifiers": "Identifiers",
+    "Discs": "Discs"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "Цифровая копия",
     "Other": "Прочее",
     "PhysicalDisc": "Диск"
   },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "CollectionCount": "Collection count",
+    "Name": "Name",
+    "RatingAverage": "Rating average",
+    "RatingTotal": "Total score",
+    "ReleaseDate": "Release date"
+  },
   "ArtistArchiveReasonNames": {
     "Created": "Создано",
+    "Deleted": "Deleted",
     "Merged": "Создано объединением записей",
     "PropertiesUpdated": "Свойства обновлены",
+    "Restored": "Restored",
     "Reverted": "Откат к более ранней ревизии",
     "Unknown": "Неизвестно"
   },
   "ArtistEditableFieldNames": {
     "Albums": "Альбомы",
     "ArtistType": "Тип артиста",
+    "BaseVoicebank": "Base voicebank",
     "Description": "Описание",
     "Groups": "Группы",
     "Names": "Имена",
@@ -49,29 +74,49 @@
     "OriginalName": "Оригинальное имя",
     "Picture": "Изображение",
     "Pictures": "Изображения",
+    "ReleaseDate": "Voicebank release date",
     "Status": "Статус",
     "WebLinks": "Внешние ссылки"
   },
   "ArtistRoleNames": {
     "Animator": "Аниматор",
     "Arranger": "Аранжировщик",
+    "Chorus": "Chorus",
     "Composer": "Композитор",
     "Default": "По умолчанию",
     "Distributor": "Распространитель",
+    "Encoder": "Encoder",
     "Illustrator": "Иллюстратор",
     "Instrumentalist": "Инструменталист",
     "Lyricist": "Автор лирики",
     "Mastering": "Сведение",
+    "Mixer": "Mixer",
     "Other": "Прочее",
     "Publisher": "Издатель",
+    "VocalDataProvider": "Vocal data provider",
     "Vocalist": "Вокалист",
     "VoiceManipulator": "Программист вокала"
   },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Addition date (descending)",
+    "AdditionDateAsc": "Addition date (ascending)",
+    "FollowerCount": "Number of followers",
+    "Name": "Name",
+    "ReleaseDate": "Voicebank release date",
+    "SongCount": "Number of songs",
+    "SongRating": "Total song rating"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
   "CommonMessages": {
     "EntryDeleted": "Эта запись удалена. Она временно доступна, но не будет использована где-либо.",
+    "EntryMergedTo": "This entry was merged to",
     "EntryStatusExplanation": "Черновик: отсутствует минимально необходимая информация, которую нужно добавить (или исправить).<br />\nЗавершено: есть вся необходимая информация, но запись ещё не проверена доверенным пользователем.<br />\nОдобрено: проверено доверенным пользователем. Одобренные записи могут быть изменены только доверенными пользователями.",
     "Locked": "Данная запись заблокирована и может быть изменена только модератором.",
-    "NameLanguageHelp": "Выберите тип названия (имени). \"Оригинальное\" - для любого языка, кроме английского. Если оригинальное название (имя) - на английском, не нужно указывать его в поле \"Оригинального\"."
+    "NameLanguageHelp": "Выберите тип названия (имени). \"Оригинальное\" - для любого языка, кроме английского. Если оригинальное название (имя) - на английском, не нужно указывать его в поле \"Оригинального\".",
+    "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Оригинальный",
@@ -80,8 +125,19 @@
     "Romaji": "Транслит.",
     "Unspecified": "Неопределённый"
   },
+  "DiscTypeDescriptions": {
+    "Album": "Album that consists mostly of previously unpublished songs.",
+    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
+    "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "Other": "For albums that don't fit into anything above.",
+    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
+    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+  },
   "EntryEditEventNames": {
     "Created": "Создано",
+    "Deleted": "Deleted",
+    "Restored": "Restored",
     "Updated": "Обновлено"
   },
   "EntryStatusNames": {
@@ -93,15 +149,20 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Меню управления доступом",
     "Admin": "Администрирование",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
     "ApproveEntries": "Одобрение записей",
+    "BulkDeletePVs": "Bulk delete PVs",
     "CreateComments": "Комментирование",
     "DeleteComments": "Удаление комментариев",
     "DeleteEntries": "Удаление записей",
     "DesignatedStaff": "Назначенный участник команды",
     "DisableUsers": "Блокирование пользователей",
+    "EditAllSongLists": "Edit all song lists",
     "EditFeaturedLists": "Управление отмеченными списками песен",
     "EditNews": "Редактирование новостей",
     "EditProfile": "Редактирование профилей",
+    "EditTags": "Edit tags",
     "LockEntries": "Блокирование записей",
     "ManageDatabase": "Управление базой данных",
     "ManageEntryReports": "Управление отчётами о записях",
@@ -113,8 +174,15 @@
     "MoveToTrash": "Отправить в мусор",
     "Nothing": "Нет",
     "ReadRecentComments": "Просмотр последних комментариев",
+    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveTagUsages": "Remove tag usages",
     "RestoreRevisions": "Откат к предыдущим версиям",
-    "ViewAuditLog": "Просмотр журнала событий"
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "Просмотр журнала событий",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "Оригинал (загруженный автором)",
@@ -126,32 +194,63 @@
     "Other": "Прочее",
     "Reprint": "Копия"
   },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Rating date"
+  },
   "ReleaseEventEditableFieldNames": {
+    "Artists": "Artists",
+    "Category": "Category",
     "Date": "Дата",
     "Description": "Описание",
-    "Name": "Название",
-    "SeriesNumber": "Порядковый номер"
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
+    "Series": "Series",
+    "SeriesNumber": "Порядковый номер",
+    "SeriesSuffix": "Series suffix",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Автомагически импортировано из MikuDB",
     "Created": "Создано",
+    "Deleted": "Deleted",
     "Merged": "Создано объединением с другой записью",
     "PropertiesUpdated": "Свойства обновлены",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
     "Unknown": "Неизвестно"
   },
   "SongEditableFieldNames": {
     "Artists": "Артисты",
     "Groups": "Группы",
+    "Length": "Duration",
     "Lyrics": "Текст",
     "Names": "Названия",
     "Notes": "Заметки",
     "Nothing": "Ничего",
     "OriginalName": "Оригинальное название",
     "OriginalVersion": "Оригинальная версия",
+    "PublishDate": "Publish date",
     "PVs": "PV",
     "SongType": "Тип песни",
     "Status": "Статус",
-    "WebLinks": "Внешние ссылки"
+    "WebLinks": "Внешние ссылки",
+    "ReleaseEvent": "Release event",
+    "Bpm": "BPM"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Description",
+    "EventDate": "Event date",
+    "FeaturedCategory": "Featured category",
+    "Name": "Name",
+    "Songs": "Songs",
+    "Status": "Status",
+    "Thumbnail": "Thumbnail"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Концертные списки песен",
@@ -160,13 +259,32 @@
     "Pools": "Группы",
     "VocaloidRanking": "Вокалоидные рейтинги"
   },
+  "SongSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "FavoritedTimes": "Times favorited",
+    "Name": "Name",
+    "None": "Nothing",
+    "PublishDate": "Publish date",
+    "RatingScore": "Rating score",
+    "TagUsageCount": "Tag usage count"
+  },
   "SongVoteRatingNames": {
     "Favorite": "Любимое",
     "Like": "Нравится"
   },
   "TagEditableFieldNames": {
+    "AliasedTo": "Aliased to",
     "CategoryName": "Категория",
-    "Description": "Описание"
+    "Description": "Описание",
+    "HideFromSuggestions": "Hide from suggestions",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Parent": "Parent",
+    "Picture": "Picture",
+    "RelatedTags": "Related tags",
+    "Status": "Status",
+    "Targets": "Targets",
+    "WebLinks": "External links"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Нет личных сообщений",
@@ -180,6 +298,16 @@
     "Nothing": "Ничто",
     "Regular": "Пользователь",
     "Trusted": "Доверенный пользователь"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Коммерческая",

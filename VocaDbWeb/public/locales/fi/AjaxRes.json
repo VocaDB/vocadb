@@ -17,7 +17,8 @@
     "AddExtraArtist": "Lisää muu artisti nimellä '{{0}}'",
     "ReportSent": "Raportti lähetetty. Kiitos!",
     "Save": "Tallenna",
-    "ThanksForRating": "Kiitos arvostelusta!"
+    "ThanksForRating": "Kiitos arvostelusta!",
+    "UnableToSendReport": "Unable to send report."
   },
   "Song": {
     "AddedToList": "Lisätty listaan",

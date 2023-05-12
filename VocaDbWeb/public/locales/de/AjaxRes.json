@@ -17,7 +17,8 @@
     "AddExtraArtist": "Benutzerdefinierten Künstler '{{0}}' hinzufügen",
     "ReportSent": "Fehler wurde gemeldet. Vielen Dank!",
     "Save": "Speichern",
-    "ThanksForRating": "Danke für deine Bewertung!"
+    "ThanksForRating": "Danke für deine Bewertung!",
+    "UnableToSendReport": "Unable to send report."
   },
   "Song": {
     "AddedToList": "Zur Liste hinzugefügt",

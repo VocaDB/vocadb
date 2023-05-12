@@ -1,8 +1,12 @@
 {
   "DiscTypeNames": {
     "Album": "Album original",
+    "Artbook": "Artbook",
     "Compilation": "Compilación",
     "EP": "E.P.",
+    "Fanmade": "Fanmade/doujin",
+    "Game": "Game",
+    "Instrumental": "Instrumental",
     "Other": "Otro",
     "Single": "Sencillo",
     "SplitAlbum": "Album compartido",

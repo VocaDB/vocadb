@@ -1,8 +1,11 @@
 {
   "SongTypeNames": {
+    "Arrangement": "Arrangement",
     "Cover": "Перепевка",
     "DramaPV": "Драматическое PV",
+    "Illustration": "Illustration",
     "Instrumental": "Без вокала",
+    "Live": "Live recording",
     "Mashup": "Компиляция (Mashup)",
     "MusicPV": "Музыкальное видео (PV)",
     "Original": "Оригинальная песня",

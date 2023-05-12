@@ -1,0 +1,28 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Artists associated with this album.",
+    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "TouhouDB account",
+    "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "TouhouDB is a Touhou music database with translated artists, albums and songs.",
+    "Welcome": "Welcome to Touhou music database!",
+    "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
+  },
+  "LayoutRes": {
+    "Keywords": "Touhou",
+    "PaypalDonateTitle": "",
+    "SiteName": "TouhouDB",
+    "SiteTitle": "Touhou Music Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
+    "RankingsTitle": "TouhouDB song rankings"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Touhou music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your TouhouDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+  }
+}

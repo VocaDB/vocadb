@@ -1,6 +1,8 @@
 {
   "EnglishTranslatedString": {
-    "ShowFullDescription": "Mostrar la descripción completa"
+    "Original": "Original",
+    "ShowFullDescription": "Mostrar la descripción completa",
+    "Translated": "Translated"
   },
   "PlayList": {
     "Autoplay": "Auto-reproducir",

@@ -7,7 +7,6 @@
     "Category": "Kategoria",
     "EntryType": "Tyyppi",
     "InMyCollection": "Kokoelmassani",
-    "ItemsOf": "kohdetta, yhteensä",
     "ItemsPerPage": "{{0}} kohdetta per sivu",
     "MoreFilters": "Lisää hakuehtoja",
     "MoreRecentThan": "Uudempi kuin",
@@ -15,7 +14,6 @@
     "Preview": "Esikatselu",
     "Rating": "Arvostelu",
     "ReleaseDate": "Julkaisupäivä",
-    "Showing": "Näytetään",
     "ShowTags": "Näytä tägit",
     "SongType": "Kappaleen tyyppi",
     "TagCategory": "Kategoria",
@@ -27,6 +25,18 @@
     "MinScore": "Pisteet vähintään",
     "OnlyMyFollowedArtists": "Vain seuraamani artistit",
     "Playlist": "Soittolista",
-    "TopGenres": "Yleisimmät genret"
+    "TopGenres": "Yleisimmät genret",
+    "ShowingItemsOf": "Showing {{0}} items of {{1}}",
+    "TagUsages": "Usages",
+    "ChildTags": "Include child tags",
+    "VoicebankReleaseDate": "Released:",
+    "IncludeGroupMembers": "Include group members",
+    "OnlyMyEvents": "Only my events",
+    "EventCategory": "Category",
+    "ReleaseEvent": "Release event",
+    "Today": "Today",
+    "ParentVersion": "Parent version",
+    "Bpm": "BPM",
+    "Duration": "Duration"
   }
 }

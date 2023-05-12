@@ -1,10 +1,10 @@
 {
   "Album": {
     "AddedToCollection": "Adicionado à coleção.",
-    "AddNewSong": "Adicionar nova música chamada '{{0}}'",
     "AddToTracks": "Adicionar às músicas",
-    "Download": "Download",
-    "RemoveFromTracks": "Apagar das minhas músicas"
+    "RemoveFromTracks": "Apagar das minhas músicas",
+    "AddNewSong": "Adicionar nova música chamada '{{0}}'",
+    "Download": "Download"
   },
   "EntryIndex": {
     "DraftsOnlyFilter": "Estado do draft",
@@ -17,10 +17,12 @@
     "AddExtraArtist": "Adicionar artista chamado '{{0}}'",
     "ReportSent": "Denúncia feita. Obrigado!",
     "Save": "Gravar",
-    "ThanksForRating": "Obrigado por classificar!"
+    "ThanksForRating": "Obrigado por classificar!",
+    "UnableToSendReport": "Unable to send report."
   },
   "Song": {
     "AddedToList": "Adicionado à lista.",
+    "ArtistFilter": "artist '{{0}}'",
     "OnlyWithPVsFilter": "Só PVs",
     "SinceFilter": "mais recente que {{0}}",
     "SongTypeFilter": "tipo de música '{{0}}'",

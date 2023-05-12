@@ -5,21 +5,31 @@
     "Category": "カテゴリ",
     "Event": "イベント",
     "OccurrenceDate": "イベント日時",
+    "PVs": "PVs",
+    "RemoveAttendance": "Remove from my events",
     "Series": "シリーズ",
     "SongList": "セットリスト",
+    "Songs": "Songs",
     "UserAttending": "参加予定",
     "UserInterested": "興味あり",
     "Venue": "会場"
   },
   "EventsBySeries": {
     "CreateEvent": "イベントを登録",
-    "CreateSeries": "シリーズを登録"
+    "CreateSeries": "シリーズを登録",
+    "CreateVenue": "Create venue",
+    "ViewByDate": "All by date",
+    "ViewBySeries": "All by series",
+    "ViewByVenue": "All by venue",
+    "ViewList": "Upcoming"
   },
   "Find": {
     "CreateEvent": "イベントを登録",
     "EventNotFound": "イベントが見つかりませんでした。おそらくまだ登録されていません。",
     "FindEvent": "イベントを検索",
+    "Number": "number",
     "Series": "シリーズ",
+    "UngroupedEventNamed": "Ungrouped event named:",
     "YouMayAddTheEvent": "イベントを登録できます。"
   }
 }
