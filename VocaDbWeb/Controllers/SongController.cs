@@ -115,15 +115,6 @@ public class SongController : ControllerBase
 		});
 	}
 
-	public ActionResult SongListsForSong(int songId = InvalidId)
-	{
-		if (songId == InvalidId)
-			return NoId();
-
-		var lists = _queries.GetPublicSongListsForSong(songId);
-		return PartialView("Partials/_SongInListsDialogContent", lists);
-	}
-
 	//
 	// GET: /Song/Details/5
 

@@ -577,6 +577,16 @@ public class SongApiController : ApiController
 		return _service.GetSongListsForCurrentUser(ignoreSongId);
 	}
 
+	[HttpGet("{id:int}/songlists")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult<SongListContract[]> GetSongListsForSong(int id = 0)
+	{
+		if (id == 0)
+			return NotFound("No ID specified");
+
+		return _queries.GetPublicSongListsForSong(id);
+	}
+
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

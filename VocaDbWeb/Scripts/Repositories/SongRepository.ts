@@ -12,6 +12,7 @@ import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
 import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongWithPVPlayerAndVoteContract } from '@/DataContracts/Song/SongWithPVPlayerAndVoteContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
@@ -133,8 +134,11 @@ export class SongRepository
 			songId,
 		}: {
 			songId: number;
-		}): Promise<string> => {
-			return this.get<string>('/SongListsForSong', { songId: songId });
+		}): Promise<SongListContract[]> => {
+			return this.httpClient.get<SongListContract[]>(
+				`/api/songs/${songId}/songlists`,
+				{},
+			);
 		};
 
 		this.songListsForUser = ({
@@ -506,7 +510,11 @@ export class SongRepository
 
 	//songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
-	songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
+	songListsForSong: ({
+		songId,
+	}: {
+		songId: number;
+	}) => Promise<SongListContract[]>;
 
 	songListsForUser: ({
 		ignoreSongId,
