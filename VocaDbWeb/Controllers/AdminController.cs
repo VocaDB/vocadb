@@ -44,11 +44,7 @@ public class AdminController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-		var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
-
-		PageProperties.Title = "Active editors";
-
-		return View(items);
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -125,7 +121,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Site management";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult GeneratePictureThumbs()
@@ -144,7 +140,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage blocked IPs";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -152,7 +148,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage entry type to tag mappings";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -160,7 +156,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult PVAuthorNames(string term)
@@ -273,7 +269,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View audit log";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -310,6 +306,6 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage webhooks";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 }
