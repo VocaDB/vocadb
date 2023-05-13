@@ -115,7 +115,12 @@ export class FeaturedSongListsStore
 	set locationState(value: FeaturedSongListsRouteParams) {
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
-		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
+		this.currentCategoryStore.sort =
+			value.sort ??
+			(this.category === SongListFeaturedCategory.Other ||
+			this.category === SongListFeaturedCategory.Pools
+				? SongListSortRule.Name
+				: SongListSortRule.Date);
 		this.currentCategoryStore.tagIds = ([] as number[]).concat(
 			value.tagId ?? [],
 		);
