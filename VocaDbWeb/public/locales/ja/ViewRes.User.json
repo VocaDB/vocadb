@@ -206,10 +206,10 @@
   },
   "RequestVerification": {
     "ArtistTitle": "証明するアーティスト項目（必須）",
-    "Login": "ログオン",
+    "Login": "ログイン",
     "MessageTitle": "追加メッセージ（任意）",
     "NoPrivateMessage": "証明を以下のURLで提出",
-    "NotLoggedInMessage": "これを使う前に<1>ログオン</1>するか<2>登録</2>してください。",
+    "NotLoggedInMessage": "これを使う前に<1>ログイン</1>するか<2>登録</2>してください。",
     "PageTitle": "アーティストアカウント証明",
     "PrivateMessage": "証明をダイレクトメッセージで提出",
     "Send": "送信",
