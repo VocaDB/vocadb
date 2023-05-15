@@ -15,13 +15,13 @@
     "SongMissing": "FEHLT",
     "SongsInList": "Songs in der Liste",
     "SongsMissingError": "Einige der Songs fehlen auf VocaDB. Füge zuerst alle Songs der Datenbank hinzu.",
-    "Submit": "Submit",
-    "Title": "Create song list from NicoNico MyList or YouTube playlist",
-    "TotalSongs": "Total songs",
-    "UnableToParse": "Unable to parse list",
-    "UrlDescription": "Can be any NicoNico MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "Submit": "Einreichen",
+    "Title": "Erstelle Songliste aus NicoNico MyList oder YouTube Playlist",
+    "TotalSongs": "Gesamte Songs",
+    "UnableToParse": "Liste konnte nicht analysiert werden",
+    "UrlDescription": "Kann jede beliebige NicoNico MyList, zum Beispiel http://www.nicovideo.jp/mylist/1234567, oder YouTube Playlist, zum Beispiel https://www.youtube.com/playlist?list=MIKUMIKU3939 sein",
     "UrlLabel": "Playlist/Mylist URL",
-    "VocaDbEntry": "VocaDB song entry"
+    "VocaDbEntry": "VocaDB Songeintrag"
   },
   "SongListSortRuleNames": {
     "CreateDate": "Erstellungs Zeitpunkt",
