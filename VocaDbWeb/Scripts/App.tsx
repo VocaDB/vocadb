@@ -44,15 +44,19 @@ const AppContainer = (): React.ReactElement => {
 				</div>
 				<AboutDisclaimer />
 			</div>
-				<React.Suspense fallback={null}>
-					{vdb.values.loggedUser?.stylesheet.toLowerCase().startsWith("darkangel") && (
-						<DarkAngel />
-					)}
-					
-					{vdb.values.loggedUser?.stylesheet.toLowerCase().startsWith("tetodb") && (
-						<TetoDB />
-					)}
-				</React.Suspense>
+			<React.Suspense fallback={null}>
+				{vdb.values.loggedUser?.stylesheet && (
+					<>
+						{vdb.values.loggedUser?.stylesheet
+							.toLowerCase()
+							.startsWith('darkangel') && <DarkAngel />}
+
+						{vdb.values.loggedUser?.stylesheet
+							.toLowerCase()
+							.startsWith('tetodb') && <TetoDB />}
+					</>
+				)}
+			</React.Suspense>
 		</Container>
 	);
 };
