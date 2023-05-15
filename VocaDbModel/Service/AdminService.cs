@@ -253,7 +253,7 @@ public class AdminService : ServiceBase
 		});
 	}
 
-	public (EntryForApiContract entry, ServerOnlyUserContract user, DateTime time)[] GetActiveEditors()
+	public ActiveEditorForApiContract[] GetActiveEditors()
 	{
 		PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -264,9 +264,9 @@ public class AdminService : ServiceBase
 			var db = new NHibernateDatabaseContext(ctx, PermissionContext);
 			var entryLoader = new Queries.EntryQueries();
 			return editors
-				.Select(i =>
-					(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, PermissionContext, null, EntryOptionalFields.None),
-					new ServerOnlyUserContract(ctx.Load<User>(i.Value.UserId)),
+				.Select(i => new ActiveEditorForApiContract(
+					EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, PermissionContext, null, EntryOptionalFields.None),
+					new UserForApiContract(ctx.Load<User>(i.Value.UserId)),
 					i.Value.Time))
 				.ToArray();
 		});
