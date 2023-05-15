@@ -27,7 +27,7 @@ const BannerLink = React.memo(
 					functions.trackOutboundLink(e.nativeEvent);
 				}}
 			>
-				<img src={`Content/banners/${img}`} alt={title} title={title} />
+				<img src={`/Content/banners/${img}`} alt={title} title={title} />
 			</a>
 		);
 	},
