@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
@@ -74,7 +75,7 @@ public class AdminApiController : ApiController
 	}
 
 	[HttpGet("reports")]
-	public EntryReportForApiContract[] GetEntryReports(ReportStatus status) => 
+	public EntryReportForApiContract[] GetEntryReports(ReportStatus status) =>
 		_adminService.GetEntryReports(status);
 
 	[HttpDelete("reports/{id:int}")]
@@ -87,4 +88,8 @@ public class AdminApiController : ApiController
 
 		return NoContent();
 	}
+
+	[HttpGet("activeEditors")]
+	public ActiveEditorForApiContract[] GetActiveEditors() => _adminService.GetActiveEditors();
+
 }

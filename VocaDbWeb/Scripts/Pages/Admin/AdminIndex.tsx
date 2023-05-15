@@ -78,7 +78,8 @@ const AdminIndex = (): React.ReactElement => {
 				<>
 					<h3>Database maintenance tasks{/* LOC */}</h3>
 					<p>
-						<a href="/Admin/ActiveEdits">View active editors{/* LOC */}</a>
+						<Link to="/Admin/ActiveEdits">View active editors</Link>
+						{/* LOC */}
 					</p>
 					<p>
 						<a href="/Admin/CreateJsonDump">Create JSON dump{/* LOC */}</a>
