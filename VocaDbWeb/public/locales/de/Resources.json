@@ -56,10 +56,10 @@
   },
   "ArtistArchiveReasonNames": {
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Von einer anderen Einreichung zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Zu einer früheren Revision zurückgekehrt",
     "Unknown": "Unbekannt"
   },
@@ -74,7 +74,7 @@
     "OriginalName": "Originaler Name",
     "Picture": "Hauptbild",
     "Pictures": "Bilder",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Voicebank Veröffentlichungsdatum",
     "Status": "Status",
     "WebLinks": "Externe Links"
   },
@@ -92,17 +92,17 @@
     "Mastering": "Mastering",
     "Mixer": "Mixer",
     "Other": "Andere",
-    "Publisher": "Publisher",
-    "VocalDataProvider": "Vocal data provider",
+    "Publisher": "Herausgeber",
+    "VocalDataProvider": "Vocal Data Provider",
     "Vocalist": "Sänger",
     "VoiceManipulator": "Stimmenmanipulator"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Hinzufügungsdatum (absteigend)",
     "AdditionDateAsc": "Hinzufügungsdatum (aufsteigend)",
-    "FollowerCount": "Number of followers",
+    "FollowerCount": "Anzahl der Follower",
     "Name": "Name",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Voicebank Veröffentlichungsdatum",
     "SongCount": "Anzahl Songs",
     "SongRating": "Insgesamte Songbewertung"
   },
@@ -136,8 +136,8 @@
   },
   "EntryEditEventNames": {
     "Created": "Erstellt",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
+    "Deleted": "Gelöscht",
+    "Restored": "Wiederhergestellt",
     "Updated": "Aktualisiert"
   },
   "EntryStatusNames": {
@@ -162,7 +162,7 @@
     "EditFeaturedLists": "Songlisten verwalten",
     "EditNews": "Neuigkeiten verwalten",
     "EditProfile": "Persönliches Profil bearbeiten",
-    "EditTags": "Edit tags",
+    "EditTags": "Schlagwörter bearbeiten",
     "LockEntries": "Einreichungen sperren",
     "ManageDatabase": "Datenbank verwalten",
     "ManageEntryReports": "Berichte zu Einreichungen verwalten",
@@ -174,15 +174,15 @@
     "MoveToTrash": "In den Papierkorb verschieben",
     "Nothing": "Nichts",
     "ReadRecentComments": "Neuesten Kommentare lesen",
-    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveEditPermission": "Datenbankbearbeitungsrechte entfernen",
     "RemoveTagUsages": "Schlagwortverwendungen löschen",
     "RestoreRevisions": "Revisionen ansehen",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Eigene Medien hochladen",
     "ViewAuditLog": "Ereignisprotokoll ansehen",
-    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRatings": "Ausgeblendete Bewertungen anzeigen",
     "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ManageWebhooks": "Webhooks verwalten",
+    "CreateDatabaseDump": "Datenbank-Dump erstellen"
   },
   "PVTypeDescriptions": {
     "Original": "Original (offizieller/autorisierter Upload)",
@@ -198,7 +198,7 @@
     "RatingDate": "Bewertungsdatum"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
+    "Artists": "Interpreten",
     "Category": "Category",
     "Date": "Datum",
     "Description": "Beschreibung",
