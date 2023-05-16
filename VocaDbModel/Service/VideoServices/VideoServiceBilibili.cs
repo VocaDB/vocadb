@@ -50,9 +50,9 @@ public class VideoServiceBilibili : VideoService
 			return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException($"Unable to load Bilibili URL: {x.Message}", x));
 		}
 
-		// cannot view video
+		// If the video cannot be viewed,
 		// web returns the error message "啊叻？视频不见了？" (あれ? the video's gone?)
-		// api simultaneously returns the message "稿件不可见" (upload cannot be viewed)
+		// API simultaneously returns the message "稿件不可见" (upload cannot be viewed)
 		if (response.Code == 62002)
 		{
 			return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Video cannot be viewed");
