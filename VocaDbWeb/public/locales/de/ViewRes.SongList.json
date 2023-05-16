@@ -12,7 +12,7 @@
     "Songs": "Song(s)"
   },
   "Edit": {
-    "AddSong": "Add song",
+    "AddSong": "Song hinzufügen",
     "ConfirmDelete": "Are you sure you want to delete this list?",
     "CreateTitle": "Erstelle eine Songliste",
     "Description": "Description",
