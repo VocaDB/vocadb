@@ -92,7 +92,7 @@
     "OnlyAdditions": "Only additions"
   },
   "FavoriteSongs": {
-    "GroupByRating": "Group by rating"
+    "GroupByRating": "Nach Bewertung gruppieren"
   },
   "ForgotPassword": {
     "CaptchaIsInvalid": "CAPTCHA ist falsch.",
@@ -198,10 +198,10 @@
     "Username": "Benutzername"
   },
   "RatedSongs": {
-    "GroupByRating": "Group by rating",
+    "GroupByRating": "Nach Bewertung gruppieren",
     "NoSongListSelection": "Keine",
-    "RatingAnything": "Anything",
-    "ShowTags": "Show tags",
+    "RatingAnything": "Alles",
+    "ShowTags": "Schlagwörter anzeigen",
     "SongList": "Songliste"
   },
   "RequestVerification": {
