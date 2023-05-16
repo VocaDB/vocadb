@@ -16,9 +16,9 @@
     "Illustrator": "Illustrator",
     "Label": "Label",
     "Other": "Other",
-    "Producer": "Producer",
+    "Producer": "Produzent",
     "Subject": "Subject",
-    "Vocalist": "Vocalist"
+    "Vocalist": "Sänger"
   },
   "ArtistTypeNames": {
     "Circle": "Personenkreis",
@@ -37,10 +37,10 @@
     "Band": "Band/Gruppe",
     "Utaite": "Utaite",
     "CeVIO": "CeVIO",
-    "Vocalist": "Vocalist",
-    "Character": "Character",
+    "Vocalist": "Sänger",
+    "Character": "Charakter",
     "SynthesizerV": "Synthesizer V",
-    "CoverArtist": "Cover artist"
+    "CoverArtist": "Cover Interpret"
   },
   "ArtistValidationErrors": {
     "NeedReferences": "Der Künstler benötigt eine Beschreibung ODER mindestens einen externen Link als Beleg.",
