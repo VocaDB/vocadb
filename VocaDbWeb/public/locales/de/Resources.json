@@ -6,10 +6,10 @@
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Zusammengefügt von einer anderen Einreichung",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -195,7 +195,7 @@
     "Reprint": "Kopie"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Rating date"
+    "RatingDate": "Bewertungsdatum"
   },
   "ReleaseEventEditableFieldNames": {
     "Artists": "Artists",
@@ -203,7 +203,7 @@
     "Date": "Datum",
     "Description": "Beschreibung",
     "MainPicture": "Main picture",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "PVs": "PVs",
     "Series": "Series",
@@ -218,10 +218,10 @@
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Von einem anderen Eintrag zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -229,13 +229,13 @@
     "Artists": "Künstler",
     "Groups": "Gruppen",
     "Length": "Dauer",
-    "Lyrics": "Lyrics",
+    "Lyrics": "Songtext",
     "Names": "Namen",
     "Notes": "Anmerkungen",
     "Nothing": "Nichts",
     "OriginalName": "Originaler Name",
     "OriginalVersion": "Originale Version",
-    "PublishDate": "Publish date",
+    "PublishDate": "Veröffentlichungsdatum",
     "PVs": "PVs",
     "SongType": "Art des Songs",
     "Status": "Status",
@@ -264,9 +264,9 @@
     "FavoritedTimes": "Anzahl der Favorisierungen",
     "Name": "Name",
     "None": "Nichts",
-    "PublishDate": "Publish date",
+    "PublishDate": "Veröffentlichungsdatum",
     "RatingScore": "Bewertungspunktzahl",
-    "TagUsageCount": "Tag usage count",
+    "TagUsageCount": "Schlagwort-Nutzungsanzahl",
     "SongType": "Art des Songs"
   },
   "SongVoteRatingNames": {
@@ -278,7 +278,7 @@
     "CategoryName": "Kategorie",
     "Description": "Beschreibung",
     "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "Parent": "Übergeordnetes Schlagwort\n",
     "Picture": "Bild",
@@ -305,7 +305,7 @@
     "AddressCountryCode": "Country/Region",
     "Coordinates": "Coordinates",
     "Description": "Description",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "Status": "Status",
     "WebLinks": "External links"
