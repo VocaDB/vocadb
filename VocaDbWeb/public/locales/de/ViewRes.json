@@ -13,7 +13,7 @@
   },
   "EntryCreate": {
     "EnglishName": "Name auf Englisch",
-    "FoundCoverArtist": "A \"Cover artist\" was found in the entry. Please change the artist type to \"Producer\" if this is an original song.",
+    "FoundCoverArtist": "Ein \"Cover Künstler\" wurde im Eintrag gefunden. Bitte änder den Künstlertyp auf \"Producer\", wenn dies ein originaler Song ist.",
     "FoundPossibleDuplicates": "Mögliche übereinstimmende Einträge wurden in der Datenbank gefunden. Bitte überprüfe, dass es sich hierbei nicht um Duplikate handelt.",
     "Name": "Name (mindestens einer)",
     "NameHelp": "Wenn der originale Name nicht Englisch ist (z.B. Japanisch) oder wenn die Sprache des Namens unbekannt ist, füge diesen in das nicht englische Namensfeld ein. Wenn bekannt, gib auch den romanisierten Namen an. Wenn der offizielle Name deiner Einreichung in der englischen Sprache vorliegt oder es eine bekannte englische Übersetzung gibt, füge diesen in das englische Namensfeld ein.",
