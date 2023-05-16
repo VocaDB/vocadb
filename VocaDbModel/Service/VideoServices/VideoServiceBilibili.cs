@@ -53,7 +53,7 @@ public class VideoServiceBilibili : VideoService
 		// If the video cannot be viewed,
 		// web returns the error message "啊叻？视频不见了？" (あれ? the video's gone?)
 		// API simultaneously returns the message "稿件不可见" (upload cannot be viewed)
-		if (response.Code == 62002)
+		if (response == null || response.Data == null || response.Code == 62002)
 		{
 			return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Video cannot be viewed");
 		}
@@ -114,7 +114,7 @@ public class BiliMetadata
 class BilibiliResponse
 {
 	public int Code { get; init; } = default!;
-	public BilibiliResponseData Data { get; init; } = default!;
+	public BilibiliResponseData? Data { get; init; } = default;
 }
 
 class BilibiliResponseData
