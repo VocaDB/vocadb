@@ -29,11 +29,11 @@
     "Notes": "Anmerkungen",
     "OriginalVersion": "Originale Version",
     "OtherArtists": "Andere Künstler",
-    "Producers": "Produzent",
+    "Producers": "Produzenten",
     "PVDetails": "PV",
     "RemoveFromFavorites": "Meine Bewertung löschen",
     "SongDetails": "Song",
-    "Vocalists": "Sänger(in)",
+    "Vocalists": "Sänger",
     "ViewExternal": "Auf externer Seite ansehen",
     "Favorites": "{{0}} Favorisierte",
     "SearchYoutube": "Auf Youtube suchen",
@@ -80,8 +80,8 @@
   },
   "Edit": {
     "ArActions": "Actions",
-    "ArAddArtistTitle": "Add artist",
-    "ArArtist": "Artist",
+    "ArAddArtistTitle": "Interpret hinzufügen",
+    "ArArtist": "Interpret",
     "ArArtistsNote": "Note that you can tag artists for a song much faster after tagging the album first.",
     "ArRoles": "Roles",
     "ArSupport": "Support",
@@ -118,7 +118,7 @@
     "PvSupportedServices": "Supported services: YouTube, NicoNico, Vimeo, SoundCloud, Piapro, Bilibili, Creofuga and Bandcamp (tracks only).",
     "PvType": "Type",
     "PvUrl": "URL:",
-    "TabArtists": "Artists",
+    "TabArtists": "Interpreten",
     "TabBasicInfo": "Basic info",
     "TabLyrics": "Songtext",
     "TabMedia": "Media"
@@ -141,9 +141,9 @@
     "NoSongs": "Keine Songs gefunden :(",
     "Preview": "Preview",
     "TotalScore": "total score",
-    "VocalistAll": "All vocalists",
-    "VocalistOther": "Other vocalists",
-    "VocalistUTAU": "Only UTAU",
-    "VocalistVocaloid": "Only Vocaloid"
+    "VocalistAll": "Alle Sänger",
+    "VocalistOther": "Andere Sänger",
+    "VocalistUTAU": "Nur UTAU",
+    "VocalistVocaloid": "Nur Vocaloid"
   }
 }
