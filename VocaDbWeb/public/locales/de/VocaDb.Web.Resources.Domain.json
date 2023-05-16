@@ -8,24 +8,24 @@
     "Other": "Anderes (in den Anmerkungen schildern)",
     "OwnershipClaim": "Besitzanspruch",
     "RemovePermissions": "Restricted editing",
-    "Spamming": "Spamming"
+    "Spamming": "Spammen"
   },
   "EntryTypeNames": {
     "Album": "Album",
     "Artist": "Künstler",
-    "DiscussionTopic": "Topic",
+    "DiscussionTopic": "Thema",
     "PV": "PV",
-    "ReleaseEvent": "Event",
-    "ReleaseEventSeries": "Event series",
+    "ReleaseEvent": "Ereignis",
+    "ReleaseEventSeries": "Ereignis-Serie",
     "Song": "Song",
     "SongList": "Songliste",
     "Tag": "Schlagwort",
     "Undefined": "Alles",
     "User": "Benutzer",
-    "Venue": "Venue"
+    "Venue": "Veranstaltungsort"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "Eintrag melden",
+    "User": "Benutzer"
   }
 }
