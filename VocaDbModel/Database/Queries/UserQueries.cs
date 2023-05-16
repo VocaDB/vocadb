@@ -2154,7 +2154,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 							user,
 							title: $"Possible spam account: {user.Name}",
 							url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id),
-							color: new Color(252, 41, 41)
+							color: new Discord.Color(252, 41, 41)
 						);
 					}
 				}

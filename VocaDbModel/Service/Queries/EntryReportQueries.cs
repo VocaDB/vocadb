@@ -124,7 +124,7 @@ public class EntryReportQueries
 			title: $"[{entry.DefaultName}] Report opened",
 			url: entryLinkFactory.GetFullEntryUrl(entry),
 			description: notes,
-			color: new Color(235, 100, 32)
+			color: new Discord.Color(235, 100, 32)
 		);
 
 		ctx.Save(report);
