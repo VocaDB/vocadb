@@ -20,9 +20,6 @@ public class LyricsForSongMap : ClassMap<LyricsForSong>
 		Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 		References(m => m.Song).Not.Nullable();
 
-		Component(m => m.CultureCode, c =>
-		{
-			c.Map(m => m.CultureCode).Column("[CultureCode]").Length(20).Not.Nullable();
-		});
+		Map(m => m.CultureCodes).Column("[CultureCode]").CustomType(typeof(string)).Access.CamelCaseField(Prefix.Underscore);
 	}
 }

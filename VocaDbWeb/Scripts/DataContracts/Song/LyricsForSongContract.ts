@@ -1,7 +1,7 @@
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 
 export interface LyricsForSongContract {
-	cultureCode?: string;
+	cultureCodes?: string[];
 	id?: number;
 	language?: ContentLanguageSelection;
 	source: string;

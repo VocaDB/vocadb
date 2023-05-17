@@ -13,7 +13,8 @@ public static class LyricsHelper
 		if (!lyrics.Any())
 			return null;
 
-		var dict = lyrics.Where(l => !string.IsNullOrEmpty(l.CultureCode)).Distinct(l => l.CultureCode).ToDictionary(l => l.CultureCode);
+		// TODO: Fix this
+		var dict = lyrics.Where(l => l.CultureCodes != null).Distinct(l => l.CultureCodes).ToDictionary(l => l.CultureCodes.First());
 
 		var uiCulture = uiCultureCode.CultureInfo;
 		if (uiCulture != null && dict.ContainsKey(uiCulture.TwoLetterISOLanguageName))

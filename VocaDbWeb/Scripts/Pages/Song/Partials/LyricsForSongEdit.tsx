@@ -41,13 +41,15 @@ const LyricsForSongEdit = observer(
 							<span>
 								(
 								{
-									userLanguageCultures[lyricsForSongEditStore.cultureCode]
+									userLanguageCultures[lyricsForSongEditStore.cultureCodes[0]]
 										? `${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.nativeName
+												userLanguageCultures[
+													lyricsForSongEditStore.cultureCodes[0]
+												].nativeName
 										  } (${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.englishName
+												userLanguageCultures[
+													lyricsForSongEditStore.cultureCodes[0]
+												].englishName
 										  })`
 										: 'Other/Unknown' /* LOC */
 								}
@@ -81,10 +83,13 @@ const LyricsForSongEdit = observer(
 										placeholder={t(
 											'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
 										)}
-										value={lyricsForSongEditStore.cultureCode}
+										value={lyricsForSongEditStore.cultureCodes[0]}
 										onChange={(e): void =>
 											runInAction(() => {
-												lyricsForSongEditStore.cultureCode = e.target.value;
+												lyricsForSongEditStore.cultureCodes = [
+													'de',
+													e.target.value,
+												];
 											})
 										}
 									/>
