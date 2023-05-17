@@ -51,6 +51,26 @@ export class LyricsForSongEditStore {
 		this.isNew = !contract;
 	}
 
+	@action addCultureCode = (cultureCode: string): void => {
+		console.log('Heeey');
+		this.cultureCodes = this.cultureCodes
+			.filter((c) => cultureCode !== c)
+			.concat(cultureCode);
+	};
+
+	@action replaceCultureCode = (
+		prevCultureCode: string,
+		newCultureCode: string,
+	): void => {
+		this.cultureCodes = this.cultureCodes.map((c) =>
+			c === prevCultureCode ? newCultureCode : c,
+		);
+	};
+
+	@action removeCultureCode = (cultureCode: string): void => {
+		this.cultureCodes = this.cultureCodes.filter((c) => c !== cultureCode);
+	};
+
 	@computed get showLanguageSelection(): boolean {
 		return this.translationType !== TranslationType[TranslationType.Romanized];
 	}
