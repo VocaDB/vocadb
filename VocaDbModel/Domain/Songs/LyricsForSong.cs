@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Songs;
 
 public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 {
-	protected string _cultureCodes;
+	private string _rawCultureCode;
 	private string _notes;
 	private Song _song;
 	private string _source;
@@ -27,12 +27,23 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 		Value = val;
 	}
 
-	public virtual OptionalCultureCode[] CultureCodes
+	public virtual string RawCultureCode
 	{
-		get => _cultureCodes.Split(",").Select(c => new OptionalCultureCode(c)).ToArray();
+		get => _rawCultureCode;
+		[MemberNotNull(nameof(_rawCultureCode))]
 		set
 		{
-			_cultureCodes = String.Join(",", value.Select(x => x.CultureCode));
+			ParamIs.NotNull(() => value);
+			_rawCultureCode = value;
+		}
+	}
+
+	public virtual OptionalCultureCode[] CultureCodes
+	{
+		get => _rawCultureCode.Split(",").Select(c => new OptionalCultureCode(c)).ToArray();
+		set
+		{
+			_rawCultureCode = String.Join(",", value.Select(x => x.CultureCode));
 		}
 	}
 
