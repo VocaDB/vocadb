@@ -93,7 +93,7 @@ const LyricsForSongEdit = observer(
 															onChange={(e): void =>
 																runInAction(() => {
 																	lyricsForSongEditStore.replaceCultureCode(
-																		cultureCode,
+																		index,
 																		e.target.value,
 																	);
 																})
@@ -103,9 +103,7 @@ const LyricsForSongEdit = observer(
 													<td>
 														<SafeAnchor
 															onClick={(): void =>
-																lyricsForSongEditStore.removeCultureCode(
-																	cultureCode,
-																)
+																lyricsForSongEditStore.removeCultureCode(index)
 															}
 															href="#"
 															className="nameDelete textLink deleteLink"

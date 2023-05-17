@@ -52,23 +52,18 @@ export class LyricsForSongEditStore {
 	}
 
 	@action addCultureCode = (cultureCode: string): void => {
-		console.log('Heeey');
-		this.cultureCodes = this.cultureCodes
-			.filter((c) => cultureCode !== c)
-			.concat(cultureCode);
+		this.cultureCodes = this.cultureCodes.concat(cultureCode);
 	};
 
 	@action replaceCultureCode = (
-		prevCultureCode: string,
+		index: number,
 		newCultureCode: string,
 	): void => {
-		this.cultureCodes = this.cultureCodes.map((c) =>
-			c === prevCultureCode ? newCultureCode : c,
-		);
+		this.cultureCodes[index] = newCultureCode;
 	};
 
-	@action removeCultureCode = (cultureCode: string): void => {
-		this.cultureCodes = this.cultureCodes.filter((c) => c !== cultureCode);
+	@action removeCultureCode = (index: number): void => {
+		this.cultureCodes.splice(index, 1);
 	};
 
 	@computed get showLanguageSelection(): boolean {
