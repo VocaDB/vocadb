@@ -43,7 +43,7 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 		get => _rawCultureCode.Split(",").Select(c => new OptionalCultureCode(c)).ToArray();
 		set
 		{
-			_rawCultureCode = String.Join(",", value.Select(x => x.CultureCode));
+			_rawCultureCode = String.Join(",", value.Select(x => x.CultureCode).Distinct());
 		}
 	}
 
@@ -112,7 +112,7 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 			return false;
 
 		return (TranslationType == contract.TranslationType
-			&& CultureCodes.All(c => contract.CultureCodes.Contains(c.CultureCode))
+			&& CultureCodes.Select(c => c.CultureCode) == contract.CultureCodes
 			&& Source == contract.Source
 			&& URL == contract.URL
 			&& Value == contract.Value);
