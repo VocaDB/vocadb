@@ -1,10 +1,3 @@
-import AppRoutes from '@/AppRoutes';
-import '@/ArrayExtensions';
-import Container from '@/Bootstrap/Container';
-import { AboutDisclaimer } from '@/Components/Shared/Partials/AboutDisclaimer';
-import { Header } from '@/Components/Shared/Partials/Header';
-import { LeftMenu } from '@/Components/Shared/Partials/LeftMenu';
-import { miniPlayerHeight, VdbPlayer } from '@/Components/VdbPlayer/VdbPlayer';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { Compose } from '@/Compose';
 import { LoginManagerProvider } from '@/LoginManagerContext';
@@ -13,59 +6,20 @@ import { VdbProvider, useVdb } from '@/VdbContext';
 import '@/i18n';
 import '@/styles/css.less';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
-import { ScrollToTop } from '@vocadb/route-sphere';
-import React from 'react';
-import { Toaster } from 'react-hot-toast';
+import React, { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { CultureCodesProvider } from './CultureCodesContext';
+const NewApp = React.lazy(() => import('./NewApp'));
+const OldApp = React.lazy(() => import('./OldApp'));
 
-const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
-const TetoDB = React.lazy(() => import('./styles/tetoDb'));
-const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
-
-const AppContainer = (): React.ReactElement => {
+const InnerAppChooser = (): React.ReactElement => {
 	const vdb = useVdb();
 
-	return (
-		<Container
-			fluid
-			css={{
-				flex: '1 1 100%',
-				paddingBottom: miniPlayerHeight,
-				minWidth: 0,
-				overflow: 'hidden',
-			}}
-		>
-			<div className="row-fluid">
-				<div className="span12 rightFrame well">
-					<React.Suspense fallback={null /* TODO */}>
-						<AppRoutes />
-					</React.Suspense>
-				</div>
-				<AboutDisclaimer />
-			</div>
-			<React.Suspense fallback={null}>
-				{vdb.values.loggedUser?.stylesheet && (
-					<>
-						{vdb.values.loggedUser?.stylesheet && (
-							<>
-								{vdb.values.loggedUser?.stylesheet
-									.toLowerCase()
-									.startsWith('darkangel') && <DarkAngel />}
-								{vdb.values.loggedUser?.stylesheet
-									.toLowerCase()
-									.startsWith('tetodb') && <TetoDB />}
-								{vdb.values.siteName.toLowerCase().includes('utaite') && (
-									<UtaiteDB />
-								)}
-							</>
-						)}
-					</>
-				)}
-			</React.Suspense>
-		</Container>
-	);
+	if (vdb.values.loggedUser?.stylesheet === 'new_bta') {
+		return <NewApp />;
+	}
+
+	return <OldApp />;
 };
 
 const App = (): React.ReactElement => {
@@ -81,14 +35,9 @@ const App = (): React.ReactElement => {
 				CultureCodesProvider,
 			]}
 		>
-			<ScrollToTop />
-			<Header />
-			<div css={{ display: 'flex' }}>
-				<LeftMenu />
-				<AppContainer />
-			</div>
-			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
-			<VdbPlayer />
+			<Suspense fallback={null}>
+				<InnerAppChooser />
+			</Suspense>
 		</Compose>
 	);
 };
