@@ -125,6 +125,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details_entry(items[0]));
 				} else {
 					navigate(
@@ -144,6 +145,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Album, items[0].id));
 				} else {
 					navigate(
@@ -164,6 +166,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Artist, items[0].id));
 				} else {
 					navigate(
@@ -187,6 +190,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, items[0].id));
 				} else {
 					navigate(
@@ -209,6 +213,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Song, items[0].id));
 				} else {
 					navigate(
@@ -228,6 +233,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
 				} else {
 					navigate('/SongList/Featured');
@@ -262,6 +268,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details_user_byName(items[0].name));
 				} else {
 					navigate(
@@ -348,8 +355,12 @@ export const GlobalSearchBox = observer(
 							);
 						}}
 						select={(event: Event, ui): void => {
-							globalSearchTermRef.current.value = ui.item.value;
+							topBarStore.searchTerm = ui.item.value;
 							submit();
+						}}
+						value={topBarStore.searchTerm}
+						onChange={(e): void => {
+							topBarStore.searchTerm = e.target.value;
 						}}
 						ref={globalSearchTermRef}
 					/>
