@@ -1,6 +1,6 @@
 import { NotificationPanel } from '@/Components/Shared/Partials/Shared/NotificationPanel';
 import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,7 @@ export const ConcurrentEditWarning = React.memo(
 	({ conflictingEditor }: ConcurrentEditWarningProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const ago = moment().diff(conflictingEditor.time, 'minutes');
+		const ago = dayjs().diff(conflictingEditor.time, 'minutes');
 
 		return (
 			<NotificationPanel

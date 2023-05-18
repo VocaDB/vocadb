@@ -1,6 +1,6 @@
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -38,7 +38,7 @@ export const SongPopupContent = React.memo(
 				{song.publishDate && (
 					<p>
 						{t('ViewRes:EntryDetails.PublishDate')}{' '}
-						{moment(song.publishDate).format('l')}
+						{dayjs(song.publishDate).format('l')}
 					</p>
 				)}
 

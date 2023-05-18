@@ -7,10 +7,10 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { adminRepo } from '@/Repositories/AdminRepository';
 import { ManageIPRulesStore } from '@/Stores/Admin/ManageIPRulesStore';
+import dayjs from '@/dayjs';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -124,7 +124,7 @@ const AdminManageIPRules = observer(
 											}
 										/>
 									</td>
-									<td>{moment(rule.created).format('L LT')}</td>
+									<td>{dayjs(rule.created).format('L LT')}</td>
 									<td>
 										<SafeAnchor
 											href="#"

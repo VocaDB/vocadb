@@ -25,6 +25,7 @@ import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { ArtistForEventEditStore } from '@/Stores/ReleaseEvent/ArtistForEventEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
+import dayjs from 'dayjs';
 import { pull } from 'lodash-es';
 import {
 	action,
@@ -34,7 +35,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export class EventArtistRolesEditStore extends ArtistRolesEditStore {
 	constructor(roleNames: { [key: string]: string | undefined }) {
@@ -118,11 +118,11 @@ export class ReleaseEventEditStore {
 		);
 		this.category = contract.category;
 		this.customName = contract.customName;
-		this.date = contract.date ? moment(contract.date).toDate() : undefined;
+		this.date = contract.date ? dayjs(contract.date).toDate() : undefined;
 		this.defaultNameLanguage = contract.defaultNameLanguage;
 		this.description = contract.description;
 		this.endDate = contract.endDate
-			? moment(contract.endDate).toDate()
+			? dayjs(contract.endDate).toDate()
 			: undefined;
 
 		this.names = NamesEditStore.fromContracts(contract.names);

@@ -7,10 +7,10 @@ import { ImageSize } from '@/Models/Images/ImageSize';
 import { useMutedUsers } from '@/MutedUsersContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -66,12 +66,12 @@ const ViewFolderTableRow = observer(
 					<span>{topic.commentCount}</span>
 				</td>
 				<td>
-					<span>{moment(topic.created).format('lll')}</span>
+					<span>{dayjs(topic.created).format('lll')}</span>
 				</td>
 				<td>
 					{topic.lastComment && (
 						<span>
-							{moment(topic.lastComment.created).format('lll')} by{' '}
+							{dayjs(topic.lastComment.created).format('lll')} by{' '}
 							{topic.lastComment.authorName}
 						</span>
 					)}

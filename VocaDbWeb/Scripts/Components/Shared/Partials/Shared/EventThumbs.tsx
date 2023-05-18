@@ -5,8 +5,8 @@ import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -84,8 +84,8 @@ export const EventThumbs = ({
 							<>
 								<br />
 								<small className="extraInfo">
-									{moment(event.date).format('l')}
-									{event.endDate && <> - {moment(event.endDate).format('l')}</>}
+									{dayjs(event.date).format('l')}
+									{event.endDate && <> - {dayjs(event.endDate).format('l')}</>}
 								</small>
 							</>
 						)}

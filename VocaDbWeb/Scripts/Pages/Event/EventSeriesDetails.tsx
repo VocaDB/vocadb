@@ -19,7 +19,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { EventSeriesDetailsStore } from '@/Stores/ReleaseEvent/EventSeriesDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -211,7 +211,7 @@ const EventSeriesDetailsLayout = ({
 						{event.date && (
 							<>
 								{' '}
-								<small>({moment(event.date).format('l')})</small>
+								<small>({dayjs(event.date).format('l')})</small>
 							</>
 						)}
 					</li>

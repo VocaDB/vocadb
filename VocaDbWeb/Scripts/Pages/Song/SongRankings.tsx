@@ -15,11 +15,11 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -140,7 +140,7 @@ const SongRankingsTableRow = observer(
 						/>
 					)}
 				</td>
-				<td>{moment(song.publishDate).format('l')}</td>
+				<td>{dayjs(song.publishDate).format('l')}</td>
 				<td className="search-tags-column">
 					{song.tags && song.tags.length > 0 && (
 						<>

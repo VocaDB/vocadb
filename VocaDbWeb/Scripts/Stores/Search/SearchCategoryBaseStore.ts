@@ -7,7 +7,9 @@ import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import dayjs from '@/dayjs';
 import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
+import UTC from 'dayjs/plugin/utc';
 import {
 	action,
 	computed,
@@ -16,7 +18,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
@@ -25,6 +26,8 @@ export interface ISearchCategoryBaseStore<
 	updateResults(clearResults: boolean): Promise<void>;
 	updateResultsWithTotalCount(): Promise<void>;
 }
+
+dayjs.extend(UTC);
 
 // Base class for different types of searches.
 export abstract class SearchCategoryBaseStore<
@@ -108,7 +111,7 @@ export abstract class SearchCategoryBaseStore<
 	}
 
 	formatDate = (dateStr: string): string => {
-		return moment(dateStr).utc().format('l');
+		return dayjs(dateStr).utc().format('l');
 	};
 
 	// Method for loading a page of results.

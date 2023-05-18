@@ -2,8 +2,8 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongListsBaseStore } from '@/Stores/SongList/SongListsBaseStore';
+import dayjs from '@/dayjs';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ export const SongListsKnockout = observer(
 								<tr>
 									<td colSpan={3}>
 										<h3 className="song-list-year">
-											{moment(item.eventDate).format('YYYY')}
+											{dayjs(item.eventDate).format('YYYY')}
 										</h3>
 									</td>
 								</tr>
@@ -54,7 +54,7 @@ export const SongListsKnockout = observer(
 									</Link>
 									{item.eventDate && (
 										<div>
-											<small>{moment(item.eventDate).format('l')}</small>
+											<small>{dayjs(item.eventDate).format('l')}</small>
 										</div>
 									)}
 								</td>

@@ -1,6 +1,6 @@
 import { CommonEntryContract } from '@/DataContracts/CommonEntryContract';
 import { EntryStatus } from '@/Models/EntryStatus';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export class EntryMergeValidationHelper {
 	private static toEnum(statusStr: string | EntryStatus): EntryStatus {
@@ -22,14 +22,14 @@ export class EntryMergeValidationHelper {
 
 		return {
 			validationError_targetIsLessComplete:
-				moment(targetCreated) <= moment(baseCreated) &&
+				dayjs(targetCreated) <= dayjs(baseCreated) &&
 				targetStatusEnum === EntryStatus.Draft &&
 				baseStatusEnum > EntryStatus.Draft,
 			validationError_targetIsNewer:
 				!(
 					targetStatusEnum > EntryStatus.Draft &&
 					baseStatusEnum === EntryStatus.Draft
-				) && moment(targetCreated) > moment(baseCreated),
+				) && dayjs(targetCreated) > dayjs(baseCreated),
 		};
 	}
 
