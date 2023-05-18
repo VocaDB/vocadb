@@ -9,13 +9,15 @@ import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import React, { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { CultureCodesProvider } from './CultureCodesContext';
+
 const NewApp = React.lazy(() => import('./NewApp'));
 const OldApp = React.lazy(() => import('./OldApp'));
 
 const InnerAppChooser = (): React.ReactElement => {
 	const vdb = useVdb();
 
-	if (vdb.values.loggedUser?.stylesheet === 'new_bta') {
+	if (vdb.values.loggedUser?.stylesheet === 'new_beta') {
 		return <NewApp />;
 	}
 
