@@ -8,12 +8,13 @@ interface MomentJsTimeAgoProps {
 	children: string;
 }
 
+dayjs.extend(relativeTime);
+
 export const MomentJsTimeAgo = ({
 	as: Component,
 	className,
 	children,
 }: MomentJsTimeAgoProps): React.ReactElement => {
-	dayjs.extend(relativeTime);
 	const parsed = dayjs(children);
 
 	return (
