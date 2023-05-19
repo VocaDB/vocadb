@@ -10,13 +10,13 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { adminRepo } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { ViewAuditLogStore } from '@/Stores/Admin/ViewAuditLogStore';
+import dayjs from '@/dayjs';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import $ from 'jquery';
 import 'jquery-ui';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
@@ -252,7 +252,7 @@ const AdminViewAuditLog = observer(
 						<tbody id="logEntries">
 							{viewAuditLogStore.items.map((logEntry, index) => (
 								<tr key={index}>
-									<td>{moment(logEntry.time).format('L LT')}</td>
+									<td>{dayjs(logEntry.time).format('L LT')}</td>
 									<td>
 										<UserLinkOrName
 											user={logEntry.user}

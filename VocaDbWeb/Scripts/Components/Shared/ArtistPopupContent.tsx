@@ -1,7 +1,7 @@
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -41,7 +41,7 @@ export const ArtistPopupContent = React.memo(
 				{artist.releaseDate && (
 					<p>
 						{t('ViewRes.Artist:Details.ReleaseDate')}{' '}
-						{moment(artist.releaseDate).format('l')}
+						{dayjs(artist.releaseDate).format('l')}
 					</p>
 				)}
 			</>

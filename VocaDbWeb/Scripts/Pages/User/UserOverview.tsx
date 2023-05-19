@@ -24,10 +24,10 @@ import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -254,7 +254,7 @@ const UserOverview = observer(
 						<h4 className="withMargin">
 							{t('ViewRes.User:Details.MemberSince')}
 						</h4>
-						{moment(user.createDate).format('l')}
+						{dayjs(user.createDate).format('l')}
 
 						{loginManager.canViewOldUsernames &&
 							user.oldUsernames &&
@@ -268,7 +268,7 @@ const UserOverview = observer(
 											{index > 0 && ', '}
 											{oldName.oldName}{' '}
 											{t('ViewRes.User:Details.OldNameUntil', {
-												0: moment(oldName.date).format('l'),
+												0: dayjs(oldName.date).format('l'),
 											})}
 										</React.Fragment>
 									))}

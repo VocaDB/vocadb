@@ -48,8 +48,8 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -285,9 +285,9 @@ const EventDetailsLayout = observer(
 							{event.date && (
 								<p>
 									{t('ViewRes.Event:Details.OccurrenceDate')}:{' '}
-									{moment(event.date).format('l')}
+									{dayjs(event.date).format('l')}
 									{event.endDate && event.endDate > event.date && (
-										<> - {moment(event.endDate).format('l')}</>
+										<> - {dayjs(event.endDate).format('l')}</>
 									)}
 								</p>
 							)}

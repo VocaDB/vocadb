@@ -39,10 +39,10 @@ import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -159,7 +159,7 @@ const PVButton = observer(
 				title={
 					pv.publishDate && pv.author
 						? `${t('ViewRes.Song:Details.PVDescription', {
-								0: moment(pv.publishDate).format('l') /* REVIEW */,
+								0: dayjs(pv.publishDate).format('l') /* REVIEW */,
 								1: pv.author,
 						  })}${
 								pv.disabled ? ` ${t('ViewRes.Song:Details.PVUnavailable')}` : ''
@@ -622,7 +622,7 @@ const SongBasicInfo = observer(
 						{model.publishDate && (
 							<tr>
 								<td>{t('ViewRes:EntryDetails.PublishDate')}</td>
-								<td>{moment(model.publishDate).format('l') /* REVIEW */}</td>
+								<td>{dayjs(model.publishDate).format('l') /* REVIEW */}</td>
 							</tr>
 						)}
 

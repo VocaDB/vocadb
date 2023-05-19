@@ -11,19 +11,17 @@ import { LoginManagerProvider } from '@/LoginManagerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
 import { VdbProvider, useVdb } from '@/VdbContext';
 import '@/i18n';
+import '@/styles/css.less';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
-import "@/styles/css.less"
-
-const TetoDB = React.lazy(() => import("./styles/tetoDb"))
-const DarkAngel = React.lazy(() => import("./styles/darkAngel"))
+const TetoDB = React.lazy(() => import('./styles/tetoDb'));
+const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
 
 const AppContainer = (): React.ReactElement => {
-
 	const vdb = useVdb();
 
 	return (

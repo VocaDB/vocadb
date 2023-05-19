@@ -2,9 +2,9 @@ import {
 	AdminRepository,
 	IPRuleContract,
 } from '@/Repositories/AdminRepository';
+import dayjs from 'dayjs';
 import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import moment from 'moment';
 
 class IPRule {
 	@observable address: string;
@@ -59,7 +59,7 @@ export class ManageIPRulesStore {
 	};
 
 	@action deleteOldRules = (): void => {
-		const cutOff = moment().subtract(1, 'years').toDate();
+		const cutOff = dayjs().subtract(1, 'years').toDate();
 
 		const toBeRemoved = this.rules.filter((r) => new Date(r.created) < cutOff);
 		pull(this.rules, ...toBeRemoved);

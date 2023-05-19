@@ -9,7 +9,7 @@ import {
 } from '@/Repositories/ReleaseEventRepository';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { useVdb } from '@/VdbContext';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -106,7 +106,7 @@ const EventIndex = (): React.ReactElement => {
 						ReleaseEventOptionalField.Series,
 						ReleaseEventOptionalField.Venue,
 					],
-					afterDate: moment().subtract(2, 'days').toDate(),
+					afterDate: dayjs().subtract(2, 'days').toDate(),
 					start: 0,
 					maxResults: 15,
 					sort: EventSortRule.Date,

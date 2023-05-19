@@ -2,7 +2,8 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import moment from 'moment';
+import dayjs from '@/dayjs';
+import UTC from 'dayjs/plugin/utc';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -40,6 +41,8 @@ interface SongGridProps {
 	displayPublishDate?: boolean;
 }
 
+dayjs.extend(UTC);
+
 export const SongGrid = ({
 	songs,
 	columns,
@@ -70,9 +73,7 @@ export const SongGrid = ({
 											<i
 												className="icon-calendar"
 												title={`Published: ${
-													moment(song.publishDate)
-														.utc()
-														.format('l') /* REVIEW */
+													dayjs(song.publishDate).utc().format('l') /* REVIEW */
 												}`} /* LOC */
 												/* TODO: tooltip */
 											/>
