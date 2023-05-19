@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Date": "crwdns15511:0{{0}}crwdne15511:0",
+    "DefaultSortRule": "crwdns15513:0crwdne15513:0",
+    "Details": "crwdns15515:0crwdne15515:0",
+    "Events": "crwdns15517:0crwdne15517:0",
+    "Export": "crwdns15519:0crwdne15519:0",
+    "Playlist": "crwdns15521:0crwdne15521:0",
+    "Preview": "crwdns15523:0crwdne15523:0",
+    "ShowTags": "crwdns15525:0crwdne15525:0",
+    "SongList": "crwdns15527:0crwdne15527:0",
+    "Songs": "crwdns15529:0crwdne15529:0"
+  },
+  "Edit": {
+    "AddSong": "crwdns15531:0crwdne15531:0",
+    "ConfirmDelete": "crwdns15533:0crwdne15533:0",
+    "CreateTitle": "crwdns15535:0crwdne15535:0",
+    "Description": "crwdns15537:0crwdne15537:0",
+    "EditTitle": "crwdns15539:0{{0}}crwdne15539:0",
+    "EventDate": "crwdns15541:0crwdne15541:0",
+    "EventDateHelp": "crwdns15543:0crwdne15543:0",
+    "FeaturedCategory": "crwdns15545:0crwdne15545:0",
+    "Name": "crwdns15547:0crwdne15547:0",
+    "RemoveFromList": "crwdns15549:0crwdne15549:0",
+    "Status": "crwdns15551:0crwdne15551:0",
+    "TabProperties": "crwdns15553:0crwdne15553:0",
+    "TabSongs": "crwdns15555:0crwdne15555:0",
+    "Thumbnail": "crwdns15557:0crwdne15557:0",
+    "UnableToSave": "crwdns15559:0crwdne15559:0"
+  },
+  "Featured": {
+    "Import": "crwdns15561:0crwdne15561:0",
+    "SortBy": "crwdns15563:0crwdne15563:0"
+  }
+}
