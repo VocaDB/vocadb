@@ -12,7 +12,7 @@ export const IPManage = React.memo(
 			<>
 				<span>{ip}</span> (
 				<a
-					href={`http://www.geoiptool.com/?IP=${ip}`}
+					href={`http://www.geodatatool.com/?ip=${ip}`}
 					target="_blank"
 					rel="noreferrer"
 				>
