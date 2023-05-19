@@ -34,9 +34,9 @@ import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -116,6 +116,8 @@ export const GlobalSearchBox = observer(
 		);
 
 		const navigate = useNavigate();
+		const location = useLocation();
+
 		const submit = React.useCallback(async (): Promise<void> => {
 			const tryRedirectEntry = async (filter: string): Promise<void> => {
 				const { items } = await entryRepo.getList({
@@ -294,6 +296,16 @@ export const GlobalSearchBox = observer(
 				globalSearchTermRef.current.value,
 			);
 		}, [vdb, topBarStore, navigate]);
+
+		// Clear the search bar if a user chooses a song from the search list
+		useEffect(() => {
+			if (
+				/^\/\w\w?\/.+$/.test(location.pathname) ||
+				location.pathname === '/'
+			) {
+				topBarStore.searchTerm = '';
+			}
+		}, [location, topBarStore]);
 
 		return (
 			<form
