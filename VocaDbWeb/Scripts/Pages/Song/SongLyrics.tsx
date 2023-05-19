@@ -60,8 +60,14 @@ const SongLyrics = observer(
 								>
 									{lyrics.translationType === 'Romanized'
 										? 'Romanized' /* LOC */
-										: lyrics.cultureCode
-										? userLanguageCultures[lyrics.cultureCode].nativeName
+										: lyrics.cultureCodes
+										? lyrics.cultureCodes
+												.map((c) =>
+													c === ''
+														? t('ViewRes.Song:Details.LyricsLanguageOther')
+														: userLanguageCultures[c]?.nativeName,
+												)
+												.join(', ')
 										: t('ViewRes.Song:Details.LyricsLanguageOther')}
 									{lyrics.translationType === 'Original' &&
 										` (${t(

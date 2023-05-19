@@ -148,7 +148,11 @@ public static class SongQueryableExtensions
 		}
 		else if (languageCodes != null && languageCodes.Any())
 		{
-			return query.Where(s => s.Lyrics.Any(l => languageCodes.Contains(l.CultureCode.CultureCode)));
+			foreach (var languageCode in languageCodes)
+			{
+				query = query.Where(s => s.Lyrics.Where(l => l.RawCultureCode.Contains(languageCode)).Any());
+			}
+			return query;
 		}
 		else
 		{

@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Songs;
 
 public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 {
-	private OptionalCultureCode? _cultureCode;
+	private string _rawCultureCode;
 	private string _notes;
 	private Song _song;
 	private string _source;
@@ -17,22 +17,33 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 	public LyricsForSong() { }
 #nullable enable
 
-	public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string? cultureCode)
+	public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string[]? cultureCodes)
 	{
 		Song = song;
 		Source = source;
 		URL = url;
 		TranslationType = translationType;
-		CultureCode = new OptionalCultureCode(cultureCode);
+		CultureCodes = cultureCodes != null ? cultureCodes.Select(x => new OptionalCultureCode(x)).ToArray() : Array.Empty<OptionalCultureCode>();
 		Value = val;
 	}
 
-	public virtual OptionalCultureCode CultureCode
+	public virtual string RawCultureCode
 	{
-		get => _cultureCode ?? (_cultureCode = OptionalCultureCode.Empty);
+		get => _rawCultureCode;
+		[MemberNotNull(nameof(_rawCultureCode))]
 		set
 		{
-			_cultureCode = value ?? OptionalCultureCode.Empty;
+			ParamIs.NotNull(() => value);
+			_rawCultureCode = value;
+		}
+	}
+
+	public virtual OptionalCultureCode[] CultureCodes
+	{
+		get => _rawCultureCode.Split(",").Select(c => new OptionalCultureCode(c)).ToArray();
+		set
+		{
+			_rawCultureCode = String.Join(",", value.Select(x => x.CultureCode).Distinct());
 		}
 	}
 
@@ -101,7 +112,7 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 			return false;
 
 		return (TranslationType == contract.TranslationType
-			&& CultureCode.CultureCode == contract.CultureCode
+			&& CultureCodes.Select(c => c.CultureCode) == contract.CultureCodes
 			&& Source == contract.Source
 			&& URL == contract.URL
 			&& Value == contract.Value);

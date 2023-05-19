@@ -73,7 +73,7 @@ public class SongTests
 		_artists.Add(_artist);
 		_artists.Add(_vocalist);
 		_song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
-		_lyrics = _song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
+		_lyrics = _song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, new[] { "ja" });
 		_instrumentalTag = CreateEntry.Tag("instrumental", 1);
 		_changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
 		_specialTags = new SpecialTags

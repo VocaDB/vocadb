@@ -13,13 +13,19 @@ namespace VocaDb.Tests.Helpers;
 [TestClass]
 public class LyricsHelperTests
 {
+	private static LyricsForSongContract Lyrics(string[] cultureCodes, TranslationType translationType = TranslationType.Translation)
+	{
+		return new LyricsForSongContract { CultureCodes = cultureCodes, TranslationType = translationType, Source = string.Empty, Value = "Miku Miku!" };
+	}
+
 	private static LyricsForSongContract Lyrics(string cultureCode, TranslationType translationType = TranslationType.Translation)
 	{
-		return new LyricsForSongContract { CultureCode = cultureCode, TranslationType = translationType, Source = string.Empty, Value = "Miku Miku!" };
+		return new LyricsForSongContract { CultureCodes = new[] { cultureCode }, TranslationType = translationType, Source = string.Empty, Value = "Miku Miku!" };
 	}
 
 	private readonly LyricsForSongContract[] lyrics = {
-		Lyrics(OptionalCultureCode.LanguageCode_Japanese, TranslationType.Original),
+		Lyrics(new []{OptionalCultureCode.LanguageCode_Japanese, OptionalCultureCode.LanguageCode_English}, TranslationType.Original),
+		Lyrics(OptionalCultureCode.LanguageCode_Japanese),
 		Lyrics(OptionalCultureCode.LanguageCode_Japanese, TranslationType.Romanized),
 		Lyrics(OptionalCultureCode.LanguageCode_English),
 		Lyrics("ru")
@@ -30,7 +36,7 @@ public class LyricsHelperTests
 	{
 		var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode(OptionalCultureCode.LanguageCode_English), null, null);
 
-		result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_English, "CultureCode");
+		result?.CultureCodes.Should().Contain(OptionalCultureCode.LanguageCode_English, "CultureCode");
 	}
 
 	[TestMethod]
@@ -39,7 +45,7 @@ public class LyricsHelperTests
 		var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
 			new[] { new OptionalCultureCode("mi-ku"), new OptionalCultureCode(OptionalCultureCode.LanguageCode_English) }, null);
 
-		result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_English, "CultureCode");
+		result?.CultureCodes.Should().Contain(OptionalCultureCode.LanguageCode_English, "CultureCode");
 	}
 
 	[TestMethod]
@@ -48,6 +54,6 @@ public class LyricsHelperTests
 		var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
 			new[] { new OptionalCultureCode("mi-ku") }, new Lazy<IEnumerable<UserKnownLanguage>>(() => null));
 
-		result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_Japanese, "CultureCode");
+		result?.CultureCodes.Should().Contain(OptionalCultureCode.LanguageCode_Japanese, "CultureCode");
 	}
 }

@@ -7,7 +7,7 @@ import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export class LyricsForSongEditStore {
-	@observable cultureCode: string;
+	@observable cultureCodes: string[];
 	@observable id: number;
 	readonly isNew: boolean;
 	@observable language: ContentLanguageSelection;
@@ -21,7 +21,7 @@ export class LyricsForSongEditStore {
 
 		if (contract) {
 			this.id = contract.id!;
-			this.cultureCode = contract.cultureCode!;
+			this.cultureCodes = contract.cultureCodes!;
 			this.language = contract.language!;
 			this.source = contract.source;
 			this.translationType = contract.translationType;
@@ -29,7 +29,7 @@ export class LyricsForSongEditStore {
 			this.value = contract.value!;
 		} else {
 			this.id = 0;
-			this.cultureCode = '';
+			this.cultureCodes = [''];
 			this.language = ContentLanguageSelection.Unspecified;
 			this.source = '';
 			this.translationType = TranslationType[TranslationType.Translation];
@@ -50,6 +50,21 @@ export class LyricsForSongEditStore {
 
 		this.isNew = !contract;
 	}
+
+	@action addCultureCode = (cultureCode: string): void => {
+		this.cultureCodes = this.cultureCodes.concat(cultureCode);
+	};
+
+	@action replaceCultureCode = (
+		index: number,
+		newCultureCode: string,
+	): void => {
+		this.cultureCodes[index] = newCultureCode;
+	};
+
+	@action removeCultureCode = (index: number): void => {
+		this.cultureCodes.splice(index, 1);
+	};
 
 	@computed get showLanguageSelection(): boolean {
 		return this.translationType !== TranslationType[TranslationType.Romanized];
@@ -86,7 +101,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 	@action changeToOriginal = (lyrics: LyricsForSongEditStore): void => {
 		this.original.id = lyrics.id;
 		this.original.value = lyrics.value;
-		this.original.cultureCode = lyrics.cultureCode;
+		this.original.cultureCodes = lyrics.cultureCodes;
 		this.original.source = lyrics.source;
 		this.original.url = lyrics.url;
 		pull(this.items, lyrics);
@@ -96,7 +111,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 		if (lyrics === this.original) {
 			const newLyrics = new LyricsForSongEditStore({
 				id: this.original.id,
-				cultureCode: this.original.cultureCode,
+				cultureCodes: this.original.cultureCodes,
 				source: this.original.source,
 				url: this.original.url,
 				value: this.original.value,
@@ -107,7 +122,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 
 			this.original.id = 0;
 			this.original.value = '';
-			this.original.cultureCode = '';
+			this.original.cultureCodes = [''];
 			this.original.source = '';
 			this.original.url = '';
 		} else {
