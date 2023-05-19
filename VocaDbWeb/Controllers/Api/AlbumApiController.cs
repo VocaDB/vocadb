@@ -293,7 +293,10 @@ public class AlbumApiController : ApiController
 	[HttpGet("{id:int}/tagSuggestions")]
 	public Task<TagUsageForApiContract[]> GetTagSuggestions(int id) => _queries.GetTagSuggestions(id);
 
-	/// <summary>
+	[HttpGet("{id:int}/tagUsages")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);	/// <summary>
+
 	/// Gets tracks for an album.
 	/// </summary>
 	/// <param name="id">Album ID (required).</param>

@@ -1,11 +1,33 @@
 {
+  "ArchivedObjectVersions": {
+    "Author": "Author",
+    "Changes": "Changes",
+    "Created": "Created",
+    "CurrentVersionIs": "Current version number is",
+    "Notes": "Notes",
+    "Version": "Version"
+  },
   "DiscussionContent": {
     "AddComment": "发表评论",
     "NewComment": "写评论"
   },
+  "EntryCreate": {
+    "EnglishName": "Name in English",
+    "FoundCoverArtist": "A \"Cover artist\" was found in the entry. Please change the artist type to \"Producer\" if this is an original song.",
+    "FoundPossibleDuplicates": "Possible matching entries found in the database. Please verify that these are not duplicates.",
+    "Name": "Name (need at least one)",
+    "NameHelp": "If the original name is non-English (for example Japanese), or if the language of the name is unknown, input that into the Non-English name field. If known, input the romanized name as well. If the official name of the entry is in English, or there is a known English translation, input that into the English name field.",
+    "NeedName": "Need at least one name.",
+    "NoArtistsToName": "Do not enter artist names into the name field. Instead, use the artists list.",
+    "NonEnglishName": "Non-English name",
+    "PictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB.",
+    "RomajiName": "Romanized name"
+  },
   "EntryDetails": {
     "AdditionDate": "添加时间",
+    "AllPictures": "All pictures",
     "BasicInfoTab": "基本信息",
+    "ConfirmDeleteComment": "Are you sure you want to delete this comment?",
     "DiscussionTab": "评论区",
     "EditTags": "编辑标签",
     "ExternalLinks": "外部链接",
@@ -14,14 +36,28 @@
     "Link": "链接",
     "ManageTags": "管理标签",
     "NoComments": "还没有人发过评论!",
+    "NoMatches": "Sorry, no matches :(",
+    "NumTotal": "{{0}} total",
     "NumTotalParenthesis": "（总计{{0}}）",
     "OfficialLinks": "官方链接",
     "OtherLinks": "非官方链接",
+    "PersonalDescription": "Artist's personal description",
+    "PersonalDescriptionHelp": "This field is for artist's personal introduction of the entry. Unlike the description field, this is considered a subjective opinion, possibly written in first person, and may include a limited amount of \"marketing speech\". Select the author of the description - who wrote it? For entries with multiple involved artists, only one description may be provided, but whenever possible the circle/group can be selected as the author.",
+    "PersonalDescriptionSelectAuthor": "Select author",
     "PicturesTab": "图片",
     "PublishDate": "发布时间",
     "ReportAnError": "报告错误信息",
+    "ReportArchivedVersionExplanation": "Report a mistake in this edit. The user will be notified as well.",
+    "ReportArchivedVersionMessage": "Explain what's wrong",
+    "ReportNotes": "Notes",
+    "ReportNotesRequired": "(required)",
+    "ReportType": "Report type",
+    "Revisions": "Revisions",
+    "Share": "Share a link",
+    "ShowAllTags": "Show all",
     "Social": "社交网站",
     "Stats": "统计数据",
+    "Subject": "Subject",
     "ViewAllComments": "查看全部评论",
     "ViewModifications": "查看编辑历史"
   },
@@ -32,20 +68,29 @@
     "ConcurrentEditWarning": "{{0}} also edited this entry {{1}} minute(s) ago.",
     "ConcurrentEditWarningNow": "{{0}} is also editing this entry right now!",
     "ConfirmDelete": "Please confirm that you wish to delete this entry. You may provide an additional explanation below (optional).",
+    "ConfirmMoveToTrash": "Please confirm that you wish to permanently delete this entry. This cannot be undone. You may provide an additional explanation below (optional).",
     "DefaultLanguageHelp": "该词条的初始名所使用的语言。",
     "DefaultLanguageSelection": "原语言",
     "ExternalLinksQuickHelp": "External links relevant to this entry. Keep in mind no illegal/direct download links will be allowed!<br />\n<br />\nFill in the URL first, and description and category will be guessed automatically if the domain is known.<br />\n<br />\nOfficial: artist's official site (usually blogs, websites, Facebook etc.).<br />\nCommercial: authorized sales such as Amazon and CDJapan.<br />\nReference: fansites with useful information such as wikis.<br />\nOther: for those that don't fit into anything above.<br />",
+    "LivePreview": "Live preview",
     "Merge": "合并",
+    "MoveToTrash": "Move to trash",
     "NameHelp": "如果初始名不是英文，或者无法确认初始名的语言，请将其填入非英文框。如果能确认初始名的读音，请将其填入罗马字框。如果初始名是英文或有英文译名，请将其填入英文框。\n\n您不需要填满所有的框，系统会根据您填的内容进行自动识别需要显示的名字。",
+    "PVUnavailable": "Unavailable",
     "Restore": "Restore",
     "SaveWarning": "This entry has validation warnings. Are you sure you want to save it as finished?",
     "Status": "状态",
     "TranslatedStringAddEnglishTranslation": "添加英文译文",
     "TranslatedStringEnglishTranslation": "英文译文",
+    "TranslatedStringOriginal": "Original",
     "UpdateNotes": "留言（可选）",
     "WebLinks": "外部链接"
   },
   "EntryIndex": {
+    "Drafts": "These entries are marked as drafts which means they are missing some information. ",
+    "ManageDeleted": "Manage  deleted entries",
+    "NoResults": "No results! Try a different query or Google custom search.",
+    "OnlyDrafts": "Only drafts",
     "SortBy": "排序方式"
   },
   "EntryMerge": {
@@ -59,6 +104,7 @@
     "Account": "账户",
     "AddAlbum": "添加专辑",
     "AddArtist": "添加艺术家",
+    "AddEvent": "Add an event",
     "AddSong": "添加歌曲",
     "BackgroundCredit": "Background illustration by {{0}}",
     "Blog": "博客",
@@ -76,14 +122,23 @@
     "NewAlbums": "最新专辑",
     "NewPVs": "最新歌曲",
     "OtherCredit": "Other credits and source code",
+    "PrivacyPolicy": "Privacy and cookie policy",
     "Register": "注册",
     "RelatedSites": "关联站点",
     "Services": "Services",
     "SocialSites": "社区",
     "Tags": "标签/流派",
     "UnreadMessages": "You have unread messages",
+    "UpcomingEvents": "Upcoming events",
     "Welcome": "欢迎",
     "Wiki": "Wiki"
+  },
+  "Misc": {
+    "Details": "Details",
+    "EventSeries": "Event series",
+    "FavoritedTimes": "times",
+    "HideChatbox": "Hide",
+    "Search": "Search"
   },
   "Shared": {
     "Actions": "Actions",
@@ -111,6 +166,7 @@
     "Remove": "删除",
     "Save": "Save",
     "Search": "搜索",
+    "SetToLimited": "Remove database editing permissions",
     "ShowMore": "显示更多",
     "Songs": "歌曲",
     "Tag": "标签",
@@ -121,7 +177,15 @@
     "Type": "类别",
     "Unsorted": "Unsorted",
     "Username": "Username",
-    "Users": "用户"
+    "Users": "用户",
+    "Venues": "Venues"
+  },
+  "TagSelections": {
+    "AddTag": "Add tag",
+    "Info": "Check tags that apply, or add your own.",
+    "NoSuggestions": "No suggestions",
+    "Suggestions": "Suggestions:",
+    "Usages": "{{0}} usages"
   },
   "TopBar": {
     "EntryReports": "信息报告",
@@ -129,5 +193,13 @@
     "MySongs": "我的歌曲",
     "NoUnreadMessages": "无未读信息",
     "ViewAllMessages": "查看所有信息"
+  },
+  "ViewVersion": {
+    "ConfirmHide": "Are you sure you want to hide this version?",
+    "ConfirmRevertToVersion": "Are you sure you want to revert to this version?",
+    "ConfirmUnhide": "Are you sure you want to unhide this version?",
+    "HideVersion": "Hide this version",
+    "RevertToVersion": "Revert to this version",
+    "UnhideVersion": "Unhide this version"
   }
 }

@@ -252,15 +252,6 @@ public class AlbumController : ControllerBase
 		return PartialView("RelatedAlbums", related);
 	}
 
-	[Authorize]
-	public ActionResult RemoveTagUsage(long id)
-	{
-		var albumId = _queries.RemoveTagUsage(id);
-		TempData.SetStatusMessage("Tag usage removed");
-
-		return RedirectToAction("ManageTagUsages", new { id = albumId });
-	}
-
 	public ActionResult Restore(int id)
 	{
 		Service.Restore(id);
@@ -274,16 +265,6 @@ public class AlbumController : ControllerBase
 		PageProperties.Title = "Deleted albums";
 
 		return File("index.html", "text/html") ;
-	}
-
-	[Authorize]
-	public ActionResult ManageTagUsages(int id)
-	{
-		var album = Service.GetEntryWithTagUsages(id);
-
-		PageProperties.Title = "Manage tag usages - " + album.DefaultName;
-
-		return View(album);
 	}
 
 	public ActionResult Merge()

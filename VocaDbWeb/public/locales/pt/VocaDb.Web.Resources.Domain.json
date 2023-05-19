@@ -6,15 +6,26 @@
     "InvalidInfo": "Informação em falta ou inválida.",
     "MaliciousIP": "IP suspeito",
     "Other": "Outros (especificar nas notas)",
-    "OwnershipClaim": "Reclamar uma página como sua"
+    "OwnershipClaim": "Reclamar uma página como sua",
+    "RemovePermissions": "Restricted editing",
+    "Spamming": "Spamming"
   },
   "EntryTypeNames": {
     "Album": "Álbum",
     "Artist": "Artista",
+    "DiscussionTopic": "Topic",
+    "PV": "PV",
     "ReleaseEvent": "Evento",
+    "ReleaseEventSeries": "Event series",
     "Song": "Música",
     "SongList": "Lista de músicas",
+    "Tag": "Tag",
     "Undefined": "Tudo",
-    "User": "Utilizador"
+    "User": "Utilizador",
+    "Venue": "Venue"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Entry report",
+    "User": "User"
   }
 }

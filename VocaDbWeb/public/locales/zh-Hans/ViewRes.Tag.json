@@ -1,0 +1,31 @@
+{
+  "Details": {
+    "AliasedTo": "Aliased to",
+    "Aliases": "Aliases",
+    "AllAlbums": "All albums",
+    "AllArtists": "All artists",
+    "AllEntries": "All entries",
+    "AllEvents": "All events",
+    "AllSongLists": "All song lists",
+    "AllSongs": "All songs",
+    "AssociatedEntryType": "Associated entry type",
+    "Category": "Category",
+    "Children": "Children",
+    "EventSeries": "Event series",
+    "FollowCount": "Followed by {{0}} user(s)",
+    "FollowTag": "Follow tag",
+    "MappedTags": "The following NicoNico tags are mapped to this tag",
+    "Overview": "Overview",
+    "RelatedTags": "Related tags",
+    "Siblings": "Siblings",
+    "Tag": "Tag",
+    "TagDetails": "Tag details",
+    "TopAlbums": "Top albums",
+    "TopArtists": "Top artists",
+    "TopEvents": "Top events",
+    "TopSongs": "Top songs",
+    "Translations": "Translations",
+    "UnfollowTag": "Unfollow tag",
+    "ValidFor": "Valid for"
+  }
+}

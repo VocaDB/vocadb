@@ -8,6 +8,9 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const ArtistCreate = React.lazy(() => import('./ArtistCreate'));
 const ArtistEdit = React.lazy(() => import('./ArtistEdit'));
+const ArtistManageTagUsages = React.lazy(
+	() => import('./ArtistManageTagUsages'),
+);
 const ArtistMerge = React.lazy(() => import('./ArtistMerge'));
 const ArtistVersions = React.lazy(() => import('./ArtistVersions'));
 const ArtistViewVersion = React.lazy(() => import('./ArtistViewVersion'));
@@ -38,6 +41,7 @@ const ArtistRoutes = (): React.ReactElement => {
 			<Route path="Create" element={<ArtistCreate />} />
 			<Route path="Details/:id/*" element={<ArtistDetailsNavigate />} />
 			<Route path="Edit/:id" element={<ArtistEdit />} />
+			<Route path="ManageTagUsages/:id" element={<ArtistManageTagUsages />} />
 			<Route path="Merge/:id" element={<ArtistMerge />} />
 			<Route path="Versions/:id" element={<ArtistVersions />} />
 			<Route path="ViewVersion/:id" element={<ArtistViewVersion />} />

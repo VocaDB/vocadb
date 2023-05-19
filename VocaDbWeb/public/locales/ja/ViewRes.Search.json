@@ -27,8 +27,16 @@
     "Playlist": "プレイリスト",
     "TopGenres": "最も人気の高いジャンル",
     "ShowingItemsOf": "{{1}}件中{{0}} を表示",
+    "TagUsages": "Usages",
+    "ChildTags": "Include child tags",
+    "VoicebankReleaseDate": "Released:",
+    "IncludeGroupMembers": "Include group members",
     "OnlyMyEvents": "登録したイベントのみ",
     "EventCategory": "カテゴリ",
-    "ReleaseEvent": "リリースイベント"
+    "ReleaseEvent": "リリースイベント",
+    "Today": "Today",
+    "ParentVersion": "Parent version",
+    "Bpm": "BPM",
+    "Duration": "Duration"
   }
 }

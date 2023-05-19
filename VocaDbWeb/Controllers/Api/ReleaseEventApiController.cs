@@ -7,6 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -312,7 +313,11 @@ public class ReleaseEventApiController : ApiController
 	{
 		return _queries.GetReleaseEventsByVenue();
 	}
-
+	
+	[HttpGet("{id:int}/tagUsages")]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _queries.GetEntryWithTagUsages(id);
+	
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

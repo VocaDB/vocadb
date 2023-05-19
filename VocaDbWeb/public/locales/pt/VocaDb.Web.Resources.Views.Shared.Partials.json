@@ -1,4 +1,9 @@
 {
+  "EnglishTranslatedString": {
+    "Original": "Original",
+    "ShowFullDescription": "Show full description",
+    "Translated": "Translated"
+  },
   "PlayList": {
     "Autoplay": "Autoplay",
     "AutoplayNote": "Autoplay só é suportado no YouTube e Soundcloud",

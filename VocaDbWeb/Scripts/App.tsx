@@ -44,15 +44,17 @@ const AppContainer = (): React.ReactElement => {
 			</div>
 			<React.Suspense fallback={null}>
 				{vdb.values.loggedUser?.stylesheet !== undefined && (
-					<>
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('darkangel') && <DarkAngel />}
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('tetodb') && <TetoDB />}
-					</>
-				)}
+				  {vdb.values.loggedUser?.stylesheet && (
+					  <>
+						  {vdb.values.loggedUser?.stylesheet
+							  .toLowerCase()
+							  .startsWith('darkangel') && <DarkAngel />}
+						  {vdb.values.loggedUser?.stylesheet
+							  .toLowerCase()
+							  .startsWith('tetodb') && <TetoDB />}
+					  </>
+				  )}
+        )}
 			</React.Suspense>
 		</Container>
 	);

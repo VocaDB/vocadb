@@ -350,7 +350,7 @@ const BasicInfoTabContent = observer(
 												)}
 												{songEditStore.suggestedPublishDate.source ===
 													'Album' && (
-													<span>{t('ViewRes.Song:Edit.BaUserAlbumDate')}</span>
+													<span>{t('ViewRes.Song:Edit.BaUseAlbumDate')}</span>
 												)}{' '}
 												<span>
 													{songEditStore.suggestedPublishDate.date.format('L')}
@@ -478,7 +478,7 @@ const ArtistsTabContent = observer(
 					</Alert>
 					{songEditStore.hasAlbums && (
 						<Alert variant="info">
-							<span>{t('ViewRes.Song:Edit.ArArtistsNotes')}</span>
+							<span>{t('ViewRes.Song:Edit.ArArtistsNote')}</span>
 						</Alert>
 					)}
 					{songEditStore.validationError_needArtist && (

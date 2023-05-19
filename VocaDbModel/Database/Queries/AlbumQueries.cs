@@ -834,11 +834,6 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 		});
 	}
 
-	public int RemoveTagUsage(long tagUsageId)
-	{
-		return new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
-	}
-
 	public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);

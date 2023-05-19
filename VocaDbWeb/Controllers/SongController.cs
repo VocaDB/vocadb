@@ -257,7 +257,7 @@ public class SongController : ControllerBase
 	{
 		var song = Service.GetEntryWithTagUsages(id);
 
-		PageProperties.Title = "Manage tag usages - " + song.DefaultName;
+		// PageProperties.Title = "Manage tag usages - " + song.DefaultName;
 
 		return View(song);
 	}
@@ -345,15 +345,6 @@ public class SongController : ControllerBase
 	public ActionResult Related(int id = InvalidId)
 	{
 		return File("index.html", "text/html");
-	}
-
-	[Authorize]
-	public ActionResult RemoveTagUsage(long id)
-	{
-		var songId = _queries.RemoveTagUsage(id);
-		TempData.SetStatusMessage("Tag usage removed");
-
-		return RedirectToAction("ManageTagUsages", new { id = songId });
 	}
 
 	public ActionResult Restore(int id)

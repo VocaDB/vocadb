@@ -13,6 +13,7 @@
   },
   "EntryCreate": {
     "EnglishName": "Nombre en inglés",
+    "FoundCoverArtist": "A \"Cover artist\" was found in the entry. Please change the artist type to \"Producer\" if this is an original song.",
     "FoundPossibleDuplicates": "Parece ser que la entrada que estás tratando de ingresar ya ha sido hecha por otro usuario, verifica que no haya un duplicado buscando en la base de datos.",
     "Name": "Nombre (se requiere al menos uno)",
     "NameHelp": "Si el nombre original no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin identificarcolocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.",
@@ -40,6 +41,9 @@
     "NumTotalParenthesis": "({{0}} total)",
     "OfficialLinks": "Links oficiales",
     "OtherLinks": "Links no oficiales",
+    "PersonalDescription": "Artist's personal description",
+    "PersonalDescriptionHelp": "This field is for artist's personal introduction of the entry. Unlike the description field, this is considered a subjective opinion, possibly written in first person, and may include a limited amount of \"marketing speech\". Select the author of the description - who wrote it? For entries with multiple involved artists, only one description may be provided, but whenever possible the circle/group can be selected as the author.",
+    "PersonalDescriptionSelectAuthor": "Select author",
     "PicturesTab": "Imágenes",
     "PublishDate": "Publicado",
     "ReportAnError": "Reportar un error",
@@ -53,6 +57,7 @@
     "ShowAllTags": "Mostrar todo",
     "Social": "Social",
     "Stats": "Estadísticas",
+    "Subject": "Subject",
     "ViewAllComments": "Ver todos los comentarios",
     "ViewModifications": "Ver modificaciones"
   },
@@ -67,14 +72,17 @@
     "DefaultLanguageHelp": "El idioma original del nombre de esta entrada, usualmente este es el mas usado por fuentes oficiales.",
     "DefaultLanguageSelection": "Idioma original",
     "ExternalLinksQuickHelp": "Links externos concernientes a esta entrada. Considera que links no originales (tales como descargas ilegales, reprints no autorizados, etcétera) no estan permitidos.<br />\n<br />\nPrimero llena la casilla con la URL, si el dominio o procedencia de este resultan familiares para la base de datos, una descripción y categoría serán sugeridos automaticamente.<br />\n<br />\nOficial: Sitio oficial del artista (usualmente son blogs, portafolios web, páginas de facebook, etc...).<br />\nComercial: Distribuiciones comerciales autorizadas, tales como la página de venta en Amazon, CDJapan, iTunes, etc.<br />\nReferencial: Sitios colaborativos con inforamción oficial, tales como wikis.<br />\nOtros: Para aquellos sitos que no encajan en ninguna de las categorías anteriores.<br />",
+    "LivePreview": "Live preview",
     "Merge": "Fusionar",
     "MoveToTrash": "Desechar (Mover a la basura)",
     "NameHelp": "Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.<br />\n<br />\nNótese que no necesitas copiar los nombres sin específicar, el sistema va a sustituir esos cuando se requiera. Por ejemplo, cuando carecen de un nombre romanizado, casos en los que el sistema usará el nombre por defecto.<br />\n<br />\nLos nombres adicionales se pueden incluir como pseudonimos. Para mas información ver la guía.",
+    "PVUnavailable": "Unavailable",
     "Restore": "Restaurar",
     "SaveWarning": "Esta entrada tiene advertencias pre-validación. ¿Estas seguro de que lo quieres guardar como terminada?",
     "Status": "Estado",
     "TranslatedStringAddEnglishTranslation": "Añadir una traducción en inglés",
     "TranslatedStringEnglishTranslation": "Traducción en inglés",
+    "TranslatedStringOriginal": "Original",
     "UpdateNotes": "Notas de actualización (opcional)",
     "WebLinks": "Links externos"
   },
@@ -169,11 +177,13 @@
     "Type": "Tipo",
     "Unsorted": "Sin ordenar",
     "Username": "Nombre de usuario",
-    "Users": "Usuarios"
+    "Users": "Usuarios",
+    "Venues": "Venues"
   },
   "TagSelections": {
     "AddTag": "Añadir etiqueta",
     "Info": "Verifica las etiquetas que aplican para este caso, o añadelas si no las encuentras.",
+    "NoSuggestions": "No suggestions",
     "Suggestions": "Sugerencias:",
     "Usages": "{{0}} usos"
   },
@@ -183,5 +193,13 @@
     "MySongs": "Mis canciones",
     "NoUnreadMessages": "No hay mensajes sin leer",
     "ViewAllMessages": "Ver todos los mensajes"
+  },
+  "ViewVersion": {
+    "ConfirmHide": "Are you sure you want to hide this version?",
+    "ConfirmRevertToVersion": "Are you sure you want to revert to this version?",
+    "ConfirmUnhide": "Are you sure you want to unhide this version?",
+    "HideVersion": "Hide this version",
+    "RevertToVersion": "Revert to this version",
+    "UnhideVersion": "Unhide this version"
   }
 }

@@ -1,11 +1,24 @@
 {
   "AlbumValidationErrors": {
+    "DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
     "NeedArtist": "Das Album benötigt mindestens einen Künstler.",
     "NeedCover": "Das Album benötigt ein Cover.",
+    "NeedReferences": "Album needs a description or links for reference.",
     "NeedReleaseYear": "Das Veröffentlichungsjahr muss angegeben werden.",
     "NeedTracks": "Das Album benötigt eine Songliste.",
     "NeedType": "Die Art der Disc muss angegeben werden.",
     "UnspecifiedNames": "Das Album erfordert einen primären Namen."
+  },
+  "ArtistCategoriesNames": {
+    "Animator": "Animator",
+    "Band": "Band",
+    "Circle": "Circle",
+    "Illustrator": "Illustrator",
+    "Label": "Label",
+    "Other": "Other",
+    "Producer": "Producer",
+    "Subject": "Subject",
+    "Vocalist": "Vocalist"
   },
   "ArtistTypeNames": {
     "Circle": "Personenkreis",
@@ -22,11 +35,17 @@
     "Lyricist": "Liedtexter",
     "OtherVoiceSynthesizer": "Andere Sprach Synthesizer",
     "Band": "Band/Gruppe",
-    "Utaite": "Utaite"
+    "Utaite": "Utaite",
+    "CeVIO": "CeVIO",
+    "Vocalist": "Vocalist",
+    "Character": "Character",
+    "SynthesizerV": "Synthesizer V",
+    "CoverArtist": "Cover artist"
   },
   "ArtistValidationErrors": {
     "NeedReferences": "Der Künstler benötigt eine Beschreibung ODER mindestens einen externen Link als Beleg.",
     "NeedType": "Die Art des Künstlers muss angegeben werden.",
+    "UnnecessaryPName": "There is no need to add artist name both with and without the P suffix.",
     "UnspecifiedNames": "Der Künstler benötigt einen primären Namen."
   },
   "ExtSites": {
@@ -34,10 +53,15 @@
     "Search": "Suche {{0}}"
   },
   "SongValidationErrors": {
+    "DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
     "NeedArtist": "Der Song benötigt mindestens einen Künstler.",
+    "NeedOriginal": "Derived songs need to have an original version specified, if it's in the database, or the original needs to be mentioned in notes.",
     "NeedProducer": "Der Song sollte mindestens eine Produzentenrolle (Komponist, Arrangeur oder Animator) aufweisen.",
+    "NeedReferences": "Song needs notes, PVs or links for reference.",
     "NeedType": "Die Art des Song muss angegeben werden.",
     "NonInstrumentalSongNeedsVocalists": "Dieser Song hat keine Sänger. Originale Instrumentalstücke müssen mit dem Schlagwort 'instrumental' gekennzeichnet sein. Instrumentale (Karaoke) Versionen von existierenden Songs sollten den Songtyp 'Instrumental' verwenden. Andernfalls, füge Sänger hinzu.",
+    "RedundantEvent": "The same release event does not need to be specified for both the song and album.",
+    "RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
     "UnspecifiedNames": "Der Song benötigt einen primären Namen."
   }
 }

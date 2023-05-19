@@ -552,11 +552,6 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 		});
 	}
 
-	public int RemoveTagUsage(long tagUsageId)
-	{
-		return new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, _repository);
-	}
-
 	/// <summary>
 	/// Reverts an album to an earlier archived version.
 	/// </summary>

@@ -1,8 +1,12 @@
 {
   "DiscTypeNames": {
     "Album": "Albumi",
+    "Artbook": "Artbook",
     "Compilation": "Kokoelma",
     "EP": "Pitkäsoitto",
+    "Fanmade": "Fanmade/doujin",
+    "Game": "Game",
+    "Instrumental": "Instrumental",
     "Other": "Muu",
     "Single": "Single",
     "SplitAlbum": "Split-albumi",

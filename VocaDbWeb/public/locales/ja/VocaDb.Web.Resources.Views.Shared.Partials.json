@@ -6,8 +6,8 @@
   },
   "PlayList": {
     "Autoplay": "自動再生",
+    "AutoplayNote": "自動再生はYoutubeとSoundcloudしか対応していません。",
     "NextSong": "次の曲",
-    "Shuffle": "シャッフル",
-    "AutoplayNote": "自動再生はYoutubeとSoundcloudしか対応していません。"
+    "Shuffle": "シャッフル"
   }
 }

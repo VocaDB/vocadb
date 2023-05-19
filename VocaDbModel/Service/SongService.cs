@@ -214,12 +214,12 @@ public class SongService : ServiceBase
 		});
 	}
 
-	public EntryWithTagUsagesContract GetEntryWithTagUsages(int songId)
+	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int songId)
 	{
 		return HandleQuery(session =>
 		{
 			var song = session.Load<Song>(songId);
-			return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+			return new EntryWithTagUsagesForApiContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 		});
 	}
 

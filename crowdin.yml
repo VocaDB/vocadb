@@ -1,0 +1,24 @@
+"project_id": "587363"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"preserve_hierarchy": true
+
+"files": [
+        {
+            "source": "/VocaDbWeb/public/locales/en/*.json", #source files filter
+            "translation": "/VocaDbWeb/public/locales/%two_letters_code%/%original_file_name%", #where translations are stored
+            "languages_mapping":
+                {
+                    "two_letters_code":
+                        {
+                            "de": "de",
+                            "zh-CN": "zh-Hans",
+                            "ja": "ja",
+                            "fi": "fi",
+                            "pt": "pt",
+                            "ru": "ru",
+                            "es": "es",
+                        },
+                },
+        },
+    ]
+

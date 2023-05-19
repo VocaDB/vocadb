@@ -1,7 +1,9 @@
 {
   "SongTypeNames": {
+    "Arrangement": "Arrangement",
     "Cover": "翻唱曲",
     "DramaPV": "短剧PV",
+    "Illustration": "Illustration",
     "Instrumental": "纯音乐",
     "Live": "Live recording",
     "Mashup": "混搭曲",

@@ -4,7 +4,11 @@
     "CreatedNew": "loi uuden {{0}}",
     "EntryAlbum": "albumin",
     "EntryArtist": "artistin",
+    "EntryReleaseEvent": "event",
     "EntrySong": "kappaleen",
+    "EntrySongList": "song list",
+    "EntryTag": "tag",
+    "EntryVenue": "venue",
     "Someone": "Käyttäjä",
     "Updated": "päivitti {{0}}"
   },
@@ -15,6 +19,15 @@
     "Added": "lisätty",
     "DraftIconTitle": "Tämä merkintä on luonnos.",
     "DraftMessage": "Tämä merkintä on luonnos. Voit auttaa muokkaamalla merkintää ja lisäämällä puuttuvat tiedot.",
+    "EntryIsMissingInformation": "This entry is missing the following information:",
+    "EntryValidationNoErrors": "This entry contains all the required information.",
+    "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
+    "EntryValidationWarningDetails": "Details",
+    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "IsSupportedForFormatting": "is supported for formatting",
+    "NameLangTitle": "Language",
+    "NameNewRow": "New row",
+    "NameValueTitle": "Name (required)",
     "ReturnWithoutSaving": "Palaa tallentamatta",
     "SaveChanges": "Tallenna muutokset",
     "SeeGuide": "ohjeesta",
@@ -24,9 +37,13 @@
     "StatusDescriptionDraft": "Luonnos-tilassa olevista merkinnöistä puuttuu jotain tietoja.",
     "StatusDescriptionFinished": "Valmis-tilassa olevat merkinnät sisältävät kaikki vaaditut tiedot, mutta niitä ei vielä ole hyväksytty.",
     "StatusDescriptionLocked": "Lukitut merkinnät ovat vain ylläpidon muokattavissa.",
+    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
     "WebLinkCategoryTitle": "Kategoria",
     "WebLinkDescriptionTitle": "Kuvaus",
     "WebLinkNewRow": "Uusi rivi",
     "WebLinkUrlTitle": "Osoite (vaadittu)"
+  },
+  "SongHelpers": {
+    "FromAlbum": "From album"
   }
 }

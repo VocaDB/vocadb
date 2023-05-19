@@ -3,6 +3,7 @@
     "Date": "Fecha: {{0}}.",
     "DefaultSortRule": "Por defecto",
     "Details": "Detalles",
+    "Events": "Events",
     "Export": "Exportar en un archivo CSV",
     "Playlist": "Lista de reproducción",
     "Preview": "Previsualización",
@@ -11,6 +12,7 @@
     "Songs": "cancion(es)"
   },
   "Edit": {
+    "AddSong": "Add song",
     "ConfirmDelete": "¿Estás seguro de que deseas borrar esta lista?",
     "CreateTitle": "Crear una lista de canciones",
     "Description": "Descripción",
@@ -19,10 +21,12 @@
     "EventDateHelp": "Si esta lista esta relacionada a un evento tal como un concierto o ranking, la fecha del evento se puede especificar aqui.",
     "FeaturedCategory": "Categoría añadida",
     "Name": "Nombre",
+    "RemoveFromList": "Remove from list",
     "Status": "Estado de la entrada",
     "TabProperties": "Propiedades",
     "TabSongs": "Canciones",
-    "Thumbnail": "Miniatura"
+    "Thumbnail": "Miniatura",
+    "UnableToSave": "Unable to save list"
   },
   "Featured": {
     "Import": "Importar de YouTube o NicoNicoDounga",

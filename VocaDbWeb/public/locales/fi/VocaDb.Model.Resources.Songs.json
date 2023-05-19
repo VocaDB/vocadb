@@ -1,7 +1,9 @@
 {
   "SongTypeNames": {
+    "Arrangement": "Arrangement",
     "Cover": "Cover",
     "DramaPV": "Draamavideo",
+    "Illustration": "Illustration",
     "Instrumental": "Instrumentaali",
     "Live": "Live-tallenne",
     "Mashup": "Mashup",

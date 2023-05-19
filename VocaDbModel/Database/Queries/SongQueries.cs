@@ -1169,11 +1169,6 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 		});
 	}
 
-	public int RemoveTagUsage(long tagUsageId)
-	{
-		return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
-	}
-
 	public EntryRevertedContract RevertToVersion(int archivedSongVersionId)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);

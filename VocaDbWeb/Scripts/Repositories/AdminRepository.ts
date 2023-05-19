@@ -1,4 +1,8 @@
 import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
+import {
+	EntryReportContract,
+	ReportStatus,
+} from '@/DataContracts/EntryReportContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
@@ -92,6 +96,29 @@ export class AdminRepository {
 				onlyNewUsers: onlyNewUsers,
 				userName: userName,
 				start: start,
+			},
+		);
+	};
+
+	getEntryReports = (status?: ReportStatus): Promise<EntryReportContract[]> => {
+		return this.httpClient.get<EntryReportContract[]>(
+			this.urlMapper.mapRelative('/api/admin/reports'),
+			{
+				status,
+			},
+		);
+	};
+
+	deleteEntryReport = (
+		requestToken: string,
+		{ id }: { id: number },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(`/api/admin/reports/${id}`),
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
 			},
 		);
 	};

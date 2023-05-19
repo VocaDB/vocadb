@@ -10,12 +10,15 @@
     "Status": "Status"
   },
   "Create": {
+    "Captcha": "CAPTCHA",
     "CaptchaInvalid": "CAPTCHA ist ungültig.",
     "DoRegister": "Registrieren",
+    "DuplicateUserWarning": "Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.",
     "Email": "E-Mail Adresse (erforderlich)",
     "EmailIsRequired": "E-Mail Adresse wird benötigt.",
     "EmailNote": "Deine E-Mail Adresse kann von anderen Nutzern nicht gesehen werden. Stelle sicher, dass du eine gültige Adresse angibst. Du wirst diese benötigen, wenn du einmal dein Passwort vergisst. Für ein Profilbild muss deine E-Mail Adresse mit Gravatar verbunden sein. Die E-Mail Adresse kann später geändert werden.",
     "EmailTaken": "Diese E-Mail Adresse wird bereits verwendet. Wenn es sich dabei um deine Adresse handelt, mach bitte Gebrauch voon der \"Passwort zurücksetzen\"-Funktion. Wenn das jedoch nicht funktionieren sollte, kontaktiere den englischsprachigen Support.",
+    "LoginWithTwitter": "Sign in with Twitter",
     "Password": "Passwort",
     "PasswordIsRequired": "Passwort wird benötigt.",
     "Register": "Registrieren",
@@ -31,6 +34,7 @@
     "AccountDisabled": "Konto deaktiviert",
     "Active": "Aktiv",
     "AdditionalPermissions": "Zusätzliche Berechtigungen",
+    "ArtistVerificationPage": "artist verification page",
     "Attending": "Nehme Teil",
     "CollectionTab": "Sammlung",
     "Comments": "Kommentare",
@@ -42,10 +46,13 @@
     "Disable": "Deaktivieren",
     "EffectivePermissions": "gültige Berechtigungen",
     "Email": "E-Mail",
+    "Events": "Events",
     "FavoriteSongsTab": "Songs, die mir gefallen:",
     "FavoriteTags": "Meine favorisierten Schlagwörter",
     "FollowedArtistsTab": "Künstler, denen ich folge:",
+    "ImportSongList": "Import from YouTube or NicoNico",
     "Interested": "Interessiert",
+    "KnownLanguagesMessage": "Please let us know which languages you are familiar with. You can enter this information under <a>\"My settings\", \"Profile\"</a>, \"Languages I know\". We can use this information to determine how to contact you when needed.",
     "LanguagesIKnow": "Sprachen, die ich spreche",
     "LastLogin": "Letzter Login",
     "Level": "Rang",
@@ -53,7 +60,12 @@
     "MemberSince": "Mitglied seit",
     "Messages": "Nachrichten",
     "MySettings": "Meine Einstellungen",
+    "OldNameUntil": "(until {{0}})",
+    "OldUsernames": "Old usernames",
+    "Overview": "Overview",
+    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
     "Power": "Berechtigungen",
+    "ReportSpamming": "Report user for spamming",
     "SetAvatar": "Stelle deinen Avatar bei gravatar.com ein.",
     "SomeAlbumsILike": "Einige Alben, die mir gefallen",
     "SomeArtistsIFollow": "Einige Künstler denen ich folge",
@@ -61,6 +73,7 @@
     "Staff": "Mitarbeiter",
     "StatsTab": "Statistiken",
     "Submissions": "Einreichungen",
+    "SupporterTitle": "Thanks for supporting {{0}}!",
     "TagVotes": "Schlagwort-Bewertungen",
     "Total": "{{0}} insgesamt",
     "TotalEdits": "Insgesamte Änderungen",
@@ -69,8 +82,17 @@
     "UserGroup": "Benutzergruppe",
     "UserName": "Name",
     "VerifiedAccount": "Beglaubigter Künstler",
+    "VerifiedEmail": "Verified email",
     "VerifiedOwner": "Beglaubigter Besitzer",
+    "Veteran": "{{0}} veteran",
     "VisibleOnlyToMe": "Sichtbar nur für die Mitarbeiter und mich."
+  },
+  "EntryEdits": {
+    "EntryType": "Type",
+    "OnlyAdditions": "Only additions"
+  },
+  "FavoriteSongs": {
+    "GroupByRating": "Group by rating"
   },
   "ForgotPassword": {
     "CaptchaIsInvalid": "CAPTCHA ist falsch.",
@@ -83,6 +105,8 @@
     "UsernameIsRequired": "Der Benutzername wird benötigt"
   },
   "Index": {
+    "Group": "Group",
+    "KnowsLanguage": "Knows language",
     "ShowDisabledUsers": "Deaktivierte Benutzerkonten anzeigen",
     "VerifiedArtists": "Künstler-Benutzerkonten"
   },
@@ -93,6 +117,7 @@
     "Login": "Einloggen",
     "LoginUsingSSL": "Mit SSL einloggen",
     "LoginWithoutSSL": "Ohne SSL einloggen (nicht empfohlen)",
+    "LoginWithTwitter": "Sign in with Twitter",
     "NoAccount": "Kein Benutzerkonto?",
     "Password": "Passwort",
     "PasswordIsRequired": "Passwort wird benötigt.",
@@ -150,7 +175,6 @@
     "EmailOptions": "E-Mail Benachrichtigungen für Privatnachrichten",
     "EmailTaken": "Diese E-Mail Adresse wurde bereits einem anderen Benutzer zugewiesen. Wenn es sich hierbei um deine Adresse handelt, kontaktiere den Support.",
     "ExternalLinks": "Externe Links",
-    "FillIfChangingPassword": "(ausfüllen, wenn das Passwort geändert wird.)",
     "Interface": "Benutzeroberfläche",
     "InterfaceLanguageSelection": "Sprache der Benutzeroberfläche",
     "InvalidEmail": "Bitte überprüfe die E-Mail Adresse.",
@@ -166,7 +190,6 @@
     "PublicAlbumCollection": "Jeder darf sehen welche Alben ich besitze",
     "PublicRatings": "Jeder darf meine Song- und Albenbewertungen einsehen.",
     "ReallyReset": "Passwort wirklich zurücksetzen?",
-    "RequiredForChangingPassword": "(erforderlich um das Passwort zu ändern)",
     "Reset": "Zurücksetzen",
     "SettingsUpdated": "Einstellungen aktualisiert",
     "Theme": "Thema",
@@ -175,7 +198,22 @@
     "Username": "Benutzername"
   },
   "RatedSongs": {
+    "GroupByRating": "Group by rating",
     "NoSongListSelection": "Keine",
+    "RatingAnything": "Anything",
+    "ShowTags": "Show tags",
     "SongList": "Song Liste"
+  },
+  "RequestVerification": {
+    "ArtistTitle": "Entry of the artist whom I represent (required)",
+    "Login": "log in",
+    "MessageTitle": "Additional message (optional)",
+    "NoPrivateMessage": "The proof is provided in the URL below",
+    "NotLoggedInMessage": "Sorry, you need to <1>log in</1> or <2>sign up</2> to use this feature.",
+    "PageTitle": "Request account verification",
+    "PrivateMessage": "I will submit the proof in a private message",
+    "Send": "Send request",
+    "Signup": "sign up",
+    "URL": "Link to proof, for example a tweet (required)"
   }
 }

@@ -4,14 +4,28 @@
     "Duplicate": "Дубликат",
     "Inappropriate": "Недопустимый материал",
     "InvalidInfo": "Неверная или неполная информация",
-    "Other": "Прочее (опишите в сноске)"
+    "MaliciousIP": "Malicious IP",
+    "Other": "Прочее (опишите в сноске)",
+    "OwnershipClaim": "Ownership claim",
+    "RemovePermissions": "Restricted editing",
+    "Spamming": "Spamming"
   },
   "EntryTypeNames": {
     "Album": "Альбом",
     "Artist": "Артист",
+    "DiscussionTopic": "Topic",
+    "PV": "PV",
+    "ReleaseEvent": "Event",
+    "ReleaseEventSeries": "Event series",
     "Song": "Песня",
     "SongList": "Список песен",
+    "Tag": "Tag",
     "Undefined": "Всё",
-    "User": "Пользователь"
+    "User": "Пользователь",
+    "Venue": "Venue"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Entry report",
+    "User": "User"
   }
 }

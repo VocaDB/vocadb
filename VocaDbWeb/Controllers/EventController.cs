@@ -155,18 +155,9 @@ public class EventController : ControllerBase
 	{
 		var releaseEvent = _queries.GetEntryWithTagUsages(id);
 
-		PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
+		// PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
 
 		return View(releaseEvent);
-	}
-
-	[Authorize]
-	public ActionResult RemoveTagUsage(long id)
-	{
-		var eventId = _queries.RemoveTagUsage(id);
-		TempData.SetStatusMessage("Tag usage removed");
-
-		return RedirectToAction("ManageTagUsages", new { id = eventId });
 	}
 
 	public ActionResult Restore(int id)

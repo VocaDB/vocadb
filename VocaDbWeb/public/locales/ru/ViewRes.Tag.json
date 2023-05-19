@@ -1,13 +1,31 @@
 {
   "Details": {
+    "AliasedTo": "Aliased to",
+    "Aliases": "Aliases",
     "AllAlbums": "Все альбомы",
     "AllArtists": "Все артисты",
+    "AllEntries": "All entries",
+    "AllEvents": "All events",
+    "AllSongLists": "All song lists",
     "AllSongs": "Все песни",
+    "AssociatedEntryType": "Associated entry type",
     "Category": "Категория",
+    "Children": "Children",
+    "EventSeries": "Event series",
+    "FollowCount": "Followed by {{0}} user(s)",
+    "FollowTag": "Follow tag",
+    "MappedTags": "The following NicoNico tags are mapped to this tag",
     "Overview": "Обзор",
+    "RelatedTags": "Related tags",
+    "Siblings": "Siblings",
+    "Tag": "Tag",
     "TagDetails": "Описание метки",
     "TopAlbums": "Наиболее популярные альбомы",
     "TopArtists": "Наиболее популярные артисты",
-    "TopSongs": "Наиболее популярные песни"
+    "TopEvents": "Top events",
+    "TopSongs": "Наиболее популярные песни",
+    "Translations": "Translations",
+    "UnfollowTag": "Unfollow tag",
+    "ValidFor": "Valid for"
   }
 }

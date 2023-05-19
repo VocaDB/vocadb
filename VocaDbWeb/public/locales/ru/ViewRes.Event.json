@@ -1,12 +1,27 @@
 {
   "Details": {
+    "Albums": "Albums",
+    "Attending": "Attending",
+    "Category": "Category",
     "Event": "Мероприятие",
     "OccurrenceDate": "Дата проведения",
-    "Series": "Название серии"
+    "PVs": "PVs",
+    "RemoveAttendance": "Remove from my events",
+    "Series": "Название серии",
+    "SongList": "Setlist",
+    "Songs": "Songs",
+    "UserAttending": "I'm attending",
+    "UserInterested": "I'm interested",
+    "Venue": "Venue"
   },
   "EventsBySeries": {
     "CreateEvent": "Добавить мероприятие",
-    "CreateSeries": "Добавить серию мероприятий"
+    "CreateSeries": "Добавить серию мероприятий",
+    "CreateVenue": "Create venue",
+    "ViewByDate": "All by date",
+    "ViewBySeries": "All by series",
+    "ViewByVenue": "All by venue",
+    "ViewList": "Upcoming"
   },
   "Find": {
     "CreateEvent": "Добавить мероприятие",

@@ -1,3 +1,4 @@
+import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventSeriesVersionDetailsContract';
 import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
@@ -144,6 +145,16 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<PartialFindResultContract<ReleaseEventContract>>(
 			url,
 			data,
+		);
+	};
+
+	getTagUsages = ({
+		eventId,
+	}: {
+		eventId: number;
+	}): Promise<EntryWithTagUsagesForApiContract> => {
+		return this.httpClient.get<EntryWithTagUsagesForApiContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${eventId}/tagUsages`),
 		);
 	};
 

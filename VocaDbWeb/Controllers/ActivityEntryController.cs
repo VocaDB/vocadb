@@ -24,7 +24,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = "New activity by followed artists";
 
-		return View(result.Items);
+		return File("index.html", "text/html");
 	}
 
 	//
