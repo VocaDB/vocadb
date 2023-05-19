@@ -1,0 +1,17 @@
+{
+  "SongTypeNames": {
+    "Arrangement": "crwdns16413:0crwdne16413:0",
+    "Cover": "crwdns16415:0crwdne16415:0",
+    "DramaPV": "crwdns16417:0crwdne16417:0",
+    "Illustration": "crwdns16419:0crwdne16419:0",
+    "Instrumental": "crwdns16421:0crwdne16421:0",
+    "Live": "crwdns16423:0crwdne16423:0",
+    "Mashup": "crwdns16425:0crwdne16425:0",
+    "MusicPV": "crwdns16427:0crwdne16427:0",
+    "Original": "crwdns16429:0crwdne16429:0",
+    "Other": "crwdns16431:0crwdne16431:0",
+    "Remaster": "crwdns16433:0crwdne16433:0",
+    "Remix": "crwdns16435:0crwdne16435:0",
+    "Unspecified": "crwdns16437:0crwdne16437:0"
+  }
+}
