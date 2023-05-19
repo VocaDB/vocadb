@@ -1,0 +1,16 @@
+{
+  "DiscTypeNames": {
+    "Album": "crwdns16375:0crwdne16375:0",
+    "Artbook": "crwdns16377:0crwdne16377:0",
+    "Compilation": "crwdns16379:0crwdne16379:0",
+    "EP": "crwdns16381:0crwdne16381:0",
+    "Fanmade": "crwdns16383:0crwdne16383:0",
+    "Game": "crwdns16385:0crwdne16385:0",
+    "Instrumental": "crwdns16387:0crwdne16387:0",
+    "Other": "crwdns16389:0crwdne16389:0",
+    "Single": "crwdns16391:0crwdne16391:0",
+    "SplitAlbum": "crwdns16393:0crwdne16393:0",
+    "Unknown": "crwdns16395:0crwdne16395:0",
+    "Video": "crwdns16397:0crwdne16397:0"
+  }
+}
