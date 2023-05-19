@@ -14,7 +14,7 @@
     "TitleFilter": "タイトル「{{0}}」"
   },
   "Shared": {
-    "AddExtraArtist": "Add custom artist named '{0}'",
+    "AddExtraArtist": "カスタムアーティスト「{0}」を追加",
     "ReportSent": "レポートが送信されました。ありがとうございます！",
     "Save": "セーブ",
     "ThanksForRating": "評価ありがとうございます！",

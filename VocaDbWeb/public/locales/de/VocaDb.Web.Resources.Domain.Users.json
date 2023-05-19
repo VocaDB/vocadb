@@ -1,8 +1,8 @@
 {
   "UserLanguageProficiencyNames": {
-    "Advanced": "Advanced",
-    "Basics": "Basics",
-    "Intermediate": "Intermediate",
-    "Native": "Native"
+    "Advanced": "Fortgeschritten",
+    "Basics": "Grundlagen",
+    "Intermediate": "Mittleres Niveau",
+    "Native": "Muttersprache"
   }
 }

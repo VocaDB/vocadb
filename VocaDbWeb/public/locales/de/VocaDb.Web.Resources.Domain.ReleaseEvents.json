@@ -1,15 +1,15 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
+    "Dancer": "Tänzer",
     "Default": "Default",
     "DJ": "DJ",
     "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
+    "Organizer": "Veranstalter",
     "Other": "Other",
     "OtherPerformer": "Other performer",
     "Promoter": "Promoter",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
+    "Vocalist": "Sänger",
     "VoiceManipulator": "Voice manipulator"
   },
   "EventCategoryNames": {
@@ -34,7 +34,7 @@
     "Category": "Category",
     "Description": "Description",
     "Name": "Name",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "Picture": "Main picture",
     "Status": "Status",
