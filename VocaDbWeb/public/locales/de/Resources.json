@@ -150,7 +150,7 @@
     "AccessManageMenu": "Zugriff verwalten-Menü",
     "Admin": "Administrative Datenbankaufgaben",
     "AddRawFileMedia": "Add raw media",
-    "ApplyAnyTag": "Add any tag to entry",
+    "ApplyAnyTag": "Jedes Schlagwort zum Eintrag hinzufügen",
     "ApproveEntries": "Genehmigte Einreichungen",
     "BulkDeletePVs": "Mehrere PVs löschen",
     "CreateComments": "Kommentar erstellen",
@@ -165,7 +165,7 @@
     "EditTags": "Schlagwörter bearbeiten",
     "LockEntries": "Einreichungen sperren",
     "ManageDatabase": "Datenbank verwalten",
-    "ManageEntryReports": "Berichte zu Einreichungen verwalten",
+    "ManageEntryReports": "Fehlermeldungen zu Einträgen verwalten",
     "ManageEventSeries": "Eventreihen verwalten",
     "ManageIPRules": "IP Regeln verwalten",
     "ManageUserPermissions": "Benutzerberechtigungen verwalten",
@@ -266,7 +266,7 @@
     "None": "Nichts",
     "PublishDate": "Veröffentlichungsdatum",
     "RatingScore": "Bewertungspunktzahl",
-    "TagUsageCount": "Schlagwort-Nutzungsanzahl",
+    "TagUsageCount": "Schlagwort-Verwendungsanzahl",
     "SongType": "Art des Songs"
   },
   "SongVoteRatingNames": {
@@ -277,15 +277,15 @@
     "AliasedTo": "Als Alias von",
     "CategoryName": "Kategorie",
     "Description": "Beschreibung",
-    "HideFromSuggestions": "Hide from suggestions",
+    "HideFromSuggestions": "Aus Vorschlägen ausblenden",
     "Names": "Namen",
     "OriginalName": "Default name language",
     "Parent": "Übergeordnetes Schlagwort\n",
     "Picture": "Bild",
-    "RelatedTags": "Related tags",
+    "RelatedTags": "Verwandte Schlagwörter",
     "Status": "Status",
-    "Targets": "Targets",
-    "WebLinks": "External links"
+    "Targets": "Ziele",
+    "WebLinks": "Externe Links"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Keine privaten Nachrichten",
