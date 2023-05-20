@@ -11,6 +11,7 @@ import { AlbumAdvancedFilters } from '@/Components/Shared/Partials/Search/Advanc
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { MediaType } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryType } from '@/Models/EntryType';
 import { AlbumSearchListTiles } from '@/Pages/Search/Partials/AlbumSearchList';
@@ -419,7 +420,13 @@ const AlbumCollection = observer(
 											</small>
 										</td>
 										<td className="search-album-release-date-column">
-											<span>{albumForUser.album.releaseDate?.formatted}</span>
+											<span>
+												{DateTimeHelper.formatComponentDate(
+													albumForUser.album.releaseDate.year,
+													albumForUser.album.releaseDate.month,
+													albumForUser.album.releaseDate.day,
+												)}
+											</span>
 											{albumForUser.album.releaseEvent && (
 												<span>
 													<br />

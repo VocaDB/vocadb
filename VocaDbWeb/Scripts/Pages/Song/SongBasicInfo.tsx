@@ -159,7 +159,7 @@ const PVButton = observer(
 				title={
 					pv.publishDate && pv.author
 						? `${t('ViewRes.Song:Details.PVDescription', {
-								0: dayjs(pv.publishDate).format('l') /* REVIEW */,
+								0: dayjs(pv.publishDate).format('ll') /* REVIEW */,
 								1: pv.author,
 						  })}${
 								pv.disabled ? ` ${t('ViewRes.Song:Details.PVUnavailable')}` : ''
@@ -622,7 +622,7 @@ const SongBasicInfo = observer(
 						{model.publishDate && (
 							<tr>
 								<td>{t('ViewRes:EntryDetails.PublishDate')}</td>
-								<td>{dayjs(model.publishDate).format('l') /* REVIEW */}</td>
+								<td>{dayjs(model.publishDate).format('ll') /* REVIEW */}</td>
 							</tr>
 						)}
 
