@@ -41,13 +41,15 @@ const LyricsForSongEdit = observer(
 							<span>
 								(
 								{
-									userLanguageCultures[lyricsForSongEditStore.cultureCode]
+									userLanguageCultures[lyricsForSongEditStore.cultureCodes[0]]
 										? `${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.nativeName
+												userLanguageCultures[
+													lyricsForSongEditStore.cultureCodes[0]
+												].nativeName
 										  } (${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.englishName
+												userLanguageCultures[
+													lyricsForSongEditStore.cultureCodes[0]
+												].englishName
 										  })`
 										: 'Other/Unknown' /* LOC */
 								}
@@ -77,17 +79,53 @@ const LyricsForSongEdit = observer(
 												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* LOC */,
 										}}
 									/>{' '}
-									<UserLanguageCultureDropdownList
-										placeholder={t(
-											'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+									<tbody>
+										{lyricsForSongEditStore.cultureCodes.map(
+											(cultureCode, index) => (
+												<tr>
+													<td>
+														<UserLanguageCultureDropdownList
+															key={index}
+															placeholder={t(
+																'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+															)}
+															value={cultureCode}
+															onChange={(e): void =>
+																runInAction(() => {
+																	lyricsForSongEditStore.replaceCultureCode(
+																		index,
+																		e.target.value,
+																	);
+																})
+															}
+														/>
+													</td>
+													<td>
+														<SafeAnchor
+															onClick={(): void =>
+																lyricsForSongEditStore.removeCultureCode(index)
+															}
+															href="#"
+															className="nameDelete textLink deleteLink"
+														>
+															{t('ViewRes:Shared.Delete')}
+														</SafeAnchor>
+													</td>
+												</tr>
+											),
 										)}
-										value={lyricsForSongEditStore.cultureCode}
-										onChange={(e): void =>
-											runInAction(() => {
-												lyricsForSongEditStore.cultureCode = e.target.value;
-											})
-										}
-									/>
+									</tbody>
+									{lyricsForSongEditStore.cultureCodes.length <= 5 && (
+										<SafeAnchor
+											onClick={(): void =>
+												lyricsForSongEditStore.addCultureCode('')
+											}
+											href="#"
+											className="textLink addLink"
+										>
+											{t('ViewRes:Shared.Add')}
+										</SafeAnchor>
+									)}
 								</p>
 							)}
 							<div>

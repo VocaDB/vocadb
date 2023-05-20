@@ -6,10 +6,10 @@
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Zusammengefügt von einer anderen Einreichung",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -56,10 +56,10 @@
   },
   "ArtistArchiveReasonNames": {
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Von einer anderen Einreichung zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Zu einer früheren Revision zurückgekehrt",
     "Unknown": "Unbekannt"
   },
@@ -74,7 +74,7 @@
     "OriginalName": "Originaler Name",
     "Picture": "Hauptbild",
     "Pictures": "Bilder",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Voicebank Veröffentlichungsdatum",
     "Status": "Status",
     "WebLinks": "Externe Links"
   },
@@ -92,17 +92,17 @@
     "Mastering": "Mastering",
     "Mixer": "Mixer",
     "Other": "Andere",
-    "Publisher": "Publisher",
-    "VocalDataProvider": "Vocal data provider",
+    "Publisher": "Herausgeber",
+    "VocalDataProvider": "Vocal Data Provider",
     "Vocalist": "Sänger",
     "VoiceManipulator": "Stimmenmanipulator"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Hinzufügungsdatum (absteigend)",
     "AdditionDateAsc": "Hinzufügungsdatum (aufsteigend)",
-    "FollowerCount": "Number of followers",
+    "FollowerCount": "Anzahl der Follower",
     "Name": "Name",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Voicebank Veröffentlichungsdatum",
     "SongCount": "Anzahl Songs",
     "SongRating": "Insgesamte Songbewertung"
   },
@@ -136,8 +136,8 @@
   },
   "EntryEditEventNames": {
     "Created": "Erstellt",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
+    "Deleted": "Gelöscht",
+    "Restored": "Wiederhergestellt",
     "Updated": "Aktualisiert"
   },
   "EntryStatusNames": {
@@ -158,11 +158,11 @@
     "DeleteEntries": "Einreichungen löschen",
     "DesignatedStaff": "Festgelegter Mitarbeiter",
     "DisableUsers": "Benutzer deaktivieren",
-    "EditAllSongLists": "Edit all song lists",
+    "EditAllSongLists": "Alle Songlisten bearbeiten",
     "EditFeaturedLists": "Songlisten verwalten",
     "EditNews": "Neuigkeiten verwalten",
     "EditProfile": "Persönliches Profil bearbeiten",
-    "EditTags": "Edit tags",
+    "EditTags": "Schlagwörter bearbeiten",
     "LockEntries": "Einreichungen sperren",
     "ManageDatabase": "Datenbank verwalten",
     "ManageEntryReports": "Berichte zu Einreichungen verwalten",
@@ -174,15 +174,15 @@
     "MoveToTrash": "In den Papierkorb verschieben",
     "Nothing": "Nichts",
     "ReadRecentComments": "Neuesten Kommentare lesen",
-    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveEditPermission": "Datenbankbearbeitungsrechte entfernen",
     "RemoveTagUsages": "Schlagwortverwendungen löschen",
     "RestoreRevisions": "Revisionen ansehen",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Eigene Medien hochladen",
     "ViewAuditLog": "Ereignisprotokoll ansehen",
-    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRatings": "Ausgeblendete Bewertungen anzeigen",
     "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ManageWebhooks": "Webhooks verwalten",
+    "CreateDatabaseDump": "Datenbank-Dump erstellen"
   },
   "PVTypeDescriptions": {
     "Original": "Original (offizieller/autorisierter Upload)",
@@ -195,21 +195,21 @@
     "Reprint": "Kopie"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Rating date"
+    "RatingDate": "Bewertungsdatum"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
+    "Artists": "Interpreten",
     "Category": "Category",
     "Date": "Datum",
     "Description": "Beschreibung",
     "MainPicture": "Main picture",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "PVs": "PVs",
     "Series": "Series",
     "SeriesNumber": "Anzahl Events",
     "SeriesSuffix": "Seriensuffix",
-    "SongList": "Setlist",
+    "SongList": "Setliste",
     "Status": "Status",
     "Venue": "Venue",
     "VenueName": "Venue name",
@@ -218,10 +218,10 @@
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
     "Created": "Erstellt",
-    "Deleted": "Deleted",
+    "Deleted": "Gelöscht",
     "Merged": "Von einem anderen Eintrag zusammengeführt",
     "PropertiesUpdated": "Eigenschaften aktualisiert",
-    "Restored": "Restored",
+    "Restored": "Wiederhergestellt",
     "Reverted": "Rückgängig gemacht",
     "Unknown": "Unbekannt"
   },
@@ -229,13 +229,13 @@
     "Artists": "Künstler",
     "Groups": "Gruppen",
     "Length": "Dauer",
-    "Lyrics": "Lyrics",
+    "Lyrics": "Songtext",
     "Names": "Namen",
     "Notes": "Anmerkungen",
     "Nothing": "Nichts",
     "OriginalName": "Originaler Name",
     "OriginalVersion": "Originale Version",
-    "PublishDate": "Publish date",
+    "PublishDate": "Veröffentlichungsdatum",
     "PVs": "PVs",
     "SongType": "Art des Songs",
     "Status": "Status",
@@ -244,9 +244,9 @@
     "Bpm": "BPM"
   },
   "SongListEditableFieldNames": {
-    "Description": "Description",
-    "EventDate": "Event date",
-    "FeaturedCategory": "Featured category",
+    "Description": "Beschreibung",
+    "EventDate": "Event Datum",
+    "FeaturedCategory": "Vorgestellte Kategorie",
     "Name": "Name",
     "Songs": "Songs",
     "Status": "Status",
@@ -264,9 +264,9 @@
     "FavoritedTimes": "Anzahl der Favorisierungen",
     "Name": "Name",
     "None": "Nichts",
-    "PublishDate": "Publish date",
+    "PublishDate": "Veröffentlichungsdatum",
     "RatingScore": "Bewertungspunktzahl",
-    "TagUsageCount": "Tag usage count",
+    "TagUsageCount": "Schlagwort-Nutzungsanzahl",
     "SongType": "Art des Songs"
   },
   "SongVoteRatingNames": {
@@ -278,7 +278,7 @@
     "CategoryName": "Kategorie",
     "Description": "Beschreibung",
     "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "Parent": "Übergeordnetes Schlagwort\n",
     "Picture": "Bild",
@@ -305,7 +305,7 @@
     "AddressCountryCode": "Country/Region",
     "Coordinates": "Coordinates",
     "Description": "Description",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Default name language",
     "Status": "Status",
     "WebLinks": "External links"

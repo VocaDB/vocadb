@@ -6,8 +6,8 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { TagFilters } from '@/Stores/Search/TagFilters';
+import dayjs from 'dayjs';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
-import moment from 'moment';
 
 // Corresponds to the SongListSortRule enum in C#.
 export enum SongListSortRule {
@@ -81,8 +81,8 @@ export abstract class SongListsBaseStore extends PagedItemsStore<SongListContrac
 
 		if (!prev.eventDate) return false;
 
-		const currentYear = moment(current.eventDate).year();
-		const prevYear = moment(prev.eventDate).year();
+		const currentYear = dayjs(current.eventDate).year();
+		const prevYear = dayjs(prev.eventDate).year();
 
 		return currentYear !== prevYear;
 	};

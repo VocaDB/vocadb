@@ -1,4 +1,7 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import UTC from 'dayjs/plugin/utc';
+
+dayjs.extend(UTC);
 
 export class DateTimeHelper {
 	private static addLeadingZero(val: any): any {
@@ -7,15 +10,18 @@ export class DateTimeHelper {
 
 	static convertToLocal(utcDate: Date): Date | null {
 		if (utcDate == null) return null;
-		const momentDate = moment.utc(utcDate);
+		const momentDate = dayjs.utc(utcDate);
 		return new Date(momentDate.year(), momentDate.month(), momentDate.date());
 		//return new Date(utcDate.getFullYear(), utcDate.getMonth(), utcDate.getDate());
 	}
 
 	static convertToUtc(localDate: Date): Date | null {
 		if (localDate == null) return null;
-		return moment
-			.utc([localDate.getFullYear(), localDate.getMonth(), localDate.getDate()])
+		return dayjs
+			.utc()
+			.year(localDate.getFullYear())
+			.month(localDate.getMonth())
+			.date(localDate.getDate())
 			.toDate();
 	}
 

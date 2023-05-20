@@ -1,5 +1,6 @@
 import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import {
@@ -84,8 +85,8 @@ export class FakeSongRepository extends SongRepository {
 			songId,
 		}: {
 			songId: number;
-		}): Promise<string> => {
-			return FakePromise.resolve('Miku!');
+		}): Promise<SongListContract[]> => {
+			return FakePromise.resolve([]);
 		};
 
 		this.songListsForUser = ({

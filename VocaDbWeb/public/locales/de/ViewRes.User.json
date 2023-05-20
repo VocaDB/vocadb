@@ -50,7 +50,7 @@
     "FavoriteSongsTab": "Songs, die mir gefallen:",
     "FavoriteTags": "Meine favorisierten Schlagwörter",
     "FollowedArtistsTab": "Künstler, denen ich folge:",
-    "ImportSongList": "Import from YouTube or NicoNico",
+    "ImportSongList": "Importiere aus YouTube oder NicoNico",
     "Interested": "Interessiert",
     "KnownLanguagesMessage": "Please let us know which languages you are familiar with. You can enter this information under <a>\"My settings\", \"Profile\"</a>, \"Languages I know\". We can use this information to determine how to contact you when needed.",
     "LanguagesIKnow": "Sprachen, die ich spreche",
@@ -92,7 +92,7 @@
     "OnlyAdditions": "Only additions"
   },
   "FavoriteSongs": {
-    "GroupByRating": "Group by rating"
+    "GroupByRating": "Nach Bewertung gruppieren"
   },
   "ForgotPassword": {
     "CaptchaIsInvalid": "CAPTCHA ist falsch.",
@@ -198,11 +198,11 @@
     "Username": "Benutzername"
   },
   "RatedSongs": {
-    "GroupByRating": "Group by rating",
+    "GroupByRating": "Nach Bewertung gruppieren",
     "NoSongListSelection": "Keine",
-    "RatingAnything": "Anything",
-    "ShowTags": "Show tags",
-    "SongList": "Song Liste"
+    "RatingAnything": "Alles",
+    "ShowTags": "Schlagwörter anzeigen",
+    "SongList": "Songliste"
   },
   "RequestVerification": {
     "ArtistTitle": "Entry of the artist whom I represent (required)",

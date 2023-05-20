@@ -44,19 +44,18 @@ import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
+import '@/styles/Styles/songlist.less';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-import '@/styles/Styles/songlist.less'
 
 interface SongListDetailsTableRowProps {
 	songListStore: SongListStore;
@@ -356,7 +355,7 @@ const SongListDetailsLayout = observer(
 						{songList.eventDate && (
 							<p>
 								{t('ViewRes.SongList:Details.Date', {
-									0: moment(songList.eventDate).format('l'),
+									0: dayjs(songList.eventDate).format('l'),
 								})}
 							</p>
 						)}
@@ -413,11 +412,11 @@ const SongListDetailsLayout = observer(
 												{event.date ? (
 													event.venue || event.venueName ? (
 														<>
-															{moment(event.date).format('l')}
+															{dayjs(event.date).format('l')}
 															, <VenueLinkOrVenueName event={event} />
 														</>
 													) : (
-														moment(event.date).format('l')
+														dayjs(event.date).format('l')
 													)
 												) : (
 													(event.venue || event.venueName) && (

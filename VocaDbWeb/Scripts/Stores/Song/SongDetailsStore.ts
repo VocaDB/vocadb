@@ -1,6 +1,8 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { RelatedSongs } from '@/DataContracts/Song/RelatedSongs';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongDetailsAjax } from '@/DataContracts/Song/SongDetailsForApi';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
@@ -89,7 +91,7 @@ interface SongLinkWithUrl {
 }
 
 export class SongInListsStore {
-	@observable contentHtml?: string;
+	@observable listsForSong: SongListContract[] = [];
 	@observable dialogVisible = false;
 
 	constructor(
@@ -102,7 +104,7 @@ export class SongInListsStore {
 	show = (): void => {
 		this.songRepo.songListsForSong({ songId: this.songId }).then((result) =>
 			runInAction(() => {
-				this.contentHtml = result;
+				this.listsForSong = result;
 				this.dialogVisible = true;
 			}),
 		);
@@ -375,5 +377,12 @@ export class SongDetailsStore {
 
 	@action showAllVersions = (): void => {
 		this.allVersionsVisible = true;
+	};
+
+	getRelated = (): Promise<RelatedSongs> => {
+		return this.songRepo.getRelated({
+			songId: this.id,
+			lang: this.values.languagePreference,
+		});
 	};
 }

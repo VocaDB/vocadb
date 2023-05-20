@@ -26,8 +26,11 @@ import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
 import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
+import dayjs, { Dayjs } from 'dayjs';
+import UTC from 'dayjs/plugin/utc';
 import { computed, makeObservable, observable } from 'mobx';
-import moment from 'moment';
+
+dayjs.extend(UTC);
 
 export interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;
@@ -172,17 +175,17 @@ export class SongSearchStore
 
 	// Remember, JavaScript months start from 0 (who came up with that??)
 	// The answer song: https://stackoverflow.com/questions/2552483/why-does-the-month-argument-range-from-0-to-11-in-javascripts-date-constructor/41992352#41992352
-	private toDateOrUndefined = (mom: moment.Moment): Date | undefined =>
+	private toDateOrUndefined = (mom: Dayjs): Date | undefined =>
 		mom.isValid() ? mom.toDate() : undefined;
 
 	@computed get afterDate(): Date | undefined {
 		return this.dateYear
 			? this.toDateOrUndefined(
-					moment.utc([
-						this.dateYear,
-						(this.dateMonth || 1) - 1,
-						this.dateDay || 1,
-					]),
+					dayjs
+						.utc()
+						.year(this.dateYear)
+						.month((this.dateMonth || 1) - 1)
+						.date(this.dateDay || 1),
 			  )
 			: undefined;
 	}
@@ -190,11 +193,11 @@ export class SongSearchStore
 	@computed get beforeDate(): Date | undefined {
 		if (!this.dateYear) return undefined;
 
-		const mom = moment.utc([
-			this.dateYear,
-			(this.dateMonth || 12) - 1,
-			this.dateDay || 1,
-		]);
+		const mom = dayjs
+			.utc()
+			.year(this.dateYear)
+			.month((this.dateMonth || 12) - 1)
+			.date(this.dateDay || 1);
 
 		return this.toDateOrUndefined(
 			this.dateMonth && this.dateDay ? mom.add(1, 'd') : mom.add(1, 'M'),

@@ -1,14 +1,14 @@
 import { EntryMergeValidationHelper } from '@/Helpers/EntryMergeValidationHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
-import moment from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 
 function testValidate(
 	expectedLessComplete: boolean,
 	expectedNewer: boolean,
 	baseStatus: EntryStatus,
 	targetStatus: EntryStatus,
-	baseDate: moment.Moment,
-	targetDate: moment.Moment,
+	baseDate: Dayjs,
+	targetDate: Dayjs,
 ): void {
 	var result = EntryMergeValidationHelper.validate(
 		baseStatus,
@@ -43,8 +43,8 @@ test('target is older, no warning', () => {
 		false,
 		EntryStatus.Draft,
 		EntryStatus.Draft,
-		moment(3939),
-		moment(39),
+		dayjs(3939),
+		dayjs(39),
 	);
 });
 
@@ -54,8 +54,8 @@ test('target is older and more complete, no warning', () => {
 		false,
 		EntryStatus.Draft,
 		EntryStatus.Finished,
-		moment(3939),
-		moment(39),
+		dayjs(3939),
+		dayjs(39),
 	);
 });
 
@@ -65,8 +65,8 @@ test('target is newer but more complete, no warning', () => {
 		false,
 		EntryStatus.Draft,
 		EntryStatus.Finished,
-		moment(39),
-		moment(3939),
+		dayjs(39),
+		dayjs(3939),
 	);
 });
 
@@ -76,8 +76,8 @@ test('target is newer, show warning', () => {
 		true,
 		EntryStatus.Draft,
 		EntryStatus.Draft,
-		moment(39),
-		moment(3939),
+		dayjs(39),
+		dayjs(3939),
 	);
 });
 
@@ -87,8 +87,8 @@ test('target is older but draft, show warning', () => {
 		false,
 		EntryStatus.Finished,
 		EntryStatus.Draft,
-		moment(3939),
-		moment(39),
+		dayjs(3939),
+		dayjs(39),
 	);
 });
 
@@ -98,7 +98,7 @@ test("target is newer and draft, show only 'target is newer' warning", () => {
 		true,
 		EntryStatus.Finished,
 		EntryStatus.Draft,
-		moment(39),
-		moment(3939),
+		dayjs(39),
+		dayjs(3939),
 	);
 });

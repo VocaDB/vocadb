@@ -21,22 +21,22 @@ public static class SongLinkQueryableExtensions
 
 	public static IOrderedQueryable<T> OrderBySongName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 		where T : ISongLink => languagePreference switch
-	{
-		ContentLanguagePreference.Japanese => query.OrderBy(e => e.Song.Names.SortNames.Japanese),
-		ContentLanguagePreference.English => query.OrderBy(e => e.Song.Names.SortNames.English),
-		_ => query.OrderBy(e => e.Song.Names.SortNames.Romaji),
-	};
+		{
+			ContentLanguagePreference.Japanese => query.OrderBy(e => e.Song.Names.SortNames.Japanese),
+			ContentLanguagePreference.English => query.OrderBy(e => e.Song.Names.SortNames.English),
+			_ => query.OrderBy(e => e.Song.Names.SortNames.Romaji),
+		};
 
 	public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, SongSortRule sortRule, ContentLanguagePreference languagePreference)
 		where T : ISongLink => sortRule switch
-	{
-		SongSortRule.Name => query.OrderBySongName(languagePreference),
-		SongSortRule.AdditionDate => query.OrderByDescending(a => a.Song.CreateDate),
-		SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.Song.FavoritedTimes),
-		SongSortRule.RatingScore => query.OrderByDescending(a => a.Song.RatingScore),
-		SongSortRule.PublishDate => query.OrderByDescending(a => a.Song.PublishDate.DateTime),
-		_ => query,
-	};
+		{
+			SongSortRule.Name => query.OrderBySongName(languagePreference),
+			SongSortRule.AdditionDate => query.OrderByDescending(a => a.Song.CreateDate),
+			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.Song.FavoritedTimes),
+			SongSortRule.RatingScore => query.OrderByDescending(a => a.Song.RatingScore),
+			SongSortRule.PublishDate => query.OrderByDescending(a => a.Song.PublishDate.DateTime),
+			_ => query,
+		};
 
 	public static Expression<Func<TEntry, bool>> GetChildHasNameExpression<TEntry>(SearchTextQuery textQuery)
 		where TEntry : ISongLink
@@ -147,7 +147,11 @@ public static class SongLinkQueryableExtensions
 		}
 		else if (languageCodes != null && languageCodes.Any())
 		{
-			return query.Where(s => s.Song.Lyrics.Any(l => languageCodes.Contains(l.CultureCode.CultureCode)));
+			foreach (var languageCode in languageCodes)
+			{
+				query = query.Where(s => s.Song.Lyrics.Where(l => l.RawCultureCode.Contains(languageCode)).Any());
+			}
+			return query;
 		}
 		else
 		{

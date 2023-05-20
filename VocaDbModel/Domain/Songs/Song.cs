@@ -537,16 +537,16 @@ public class Song :
 	public virtual LyricsForSong CreateLyrics(LyricsForSongContract lyrics)
 	{
 		ParamIs.NotNull(() => lyrics);
-		return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode);
+		return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCodes);
 	}
 
-	public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string? cultureCode)
+	public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string[]? cultureCodes)
 	{
 		ParamIs.NotNullOrEmpty(() => val);
 		ParamIs.NotNull(() => source);
 		ParamIs.NotNull(() => url);
 
-		var entry = new LyricsForSong(this, val, source, url, translationType, cultureCode);
+		var entry = new LyricsForSong(this, val, source, url, translationType, cultureCodes);
 		Lyrics.Add(entry);
 
 		return entry;
@@ -849,7 +849,7 @@ public class Song :
 
 		foreach (var newEntry in diff.Added)
 		{
-			var l = CreateLyrics(newEntry.Value, newEntry.Source, newEntry.URL, newEntry.TranslationType, newEntry.CultureCode);
+			var l = CreateLyrics(newEntry.Value, newEntry.Source, newEntry.URL, newEntry.TranslationType, newEntry.CultureCodes);
 			created.Add(l);
 		}
 
@@ -860,7 +860,7 @@ public class Song :
 
 			if (!entry.ContentEquals(newEntry))
 			{
-				linkEntry.CultureCode = new OptionalCultureCode(newEntry.CultureCode);
+				linkEntry.CultureCodes = newEntry.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
 				linkEntry.Source = newEntry.Source;
 				linkEntry.TranslationType = newEntry.TranslationType;
 				linkEntry.URL = newEntry.URL;

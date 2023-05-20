@@ -34,9 +34,9 @@ import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -116,6 +116,8 @@ export const GlobalSearchBox = observer(
 		);
 
 		const navigate = useNavigate();
+		const location = useLocation();
+
 		const submit = React.useCallback(async (): Promise<void> => {
 			const tryRedirectEntry = async (filter: string): Promise<void> => {
 				const { items } = await entryRepo.getList({
@@ -125,6 +127,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details_entry(items[0]));
 				} else {
 					navigate(
@@ -144,6 +147,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Album, items[0].id));
 				} else {
 					navigate(
@@ -164,6 +168,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Artist, items[0].id));
 				} else {
 					navigate(
@@ -187,6 +192,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, items[0].id));
 				} else {
 					navigate(
@@ -209,6 +215,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.Song, items[0].id));
 				} else {
 					navigate(
@@ -228,6 +235,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
 				} else {
 					navigate('/SongList/Featured');
@@ -262,6 +270,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
+					topBarStore.searchTerm = '';
 					navigate(EntryUrlMapper.details_user_byName(items[0].name));
 				} else {
 					navigate(
@@ -287,6 +296,16 @@ export const GlobalSearchBox = observer(
 				globalSearchTermRef.current.value,
 			);
 		}, [vdb, topBarStore, navigate]);
+
+		// Clear the search bar if a user chooses a song from the search list
+		useEffect(() => {
+			if (
+				/^\/\w\w?\/.+$/.test(location.pathname) ||
+				location.pathname === '/'
+			) {
+				topBarStore.searchTerm = '';
+			}
+		}, [location, topBarStore]);
 
 		return (
 			<form
@@ -348,8 +367,12 @@ export const GlobalSearchBox = observer(
 							);
 						}}
 						select={(event: Event, ui): void => {
-							globalSearchTermRef.current.value = ui.item.value;
+							topBarStore.searchTerm = ui.item.value;
 							submit();
+						}}
+						value={topBarStore.searchTerm}
+						onChange={(e): void => {
+							topBarStore.searchTerm = e.target.value;
 						}}
 						ref={globalSearchTermRef}
 					/>

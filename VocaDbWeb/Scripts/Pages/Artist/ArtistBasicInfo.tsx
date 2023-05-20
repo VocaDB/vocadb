@@ -31,11 +31,11 @@ import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -201,7 +201,7 @@ const ArtistBasicInfo = observer(
 							{artist.releaseDate && (
 								<tr>
 									<td>{t('ViewRes.Artist:Details.ReleaseDate')}</td>
-									<td>{moment(artist.releaseDate).format('l') /* REVIEW */}</td>
+									<td>{dayjs(artist.releaseDate).format('l') /* REVIEW */}</td>
 								</tr>
 							)}
 

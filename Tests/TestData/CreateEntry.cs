@@ -46,7 +46,7 @@ public static class CreateEntry
 
 	public static LyricsForSongContract LyricsForSongContract(TranslationType translationType = TranslationType.Translation, string value = "Miku Miku", string cultureCode = "ja")
 	{
-		return new LyricsForSongContract { TranslationType = translationType, Value = value, Source = string.Empty, URL = string.Empty, CultureCode = cultureCode };
+		return new LyricsForSongContract { TranslationType = translationType, Value = value, Source = string.Empty, URL = string.Empty, CultureCodes = new[] { cultureCode } };
 	}
 
 	public static Artist Producer(int id = 0, string name = "Tripshots")

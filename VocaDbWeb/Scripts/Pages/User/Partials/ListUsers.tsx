@@ -11,10 +11,10 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ListUsersStore, UserSortRule } from '@/Stores/User/ListUsersStore';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
@@ -232,7 +232,7 @@ const UserSearchListTableRow = observer(
 						{user.name}
 					</Link>
 				</td>
-				<td>{moment(user.memberSince).format('L')}</td>
+				<td>{dayjs(user.memberSince).format('L')}</td>
 				<td>{t(`Resources:UserGroupNames.${user.groupId}`)}</td>
 			</tr>
 		);
