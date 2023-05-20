@@ -24,7 +24,7 @@
     "Video": "Video"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "Interpret",
+    "Artists": "Künstler",
     "Cover": "Cover",
     "Description": "Beschreibung",
     "DiscType": "Art der Disc",
@@ -65,7 +65,7 @@
   },
   "ArtistEditableFieldNames": {
     "Albums": "Alben",
-    "ArtistType": "Art des Interpreten",
+    "ArtistType": "Art des Künstlers",
     "BaseVoicebank": "Base voicebank",
     "Description": "Beschreibung",
     "Groups": "Gruppen",
@@ -198,7 +198,7 @@
     "RatingDate": "Bewertungsdatum"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Interpreten",
+    "Artists": "Künstler",
     "Category": "Category",
     "Date": "Datum",
     "Description": "Beschreibung",
@@ -226,7 +226,7 @@
     "Unknown": "Unbekannt"
   },
   "SongEditableFieldNames": {
-    "Artists": "Interpret",
+    "Artists": "Künstler",
     "Groups": "Gruppen",
     "Length": "Dauer",
     "Lyrics": "Songtext",
