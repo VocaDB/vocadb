@@ -7,7 +7,7 @@
     "EntryReleaseEvent": "event",
     "EntrySong": "Song",
     "EntrySongList": "Songliste",
-    "EntryTag": "tag",
+    "EntryTag": "Schlagwort",
     "EntryVenue": "venue",
     "Someone": "Ein Mitwirkender",
     "Updated": "aktualisierte einen {{0}}:"
