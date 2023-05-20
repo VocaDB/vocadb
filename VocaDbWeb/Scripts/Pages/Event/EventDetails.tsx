@@ -285,9 +285,9 @@ const EventDetailsLayout = observer(
 							{event.date && (
 								<p>
 									{t('ViewRes.Event:Details.OccurrenceDate')}:{' '}
-									{dayjs(event.date).format('l')}
+									{dayjs(event.date).format('ll')}
 									{event.endDate && event.endDate > event.date && (
-										<> - {dayjs(event.endDate).format('l')}</>
+										<> - {dayjs(event.endDate).format('ll')}</>
 									)}
 								</p>
 							)}

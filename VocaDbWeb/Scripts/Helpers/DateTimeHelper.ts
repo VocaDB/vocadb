@@ -8,6 +8,33 @@ export class DateTimeHelper {
 		return val < 10 ? '0' + val : val;
 	}
 
+	static formatComponentDate(
+		year?: number,
+		month?: number,
+		date?: number,
+	): string {
+		if (date && month && year) {
+			return dayjs()
+				.year(year)
+				.month(month - 1)
+				.date(date)
+				.format('ll');
+		}
+
+		if (month && year) {
+			return dayjs()
+				.year(year)
+				.month(month - 1)
+				.format('MMM YYYY');
+		}
+
+		if (year) {
+			return dayjs().year(year).format('YYYY');
+		}
+
+		return '';
+	}
+
 	static convertToLocal(utcDate: Date): Date | null {
 		if (utcDate == null) return null;
 		const momentDate = dayjs.utc(utcDate);

@@ -19,6 +19,7 @@ import {
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
@@ -271,6 +272,14 @@ export class AlbumDetailsForApi {
 
 	get jsonModel(): AlbumDetailsAjax {
 		return new AlbumDetailsAjax(this);
+	}
+
+	get formattedReleaseDate(): string {
+		return DateTimeHelper.formatComponentDate(
+			this.releaseDate?.year,
+			this.releaseDate?.month,
+			this.releaseDate?.day,
+		);
 	}
 
 	get releaseDateIsInTheFarFuture(): boolean {

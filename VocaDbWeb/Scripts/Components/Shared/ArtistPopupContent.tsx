@@ -41,7 +41,7 @@ export const ArtistPopupContent = React.memo(
 				{artist.releaseDate && (
 					<p>
 						{t('ViewRes.Artist:Details.ReleaseDate')}{' '}
-						{dayjs(artist.releaseDate).format('l')}
+						{dayjs(artist.releaseDate).format('ll')}
 					</p>
 				)}
 			</>
