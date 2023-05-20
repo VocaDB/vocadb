@@ -65,7 +65,7 @@
     "Overview": "Overview",
     "PossibleProducerMessage": "Bist du möglicherweise ein Künstler (z. B. Produzent, Animator oder Illustrator) der mit Vocaloid/UTAU arbeitet?\nWenn ja, sieh dir bitte die <a>Künstler-Verifizierungsseite</a> an.",
     "Power": "Berechtigungen",
-    "ReportSpamming": "Report user for spamming",
+    "ReportSpamming": "Benutzer aufgrund von Spam melden",
     "SetAvatar": "Stelle deinen Avatar bei gravatar.com ein.",
     "SomeAlbumsILike": "Einige Alben, die mir gefallen",
     "SomeArtistsIFollow": "Einige Künstler denen ich folge",
@@ -208,12 +208,12 @@
     "ArtistTitle": "Eintrag des Künstlers, den ich repräsentiere, (erforderlich)",
     "Login": "log in",
     "MessageTitle": "Additional message (optional)",
-    "NoPrivateMessage": "The proof is provided in the URL below",
+    "NoPrivateMessage": "Der Nachweis ist in der URL unten angegeben",
     "NotLoggedInMessage": "Sorry, you need to <1>log in</1> or <2>sign up</2> to use this feature.",
     "PageTitle": "Benutzerkonto-Verifizierung anfordern",
-    "PrivateMessage": "I will submit the proof in a private message",
+    "PrivateMessage": "Ich werde den Nachweis in einer privaten Nachricht einreichen",
     "Send": "Send request",
     "Signup": "sign up",
-    "URL": "Link to proof, for example a tweet (required)"
+    "URL": "Link zum Nachweis, zum Beispiel ein Tweet (erforderlich)"
   }
 }
