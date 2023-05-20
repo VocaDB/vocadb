@@ -38,10 +38,15 @@ export const SongDetailsTabs = React.memo(
 
 		const lyricsLanguageNames = model.lyrics
 			.sortBy((l) => l.translationType)
-			.filter((l) => !!l.cultureCodes || l!.translationType === 'Romanized')
+			.filter(
+				(l) =>
+					(!!l.cultureCodes && l.cultureCodes.length > 0) ||
+					l!.translationType === 'Romanized',
+			)
 			.map((l) =>
 				l.translationType !== 'Romanized'
-					? userLanguageCultures[l.cultureCodes![0]].nativeName
+					? userLanguageCultures[l.cultureCodes![0]]?.nativeName ??
+					  t('ViewRes.Song:Details.LyricsLanguageOther')
 					: t(
 							'VocaDb.Web.Resources.Domain.Globalization:TranslationTypeNames.Romanized',
 					  ),

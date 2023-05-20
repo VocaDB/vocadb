@@ -12,7 +12,13 @@ export const LyricsInfo = React.memo(
 			<>
 				{lyrics.translationType}
 				{lyrics.cultureCodes && (
-					<> ({userLanguageCultures[lyrics.cultureCodes[0]].englishName})</>
+					<>
+						{' '}
+						(
+						{userLanguageCultures[lyrics.cultureCodes[0]]?.englishName ??
+							'Other'}
+						)
+					</>
 				)}
 				{lyrics.source && <> ({lyrics.source})</>}
 			</>
