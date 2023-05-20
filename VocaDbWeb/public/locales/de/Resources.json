@@ -131,7 +131,7 @@
     "EP": "Bedeutet Extended Play. Enthält 3-4 einzelne Songs. Alternative Versionen (Instrumental- und Remix-) werden für gewöhnlich nicht mitgezählt.",
     "Other": "Für Alben, die nicht auf eine der obigen Beschreibungen passt.",
     "Single": "Beinhaltet ein oder zwei einzelne Songs. Alternative Versionen (Instrumental- und Remix-) werden für gewöhnlich nicht mitgezählt.",
-    "SplitAlbum": "Kollaborationen zwischen zwei oder mehr (aber für gewöhnlich nur zwei) gleichen Interpreten, wo jeder Interpret ungefähr die gleiche Songanzahl besitzt.",
+    "SplitAlbum": "Kollaborationen zwischen zwei oder mehr (aber für gewöhnlich nur zwei) gleichen Künstlern, wo jeder Künstler ungefähr die gleiche Songanzahl besitzt.",
     "Video": "Disc beinhaltet hauptsächlich Musikvideos, für gewöhnlich eine DVD oder BluRay."
   },
   "EntryEditEventNames": {
