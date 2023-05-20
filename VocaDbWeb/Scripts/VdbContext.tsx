@@ -14,6 +14,7 @@ interface VdbContextProps {
 
 const locales: LocaleLoader = {
 	'de-DE': () => import('dayjs/locale/de'),
+	en: () => import('dayjs/locale/en'),
 	'en-US': () => import('dayjs/locale/en'),
 	es: () => import('dayjs/locale/es'),
 	pt: () => import('dayjs/locale/pt'),
@@ -50,9 +51,9 @@ export const VdbProvider = ({
 			),
 		]);
 
-		locales[values.culture]()
-			.then(() => dayjs.locale(values.culture))
-			.then(() => console.log('Hey'));
+		if (values.culture in locales) {
+			locales[values.culture]().then(() => dayjs.locale(values.culture));
+		}
 
 		i18n.changeLanguage(values.uiCulture);
 
