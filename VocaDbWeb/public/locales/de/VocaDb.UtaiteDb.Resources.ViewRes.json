@@ -4,7 +4,7 @@
     "NewAlbumInfo": "The album needs to have at least one track with an utaite to be allowed on UtaiteDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
   },
   "ArtistRes": {
-    "AuthoredBy": "UtaiteDB account",
+    "AuthoredBy": "UtaiteDB-Konto",
     "NewArtistExternalLink": "Externer Link (zu einer Künstler-Webseite, Utaite Wiki, NND MyList etc.)"
   },
   "HomeRes": {
