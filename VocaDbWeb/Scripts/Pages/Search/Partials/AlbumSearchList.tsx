@@ -5,6 +5,7 @@ import { AlbumThumbItem } from '@/Components/Shared/Partials/Shared/AlbumThumbIt
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
@@ -188,7 +189,13 @@ const AlbumSearchList = observer(
 										</td>
 									)}
 									<td className="search-album-release-date-column">
-										<span>{album.releaseDate?.formatted}</span>
+										<span>
+											{DateTimeHelper.formatComponentDate(
+												album.releaseDate.year,
+												album.releaseDate.month,
+												album.releaseDate.day,
+											)}
+										</span>
 										{album.releaseEvent && (
 											<span>
 												<br />

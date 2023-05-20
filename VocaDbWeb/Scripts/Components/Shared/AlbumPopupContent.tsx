@@ -1,5 +1,6 @@
 import { StarsMetaSpan } from '@/Components/Shared/Partials/Shared/StarsMetaSpan';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +17,11 @@ export const AlbumPopupContent = React.memo(
 			'VocaDb.Model.Resources.Albums',
 		]);
 
+		const releaseDate = DateTimeHelper.formatComponentDate(
+			album.releaseDate.year,
+			album.releaseDate.month,
+			album.releaseDate.day,
+		);
 		return (
 			<>
 				<p>
@@ -35,7 +41,7 @@ export const AlbumPopupContent = React.memo(
 				</p>
 				{!album.releaseDate.isEmpty && (
 					<p>
-						{t('HelperRes:AlbumHelpers.Released')} {album.releaseDate.formatted}
+						{t('HelperRes:AlbumHelpers.Released')} {releaseDate}
 						{album.releaseEvent && <> ({album.releaseEvent.name})</>}
 					</p>
 				)}
