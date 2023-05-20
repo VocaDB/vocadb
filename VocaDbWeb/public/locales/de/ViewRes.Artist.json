@@ -72,10 +72,10 @@
     "BaNames": "Primary name (in one or more languages)",
     "BaPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB.",
     "BaReleaseDate": "Voicebank release date",
-    "EditTitle": "Edit artist - {{0}}",
+    "EditTitle": "Künstler bearbeiten - {{0}}",
     "PiAdd": "Add",
     "PiPictureDescription": "Picture description",
-    "PiPicturesNote": "Please only upload pictures relevant to this artist, nothing else.",
+    "PiPicturesNote": "Bitte lade nur Bilder hoch, die für diesen Künstler relevant sind.",
     "TabAdditionalPictures": "Additional pictures"
   },
   "MostUsedLanguages": "Most used language(s):"
