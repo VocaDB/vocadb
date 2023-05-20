@@ -18,9 +18,6 @@ public class ArchivedAlbumReleaseContract : IAlbumRelease
 		CatNum = release.CatNum;
 		ReleaseDate = release.ReleaseDate != null ? new OptionalDateTimeContract(release.ReleaseDate) : null;
 
-		if (ReleaseDate != null)
-			ReleaseDate.Formatted = string.Empty;
-
 		ReleaseEvent = ObjectRefContract.Create(release.ReleaseEvent);
 	}
 
