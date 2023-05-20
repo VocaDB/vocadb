@@ -61,7 +61,7 @@
     "NeedType": "Die Art des Song muss angegeben werden.",
     "NonInstrumentalSongNeedsVocalists": "Dieser Song hat keine Sänger. Originale Instrumentalstücke müssen mit dem Schlagwort 'instrumental' gekennzeichnet sein. Instrumentale (Karaoke) Versionen von existierenden Songs sollten den Songtyp 'Instrumental' verwenden. Andernfalls, füge Sänger hinzu.",
     "RedundantEvent": "The same release event does not need to be specified for both the song and album.",
-    "RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
+    "RedundantRoles": "Die Rolle des Produzenten muss nicht angegeben werden, wenn dieser der einzige Produzent ist.",
     "UnspecifiedNames": "Der Song benötigt einen primären Namen."
   }
 }
