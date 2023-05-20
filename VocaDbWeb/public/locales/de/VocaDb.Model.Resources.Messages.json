@@ -1,12 +1,12 @@
 {
   "EntryReport": {
     "EntryVersionReportBody": "Entry '{{0}}', which you have edited, was reported with the following message: '{{1}}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.",
-    "EntryVersionReportTitle": "Entry report for {{0}}"
+    "EntryVersionReportTitle": "Eintrag-Fehlermeldung zu {{0}}"
   },
   "UserAccount": {
     "AccountCreatedSubject": "Willkommen bei {{0}}, bitte bestätige deine E-Mail.",
     "PasswordResetBody": "Du (oder jemand, der deine E-Mail-Adresse kennt) hast angefordert, dein Passwort auf VocaDB zurückzusetzen.\nDu kannst diese Aktion unter {{0}} durchführen. Wenn der Link nicht funktioniert, versuche ihn in die Adressleiste zu kopieren. Falls diese Anfrage nicht von dir stammt, kannst du diese Nachricht ignorieren.",
-    "PasswordResetSubject": "Rücksetzung des Passworts angefordert.",
+    "PasswordResetSubject": "Rücksetzung des Passwortes angefordert.",
     "VerifyEmailBody": "Bitte klicke auf den unten stehenden Link, um deine E-Mail unter {{0}} zu bestätigen.\n{{1}}?token={{2}}",
     "VerifyEmailSubject": "Bestätige deine E-Mail unter {{0}}."
   }
