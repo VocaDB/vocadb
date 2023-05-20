@@ -14,7 +14,7 @@
     "TitleFilter": "Titel '{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Benutzerdefinierten Interpret '{0}' hinzufügen",
+    "AddExtraArtist": "Benutzerdefinierten Künstler '{0}' hinzufügen",
     "ReportSent": "Fehler wurde gemeldet. Vielen Dank!",
     "Save": "Speichern",
     "ThanksForRating": "Danke für deine Bewertung!",
@@ -22,7 +22,7 @@
   },
   "Song": {
     "AddedToList": "Zur Liste hinzugefügt",
-    "ArtistFilter": "Interpret '{{0}}'",
+    "ArtistFilter": "Künstler '{{0}}'",
     "OnlyWithPVsFilter": "Nur PVs",
     "SinceFilter": "neuer als {{0}}",
     "SongTypeFilter": "Art des Songs '{{0}}'",
