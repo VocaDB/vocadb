@@ -34,7 +34,7 @@
     "AccountDisabled": "Konto deaktiviert",
     "Active": "Aktiv",
     "AdditionalPermissions": "Zusätzliche Berechtigungen",
-    "ArtistVerificationPage": "artist verification page",
+    "ArtistVerificationPage": "Künstler-Verifizierungsseite",
     "Attending": "Nehme Teil",
     "CollectionTab": "Sammlung",
     "Comments": "Kommentare",
@@ -63,7 +63,7 @@
     "OldNameUntil": "(until {{0}})",
     "OldUsernames": "Old usernames",
     "Overview": "Overview",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
+    "PossibleProducerMessage": "Bist du möglicherweise ein Künstler (z. B. Produzent, Animator oder Illustrator) der mit Vocaloid/UTAU arbeitet?\nWenn ja, sieh dir bitte die <a>Künstler-Verifizierungsseite</a> an.",
     "Power": "Berechtigungen",
     "ReportSpamming": "Report user for spamming",
     "SetAvatar": "Stelle deinen Avatar bei gravatar.com ein.",
@@ -205,7 +205,7 @@
     "SongList": "Songliste"
   },
   "RequestVerification": {
-    "ArtistTitle": "Entry of the artist whom I represent (required)",
+    "ArtistTitle": "Eintrag des Künstlers, den ich repräsentiere, (erforderlich)",
     "Login": "log in",
     "MessageTitle": "Additional message (optional)",
     "NoPrivateMessage": "The proof is provided in the URL below",
