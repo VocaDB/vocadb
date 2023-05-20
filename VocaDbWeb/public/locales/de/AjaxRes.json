@@ -10,11 +10,11 @@
     "DraftsOnlyFilter": "Entwurfsstatus",
     "ExactTitleFilter": "Genauer Titel '{{0}}'",
     "FilterPre": "Filtern durch",
-    "StartsWithTitleFilter": "Bginnt mit dem Titel '{{0}}'",
+    "StartsWithTitleFilter": "Beginnt mit dem Titel '{{0}}'",
     "TitleFilter": "Titel '{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Benutzerdefinierten Künstler '{{0}}' hinzufügen",
+    "AddExtraArtist": "Benutzerdefinierten Interpret '{0}' hinzufügen",
     "ReportSent": "Fehler wurde gemeldet. Vielen Dank!",
     "Save": "Speichern",
     "ThanksForRating": "Danke für deine Bewertung!",
@@ -22,8 +22,8 @@
   },
   "Song": {
     "AddedToList": "Zur Liste hinzugefügt",
-    "ArtistFilter": "Künstler '{{0}}'",
-    "OnlyWithPVsFilter": "nur PVs",
+    "ArtistFilter": "Interpret '{{0}}'",
+    "OnlyWithPVsFilter": "Nur PVs",
     "SinceFilter": "neuer als {{0}}",
     "SongTypeFilter": "Art des Songs '{{0}}'",
     "ThanksForRating": "Danke für die Bewertung!"
