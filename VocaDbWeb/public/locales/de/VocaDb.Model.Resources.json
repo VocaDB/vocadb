@@ -1,6 +1,6 @@
 {
   "AlbumValidationErrors": {
-    "DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
+    "DuplicateArtist": "Der gleiche Künstler kann nicht zweimal hinzugefügt werden. Bitte entferne das Duplikat und bearbeite die Rollen entsprechend.",
     "NeedArtist": "Das Album benötigt mindestens einen Künstler.",
     "NeedCover": "Das Album benötigt ein Cover.",
     "NeedReferences": "Album needs a description or links for reference.",
@@ -40,12 +40,12 @@
     "Vocalist": "Sänger",
     "Character": "Charakter",
     "SynthesizerV": "Synthesizer V",
-    "CoverArtist": "Cover Interpret"
+    "CoverArtist": "Cover-Künstler"
   },
   "ArtistValidationErrors": {
     "NeedReferences": "Der Künstler benötigt eine Beschreibung ODER mindestens einen externen Link als Beleg.",
     "NeedType": "Die Art des Künstlers muss angegeben werden.",
-    "UnnecessaryPName": "There is no need to add artist name both with and without the P suffix.",
+    "UnnecessaryPName": "Es ist nicht nötig, Künstlernamen mit und ohne das P-Suffix hinzuzufügen.",
     "UnspecifiedNames": "Der Künstler benötigt einen primären Namen."
   },
   "ExtSites": {
@@ -53,7 +53,7 @@
     "Search": "Suche {{0}}"
   },
   "SongValidationErrors": {
-    "DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
+    "DuplicateArtist": "Der gleiche Künstler kann nicht zweimal hinzugefügt werden. Bitte entferne das Duplikat und bearbeite die Rollen entsprechend.",
     "NeedArtist": "Der Song benötigt mindestens einen Künstler.",
     "NeedOriginal": "Derived songs need to have an original version specified, if it's in the database, or the original needs to be mentioned in notes.",
     "NeedProducer": "Der Song sollte mindestens eine Produzentenrolle (Komponist, Arrangeur oder Animator) aufweisen.",
