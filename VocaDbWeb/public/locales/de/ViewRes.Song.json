@@ -81,7 +81,7 @@
   "Edit": {
     "ArActions": "Actions",
     "ArAddArtistTitle": "Künstler hinzufügen",
-    "ArArtist": "Interpret",
+    "ArArtist": "Künstler",
     "ArArtistsNote": "Beachte, dass Künstler für einen Song viel schneller hinzugefügt werden können, nachdem diese bereits zum Album hinzugefügt wurden.",
     "ArRoles": "Roles",
     "ArSupport": "Support",
@@ -118,7 +118,7 @@
     "PvSupportedServices": "Supported services: YouTube, NicoNico, Vimeo, SoundCloud, Piapro, Bilibili, Creofuga and Bandcamp (tracks only).",
     "PvType": "Type",
     "PvUrl": "URL:",
-    "TabArtists": "Interpreten",
+    "TabArtists": "Künstler",
     "TabBasicInfo": "Basic info",
     "TabLyrics": "Songtext",
     "TabMedia": "Media"
