@@ -18,4 +18,5 @@ export interface EntryReportContract {
 	reportTypeName: string;
 	user?: UserApiContract;
 	version?: ArchivedVersionContract;
+	hostname?: string;
 }

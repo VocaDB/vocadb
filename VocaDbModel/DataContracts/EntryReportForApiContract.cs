@@ -3,6 +3,7 @@ using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts;
 
@@ -36,7 +37,10 @@ public sealed record EntryReportForApiContract
 	[DataMember]
 	public ArchivedObjectVersionForApiContract? Version { get; init; }
 
-	public EntryReportForApiContract(EntryReport report, EntryForApiContract entry, IUserIconFactory userIconFactory)
+	[DataMember]
+	public string? Hostname { get; init; }
+
+	public EntryReportForApiContract(EntryReport report, EntryForApiContract entry, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext)
 	{
 		ParamIs.NotNull(() => report);
 		ClosedAt = report.ClosedAt;
@@ -48,5 +52,6 @@ public sealed record EntryReportForApiContract
 		ReportTypeName = report.ReportTypeName();
 		User = (report.User != null ? new UserForApiContract(report.User, userIconFactory, UserOptionalFields.MainPicture) : null);
 		Version = (report.VersionBase != null) ? new ArchivedObjectVersionForApiContract(report.VersionBase, false, "", userIconFactory) : null;
+		Hostname = permissionContext.HasPermission(PermissionToken.ManageIPRules) ? report.Hostname : null;
 	}
 }

@@ -293,7 +293,8 @@ public class AdminService : ServiceBase
 					EntryOptionalFields.AdditionalNames,
 					LanguagePreference
 				),
-				_userIconFactory
+				_userIconFactory,
+				PermissionContext
 			)).ToArray();
 		});
 	}
