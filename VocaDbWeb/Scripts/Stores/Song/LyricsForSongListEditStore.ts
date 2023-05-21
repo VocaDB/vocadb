@@ -21,7 +21,7 @@ export class LyricsForSongEditStore {
 
 		if (contract) {
 			this.id = contract.id!;
-			this.cultureCodes = contract.cultureCodes!;
+			this.cultureCodes = contract.cultureCodes ?? [''];
 			this.language = contract.language!;
 			this.source = contract.source;
 			this.translationType = contract.translationType;
@@ -68,6 +68,10 @@ export class LyricsForSongEditStore {
 
 	@computed get showLanguageSelection(): boolean {
 		return this.translationType !== TranslationType[TranslationType.Romanized];
+	}
+
+	@computed get allowMultipleLanguages(): boolean {
+		return this.translationType === TranslationType[TranslationType.Original];
 	}
 }
 
