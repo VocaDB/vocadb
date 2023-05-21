@@ -71,7 +71,7 @@ const LyricsForSongEdit = observer(
 										label={t('ViewRes.Song:Edit.LyLanguage')}
 										dangerouslySetInnerHTML={{
 											__html:
-												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* LOC */,
+												'If multiple languages match, click "Add" to add more languages. If none of the options match, select \'Other/Unknown\'.' /* LOC */,
 										}}
 									/>{' '}
 									<tbody>
