@@ -38,7 +38,7 @@ const AdminViewEntryReport = ({
 						<UserIconLink_UserForApiContract user={entryReport.user} />
 					</>
 				)}
-				{!entryReport.user && <p>System</p>}
+				{!entryReport.user && <p>{entryReport.hostname ?? 'System'}</p>}
 			</td>
 			<td>
 				<EntryLink entry={entryReport.entry} />
