@@ -115,7 +115,7 @@ const LyricsForSongEdit = observer(
 											),
 										)}
 									</tbody>
-									{lyricsForSongEditStore.cultureCodes.length <= 5 && (
+									{lyricsForSongEditStore.cultureCodes.length < 3 && (
 										<SafeAnchor
 											onClick={(): void =>
 												lyricsForSongEditStore.addCultureCode('')
