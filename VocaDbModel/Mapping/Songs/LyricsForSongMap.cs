@@ -20,6 +20,6 @@ public class LyricsForSongMap : ClassMap<LyricsForSong>
 		Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 		References(m => m.Song).Not.Nullable();
 
-		Map(m => m.RawCultureCode).Column("[CultureCode]").Length(20).Not.Nullable();
+		Map(m => m.RawCultureCode).Column("[CultureCode]").Length(100).Not.Nullable();
 	}
 }

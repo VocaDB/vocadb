@@ -40,19 +40,14 @@ const LyricsForSongEdit = observer(
 							{' '}
 							<span>
 								(
-								{
-									userLanguageCultures[lyricsForSongEditStore.cultureCodes[0]]
-										? `${
-												userLanguageCultures[
-													lyricsForSongEditStore.cultureCodes[0]
-												].nativeName
-										  } (${
-												userLanguageCultures[
-													lyricsForSongEditStore.cultureCodes[0]
-												].englishName
-										  })`
-										: 'Other/Unknown' /* LOC */
-								}
+								{lyricsForSongEditStore.cultureCodes
+									.map(
+										(code) =>
+											userLanguageCultures[code]
+												? `${userLanguageCultures[code].nativeName} (${userLanguageCultures[code].englishName})`
+												: 'Other/Unknown' /* LOC */,
+									)
+									.join(' / ')}
 								)
 							</span>
 						</>
@@ -76,7 +71,7 @@ const LyricsForSongEdit = observer(
 										label={t('ViewRes.Song:Edit.LyLanguage')}
 										dangerouslySetInnerHTML={{
 											__html:
-												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* LOC */,
+												'If multiple languages match, click "Add" to add more languages. If none of the options match, select \'Other/Unknown\'.' /* LOC */,
 										}}
 									/>{' '}
 									<tbody>
@@ -100,32 +95,37 @@ const LyricsForSongEdit = observer(
 															}
 														/>
 													</td>
-													<td>
-														<SafeAnchor
-															onClick={(): void =>
-																lyricsForSongEditStore.removeCultureCode(index)
-															}
-															href="#"
-															className="nameDelete textLink deleteLink"
-														>
-															{t('ViewRes:Shared.Delete')}
-														</SafeAnchor>
-													</td>
+													{lyricsForSongEditStore.allowMultipleLanguages && (
+														<td>
+															<SafeAnchor
+																onClick={(): void =>
+																	lyricsForSongEditStore.removeCultureCode(
+																		index,
+																	)
+																}
+																href="#"
+																className="nameDelete textLink deleteLink"
+															>
+																{t('ViewRes:Shared.Delete')}
+															</SafeAnchor>
+														</td>
+													)}
 												</tr>
 											),
 										)}
 									</tbody>
-									{lyricsForSongEditStore.cultureCodes.length <= 5 && (
-										<SafeAnchor
-											onClick={(): void =>
-												lyricsForSongEditStore.addCultureCode('')
-											}
-											href="#"
-											className="textLink addLink"
-										>
-											{t('ViewRes:Shared.Add')}
-										</SafeAnchor>
-									)}
+									{lyricsForSongEditStore.allowMultipleLanguages &&
+										lyricsForSongEditStore.cultureCodes.length < 3 && (
+											<SafeAnchor
+												onClick={(): void =>
+													lyricsForSongEditStore.addCultureCode('')
+												}
+												href="#"
+												className="textLink addLink"
+											>
+												{t('ViewRes:Shared.Add')}
+											</SafeAnchor>
+										)}
 								</p>
 							)}
 							<div>

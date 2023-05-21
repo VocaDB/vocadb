@@ -21,9 +21,13 @@ public static class NicoLogHelper
 	{
 		var url = $"https://nicolog.jp/watch/{videoId}";
 
-		SslHelper.ForceStrongTLS();
+		// NicoLog only support TLS 1.3
+		var handler = new HttpClientHandler
+		{
+			SslProtocols = System.Security.Authentication.SslProtocols.Tls13
+		};
 
-		using var client = new HttpClient();
+		using var client = new HttpClient(handler);
 		client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 		HttpResponseMessage response;
 

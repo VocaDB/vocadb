@@ -6,6 +6,20 @@ namespace VocaDb.Migrations;
 
 // Migration version format: YYYY_MM_DD_HHmm
 
+[Migration(2023_05_21_0245)]
+public class IncreaseCultureCodeLength : Migration
+{
+	public override void Up()
+	{
+		Delete.DefaultConstraint().OnTable(TableNames.LyricsForSongs).OnColumn("CultureCode");
+		Alter.Column("CultureCode").OnTable(TableNames.LyricsForSongs).AsString(100).NotNullable().WithDefaultValue(string.Empty);
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2022_03_19_0300)]
 public class UserPicture : AutoReversingMigration
 {
