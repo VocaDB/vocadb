@@ -1,13 +1,13 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "Defekter PV",
+    "BrokenPV": "Defektes PV",
     "Duplicate": "Doppelter Eintrag",
     "Inappropriate": "Unangebrachter Inhalt",
     "InvalidInfo": "Falsche oder fehlende Information",
     "MaliciousIP": "Böswillige IP",
     "Other": "Anderes (in den Anmerkungen schildern)",
     "OwnershipClaim": "Besitzanspruch",
-    "RemovePermissions": "Restricted editing",
+    "RemovePermissions": "Bearbeitung eingeschränkt",
     "Spamming": "Spammen"
   },
   "EntryTypeNames": {
@@ -25,7 +25,7 @@
     "Venue": "Veranstaltungsort"
   },
   "WebhookEventNames": {
-    "EntryReport": "Eintrag melden",
+    "EntryReport": "Eintrag-Fehlermeldung",
     "User": "Benutzer"
   }
 }

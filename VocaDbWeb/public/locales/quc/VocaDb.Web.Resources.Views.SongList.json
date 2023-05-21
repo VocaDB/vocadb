@@ -1,0 +1,31 @@
+{
+  "Import": {
+    "Accept": "crwdns16809:0crwdne16809:0",
+    "InvalidUrlError": "crwdns16811:0crwdne16811:0",
+    "ItemsLoaded": "crwdns16813:0crwdne16813:0",
+    "ListDescription": "crwdns16815:0crwdne16815:0",
+    "ListName": "crwdns16817:0crwdne16817:0",
+    "LoadMoreHelp": "crwdns16819:0crwdne16819:0",
+    "MylistDescription": "crwdns16821:0crwdne16821:0",
+    "NicoPV": "crwdns16823:0crwdne16823:0",
+    "OnlyRanked": "crwdns16825:0crwdne16825:0",
+    "Order": "crwdns16827:0crwdne16827:0",
+    "ParseAll": "crwdns16829:0crwdne16829:0",
+    "Process": "crwdns16831:0crwdne16831:0",
+    "SongMissing": "crwdns16833:0crwdne16833:0",
+    "SongsInList": "crwdns16835:0crwdne16835:0",
+    "SongsMissingError": "crwdns16837:0crwdne16837:0",
+    "Submit": "crwdns16839:0crwdne16839:0",
+    "Title": "crwdns16841:0crwdne16841:0",
+    "TotalSongs": "crwdns16843:0crwdne16843:0",
+    "UnableToParse": "crwdns16845:0crwdne16845:0",
+    "UrlDescription": "crwdns16847:0crwdne16847:0",
+    "UrlLabel": "crwdns16849:0crwdne16849:0",
+    "VocaDbEntry": "crwdns16851:0crwdne16851:0"
+  },
+  "SongListSortRuleNames": {
+    "CreateDate": "crwdns16853:0crwdne16853:0",
+    "Date": "crwdns16855:0crwdne16855:0",
+    "Name": "crwdns16857:0crwdne16857:0"
+  }
+}

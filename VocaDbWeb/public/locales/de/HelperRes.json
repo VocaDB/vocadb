@@ -7,7 +7,7 @@
     "EntryReleaseEvent": "event",
     "EntrySong": "Song",
     "EntrySongList": "Songliste",
-    "EntryTag": "tag",
+    "EntryTag": "Schlagwort",
     "EntryVenue": "venue",
     "Someone": "Ein Mitwirkender",
     "Updated": "aktualisierte einen {{0}}:"
@@ -33,7 +33,7 @@
     "SeeGuide": "Anleitung",
     "SeeGuidePost": "für weitere Informationen.",
     "SeeGuidePre": "See the",
-    "StatusDescriptionApproved": "Genehmigte Einreichungen wurden von einen vertrauenswürdigen Benutzer geprüft. Das Bearbeiten der zugelassenen Einreichungen ist begrenzt.",
+    "StatusDescriptionApproved": "Genehmigte Einreichungen wurden von einem vertrauenswürdigen Benutzer geprüft. Das Bearbeiten der zugelassenen Einreichungen ist begrenzt.",
     "StatusDescriptionDraft": "Bei den Entwurfseinreichungen fehlen einige benötigte Informationen.",
     "StatusDescriptionFinished": "Fertige Einreichungen beinhalten alle benötigten Informationen aber sind bislang noch nicht genehmigt worden.",
     "StatusDescriptionLocked": "Gesperrte Einreichungen können nur von Mitarbeitern bearbeitet werden.",

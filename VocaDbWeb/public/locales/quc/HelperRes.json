@@ -1,0 +1,49 @@
+{
+  "ActivityFeedHelper": {
+    "At": "crwdns14095:0crwdne14095:0",
+    "CreatedNew": "crwdns14097:0{{0}}crwdne14097:0",
+    "EntryAlbum": "crwdns14099:0crwdne14099:0",
+    "EntryArtist": "crwdns14101:0crwdne14101:0",
+    "EntryReleaseEvent": "crwdns14103:0crwdne14103:0",
+    "EntrySong": "crwdns14105:0crwdne14105:0",
+    "EntrySongList": "crwdns14107:0crwdne14107:0",
+    "EntryTag": "crwdns14109:0crwdne14109:0",
+    "EntryVenue": "crwdns14111:0crwdne14111:0",
+    "Someone": "crwdns14113:0crwdne14113:0",
+    "Updated": "crwdns14115:0{{0}}crwdne14115:0"
+  },
+  "AlbumHelpers": {
+    "Released": "crwdns14117:0crwdne14117:0"
+  },
+  "Helper": {
+    "Added": "crwdns14119:0crwdne14119:0",
+    "DraftIconTitle": "crwdns14121:0crwdne14121:0",
+    "DraftMessage": "crwdns14123:0crwdne14123:0",
+    "EntryIsMissingInformation": "crwdns14125:0crwdne14125:0",
+    "EntryValidationNoErrors": "crwdns14127:0crwdne14127:0",
+    "EntryValidationNoErrorsDraft": "crwdns14129:0crwdne14129:0",
+    "EntryValidationWarningDetails": "crwdns14131:0crwdne14131:0",
+    "GitHubMarkdown": "crwdns14133:0crwdne14133:0",
+    "IsSupportedForFormatting": "crwdns14135:0crwdne14135:0",
+    "NameLangTitle": "crwdns14137:0crwdne14137:0",
+    "NameNewRow": "crwdns14139:0crwdne14139:0",
+    "NameValueTitle": "crwdns14141:0crwdne14141:0",
+    "ReturnWithoutSaving": "crwdns14143:0crwdne14143:0",
+    "SaveChanges": "crwdns14145:0crwdne14145:0",
+    "SeeGuide": "crwdns14147:0crwdne14147:0",
+    "SeeGuidePost": "crwdns14149:0crwdne14149:0",
+    "SeeGuidePre": "crwdns14151:0crwdne14151:0",
+    "StatusDescriptionApproved": "crwdns14153:0crwdne14153:0",
+    "StatusDescriptionDraft": "crwdns14155:0crwdne14155:0",
+    "StatusDescriptionFinished": "crwdns14157:0crwdne14157:0",
+    "StatusDescriptionLocked": "crwdns14159:0crwdne14159:0",
+    "UploadPictureInfo": "crwdns14161:0{{0}}crwdnd14161:0{{1}}crwdne14161:0",
+    "WebLinkCategoryTitle": "crwdns14163:0crwdne14163:0",
+    "WebLinkDescriptionTitle": "crwdns14165:0crwdne14165:0",
+    "WebLinkNewRow": "crwdns14167:0crwdne14167:0",
+    "WebLinkUrlTitle": "crwdns14169:0crwdne14169:0"
+  },
+  "SongHelpers": {
+    "FromAlbum": "crwdns14171:0crwdne14171:0"
+  }
+}

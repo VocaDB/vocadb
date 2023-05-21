@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "crwdns16601:0crwdne16601:0",
+    "NewAlbumInfo": "crwdns16603:0crwdne16603:0"
+  },
+  "ArtistRes": {
+    "AuthoredBy": "crwdns16605:0crwdne16605:0",
+    "NewArtistExternalLink": "crwdns16607:0crwdne16607:0"
+  },
+  "HomeRes": {
+    "SiteDescription": "crwdns16609:0crwdne16609:0",
+    "Welcome": "crwdns16611:0crwdne16611:0",
+    "WelcomeSubtitle": "crwdns16613:0crwdne16613:0"
+  },
+  "LayoutRes": {
+    "Keywords": "crwdns16615:0crwdne16615:0",
+    "PaypalDonateTitle": "crwdns16617:0crwdne16617:0",
+    "SiteName": "crwdns16619:0crwdne16619:0",
+    "SiteTitle": "crwdns16621:0crwdne16621:0"
+  },
+  "SongRes": {
+    "NewSongInfo": "crwdns16623:0crwdne16623:0",
+    "RankingsTitle": "crwdns16625:0crwdne16625:0"
+  }
+}

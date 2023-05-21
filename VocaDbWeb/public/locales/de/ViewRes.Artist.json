@@ -5,7 +5,7 @@
     "ArtistType": "Art des Künstlers",
     "Description": "Bitte schreibe eine kurze Beschreibung über den Künstler (optional, aber empfohlen)",
     "Draft": "Diese Einreichung ist ein Entwurf.",
-    "ExternalLink": "Externer Link (zu einer Künstlerseite, Hatsune Miku Wiki, NND MyList etc.)",
+    "ExternalLink": "Externer Link (zu einer Künstler-Webseite, Hatsune Miku Wiki, NND MyList etc.)",
     "Name": "Name (mindestens einen)",
     "NameHelp": "Wenn die Einreichung einen nicht-englischen Namen (zum Beispiel japanisch) hat oder die Sprache des Namens unbekannt ist, füge diesen in das nicht-englische Namensfeld ein. Wenn du auch den romanisierten Namen kennst, kannst du diesen ebenfalls beifügen. Wenn der offizielle Name der Einreichung in der englischen Sprache vorliegt, kannst du diesen in das englische Namensfeld eintragen.",
     "NeedWebLinkOrDescription": "Du musst eine Beschreibung ODER einen externen Link hinzufügen.",
@@ -72,10 +72,10 @@
     "BaNames": "Primary name (in one or more languages)",
     "BaPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB.",
     "BaReleaseDate": "Voicebank release date",
-    "EditTitle": "Edit artist - {{0}}",
+    "EditTitle": "Künstler bearbeiten - {{0}}",
     "PiAdd": "Add",
     "PiPictureDescription": "Picture description",
-    "PiPicturesNote": "Please only upload pictures relevant to this artist, nothing else.",
+    "PiPicturesNote": "Bitte lade nur Bilder hoch, die für diesen Künstler relevant sind.",
     "TabAdditionalPictures": "Additional pictures"
   },
   "MostUsedLanguages": "Most used language(s):"

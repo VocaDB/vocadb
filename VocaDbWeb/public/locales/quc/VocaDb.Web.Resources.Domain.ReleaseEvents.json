@@ -1,0 +1,43 @@
+{
+  "ArtistEventRoleNames": {
+    "Dancer": "crwdns16645:0crwdne16645:0",
+    "Default": "crwdns16647:0crwdne16647:0",
+    "DJ": "crwdns16649:0crwdne16649:0",
+    "Instrumentalist": "crwdns16651:0crwdne16651:0",
+    "Organizer": "crwdns16653:0crwdne16653:0",
+    "Other": "crwdns16655:0crwdne16655:0",
+    "OtherPerformer": "crwdns16657:0crwdne16657:0",
+    "Promoter": "crwdns16659:0crwdne16659:0",
+    "VJ": "crwdns16661:0crwdne16661:0",
+    "Vocalist": "crwdns16663:0crwdne16663:0",
+    "VoiceManipulator": "crwdns16665:0crwdne16665:0"
+  },
+  "EventCategoryNames": {
+    "AlbumRelease": "crwdns16667:0crwdne16667:0",
+    "Anniversary": "crwdns16669:0crwdne16669:0",
+    "Club": "crwdns16671:0crwdne16671:0",
+    "Concert": "crwdns16673:0crwdne16673:0",
+    "Contest": "crwdns16675:0crwdne16675:0",
+    "Festival": "crwdns16677:0crwdne16677:0",
+    "Convention": "crwdns16679:0crwdne16679:0",
+    "Other": "crwdns16681:0crwdne16681:0",
+    "Unspecified": "crwdns16683:0crwdne16683:0"
+  },
+  "EventSortRuleNames": {
+    "AdditionDate": "crwdns16685:0crwdne16685:0",
+    "Date": "crwdns16687:0crwdne16687:0",
+    "Name": "crwdns16689:0crwdne16689:0",
+    "SeriesName": "crwdns16691:0crwdne16691:0",
+    "VenueName": "crwdns16693:0crwdne16693:0"
+  },
+  "ReleaseEventSeriesEditableFieldNames": {
+    "Category": "crwdns16695:0crwdne16695:0",
+    "Description": "crwdns16697:0crwdne16697:0",
+    "Name": "crwdns16699:0crwdne16699:0",
+    "Names": "crwdns16701:0crwdne16701:0",
+    "OriginalName": "crwdns16703:0crwdne16703:0",
+    "Picture": "crwdns16705:0crwdne16705:0",
+    "Status": "crwdns16707:0crwdne16707:0",
+    "WebLinks": "crwdns16709:0crwdne16709:0"
+  }
+}

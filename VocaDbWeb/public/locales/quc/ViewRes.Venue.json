@@ -1,0 +1,16 @@
+{
+  "Details": {
+    "Address": "crwdns16001:0crwdne16001:0",
+    "Aliases": "crwdns16003:0crwdne16003:0",
+    "Country": "crwdns16005:0crwdne16005:0",
+    "Venue": "crwdns16007:0crwdne16007:0"
+  },
+  "Edit": {
+    "Address": "crwdns16009:0crwdne16009:0",
+    "Coordinates": "crwdns16011:0crwdne16011:0",
+    "Country": "crwdns16013:0crwdne16013:0",
+    "Latitude": "crwdns16015:0crwdne16015:0",
+    "Location": "crwdns16017:0crwdne16017:0",
+    "Longitude": "crwdns16019:0crwdne16019:0"
+  }
+}

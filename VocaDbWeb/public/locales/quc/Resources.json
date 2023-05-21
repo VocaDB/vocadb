@@ -1,0 +1,319 @@
+{
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "crwdns14173:0crwdne14173:0",
+    "CreateDateDescending": "crwdns14175:0crwdne14175:0"
+  },
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "crwdns14177:0crwdne14177:0",
+    "Created": "crwdns14179:0crwdne14179:0",
+    "Deleted": "crwdns14181:0crwdne14181:0",
+    "Merged": "crwdns14183:0crwdne14183:0",
+    "PropertiesUpdated": "crwdns14185:0crwdne14185:0",
+    "Restored": "crwdns14187:0crwdne14187:0",
+    "Reverted": "crwdns14189:0crwdne14189:0",
+    "Unknown": "crwdns14191:0crwdne14191:0"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "crwdns14193:0crwdne14193:0",
+    "Ordered": "crwdns14195:0crwdne14195:0",
+    "Owned": "crwdns14197:0crwdne14197:0",
+    "Wishlisted": "crwdns14199:0crwdne14199:0"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "crwdns14201:0crwdne14201:0",
+    "Video": "crwdns14203:0crwdne14203:0"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "crwdns14205:0crwdne14205:0",
+    "Cover": "crwdns14207:0crwdne14207:0",
+    "Description": "crwdns14209:0crwdne14209:0",
+    "DiscType": "crwdns14211:0crwdne14211:0",
+    "Names": "crwdns14213:0crwdne14213:0",
+    "Nothing": "crwdns14215:0crwdne14215:0",
+    "OriginalName": "crwdns14217:0crwdne14217:0",
+    "OriginalRelease": "crwdns14219:0crwdne14219:0",
+    "Pictures": "crwdns14221:0crwdne14221:0",
+    "PVs": "crwdns14223:0crwdne14223:0",
+    "Status": "crwdns14225:0crwdne14225:0",
+    "Tracks": "crwdns14227:0crwdne14227:0",
+    "WebLinks": "crwdns14229:0crwdne14229:0",
+    "Barcode": "crwdns14231:0crwdne14231:0",
+    "Identifiers": "crwdns14233:0crwdne14233:0",
+    "Discs": "crwdns14235:0crwdne14235:0"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "crwdns14237:0crwdne14237:0",
+    "Other": "crwdns14239:0crwdne14239:0",
+    "PhysicalDisc": "crwdns14241:0crwdne14241:0"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "crwdns14243:0crwdne14243:0",
+    "CollectionCount": "crwdns14245:0crwdne14245:0",
+    "Name": "crwdns14247:0crwdne14247:0",
+    "RatingAverage": "crwdns14249:0crwdne14249:0",
+    "RatingTotal": "crwdns14251:0crwdne14251:0",
+    "ReleaseDate": "crwdns14253:0crwdne14253:0"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "crwdns14255:0crwdne14255:0",
+    "Deleted": "crwdns14257:0crwdne14257:0",
+    "Merged": "crwdns14259:0crwdne14259:0",
+    "PropertiesUpdated": "crwdns14261:0crwdne14261:0",
+    "Restored": "crwdns14263:0crwdne14263:0",
+    "Reverted": "crwdns14265:0crwdne14265:0",
+    "Unknown": "crwdns14267:0crwdne14267:0"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "crwdns14269:0crwdne14269:0",
+    "ArtistType": "crwdns14271:0crwdne14271:0",
+    "BaseVoicebank": "crwdns14273:0crwdne14273:0",
+    "Description": "crwdns14275:0crwdne14275:0",
+    "Groups": "crwdns14277:0crwdne14277:0",
+    "Names": "crwdns14279:0crwdne14279:0",
+    "Nothing": "crwdns14281:0crwdne14281:0",
+    "OriginalName": "crwdns14283:0crwdne14283:0",
+    "Picture": "crwdns14285:0crwdne14285:0",
+    "Pictures": "crwdns14287:0crwdne14287:0",
+    "ReleaseDate": "crwdns14289:0crwdne14289:0",
+    "Status": "crwdns14291:0crwdne14291:0",
+    "WebLinks": "crwdns14293:0crwdne14293:0"
+  },
+  "ArtistRoleNames": {
+    "Animator": "crwdns14295:0crwdne14295:0",
+    "Arranger": "crwdns14297:0crwdne14297:0",
+    "Chorus": "crwdns14299:0crwdne14299:0",
+    "Composer": "crwdns14301:0crwdne14301:0",
+    "Default": "crwdns14303:0crwdne14303:0",
+    "Distributor": "crwdns14305:0crwdne14305:0",
+    "Encoder": "crwdns14307:0crwdne14307:0",
+    "Illustrator": "crwdns14309:0crwdne14309:0",
+    "Instrumentalist": "crwdns14311:0crwdne14311:0",
+    "Lyricist": "crwdns14313:0crwdne14313:0",
+    "Mastering": "crwdns14315:0crwdne14315:0",
+    "Mixer": "crwdns14317:0crwdne14317:0",
+    "Other": "crwdns14319:0crwdne14319:0",
+    "Publisher": "crwdns14321:0crwdne14321:0",
+    "VocalDataProvider": "crwdns14323:0crwdne14323:0",
+    "Vocalist": "crwdns14325:0crwdne14325:0",
+    "VoiceManipulator": "crwdns14327:0crwdne14327:0"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "crwdns14329:0crwdne14329:0",
+    "AdditionDateAsc": "crwdns14331:0crwdne14331:0",
+    "FollowerCount": "crwdns14333:0crwdne14333:0",
+    "Name": "crwdns14335:0crwdne14335:0",
+    "ReleaseDate": "crwdns14337:0crwdne14337:0",
+    "SongCount": "crwdns14339:0crwdne14339:0",
+    "SongRating": "crwdns14341:0crwdne14341:0"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "crwdns14343:0crwdne14343:0",
+    "CreateDateDescending": "crwdns14345:0crwdne14345:0"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "crwdns14347:0crwdne14347:0",
+    "EntryMergedTo": "crwdns14349:0crwdne14349:0",
+    "EntryStatusExplanation": "crwdns14351:0crwdne14351:0",
+    "Locked": "crwdns14353:0crwdne14353:0",
+    "NameLanguageHelp": "crwdns14355:0crwdne14355:0",
+    "RevisionHidden": "crwdns14357:0crwdne14357:0"
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "crwdns14359:0crwdne14359:0",
+    "English": "crwdns14361:0crwdne14361:0",
+    "Japanese": "crwdns14363:0crwdne14363:0",
+    "Romaji": "crwdns14365:0crwdne14365:0",
+    "Unspecified": "crwdns14367:0crwdne14367:0"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "crwdns14369:0crwdne14369:0",
+    "Compilation": "crwdns14371:0crwdne14371:0",
+    "EP": "crwdns14373:0crwdne14373:0",
+    "Other": "crwdns14375:0crwdne14375:0",
+    "Single": "crwdns14377:0crwdne14377:0",
+    "SplitAlbum": "crwdns14379:0crwdne14379:0",
+    "Video": "crwdns14381:0crwdne14381:0"
+  },
+  "EntryEditEventNames": {
+    "Created": "crwdns14383:0crwdne14383:0",
+    "Deleted": "crwdns14385:0crwdne14385:0",
+    "Restored": "crwdns14387:0crwdne14387:0",
+    "Updated": "crwdns14389:0crwdne14389:0"
+  },
+  "EntryStatusNames": {
+    "Approved": "crwdns14391:0crwdne14391:0",
+    "Draft": "crwdns14393:0crwdne14393:0",
+    "Finished": "crwdns14395:0crwdne14395:0",
+    "Locked": "crwdns14397:0crwdne14397:0"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "crwdns14399:0crwdne14399:0",
+    "Admin": "crwdns14401:0crwdne14401:0",
+    "AddRawFileMedia": "crwdns14403:0crwdne14403:0",
+    "ApplyAnyTag": "crwdns14405:0crwdne14405:0",
+    "ApproveEntries": "crwdns14407:0crwdne14407:0",
+    "BulkDeletePVs": "crwdns14409:0crwdne14409:0",
+    "CreateComments": "crwdns14411:0crwdne14411:0",
+    "DeleteComments": "crwdns14413:0crwdne14413:0",
+    "DeleteEntries": "crwdns14415:0crwdne14415:0",
+    "DesignatedStaff": "crwdns14417:0crwdne14417:0",
+    "DisableUsers": "crwdns14419:0crwdne14419:0",
+    "EditAllSongLists": "crwdns14421:0crwdne14421:0",
+    "EditFeaturedLists": "crwdns14423:0crwdne14423:0",
+    "EditNews": "crwdns14425:0crwdne14425:0",
+    "EditProfile": "crwdns14427:0crwdne14427:0",
+    "EditTags": "crwdns14429:0crwdne14429:0",
+    "LockEntries": "crwdns14431:0crwdne14431:0",
+    "ManageDatabase": "crwdns14433:0crwdne14433:0",
+    "ManageEntryReports": "crwdns14435:0crwdne14435:0",
+    "ManageEventSeries": "crwdns14437:0crwdne14437:0",
+    "ManageIPRules": "crwdns14439:0crwdne14439:0",
+    "ManageUserPermissions": "crwdns14441:0crwdne14441:0",
+    "MergeEntries": "crwdns14443:0crwdne14443:0",
+    "MikuDbImport": "crwdns14445:0crwdne14445:0",
+    "MoveToTrash": "crwdns14447:0crwdne14447:0",
+    "Nothing": "crwdns14449:0crwdne14449:0",
+    "ReadRecentComments": "crwdns14451:0crwdne14451:0",
+    "RemoveEditPermission": "crwdns14453:0crwdne14453:0",
+    "RemoveTagUsages": "crwdns14455:0crwdne14455:0",
+    "RestoreRevisions": "crwdns14457:0crwdne14457:0",
+    "UploadMedia": "crwdns14459:0crwdne14459:0",
+    "ViewAuditLog": "crwdns14461:0crwdne14461:0",
+    "ViewHiddenRatings": "crwdns14463:0crwdne14463:0",
+    "ViewHiddenRevisions": "crwdns14465:0crwdne14465:0",
+    "ManageWebhooks": "crwdns14467:0crwdne14467:0",
+    "CreateDatabaseDump": "crwdns14469:0crwdne14469:0"
+  },
+  "PVTypeDescriptions": {
+    "Original": "crwdns14471:0crwdne14471:0",
+    "Other": "crwdns14473:0crwdne14473:0",
+    "Reprint": "crwdns14475:0crwdne14475:0"
+  },
+  "PVTypeNames": {
+    "Original": "crwdns14477:0crwdne14477:0",
+    "Other": "crwdns14479:0crwdne14479:0",
+    "Reprint": "crwdns14481:0crwdne14481:0"
+  },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "crwdns14483:0crwdne14483:0"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Artists": "crwdns14485:0crwdne14485:0",
+    "Category": "crwdns14487:0crwdne14487:0",
+    "Date": "crwdns14489:0crwdne14489:0",
+    "Description": "crwdns14491:0crwdne14491:0",
+    "MainPicture": "crwdns14493:0crwdne14493:0",
+    "Names": "crwdns14495:0crwdne14495:0",
+    "OriginalName": "crwdns14497:0crwdne14497:0",
+    "PVs": "crwdns14499:0crwdne14499:0",
+    "Series": "crwdns14501:0crwdne14501:0",
+    "SeriesNumber": "crwdns14503:0crwdne14503:0",
+    "SeriesSuffix": "crwdns14505:0crwdne14505:0",
+    "SongList": "crwdns14507:0crwdne14507:0",
+    "Status": "crwdns14509:0crwdne14509:0",
+    "Venue": "crwdns14511:0crwdne14511:0",
+    "VenueName": "crwdns14513:0crwdne14513:0",
+    "WebLinks": "crwdns14515:0crwdne14515:0"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "crwdns14517:0crwdne14517:0",
+    "Created": "crwdns14519:0crwdne14519:0",
+    "Deleted": "crwdns14521:0crwdne14521:0",
+    "Merged": "crwdns14523:0crwdne14523:0",
+    "PropertiesUpdated": "crwdns14525:0crwdne14525:0",
+    "Restored": "crwdns14527:0crwdne14527:0",
+    "Reverted": "crwdns14529:0crwdne14529:0",
+    "Unknown": "crwdns14531:0crwdne14531:0"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "crwdns14533:0crwdne14533:0",
+    "Groups": "crwdns14535:0crwdne14535:0",
+    "Length": "crwdns14537:0crwdne14537:0",
+    "Lyrics": "crwdns14539:0crwdne14539:0",
+    "Names": "crwdns14541:0crwdne14541:0",
+    "Notes": "crwdns14543:0crwdne14543:0",
+    "Nothing": "crwdns14545:0crwdne14545:0",
+    "OriginalName": "crwdns14547:0crwdne14547:0",
+    "OriginalVersion": "crwdns14549:0crwdne14549:0",
+    "PublishDate": "crwdns14551:0crwdne14551:0",
+    "PVs": "crwdns14553:0crwdne14553:0",
+    "SongType": "crwdns14555:0crwdne14555:0",
+    "Status": "crwdns14557:0crwdne14557:0",
+    "WebLinks": "crwdns14559:0crwdne14559:0",
+    "ReleaseEvent": "crwdns14561:0crwdne14561:0",
+    "Bpm": "crwdns14563:0crwdne14563:0"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "crwdns14565:0crwdne14565:0",
+    "EventDate": "crwdns14567:0crwdne14567:0",
+    "FeaturedCategory": "crwdns14569:0crwdne14569:0",
+    "Name": "crwdns14571:0crwdne14571:0",
+    "Songs": "crwdns14573:0crwdne14573:0",
+    "Status": "crwdns14575:0crwdne14575:0",
+    "Thumbnail": "crwdns14577:0crwdne14577:0"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "crwdns14579:0crwdne14579:0",
+    "Nothing": "crwdns14581:0crwdne14581:0",
+    "Other": "crwdns14583:0crwdne14583:0",
+    "Pools": "crwdns14585:0crwdne14585:0",
+    "VocaloidRanking": "crwdns14587:0crwdne14587:0"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "crwdns14589:0crwdne14589:0",
+    "FavoritedTimes": "crwdns14591:0crwdne14591:0",
+    "Name": "crwdns14593:0crwdne14593:0",
+    "None": "crwdns14595:0crwdne14595:0",
+    "PublishDate": "crwdns14597:0crwdne14597:0",
+    "RatingScore": "crwdns14599:0crwdne14599:0",
+    "TagUsageCount": "crwdns14601:0crwdne14601:0",
+    "SongType": "crwdns16865:0crwdne16865:0"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "crwdns14603:0crwdne14603:0",
+    "Like": "crwdns14605:0crwdne14605:0"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "crwdns14607:0crwdne14607:0",
+    "CategoryName": "crwdns14609:0crwdne14609:0",
+    "Description": "crwdns14611:0crwdne14611:0",
+    "HideFromSuggestions": "crwdns14613:0crwdne14613:0",
+    "Names": "crwdns14615:0crwdne14615:0",
+    "OriginalName": "crwdns14617:0crwdne14617:0",
+    "Parent": "crwdns14619:0crwdne14619:0",
+    "Picture": "crwdns14621:0crwdne14621:0",
+    "RelatedTags": "crwdns14623:0crwdne14623:0",
+    "Status": "crwdns14625:0crwdne14625:0",
+    "Targets": "crwdns14627:0crwdne14627:0",
+    "WebLinks": "crwdns14629:0crwdne14629:0"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "crwdns14631:0crwdne14631:0",
+    "PrivateMessagesFromAdmins": "crwdns14633:0crwdne14633:0",
+    "PrivateMessagesFromAll": "crwdns14635:0crwdne14635:0"
+  },
+  "UserGroupNames": {
+    "Admin": "crwdns14637:0crwdne14637:0",
+    "Limited": "crwdns14639:0crwdne14639:0",
+    "Moderator": "crwdns14641:0crwdne14641:0",
+    "Nothing": "crwdns14643:0crwdne14643:0",
+    "Regular": "crwdns14645:0crwdne14645:0",
+    "Trusted": "crwdns14647:0crwdne14647:0"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "crwdns14649:0crwdne14649:0",
+    "AddressCountryCode": "crwdns14651:0crwdne14651:0",
+    "Coordinates": "crwdns14653:0crwdne14653:0",
+    "Description": "crwdns14655:0crwdne14655:0",
+    "Names": "crwdns14657:0crwdne14657:0",
+    "OriginalName": "crwdns14659:0crwdne14659:0",
+    "Status": "crwdns14661:0crwdne14661:0",
+    "WebLinks": "crwdns14663:0crwdne14663:0"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "crwdns14665:0crwdne14665:0",
+    "Official": "crwdns14667:0crwdne14667:0",
+    "Other": "crwdns14669:0crwdne14669:0",
+    "Reference": "crwdns14671:0crwdne14671:0"
+  }
+}

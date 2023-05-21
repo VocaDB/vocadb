@@ -103,7 +103,7 @@
     "EditTitle": "Edit song {{0}}",
     "LyAddRow": "Add translation",
     "LyInheritanceNote": "Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.",
-    "LyLanguage": "Language:",
+    "LyLanguage": "Language(s):",
     "LySource": "Source:",
     "PvAddMedia": "Add media",
     "PvAuthor": "Author",

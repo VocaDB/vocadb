@@ -1,5 +1,5 @@
 {
   "TagController": {
-    "TagNameError": "Der Name des Schlüsselworts darf nur Textzeichen enthalten und darf nicht leer sein."
+    "TagNameError": "Der Name des Schlagwortes darf nur Textzeichen enthalten und darf nicht leer sein."
   }
 }

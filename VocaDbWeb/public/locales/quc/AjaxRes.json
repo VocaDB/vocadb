@@ -1,0 +1,31 @@
+{
+  "Album": {
+    "AddedToCollection": "crwdns14053:0crwdne14053:0",
+    "AddToTracks": "crwdns14055:0crwdne14055:0",
+    "RemoveFromTracks": "crwdns14057:0crwdne14057:0",
+    "AddNewSong": "crwdns14059:0{{0}}crwdne14059:0",
+    "Download": "crwdns14061:0crwdne14061:0"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "crwdns14063:0crwdne14063:0",
+    "ExactTitleFilter": "crwdns14065:0{{0}}crwdne14065:0",
+    "FilterPre": "crwdns14067:0crwdne14067:0",
+    "StartsWithTitleFilter": "crwdns14069:0{{0}}crwdne14069:0",
+    "TitleFilter": "crwdns14071:0{{0}}crwdne14071:0"
+  },
+  "Shared": {
+    "AddExtraArtist": "crwdns14073:0{0}crwdne14073:0",
+    "ReportSent": "crwdns14075:0crwdne14075:0",
+    "Save": "crwdns14077:0crwdne14077:0",
+    "ThanksForRating": "crwdns14079:0crwdne14079:0",
+    "UnableToSendReport": "crwdns14081:0crwdne14081:0"
+  },
+  "Song": {
+    "AddedToList": "crwdns14083:0crwdne14083:0",
+    "ArtistFilter": "crwdns14085:0{{0}}crwdne14085:0",
+    "OnlyWithPVsFilter": "crwdns14087:0crwdne14087:0",
+    "SinceFilter": "crwdns14089:0{{0}}crwdne14089:0",
+    "SongTypeFilter": "crwdns14091:0{{0}}crwdne14091:0",
+    "ThanksForRating": "crwdns14093:0crwdne14093:0"
+  }
+}

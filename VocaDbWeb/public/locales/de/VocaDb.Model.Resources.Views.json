@@ -4,13 +4,13 @@
     "NewAlbumInfo": "Bitte beachte, dass es sich bei VocaDB nicht um UtaiteDB handelt. <strong>Das Album muss mindestens einen Song mit Vocaloid-Stimmen beinhalten um die Zustimmung von VocaDB zu erhalten (andere Sprach-Synthesizer wie UTAU sind ebenfalls erlaubt, aber von Menschen gesungene Cover sind es nicht)</strong>. Inoffizielle Fan-gemachte Kompilationen (Bootlegs) sind auch nicht erlaubt. Für weitere Informationen sieh dir die Hilfe bzw. die Richtlinien an."
   },
   "ArtistRes": {
-    "AuthoredBy": "VocaDB Account",
+    "AuthoredBy": "VocaDB-Konto",
     "NewArtistExternalLink": "Externer Link (zu einer Künstler-Webseite, Hatsune Miku Wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
+    "SiteDescription": "VocaDB ist eine Vocaloid Musikdatenbank mit übersetzten Künstlern, Alben und Songs.",
     "Welcome": "Willkommen bei der Vocaloid Database!",
-    "WelcomeSubtitle": "Der kollaborativen Datenbank mit Vocaloid-Künstlern, Diskografie, PVs und mehr."
+    "WelcomeSubtitle": "Die kollaborative Datenbank für Vocaloid, UTAU und andere Gesangssynthesizer, mit Künstlern, Diskografie, PVs und mehr."
   },
   "LayoutRes": {
     "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
@@ -23,6 +23,6 @@
     "RankingsTitle": "VocaDB Song Rankings"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\tWenn du ein Produzent, Illustrator, Animator oder ein anderer Content-Ersteller bist, der mit Vocaloid Musik oder Videos arbeitet oder ein Vertreter eines Personenkreises bist, kannst du dieses Formular verwenden, um die Überprüfung deines Benutzerkontos durch das Personal der Webseite zu beantragen. Nach der Überprüfung wird dein Profil im Künstler-Eintrag angezeigt, und umgekehrt, auf deinem Profil der Künstler-Eintrag.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tDu musst einen Beweis dafür liefern, dass du der rechtmäßige Besitzer dieses Eintrags bzw. Künstlers bist. Andernfalls wird die Anfrage abgelehnt.\n\t\t\t</strong>\n\t\t\tEine Möglichkeit die Identität zu beweisen, wäre zum Beispiel auf dem eigenen Twitter oder Blog zu posten und die Verifizierungsanfrage dort zu erwähnen oder ähnliches. Zusätzlich sollte das Twitter- oder Blog-Konto mit dem VocaDB-Konto verlinkt werden.\n\t\t\t<strong>\n\t\t\t\tDu solltest auch mindestens ein oder zwei akzeptierte und fertig gestellte Songeinträge (Vocaloid oder UTAU) auf der Seite haben – Du kannst diese auch selbst erstellen.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tNach der Verifizierung kannst du deinen Künstlereintrag als \"genehmigt\" markieren, um so zu beschränken wer ihn bearbeiten kann. Momentan kann nur der Künstlereintrag selbst auf diese Weise \"geschützt\" werden - Songs und Alben sind davon nicht betroffen.\n\t\t</p>\n\t\t<p>\n\t\t\tBitte verstehe, dass wir uns das Recht vorbehalten, die Anfrage abzulehnen. Die Gründe dafür sind unter anderem die bereits oben genannten. Sofern der Grund für die Ablehnung der Anfrage nicht offensichtlich ist, werden wir versuchen, dich zu kontaktieren und dich zu bitten, die Fehler zu korrigieren, damit die Anfrage genehmigt werden kann.\n\t\t</p>"
   }
 }
