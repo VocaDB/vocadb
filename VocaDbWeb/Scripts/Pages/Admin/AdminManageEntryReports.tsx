@@ -8,9 +8,11 @@ import {
 } from '@/DataContracts/EntryReportContract';
 import { adminRepo } from '@/Repositories/AdminRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 interface AdminViewEntryReportParams {
@@ -24,9 +26,11 @@ const AdminViewEntryReport = ({
 	onReportDelete,
 	status,
 }: AdminViewEntryReportParams): React.ReactElement => {
+	const { t } = useTranslation(['VocaDb.Web.Resources.Domain']);
+
 	return (
 		<tr>
-			<td>{entryReport.created}</td>
+			<td>{dayjs(entryReport.created).format('lll')}</td>
 			<td>
 				{entryReport.user && (
 					<>
@@ -39,7 +43,11 @@ const AdminViewEntryReport = ({
 			<td>
 				<EntryLink entry={entryReport.entry} />
 			</td>
-			<td>{entryReport.reportTypeName}</td>
+			<td>
+				{t(
+					`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${entryReport.reportTypeName}`,
+				)}
+			</td>
 			<td>
 				<div className="entry-report-notes">{entryReport.notes}</div>
 			</td>
