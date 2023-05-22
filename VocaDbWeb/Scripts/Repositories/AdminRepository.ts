@@ -3,6 +3,7 @@ import {
 	EntryReportContract,
 	ReportStatus,
 } from '@/DataContracts/EntryReportContract';
+import { PVForSongContract } from '@/DataContracts/PVForSongContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
@@ -120,6 +121,19 @@ export class AdminRepository {
 					requestVerificationToken: requestToken,
 				},
 			},
+		);
+	};
+
+	getPVsByAuthor = (author: string): Promise<PVForSongContract[]> => {
+		return this.httpClient.get(
+			this.urlMapper.mapRelative(`/api/admin/pvsByAuthor`),
+			{ author },
+		);
+	};
+
+	deletePVsByAuthor = (author: string): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(`/api/admin/pvsByAuthor/${author}`),
 		);
 	};
 }
