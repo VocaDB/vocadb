@@ -18,10 +18,10 @@ const SongInListsDialog = observer(
 		const { t } = useTranslation(['ViewRes.Song', 'Resources']);
 
 		const byCategory = songInListsStore.listsForSong
-			.filter((l) => l.featuredCategory != SongListFeaturedCategory.Nothing)
+			.filter((l) => l.featuredCategory !== SongListFeaturedCategory.Nothing)
 			.groupBy((l) => l.featuredCategory);
 		const customLists = songInListsStore.listsForSong.filter(
-			(l) => l.featuredCategory == SongListFeaturedCategory.Nothing,
+			(l) => l.featuredCategory === SongListFeaturedCategory.Nothing,
 		);
 
 		return (
@@ -38,9 +38,13 @@ const SongInListsDialog = observer(
 				{Object.keys(byCategory).map((category, index) => (
 					<React.Fragment key={index}>
 						<h4>{t(`Resources:SongListFeaturedCategoryNames.${category}`)}</h4>
-						<Link to={`/L/${byCategory[category].first()?.id}`}>
-							{byCategory[category].first()?.name}
-						</Link>
+						{byCategory[category].map((song, index) => (
+							<div>
+								<Link to={`/L/${song.id}`} key={index}>
+									{song.name}
+								</Link>
+							</div>
+						))}
 					</React.Fragment>
 				))}
 				{customLists.length > 0 && (
