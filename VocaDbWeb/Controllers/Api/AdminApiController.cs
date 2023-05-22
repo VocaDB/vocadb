@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Security;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
@@ -92,4 +94,15 @@ public class AdminApiController : ApiController
 	[HttpGet("activeEditors")]
 	public ActiveEditorForApiContract[] GetActiveEditors() => _adminService.GetActiveEditors();
 
+	[HttpGet("pvsByAuthor")]
+	public PVForSongContract[] GetPVsByAuthor(string author, int maxResults = 50) => _adminService.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
+
+	[HttpDelete("pvsByAuthor/{author}")]
+	public ActionResult DeletePVsByAuthor(string author)
+	{
+
+		var count = _adminService.DeletePVsByAuthor(author, PVService.Youtube);
+
+		return NoContent();
+	}
 }

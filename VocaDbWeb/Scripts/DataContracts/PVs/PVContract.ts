@@ -1,7 +1,7 @@
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 
-interface PVContractBase {
+export interface PVContractBase {
 	author?: string;
 	createdBy?: number;
 	disabled?: boolean;
