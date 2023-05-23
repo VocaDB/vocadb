@@ -1,6 +1,6 @@
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,7 +29,7 @@ export const UserPopupContent = React.memo(
 				)}
 
 				<p>
-					Joined{/* LOC */} {moment(user.memberSince).format('l')}
+					Joined{/* LOC */} {dayjs(user.memberSince).format('ll')}
 				</p>
 			</>
 		);

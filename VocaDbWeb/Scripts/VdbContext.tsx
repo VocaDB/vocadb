@@ -2,7 +2,7 @@ import { GlobalResources } from '@/Shared/GlobalResources';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +10,22 @@ interface VdbContextProps {
 	resources: GlobalResources;
 	values: GlobalValues;
 	refresh(): Promise<void>;
+}
+
+const locales: LocaleLoader = {
+	'de-DE': () => import('dayjs/locale/de'),
+	en: () => import('dayjs/locale/en'),
+	'en-US': () => import('dayjs/locale/en'),
+	es: () => import('dayjs/locale/es'),
+	pt: () => import('dayjs/locale/pt'),
+	'fi-FI': () => import('dayjs/locale/fi'),
+	'ru-RU': () => import('dayjs/locale/ru'),
+	'zh-Hans': () => import('dayjs/locale/zh'),
+	'ja-JP': () => import('dayjs/locale/ja'),
+};
+
+interface LocaleLoader {
+	[key: string]: () => Promise<any>;
 }
 
 const VdbContext = React.createContext<VdbContextProps>(undefined!);
@@ -35,8 +51,11 @@ export const VdbProvider = ({
 			),
 		]);
 
+		if (values.culture in locales) {
+			locales[values.culture]().then(() => dayjs.locale(values.culture));
+		}
+
 		i18n.changeLanguage(values.uiCulture);
-		moment.locale(values.culture);
 
 		setVdb({ resources, values, refresh });
 	}, [i18n]);

@@ -1,14 +1,14 @@
 {
   "Details": {
     "Albums": "Albums",
-    "Attending": "Nehme Teil",
+    "Attending": "Nehme teil",
     "Category": "Category",
     "Event": "Event",
     "OccurrenceDate": "Ereignistermin",
     "PVs": "PVs",
     "RemoveAttendance": "Remove from my events",
     "Series": "Reihe",
-    "SongList": "Setlist",
+    "SongList": "Setliste",
     "Songs": "Songs",
     "UserAttending": "I'm attending",
     "UserInterested": "I'm interested",
@@ -29,7 +29,7 @@
     "FindEvent": "Event finden",
     "Number": "Nummer",
     "Series": "Reihe",
-    "UngroupedEventNamed": "ungruppiertes Event mit dem Namen:",
+    "UngroupedEventNamed": "Ungruppiertes Event mit dem Namen:",
     "YouMayAddTheEvent": "Du kannst das Event in die Datenbank mitaufnehmen."
   }
 }

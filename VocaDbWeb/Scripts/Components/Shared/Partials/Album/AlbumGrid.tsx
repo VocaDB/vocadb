@@ -1,5 +1,6 @@
 import { AlbumIconLink } from '@/Components/Shared/Partials/Album/AlbumIconLink';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
@@ -57,7 +58,11 @@ export const AlbumGrid = ({
 											<br />
 											<span>
 												{t('HelperRes:AlbumHelpers.Released')}{' '}
-												{album.releaseDate.formatted}
+												{DateTimeHelper.formatComponentDate(
+													album.releaseDate.year,
+													album.releaseDate.month,
+													album.releaseDate.day,
+												)}
 											</span>
 										</>
 									)}

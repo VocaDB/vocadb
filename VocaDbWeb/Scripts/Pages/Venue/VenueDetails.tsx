@@ -19,7 +19,7 @@ import {
 import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { VenueDetailsStore } from '@/Stores/Venue/VenueDetailsStore';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -157,7 +157,7 @@ const VenueDetailsLayout = ({
 						{event.date && (
 							<>
 								{' '}
-								<small>({moment(event.date).format('l')})</small>
+								<small>({dayjs(event.date).format('l')})</small>
 							</>
 						)}
 					</li>

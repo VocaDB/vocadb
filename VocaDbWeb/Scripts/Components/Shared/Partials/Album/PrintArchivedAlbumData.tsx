@@ -13,6 +13,7 @@ import { WebLinkInfo } from '@/Components/Shared/Partials/ArchivedEntry/WebLinkI
 import { ArchivedAlbumContract } from '@/DataContracts/Album/ArchivedAlbumContract';
 import { ArchivedTranslatedStringContract } from '@/DataContracts/ArchivedTranslatedStringContract';
 import { ComparedVersionsContract } from '@/DataContracts/Versioning/ComparedVersionsContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -93,9 +94,12 @@ export const PrintArchivedAlbumData = React.memo(
 						<DataRow_ComparedVersionsContract
 							name="Release date" /* LOC */
 							comparedVersions={comparedAlbums}
-							valGetter={
-								(data): React.ReactNode =>
-									data.originalRelease?.releaseDate?.formatted /* TODO */
+							valGetter={(data): React.ReactNode =>
+								DateTimeHelper.formatComponentDate(
+									data.originalRelease?.releaseDate?.year,
+									data.originalRelease?.releaseDate?.month,
+									data.originalRelease?.releaseDate?.day,
+								)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}

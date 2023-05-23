@@ -28,6 +28,7 @@ import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
+import dayjs, { Dayjs } from 'dayjs';
 import { isEmpty, isNumber, pull, some } from 'lodash-es';
 import {
 	action,
@@ -37,7 +38,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment, { Moment } from 'moment';
 
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionStore {
@@ -287,18 +287,21 @@ export class AlbumEditStore {
 		);
 	}
 
-	@computed get eventDate(): Moment | undefined {
+	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvent.entry && this.releaseEvent.entry.date
-			? moment(this.releaseEvent.entry.date)
+			? dayjs(this.releaseEvent.entry.date)
 			: undefined;
 	}
 
-	@computed get releaseDate(): Moment | undefined {
+	@computed get releaseDate(): Dayjs | undefined {
 		return this.releaseYear && this.releaseMonth && this.releaseDay
-			? moment([this.releaseYear, this.releaseMonth, this.releaseDay])
+			? dayjs()
+					.year(this.releaseYear)
+					.month(this.releaseMonth)
+					.date(this.releaseDay)
 			: undefined;
 	}
-	set releaseDate(value: Moment | undefined) {
+	set releaseDate(value: Dayjs | undefined) {
 		this.releaseYear = value?.year();
 		this.releaseMonth = value ? value.month() + 1 : undefined;
 		this.releaseDay = value?.date();

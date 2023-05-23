@@ -5,10 +5,10 @@ import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipT
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import dayjs from '@/dayjs';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -106,7 +106,7 @@ const Events = observer(
 									{event.date && (
 										<span>
 											<br />
-											<small>{moment(event.date).format('l')}</small>
+											<small>{dayjs(event.date).format('l')}</small>
 										</span>
 									)}
 								</td>

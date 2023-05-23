@@ -1,4 +1,5 @@
 import { HttpClient } from '@/Shared/HttpClient';
+import dayjs from 'dayjs';
 import {
 	computed,
 	makeObservable,
@@ -6,7 +7,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 interface IReportCategory {
 	name: string;
@@ -165,8 +165,10 @@ export class StatsStore {
 
 	private updateReport = (): void => {
 		const cutoff =
-			this.showTimespanFilter && this.timespan
-				? moment().subtract(this.timespan, 'hours').toISOString()
+			this.showTimespanFilter && Number.isSafeInteger(this.timespan)
+				? dayjs()
+						.subtract(Number.parseInt(this.timespan ?? '0'), 'hours')
+						.toISOString()
 				: undefined;
 
 		this.httpClient

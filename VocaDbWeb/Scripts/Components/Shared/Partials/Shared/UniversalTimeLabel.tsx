@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import React from 'react';
 
 interface UniversalTimeLabelProps {
@@ -8,7 +8,7 @@ interface UniversalTimeLabelProps {
 export const UniversalTimeLabel = React.memo(
 	({ dateTime }: UniversalTimeLabelProps): React.ReactElement => {
 		return (
-			<span title="UTC" /* LOC */>{moment(dateTime).utc().format('lll')}</span>
+			<span title="UTC" /* LOC */>{dayjs(dateTime).utc().format('lll')}</span>
 		);
 	},
 );

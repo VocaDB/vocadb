@@ -118,14 +118,16 @@ body .ui-widget {
 }
 
 .navbar .navbar-languageBar {
-	padding: 0;
+	margin: 0px;
 	padding-left: 15px;
-	margin-top: 1px;
-	margin-left: 0;
+
+	@media (max-width: @left-menu-breakpoint) {
+		margin-bottom: 5px;
+	}
 }
 
 .navbar .navbar-languageBtn {
-	margin: 4px 0 0 0;
+	vertical-align: middle;
 }
 
 .input-append > .btn {
@@ -179,10 +181,13 @@ ol {
 .btn > [class^='icon-'],
 .btn > [class*=' icon-'],
 .menuIcon {
-	margin-top: 2px;
-	&.noMargin {
-		margin-top: 0px;
-	}
+	margin: 0px 0px 2px 0px;
+	vertical-align: middle;
+}
+
+.btn .caret {
+	margin: 0px 0px 2px 2px;
+	vertical-align: middle;
 }
 
 // Opens the menu on hover

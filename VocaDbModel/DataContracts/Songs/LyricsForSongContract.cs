@@ -18,7 +18,7 @@ public class LyricsForSongContract
 	{
 		ParamIs.NotNull(() => lyrics);
 
-		CultureCode = lyrics.CultureCode.CultureCode;
+		CultureCodes = lyrics.CultureCodes.Select(c => c.CultureCode).ToArray();
 		Id = lyrics.Id;
 		Source = lyrics.Source;
 		TranslationType = lyrics.TranslationType;
@@ -31,9 +31,8 @@ public class LyricsForSongContract
 	}
 
 	[DataMember]
-	[DefaultValue("")]
 	[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string CultureCode { get; init; }
+	public string[]? CultureCodes { get; init; }
 
 	[DataMember]
 	public int Id { get; init; }

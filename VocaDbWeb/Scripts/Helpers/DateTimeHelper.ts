@@ -1,21 +1,54 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import UTC from 'dayjs/plugin/utc';
+
+dayjs.extend(UTC);
 
 export class DateTimeHelper {
 	private static addLeadingZero(val: any): any {
 		return val < 10 ? '0' + val : val;
 	}
 
+	static formatComponentDate(
+		year?: number,
+		month?: number,
+		date?: number,
+	): string {
+		if (date && month && year) {
+			return dayjs()
+				.year(year)
+				.month(month - 1)
+				.date(date)
+				.format('ll');
+		}
+
+		if (month && year) {
+			return dayjs()
+				.year(year)
+				.month(month - 1)
+				.format('MMM YYYY');
+		}
+
+		if (year) {
+			return dayjs().year(year).format('YYYY');
+		}
+
+		return '';
+	}
+
 	static convertToLocal(utcDate: Date): Date | null {
 		if (utcDate == null) return null;
-		const momentDate = moment.utc(utcDate);
+		const momentDate = dayjs.utc(utcDate);
 		return new Date(momentDate.year(), momentDate.month(), momentDate.date());
 		//return new Date(utcDate.getFullYear(), utcDate.getMonth(), utcDate.getDate());
 	}
 
 	static convertToUtc(localDate: Date): Date | null {
 		if (localDate == null) return null;
-		return moment
-			.utc([localDate.getFullYear(), localDate.getMonth(), localDate.getDate()])
+		return dayjs
+			.utc()
+			.year(localDate.getFullYear())
+			.month(localDate.getMonth())
+			.date(localDate.getDate())
 			.toDate();
 	}
 

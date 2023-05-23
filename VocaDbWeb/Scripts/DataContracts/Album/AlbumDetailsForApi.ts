@@ -19,13 +19,17 @@ import {
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryStatus } from '@/Models/EntryStatus';
+import dayjs from 'dayjs';
+import UTC from 'dayjs/plugin/utc';
 import { has } from 'lodash-es';
-import moment from 'moment';
+
+dayjs.extend(UTC);
 
 export enum DiscMediaType {
 	Audio = 'Audio',
@@ -182,12 +186,11 @@ export class AlbumDetailsForApi {
 				this.releaseDate.year &&
 				this.releaseDate.month &&
 				this.releaseDate.day
-					? moment
-							.utc([
-								this.releaseDate.year,
-								this.releaseDate.month - 1,
-								this.releaseDate.day,
-							])
+					? dayjs
+							.utc()
+							.year(this.releaseDate.year)
+							.month(this.releaseDate.month - 1)
+							.date(this.releaseDate.day)
 							.toDate()
 					: undefined;
 		}
@@ -271,24 +274,32 @@ export class AlbumDetailsForApi {
 		return new AlbumDetailsAjax(this);
 	}
 
+	get formattedReleaseDate(): string {
+		return DateTimeHelper.formatComponentDate(
+			this.releaseDate?.year,
+			this.releaseDate?.month,
+			this.releaseDate?.day,
+		);
+	}
+
 	get releaseDateIsInTheFarFuture(): boolean {
 		return (
 			!!this.fullReleaseDate &&
-			this.fullReleaseDate > moment.utc().add(7, 'd').toDate()
+			this.fullReleaseDate > dayjs.utc().add(7, 'd').toDate()
 		);
 	}
 
 	get releaseDateIsInTheNearFuture(): boolean {
 		return (
 			!!this.fullReleaseDate &&
-			this.fullReleaseDate > moment.utc().toDate() &&
-			this.fullReleaseDate <= moment.utc().add(7, 'd').toDate()
+			this.fullReleaseDate > dayjs.utc().toDate() &&
+			this.fullReleaseDate <= dayjs.utc().add(7, 'd').toDate()
 		);
 	}
 
 	get releaseDateIsInThePast(): boolean {
 		return (
-			!!this.fullReleaseDate && this.fullReleaseDate <= moment.utc().toDate()
+			!!this.fullReleaseDate && this.fullReleaseDate <= dayjs.utc().toDate()
 		);
 	}
 

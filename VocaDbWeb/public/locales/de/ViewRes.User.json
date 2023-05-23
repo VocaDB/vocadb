@@ -13,7 +13,7 @@
     "Captcha": "CAPTCHA",
     "CaptchaInvalid": "CAPTCHA ist ungültig.",
     "DoRegister": "Registrieren",
-    "DuplicateUserWarning": "Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.",
+    "DuplicateUserWarning": "Bitte beachte, dass das Erstellen mehrerer Benutzerkonten zur Erhöhung der Bewertungen verboten ist und zur Kündigung des Benutzerkontos führt. Wenn du das Passwort vergessen hast, setze es zurück oder wende dich an einen Mitarbeiter.",
     "Email": "E-Mail Adresse (erforderlich)",
     "EmailIsRequired": "E-Mail Adresse wird benötigt.",
     "EmailNote": "Deine E-Mail Adresse kann von anderen Nutzern nicht gesehen werden. Stelle sicher, dass du eine gültige Adresse angibst. Du wirst diese benötigen, wenn du einmal dein Passwort vergisst. Für ein Profilbild muss deine E-Mail Adresse mit Gravatar verbunden sein. Die E-Mail Adresse kann später geändert werden.",
@@ -23,7 +23,7 @@
     "PasswordIsRequired": "Passwort wird benötigt.",
     "Register": "Registrieren",
     "RegistrationUnsuccessful": "Die Registrierung konnte nicht abgeschlossen werden.",
-    "TwitterNote": "Alternativ kannst du dich auch mit deinem Twitter-Account anmelden. Ein Twitter-Account kann auch nachträglich noch verknüpft werden.",
+    "TwitterNote": "Alternativ kannst du dich auch mit deinem Twitter-Konto anmelden. Ein Twitter-Konto kann auch nachträglich noch verknüpft werden.",
     "Username": "Benutzername",
     "UsernameIsRequired": "Benutzername wird benötigt.",
     "UsernameNote": "Der Benutzername muss aus mindestens 3 Zeichen bestehen und darf nur das englische Alphabet, Zahlen und Unterstriche enthalten. Das Passwort muss aus mindestens {{0}} Zeichen bestehen.",
@@ -31,10 +31,10 @@
   },
   "Details": {
     "AboutMe": "Über mich",
-    "AccountDisabled": "Konto deaktiviert",
+    "AccountDisabled": "Benutzerkonto deaktiviert",
     "Active": "Aktiv",
     "AdditionalPermissions": "Zusätzliche Berechtigungen",
-    "ArtistVerificationPage": "artist verification page",
+    "ArtistVerificationPage": "Künstler-Verifizierungsseite",
     "Attending": "Nehme Teil",
     "CollectionTab": "Sammlung",
     "Comments": "Kommentare",
@@ -50,7 +50,7 @@
     "FavoriteSongsTab": "Songs, die mir gefallen:",
     "FavoriteTags": "Meine favorisierten Schlagwörter",
     "FollowedArtistsTab": "Künstler, denen ich folge:",
-    "ImportSongList": "Import from YouTube or NicoNico",
+    "ImportSongList": "Importiere aus YouTube oder NicoNico",
     "Interested": "Interessiert",
     "KnownLanguagesMessage": "Please let us know which languages you are familiar with. You can enter this information under <a>\"My settings\", \"Profile\"</a>, \"Languages I know\". We can use this information to determine how to contact you when needed.",
     "LanguagesIKnow": "Sprachen, die ich spreche",
@@ -63,9 +63,9 @@
     "OldNameUntil": "(until {{0}})",
     "OldUsernames": "Old usernames",
     "Overview": "Overview",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
+    "PossibleProducerMessage": "Bist du möglicherweise ein Künstler (z. B. Produzent, Animator oder Illustrator) der mit Vocaloid/UTAU arbeitet?\nWenn ja, sieh dir bitte die <a>Künstler-Verifizierungsseite</a> an.",
     "Power": "Berechtigungen",
-    "ReportSpamming": "Report user for spamming",
+    "ReportSpamming": "Benutzer aufgrund von Spam melden",
     "SetAvatar": "Stelle deinen Avatar bei gravatar.com ein.",
     "SomeAlbumsILike": "Einige Alben, die mir gefallen",
     "SomeArtistsIFollow": "Einige Künstler denen ich folge",
@@ -77,11 +77,11 @@
     "TagVotes": "Schlagwort-Bewertungen",
     "Total": "{{0}} insgesamt",
     "TotalEdits": "Insgesamte Änderungen",
-    "TwitterAccount": "Twitter-Account",
+    "TwitterAccount": "Twitter-Konto",
     "UserDetails": "Benutzerinformationen",
     "UserGroup": "Benutzergruppe",
     "UserName": "Name",
-    "VerifiedAccount": "Beglaubigter Künstler",
+    "VerifiedAccount": "Verifizierter Künstler",
     "VerifiedEmail": "Verified email",
     "VerifiedOwner": "Beglaubigter Besitzer",
     "Veteran": "{{0}} veteran",
@@ -92,12 +92,12 @@
     "OnlyAdditions": "Only additions"
   },
   "FavoriteSongs": {
-    "GroupByRating": "Group by rating"
+    "GroupByRating": "Nach Bewertung gruppieren"
   },
   "ForgotPassword": {
     "CaptchaIsInvalid": "CAPTCHA ist falsch.",
     "EmailIsRequired": "E-Mail wird benötigt.",
-    "MessageSent": "Eine Nachricht zum Zurücksetzen des Passworts wurde geschickt.",
+    "MessageSent": "Wenn die angegebenen Informationen zu unseren Datensätzen passen, solltest du in Kürze eine E-Mail erhalten. Falls nicht, überprüfe, ob der Benutzername und die E-Mail-Adresse übereinstimmen und das Benutzerkonto nicht deaktiviert ist. Wenn die E-Mail trotzdem nicht eintrifft, wende dich an einen Moderator.",
     "RequestPasswordReset": "Passwort zurücksetzen",
     "SendRequest": "Anfrage schicken",
     "UnableToProcessRequest": "Anfrage konnte nicht bearbeitet werden",
@@ -159,7 +159,7 @@
     "AboutMe": "Über mich",
     "AccessKey": "Zugriffsschlüssel",
     "AccessKeyDescription": "Der Zugriffsschlüssel kann benutzt werden um sich von verschiedenen anderen Diensten einzuloggen, ohne dein eigentliches Passwort anzugeben.\n\t\t\t\tDu kannst den Zugriffsschlüssel jederzeit erneuern - dies wird den vorherigen Schlüssel ungültig machen.\n\t\t\t\tHalte deinen Zugriffsschlüssel geheim! Wenn du bemerkst, dass dein Schlüssel von jemand anderem herausgefunden wurde, erneuere ihn sofort.",
-    "AccountSettings": "Kontoeinstellungen",
+    "AccountSettings": "Benutzerkontoeinstellungen",
     "AddKnownLanguage": "Neue Zeile hinzufügen",
     "AnonymousActivity": "Mein Benutzername darf in der Liste für die letzten Aktivitäten angezeigt werden.",
     "Automatic": "(Automatisch)",
@@ -198,22 +198,22 @@
     "Username": "Benutzername"
   },
   "RatedSongs": {
-    "GroupByRating": "Group by rating",
+    "GroupByRating": "Nach Bewertung gruppieren",
     "NoSongListSelection": "Keine",
-    "RatingAnything": "Anything",
-    "ShowTags": "Show tags",
-    "SongList": "Song Liste"
+    "RatingAnything": "Alles",
+    "ShowTags": "Schlagwörter anzeigen",
+    "SongList": "Songliste"
   },
   "RequestVerification": {
-    "ArtistTitle": "Entry of the artist whom I represent (required)",
+    "ArtistTitle": "Eintrag des Künstlers, den ich repräsentiere, (erforderlich)",
     "Login": "log in",
     "MessageTitle": "Additional message (optional)",
-    "NoPrivateMessage": "The proof is provided in the URL below",
+    "NoPrivateMessage": "Der Nachweis ist in der URL unten angegeben",
     "NotLoggedInMessage": "Sorry, you need to <1>log in</1> or <2>sign up</2> to use this feature.",
-    "PageTitle": "Request account verification",
-    "PrivateMessage": "I will submit the proof in a private message",
+    "PageTitle": "Benutzerkonto-Verifizierung anfordern",
+    "PrivateMessage": "Ich werde den Nachweis in einer privaten Nachricht einreichen",
     "Send": "Send request",
     "Signup": "sign up",
-    "URL": "Link to proof, for example a tweet (required)"
+    "URL": "Link zum Nachweis, zum Beispiel ein Tweet (erforderlich)"
   }
 }

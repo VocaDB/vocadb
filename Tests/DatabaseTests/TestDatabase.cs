@@ -131,7 +131,7 @@ public class TestDatabase
 			PVServices = PVServices.Youtube,
 			CreateDate = new DateTime(2012, 6, 1)
 		};
-		Song.Lyrics.Add(new LyricsForSong(Song, "Here be lyrics", string.Empty, string.Empty, TranslationType.Translation, "en"));
+		Song.Lyrics.Add(new LyricsForSong(Song, "Here be lyrics", string.Empty, string.Empty, TranslationType.Translation, new[] { "en" }));
 		var tagUsage = new SongTagUsage(Song, Tag);
 		Song.Tags.Usages.Add(tagUsage);
 		Tag.AllSongTagUsages.Add(tagUsage);
@@ -144,7 +144,7 @@ public class TestDatabase
 			PVServices = PVServices.Youtube,
 			CreateDate = new DateTime(2012, 6, 1)
 		};
-		Song2.Lyrics.Add(new LyricsForSong(Song2, "Here be lyrics", string.Empty, string.Empty, TranslationType.Romanized, string.Empty));
+		Song2.Lyrics.Add(new LyricsForSong(Song2, "Here be lyrics", string.Empty, string.Empty, TranslationType.Romanized, new[] { string.Empty }));
 		session.Save(Song2);
 
 		Song3 = new Song(new LocalizedString("Crystal Tears", ContentLanguageSelection.English))

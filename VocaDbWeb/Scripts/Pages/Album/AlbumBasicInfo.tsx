@@ -367,7 +367,7 @@ const AlbumBasicInfo = observer(
 								<tr>
 									<td>{t('ViewRes.Album:Details.ReleaseDate')}</td>
 									<td>
-										{model.releaseDate.formatted}
+										{model.formattedReleaseDate}
 										{model.releaseDateIsInThePast && (
 											<>
 												{' '}

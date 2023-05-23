@@ -3,7 +3,7 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import { EntryType } from '@/Models/EntryType';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import moment from 'moment';
+import dayjs from '@/dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ const EventEventsByDateLayout = ({
 		() =>
 			model
 				.filter((event) => !!event.date)
-				.groupBy((event) => moment(event.date!).format('YYYY')),
+				.groupBy((event) => dayjs(event.date!).format('YYYY')),
 		[model],
 	);
 
@@ -73,7 +73,7 @@ const EventEventsByDateLayout = ({
 
 								{events.map((event, index) => (
 									<tr key={index}>
-										<td>{moment(event.date).format('l')}</td>
+										<td>{dayjs(event.date).format('l')}</td>
 										<td>
 											<Link
 												to={EntryUrlMapper.details(

@@ -175,7 +175,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "PVs by author";
 
-		return View(model);
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult RefreshDbCache()

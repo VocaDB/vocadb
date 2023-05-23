@@ -972,7 +972,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.Select(s => new DuplicateEntryResultContract<SongMatchProperty>(new EntryRefWithCommonPropertiesContract(s.song, PermissionContext.LanguagePreference), s.property))
 				.Distinct(s => s.Entry.Id)
 				.ToArray();
-			
+
 			return new NewSongCheckResultContract(matches, titleParseResult, PermissionContext.LanguagePreference);
 		});
 	}
@@ -1240,7 +1240,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 				foreach (var lyrics in lyricsDiff.Added)
 				{
-					session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source ?? string.Empty, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode));
+					session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source ?? string.Empty, lyrics.URL, lyrics.TranslationType, lyrics.CultureCodes));
 				}
 
 				foreach (var lyrics in lyricsDiff.Removed)
@@ -1253,7 +1253,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				{
 					var newLyrics = fullProperties.Lyrics.First(l => l.Id == lyrics.Id);
 
-					lyrics.CultureCode = new OptionalCultureCode(newLyrics.CultureCode);
+					lyrics.CultureCodes = newLyrics.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
 					lyrics.TranslationType = newLyrics.TranslationType;
 					lyrics.Source = newLyrics.Source ?? string.Empty;
 					lyrics.Value = newLyrics.Value;

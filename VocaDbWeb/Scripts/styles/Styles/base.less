@@ -89,13 +89,15 @@ body .container-fluid {
 .vdb .navbar-searchBox {
 	max-width: 402px;
 	width: calc(100% - 60px);
+	margin-left: 15px;
+	margin-right: -13px;
 
 	@media (max-width: @left-menu-breakpoint) {
 		margin-bottom: 5px;
 	}
 
 	@media (min-width: @left-menu-breakpoint) {
-		margin-right: 30px;
+		margin-right: 16px;
 	}
 }
 
@@ -126,10 +128,10 @@ body .container-fluid {
 @navbar-collapse-hover-dark: lighten(@navbar-color-dark, 30%);
 
 .vdb .navbar-inverse .btn-navbar {
-	margin-top: 1px;
+	margin-top: 0px;
 	margin-left: 10px;
 
-	background-color: @navbar-color-dark;
+	background-color: @navbar-collapse-dark;
 	background-image: -webkit-gradient(
 		linear,
 		0 0,

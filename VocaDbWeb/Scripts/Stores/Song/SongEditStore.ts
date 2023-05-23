@@ -27,6 +27,7 @@ import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
 import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
+import dayjs, { Dayjs } from 'dayjs';
 import { isEmpty, pull, some, unionBy } from 'lodash-es';
 import {
 	action,
@@ -35,16 +36,15 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-import moment, { Moment } from 'moment';
 
 interface PotentialDate {
-	date: Moment;
+	date: Dayjs;
 	source: string;
 }
 
 export class SongEditStore {
 	private readonly albumEventId?: number;
-	private readonly albumReleaseDate?: Moment;
+	private readonly albumReleaseDate?: Dayjs;
 	// List of artist links for this song.
 	@observable artistLinks: ArtistForAlbumEditStore[] = [];
 	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
@@ -110,7 +110,7 @@ export class SongEditStore {
 
 		this.albumEventId = contract.albumEventId;
 		this.albumReleaseDate = contract.albumReleaseDate
-			? moment(contract.albumReleaseDate)
+			? dayjs(contract.albumReleaseDate)
 			: undefined;
 		this.artistLinks = contract.artists.map(
 			(artist) => new ArtistForAlbumEditStore(artist),
@@ -131,7 +131,7 @@ export class SongEditStore {
 		this.notes = new EnglishTranslatedStringEditStore(contract.notes);
 		this.originalVersion.id = contract.originalVersion?.id;
 		this.publishDate = contract.publishDate
-			? moment(contract.publishDate).toDate()
+			? dayjs(contract.publishDate).toDate()
 			: undefined;
 		this.pvs = new PVListEditStore(
 			pvRepo,
@@ -268,18 +268,18 @@ export class SongEditStore {
 		);
 	}
 
-	@computed get eventDate(): Moment | undefined {
+	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvent.entry && this.releaseEvent.entry.date
-			? moment(this.releaseEvent.entry.date)
+			? dayjs(this.releaseEvent.entry.date)
 			: undefined;
 	}
 
-	@computed get firstPvDate(): Moment | undefined {
+	@computed get firstPvDate(): Dayjs | undefined {
 		return this.pvs.pvs
 			.filter(
 				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
 			)
-			.map((pv) => moment(pv.contract.publishDate))
+			.map((pv) => dayjs(pv.contract.publishDate))
 			.sortBy((p) => p)
 			.head();
 	}

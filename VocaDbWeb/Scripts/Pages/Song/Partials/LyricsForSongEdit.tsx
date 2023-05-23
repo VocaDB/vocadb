@@ -40,17 +40,14 @@ const LyricsForSongEdit = observer(
 							{' '}
 							<span>
 								(
-								{
-									userLanguageCultures[lyricsForSongEditStore.cultureCode]
-										? `${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.nativeName
-										  } (${
-												userLanguageCultures[lyricsForSongEditStore.cultureCode]
-													.englishName
-										  })`
-										: 'Other/Unknown' /* LOC */
-								}
+								{lyricsForSongEditStore.cultureCodes
+									.map(
+										(code) =>
+											userLanguageCultures[code]
+												? `${userLanguageCultures[code].nativeName} (${userLanguageCultures[code].englishName})`
+												: 'Other/Unknown' /* LOC */,
+									)
+									.join(' / ')}
 								)
 							</span>
 						</>
@@ -74,20 +71,61 @@ const LyricsForSongEdit = observer(
 										label={t('ViewRes.Song:Edit.LyLanguage')}
 										dangerouslySetInnerHTML={{
 											__html:
-												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* LOC */,
+												'If multiple languages match, click "Add" to add more languages. If none of the options match, select \'Other/Unknown\'.' /* LOC */,
 										}}
 									/>{' '}
-									<UserLanguageCultureDropdownList
-										placeholder={t(
-											'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+									<tbody>
+										{lyricsForSongEditStore.cultureCodes.map(
+											(cultureCode, index) => (
+												<tr>
+													<td>
+														<UserLanguageCultureDropdownList
+															key={index}
+															placeholder={t(
+																'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+															)}
+															value={cultureCode}
+															onChange={(e): void =>
+																runInAction(() => {
+																	lyricsForSongEditStore.replaceCultureCode(
+																		index,
+																		e.target.value,
+																	);
+																})
+															}
+														/>
+													</td>
+													{lyricsForSongEditStore.allowMultipleLanguages && (
+														<td>
+															<SafeAnchor
+																onClick={(): void =>
+																	lyricsForSongEditStore.removeCultureCode(
+																		index,
+																	)
+																}
+																href="#"
+																className="nameDelete textLink deleteLink"
+															>
+																{t('ViewRes:Shared.Delete')}
+															</SafeAnchor>
+														</td>
+													)}
+												</tr>
+											),
 										)}
-										value={lyricsForSongEditStore.cultureCode}
-										onChange={(e): void =>
-											runInAction(() => {
-												lyricsForSongEditStore.cultureCode = e.target.value;
-											})
-										}
-									/>
+									</tbody>
+									{lyricsForSongEditStore.allowMultipleLanguages &&
+										lyricsForSongEditStore.cultureCodes.length < 3 && (
+											<SafeAnchor
+												onClick={(): void =>
+													lyricsForSongEditStore.addCultureCode('')
+												}
+												href="#"
+												className="textLink addLink"
+											>
+												{t('ViewRes:Shared.Add')}
+											</SafeAnchor>
+										)}
 								</p>
 							)}
 							<div>

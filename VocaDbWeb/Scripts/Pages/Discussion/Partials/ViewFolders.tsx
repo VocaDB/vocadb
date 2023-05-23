@@ -1,6 +1,6 @@
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
+import dayjs from '@/dayjs';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ const ViewFolders = observer(
 									<td>
 										{folder.lastTopicDate && (
 											<span>
-												{moment(folder.lastTopicDate).format('lll')} by{' '}
+												{dayjs(folder.lastTopicDate).format('lll')} by{' '}
 												{folder.lastTopicAuthor?.name}
 											</span>
 										)}
@@ -74,7 +74,7 @@ const ViewFolders = observer(
 											{recentTopic.name}
 											<br />
 											<span className="extraInfo">
-												{moment(recentTopic.created).format('lll')} by{' '}
+												{dayjs(recentTopic.created).format('lll')} by{' '}
 												{recentTopic.author.name}
 											</span>
 										</td>

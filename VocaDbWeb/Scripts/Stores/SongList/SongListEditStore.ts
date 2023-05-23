@@ -8,6 +8,7 @@ import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import dayjs from 'dayjs';
 import { pull } from 'lodash-es';
 import {
 	action,
@@ -17,7 +18,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export class SongInListEditStore {
 	private static nextId = 1;
@@ -86,7 +86,7 @@ export class SongListEditStore {
 		this.name = contract.name;
 		this.description = contract.description;
 		this.eventDateDate = contract.eventDate
-			? moment(contract.eventDate).toDate()
+			? dayjs(contract.eventDate).toDate()
 			: undefined; // Assume server date is UTC
 		this.featuredCategory = contract.featuredCategory;
 		this.status = contract.status;

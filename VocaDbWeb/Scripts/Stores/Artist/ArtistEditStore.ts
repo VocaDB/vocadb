@@ -15,6 +15,7 @@ import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEdit
 import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
+import dayjs from 'dayjs';
 import { pull } from 'lodash-es';
 import {
 	action,
@@ -24,7 +25,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export class ArtistForArtistEditStore {
 	@observable linkType: string /* TODO: enum */;
@@ -112,7 +112,7 @@ export class ArtistEditStore {
 		this.names = NamesEditStore.fromContracts(contract.names);
 		this.pictures = new EntryPictureFileListEditStore(contract.pictures);
 		this.releaseDate = contract.releaseDate
-			? moment(contract.releaseDate).toDate()
+			? dayjs(contract.releaseDate).toDate()
 			: undefined;
 		this.status = contract.status;
 		this.voiceProvider.id = contract.voiceProvider?.id;

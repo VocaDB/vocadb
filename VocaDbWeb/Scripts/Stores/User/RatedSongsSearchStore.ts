@@ -22,6 +22,7 @@ import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
+import dayjs from '@/dayjs';
 import {
 	includesAny,
 	StateChangeEvent,
@@ -36,7 +37,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 import schema from './RatedSongsSearchRouteParams.schema.json';
 
@@ -172,7 +172,7 @@ export class RatedSongsSearchStore
 	};
 
 	formatDate = (dateStr: string): string => {
-		return moment(dateStr).format('l');
+		return dayjs(dateStr).format('l');
 	};
 
 	getPVServiceIcons = (

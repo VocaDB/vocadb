@@ -10,9 +10,6 @@ public sealed class OptionalDateTimeContract : IOptionalDateTime
 	public int? Day { get; init; }
 
 	[DataMember]
-	public string Formatted { get; set; }
-
-	[DataMember]
 	public bool IsEmpty { get; init; }
 
 	[DataMember]
@@ -33,6 +30,5 @@ public sealed class OptionalDateTimeContract : IOptionalDateTime
 		IsEmpty = dateTime.IsEmpty;
 		Month = dateTime.Month;
 		Year = dateTime.Year;
-		Formatted = dateTime.ToString();
 	}
 }

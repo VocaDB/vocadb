@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Albums": "crwdns15079:0crwdne15079:0",
+    "Attending": "crwdns15081:0crwdne15081:0",
+    "Category": "crwdns15083:0crwdne15083:0",
+    "Event": "crwdns15085:0crwdne15085:0",
+    "OccurrenceDate": "crwdns15087:0crwdne15087:0",
+    "PVs": "crwdns15089:0crwdne15089:0",
+    "RemoveAttendance": "crwdns15091:0crwdne15091:0",
+    "Series": "crwdns15093:0crwdne15093:0",
+    "SongList": "crwdns15095:0crwdne15095:0",
+    "Songs": "crwdns15097:0crwdne15097:0",
+    "UserAttending": "crwdns15099:0crwdne15099:0",
+    "UserInterested": "crwdns15101:0crwdne15101:0",
+    "Venue": "crwdns15103:0crwdne15103:0"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "crwdns15105:0crwdne15105:0",
+    "CreateSeries": "crwdns15107:0crwdne15107:0",
+    "CreateVenue": "crwdns15109:0crwdne15109:0",
+    "ViewByDate": "crwdns15111:0crwdne15111:0",
+    "ViewBySeries": "crwdns15113:0crwdne15113:0",
+    "ViewByVenue": "crwdns15115:0crwdne15115:0",
+    "ViewList": "crwdns15117:0crwdne15117:0"
+  },
+  "Find": {
+    "CreateEvent": "crwdns15119:0crwdne15119:0",
+    "EventNotFound": "crwdns15121:0crwdne15121:0",
+    "FindEvent": "crwdns15123:0crwdne15123:0",
+    "Number": "crwdns15125:0crwdne15125:0",
+    "Series": "crwdns15127:0crwdne15127:0",
+    "UngroupedEventNamed": "crwdns15129:0crwdne15129:0",
+    "YouMayAddTheEvent": "crwdns15131:0crwdne15131:0"
+  }
+}
