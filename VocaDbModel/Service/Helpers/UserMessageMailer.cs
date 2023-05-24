@@ -116,7 +116,7 @@ public class UserMessageMailer : IUserMessageMailer
 
 		var client = new SmtpClient(_smtpSettings.Host)
 		{
-			Port = _smtpSettings.Port,
+			Port = 587,
 			Credentials = new NetworkCredential(_smtpSettings.UserName, _smtpSettings.Password),
 			EnableSsl = true,
 		};
