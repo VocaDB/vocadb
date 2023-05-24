@@ -383,6 +383,7 @@ export class SongDetailsStore {
 		return this.songRepo.getRelated({
 			songId: this.id,
 			lang: this.values.languagePreference,
+			fields: SongOptionalField.MainPicture,
 		});
 	};
 }
