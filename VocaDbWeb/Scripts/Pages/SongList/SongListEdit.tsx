@@ -1,4 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { SongAutoComplete } from '@/Components/KnockoutExtensions/SongAutoComplete';
@@ -37,7 +38,7 @@ import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
@@ -204,9 +205,51 @@ interface SongsTabContentProps {
 const SongsTabContent = observer(
 	({ songListEditStore }: SongsTabContentProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.SongList']);
+		const fileInputRef = useRef<HTMLInputElement | null>(null);
+		const [csvData, setCsvData] = useState<string | null>(null);
+
+		useEffect(() => {
+			if (csvData === null) {
+				return;
+			}
+			let parsedCsvData = csvData
+				.split('\n')
+				.map((r) => r.split(','))
+				.slice(1)
+				.map((r) => ({
+					songId: Number(r[0]),
+					order: Number(r[1]),
+					notes: r[2],
+				}))
+				.filter((r) => !Number.isNaN(r.songId) && !Number.isNaN(r.order));
+			console.log(songListEditStore.calculateCsvDifference(parsedCsvData));
+			songListEditStore.importCsvData(parsedCsvData);
+		}, [csvData]);
 
 		return (
 			<>
+				<div>
+					<input
+						onChange={(e): void => {
+							if (e.target.files === null) {
+								return;
+							}
+							let reader = new FileReader();
+							reader.readAsText(e.target.files[0]);
+							reader.onloadend = (): void => {
+								setCsvData(reader.result as string);
+							};
+						}}
+						type="file"
+						ref={fileInputRef}
+						accept=".csv"
+						hidden
+					/>
+					<Button onClick={(): void => fileInputRef.current?.click()}>
+						Import CSV
+					</Button>
+				</div>
+				<br />
 				<table>
 					<ReactSortable
 						tag="tbody"

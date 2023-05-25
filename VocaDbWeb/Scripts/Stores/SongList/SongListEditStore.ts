@@ -1,4 +1,5 @@
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -37,6 +38,18 @@ export class SongInListEditStore {
 		this.order = data.order;
 		this.song = data.song;
 	}
+}
+
+interface CsvData {
+	order: number;
+	songId: number;
+	notes: string;
+}
+
+interface SongListDifference {
+	songsAdded: number;
+	songsRemoved: number;
+	songsUpdated: number;
 }
 
 export class SongListEditStore {
@@ -109,6 +122,62 @@ export class SongListEditStore {
 	@computed get eventDate(): string | undefined {
 		return this.eventDateDate ? this.eventDateDate.toISOString() : undefined;
 	}
+
+	importCsvData = (data: CsvData[]): void => {
+		this.songLinks = [];
+		this.songLinks = data.map(
+			(d) =>
+				new SongInListEditStore({
+					songInListId: 0,
+					order: d.order,
+					notes: d.notes,
+					song: { id: d.songId } as SongContract,
+				}),
+		);
+	};
+
+	calculateCsvDifference = (data: CsvData[]): SongListDifference => {
+		let difference: SongListDifference = {
+			songsAdded: 0,
+			songsRemoved: 0,
+			songsUpdated: 0,
+		};
+
+		const previousSongs = this.songLinks.reduce(
+			(
+				map: { [id: number]: SongInListEditStore },
+				obj: SongInListEditStore,
+			) => {
+				map[obj.song.id] = obj;
+				return map;
+			},
+			{},
+		);
+
+		const newSongs = data.reduce(
+			(map: { [id: number]: CsvData }, obj: CsvData) => {
+				map[obj.songId] = obj;
+				return map;
+			},
+			{},
+		);
+		difference.songsAdded = data.filter(
+			(s) => !(s.songId in previousSongs),
+		).length;
+		difference.songsRemoved = Object.keys(previousSongs).filter(
+			(s) => !(s in newSongs),
+		).length;
+		difference.songsUpdated = Object.keys(previousSongs).filter((s) => {
+			const id = Number(s);
+			return (
+				s in newSongs &&
+				(newSongs[id].notes !== previousSongs[id].notes ||
+					newSongs[id].order !== previousSongs[id].order)
+			);
+		}).length;
+
+		return difference;
+	};
 
 	acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
