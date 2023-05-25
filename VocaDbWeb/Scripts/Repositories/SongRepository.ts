@@ -735,14 +735,17 @@ export class SongRepository
 	getRelated = ({
 		songId,
 		lang,
+		fields,
 	}: {
 		songId: number;
 		lang: ContentLanguagePreference;
+		fields: SongOptionalField;
 	}): Promise<RelatedSongs> => {
 		return this.httpClient.get<RelatedSongs>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/related`),
 			{
 				lang,
+				fields,
 			},
 		);
 	};
