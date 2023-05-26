@@ -1,10 +1,10 @@
 {
   "InterfaceLanguage": {
-    "Other": "Other/Unknown"
+    "Other": "기타/미확인"
   },
   "TranslationTypeNames": {
-    "Original": "Original",
-    "Romanized": "Romanized",
-    "Translation": "Translation"
+    "Original": "원본",
+    "Romanized": "로마자화",
+    "Translation": "번역"
   }
 }
