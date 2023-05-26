@@ -1,31 +1,31 @@
 {
   "Import": {
-    "Accept": "Accept",
-    "InvalidUrlError": "Check that the URL is valid and points to a NicoNico MyList, RSS feed or YouTube playlist.",
+    "Accept": "수락",
+    "InvalidUrlError": "URL이 유효하며 니코니코 마이리스트, RSS 피드 또는 유튜브 재생목록으로 다이렉트 되는지 혹인해주시길 바랍니다.",
     "ItemsLoaded": "loaded",
-    "ListDescription": "Description",
-    "ListName": "Name",
+    "ListDescription": "설명",
+    "ListName": "이름",
     "LoadMoreHelp": "(Click \"Show more\" to load more songs from the list.)",
-    "MylistDescription": "List properties",
+    "MylistDescription": "속성 정렬",
     "NicoPV": "Imported PV",
     "OnlyRanked": "Include only ranked songs (from NicoNico rankings)",
     "Order": "Order",
     "ParseAll": "Include all songs in the list (not just ranked)",
-    "Process": "Process",
+    "Process": "프로세스",
     "SongMissing": "MISSING",
-    "SongsInList": "Songs in the list",
+    "SongsInList": "목록에 있는 곡",
     "SongsMissingError": "Some of the songs are missing from VocaDB. You need to add all songs to the database before including them in the list.",
-    "Submit": "Submit",
-    "Title": "Create song list from NicoNico MyList or YouTube playlist",
-    "TotalSongs": "Total songs",
-    "UnableToParse": "Unable to parse list",
+    "Submit": "제출",
+    "Title": "니코니코 마이리스트 또는 유튜브 재생목록에서 곡 리스트 작성",
+    "TotalSongs": "노래 총합",
+    "UnableToParse": "목록 분석 불가",
     "UrlDescription": "Can be any NicoNico MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939",
-    "UrlLabel": "Playlist/Mylist URL",
+    "UrlLabel": "재생목록/마이리스트 URL",
     "VocaDbEntry": "VocaDB song entry"
   },
   "SongListSortRuleNames": {
-    "CreateDate": "Creation date",
-    "Date": "Event date",
-    "Name": "Name"
+    "CreateDate": "생성일",
+    "Date": "이벤트 날짜",
+    "Name": "이름"
   }
 }
