@@ -1,17 +1,17 @@
 {
   "SongTypeNames": {
-    "Arrangement": "Arrangement",
-    "Cover": "Cover",
-    "DramaPV": "Drama PV",
-    "Illustration": "Illustration",
-    "Instrumental": "Instrumental",
-    "Live": "Live recording",
-    "Mashup": "Mashup",
-    "MusicPV": "Music PV",
-    "Original": "Original song",
-    "Other": "Other",
-    "Remaster": "Remaster",
-    "Remix": "Remix",
-    "Unspecified": "Unspecified"
+    "Arrangement": "어레인지",
+    "Cover": "커버",
+    "DramaPV": "드라마 PV",
+    "Illustration": "그림",
+    "Instrumental": "기악곡",
+    "Live": "현장 녹화",
+    "Mashup": "매시업",
+    "MusicPV": "음악 PV",
+    "Original": "원곡",
+    "Other": "기타",
+    "Remaster": "리마스터",
+    "Remix": "리믹스",
+    "Unspecified": "지정되지 않음"
   }
 }
