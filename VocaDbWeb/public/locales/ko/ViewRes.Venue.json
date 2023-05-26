@@ -1,0 +1,16 @@
+{
+  "Details": {
+    "Address": "주소",
+    "Aliases": "별칭",
+    "Country": "국가/지역",
+    "Venue": "장소"
+  },
+  "Edit": {
+    "Address": "주소",
+    "Coordinates": "좌표",
+    "Country": "국가/지역",
+    "Latitude": "위도",
+    "Location": "장소",
+    "Longitude": "경도"
+  }
+}

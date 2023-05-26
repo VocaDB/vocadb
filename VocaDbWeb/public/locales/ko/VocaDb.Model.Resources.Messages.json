@@ -1,0 +1,13 @@
+{
+  "EntryReport": {
+    "EntryVersionReportBody": "Entry '{{0}}', which you have edited, was reported with the following message: '{{1}}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.",
+    "EntryVersionReportTitle": "Entry report for {{0}}"
+  },
+  "UserAccount": {
+    "AccountCreatedSubject": "{{0}} 에 오신 것을 환영합니다. 이메일을 인증해주세요.",
+    "PasswordResetBody": "VocaDB에서 비밀번호 변경 요청을 받았습니다. 비밀번호 변경은 {{0}} 에서 가능합니다. 링크가 작동하지 않을 시 주소창으로 복사하는 것을 시도하시기 바랍니다. 만약 비밀번호 변경을 요청하지 않았을 시 해당 메세지를 무시하셔도 좋습니다.",
+    "PasswordResetSubject": "비밀번호 재설정 요청됨",
+    "VerifyEmailBody": "{{0}} 에서 이메일 인증을 하기 위해 아래 링크를 클릭해주십시오.\n{{1}}?token={{2}}",
+    "VerifyEmailSubject": "{{0}} 에서 이메일을 인증하십시오."
+  }
+}

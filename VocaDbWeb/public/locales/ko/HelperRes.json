@@ -1,0 +1,49 @@
+{
+  "ActivityFeedHelper": {
+    "At": "at",
+    "CreatedNew": "{{0}} 을(를) 새로 생성함",
+    "EntryAlbum": "앨범",
+    "EntryArtist": "아티스트",
+    "EntryReleaseEvent": "행사",
+    "EntrySong": "노래",
+    "EntrySongList": "노래 목록",
+    "EntryTag": "태그",
+    "EntryVenue": "장소",
+    "Someone": "기여자",
+    "Updated": "{{0}} 업데이트함"
+  },
+  "AlbumHelpers": {
+    "Released": "발행됨"
+  },
+  "Helper": {
+    "Added": "추가됨",
+    "DraftIconTitle": "초안입니다.",
+    "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
+    "EntryIsMissingInformation": "This entry is missing the following information:",
+    "EntryValidationNoErrors": "This entry contains all the required information.",
+    "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
+    "EntryValidationWarningDetails": "세부 사항",
+    "GitHubMarkdown": "깃허브(GitHub)식 마크다운",
+    "IsSupportedForFormatting": "서식 설정에 지원됨",
+    "NameLangTitle": "언어",
+    "NameNewRow": "새 열",
+    "NameValueTitle": "이름 (필수)",
+    "ReturnWithoutSaving": "저장하지 않고 돌아가기",
+    "SaveChanges": "변경사항 저장",
+    "SeeGuide": "가이드",
+    "SeeGuidePost": "자세한 정보",
+    "SeeGuidePre": "See the",
+    "StatusDescriptionApproved": "Approved entries have been inspected by a trusted user. Editing of approved entries is limited.",
+    "StatusDescriptionDraft": "Draft entries are missing some required information.",
+    "StatusDescriptionFinished": "Finished entries contain all the required information but haven't been approved yet.",
+    "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
+    "UploadPictureInfo": "허용된 유형: {{0}}. 최대 업로드 사이즈는 {{1}} MB 입니다. 저작권 존중을 요청하며 이미지 출처 및 설명 제공을 부탁드립니다.",
+    "WebLinkCategoryTitle": "카테고리",
+    "WebLinkDescriptionTitle": "설명",
+    "WebLinkNewRow": "새 열",
+    "WebLinkUrlTitle": "URL"
+  },
+  "SongHelpers": {
+    "FromAlbum": "From album"
+  }
+}

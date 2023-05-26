@@ -266,8 +266,7 @@
     "None": "Nothing",
     "PublishDate": "Publish date",
     "RatingScore": "Rating score",
-    "TagUsageCount": "Tag usage count",
-    "SongType": "Song type"
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "Любимое",

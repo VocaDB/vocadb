@@ -1,0 +1,13 @@
+{
+  "EnglishTranslatedString": {
+    "Original": "원본",
+    "ShowFullDescription": "전체 설명 보기",
+    "Translated": "번역됨"
+  },
+  "PlayList": {
+    "Autoplay": "자동 재생",
+    "AutoplayNote": "자동재생은 유튜브 및 사운드클라우드에서만 지원됩니다",
+    "NextSong": "다음 곡",
+    "Shuffle": "셔플"
+  }
+}

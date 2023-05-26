@@ -1,0 +1,43 @@
+{
+  "ArtistEventRoleNames": {
+    "Dancer": "댄서",
+    "Default": "기본값",
+    "DJ": "DJ",
+    "Instrumentalist": "연주자",
+    "Organizer": "개최자",
+    "Other": "기타",
+    "OtherPerformer": "Other performer",
+    "Promoter": "프로모터",
+    "VJ": "VJ",
+    "Vocalist": "가수",
+    "VoiceManipulator": "Voice manipulator"
+  },
+  "EventCategoryNames": {
+    "AlbumRelease": "Album release fair",
+    "Anniversary": "캐릭터 기념행사",
+    "Club": "클럽",
+    "Concert": "콘서트",
+    "Contest": "대회",
+    "Festival": "축제",
+    "Convention": "컨벤션",
+    "Other": "기타",
+    "Unspecified": "지정되지 않음"
+  },
+  "EventSortRuleNames": {
+    "AdditionDate": "추가 일자",
+    "Date": "날짜",
+    "Name": "이름",
+    "SeriesName": "시리즈",
+    "VenueName": "장소"
+  },
+  "ReleaseEventSeriesEditableFieldNames": {
+    "Category": "카테고리",
+    "Description": "설명",
+    "Name": "이름",
+    "Names": "이름",
+    "OriginalName": "기본 이름 언어",
+    "Picture": "메인 사진",
+    "Status": "상태",
+    "WebLinks": "외부 링크"
+  }
+}

@@ -266,8 +266,7 @@
     "None": "Nichts",
     "PublishDate": "Veröffentlichungsdatum",
     "RatingScore": "Bewertungspunktzahl",
-    "TagUsageCount": "Schlagwort-Verwendungsanzahl",
-    "SongType": "Art des Songs"
+    "TagUsageCount": "Schlagwort-Verwendungsanzahl"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorisieren",

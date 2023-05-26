@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Albums": "앨범",
+    "Attending": "참석 여부",
+    "Category": "카테고리",
+    "Event": "행사",
+    "OccurrenceDate": "날짜",
+    "PVs": "PVs",
+    "RemoveAttendance": "내 행사에서 삭제",
+    "Series": "시리즈",
+    "SongList": "세트 목록",
+    "Songs": "노래",
+    "UserAttending": "내가 참가함",
+    "UserInterested": "내가 관심있음",
+    "Venue": "장소"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "이벤트 생성",
+    "CreateSeries": "시리즈 생성",
+    "CreateVenue": "장소 생성",
+    "ViewByDate": "날짜별 모든 항목",
+    "ViewBySeries": "시리즈별 모든 항목",
+    "ViewByVenue": "장소별 모든 항목",
+    "ViewList": "다가오는"
+  },
+  "Find": {
+    "CreateEvent": "이벤트 생성",
+    "EventNotFound": "죄송합니다, 해당 이름의 장소는 찾을 수 없습니다. 아마도 데이터베이스에 추가되지 않았을 가능성이 높습니다.",
+    "FindEvent": "이벤트 찾기",
+    "Number": "번호",
+    "Series": "시리즈",
+    "UngroupedEventNamed": "해체된 이벤트 이름:",
+    "YouMayAddTheEvent": "이벤트를 데이터베이스에 추가할 수 있습니다."
+  }
+}

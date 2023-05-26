@@ -1,0 +1,31 @@
+{
+  "Details": {
+    "AliasedTo": "Aliased to",
+    "Aliases": "Aliases",
+    "AllAlbums": "모든 앨범",
+    "AllArtists": "전체 아티스트",
+    "AllEntries": "모든 항목",
+    "AllEvents": "모든 이벤트",
+    "AllSongLists": "모든 곡 목록",
+    "AllSongs": "전체 노래",
+    "AssociatedEntryType": "관련 항목 부류",
+    "Category": "카테고리",
+    "Children": "Children",
+    "EventSeries": "Event series",
+    "FollowCount": "Followed by {{0}} user(s)",
+    "FollowTag": "Follow tag",
+    "MappedTags": "아래 니코니코 태크는 이 태그로 분류됩니다",
+    "Overview": "개요",
+    "RelatedTags": "관련 태그",
+    "Siblings": "Siblings",
+    "Tag": "태그",
+    "TagDetails": "태그 세부정보",
+    "TopAlbums": "인기 앨범",
+    "TopArtists": "인기 아티스트",
+    "TopEvents": "탑 이벤트",
+    "TopSongs": "인기 노래",
+    "Translations": "번역",
+    "UnfollowTag": "태그 팔로우 취소",
+    "ValidFor": "Valid for"
+  }
+}
