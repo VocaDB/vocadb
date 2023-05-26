@@ -1,28 +1,28 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. <strong>The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not)</strong>. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "이 앨범과 연관된 프로듀서 및 보컬리스트",
+    "NewAlbumInfo": "VocaDB는 UtaiteDB가 아님을 꼭 숙지해주시기 바랍니다. <strong>앨범이 VocaDB에 추가되기 위해서는 하나 이상의 곡이 보컬로이드로 제작된 곡이여야 합니다 (UTAU 등 타 음성 합성 엔진또한 허용되나, 사람이 부른 커버 곡들은 제외됩니다)</strong>. 팬메이드 비공식 합작 또한 허용되지 않습니다. 추가적인 정보를 위해서는 도움말/가이드라인 을 확인해주시기 바랍니다."
   },
   "ArtistRes": {
-    "AuthoredBy": "VocaDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
+    "AuthoredBy": "VocaDB 계정",
+    "NewArtistExternalLink": "외부 링크 (아티스트 웹사이트, 하츠네 미쿠 위키, 니코니코동화 마이리스트 등)"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to the Vocaloid Database!",
-    "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
+    "SiteDescription": "VocaDB는 각종 곡들과 아티스트, 앨범 등에 대한 정보와 번역본이 있는 보컬로이드 음악 데이터베이스입니다.",
+    "Welcome": "보컬로이드 데이터베이스에 오신 것을 환영합니다!",
+    "WelcomeSubtitle": "보컬로이드, UTAU, 기타 음성 합성 신디사이저, 아티스트, 디스코그래피, PV 등이 포함된 합작 데이터베이스."
   },
   "LayoutRes": {
-    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "Keywords": "보컬로이드, VocaDB, 보컬로이드 데이터베이스, 하츠네 미쿠, UTAU",
+    "PaypalDonateTitle": "VocaDB는 비영리 프로젝트입니다. 모든 금액은 추후의 사이트 개발과 호스팅 비용, 소프트웨어 라이선스 등에 사용됩니다.",
     "SiteName": "VocaDB",
-    "SiteTitle": "Vocaloid Database"
+    "SiteTitle": "보컬로이드 데이터베이스"
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
-    "RankingsTitle": "VocaDB song rankings"
+    "NewSongInfo": "현재 제출하고자 하는 곡이 이전에 추가된 적이 없음을 다시 한 번 확인해주시기 바랍니다. 최소한 한 명 이상의 아티스트 이름의 기입이 필요합니다. 오리지널 PV 링크 기입이 매우 추구됩니다. \n\n보컬로이드가 사용되지 않은 곡은 해당 곡의 보컬로이드 커버 버전이 여러 차례 존재했거나 타 보컬로이드 곡이 있는 앨범에 함께 수록된 경우에만 추가될 수 있음을 숙지해주시기 바랍니다. UTAU 및 타 음성 합성 엔진의 사용 또한 허가되나, 사람이 부른 커버곡은 혀용되지 않습니다.",
+    "RankingsTitle": "VocaDB 곡 랭킹"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\t만약 당신이 한 서클의 대변인이거나 보컬로이드 음악 및 뮤직비디오와 관련된 창작 활동을 하고 있는 프로듀서, 일러스트레이터, 애니메이터 또는 기타 부류의 컨텐츠 크리에이터일 경우, 아래 양식을 사용하여 사이트 직원에게 계정 인증 요청을 보낼 수 있습니다. \n\t\t\t인증 이후에는 당신의 계정 이름이 아티스트 페이지에 표시되며, 반대로도 적용됩니다.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t소유권 주장에 대한 확실한 증거를 제출할 수 없을 시 요청이 거절될 가능성이 높습니다.\n\t\t\t</strong>\n\t\t\t예시로, 트위터 계정이나 블로그에 VocaDB 계정 링크를 올리는 것이 수용 가능한 증거 제출로 취급될 수 있습니다.\n\t\t\t<strong>\n\t\t\t\t사이트에는 당신의 명의로 등록이 완료된 음성 합성 엔진 곡이 하나 이상 있어야 합니다 - 만약 타인이 업로드하지 않았을 시 본인이 직접 제출할 수 있습니다.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\t인증 이후에는 당신이 아티스트 정보에 대한 정보를 수락 또는 거부할 권한이 생기며 정보 편집을 할 인원을 제한할 권한이 주어집니다.\n\t\t\t현재로서는 아티스트 프로필을 \"보호\"할 수 있는 수단이 이것이 유일합니다 - 곡 및 앨범에는 효력이 발생하지 않습니다.\n\t\t</p>\n\t\t<p>\n\t\t\t저희에게는 요청을 거부할 권리가 있음을 이해해주시기 바랍니다. 사유는 위에 언급된 내용을 포함할 수 있습니다.\n\t\t\t확실한 요청 거부 사유가 있지 않는 한, 저희는 당신에게 연락을 취할 것이며 요청이 수락될 수 있게끔 오류 정정을 요청할 것임을 알립니다.\n\t\t</p>"
   }
 }
