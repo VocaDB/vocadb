@@ -19,7 +19,7 @@
     "Title": "니코니코 마이리스트 또는 유튜브 재생목록에서 곡 리스트 작성",
     "TotalSongs": "노래 총합",
     "UnableToParse": "목록 분석 불가",
-    "UrlDescription": "Can be any NicoNico MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "UrlDescription": "니코니코 마이리스트(예: for example http://www.nicovideo.jp/mylist/1234567) 또는 유튜브 재생목록 (예: https://www.youtube.com/playlist?list=MIKUMIKU3939) 등이 될 수 있음",
     "UrlLabel": "재생목록/마이리스트 URL",
     "VocaDbEntry": "VocaDB song entry"
   },
