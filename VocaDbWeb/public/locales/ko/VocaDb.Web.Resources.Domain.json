@@ -1,31 +1,31 @@
 {
   "EntryReportTypeNames": {
     "BrokenPV": "Broken PV",
-    "Duplicate": "Duplicate entry",
-    "Inappropriate": "Inappropriate content",
-    "InvalidInfo": "Invalid or missing information",
-    "MaliciousIP": "Malicious IP",
-    "Other": "Other (specify in notes)",
-    "OwnershipClaim": "Ownership claim",
-    "RemovePermissions": "Restricted editing",
-    "Spamming": "Spamming"
+    "Duplicate": "중복 입력",
+    "Inappropriate": "부적절한 내용",
+    "InvalidInfo": "유효하지 않거나 유실된 정보",
+    "MaliciousIP": "악의적 IP",
+    "Other": "기타 (노트에서 특정)",
+    "OwnershipClaim": "소유권 주장",
+    "RemovePermissions": "제한된 편집",
+    "Spamming": "스팸"
   },
   "EntryTypeNames": {
-    "Album": "Album",
-    "Artist": "Artist",
-    "DiscussionTopic": "Topic",
+    "Album": "앨범",
+    "Artist": "아티스트",
+    "DiscussionTopic": "주제",
     "PV": "PV",
-    "ReleaseEvent": "Event",
+    "ReleaseEvent": "행사",
     "ReleaseEventSeries": "Event series",
-    "Song": "Song",
-    "SongList": "Song list",
-    "Tag": "Tag",
-    "Undefined": "Anything",
-    "User": "User",
-    "Venue": "Venue"
+    "Song": "노래",
+    "SongList": "노래 목록",
+    "Tag": "태그",
+    "Undefined": "아무거나",
+    "User": "사용자",
+    "Venue": "장소"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",
-    "User": "User"
+    "User": "사용자"
   }
 }
