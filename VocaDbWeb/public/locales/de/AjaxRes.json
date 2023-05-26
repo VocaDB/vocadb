@@ -1,15 +1,15 @@
 {
   "Album": {
     "AddedToCollection": "Zur Sammlung hinzugefügt.",
-    "AddToTracks": "Zu den Songs hinzufügen",
-    "RemoveFromTracks": "Von den Songs entfernen",
+    "AddToTracks": "Zu Tracks hinzufügen",
+    "RemoveFromTracks": "Von Tracks entfernen",
     "AddNewSong": "Neuen Song '{{0}}' hinzufügen",
     "Download": "Download"
   },
   "EntryIndex": {
     "DraftsOnlyFilter": "Entwurfsstatus",
-    "ExactTitleFilter": "Genauer Titel '{{0}}'",
-    "FilterPre": "Filtern durch",
+    "ExactTitleFilter": "exakter Titel '{{0}}'",
+    "FilterPre": "Filtern nach",
     "StartsWithTitleFilter": "Beginnt mit dem Titel '{{0}}'",
     "TitleFilter": "Titel '{{0}}'"
   },
@@ -26,6 +26,6 @@
     "OnlyWithPVsFilter": "Nur PVs",
     "SinceFilter": "neuer als {{0}}",
     "SongTypeFilter": "Art des Songs '{{0}}'",
-    "ThanksForRating": "Danke für die Bewertung!"
+    "ThanksForRating": "Danke für deine Bewertung!"
   }
 }
