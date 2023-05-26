@@ -1,7 +1,7 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "오래된 순",
+    "CreateDateDescending": "최신순"
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Auto-imported",
@@ -9,106 +9,106 @@
     "Deleted": "Deleted",
     "Merged": "Merged from another entry",
     "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
+    "Restored": "복구됨",
     "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "Unknown": "불명"
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "Nothing",
     "Ordered": "Ordered",
-    "Owned": "Owned",
-    "Wishlisted": "Wishlisted"
+    "Owned": "소유함",
+    "Wishlisted": "찜 목록에 추가됨"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
-    "Video": "Video"
+    "Audio": "오디오",
+    "Video": "동영상"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "Artists",
-    "Cover": "Cover",
+    "Artists": "아티스트",
+    "Cover": "커버",
     "Description": "설명",
-    "DiscType": "Album type",
-    "Names": "Names",
+    "DiscType": "앨범 종류",
+    "Names": "이름",
     "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "OriginalRelease": "Original release",
-    "Pictures": "Pictures",
+    "OriginalName": "원래 이름",
+    "OriginalRelease": "첫 출시일",
+    "Pictures": "사진",
     "PVs": "PVs",
-    "Status": "Status",
-    "Tracks": "Tracks",
-    "WebLinks": "External links",
-    "Barcode": "Barcode",
-    "Identifiers": "Identifiers",
-    "Discs": "Discs"
+    "Status": "상태",
+    "Tracks": "트랙",
+    "WebLinks": "외부 링크",
+    "Barcode": "바코드",
+    "Identifiers": "식별자",
+    "Discs": "디스크"
   },
   "AlbumMediaTypeNames": {
-    "DigitalDownload": "Digital download",
-    "Other": "Unspecified",
-    "PhysicalDisc": "Physical disc"
+    "DigitalDownload": "디지털 다운로드",
+    "Other": "지정되지 않음",
+    "PhysicalDisc": "물리적 디스크"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "CollectionCount": "Collection count",
-    "Name": "Name",
-    "RatingAverage": "Rating average",
-    "RatingTotal": "Total score",
-    "ReleaseDate": "Release date"
+    "AdditionDate": "추가 일자",
+    "CollectionCount": "컬렉션 총수",
+    "Name": "이름",
+    "RatingAverage": "평균 평가",
+    "RatingTotal": "총 점수",
+    "ReleaseDate": "출시일"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
+    "Created": "생성됨",
+    "Deleted": "삭제됨",
     "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted to an earlier revision",
-    "Unknown": "Unknown"
+    "PropertiesUpdated": "업데이트된 사항",
+    "Restored": "복구됨",
+    "Reverted": "이전 내용으로 복구됨",
+    "Unknown": "불명"
   },
   "ArtistEditableFieldNames": {
-    "Albums": "Albums",
-    "ArtistType": "Artist type",
+    "Albums": "앨범",
+    "ArtistType": "아티스트 부류",
     "BaseVoicebank": "Base voicebank",
-    "Description": "Description",
-    "Groups": "Groups",
-    "Names": "Names",
+    "Description": "설명",
+    "Groups": "그룹",
+    "Names": "이름",
     "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "Picture": "Main picture",
-    "Pictures": "Pictures",
-    "ReleaseDate": "Voicebank release date",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "OriginalName": "원래 이름",
+    "Picture": "메인 사진",
+    "Pictures": "사진",
+    "ReleaseDate": "보이스뱅크 출시일",
+    "Status": "상태",
+    "WebLinks": "외부 링크"
   },
   "ArtistRoleNames": {
-    "Animator": "Animator",
+    "Animator": "애니메이터",
     "Arranger": "Arranger",
     "Chorus": "Chorus",
     "Composer": "Composer",
     "Default": "Default",
     "Distributor": "Distributor",
     "Encoder": "Encoder",
-    "Illustrator": "Illustrator",
+    "Illustrator": "일러스트레이터",
     "Instrumentalist": "Instrumentalist",
-    "Lyricist": "Lyricist",
-    "Mastering": "Mastering",
+    "Lyricist": "작사가",
+    "Mastering": "마스터링",
     "Mixer": "Mixer",
-    "Other": "Other",
-    "Publisher": "Publisher",
-    "VocalDataProvider": "Vocal data provider",
-    "Vocalist": "Vocalist",
+    "Other": "기타",
+    "Publisher": "발행자",
+    "VocalDataProvider": "보컬 데이터 제공자",
+    "Vocalist": "가수",
     "VoiceManipulator": "Voice manipulator"
   },
   "ArtistSortRuleNames": {
-    "AdditionDate": "Addition date (descending)",
-    "AdditionDateAsc": "Addition date (ascending)",
-    "FollowerCount": "Number of followers",
-    "Name": "Name",
-    "ReleaseDate": "Voicebank release date",
-    "SongCount": "Number of songs",
+    "AdditionDate": "작성일 (내림차순)",
+    "AdditionDateAsc": "작성일 (오름차순)",
+    "FollowerCount": "팔로워 수",
+    "Name": "이름",
+    "ReleaseDate": "보이스뱅크 출시일",
+    "SongCount": "곡 수",
     "SongRating": "Total song rating"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "오래된 순",
+    "CreateDateDescending": "최신순"
   },
   "CommonMessages": {
     "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
@@ -116,49 +116,49 @@
     "EntryStatusExplanation": "Draft = entry is missing crucial information. This status indicates that you're requesting additional information to be added or corrected.<br />\nFinished = The entry has all the necessary information, but it hasn't been inspected by a trusted user yet.<br />\nApproved = The entry has been inspected and approved by a trusted user. Approved entries can only be edited by trusted users.",
     "Locked": "This entry is locked, meaning that only moderators are allowed to edit it.",
     "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
-    "RevisionHidden": "This page revision has been hidden."
+    "RevisionHidden": "해당 페이지 수정사항은 숨겨진 상태입니다."
   },
   "ContentLanguageSelectionNames": {
-    "Default": "Original",
-    "English": "English",
-    "Japanese": "Non-English",
-    "Romaji": "Romanized",
-    "Unspecified": "Unspecified"
+    "Default": "원본",
+    "English": "영어",
+    "Japanese": "영어 이외의 언어",
+    "Romaji": "로마자화",
+    "Unspecified": "지정되지 않음"
   },
   "DiscTypeDescriptions": {
     "Album": "Album that consists mostly of previously unpublished songs.",
-    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
+    "Compilation": "하나 혹은 이상의 이전 앨범에 수록된 곡들의 모음집. 예시) \"베스트 모음집\"",
     "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
-    "Other": "For albums that don't fit into anything above.",
-    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "Other": "위 사항 어느 것에도 해당하지 않는 앨범",
+    "Single": "개별적인 곡을 한두개 포함하고 있음. 대체 버전(리믹스, 악곡 버전 등) 은 일반적으로 제외됨.",
     "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
-    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+    "Video": "DVD 및 Blu-ray 등의 뮤직 비디오 중심의 디스크"
   },
   "EntryEditEventNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
-    "Updated": "Updated"
+    "Created": "생성됨",
+    "Deleted": "삭제됨",
+    "Restored": "복구됨",
+    "Updated": "업데이트됨"
   },
   "EntryStatusNames": {
-    "Approved": "Approved",
-    "Draft": "Draft",
-    "Finished": "Finished",
-    "Locked": "Locked"
+    "Approved": "승인됨",
+    "Draft": "초안",
+    "Finished": "완료됨",
+    "Locked": "잠김"
   },
   "PermissionTokenNames": {
     "AccessManageMenu": "Access manage menu",
-    "Admin": "Database admin tasks",
-    "AddRawFileMedia": "Add raw media",
+    "Admin": "데이터베이스 관리자 작업",
+    "AddRawFileMedia": "원본 미디어 추가",
     "ApplyAnyTag": "Add any tag to entry",
     "ApproveEntries": "Approve entries",
-    "BulkDeletePVs": "Bulk delete PVs",
-    "CreateComments": "Create comments",
-    "DeleteComments": "Delete comments",
+    "BulkDeletePVs": "PV 대량 삭제",
+    "CreateComments": "댓글 작성",
+    "DeleteComments": "댓글 삭제",
     "DeleteEntries": "Delete entries",
-    "DesignatedStaff": "Designated staff member",
-    "DisableUsers": "Disable users",
-    "EditAllSongLists": "Edit all song lists",
+    "DesignatedStaff": "지정된 직원 멤버",
+    "DisableUsers": "사용자 비활성화",
+    "EditAllSongLists": "모든 곡 목록 편집",
     "EditFeaturedLists": "Manage featured songlists",
     "EditNews": "Manage news",
     "EditProfile": "Edit personal profile",
@@ -167,153 +167,153 @@
     "ManageDatabase": "Manage database",
     "ManageEntryReports": "Manage entry reports",
     "ManageEventSeries": "Manage event series",
-    "ManageIPRules": "Manage IP rules",
-    "ManageUserPermissions": "Manage user permissions",
+    "ManageIPRules": "IP 규칙 관리",
+    "ManageUserPermissions": "사용자 권한 관리",
     "MergeEntries": "Merge entries",
-    "MikuDbImport": "Album import",
-    "MoveToTrash": "Move to trash",
+    "MikuDbImport": "앨범 불러오기",
+    "MoveToTrash": "휴지통으로 이동",
     "Nothing": "Nothing",
     "ReadRecentComments": "Read recent comments",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Remove tag usages",
-    "RestoreRevisions": "Restore revisions",
-    "UploadMedia": "Upload own media",
-    "ViewAuditLog": "View event log",
-    "ViewHiddenRatings": "View hidden ratings",
-    "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "RestoreRevisions": "수정사항 복구하기",
+    "UploadMedia": "미디어 파일 업로드",
+    "ViewAuditLog": "이벤트 기록 보기",
+    "ViewHiddenRatings": "숨겨진 평가 보기",
+    "ViewHiddenRevisions": "숨겨진 변경사항 보기",
+    "ManageWebhooks": "웹훅 관리",
+    "CreateDatabaseDump": "데이터베이스 덤프 생성"
   },
   "PVTypeDescriptions": {
-    "Original": "Original (official/authorized upload)",
-    "Other": "Other",
+    "Original": "원본 (공식/인증된 업로드)",
+    "Other": "기타",
     "Reprint": "Reprint (copied from elsewhere)"
   },
   "PVTypeNames": {
-    "Original": "Original",
-    "Other": "Other",
+    "Original": "원본",
+    "Other": "기타",
     "Reprint": "Reprint"
   },
   "RatedSongForUserSortRuleNames": {
     "RatingDate": "Rating date"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
-    "Category": "Category",
-    "Date": "Date",
-    "Description": "Description",
-    "MainPicture": "Main picture",
-    "Names": "Names",
-    "OriginalName": "Default name language",
+    "Artists": "아티스트",
+    "Category": "카테고리",
+    "Date": "날짜",
+    "Description": "설명",
+    "MainPicture": "메인 사진",
+    "Names": "이름",
+    "OriginalName": "기본 이름 언어",
     "PVs": "PVs",
-    "Series": "Series",
-    "SeriesNumber": "Series number",
+    "Series": "시리즈",
+    "SeriesNumber": "시리즈 번호",
     "SeriesSuffix": "Series suffix",
-    "SongList": "Setlist",
-    "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "SongList": "세트 목록",
+    "Status": "상태",
+    "Venue": "장소",
+    "VenueName": "장소 이름",
+    "WebLinks": "외부 링크"
   },
   "SongArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-imported",
-    "Created": "Created",
-    "Deleted": "Deleted",
+    "AutoImportedFromMikuDb": "자동 가져오기",
+    "Created": "생성됨",
+    "Deleted": "삭제됨",
     "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "PropertiesUpdated": "업데이트된 사항",
+    "Restored": "복구됨",
+    "Reverted": "되돌려짐",
+    "Unknown": "알 수 없음"
   },
   "SongEditableFieldNames": {
-    "Artists": "Artists",
-    "Groups": "Groups",
-    "Length": "Duration",
-    "Lyrics": "Lyrics",
-    "Names": "Names",
-    "Notes": "Description",
+    "Artists": "아티스트",
+    "Groups": "그룹",
+    "Length": "기간",
+    "Lyrics": "가사",
+    "Names": "이름",
+    "Notes": "설명",
     "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "OriginalVersion": "Original version",
-    "PublishDate": "Publish date",
+    "OriginalName": "원래 이름",
+    "OriginalVersion": "원본 버전",
+    "PublishDate": "게시일",
     "PVs": "PVs",
-    "SongType": "Song type",
-    "Status": "Status",
-    "WebLinks": "External links",
-    "ReleaseEvent": "Release event",
+    "SongType": "곡 종류",
+    "Status": "상태",
+    "WebLinks": "외부 링크",
+    "ReleaseEvent": "게시 행사",
     "Bpm": "BPM"
   },
   "SongListEditableFieldNames": {
-    "Description": "Description",
-    "EventDate": "Event date",
-    "FeaturedCategory": "Featured category",
-    "Name": "Name",
-    "Songs": "Songs",
-    "Status": "Status",
-    "Thumbnail": "Thumbnail"
+    "Description": "설명",
+    "EventDate": "이벤트 날짜",
+    "FeaturedCategory": "추천 카테고리",
+    "Name": "이름",
+    "Songs": "곡",
+    "Status": "상태",
+    "Thumbnail": "미리보기"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Concert setlists",
     "Nothing": "Nothing",
-    "Other": "Other",
+    "Other": "기타",
     "Pools": "Pools",
-    "VocaloidRanking": "Vocaloid rankings"
+    "VocaloidRanking": "보컬로이드 랭킹"
   },
   "SongSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "FavoritedTimes": "Times favorited",
-    "Name": "Name",
+    "AdditionDate": "추가 일자",
+    "FavoritedTimes": "즐겨찾기 횟수",
+    "Name": "이름",
     "None": "Nothing",
-    "PublishDate": "Publish date",
-    "RatingScore": "Rating score",
+    "PublishDate": "게시일",
+    "RatingScore": "평가 점수",
     "TagUsageCount": "Tag usage count",
-    "SongType": "Song type"
+    "SongType": "곡 종류"
   },
   "SongVoteRatingNames": {
-    "Favorite": "Favorite",
-    "Like": "Like"
+    "Favorite": "즐겨찾기",
+    "Like": "좋아요"
   },
   "TagEditableFieldNames": {
     "AliasedTo": "Aliased to",
-    "CategoryName": "Category",
-    "Description": "Description",
-    "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
-    "OriginalName": "Default name language",
+    "CategoryName": "카테고리",
+    "Description": "설명",
+    "HideFromSuggestions": "추천에서 숨기기",
+    "Names": "이름",
+    "OriginalName": "기본 이름 언어",
     "Parent": "Parent",
-    "Picture": "Picture",
-    "RelatedTags": "Related tags",
-    "Status": "Status",
-    "Targets": "Targets",
-    "WebLinks": "External links"
+    "Picture": "사진",
+    "RelatedTags": "관련 태그",
+    "Status": "상태",
+    "Targets": "대상",
+    "WebLinks": "외부 링크"
   },
   "UserEmailOptionsNames": {
-    "NoEmail": "No private messages",
-    "PrivateMessagesFromAdmins": "Private messages from admins",
-    "PrivateMessagesFromAll": "Private messages from everybody"
+    "NoEmail": "비공개 메세지 없음",
+    "PrivateMessagesFromAdmins": "관리자로부터의 비공개 메세지",
+    "PrivateMessagesFromAll": "모두로부터의 비공개 메세지"
   },
   "UserGroupNames": {
-    "Admin": "Administrator",
-    "Limited": "Limited user",
-    "Moderator": "Moderator",
+    "Admin": "관리자",
+    "Limited": "제한된 사용자",
+    "Moderator": "중재자",
     "Nothing": "Nothing",
-    "Regular": "Regular user",
-    "Trusted": "Trusted user"
+    "Regular": "일반 사용자",
+    "Trusted": "신뢰할 수 있는 사용자"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Address": "주소",
+    "AddressCountryCode": "국가/지역",
+    "Coordinates": "좌표",
+    "Description": "설명",
+    "Names": "이름",
+    "OriginalName": "기본 언어",
+    "Status": "상태",
+    "WebLinks": "외부 링크"
   },
   "WebLinkCategoryNames": {
-    "Commercial": "Commercial",
-    "Official": "Official",
-    "Other": "Other",
-    "Reference": "Reference"
+    "Commercial": "상업적",
+    "Official": "공식",
+    "Other": "기타",
+    "Reference": "참고"
   }
 }
