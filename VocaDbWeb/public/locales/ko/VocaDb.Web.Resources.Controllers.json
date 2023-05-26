@@ -1,5 +1,5 @@
 {
   "TagController": {
-    "TagNameError": "Tag name may contain only word characters and cannot be empty."
+    "TagNameError": "태그 이름은 단어만 포함할 수 있으며 비어있을 수 없습니다."
   }
 }
