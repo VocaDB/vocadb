@@ -1,16 +1,16 @@
 {
   "DiscTypeNames": {
-    "Album": "Original album",
-    "Artbook": "Artbook",
+    "Album": "원본 앨범",
+    "Artbook": "아트북",
     "Compilation": "Compilation",
     "EP": "E.P.",
-    "Fanmade": "Fanmade/doujin",
-    "Game": "Game",
-    "Instrumental": "Instrumental",
-    "Other": "Other",
-    "Single": "Single",
-    "SplitAlbum": "Split album",
-    "Unknown": "Not specified",
-    "Video": "Video"
+    "Fanmade": "팬아트/동인",
+    "Game": "게임",
+    "Instrumental": "기악곡",
+    "Other": "기타",
+    "Single": "싱글",
+    "SplitAlbum": "앨범 분리",
+    "Unknown": "지정되지 않음",
+    "Video": "동영상"
   }
 }
