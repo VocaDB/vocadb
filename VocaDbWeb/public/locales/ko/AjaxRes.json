@@ -1,13 +1,13 @@
 {
   "Album": {
-    "AddedToCollection": "Added to collection.",
-    "AddToTracks": "Add to tracks",
-    "RemoveFromTracks": "Remove from tracks",
-    "AddNewSong": "Add new song called '{{0}}'",
-    "Download": "Download"
+    "AddedToCollection": "컬렉션에 추가됨",
+    "AddToTracks": "트랙 추가",
+    "RemoveFromTracks": "트랙 삭제",
+    "AddNewSong": "'{{0}}' 라는 곡 새로 추가하기",
+    "Download": "다운로드"
   },
   "EntryIndex": {
-    "DraftsOnlyFilter": "draft status",
+    "DraftsOnlyFilter": "초안 상태",
     "ExactTitleFilter": "exact title '{{0}}'",
     "FilterPre": "Filtering by",
     "StartsWithTitleFilter": "starting with title '{{0}}'",
