@@ -266,8 +266,7 @@
     "None": "Nothing",
     "PublishDate": "게시일",
     "RatingScore": "평가 점수",
-    "TagUsageCount": "Tag usage count",
-    "SongType": "곡 종류"
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "즐겨찾기",
