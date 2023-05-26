@@ -18,6 +18,8 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
+import { CultureCodesProvider } from './CultureCodesContext';
+
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
 const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
 
@@ -72,6 +74,7 @@ const App = (): React.ReactElement => {
 				NostalgicDivaProvider,
 				VdbPlayerProvider,
 				MutedUsersProvider,
+				CultureCodesProvider,
 			]}
 		>
 			<ScrollToTop />

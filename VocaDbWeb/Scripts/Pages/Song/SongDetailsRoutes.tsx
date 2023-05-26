@@ -1,4 +1,4 @@
-import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import { useLoginManager } from '@/LoginManagerContext';
@@ -29,6 +29,7 @@ export const SongDetailsTabs = React.memo(
 		children,
 	}: SongDetailsTabsProps): React.ReactElement => {
 		const loginManager = useLoginManager();
+		const { getCodeDescription } = useCultureCodes();
 
 		const { t } = useTranslation([
 			'ViewRes',
@@ -45,7 +46,7 @@ export const SongDetailsTabs = React.memo(
 			)
 			.map((l) =>
 				l.translationType !== 'Romanized'
-					? userLanguageCultures[l.cultureCodes![0]]?.nativeName ??
+					? getCodeDescription(l.cultureCodes![0])?.nativeName ??
 					  t('ViewRes.Song:Details.LyricsLanguageOther')
 					: t(
 							'VocaDb.Web.Resources.Domain.Globalization:TranslationTypeNames.Romanized',

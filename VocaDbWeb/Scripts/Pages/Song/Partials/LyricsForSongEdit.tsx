@@ -2,14 +2,14 @@ import Accordion from '@/Bootstrap/Accordion';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
-import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { useCultureCodes } from '@/CultureCodesContext';
 import {
 	LyricsForSongEditStore,
 	LyricsForSongListEditStore,
 } from '@/Stores/Song/LyricsForSongListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface LyricsForSongEditProps {
@@ -29,6 +29,12 @@ const LyricsForSongEdit = observer(
 			'ViewRes.Song',
 			'VocaDb.Web.Resources.Domain.Globalization',
 		]);
+		const [languageOptionsExtended, setLanguageOptionsExtended] = useState(
+			lyricsForSongEditStore.cultureCodes.filter(
+				(c) => c.length > 2 && c !== 'fil',
+			).length > 0,
+		);
+		const { getCodeDescription } = useCultureCodes();
 
 		return (
 			<Accordion.Item eventKey={eventKey}>
@@ -43,8 +49,10 @@ const LyricsForSongEdit = observer(
 								{lyricsForSongEditStore.cultureCodes
 									.map(
 										(code) =>
-											userLanguageCultures[code]
-												? `${userLanguageCultures[code].nativeName} (${userLanguageCultures[code].englishName})`
+											getCodeDescription(code)
+												? `${getCodeDescription(code)?.nativeName} (${
+														getCodeDescription(code)?.englishName
+												  })`
 												: 'Other/Unknown' /* LOC */,
 									)
 									.join(' / ')}
@@ -85,6 +93,7 @@ const LyricsForSongEdit = observer(
 																'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
 															)}
 															value={cultureCode}
+															extended={languageOptionsExtended}
 															onChange={(e): void =>
 																runInAction(() => {
 																	lyricsForSongEditStore.replaceCultureCode(
@@ -126,6 +135,15 @@ const LyricsForSongEdit = observer(
 												{t('ViewRes:Shared.Add')}
 											</SafeAnchor>
 										)}
+									{!languageOptionsExtended && (
+										<SafeAnchor
+											onClick={(): void => setLanguageOptionsExtended(true)}
+											href="#"
+											className="textLink addLink"
+										>
+											{t('ViewRes.Song:Edit.LyExtendLanguages')}{' '}
+										</SafeAnchor>
+									)}
 								</p>
 							)}
 							<div>
