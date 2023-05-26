@@ -1,9 +1,9 @@
 {
   "Time": {
-    "Days": "days",
-    "Hours": "hours",
-    "Minutes": "minutes",
-    "Months": "months",
-    "TimeAgo": "{{0}} {{1}} ago"
+    "Days": "일",
+    "Hours": "시간",
+    "Minutes": "분",
+    "Months": "개월",
+    "TimeAgo": "{{0}} {{1}} 전"
   }
 }
