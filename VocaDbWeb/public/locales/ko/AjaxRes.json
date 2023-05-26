@@ -9,23 +9,23 @@
   "EntryIndex": {
     "DraftsOnlyFilter": "초안 상태",
     "ExactTitleFilter": "exact title '{{0}}'",
-    "FilterPre": "Filtering by",
-    "StartsWithTitleFilter": "starting with title '{{0}}'",
-    "TitleFilter": "title '{{0}}'"
+    "FilterPre": "필터링 기준",
+    "StartsWithTitleFilter": "'{{0}}' 로 시작하는 제목",
+    "TitleFilter": "제목 '{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Add custom artist named '{0}'",
-    "ReportSent": "Report sent. Thank you!",
-    "Save": "Save",
-    "ThanksForRating": "Thank you for rating!",
-    "UnableToSendReport": "Unable to send report."
+    "AddExtraArtist": "'{0}' 라는 이름의 커스텀 아티스트 추가",
+    "ReportSent": "신고되었습니다. 감사합니다!",
+    "Save": "저장",
+    "ThanksForRating": "평점에 감사드립니다!",
+    "UnableToSendReport": "보고 전송 불가능."
   },
   "Song": {
-    "AddedToList": "Added to list",
-    "ArtistFilter": "artist '{{0}}'",
+    "AddedToList": "목록에 추가되었습니다",
+    "ArtistFilter": "아티스트 '{{0}}'",
     "OnlyWithPVsFilter": "PVs only",
-    "SinceFilter": "newer than {{0}}",
-    "SongTypeFilter": "song type '{{0}}'",
-    "ThanksForRating": "Thank you for rating!"
+    "SinceFilter": "{{0}} 보다 최근",
+    "SongTypeFilter": "곡 종류 '{{0}}'",
+    "ThanksForRating": "평점에 감사드립니다!"
   }
 }
