@@ -1,0 +1,16 @@
+{
+  "Details": {
+    "Address": "Address",
+    "Aliases": "Aliases",
+    "Country": "Country/Region",
+    "Venue": "Venue"
+  },
+  "Edit": {
+    "Address": "Address",
+    "Coordinates": "Coordinates",
+    "Country": "Country/Region",
+    "Latitude": "Latitude",
+    "Location": "Location",
+    "Longitude": "Longitude"
+  }
+}
