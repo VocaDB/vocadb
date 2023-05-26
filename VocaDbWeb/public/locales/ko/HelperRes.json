@@ -13,7 +13,7 @@
     "Updated": "{{0}} 업데이트함"
   },
   "AlbumHelpers": {
-    "Released": "Released"
+    "Released": "발행됨"
   },
   "Helper": {
     "Added": "추가됨",
@@ -31,7 +31,7 @@
     "ReturnWithoutSaving": "저장하지 않고 돌아가기",
     "SaveChanges": "변경사항 저장",
     "SeeGuide": "가이드",
-    "SeeGuidePost": "for more information.",
+    "SeeGuidePost": "자세한 정보",
     "SeeGuidePre": "See the",
     "StatusDescriptionApproved": "Approved entries have been inspected by a trusted user. Editing of approved entries is limited.",
     "StatusDescriptionDraft": "Draft entries are missing some required information.",
