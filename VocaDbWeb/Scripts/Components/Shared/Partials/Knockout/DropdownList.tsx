@@ -85,6 +85,7 @@ const cultures = Object.fromEntries(
 		},
 		es: { nativeName: 'espa\u00F1ol', englishName: 'Spanish' },
 		'fi-Fi': { nativeName: 'suomi (Suomi)', englishName: 'Finnish (Finland)' },
+		ko: { nativeName: '한국어 (대한민국) ', englishName: 'Korean (Korea)' },
 		pt: { nativeName: 'portugu\u00EAs', englishName: 'Portuguese' },
 		'ru-RU': {
 			nativeName:

@@ -17,6 +17,7 @@ const locales: LocaleLoader = {
 	en: () => import('dayjs/locale/en'),
 	'en-US': () => import('dayjs/locale/en'),
 	es: () => import('dayjs/locale/es'),
+	ko: () => import('dayjs/locale/ko'),
 	pt: () => import('dayjs/locale/pt'),
 	'fi-FI': () => import('dayjs/locale/fi'),
 	'ru-RU': () => import('dayjs/locale/ru'),
