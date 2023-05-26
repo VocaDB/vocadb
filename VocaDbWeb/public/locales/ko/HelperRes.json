@@ -17,7 +17,7 @@
   },
   "Helper": {
     "Added": "추가됨",
-    "DraftIconTitle": "This entry is a draft.",
+    "DraftIconTitle": "초안입니다.",
     "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
     "EntryIsMissingInformation": "This entry is missing the following information:",
     "EntryValidationNoErrors": "This entry contains all the required information.",
@@ -37,7 +37,7 @@
     "StatusDescriptionDraft": "Draft entries are missing some required information.",
     "StatusDescriptionFinished": "Finished entries contain all the required information but haven't been approved yet.",
     "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
-    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
+    "UploadPictureInfo": "허용된 유형: {{0}}. 최대 업로드 사이즈는 {{1}} MB 입니다. 저작권 존중을 요청하며 이미지 출처 및 설명 제공을 부탁드립니다.",
     "WebLinkCategoryTitle": "카테고리",
     "WebLinkDescriptionTitle": "설명",
     "WebLinkNewRow": "새 열",
