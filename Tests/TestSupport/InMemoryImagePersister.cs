@@ -1,8 +1,8 @@
 #nullable disable
 
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net.Mime;
+using SixLabors.ImageSharp;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
@@ -15,15 +15,6 @@ namespace VocaDb.Tests.TestSupport;
 public class InMemoryImagePersisterStore
 {
 	private readonly Dictionary<string, byte[]> _images = new();
-
-	private ImageFormat GetImageFormat(IEntryImageInformation imageInfo) => imageInfo.Mime switch
-	{
-		MediaTypeNames.Image.Jpeg => ImageFormat.Jpeg,
-		"image/png" => ImageFormat.Png,
-		MediaTypeNames.Image.Gif => ImageFormat.Gif,
-		"image/bmp" => ImageFormat.Bmp,
-		_ => ImageFormat.Png,
-	};
 
 	public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 	{
@@ -52,7 +43,7 @@ public class InMemoryImagePersisterStore
 	public void Write(IEntryImageInformation picture, ImageSize size, Image image)
 	{
 		using var stream = new MemoryStream();
-		image.Save(stream, GetImageFormat(picture));
+		image.Save(stream, image.Metadata.DecodedImageFormat);
 		Write(picture, size, stream);
 	}
 }
