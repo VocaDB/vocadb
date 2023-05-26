@@ -1,16 +1,16 @@
 {
   "Details": {
-    "Address": "Address",
-    "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Address": "주소",
+    "Aliases": "별칭",
+    "Country": "국가/지역",
+    "Venue": "장소"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
-    "Latitude": "Latitude",
-    "Location": "Location",
-    "Longitude": "Longitude"
+    "Address": "주소",
+    "Coordinates": "좌표",
+    "Country": "국가/지역",
+    "Latitude": "위도",
+    "Location": "장소",
+    "Longitude": "경도"
   }
 }
