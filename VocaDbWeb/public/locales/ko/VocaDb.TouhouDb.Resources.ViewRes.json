@@ -1,28 +1,28 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
-    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "이 앨범과 연관된 아티스트",
+    "NewAlbumInfo": "이 앨범이 TouhouDB에 수록되기 위해서는 동방과 연관된 곡이 하나 이상 있어야 합니다. 비공식 팬메이드 컴필레이션은 허용되지 않습니다. 추가 정보를 위해서는 도움말/가이드라인을 확인해주시기 바랍니다."
   },
   "ArtistRes": {
-    "AuthoredBy": "TouhouDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
+    "AuthoredBy": "TouhouDB 계정",
+    "NewArtistExternalLink": "외부 링크 (아티스트 웹사이트, 동방 위키, 니코니코동화 마이리스트 등)"
   },
   "HomeRes": {
-    "SiteDescription": "TouhouDB is a Touhou music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to Touhou music database!",
-    "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
+    "SiteDescription": "TouhouDB는 각종 곡들과 아티스트, 앨범 등에 대한 정보와 번역본이 있는 동방 음악 데이터베이스입니다.",
+    "Welcome": "동방 음악 데이터베이스에 오신 것을 환영합니다!",
+    "WelcomeSubtitle": "동방프로젝트 관련 아티스트, 디스코그래피, PV, 기타 등등이 모여있는 합작 데이터베이스."
   },
   "LayoutRes": {
-    "Keywords": "Touhou",
+    "Keywords": "동방",
     "PaypalDonateTitle": "",
     "SiteName": "TouhouDB",
-    "SiteTitle": "Touhou Music Database"
+    "SiteTitle": "동방 음악 데이터베이스"
   },
   "SongRes": {
     "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
-    "RankingsTitle": "TouhouDB song rankings"
+    "RankingsTitle": "TouhouDB 곡 랭킹"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Touhou music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your TouhouDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\t만약 당신이 한 서클의 대변인이거나 동방 음악 및 뮤직비디오와 관련된 창작 활동을 하고 있는 프로듀서, 일러스트레이터, 애니메이터 또는 기타 부류의 컨텐츠 크리에이터일 경우, 아래 양식을 사용하여 사이트 직원에게 계정 인증 요청을 보낼 수 있습니다. \n\t\t\t인증 이후에는 당신의 계정 이름이 아티스트 페이지에 표시되며, 반대로도 적용됩니다.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t소유권 주장에 대한 확실한 증거를 제출할 수 없을 시 요청이 거절될 가능성이 높습니다.\n\t\t\t</strong>\n\t\t\t예시로, 트위터 계정이나 블로그에 TouhouDB 계정 링크를 올리는 것이 수용 가능한 증거 제출로 취급될 수 있습니다.\n\t\t\t<strong>\n\t\t\t\t사이트에는 당신의 명의로 등록이 완료된 곡이 하나 이상 있어야 합니다 - 만약 타인이 업로드하지 않았을 시 본인이 직접 제출할 수 있습니다.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\t인증 이후에는 당신이 아티스트 정보에 대한 정보를 수락 또는 거부할 권한이 생기며 정보 편집을 할 인원을 제한할 권한이 주어집니다.\n\t\t\t현재로서는 아티스트 프로필을 \"보호\"할 수 있는 수단이 이것이 유일합니다 - 곡 및 앨범에는 효력이 발생하지 않습니다.\n\t\t</p>\n\t\t<p>\n\t\t\t저희에게는 요청을 거부할 권리가 있음을 이해해주시기 바랍니다. 사유는 위에 언급된 내용을 포함할 수 있습니다.\n\t\t\t확실한 요청 거부 사유가 있지 않는 한, 저희는 당신에게 연락을 취할 것이며 요청이 수락될 수 있게끔 오류 정정을 요청할 것임을 알립니다.\n\t\t</p>"
   }
 }
