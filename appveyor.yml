@@ -9,6 +9,9 @@ before_build:
 build:
   project: VocaDb.sln
   verbosity: normal
+branches:
+  except:
+  - l10n_main
 test:
   categories:
     except:
