@@ -20,7 +20,7 @@
     "DraftIconTitle": "此条目是草稿。",
     "DraftMessage": "此条目是草稿。您可以通过编辑条目和添加缺少的信息来提供帮助。",
     "EntryIsMissingInformation": "此条目缺少下列信息：",
-    "EntryValidationNoErrors": "此条目包含了所有需要的信息。",
+    "EntryValidationNoErrors": "此条目包含了所有必要信息。",
     "EntryValidationNoErrorsDraft": "此条目包含所有需要的信息，可标记为定稿（非草稿）。",
     "EntryValidationWarningDetails": "详细信息",
     "GitHubMarkdown": "支持GitHub式Markdown语言",
@@ -33,15 +33,15 @@
     "SeeGuide": "编辑指南",
     "SeeGuidePost": "。",
     "SeeGuidePre": "获取更多信息，请参考",
-    "StatusDescriptionApproved": "此词条已经过信任用户的核准，对词条的编辑受到限制。",
+    "StatusDescriptionApproved": "核准条目已被一位受信任用户审核过。对核准条目的编辑受到了限制。",
     "StatusDescriptionDraft": "此条目处于草稿状态，缺失部分必要信息。",
-    "StatusDescriptionFinished": "此词条包含了所有必要的信息，但没有经过核准。",
+    "StatusDescriptionFinished": "完成条目中包含了所有必要信息，但还未经过核准。",
     "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
     "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
     "WebLinkCategoryTitle": "类别",
     "WebLinkDescriptionTitle": "描述",
     "WebLinkNewRow": "添加新的内容",
-    "WebLinkUrlTitle": "网址"
+    "WebLinkUrlTitle": "链接地址"
   },
   "SongHelpers": {
     "FromAlbum": "From album"
