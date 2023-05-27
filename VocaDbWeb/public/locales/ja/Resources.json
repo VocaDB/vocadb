@@ -266,8 +266,7 @@
     "None": "なし",
     "PublishDate": "公開日",
     "RatingScore": "評価点数",
-    "TagUsageCount": "Tag usage count",
-    "SongType": "Song type"
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "お気に入りに追加",

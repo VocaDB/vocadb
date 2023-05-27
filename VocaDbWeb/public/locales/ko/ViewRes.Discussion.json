@@ -1,0 +1,18 @@
+{
+  "Index": {
+    "Author": "작성자",
+    "Comments": "댓글",
+    "Created": "생성됨",
+    "Discussions": "토론",
+    "DoPost": "게시",
+    "Folder": "폴더",
+    "LastComment": "마지막 댓글",
+    "LastTopic": "마지막 주제",
+    "PostContent": "내용",
+    "Preview": "미리보기",
+    "RecentTopics": "최근 주제",
+    "Topic": "주제",
+    "Topics": "주제",
+    "WriteNewPost": "새 게시물 작성하기"
+  }
+}

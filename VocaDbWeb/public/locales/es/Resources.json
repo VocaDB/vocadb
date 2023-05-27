@@ -266,8 +266,7 @@
     "None": "Nada",
     "PublishDate": "Fecha de publicación",
     "RatingScore": "Puntuación de rating",
-    "TagUsageCount": "Tag usage count",
-    "SongType": "Song type"
+    "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorito",

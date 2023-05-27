@@ -1,4 +1,6 @@
-import "./Styles/TetoDB.css"
+import React from 'react';
 
-export const Style2Variables = () => <></>;
-export default Style2Variables ;
+import './Styles/TetoDB.css';
+
+export const Style2Variables = (): React.ReactElement => <></>;
+export default Style2Variables;

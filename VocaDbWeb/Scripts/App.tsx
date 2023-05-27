@@ -20,6 +20,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { CultureCodesProvider } from './CultureCodesContext';
 
+const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
 const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
 
@@ -55,6 +56,9 @@ const AppContainer = (): React.ReactElement => {
 								{vdb.values.loggedUser?.stylesheet
 									.toLowerCase()
 									.startsWith('tetodb') && <TetoDB />}
+								{vdb.values.siteName.toLowerCase().includes('utaite') && (
+									<UtaiteDB />
+								)}
 							</>
 						)}
 					</>

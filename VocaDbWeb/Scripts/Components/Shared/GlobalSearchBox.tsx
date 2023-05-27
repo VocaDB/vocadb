@@ -127,7 +127,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details_entry(items[0]));
 				} else {
 					navigate(
@@ -147,7 +147,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details(EntryType.Album, items[0].id));
 				} else {
 					navigate(
@@ -168,7 +168,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details(EntryType.Artist, items[0].id));
 				} else {
 					navigate(
@@ -192,7 +192,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, items[0].id));
 				} else {
 					navigate(
@@ -215,7 +215,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details(EntryType.Song, items[0].id));
 				} else {
 					navigate(
@@ -235,7 +235,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
 				} else {
 					navigate('/SongList/Featured');
@@ -270,7 +270,7 @@ export const GlobalSearchBox = observer(
 				});
 
 				if (items.length === 1) {
-					topBarStore.searchTerm = '';
+					globalSearchTermRef.current.value = '';
 					navigate(EntryUrlMapper.details_user_byName(items[0].name));
 				} else {
 					navigate(
@@ -303,9 +303,9 @@ export const GlobalSearchBox = observer(
 				/^\/\w\w?\/.+$/.test(location.pathname) ||
 				location.pathname === '/'
 			) {
-				topBarStore.searchTerm = '';
+				globalSearchTermRef.current.value = '';
 			}
-		}, [location, topBarStore]);
+		}, [location]);
 
 		return (
 			<form
@@ -367,12 +367,8 @@ export const GlobalSearchBox = observer(
 							);
 						}}
 						select={(event: Event, ui): void => {
-							topBarStore.searchTerm = ui.item.value;
+							globalSearchTermRef.current.value = ui.item.value;
 							submit();
-						}}
-						value={topBarStore.searchTerm}
-						onChange={(e): void => {
-							topBarStore.searchTerm = e.target.value;
 						}}
 						ref={globalSearchTermRef}
 					/>

@@ -1,7 +1,7 @@
 {
   "ActivityFeedHelper": {
     "At": "am",
-    "CreatedNew": "erstellte einen neuen {{0}}:",
+    "CreatedNew": "erstellte einen neuen {{0}}",
     "EntryAlbum": "Album",
     "EntryArtist": "Künstler",
     "EntryReleaseEvent": "event",
@@ -10,7 +10,7 @@
     "EntryTag": "Schlagwort",
     "EntryVenue": "venue",
     "Someone": "Ein Mitwirkender",
-    "Updated": "aktualisierte einen {{0}}:"
+    "Updated": "aktualisierte einen {{0}}"
   },
   "AlbumHelpers": {
     "Released": "Released"

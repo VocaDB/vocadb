@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "이 앨범과 연관된 우타이테 및 타 아티스트",
+    "NewAlbumInfo": "이 앨범이 UtaiteDB에 수록되기 위해서는 우타이테가 부른 곡이 하나 이상 있어야 합니다. 비공식 팬메이드 컴필레이션은 허용되지 않습니다. 추가 정보를 위해서는 도움말/가이드라인을 확인해주시기 바랍니다."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "UtaiteDB 계정",
+    "NewArtistExternalLink": "외부 링크 (아티스트 웹사이트, 우타이테 위키, 니코니코동화 마이리스트 등)"
+  },
+  "HomeRes": {
+    "SiteDescription": "UtaiteDB는 앨범, 아티스트 및 노래 등에 대한 상세정보를 모은 우타이테 노래 데이터베이스입니다.",
+    "Welcome": "우타이테 데이터베이스에 오신 것을 환영합니다!",
+    "WelcomeSubtitle": "우타이테 아티스트, 디스코그래피, PV, 기타 등등이 모여있는 합작 데이터베이스."
+  },
+  "LayoutRes": {
+    "Keywords": "우타이테, UtaiteDB, 우타이테 데이터베이스",
+    "PaypalDonateTitle": "UtaiteDB는 비영리 프로젝트입니다. 모든 금액은 추후의 사이트 개발과 호스팅 비용, 소프트웨어 라이선스 등에 사용됩니다.",
+    "SiteName": "UtaiteDB",
+    "SiteTitle": "우타이테 데이터베이스"
+  },
+  "SongRes": {
+    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
+    "RankingsTitle": "UtaiteDB 곡 랭킹"
+  }
+}

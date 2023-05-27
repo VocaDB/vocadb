@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Date": "날짜: {{0}}.",
+    "DefaultSortRule": "기본값",
+    "Details": "세부 사항",
+    "Events": "이벤트",
+    "Export": "내보내기",
+    "Playlist": "재생목록",
+    "Preview": "미리보기",
+    "ShowTags": "태그 표시",
+    "SongList": "노래 목록",
+    "Songs": "음악"
+  },
+  "Edit": {
+    "AddSong": "노래 추가",
+    "ConfirmDelete": "이 목록을 삭제하겠습니까?",
+    "CreateTitle": "노래 목록 생성",
+    "Description": "설명",
+    "EditTitle": "Edit list - {{0}}",
+    "EventDate": "이벤트 날짜",
+    "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
+    "FeaturedCategory": "추천 카테고리",
+    "Name": "이름",
+    "RemoveFromList": "목록에서 삭제",
+    "Status": "Entry status",
+    "TabProperties": "속성",
+    "TabSongs": "곡",
+    "Thumbnail": "미리보기",
+    "UnableToSave": "목록 저장 불가능"
+  },
+  "Featured": {
+    "Import": "유튜브 또는 니코니코동화에서 불러오기",
+    "SortBy": "정렬 기준"
+  }
+}
