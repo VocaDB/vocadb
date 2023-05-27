@@ -1,4 +1,6 @@
-import "./Styles/DarkAngel.less"
+import React from 'react';
 
-export const Style2Variables = () => <></>;
-export default Style2Variables ;
+import './Styles/DarkAngel.less';
+
+export const Style2Variables = (): React.ReactElement => <></>;
+export default Style2Variables;
