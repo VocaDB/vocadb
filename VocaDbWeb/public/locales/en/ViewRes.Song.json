@@ -102,6 +102,7 @@
     "BaUsePvDate": "Use PV date",
     "EditTitle": "Edit song {{0}}",
     "LyAddRow": "Add translation",
+    "LyExtendLanguages": "More language options",
     "LyInheritanceNote": "Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.",
     "LyLanguage": "Language:",
     "LySource": "Source:",
