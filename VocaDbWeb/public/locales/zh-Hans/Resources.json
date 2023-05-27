@@ -1,32 +1,32 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "最旧的",
+    "CreateDateDescending": "最新的"
   },
   "AlbumArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-imported",
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "AutoImportedFromMikuDb": "自动导入",
+    "Created": "创建",
+    "Deleted": "删除",
+    "Merged": "与另一个条目合并",
+    "PropertiesUpdated": "更新属性",
+    "Restored": "已还原",
+    "Reverted": "已恢复",
+    "Unknown": "未知"
   },
   "AlbumCollectionStatusNames": {
-    "Nothing": "Nothing",
+    "Nothing": "无",
     "Ordered": "已预订",
     "Owned": "持有",
     "Wishlisted": "想要"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
-    "Video": "Video"
+    "Audio": "音频",
+    "Video": "视频"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "Artists",
-    "Cover": "Cover",
-    "Description": "Description",
+    "Artists": "艺术家",
+    "Cover": "封面",
+    "Description": "描述",
     "DiscType": "Album type",
     "Names": "Names",
     "Nothing": "Nothing",
@@ -65,8 +65,8 @@
   },
   "ArtistEditableFieldNames": {
     "Albums": "Albums",
-    "ArtistType": "Artist type",
-    "BaseVoicebank": "Base voicebank",
+    "ArtistType": "艺术家类别",
+    "BaseVoicebank": "基础声库",
     "Description": "Description",
     "Groups": "Groups",
     "Names": "Names",
