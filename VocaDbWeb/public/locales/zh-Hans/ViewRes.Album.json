@@ -4,11 +4,11 @@
     "Support": "辅助"
   },
   "Create": {
-    "AlbumInfo2": "Please make sure the entry you're about to submit hasn't been added before. You need to enter at least one name and artist.",
-    "ArtistsInfo": "Artists (need at least 1)",
-    "DiscType": "Disc type",
-    "NeedArtist": "Need at least one artist.",
-    "SubmitAlbum": "Submit a new album",
+    "AlbumInfo2": "请确保您要提交的条目以前未被添加。您至少需要输入名称和艺术家。",
+    "ArtistsInfo": "艺术家（至少输入一位）",
+    "DiscType": "唱片类型",
+    "NeedArtist": "至少需要一位艺术家。",
+    "SubmitAlbum": "添加新专辑",
     "UnableToCreateAlbum": "Unable to create album. Correct the errors and try again."
   },
   "Details": {
