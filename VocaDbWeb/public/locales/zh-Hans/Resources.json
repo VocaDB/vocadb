@@ -65,7 +65,7 @@
   },
   "ArtistEditableFieldNames": {
     "Albums": "专辑",
-    "ArtistType": "艺术家类别",
+    "ArtistType": "艺术家",
     "BaseVoicebank": "基础声库",
     "Description": "描述",
     "Groups": "分组",
@@ -111,11 +111,11 @@
     "CreateDateDescending": "最新的"
   },
   "CommonMessages": {
-    "EntryDeleted": "此条目已被删除。它仍然可暂时访问，但不会显示在任何列表中。",
-    "EntryMergedTo": "此条目被合并到",
-    "EntryStatusExplanation": "草稿：表示词条缺少一些必要的信息或需要被更正。<br />\n已完成：表示词条包含了所有必要的信息，但未经过信任用户的核准。<br />\n已核准：表示词条已经过信任用户的核准。经过核准后的词条只能由信任用户进行编辑。",
+    "EntryDeleted": "此条目已被删除。它仍然暂时可访问，但不会出现在任何列表中。",
+    "EntryMergedTo": "此条目被合并至",
+    "EntryStatusExplanation": "草稿：此条目缺少必要信息。这种状态意味着你需要添加或更正额外信息。<br /> \n已完成：此条目有所有必要信息，但它还未被受信用户审查。<br />\n已核准：此条目已被一位受信用户审查并批准。 只有受信用户能编辑已核准的条目。",
     "Locked": "此条目已被锁定，只有管理员可以编辑。",
-    "NameLanguageHelp": "选择此名称的语言。\"Original\"是指非英语的原始语言，例如日语。 如果原文是英语，请不要输入名称的“Original”语言。",
+    "NameLanguageHelp": "选择该名称的语言。\"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
     "RevisionHidden": "此次页面修改已被隐藏。"
   },
   "ContentLanguageSelectionNames": {
@@ -126,7 +126,7 @@
     "Unspecified": "未定义"
   },
   "DiscTypeDescriptions": {
-    "Album": "专辑主要由以前未发表的歌曲组成。",
+    "Album": "由以前未发表的歌曲组成的专辑。",
     "Compilation": "发行歌曲的合辑，收集于一张或多张早期专辑。例如，“best of\"之类的合辑。",
     "EP": "迷你专辑。包含三至四首单曲。不包括另类版本（器乐版和Remix）。",
     "Other": "不符合上述任何内容的专辑。",
