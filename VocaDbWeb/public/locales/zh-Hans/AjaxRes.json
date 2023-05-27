@@ -1,8 +1,8 @@
 {
   "Album": {
     "AddedToCollection": "添加到收藏。",
-    "AddToTracks": "Add to tracks",
-    "RemoveFromTracks": "Remove from tracks",
+    "AddToTracks": "添加到曲目",
+    "RemoveFromTracks": "从曲目中移除",
     "AddNewSong": "Add new song called '{{0}}'",
     "Download": "下载"
   },
