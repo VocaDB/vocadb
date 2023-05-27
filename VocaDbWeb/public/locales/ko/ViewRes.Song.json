@@ -102,6 +102,7 @@
     "BaUsePvDate": "PV 날짜 사용",
     "EditTitle": "{{0}} 곡 편집",
     "LyAddRow": "번역 추가",
+    "LyExtendLanguages": "More language options",
     "LyInheritanceNote": "Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.",
     "LyLanguage": "언어:",
     "LySource": "소스:",
