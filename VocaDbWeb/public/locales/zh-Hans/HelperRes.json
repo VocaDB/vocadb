@@ -1,49 +1,49 @@
 {
   "ActivityFeedHelper": {
     "At": "-",
-    "CreatedNew": "created a new {{0}}",
-    "EntryAlbum": "album",
-    "EntryArtist": "artist",
-    "EntryReleaseEvent": "event",
-    "EntrySong": "song",
-    "EntrySongList": "song list",
-    "EntryTag": "tag",
-    "EntryVenue": "venue",
-    "Someone": "A contributor",
-    "Updated": "updated {{0}}"
+    "CreatedNew": "创建新{{0}}",
+    "EntryAlbum": "专辑",
+    "EntryArtist": "艺术家",
+    "EntryReleaseEvent": "活动",
+    "EntrySong": "曲目",
+    "EntrySongList": "歌单",
+    "EntryTag": "标签",
+    "EntryVenue": "会场",
+    "Someone": "贡献者",
+    "Updated": "已更新 {{0}}"
   },
   "AlbumHelpers": {
-    "Released": "Released"
+    "Released": "发行"
   },
   "Helper": {
-    "Added": "added",
-    "DraftIconTitle": "This entry is a draft.",
-    "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
-    "EntryIsMissingInformation": "该词条缺少以下信息：",
-    "EntryValidationNoErrors": "本词条包含了所有必要的信息。",
-    "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
-    "EntryValidationWarningDetails": "Details",
-    "GitHubMarkdown": "支持用GitHub式Markdown语言进行编辑",
-    "IsSupportedForFormatting": "is supported for formatting",
-    "NameLangTitle": "Language",
-    "NameNewRow": "添加新的内容",
-    "NameValueTitle": "Name (required)",
-    "ReturnWithoutSaving": "不保存修改返回",
+    "Added": "添加",
+    "DraftIconTitle": "此条目是草稿。",
+    "DraftMessage": "此条目是草稿。你能通过编辑条目并添加缺失信息来提供帮助。",
+    "EntryIsMissingInformation": "此条目缺少下列信息：",
+    "EntryValidationNoErrors": "此条目包含了所有必要信息。",
+    "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为已完成（非草稿）。",
+    "EntryValidationWarningDetails": "详细信息",
+    "GitHubMarkdown": "支持GitHub式Markdown语言",
+    "IsSupportedForFormatting": "支持格式化",
+    "NameLangTitle": "语言",
+    "NameNewRow": "新行",
+    "NameValueTitle": "名称（必填）",
+    "ReturnWithoutSaving": "退出且不保存",
     "SaveChanges": "保存修改",
-    "SeeGuide": "编辑指南",
+    "SeeGuide": "指南",
     "SeeGuidePost": "。",
     "SeeGuidePre": "获取更多信息，请参考",
-    "StatusDescriptionApproved": "此词条已经过信任用户的核准，对词条的编辑受到限制。",
-    "StatusDescriptionDraft": "此词条处于草稿状态，有部分信息不全。",
-    "StatusDescriptionFinished": "此词条包含了所有必要的信息，但没有经过核准。",
-    "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
-    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
+    "StatusDescriptionApproved": "已核准的条目已被受信用户审查过。已核准条目的编辑受限。",
+    "StatusDescriptionDraft": "此条目处于草稿状态，缺失部分必要信息。",
+    "StatusDescriptionFinished": "已完成条目中包含了所有必要信息，但还未经过核准。",
+    "StatusDescriptionLocked": "锁定的条目只能由工作人员编辑。",
+    "UploadPictureInfo": "Allowed types: {{0}}. 大小上限为 {{1}} MB请尊重版权，如果可行的话，请在注释/描述中提及图片来源。",
     "WebLinkCategoryTitle": "类别",
     "WebLinkDescriptionTitle": "描述",
-    "WebLinkNewRow": "添加新的内容",
-    "WebLinkUrlTitle": "网址"
+    "WebLinkNewRow": "新行",
+    "WebLinkUrlTitle": "链接地址"
   },
   "SongHelpers": {
-    "FromAlbum": "From album"
+    "FromAlbum": "来自专辑"
   }
 }

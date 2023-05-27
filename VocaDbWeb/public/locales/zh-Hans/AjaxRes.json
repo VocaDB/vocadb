@@ -1,31 +1,31 @@
 {
   "Album": {
-    "AddedToCollection": "Added to collection.",
-    "AddToTracks": "Add to tracks",
-    "RemoveFromTracks": "Remove from tracks",
+    "AddedToCollection": "添加到收藏。",
+    "AddToTracks": "添加到曲目列表",
+    "RemoveFromTracks": "从曲目列表中移除",
     "AddNewSong": "Add new song called '{{0}}'",
-    "Download": "Download"
+    "Download": "下载"
   },
   "EntryIndex": {
-    "DraftsOnlyFilter": "draft status",
+    "DraftsOnlyFilter": "草稿状态",
     "ExactTitleFilter": "exact title '{{0}}'",
-    "FilterPre": "Filtering by",
+    "FilterPre": "根据此条件筛选",
     "StartsWithTitleFilter": "starting with title '{{0}}'",
-    "TitleFilter": "title '{{0}}'"
+    "TitleFilter": "标题'{{0}}'"
   },
   "Shared": {
     "AddExtraArtist": "Add custom artist named '{0}'",
-    "ReportSent": "Report sent. Thank you!",
-    "Save": "Save",
-    "ThanksForRating": "Thank you for rating!",
-    "UnableToSendReport": "Unable to send report."
+    "ReportSent": "报告发送成功。谢谢你",
+    "Save": "保存",
+    "ThanksForRating": "感谢评分！",
+    "UnableToSendReport": "无法发送报告。"
   },
   "Song": {
-    "AddedToList": "Added to list",
-    "ArtistFilter": "artist '{{0}}'",
-    "OnlyWithPVsFilter": "PVs only",
-    "SinceFilter": "newer than {{0}}",
-    "SongTypeFilter": "song type '{{0}}'",
-    "ThanksForRating": "Thank you for rating!"
+    "AddedToList": "添加到列表",
+    "ArtistFilter": "艺术家'{{0}}'",
+    "OnlyWithPVsFilter": "仅限PV",
+    "SinceFilter": "新于 {{0}}",
+    "SongTypeFilter": "曲目类型：'{{0}}'",
+    "ThanksForRating": "感谢评分！"
   }
 }
