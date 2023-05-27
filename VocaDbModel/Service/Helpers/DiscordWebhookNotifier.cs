@@ -28,7 +28,7 @@ public interface IDiscordWebhookNotifier
 		string? title = null,
 		string? url = null,
 		string? description = null,
-		Color? color = null
+		Discord.Color? color = null
 	);
 }
 
@@ -57,7 +57,7 @@ public sealed class DiscordWebhookNotifier : IDiscordWebhookNotifier
 		_userIconFactory = userIconFactory;
 	}
 
-	public async Task SendMessageAsync(WebhookEvents webhookEvent, User? user, string? title = null, string? url = null, string? description = null, Color? color = null)
+	public async Task SendMessageAsync(WebhookEvents webhookEvent, User? user, string? title = null, string? url = null, string? description = null, Discord.Color? color = null)
 	{
 		EmbedBuilder CreateEmbedBuilder(User? user)
 		{

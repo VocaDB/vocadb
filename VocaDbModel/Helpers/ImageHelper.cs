@@ -1,8 +1,5 @@
 #nullable disable
 
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Net.Mime;
 using System.Runtime.Serialization;
 using NLog;
@@ -38,7 +35,7 @@ public static class ImageHelper
 	{
 		try
 		{
-			return Image.FromStream(stream);
+			return Image.Load(stream);
 		}
 		catch (ArgumentException x)
 		{
@@ -93,6 +90,7 @@ public static class ImageHelper
 	{
 		var buf = new Byte[length];
 		input.Read(buf, 0, length);
+		input.Seek(0, SeekOrigin.Begin);
 
 		return new PictureDataContract(buf, contentType);
 	}
@@ -126,24 +124,7 @@ public static class ImageHelper
 		int destWidth = width = (int)(sourceWidth * nPercent);
 		int destHeight = height = (int)(sourceHeight * nPercent);
 
-		var bmPhoto = new Bitmap(width, height,
-						  PixelFormat.Format32bppArgb);
-		bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
-						 imgPhoto.VerticalResolution);
-
-		using (var grPhoto = Graphics.FromImage(bmPhoto))
-		{
-			grPhoto.Clear(Color.Transparent);
-			grPhoto.InterpolationMode =
-					InterpolationMode.HighQualityBicubic;
-
-			grPhoto.DrawImage(imgPhoto,
-				new Rectangle(0, 0, destWidth, destHeight),
-				new Rectangle(0, 0, sourceWidth, sourceHeight),
-				GraphicsUnit.Pixel);
-		}
-
-		return bmPhoto;
+		return imgPhoto.Clone(x => x.Resize(destWidth, destHeight));
 	}
 #nullable disable
 }

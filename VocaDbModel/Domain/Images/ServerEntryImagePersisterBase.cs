@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Drawing;
-
 namespace VocaDb.Model.Domain.Images;
 
 public abstract class ServerEntryImagePersisterBase : IEntryImagePersister
