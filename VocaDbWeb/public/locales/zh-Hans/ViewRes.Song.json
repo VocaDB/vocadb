@@ -95,7 +95,7 @@
     "BaOriginalVersionHelp": "如果本站有这首曲子的原版的信息，请在此处填写。您可以通过搜索歌名的方式找到此曲的原版。",
     "BaPublishDate": "发布日期",
     "BaPublishDateHelp": "这首歌的发布日期。（如果是专辑曲，请填写专辑的发售日期）",
-    "BaSongType": "歌曲类别",
+    "BaSongType": "曲目类型",
     "BaSpecificBpm": "Specific BPM",
     "BaUseAlbumDate": "Use album release date",
     "BaUseEventDate": "Use event date",
