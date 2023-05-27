@@ -6,24 +6,16 @@ interface EmbedPiaproProps {
 	width?: number | string;
 	height?: number | string;
 }
-
 export const EmbedPiapro = React.memo(
 	({ pv, width, height }: EmbedPiaproProps): React.ReactElement => {
 		return (
-			<a href={pv.url} target="_blank" rel="noreferrer">
-				<div
-					css={{
-						width: '100%',
-						height: '100%',
-						backgroundColor: 'rgb(28, 28, 28)',
-						backgroundSize: 'cover',
-						backgroundPosition: 'center',
-					}}
-					style={{
-						backgroundImage: `url(/Content/banners/bnr_piapro468x120.jpg)`,
-					}}
-				/>
-			</a>
+			// eslint-disable-next-line jsx-a11y/iframe-has-title
+			<iframe
+				width={width}
+				height={height}
+				style={{ border: 0 }}
+				src={`//piapro.jp/html5_player_popup/?id=${pv.pvId}`}
+			/>
 		);
 	},
 );
