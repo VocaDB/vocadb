@@ -1,4 +1,4 @@
-import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import React from 'react';
 
@@ -8,6 +8,7 @@ interface LyricsInfoProps {
 
 export const LyricsInfo = React.memo(
 	({ lyrics }: LyricsInfoProps): React.ReactElement => {
+		const { getCodeDescription } = useCultureCodes();
 		return (
 			<>
 				{lyrics.translationType}
@@ -15,8 +16,7 @@ export const LyricsInfo = React.memo(
 					<>
 						{' '}
 						(
-						{userLanguageCultures[lyrics.cultureCodes[0]]?.englishName ??
-							'Other'}
+						{getCodeDescription(lyrics.cultureCodes[0])?.englishName ?? 'Other'}
 						)
 					</>
 				)}

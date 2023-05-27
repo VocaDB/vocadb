@@ -1,5 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -24,6 +24,7 @@ const SongLyrics = observer(
 			'ViewRes.Song',
 			'VocaDb.Web.Resources.Domain.Globalization',
 		]);
+		const { getCodeDescription } = useCultureCodes();
 
 		useLocationStateStore(songDetailsStore.lyricsStore);
 
@@ -65,7 +66,7 @@ const SongLyrics = observer(
 												.map((c) =>
 													c === ''
 														? t('ViewRes.Song:Details.LyricsLanguageOther')
-														: userLanguageCultures[c]?.nativeName,
+														: getCodeDescription(c)?.nativeName,
 												)
 												.join(', ')
 										: t('ViewRes.Song:Details.LyricsLanguageOther')}

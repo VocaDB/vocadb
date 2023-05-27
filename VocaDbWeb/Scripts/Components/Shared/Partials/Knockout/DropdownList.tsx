@@ -13,7 +13,7 @@ import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCat
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { useVdb } from '@/VdbContext';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 let nextEventCategoryOrder = 1;
@@ -119,14 +119,28 @@ export const CultureDropdownList = React.memo(
 	},
 );
 
+interface UserLanguageCultureDropdownListProps extends DropdownListProps {
+	extended?: boolean;
+}
+
 export const UserLanguageCultureDropdownList = React.memo(
-	(props: DropdownListProps): React.ReactElement => {
+	(props: UserLanguageCultureDropdownListProps): React.ReactElement => {
+		const [cultures, setCultures] = useState(userLanguageCultures);
+
+		useEffect(() => {
+			if (props.extended) {
+				import('../../../extendedUserLanguageCultures').then((res) => {
+					setCultures(res.extendedUserLanguageCultures);
+				});
+			}
+		}, [props.extended]);
+
 		return (
 			<select {...props}>
 				{props.placeholder !== undefined && (
 					<option value="">{props.placeholder}</option>
 				)}
-				{Object.entries(userLanguageCultures).map(([key, value]) => (
+				{Object.entries(cultures).map(([key, value]) => (
 					<option value={key} key={key}>
 						{value.nativeName} ({value.englishName /* LOC */})
 					</option>
