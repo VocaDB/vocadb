@@ -30,7 +30,7 @@ public class UserService : QueriesBase<IUserRepository, User>
 
 	private static string MakeGeoIpToolLink(string hostname)
 	{
-		return $"[{hostname}](http://www.geoiptool.com/?IP={hostname})";
+		return $"[{hostname}](https://www.geodatatool.com/?ip={hostname})";
 	}
 
 	public UserService(
