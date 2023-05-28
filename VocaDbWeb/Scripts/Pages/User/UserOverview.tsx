@@ -407,9 +407,9 @@ const UserOverview = observer(
 										<UniversalTimeLabel dateTime={user.lastLogin} /> (
 										{user.lastLoginAddress}){' '}
 										<a
-											href={`http://www.geoiptool.com/?IP=${user.lastLoginAddress}`}
+											href={`https://www.geodatatool.com/?ip=${user.lastLoginAddress}`}
 										>
-											GeoIpTool
+											GeoDataTool
 										</a>{' '}
 										<SafeAnchor
 											onClick={userDetailsStore.sfsCheckDialog.checkSFS}

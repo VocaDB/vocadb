@@ -16,7 +16,7 @@ export const IPManage = React.memo(
 					target="_blank"
 					rel="noreferrer"
 				>
-					View on GeoIPTool{/* LOC */}
+					View on GeoDataTool{/* LOC */}
 				</a>
 				) (
 				<a

@@ -304,7 +304,7 @@
 				<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.LastLogin))" />
 				if (Login.CanManageUsers) {
 					@:(@Model.LastLoginAddress)
-					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>
+					<a href='https://www.geodatatool.com/?ip=@Model.LastLoginAddress'>GeoDataTool</a>
 					<a data-bind="click: checkSFS" href='#'>StopForumSpam</a>
 					<a data-bind="click: addBan" href='#'>Add to banned IPs</a>
 				}
