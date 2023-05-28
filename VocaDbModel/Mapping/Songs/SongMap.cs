@@ -84,6 +84,11 @@ public class SongMap : ClassMap<Song>
 		HasMany(m => m.UserFavorites).Inverse();
 		HasMany(m => m.WebLinks).Table("SongWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
 
+		HasMany(m => m.CultureCodes).Table("CultureCodesForSongs").KeyColumn("SongId").Component(c =>
+		{
+			c.Map(m => m.CultureCode).Column("CultureCode").Length(3).Not.Nullable();
+		});
+
 		Map(m => m.MinMilliBpm).Nullable();
 		Map(m => m.MaxMilliBpm).Nullable();
 	}

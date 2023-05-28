@@ -56,6 +56,7 @@ public class Song :
 	private TagManager<SongTagUsage> _tags = new();
 	private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
 	private IList<SongWebLink> _webLinks = new List<SongWebLink>();
+	private IList<OptionalCultureCode> _cultureCodes = new List<OptionalCultureCode>();
 
 	public virtual int GetLengthFromPV()
 	{
@@ -454,6 +455,16 @@ public class Song :
 		{
 			ParamIs.NotNull(() => value);
 			_webLinks = value;
+		}
+	}
+
+	public virtual IList<OptionalCultureCode> CultureCodes
+	{
+		get => _cultureCodes;
+		set
+		{
+			ParamIs.NotNull(() => value);
+			_cultureCodes = value;
 		}
 	}
 

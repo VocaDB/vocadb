@@ -20,6 +20,9 @@ public class LyricsForSongMap : ClassMap<LyricsForSong>
 		Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 		References(m => m.Song).Not.Nullable();
 
-		Map(m => m.RawCultureCode).Column("[CultureCode]").Length(100).Not.Nullable();
+		HasMany(m => m.CultureCodes).Table("CultureCodesForLyrics").KeyColumn("LyricId").Component(c =>
+		{
+			c.Map(m => m.CultureCode).Column("CultureCode").Length(3).Not.Nullable();
+		}).Cascade.All().Cache.ReadWrite();
 	}
 }

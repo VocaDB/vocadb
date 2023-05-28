@@ -11,6 +11,7 @@ import { ArtistRolesEditViewModel } from '@/Components/Shared/Partials/ArtistRol
 import { CustomNameEdit } from '@/Components/Shared/Partials/CustomNameEdit';
 import { EnglishTranslatedStringEdit } from '@/Components/Shared/Partials/EnglishTranslatedStringEdit';
 import { EntryDeletePopup } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
+import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import {
 	LanguageSelectionDropdownList,
 	SongTypeDropdownList,
@@ -394,6 +395,53 @@ const BasicInfoTabContent = observer(
 					<WebLinksEditViewKnockout
 						webLinksEditStore={songEditStore.webLinks}
 					/>
+				</div>
+
+				<div className="editor-label">
+					<label>Language(s){/* LOC */}</label>
+				</div>
+				<div className="editor-field">
+					<tbody>
+						{songEditStore.cultureCodes.items.map((c, index) => (
+							<tr>
+								<UserLanguageCultureDropdownList
+									value={c.toString()}
+									extended={songEditStore.cultureCodes.extended}
+									onChange={(val): void => {
+										songEditStore.cultureCodes.items[index] = val.target.value;
+									}}
+									key={index}
+								/>
+								<SafeAnchor
+									onClick={(): void => songEditStore.cultureCodes.remove(c)}
+									href="#"
+									className="nameDelete textLink deleteLink"
+								>
+									{t('ViewRes:Shared.Delete')}
+								</SafeAnchor>
+								<br />
+							</tr>
+						))}
+					</tbody>
+					<SafeAnchor
+						href="#"
+						className="textLink addLink"
+						onClick={(): void => songEditStore.cultureCodes.add()}
+					>
+						{t('ViewRes:Shared.Add')}
+					</SafeAnchor>
+					{!songEditStore.cultureCodes.extended &&
+						songEditStore.cultureCodes.items.length > 0 && (
+							<SafeAnchor
+								href="#"
+								className="textLink addLink"
+								onClick={(): void => {
+									songEditStore.cultureCodes.extended = true;
+								}}
+							>
+								{t('ViewRes.Song:Edit.LyExtendLanguages')}{' '}
+							</SafeAnchor>
+						)}
 				</div>
 
 				<div className="editor-label">

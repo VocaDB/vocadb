@@ -5,6 +5,44 @@ using FluentMigrator;
 namespace VocaDb.Migrations;
 
 // Migration version format: YYYY_MM_DD_HHmm
+[Migration(2023_05_28_1150)]
+public class MigrateCultureCodes : Migration
+{
+	public override void Up()
+	{
+		Execute.Sql($@"insert into {TableNames.CultureCodesForLyrics} (LyricId, CultureCode)
+			select {TableNames.LyricsForSongs}.Id, trim(value) as CultureCode
+			from {TableNames.LyricsForSongs}
+			cross apply string_split({TableNames.LyricsForSongs}.CultureCode, ',')
+		");
+		Delete.Column("CultureCode").FromTable(TableNames.LyricsForSongs);
+	}
+
+	public override void Down()
+	{
+	}
+
+}
+[Migration(2023_05_27_0550)]
+public class SongCultureCode : Migration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.CultureCodesForLyrics)
+			.WithColumn("Id").AsInt32().Identity().PrimaryKey()
+			.WithColumn("LyricId").AsInt32().NotNullable().ForeignKey(TableNames.LyricsForSongs, "Id")
+			.WithColumn("CultureCode").AsString(3).NotNullable().WithDefaultValue(string.Empty);
+		Create.Table(TableNames.CultureCodesForSongs)
+			.WithColumn("Id").AsInt32().Identity().PrimaryKey()
+			.WithColumn("SongId").AsInt32().NotNullable().ForeignKey(TableNames.Songs, "Id")
+			.WithColumn("CultureCode").AsString(3).NotNullable().WithDefaultValue(string.Empty);
+	}
+
+	public override void Down()
+	{
+	}
+
+}
 
 [Migration(2023_05_21_0245)]
 public class IncreaseCultureCodeLength : Migration

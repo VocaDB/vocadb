@@ -129,6 +129,9 @@ public class SongForApiContract : IEntryBase
 			MinMilliBpm = song.MinMilliBpm;
 			MaxMilliBpm = song.MaxMilliBpm;
 		}
+
+		if (fields.HasFlag(SongOptionalFields.CultureCodes))
+			CultureCodes = song.CultureCodes.Select(c => c.CultureCode).ToArray();
 	}
 
 	/// <summary>
@@ -287,6 +290,13 @@ public class SongForApiContract : IEntryBase
 	/// </summary>
 	[DataMember(EmitDefaultValue = false)]
 	public WebLinkForApiContract[]? WebLinks { get; init; }
+
+	/// <summary>
+	/// List of assigned culture codes (ISO 639-1/639-3). Optional field.
+	/// </summary>
+	[DataMember]
+	[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
+	public string[] CultureCodes { get; init; }
 }
 
 [Flags]
@@ -306,4 +316,5 @@ public enum SongOptionalFields
 	ThumbUrl = 1 << 9,
 	WebLinks = 1 << 10,
 	Bpm = 1 << 11,
+	CultureCodes = 1 << 12
 }

@@ -99,6 +99,9 @@ public sealed record SongForEditForApiContract
 	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; set; }
 
+	[DataMember]
+	public string[] CultureCodes { get; set; }
+
 	public SongForEditForApiContract()
 	{
 		Artists = Array.Empty<ArtistForSongContract>();
@@ -110,6 +113,7 @@ public sealed record SongForEditForApiContract
 		Tags = Array.Empty<int>();
 		UpdateNotes = string.Empty;
 		WebLinks = Array.Empty<WebLinkForApiContract>();
+		CultureCodes = Array.Empty<string>();
 	}
 
 	public SongForEditForApiContract(
@@ -180,5 +184,6 @@ public sealed record SongForEditForApiContract
 			.Select(w => new WebLinkForApiContract(w))
 			.OrderBy(w => w.DescriptionOrUrl)
 			.ToArray();
+		CultureCodes = song.CultureCodes.Select(c => c.CultureCode).ToArray();
 	}
 }

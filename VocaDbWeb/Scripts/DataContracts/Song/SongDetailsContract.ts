@@ -32,6 +32,7 @@ export interface SongDetailsContract {
 	canRemoveTagUsages: boolean;
 	commentCount: number;
 	createDate: string;
+	cultureCodes: string[];
 	deleted: boolean;
 	hits: number;
 	latestComments: CommentContract[];

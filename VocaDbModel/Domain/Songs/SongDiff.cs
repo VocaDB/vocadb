@@ -21,6 +21,7 @@ public class SongDiff : EntryDiff<SongEditableFields>
 	public EnumFieldAccessor<SongEditableFields> Status => Field(SongEditableFields.Status);
 	public EnumFieldAccessor<SongEditableFields> WebLinks => Field(SongEditableFields.WebLinks);
 	public EnumFieldAccessor<SongEditableFields> Bpm => Field(SongEditableFields.Bpm);
+	public EnumFieldAccessor<SongEditableFields> CultureCodes => Field(SongEditableFields.CultureCodes);
 
 	public virtual bool IncludeAlbums => IsSnapshot;
 	public virtual bool IncludeArtists => IsSnapshot || Artists.IsChanged;
@@ -28,4 +29,5 @@ public class SongDiff : EntryDiff<SongEditableFields>
 	public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 	public virtual bool IncludePVs => IsSnapshot || PVs.IsChanged;
 	public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
+	public virtual bool IncludeCultureCodes => IsSnapshot || CultureCodes.IsChanged;
 }
