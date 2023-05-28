@@ -35,6 +35,8 @@ public static class TableNames
 	public const string ArtistWebLinks = nameof(ArtistWebLinks);
 	public const string AuditLogEntries = nameof(AuditLogEntries);
 	public const string Comments = nameof(Comments);
+	public const string CultureCodesForLyrics = nameof(CultureCodesForLyrics);
+	public const string CultureCodesForSongs = nameof(CultureCodesForSongs);
 	public const string DiscussionComments = nameof(DiscussionComments);
 	public const string DiscussionTopics = nameof(DiscussionTopics);
 	public const string EntryReports = nameof(EntryReports);
