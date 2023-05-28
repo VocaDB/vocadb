@@ -18,7 +18,7 @@
   "Helper": {
     "Added": "추가됨",
     "DraftIconTitle": "초안입니다.",
-    "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
+    "DraftMessage": "이 문서는 초안입니다. 문서 편집 및 정보 추가 등을 통해 기여하실 수 있습니다.",
     "EntryIsMissingInformation": "This entry is missing the following information:",
     "EntryValidationNoErrors": "This entry contains all the required information.",
     "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
@@ -34,7 +34,7 @@
     "SeeGuidePost": "자세한 정보",
     "SeeGuidePre": "See the",
     "StatusDescriptionApproved": "Approved entries have been inspected by a trusted user. Editing of approved entries is limited.",
-    "StatusDescriptionDraft": "Draft entries are missing some required information.",
+    "StatusDescriptionDraft": "이 초안은 필요한 일부 정보를 포함하지 않고 있습니다.",
     "StatusDescriptionFinished": "Finished entries contain all the required information but haven't been approved yet.",
     "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
     "UploadPictureInfo": "허용된 유형: {{0}}. 최대 업로드 사이즈는 {{1}} MB 입니다. 저작권 존중을 요청하며 이미지 출처 및 설명 제공을 부탁드립니다.",
