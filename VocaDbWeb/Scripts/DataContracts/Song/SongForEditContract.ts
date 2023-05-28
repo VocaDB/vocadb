@@ -36,4 +36,5 @@ export interface SongForEditContract {
 	tags: number[];
 	updateNotes?: string;
 	webLinks: WebLinkContract[];
+	cultureCodes: string[];
 }

@@ -37,6 +37,8 @@ import {
 	runInAction,
 } from 'mobx';
 
+import { CultureCodesEditStore } from '../CultureCodesEditStore';
+
 interface PotentialDate {
 	date: Dayjs;
 	source: string;
@@ -71,6 +73,7 @@ export class SongEditStore {
 	private readonly tags: number[];
 	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
+	readonly cultureCodes: CultureCodesEditStore;
 
 	constructor(
 		private readonly values: GlobalValues,
@@ -149,6 +152,7 @@ export class SongEditStore {
 			contract.webLinks,
 			Object.values(WebLinkCategory),
 		);
+		this.cultureCodes = new CultureCodesEditStore(contract.cultureCodes);
 
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
 	}
@@ -410,6 +414,7 @@ export class SongEditStore {
 				tags: this.tags,
 				updateNotes: this.updateNotes,
 				webLinks: this.webLinks.toContracts(),
+				cultureCodes: this.cultureCodes.toContracts().map((s) => s.toString()),
 			});
 
 			return id;
