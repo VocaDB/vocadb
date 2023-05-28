@@ -39,6 +39,7 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
+using Prometheus;
 
 namespace VocaDb.Web;
 
@@ -295,6 +296,8 @@ public class Startup
 
 		app.UseResponseCaching();
 
+		app.UseHttpMetrics();
+
 		// Code from: https://stackoverflow.com/questions/54271639/how-can-i-redirect-a-user-when-a-specific-exception-is-cought-with-asp-net-core/54275293#54275293
 		app.Use(async (context, next) =>
 		{
@@ -360,6 +363,8 @@ public class Startup
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}"
 			);
+
+			endpoints.MapMetrics();
 		});
 	}
 }
