@@ -241,7 +241,8 @@
     "Status": "状态",
     "WebLinks": "外部链接",
     "ReleaseEvent": "发行活动",
-    "Bpm": "BPM"
+    "Bpm": "BPM",
+    "CultureCodes": "Languages"
   },
   "SongListEditableFieldNames": {
     "Description": "描述",
