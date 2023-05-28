@@ -76,7 +76,8 @@
     "ReleaseEvent": "Erscheinungs Event",
     "PVUnavailable": "(PV ist nicht verfügbar)",
     "ViewInfo": "View info",
-    "Bpm": "BPM"
+    "Bpm": "BPM",
+    "Languages": "Language(s)"
   },
   "Edit": {
     "ArActions": "Actions",
