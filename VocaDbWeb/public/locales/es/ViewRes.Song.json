@@ -76,7 +76,8 @@
     "ReleaseEvent": "Release event",
     "PVUnavailable": "(PV is unavailable)",
     "ViewInfo": "View info",
-    "Bpm": "BPM"
+    "Bpm": "BPM",
+    "Languages": "Language(s)"
   },
   "Edit": {
     "ArActions": "Acciones",
@@ -102,6 +103,7 @@
     "BaUsePvDate": "Use PV date",
     "EditTitle": "Editar la canción {{0}}",
     "LyAddRow": "Añadir fila",
+    "LyExtendLanguages": "More language options",
     "LyInheritanceNote": "Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.",
     "LyLanguage": "Idioma:",
     "LySource": "Fuente:",

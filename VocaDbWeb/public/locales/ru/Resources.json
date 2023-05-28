@@ -241,7 +241,8 @@
     "Status": "Статус",
     "WebLinks": "Внешние ссылки",
     "ReleaseEvent": "Release event",
-    "Bpm": "BPM"
+    "Bpm": "BPM",
+    "CultureCodes": "Languages"
   },
   "SongListEditableFieldNames": {
     "Description": "Description",

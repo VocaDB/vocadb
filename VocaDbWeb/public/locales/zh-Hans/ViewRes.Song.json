@@ -76,7 +76,8 @@
     "ReleaseEvent": "Release event",
     "PVUnavailable": "(PV is unavailable)",
     "ViewInfo": "View info",
-    "Bpm": "BPM"
+    "Bpm": "BPM",
+    "Languages": "Language(s)"
   },
   "Edit": {
     "ArActions": "操作",
@@ -102,6 +103,7 @@
     "BaUsePvDate": "Use PV date",
     "EditTitle": "Edit song {{0}}",
     "LyAddRow": "添加新的内容",
+    "LyExtendLanguages": "More language options",
     "LyInheritanceNote": "Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.",
     "LyLanguage": "语言：",
     "LySource": "来源：",

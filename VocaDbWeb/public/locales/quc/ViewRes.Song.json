@@ -76,7 +76,8 @@
     "ReleaseEvent": "crwdns15375:0crwdne15375:0",
     "PVUnavailable": "crwdns15377:0crwdne15377:0",
     "ViewInfo": "crwdns15379:0crwdne15379:0",
-    "Bpm": "crwdns15381:0crwdne15381:0"
+    "Bpm": "crwdns15381:0crwdne15381:0",
+    "Languages": "crwdns16871:0crwdne16871:0"
   },
   "Edit": {
     "ArActions": "crwdns15383:0crwdne15383:0",
@@ -102,6 +103,7 @@
     "BaUsePvDate": "crwdns15423:0crwdne15423:0",
     "EditTitle": "crwdns15425:0{{0}}crwdne15425:0",
     "LyAddRow": "crwdns15427:0crwdne15427:0",
+    "LyExtendLanguages": "crwdns16869:0crwdne16869:0",
     "LyInheritanceNote": "crwdns15429:0crwdne15429:0",
     "LyLanguage": "crwdns16867:0crwdne16867:0",
     "LySource": "crwdns15433:0crwdne15433:0",
