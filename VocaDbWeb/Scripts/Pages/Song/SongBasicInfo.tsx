@@ -19,6 +19,7 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
@@ -30,6 +31,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
+import { TranslationType } from '@/Models/Globalization/TranslationType';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -242,6 +244,7 @@ interface SongBasicInfoProps {
 const SongBasicInfo = observer(
 	({ model, songDetailsStore }: SongBasicInfoProps): React.ReactElement => {
 		const loginManager = useLoginManager();
+		const { getCodeDescription } = useCultureCodes();
 
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
@@ -271,6 +274,12 @@ const SongBasicInfo = observer(
 
 			return model.webLinks;
 		}, [model, t]);
+
+		const cultureCodes =
+			model.cultureCodes.length > 0
+				? model.cultureCodes
+				: model.lyrics.filter((l) => l.translationType === 'Original').first()
+						?.cultureCodes;
 
 		return (
 			<SongDetailsTabs
@@ -403,6 +412,21 @@ const SongBasicInfo = observer(
 							<tr>
 								<td>{t('ViewRes.Song:Details.Duration')}</td>
 								<td>{DateTimeHelper.formatFromSeconds(model.length)}</td>
+							</tr>
+						)}
+
+						{cultureCodes && (
+							<tr>
+								<td>{t('ViewRes.Song:Details.Languages')}</td>
+								<td>
+									{cultureCodes
+										.map(
+											(c) =>
+												getCodeDescription(c)?.englishName ??
+												t('ViewRes.Song:Details.LyricsLanguageOther'),
+										)
+										.join(', ')}
+								</td>
 							</tr>
 						)}
 

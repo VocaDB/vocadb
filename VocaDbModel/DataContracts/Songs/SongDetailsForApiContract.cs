@@ -141,6 +141,9 @@ public sealed record SongDetailsForApiContract
 	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
+	[DataMember]
+	public string[] CultureCodes { get; init; }
+
 	public SongDetailsForApiContract(
 		Song song,
 		ContentLanguagePreference languagePreference,
@@ -256,6 +259,11 @@ public sealed record SongDetailsForApiContract
 		WebLinks = song.WebLinks
 			.OrderBy(w => w.DescriptionOrUrl)
 			.Select(w => new WebLinkForApiContract(w))
+			.ToArray();
+
+		CultureCodes = song.CultureCodes
+			.Select(c => c.CultureCode)
+			.OrderBy(c => c)
 			.ToArray();
 	}
 }

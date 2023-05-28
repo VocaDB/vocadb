@@ -33,6 +33,7 @@ export class SongDetailsForApi {
 	readonly canRemoveTagUsages: boolean;
 	readonly commentCount: number;
 	readonly createDate: string;
+	readonly cultureCodes: string[];
 	readonly deleted: boolean;
 	readonly draft: boolean;
 	readonly favoritedTimes: number;
@@ -87,6 +88,7 @@ export class SongDetailsForApi {
 		this.canRemoveTagUsages = contract.canRemoveTagUsages;
 		this.commentCount = contract.commentCount;
 		this.createDate = contract.createDate;
+		this.cultureCodes = contract.cultureCodes;
 		this.deleted = contract.deleted;
 		this.draft = contract.song.status === EntryStatus.Draft;
 		this.favoritedTimes = contract.song.favoritedTimes!;
