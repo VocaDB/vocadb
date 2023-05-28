@@ -11,7 +11,7 @@ public class MigrateCultureCodes : Migration
 	public override void Up()
 	{
 		Execute.Sql($@"insert into {TableNames.CultureCodesForLyrics} (LyricId, CultureCode)
-			select {TableNames.LyricsForSongs}.Id, trim(value) as CultureCode
+			select {TableNames.LyricsForSongs}.Id, rtrim(ltrim(value)) as CultureCode
 			from {TableNames.LyricsForSongs}
 			cross apply string_split({TableNames.LyricsForSongs}.CultureCode, ',')
 		");
