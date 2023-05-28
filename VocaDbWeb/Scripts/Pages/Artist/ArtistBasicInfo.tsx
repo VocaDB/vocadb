@@ -14,6 +14,7 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
@@ -143,10 +144,12 @@ const ArtistBasicInfo = observer(
 	}: ArtistBasicInfoProps): React.ReactElement => {
 		const vdb = useVdb();
 		const loginManager = useLoginManager();
+		const { getCodeDescription } = useCultureCodes();
 
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',
+			'ViewRes.Song',
 			'VocaDb.Model.Resources',
 		]);
 
@@ -421,19 +424,35 @@ const ArtistBasicInfo = observer(
 												</Link>
 											</>
 										)}
-									{artist.advancedStats &&
-										artist.advancedStats.topVocaloids.length > 0 && (
-											<p>
-												{t('ViewRes.Artist:Details.MostlyUses')}{' '}
-												<ArtistLinkList
-													artists={artist.advancedStats.topVocaloids.map(
-														(a) => a.data,
-													)}
-													typeLabel={true}
-													tooltip={true}
-												/>
-											</p>
-										)}
+									{artist.advancedStats && (
+										<p>
+											{artist.advancedStats.topVocaloids.length > 0 && (
+												<>
+													{t('ViewRes.Artist:Details.MostlyUses')}{' '}
+													<ArtistLinkList
+														artists={artist.advancedStats.topVocaloids.map(
+															(a) => a.data,
+														)}
+														typeLabel={true}
+														tooltip={true}
+													/>
+												</>
+											)}
+											{artist.advancedStats.topLanguages.length > 0 && (
+												<>
+													<br />
+													{t('ViewRes.Artist:Details.MostUsedLanguages')}{' '}
+													{artist.advancedStats.topLanguages
+														.map(
+															(c) =>
+																getCodeDescription(c.data)?.englishName ??
+																t('ViewRes.Song:Details.LyricsLanguageOther'),
+														)
+														.join(', ')}
+												</>
+											)}
+										</p>
+									)}
 								</td>
 							</tr>
 

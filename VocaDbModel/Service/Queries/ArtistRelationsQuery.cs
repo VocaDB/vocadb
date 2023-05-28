@@ -239,4 +239,23 @@ public class ArtistRelationsQuery
 
 		return topVocaloids;
 	}
+
+	public TopStatContract<string>[] GetTopLanguages(Artist artist)
+	{
+		return artist.AllSongs
+			.Where(a => !a.Song.Deleted)
+			.SelectMany(a =>
+			{
+				if (a.Song.CultureCodes.Count > 0) return a.Song.CultureCodes;
+				return a.Song.Lyrics.Where(l => l.TranslationType == TranslationType.Original).SelectMany(l => l.CultureCodes);
+			})
+			.GroupBy(c => c)
+			.Select(l => new TopStatContract<string>
+			{
+				Data = l.Key.CultureCode,
+				Count = l.Count()
+			})
+			.OrderByDescending(l => l.Count)
+			.ToArray();
+	}
 }
