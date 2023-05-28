@@ -34,6 +34,8 @@ import {
 	computed,
 	makeObservable,
 	observable,
+	observe,
+	reaction,
 	runInAction,
 } from 'mobx';
 
@@ -161,6 +163,11 @@ export class SongEditStore {
 		);
 
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
+
+		observe(this.lyrics.original.cultureCodes, (change) => {
+			// eslint-disable-next-line no-new-wrappers
+			this.cultureCodes.items = change.object.map((s) => new String(s));
+		});
 	}
 
 	@computed get canHaveOriginalVersion(): boolean {

@@ -52,7 +52,7 @@ export class LyricsForSongEditStore {
 	}
 
 	@action addCultureCode = (cultureCode: string): void => {
-		this.cultureCodes = this.cultureCodes.concat(cultureCode);
+		this.cultureCodes.push(cultureCode);
 	};
 
 	@action replaceCultureCode = (

@@ -401,19 +401,28 @@ const BasicInfoTabContent = observer(
 					<label>Language(s){/* LOC */}</label>
 				</div>
 				<div className="editor-field">
-					{songEditStore.cultureCodes.items.map((c, index) => (
-						<>
-							<UserLanguageCultureDropdownList
-								value={c.toString()}
-								extended={songEditStore.cultureCodes.extended}
-								onChange={(val): void => {
-									songEditStore.cultureCodes.items[index] = val.target.value;
-								}}
-								key={index}
-							/>
-							<br />
-						</>
-					))}
+					<tbody>
+						{songEditStore.cultureCodes.items.map((c, index) => (
+							<tr>
+								<UserLanguageCultureDropdownList
+									value={c.toString()}
+									extended={songEditStore.cultureCodes.extended}
+									onChange={(val): void => {
+										songEditStore.cultureCodes.items[index] = val.target.value;
+									}}
+									key={index}
+								/>
+								<SafeAnchor
+									onClick={(): void => songEditStore.cultureCodes.remove(c)}
+									href="#"
+									className="nameDelete textLink deleteLink"
+								>
+									{t('ViewRes:Shared.Delete')}
+								</SafeAnchor>
+								<br />
+							</tr>
+						))}
+					</tbody>
 					<SafeAnchor
 						href="#"
 						className="textLink addLink"
