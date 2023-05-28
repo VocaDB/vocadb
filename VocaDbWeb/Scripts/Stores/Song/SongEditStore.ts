@@ -152,7 +152,13 @@ export class SongEditStore {
 			contract.webLinks,
 			Object.values(WebLinkCategory),
 		);
-		this.cultureCodes = new CultureCodesEditStore(contract.cultureCodes);
+		this.cultureCodes = new CultureCodesEditStore(
+			contract.cultureCodes.length > 0
+				? contract.cultureCodes
+				: this.lyrics.original.cultureCodes[0] !== ''
+				? this.lyrics.original.cultureCodes
+				: [],
+		);
 
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
 	}
