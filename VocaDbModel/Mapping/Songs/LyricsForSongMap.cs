@@ -22,7 +22,7 @@ public class LyricsForSongMap : ClassMap<LyricsForSong>
 
 		HasMany(m => m.CultureCodes).Table("CultureCodesForLyrics").KeyColumn("LyricId").Component(c =>
 		{
-			c.Map(e => e.CultureCode).Column("CultureCode").Length(3).Not.Nullable();
+			c.Map(m => m.CultureCode).Column("CultureCode").Length(3).Not.Nullable();
 		}).Cascade.All().Cache.ReadWrite();
 	}
 }

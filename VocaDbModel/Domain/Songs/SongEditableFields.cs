@@ -37,4 +37,6 @@ public enum SongEditableFields
 	WebLinks = 1 << 13,
 
 	Bpm = 1 << 14,
+
+	CultureCodes = 1 << 15,
 }

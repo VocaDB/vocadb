@@ -1371,6 +1371,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				diff.Status.Set();
 			}
 
+			var newCultureCodes = properties.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
+			if (!song.CultureCodes.SequenceEqual(newCultureCodes))
+			{
+				song.CultureCodes = newCultureCodes;
+				diff.CultureCodes.Set();
+			}
+
 			var artistGetter = new Func<ArtistForSongContract, Artist>(artistForSong =>
 				ctx.OfType<Artist>().Load(artistForSong.Artist.Id));
 
