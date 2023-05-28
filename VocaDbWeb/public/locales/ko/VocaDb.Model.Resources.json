@@ -59,9 +59,9 @@
     "NeedProducer": "노래에는 하나 이상의 프로듀서 역할(작곡가, 어레인저 또는 애니메이터) 역할이 있어야 합니다.",
     "NeedReferences": "노래에는 메모, PV 또는 링크가 참조 문헌으로 있어야 합니다.",
     "NeedType": "음악 부류가 표기되어있어야 합니다.",
-    "NonInstrumentalSongNeedsVocalists": "This song has no vocalists. Original instrumental songs need to be tagged with the 'instrumental' tag. Instrumental (karaoke) versions of existing songs should use the 'Instrumental' song type. Otherwise, add vocalists.",
+    "NonInstrumentalSongNeedsVocalists": "곡 정보에 보컬 제공자 정보가 없습니다. 원본 기악곡 노래들은 '기악곡' 태그가 붙어있어야 합니다. 노래방 버전의 경우 노래 분류가 '기악곡' 타입으로 분류되어있어야 합니다. 그렇지 않다면 보컬 관련 정보를 추가해주시기 바랍니다.",
     "RedundantEvent": "The same release event does not need to be specified for both the song and album.",
-    "RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
+    "RedundantRoles": "프로듀서가 1명만 존재할 시 역할 지정이 필요하지 않습니다.",
     "UnspecifiedNames": "Song needs a primary name."
   }
 }
