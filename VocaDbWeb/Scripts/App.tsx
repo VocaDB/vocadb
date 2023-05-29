@@ -1,3 +1,4 @@
+import '@/ArrayExtensions';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { Compose } from '@/Compose';
 import { LoginManagerProvider } from '@/LoginManagerContext';
@@ -16,8 +17,12 @@ const OldApp = React.lazy(() => import('./OldApp'));
 
 const InnerAppChooser = (): React.ReactElement => {
 	const vdb = useVdb();
+	const beta_enabled = localStorage.getItem('new_beta');
 
-	if (vdb.values.loggedUser?.stylesheet === 'new_beta') {
+	if (
+		beta_enabled === 'true' &&
+		vdb.values.loggedUser?.stylesheet === 'new_beta'
+	) {
 		return <NewApp />;
 	}
 
