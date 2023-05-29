@@ -41,7 +41,7 @@ export const useCultureCodes = (): CultureCodeTools => {
 	const codes = React.useContext(CultureCodesContext);
 
 	const getCodeDescription = (code: string): CodeDescription | undefined => {
-		if (code.length > 2 && code !== 'fil') {
+		if (!(code in userLanguageCultures)) {
 			return codes === undefined ? undefined : codes[code];
 		}
 
