@@ -37,6 +37,7 @@
     "Today": "오늘",
     "ParentVersion": "Parent version",
     "Bpm": "BPM",
-    "Duration": "기간"
+    "Duration": "기간",
+    "Language": "Language"
   }
 }

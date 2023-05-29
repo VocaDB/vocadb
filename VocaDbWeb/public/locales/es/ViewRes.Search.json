@@ -37,6 +37,7 @@
     "Today": "Hoy",
     "ParentVersion": "Versión principal",
     "Bpm": "BPM",
-    "Duration": "Duración"
+    "Duration": "Duración",
+    "Language": "Language"
   }
 }
