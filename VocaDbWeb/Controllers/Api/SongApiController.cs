@@ -341,7 +341,8 @@ public class SongApiController : ApiController
 		int? minMilliBpm = null,
 		int? maxMilliBpm = null,
 		int? minLength = null,
-		int? maxLength = null
+		int? maxLength = null,
+		string? language = null
 	)
 	{
 		var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -385,6 +386,7 @@ public class SongApiController : ApiController
 			MaxMilliBpm = maxMilliBpm,
 			MinLength = minLength,
 			MaxLength = maxLength,
+			Language = language,
 		};
 		param = param with { Common = param.Common with { EntryStatus = status } };
 
