@@ -622,7 +622,8 @@ public class UserApiController : ApiController
 	[HttpDelete("current/songTags/{tagUsageId:long}")]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult RemoveSongTagUsage(long tagUsageId) {
+	public ActionResult RemoveSongTagUsage(long tagUsageId)
+	{
 		_queries.DeleteSongTag(tagUsageId);
 		return NoContent();
 	}
@@ -630,23 +631,26 @@ public class UserApiController : ApiController
 	[HttpDelete("current/artistTags/{tagUsageId:long}")]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult RemoveArtistTagUsage(long tagUsageId) {
+	public ActionResult RemoveArtistTagUsage(long tagUsageId)
+	{
 		_queries.DeleteArtistTag(tagUsageId);
 		return NoContent();
 	}
-	
+
 	[HttpDelete("current/albumTags/{tagUsageId:long}")]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult RemoveAlbumTagUsage(long tagUsageId) {
+	public ActionResult RemoveAlbumTagUsage(long tagUsageId)
+	{
 		_queries.DeleteAlbumTag(tagUsageId);
 		return NoContent();
 	}
-	
-	[HttpDelete("current/eventTags/{tagUsageId:long}")]
+
+	[HttpDelete("current/releaseEventTags/{tagUsageId:long}")]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult RemoveEventTagUsage(long tagUsageId) {
+	public ActionResult RemoveEventTagUsage(long tagUsageId)
+	{
 		_queries.DeleteEventTag(tagUsageId);
 		return NoContent();
 	}

@@ -5,6 +5,7 @@ import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { userRepo } from '@/Repositories/UserRepository';
 import { useVdb } from '@/VdbContext';
+import dayjs from '@/dayjs';
 import React from 'react';
 
 import { UserIconLink_UserForApiContract } from '../User/UserIconLink_UserForApiContract';
@@ -74,7 +75,7 @@ export const TagUsagesManageTable = React.memo(
 											))}
 										</td>
 									)}
-									<td>{tagUsage.date}</td>
+									<td>{dayjs(tagUsage.date).format('lll')}</td>
 									<td>
 										<SafeAnchor
 											onClick={(): void => deleteTagUsage(tagUsage.id)}
