@@ -82,6 +82,7 @@ const BasicInfoTabContent = observer(
 			'Resources',
 			'ViewRes',
 			'ViewRes.Song',
+			'VocaDb.Web.Resources.Domain.Globalization',
 			'VocaDb.Model.Resources',
 		]);
 
@@ -403,9 +404,12 @@ const BasicInfoTabContent = observer(
 				<div className="editor-field">
 					<tbody>
 						{songEditStore.cultureCodes.items.map((c, index) => (
-							<tr>
+							<tr key={index}>
 								<UserLanguageCultureDropdownList
 									value={c.toString()}
+									placeholder={t(
+										'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+									)}
 									extended={songEditStore.cultureCodes.extended}
 									onChange={(val): void => {
 										songEditStore.cultureCodes.items[index] = val.target.value;
