@@ -445,6 +445,6 @@ public static class SongQueryableExtensions
 			return query;
 		}
 
-		return query.Where(s => s.CultureCodes.Any(c => c.CultureCode == language) || s.Lyrics.Any(l => l.CultureCodes.Any(c => c.CultureCode == language)));
+		return query.Where(s => s.CultureCodes.Any(c => c.CultureCode == language) || s.Lyrics.Where(l => l.TranslationType == TranslationType.Original).Any(l => l.CultureCodes.Any(c => c.CultureCode == language)));
 	}
 }
