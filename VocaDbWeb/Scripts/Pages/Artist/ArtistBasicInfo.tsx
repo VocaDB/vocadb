@@ -445,8 +445,10 @@ const ArtistBasicInfo = observer(
 													{artist.advancedStats.topLanguages
 														.map(
 															(c) =>
-																getCodeDescription(c.data)?.englishName ??
-																t('ViewRes.Song:Details.LyricsLanguageOther'),
+																`${
+																	getCodeDescription(c.data)?.englishName ??
+																	t('ViewRes.Song:Details.LyricsLanguageOther')
+																} (${c.count})`,
 														)
 														.join(', ')}
 												</>
