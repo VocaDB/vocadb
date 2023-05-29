@@ -427,13 +427,15 @@ const BasicInfoTabContent = observer(
 							</tr>
 						))}
 					</tbody>
-					<SafeAnchor
-						href="#"
-						className="textLink addLink"
-						onClick={(): void => songEditStore.cultureCodes.add()}
-					>
-						{t('ViewRes:Shared.Add')}
-					</SafeAnchor>
+					{songEditStore.cultureCodes.items.length < 3 && (
+						<SafeAnchor
+							href="#"
+							className="textLink addLink"
+							onClick={(): void => songEditStore.cultureCodes.add()}
+						>
+							{t('ViewRes:Shared.Add')}
+						</SafeAnchor>
+					)}
 					{!songEditStore.cultureCodes.extended &&
 						songEditStore.cultureCodes.items.length > 0 && (
 							<SafeAnchor
