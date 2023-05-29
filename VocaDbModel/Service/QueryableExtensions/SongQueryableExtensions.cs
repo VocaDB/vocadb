@@ -437,4 +437,14 @@ public static class SongQueryableExtensions
 
 		return query;
 	}
+
+	public static IQueryable<Song> WhereHasLanguage(this IQueryable<Song> query, string? language)
+	{
+		if (language == null)
+		{
+			return query;
+		}
+
+		return query.Where(s => s.CultureCodes.Any(c => c.CultureCode == language) || s.Lyrics.Any(l => l.CultureCodes.Any(c => c.CultureCode == language)));
+	}
 }

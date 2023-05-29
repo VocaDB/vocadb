@@ -1,4 +1,5 @@
 import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
+import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
@@ -235,6 +236,21 @@ const SongSearchOptions = observer(
 					<div className="controls">
 						<SongBpmFilter songBpmFilter={songSearchStore.minBpmFilter} /> -{' '}
 						<SongBpmFilter songBpmFilter={songSearchStore.maxBpmFilter} />
+					</div>
+				</div>
+
+				<div className="control-group">
+					<div className="control-label">
+						{t('ViewRes.Search:Index.Language')}
+					</div>
+					<div className="controls">
+						<UserLanguageCultureDropdownList
+							value={songSearchStore.language}
+							placeholder="(Show all)"
+							onChange={(e): void => {
+								songSearchStore.language = e.target.value;
+							}}
+						/>
 					</div>
 				</div>
 

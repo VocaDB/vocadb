@@ -70,7 +70,8 @@ public class SongSearch
 			.WhereHasPV(queryParams.OnlyWithPVs)
 			.WhereMatchFilters(queryParams.AdvancedFilters)
 			.WhereMilliBpmIsBetween(queryParams.MinMilliBpm, queryParams.MaxMilliBpm)
-			.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength);
+			.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength)
+			.WhereHasLanguage(queryParams.Language);
 
 		return query;
 	}
