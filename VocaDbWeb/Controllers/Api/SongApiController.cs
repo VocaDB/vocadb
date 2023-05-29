@@ -476,10 +476,10 @@ public class SongApiController : ApiController
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<IEnumerable<TagUsageForApiContract>> GetTagSuggestions(int id) =>
 		await _queries.GetTagSuggestionsAsync(id);
-	
+
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _service.GetEntryWithTagUsages(id);
 
 	/// <summary>
 	/// Gets top rated songs.
@@ -682,6 +682,9 @@ public class SongApiController : ApiController
 		{
 			return ValidationProblem(ModelState);
 		}
+
+		// We only need unique culture codes
+		contract.CultureCodes = contract.CultureCodes.Distinct().ToArray();
 
 		await _queries.UpdateBasicProperties(contract);
 
