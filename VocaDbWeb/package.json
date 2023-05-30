@@ -67,6 +67,7 @@
 		"classnames": "^2.3.1",
 		"dayjs": "^1.11.7",
 		"decimal.js-light": "^2.5.1",
+		"franc-min": "^6.1.0",
 		"highcharts": "^10.0.0",
 		"highcharts-react-official": "^3.1.0",
 		"http-status-codes": "^2.2.0",
