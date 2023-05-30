@@ -109,7 +109,7 @@
     "PvURL": "网址：",
     "TrackPropertiesTitle": "曲目属性",
     "ArtistsForSong": "曲目 {{0}} 的艺术家",
-    "BaDiscTypeExplanation": "If unsure of which type to use, try to find out how the artists themselves call the album. For more elaborate descriptions, please refer to Wikipedia, Discogs or Musicbrainz.",
+    "BaDiscTypeExplanation": "如果不确定要使用哪一种类型，试图查明艺术家是如何称呼专辑的。 更详细的描述，请参阅维基百科，Discogs或Musicbrainz。",
     "BaBarcode": "条形码",
     "DiAddRow": "新增行",
     "DiAudio": "音频",
