@@ -210,7 +210,6 @@ const LyricsForSongEdit = observer(
 								) {
 									lyricsForSongEditStore.cultureCodes[0] =
 										iso639to1[franc(lyricsForSongEditStore.value)];
-									console.log(iso639to1[franc(lyricsForSongEditStore.value)]);
 								}
 							}}
 							className="input-xxlarge withMargin"
