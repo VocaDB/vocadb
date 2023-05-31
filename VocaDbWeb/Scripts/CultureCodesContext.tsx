@@ -28,20 +28,21 @@ interface CultureCodeTools {
 export const CultureCodesProvider = ({
 	children,
 }: CultureCodesProviderProps): React.ReactElement => {
-	const [cultureCodes, setCultureCodes] = useState<Codes | undefined>(
+	const [codeData, setCodeData] = useState<CultureCodeData | undefined>(
 		undefined,
 	);
-	const [iso639to1, setIso639to1] = useState<Record<string, string>>({});
 
 	useEffect(() => {
 		import('./Components/extendedUserLanguageCultures').then((resp) => {
-			setCultureCodes(resp.extendedUserLanguageCultures);
-			setIso639to1(resp.iso6393To1);
+			setCodeData({
+				codes: resp.extendedUserLanguageCultures,
+				iso639to1: resp.iso6393To1,
+			});
 		});
 	}, []);
 
 	return (
-		<CultureCodesContext.Provider value={{ codes: cultureCodes, iso639to1 }}>
+		<CultureCodesContext.Provider value={codeData}>
 			{children}
 		</CultureCodesContext.Provider>
 	);
