@@ -257,6 +257,30 @@ const calcCsvDifference = (
 	return difference;
 };
 
+const verifyCsv = (data: string): boolean => {
+	return data
+		.split('\n')
+		.map((row, index) => {
+			let ret = true;
+			let cols = row.split(',');
+
+			if (isNaN(Number(cols[0]))) {
+				ret = false;
+			}
+
+			if (isNaN(Number(cols[1]))) {
+				ret = false;
+			}
+
+			if (cols[2] === undefined) {
+				ret = false;
+			}
+
+			return ret ? ret : index === 0;
+		})
+		.every(Boolean);
+};
+
 interface CsvDifferenceAlertProps {
 	store: SongListEditStore;
 	data: CsvData[] | null;
@@ -300,18 +324,19 @@ const SongsTabContent = observer(
 		const fileInputRef = useRef<HTMLInputElement | null>(null);
 		const [csvData, setCsvData] = useState<string | null>(null);
 
+		const validCsv = verifyCsv(csvData ?? '');
+
 		const parsedCsvData = !csvData
 			? null
 			: csvData
 					.split('\n')
 					.map((r) => r.split(','))
-					.slice(1)
 					.map((r) => ({
-						id: Number(r[0]),
-						order: Number(r[1]),
+						order: Number(r[0]),
+						id: Number(r[1]),
 						notes: r[2],
 					}))
-					.filter((r) => !Number.isNaN(r.id) && !Number.isNaN(r.order));
+					.filter((r) => !isNaN(r.order)); // Filter potential header row
 
 		const applyCsv = (): void => {
 			if (!csvData || !parsedCsvData) {
@@ -343,7 +368,7 @@ const SongsTabContent = observer(
 					<Button onClick={(): void => fileInputRef.current?.click()}>
 						{t('ViewRes:Shared.ImportCsv')}
 					</Button>
-					{csvData && (
+					{csvData && validCsv && (
 						<>
 							{' '}
 							<Button variant="primary" onClick={(): void => applyCsv()}>
@@ -353,7 +378,10 @@ const SongsTabContent = observer(
 					)}
 				</div>
 				<br />
-				<CsvDifferenceAlert store={songListEditStore} data={parsedCsvData} />
+				{validCsv && (
+					<CsvDifferenceAlert store={songListEditStore} data={parsedCsvData} />
+				)}
+				{!validCsv && <Alert variant="error">Invalid CSV {/* LOC */}</Alert>}
 				<br />
 				<table>
 					{songListEditStore.csvData && (
