@@ -7,6 +7,7 @@ import {
 	LyricsForSongEditStore,
 	LyricsForSongListEditStore,
 } from '@/Stores/Song/LyricsForSongListEditStore';
+import { franc } from 'franc-min';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
@@ -34,7 +35,7 @@ const LyricsForSongEdit = observer(
 				(c) => c.length > 2 && c !== 'fil',
 			).length > 0,
 		);
-		const { getCodeDescription } = useCultureCodes();
+		const { getCodeDescription, iso639to1 } = useCultureCodes();
 
 		return (
 			<Accordion.Item eventKey={eventKey}>
@@ -201,6 +202,16 @@ const LyricsForSongEdit = observer(
 							}
 							cols={65}
 							rows={30}
+							onBlur={(): void => {
+								if (
+									lyricsForSongEditStore.cultureCodes.length === 1 &&
+									lyricsForSongEditStore.cultureCodes[0] === '' &&
+									iso639to1 !== undefined
+								) {
+									lyricsForSongEditStore.cultureCodes[0] =
+										iso639to1[franc(lyricsForSongEditStore.value)];
+								}
+							}}
 							className="input-xxlarge withMargin"
 						/>
 						<br />
