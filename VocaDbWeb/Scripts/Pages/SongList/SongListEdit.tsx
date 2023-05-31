@@ -242,13 +242,13 @@ const calcCsvDifference = (
 	difference.songsAdded = csvData.filter(
 		(s) => !(s.id in previousSongs),
 	).length;
-	difference.songsRemoved = Object.keys(previousSongs).filter(
-		(s) => !(s in newSongs),
+	difference.songsRemoved = store.songLinks.filter(
+		(s) => !(s.song.id in newSongs),
 	).length;
-	difference.songsUpdated = Object.keys(previousSongs).filter((s) => {
-		const id = Number(s);
+	difference.songsUpdated = store.songLinks.filter((s) => {
+		const id = Number(s.song.id);
 		return (
-			s in newSongs &&
+			id in newSongs &&
 			(newSongs[id].notes !== previousSongs[id].notes ||
 				newSongs[id].order !== previousSongs[id].order)
 		);
@@ -258,14 +258,18 @@ const calcCsvDifference = (
 };
 
 const verifyCsv = (data: string): boolean => {
-	return data
+	const orderIds: number[] = [];
+	const formats = data
 		.split('\n')
+		.filter((r) => r !== '')
 		.map((row, index) => {
 			let ret = true;
 			let cols = row.split(',');
 
 			if (isNaN(Number(cols[0]))) {
 				ret = false;
+			} else {
+				orderIds.push(Number(cols[0]));
 			}
 
 			if (isNaN(Number(cols[1]))) {
@@ -279,6 +283,13 @@ const verifyCsv = (data: string): boolean => {
 			return ret ? ret : index === 0;
 		})
 		.every(Boolean);
+
+	orderIds.sort((a, b) => a - b);
+	const unique = new Set(orderIds).size === orderIds.length; // Checks for duplicate order attributes
+	const allOrderIds = orderIds[0] + orderIds.length - 1 === orderIds.at(-1); // Checks that order attributes are continous
+	const startsAt1 = orderIds[0] === 1; // Checks that order ids start at 1
+
+	return formats && unique && allOrderIds && startsAt1;
 };
 
 interface CsvDifferenceAlertProps {
@@ -330,6 +341,7 @@ const SongsTabContent = observer(
 			? null
 			: csvData
 					.split('\n')
+					.filter((r) => r !== '')
 					.map((r) => r.split(','))
 					.map((r) => ({
 						order: Number(r[0]),
