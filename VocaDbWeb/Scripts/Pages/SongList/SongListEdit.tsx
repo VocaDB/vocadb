@@ -348,7 +348,8 @@ const SongsTabContent = observer(
 						id: Number(r[1]),
 						notes: r[2],
 					}))
-					.filter((r) => !isNaN(r.order)); // Filter potential header row
+					.filter((r) => !isNaN(r.order))
+					.sort((a, b) => a.order - b.order); // Filter potential header row
 
 		const applyCsv = (): void => {
 			if (!csvData || !parsedCsvData) {
@@ -402,7 +403,6 @@ const SongsTabContent = observer(
 							list={songListEditStore.csvData}
 							setList={(csvData): void =>
 								runInAction(() => {
-									console.log(csvData);
 									songListEditStore.csvData = csvData;
 								})
 							}
