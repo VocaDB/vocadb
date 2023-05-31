@@ -42,7 +42,7 @@ export class SongInListEditStore {
 
 interface CsvData {
 	order: number;
-	songId: number;
+	id: number;
 	notes: string;
 }
 
@@ -50,6 +50,20 @@ interface SongListDifference {
 	songsAdded: number;
 	songsRemoved: number;
 	songsUpdated: number;
+}
+
+export class CsvDataStore {
+	readonly id: number;
+	@observable notes: string;
+	@observable order: number;
+
+	constructor(data: CsvData) {
+		makeObservable(this);
+
+		this.id = data.id;
+		this.notes = data.notes;
+		this.order = data.order;
+	}
 }
 
 export class SongListEditStore {
@@ -60,6 +74,7 @@ export class SongListEditStore {
 	@observable featuredCategory: SongListFeaturedCategory;
 	@observable name: string;
 	@observable songLinks: SongInListEditStore[];
+	@observable csvData: CsvData[] | null = null;
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	readonly trashStore: DeleteEntryStore;
@@ -124,24 +139,19 @@ export class SongListEditStore {
 	}
 
 	importCsvData = (data: CsvData[]): void => {
-		this.songLinks = [];
-		this.songLinks = data.map(
-			(d) =>
-				new SongInListEditStore({
-					songInListId: 0,
-					order: d.order,
-					notes: d.notes,
-					song: { id: d.songId } as SongContract,
-				}),
-		);
+		this.csvData = data;
 	};
 
-	calculateCsvDifference = (data: CsvData[]): SongListDifference => {
+	@computed get csvDifference(): SongListDifference {
 		let difference: SongListDifference = {
 			songsAdded: 0,
 			songsRemoved: 0,
 			songsUpdated: 0,
 		};
+
+		if (!this.csvData) {
+			return difference;
+		}
 
 		const previousSongs = this.songLinks.reduce(
 			(
@@ -154,15 +164,16 @@ export class SongListEditStore {
 			{},
 		);
 
-		const newSongs = data.reduce(
+		const newSongs = this.csvData.reduce(
 			(map: { [id: number]: CsvData }, obj: CsvData) => {
-				map[obj.songId] = obj;
+				map[obj.id] = obj;
 				return map;
 			},
 			{},
 		);
-		difference.songsAdded = data.filter(
-			(s) => !(s.songId in previousSongs),
+
+		difference.songsAdded = this.csvData.filter(
+			(s) => !(s.id in previousSongs),
 		).length;
 		difference.songsRemoved = Object.keys(previousSongs).filter(
 			(s) => !(s in newSongs),
@@ -177,7 +188,7 @@ export class SongListEditStore {
 		}).length;
 
 		return difference;
-	};
+	}
 
 	acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
@@ -207,6 +218,18 @@ export class SongListEditStore {
 	): Promise<number> => {
 		this.submitting = true;
 
+		const songLinks = this.csvData
+			? this.csvData.map(
+					(d) =>
+						new SongInListEditStore({
+							songInListId: 0,
+							order: d.order,
+							notes: d.notes,
+							song: { id: d.id } as SongContract,
+						}),
+			  )
+			: this.songLinks;
+
 		try {
 			const id = await this.songListRepo.edit(
 				requestToken,
@@ -217,7 +240,7 @@ export class SongListEditStore {
 					featuredCategory: this.featuredCategory,
 					id: this.contract.id,
 					name: this.name,
-					songLinks: this.songLinks,
+					songLinks,
 					status: this.status,
 					updateNotes: this.updateNotes,
 				},
