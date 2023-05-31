@@ -1,3 +1,4 @@
+import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
@@ -33,12 +34,16 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import {
+	CsvData,
+	SongInListEditStore,
+	SongListEditStore,
+} from '@/Stores/SongList/SongListEditStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
@@ -198,6 +203,89 @@ const PropertiesTabContent = observer(
 	},
 );
 
+interface SongListDifference {
+	songsAdded: number;
+	songsRemoved: number;
+	songsUpdated: number;
+}
+
+const calcCsvDifference = (
+	store: SongListEditStore,
+	csvData: CsvData[] | null,
+): SongListDifference => {
+	let difference: SongListDifference = {
+		songsAdded: 0,
+		songsRemoved: 0,
+		songsUpdated: 0,
+	};
+
+	if (!csvData) {
+		return difference;
+	}
+
+	const previousSongs = store.songLinks.reduce(
+		(map: { [id: number]: SongInListEditStore }, obj: SongInListEditStore) => {
+			map[obj.song.id] = obj;
+			return map;
+		},
+		{},
+	);
+
+	const newSongs = csvData.reduce(
+		(map: { [id: number]: CsvData }, obj: CsvData) => {
+			map[obj.id] = obj;
+			return map;
+		},
+		{},
+	);
+
+	difference.songsAdded = csvData.filter(
+		(s) => !(s.id in previousSongs),
+	).length;
+	difference.songsRemoved = Object.keys(previousSongs).filter(
+		(s) => !(s in newSongs),
+	).length;
+	difference.songsUpdated = Object.keys(previousSongs).filter((s) => {
+		const id = Number(s);
+		return (
+			s in newSongs &&
+			(newSongs[id].notes !== previousSongs[id].notes ||
+				newSongs[id].order !== previousSongs[id].order)
+		);
+	}).length;
+
+	return difference;
+};
+
+interface CsvDifferenceAlertProps {
+	store: SongListEditStore;
+	data: CsvData[] | null;
+}
+
+const CsvDifferenceAlert = ({
+	store,
+	data,
+}: CsvDifferenceAlertProps): React.ReactElement => {
+	const diff = calcCsvDifference(store, data);
+	const pluralize = (count: number, suffix = 's'): string =>
+		`${count} Song${count !== 1 ? suffix : ''}`;
+
+	if (diff.songsAdded + diff.songsRemoved + diff.songsUpdated === 0) {
+		return <Alert variant="success">No changes</Alert>;
+	}
+
+	return (
+		<Alert variant="warning">
+			<b>CSV update statistics:</b>
+			<ul>
+				<li>{pluralize(diff.songsAdded)} added</li>
+				<li>{pluralize(diff.songsRemoved)} removed</li>
+				<li>{pluralize(diff.songsUpdated)} updated</li>
+			</ul>
+		</Alert>
+	);
+};
+
 interface SongsTabContentProps {
 	songListEditStore: SongListEditStore;
 }
@@ -208,24 +296,26 @@ const SongsTabContent = observer(
 		const fileInputRef = useRef<HTMLInputElement | null>(null);
 		const [csvData, setCsvData] = useState<string | null>(null);
 
-		useEffect(() => {
-			if (csvData === null) {
+		const parsedCsvData = !csvData
+			? null
+			: csvData
+					.split('\n')
+					.map((r) => r.split(','))
+					.slice(1)
+					.map((r) => ({
+						id: Number(r[0]),
+						order: Number(r[1]),
+						notes: r[2],
+					}))
+					.filter((r) => !Number.isNaN(r.id) && !Number.isNaN(r.order));
+
+		const applyCsv = (): void => {
+			if (!csvData || !parsedCsvData) {
 				return;
 			}
-			let parsedCsvData = csvData
-				.split('\n')
-				.map((r) => r.split(','))
-				.slice(1)
-				.map((r) => ({
-					id: Number(r[0]),
-					order: Number(r[1]),
-					notes: r[2],
-				}))
-				.filter((r) => !Number.isNaN(r.id) && !Number.isNaN(r.order));
+
 			songListEditStore.importCsvData(parsedCsvData);
-			console.log(songListEditStore.csvDifference);
-		}, [csvData, songListEditStore]);
-		console.log(songListEditStore.csvData);
+		};
 
 		return (
 			<>
@@ -247,9 +337,19 @@ const SongsTabContent = observer(
 						hidden
 					/>
 					<Button onClick={(): void => fileInputRef.current?.click()}>
-						Import CSV
+						{t('ViewRes:Shared.ImportCsv')}
 					</Button>
+					{csvData && (
+						<>
+							{' '}
+							<Button variant="primary" onClick={(): void => applyCsv()}>
+								{t('ViewRes:Shared.ApplyCsv')}
+							</Button>
+						</>
+					)}
 				</div>
+				<br />
+				<CsvDifferenceAlert store={songListEditStore} data={parsedCsvData} />
 				<br />
 				<table>
 					{songListEditStore.csvData && (

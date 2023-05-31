@@ -40,16 +40,10 @@ export class SongInListEditStore {
 	}
 }
 
-interface CsvData {
+export interface CsvData {
 	order: number;
 	id: number;
 	notes: string;
-}
-
-interface SongListDifference {
-	songsAdded: number;
-	songsRemoved: number;
-	songsUpdated: number;
 }
 
 export class CsvDataStore {
@@ -141,54 +135,6 @@ export class SongListEditStore {
 	importCsvData = (data: CsvData[]): void => {
 		this.csvData = data;
 	};
-
-	@computed get csvDifference(): SongListDifference {
-		let difference: SongListDifference = {
-			songsAdded: 0,
-			songsRemoved: 0,
-			songsUpdated: 0,
-		};
-
-		if (!this.csvData) {
-			return difference;
-		}
-
-		const previousSongs = this.songLinks.reduce(
-			(
-				map: { [id: number]: SongInListEditStore },
-				obj: SongInListEditStore,
-			) => {
-				map[obj.song.id] = obj;
-				return map;
-			},
-			{},
-		);
-
-		const newSongs = this.csvData.reduce(
-			(map: { [id: number]: CsvData }, obj: CsvData) => {
-				map[obj.id] = obj;
-				return map;
-			},
-			{},
-		);
-
-		difference.songsAdded = this.csvData.filter(
-			(s) => !(s.id in previousSongs),
-		).length;
-		difference.songsRemoved = Object.keys(previousSongs).filter(
-			(s) => !(s in newSongs),
-		).length;
-		difference.songsUpdated = Object.keys(previousSongs).filter((s) => {
-			const id = Number(s);
-			return (
-				s in newSongs &&
-				(newSongs[id].notes !== previousSongs[id].notes ||
-					newSongs[id].order !== previousSongs[id].order)
-			);
-		}).length;
-
-		return difference;
-	}
 
 	acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
