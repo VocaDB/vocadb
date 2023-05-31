@@ -1,4 +1,5 @@
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -39,6 +40,26 @@ export class SongInListEditStore {
 	}
 }
 
+export interface CsvData {
+	order: number;
+	id: number;
+	notes: string;
+}
+
+export class CsvDataStore {
+	readonly id: number;
+	@observable notes: string;
+	@observable order: number;
+
+	constructor(data: CsvData) {
+		makeObservable(this);
+
+		this.id = data.id;
+		this.notes = data.notes;
+		this.order = data.order;
+	}
+}
+
 export class SongListEditStore {
 	readonly deleteStore: DeleteEntryStore;
 	@observable description: string;
@@ -47,6 +68,7 @@ export class SongListEditStore {
 	@observable featuredCategory: SongListFeaturedCategory;
 	@observable name: string;
 	@observable songLinks: SongInListEditStore[];
+	@observable csvData: CsvData[] | null = null;
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	readonly trashStore: DeleteEntryStore;
@@ -104,11 +126,24 @@ export class SongListEditStore {
 				}
 			},
 		);
+		reaction(
+			() => this.csvData?.map((data) => ({ order: data.order })),
+			(data) => {
+				if (data === undefined) return;
+				for (let track = 0; track < data.length; ++track) {
+					this.csvData![track].order = track + 1;
+				}
+			},
+		);
 	}
 
 	@computed get eventDate(): string | undefined {
 		return this.eventDateDate ? this.eventDateDate.toISOString() : undefined;
 	}
+
+	importCsvData = (data: CsvData[]): void => {
+		this.csvData = data;
+	};
 
 	acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
@@ -138,6 +173,18 @@ export class SongListEditStore {
 	): Promise<number> => {
 		this.submitting = true;
 
+		const songLinks = this.csvData
+			? this.csvData.map(
+					(d) =>
+						new SongInListEditStore({
+							songInListId: 0,
+							order: d.order,
+							notes: d.notes,
+							song: { id: d.id } as SongContract,
+						}),
+			  )
+			: this.songLinks;
+
 		try {
 			const id = await this.songListRepo.edit(
 				requestToken,
@@ -148,7 +195,7 @@ export class SongListEditStore {
 					featuredCategory: this.featuredCategory,
 					id: this.contract.id,
 					name: this.name,
-					songLinks: this.songLinks,
+					songLinks,
 					status: this.status,
 					updateNotes: this.updateNotes,
 				},
