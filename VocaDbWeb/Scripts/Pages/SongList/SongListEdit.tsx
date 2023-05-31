@@ -335,7 +335,7 @@ const SongsTabContent = observer(
 		const fileInputRef = useRef<HTMLInputElement | null>(null);
 		const [csvData, setCsvData] = useState<string | null>(null);
 
-		const validCsv = verifyCsv(csvData ?? '');
+		const validCsv = csvData ? verifyCsv(csvData) : true;
 
 		const parsedCsvData = !csvData
 			? null
