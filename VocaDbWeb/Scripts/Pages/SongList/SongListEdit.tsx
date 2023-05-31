@@ -270,6 +270,10 @@ const CsvDifferenceAlert = ({
 	const pluralize = (count: number, suffix = 's'): string =>
 		`${count} Song${count !== 1 ? suffix : ''}`;
 
+	if (data === null) {
+		return <></>;
+	}
+
 	if (diff.songsAdded + diff.songsRemoved + diff.songsUpdated === 0) {
 		return <Alert variant="success">No changes</Alert>;
 	}
