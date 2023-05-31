@@ -126,6 +126,15 @@ export class SongListEditStore {
 				}
 			},
 		);
+		reaction(
+			() => this.csvData?.map((data) => ({ order: data.order })),
+			(data) => {
+				if (data === undefined) return;
+				for (let track = 0; track < data.length; ++track) {
+					this.csvData![track].order = track + 1;
+				}
+			},
+		);
 	}
 
 	@computed get eventDate(): string | undefined {
