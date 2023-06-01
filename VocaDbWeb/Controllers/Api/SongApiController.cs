@@ -680,6 +680,11 @@ public class SongApiController : ApiController
 			ModelState.AddModelError("Lyrics", "Lyrics cannot be empty");
 		}
 
+		if (contract.SongType == SongType.Instrumental && contract.CultureCodes.Length > 0)
+		{
+			ModelState.AddModelError("CultureCodes", "Instrumentals cannot have languages");
+		}
+
 		if (!ModelState.IsValid)
 		{
 			return ValidationProblem(ModelState);
