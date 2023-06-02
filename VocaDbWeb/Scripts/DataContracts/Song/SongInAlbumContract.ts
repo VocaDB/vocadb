@@ -7,4 +7,5 @@ export interface SongInAlbumContract {
 	rating?: string;
 	song?: SongApiContract;
 	trackNumber: number;
+	computedCultureCodes?: string[];
 }

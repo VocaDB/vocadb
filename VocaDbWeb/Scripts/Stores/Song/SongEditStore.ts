@@ -426,7 +426,10 @@ export class SongEditStore {
 				tags: this.tags,
 				updateNotes: this.updateNotes,
 				webLinks: this.webLinks.toContracts(),
-				cultureCodes: this.cultureCodes.toContracts().map((s) => s.toString()),
+				cultureCodes:
+					this.songType === SongType.Instrumental
+						? []
+						: this.cultureCodes.toContracts().map((s) => s.toString()),
 			});
 
 			return id;

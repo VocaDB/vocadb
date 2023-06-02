@@ -78,6 +78,7 @@ export class AlbumDetailsForApi {
 	readonly commentCount: number;
 	readonly contentFocus: ContentFocus;
 	readonly createDate: string;
+	readonly cultureCodes: string[];
 	readonly deleted: boolean;
 	readonly description: EnglishTranslatedStringContract;
 	readonly discs: AlbumDisc[];
@@ -128,6 +129,9 @@ export class AlbumDetailsForApi {
 		this.canRemoveTagUsages = contract.canRemoveTagUsages;
 		this.commentCount = contract.commentCount;
 		this.createDate = contract.createDate;
+		this.cultureCodes = contract.songs.flatMap(
+			(s) => s.computedCultureCodes ?? [],
+		);
 		this.deleted = contract.deleted;
 		this.description = contract.description;
 		this.discType = contract.discType;
