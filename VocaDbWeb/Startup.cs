@@ -233,6 +233,7 @@ public class Startup
 
 		builder.RegisterType<Login>().AsSelf();
 		builder.RegisterType<PVHelper>().AsSelf();
+		builder.RegisterType<ReactIndex>().AsSelf();
 		builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
 
 		builder.RegisterType<DiscordWebhookNotifier>().As<IDiscordWebhookNotifier>();
