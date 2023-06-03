@@ -611,21 +611,21 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			}
 
 			// HACK: Rate limiting based on action in audit log entries.
-			var failedLoginMessagePrefix = MakeFailedLoginMessage(hostname, message: null)
-				// https://stackoverflow.com/questions/3661125/sql-server-like-containing-bracket-characters
-				.Replace("[", "[[]");
-			var failedLoginCutoff = DateTime.Now - TimeSpan.FromHours(1);
-			var recentFailedLoginCount = ctx.Query<AuditLogEntry>()
-				.Count(entry => entry.Time > failedLoginCutoff && entry.Action.StartsWith(failedLoginMessagePrefix));
-			if (recentFailedLoginCount > 10)
-			{
-				ctx.AuditLogger.SysLog(MakeFailedLoginMessage(hostname, message: "too many requests."), name);
-				if (delayFailedLogin)
-				{
-					Thread.Sleep(2000);
-				}
-				return LoginResult.CreateError(LoginError.TooManyRequests);
-			}
+			// var failedLoginMessagePrefix = MakeFailedLoginMessage(hostname, message: null)
+			// 	// https://stackoverflow.com/questions/3661125/sql-server-like-containing-bracket-characters
+			// 	.Replace("[", "[[]");
+			// var failedLoginCutoff = DateTime.Now - TimeSpan.FromHours(1);
+			// var recentFailedLoginCount = ctx.Query<AuditLogEntry>()
+			// 	.Count(entry => entry.Time > failedLoginCutoff && entry.Action.StartsWith(failedLoginMessagePrefix));
+			// if (recentFailedLoginCount > 10)
+			// {
+			// 	ctx.AuditLogger.SysLog(MakeFailedLoginMessage(hostname, message: "too many requests."), name);
+			// 	if (delayFailedLogin)
+			// 	{
+			// 		Thread.Sleep(2000);
+			// 	}
+			// 	return LoginResult.CreateError(LoginError.TooManyRequests);
+			// }
 
 			// Attempt to find user by either lowercase username.
 			var user = ctx.Query().FirstOrDefault(u => u.Active && (u.NameLC == lc || (u.Options.EmailVerified && u.Email == name)));
@@ -650,6 +650,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 					Thread.Sleep(2000);
 				return LoginResult.CreateError(LoginError.InvalidPassword);
 			}
+
 
 			// Login attempt successful.
 			ctx.AuditLogger.AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with '{name}'.", user);
