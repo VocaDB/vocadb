@@ -506,7 +506,8 @@ const BasicInfoTabContent = observer(
 									</tr>
 								))}
 							</tbody>
-							{artistEditStore.cultureCodes.items.length < 3 && (
+							{(artistEditStore.cultureCodes.items.length < 5 ||
+								loginManager.canApproveEntries) && (
 								<SafeAnchor
 									href="#"
 									className="textLink addLink"
