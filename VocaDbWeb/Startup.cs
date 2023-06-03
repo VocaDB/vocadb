@@ -39,7 +39,6 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
-using Prometheus;
 using OpenTelemetry.Metrics;
 
 namespace VocaDb.Web;
