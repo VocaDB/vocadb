@@ -277,6 +277,18 @@ const ArtistBasicInfo = observer(
 								</td>
 							</tr>
 
+							{artist.cultureCodes.length > 0 && (
+								<tr>
+									<td>{t('ViewRes:EntryDetails.Languages')}</td>
+									<td>
+										{artist.cultureCodes
+											.map((c) => getCodeDescription(c)?.englishName ?? '')
+											.filter((l) => l !== '')
+											.join(', ')}
+									</td>
+								</tr>
+							)}
+
 							<tr>
 								<td>{t('ViewRes:Shared.Tags')}</td>
 								<td>

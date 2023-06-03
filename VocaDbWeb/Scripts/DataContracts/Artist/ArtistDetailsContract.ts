@@ -49,6 +49,7 @@ export interface ArtistDetailsContract {
 	childVoicebanks: ArtistApiContract[];
 	commentCount: number;
 	createDate: string;
+	cultureCodes: string[];
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	draft: boolean;
