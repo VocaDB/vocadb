@@ -44,7 +44,7 @@ public class AdminController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -121,7 +121,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Site management";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult GeneratePictureThumbs()
@@ -140,7 +140,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage blocked IPs";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -148,7 +148,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage entry type to tag mappings";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -156,7 +156,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult PVAuthorNames(string term)
@@ -175,7 +175,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "PVs by author";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult RefreshDbCache()
@@ -269,7 +269,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View audit log";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -282,7 +282,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View entry reports";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -306,6 +306,6 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage webhooks";
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 }

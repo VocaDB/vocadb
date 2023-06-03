@@ -48,7 +48,7 @@ public class HomeController : ControllerBase
 		PageProperties.AddMainScripts = false;
 		PageProperties.CanonicalUrl = UrlMapper.HostAddress;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[HttpPost]

@@ -145,7 +145,7 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = "Entry edits - " + user.Name;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult FavoriteSongs(int id = InvalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
@@ -157,14 +157,14 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = "Songs rated by " + model.User.Name;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult ForgotPassword()
 	{
 		PageProperties.Title = ViewRes.User.ForgotPasswordStrings.RequestPasswordReset;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	//
@@ -193,7 +193,7 @@ public class UserController : ControllerBase
 
 		PageProperties.Title = ViewRes.SharedStrings.Users;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 #nullable enable
@@ -204,7 +204,7 @@ public class UserController : ControllerBase
 		//PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
 		PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	//
@@ -252,7 +252,7 @@ public class UserController : ControllerBase
 		PageProperties.Title = ViewRes.User.LoginStrings.Login;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Obsolete("Use /api/users/login instead.")]
@@ -420,7 +420,7 @@ public class UserController : ControllerBase
 		PageProperties.Title = ViewRes.User.CreateStrings.Register;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[HttpPost]
@@ -437,7 +437,7 @@ public class UserController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
@@ -465,7 +465,7 @@ public class UserController : ControllerBase
 	{
 		PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -473,7 +473,7 @@ public class UserController : ControllerBase
 	{
 		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 #nullable disable
 
@@ -518,7 +518,7 @@ public class UserController : ControllerBase
 
 	public ActionResult RequestVerification()
 	{
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult ResetAccesskey()

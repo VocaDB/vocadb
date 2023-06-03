@@ -16,7 +16,7 @@ public class ErrorController : ControllerBase
 			ErrorLogger.LogHttpError(Request, ErrorLogger.Code_BadRequest);
 
 		Response.StatusCode = ErrorLogger.Code_BadRequest;
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Forbidden(bool? redirect)
@@ -25,7 +25,7 @@ public class ErrorController : ControllerBase
 			ErrorLogger.LogHttpError(Request, ErrorLogger.Code_Forbidden);
 
 		Response.StatusCode = ErrorLogger.Code_Forbidden;
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Index(int? code, bool? redirect)
@@ -45,7 +45,7 @@ public class ErrorController : ControllerBase
 			ErrorLogger.LogHttpError(Request, realCode);
 
 		Response.StatusCode = realCode;
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult IPForbidden(bool? redirect)
@@ -56,7 +56,7 @@ public class ErrorController : ControllerBase
 		// 403.6: IP address of the client has been rejected.
 		Response.StatusCode = ErrorLogger.Code_Forbidden;
 		// TODO: implement Response.SubStatusCode = 6;
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult NotFound(bool? redirect)
@@ -66,6 +66,6 @@ public class ErrorController : ControllerBase
 
 		Response.StatusCode = ErrorLogger.Code_NotFound;
 
-		return File("index.html", "text/html");
+		return ReactIndex.File(PageProperties);
 	}
 }

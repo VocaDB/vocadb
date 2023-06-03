@@ -168,7 +168,7 @@ public class AlbumController : ControllerBase
 
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(prop);
 	}
 
 	public ActionResult DownloadTags(int id = InvalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)
@@ -231,7 +231,7 @@ public class AlbumController : ControllerBase
 	[Authorize]
 	public ActionResult Create()
 	{
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	//
@@ -239,7 +239,7 @@ public class AlbumController : ControllerBase
 	[Authorize]
 	public ActionResult Edit(int id)
 	{
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 #nullable disable
 
@@ -264,12 +264,12 @@ public class AlbumController : ControllerBase
 	{
 		PageProperties.Title = "Deleted albums";
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Merge()
 	{
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -301,7 +301,7 @@ public class AlbumController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = 0)
@@ -314,7 +314,7 @@ public class AlbumController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return ReactIndex.File(PageProperties);
 	}
 }
 

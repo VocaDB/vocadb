@@ -49,6 +49,8 @@ public class ControllerBase : Controller
 
 	protected PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
+	protected ReactIndex ReactIndex => HttpContext.RequestServices.GetRequiredService<ReactIndex>();
+
 	protected IUserPermissionContext PermissionContext => HttpContext.RequestServices.GetRequiredService<IUserPermissionContext>();
 
 	protected Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
