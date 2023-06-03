@@ -788,7 +788,7 @@ public class UserQueriesTests
 	[TestMethod]
 	public async Task UpdateUserSettings_Password()
 	{
-		var algo = new HMICSHA1PasswordHashAlgorithm();
+		var algo = new PKBDF2PasswordHashAlgorithm();
 
 		var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 		{
