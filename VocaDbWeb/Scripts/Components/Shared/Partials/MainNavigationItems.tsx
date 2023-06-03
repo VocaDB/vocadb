@@ -149,11 +149,6 @@ export const MainNavigationItems = React.memo(
 						{t('ViewRes:Layout.Wiki')}
 					</Nav.Link>
 				</Nav.Item>
-				<Nav.Item>
-					<Nav.Link href={vdb.values.blogUrl}>
-						{t('ViewRes:Layout.Blog')}
-					</Nav.Link>
-				</Nav.Item>
 				{loginManager.canMikuDbImport && (
 					<Nav.Item>
 						<Nav.Link href={'/MikuDbAlbum'}>
