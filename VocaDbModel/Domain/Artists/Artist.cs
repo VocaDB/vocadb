@@ -51,6 +51,7 @@ public class Artist :
 	private TagManager<ArtistTagUsage> _tags = new();
 	private IList<ArtistForUser> _users = new List<ArtistForUser>();
 	private IList<ArtistWebLink> _webLinks = new List<ArtistWebLink>();
+	private IList<OptionalCultureCode> _cultureCodes = new List<OptionalCultureCode>();
 
 	public Artist()
 	{
@@ -176,6 +177,8 @@ public class Artist :
 	/// This is mostly a performance optimization thing, so that the child voicebanks list doesn't need to be loaded unless needed.
 	/// </summary>
 	public virtual bool CanHaveChildVoicebanks => ArtistHelper.VocalistTypes.Contains(ArtistType) || ArtistType == ArtistType.Unknown;
+
+	public virtual bool CanHaveCultureCodes => ArtistHelper.VoiceSynthesizerTypes.Contains(ArtistType) || ArtistType == ArtistType.Unknown;
 
 	public virtual IList<Artist> ChildVoicebanks
 	{
@@ -337,6 +340,15 @@ public class Artist :
 		{
 			ParamIs.NotNull(() => value);
 			_webLinks = value;
+		}
+	}
+	public virtual IList<OptionalCultureCode> CultureCodes
+	{
+		get => _cultureCodes;
+		set
+		{
+			ParamIs.NotNull(() => value);
+			_cultureCodes = value;
 		}
 	}
 

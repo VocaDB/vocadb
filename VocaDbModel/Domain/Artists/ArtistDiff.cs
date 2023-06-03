@@ -20,6 +20,7 @@ public class ArtistDiff : EntryDiff<ArtistEditableFields>
 	public EnumFieldAccessor<ArtistEditableFields> ReleaseDate => Field(ArtistEditableFields.ReleaseDate);
 	public EnumFieldAccessor<ArtistEditableFields> Status => Field(ArtistEditableFields.Status);
 	public EnumFieldAccessor<ArtistEditableFields> WebLinks => Field(ArtistEditableFields.WebLinks);
+	public EnumFieldAccessor<ArtistEditableFields> CultureCodes => Field(ArtistEditableFields.CultureCodes);
 
 	public virtual bool IncludeDescription => IsSnapshot || Description.IsChanged;
 	public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;

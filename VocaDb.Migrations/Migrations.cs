@@ -5,6 +5,23 @@ using FluentMigrator;
 namespace VocaDb.Migrations;
 
 // Migration version format: YYYY_MM_DD_HHmm
+[Migration(2023_06_01_1258)]
+public class AddArtistCultureCodes : Migration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.CultureCodesForArtists)
+			.WithColumn("Id").AsInt32().Identity().PrimaryKey()
+			.WithColumn("ArtistId").AsInt32().NotNullable().ForeignKey(TableNames.Artists, "Id")
+			.WithColumn("CultureCode").AsString(3).NotNullable().WithDefaultValue(string.Empty);
+	}
+
+	public override void Down()
+	{
+	}
+
+}
+
 [Migration(2023_05_28_1150)]
 public class MigrateCultureCodes : Migration
 {
@@ -23,6 +40,7 @@ public class MigrateCultureCodes : Migration
 	}
 
 }
+
 [Migration(2023_05_27_0550)]
 public class SongCultureCode : Migration
 {

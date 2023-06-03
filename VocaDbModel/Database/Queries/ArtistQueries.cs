@@ -743,6 +743,13 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			if (webLinkDiff.Changed)
 				diff.WebLinks.Set();
 
+			var newCultureCodes = properties.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
+			if (!artist.CultureCodes.SequenceEqual(newCultureCodes))
+			{
+				artist.CultureCodes = newCultureCodes;
+				diff.CultureCodes.Set();
+			}
+
 			if (diff.ArtistType.IsChanged || diff.Names.IsChanged || diff.OriginalName.IsChanged)
 			{
 				foreach (var song in artist.Songs)
