@@ -4,6 +4,9 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{{title}}</title>
+		<meta name="description" content="{{summarizedDescription}}" />
+		<meta name="keywords" content="{{keywords}}" />
+		<meta name="og:image" content="{{ogImage}}"/>
 		<link rel="shortcut icon" href="/Content/favicon.ico" type="image/x-icon" />
 		<!-- TODO: Remove. -->
 		<link rel="stylesheet" href="/Scripts/jqwidgets27/styles/jqx.base.css" />
@@ -13,6 +16,7 @@
 			title="VocaDB"
 			href="/opensearch.xml"
 		/>
+		<link rel="search" type="application/opensearchdescription+xml" title="{{siteName}}" href="{{osPath}}" />
 	</head>
 	<body>
 		<div id="app" class="vdb"></div>
