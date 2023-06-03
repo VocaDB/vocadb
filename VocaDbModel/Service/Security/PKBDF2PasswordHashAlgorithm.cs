@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 namespace VocaDb.Model.Service.Security;
 
 /// <summary>
-/// Password hashing using HMAC-SHA1.
+/// Password hashing using PKBDF2 - HMAC-SHA256.
 /// </summary>
-/// <remarks>
-/// HMIC = HMAC with 3939 iterations.
-/// </remarks>
 public class PKBDF2PasswordHashAlgorithm : IPasswordHashAlgorithm
 {
 	public PasswordHashAlgorithmType AlgorithmType => PasswordHashAlgorithmType.PKBDF2;
