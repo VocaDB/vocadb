@@ -36,7 +36,6 @@ public class SongController : ControllerBase
 {
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 	private readonly MarkdownParser _markdownParser;
-	private readonly ReactIndex _reactIndex;
 	private readonly SongQueries _queries;
 	private readonly SongService _service;
 	private readonly SongListQueries _songListQueries;
@@ -52,7 +51,6 @@ public class SongController : ControllerBase
 		MarkdownParser markdownParser,
 		PVHelper pvHelper,
 		BrandableStringsManager brandableStringsManager,
-		ReactIndex reactIndex
 	)
 	{
 		_service = service;
@@ -61,7 +59,6 @@ public class SongController : ControllerBase
 		_markdownParser = markdownParser;
 		_pvHelper = pvHelper;
 		_brandableStringsManager = brandableStringsManager;
-		_reactIndex = reactIndex;
 	}
 
 	// Used from the song page
