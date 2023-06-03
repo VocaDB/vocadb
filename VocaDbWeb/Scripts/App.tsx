@@ -16,7 +16,6 @@ const NewApp = React.lazy(() => import('./NewApp'));
 const OldApp = React.lazy(() => import('./OldApp'));
 
 const InnerAppChooser = (): React.ReactElement => {
-	const vdb = useVdb();
 	const beta_enabled = localStorage.getItem('new_beta');
 
 	if (beta_enabled === 'true') {
