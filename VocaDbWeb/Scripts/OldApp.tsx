@@ -1,5 +1,4 @@
 import AppRoutes from '@/AppRoutes';
-import '@/ArrayExtensions';
 import Container from '@/Bootstrap/Container';
 import { AboutDisclaimer } from '@/Components/Shared/Partials/AboutDisclaimer';
 import { Header } from '@/Components/Shared/Partials/Header';

@@ -1,11 +1,11 @@
 import '@/ArrayExtensions';
+// TODO: Remove
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { Compose } from '@/Compose';
 import { LoginManagerProvider } from '@/LoginManagerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
-import { VdbProvider, useVdb } from '@/VdbContext';
+import { VdbProvider } from '@/VdbContext';
 import '@/i18n';
-import '@/styles/css.less';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import React, { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
