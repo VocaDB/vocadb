@@ -9,6 +9,6 @@ public class DiscussionController : ControllerBase
 	{
 		PageProperties.Title = "Discussions";
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }

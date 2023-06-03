@@ -6,6 +6,6 @@ public class PlaylistController : ControllerBase
 {
 	public IActionResult Index()
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }

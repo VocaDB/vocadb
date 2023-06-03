@@ -843,6 +843,6 @@ public class StatsController : ControllerBase
 	{
 		PageProperties.Title = "Statistics / Reports";
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }

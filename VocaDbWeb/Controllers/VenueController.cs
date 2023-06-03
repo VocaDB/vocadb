@@ -34,14 +34,14 @@ public class VenueController : ControllerBase
 		PageProperties.Description = descriptionStripped;
 		PageProperties.Robots = venue.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 #nullable enable
 	[Authorize]
 	public ActionResult Edit(int? id)
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 #nullable disable
 
@@ -59,7 +59,7 @@ public class VenueController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult ViewVersion(int id, int? ComparedVersionId)
@@ -69,6 +69,6 @@ public class VenueController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }

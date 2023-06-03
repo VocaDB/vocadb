@@ -170,13 +170,13 @@ public class SongController : ControllerBase
 
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return _reactIndex.File(prop);
+		return ReactIndex.File(prop);
 	}
 
 	[Authorize]
 	public ActionResult Create(string pvUrl)
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	//
@@ -184,7 +184,7 @@ public class SongController : ControllerBase
 	[Authorize]
 	public ActionResult Edit(int id, int? albumId = null)
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	[HttpPost]
@@ -267,7 +267,7 @@ public class SongController : ControllerBase
 
 	public ActionResult Merge()
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	/// <summary>
@@ -342,12 +342,12 @@ public class SongController : ControllerBase
 	{
 		PageProperties.Title = _brandableStringsManager.Song.RankingsTitle;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Related(int id = InvalidId)
 	{
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Restore(int id)
@@ -410,7 +410,7 @@ public class SongController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult ViewVersion(int id, int? ComparedVersionId)
@@ -420,6 +420,6 @@ public class SongController : ControllerBase
 		PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }

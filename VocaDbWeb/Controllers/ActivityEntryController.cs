@@ -25,7 +25,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = "New activity by followed artists";
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 
 	//
@@ -37,7 +37,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = Resources.Views.ActivityEntry.IndexStrings.RecentActivity;
 
-		return _reactIndex.File(PageProperties);
+		return ReactIndex.File(PageProperties);
 	}
 }
 

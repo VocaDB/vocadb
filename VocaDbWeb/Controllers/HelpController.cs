@@ -25,7 +25,7 @@ public class HelpController : ControllerBase
 	public ActionResult Index()
 	{
 		if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
-			return _reactIndex.File(PageProperties);
+			return ReactIndex.File(PageProperties);
 
 		ViewBag.FreeTagId = _config.SpecialTags.Free;
 		ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
@@ -35,17 +35,17 @@ public class HelpController : ControllerBase
 			case "ja":
 				PageProperties.Title = "サポート / DBについて";
 
-				return _reactIndex.File(PageProperties);
+				return ReactIndex.File(PageProperties);
 
 			case "zh":
 				PageProperties.Title = "Help / About";
 
-				return _reactIndex.File(PageProperties);
+				return ReactIndex.File(PageProperties);
 
 			default:
 				PageProperties.Title = "Help / About";
 
-				return _reactIndex.File(PageProperties);
+				return ReactIndex.File(PageProperties);
 		}
 	}
 }
