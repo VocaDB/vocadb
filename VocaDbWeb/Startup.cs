@@ -39,7 +39,7 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
-using Prometheus;
+using OpenTelemetry.Metrics;
 
 namespace VocaDb.Web;
 
@@ -118,6 +118,12 @@ public class Startup
 			});
 
 		services.AddLaravelMix();
+
+		services.AddOpenTelemetry()
+			.WithMetrics(b => b.AddAspNetCoreInstrumentation()
+				.AddRuntimeInstrumentation()
+				.AddProcessInstrumentation()
+				.AddPrometheusExporter());
 
 		services.AddCors(options =>
 		{
@@ -296,8 +302,6 @@ public class Startup
 
 		app.UseResponseCaching();
 
-		app.UseHttpMetrics();
-
 		// Code from: https://stackoverflow.com/questions/54271639/how-can-i-redirect-a-user-when-a-specific-exception-is-cought-with-asp-net-core/54275293#54275293
 		app.Use(async (context, next) =>
 		{
@@ -364,7 +368,8 @@ public class Startup
 				pattern: "{controller=Home}/{action=Index}/{id?}"
 			);
 
-			endpoints.MapMetrics();
 		});
+
+		app.UseOpenTelemetryPrometheusScrapingEndpoint();
 	}
 }
