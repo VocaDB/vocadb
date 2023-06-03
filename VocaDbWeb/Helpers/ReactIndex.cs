@@ -43,6 +43,19 @@ public class ReactIndex
 		tags.Append(NewOpenGraphMetaTag("og:description", properties.OpenGraph.Description));
 		tags.Append(NewOpenGraphMetaTag("og:type", properties.OpenGraph.Type));
 
+		if (properties.OpenGraph.ShowTwitterCard && !string.IsNullOrEmpty(properties.OpenGraph.Title) && !string.IsNullOrEmpty(properties.OpenGraph.Description))
+		{
+			tags.Append("<meta name=\"twitter:card\" content=\"summary\" />")
+				.AppendFormat("<meta name=\"twitter:site\" content=\"@{0}\" />", _config.SiteSettings.TwitterAccountName)
+				.AppendFormat("<meta name=\"twitter:title\" content=\"{0}\" />", properties.OpenGraph.Title)
+				.AppendFormat("<meta name=\"twitter:description\" content=\"{0}\" />", properties.OpenGraph.Description);
+
+			if (!string.IsNullOrEmpty(properties.OpenGraph.Image))
+			{
+				tags.AppendFormat("<meta name=\"twitter:image\" content=\"{0}\" />", properties.OpenGraph.Image);
+			}
+		}
+
 		return tags.ToString();
 	}
 
@@ -54,7 +67,7 @@ public class ReactIndex
 
 		// Read the content of index.html file
 		var content = System.IO.File.ReadAllText(filePath)
-			.Replace("{{title}}", (!string.IsNullOrEmpty(properties.PageTitle) ? properties.PageTitle + "-" : "") + _brandableStrings.SiteTitle)
+			.Replace("{{title}}", (!string.IsNullOrEmpty(properties.PageTitle) ? properties.PageTitle + " - " : "") + _brandableStrings.SiteTitle)
 			.Replace("{{summarizedDescription}}", properties.SummarizedDescription)
 			.Replace("{{keywords}}", _brandableStrings.Layout.Keywords)
 			.Replace("{{ogImage}}", properties.OpenGraph.Image)
