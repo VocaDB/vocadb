@@ -71,7 +71,7 @@ public class SongListController : ControllerBase
 		PageProperties.Description = descriptionStripped;
 		PageProperties.Robots = viewModel.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 
 #nullable enable
@@ -80,7 +80,7 @@ public class SongListController : ControllerBase
 	[Authorize]
 	public ActionResult Edit(int? id)
 	{
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 #nullable disable
 
@@ -102,7 +102,7 @@ public class SongListController : ControllerBase
 
 		PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;
 
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 
 	[Authorize]
@@ -110,7 +110,7 @@ public class SongListController : ControllerBase
 	{
 		PageProperties.Title = Resources.Views.SongList.ImportStrings.Title;
 
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 
 	public ActionResult Versions(int id = InvalidId)
@@ -126,6 +126,6 @@ public class SongListController : ControllerBase
 		PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 		PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 }

@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers;
 
@@ -24,7 +25,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = "New activity by followed artists";
 
-		return File("index.html", "text/html");
+		return _reactIndex.File(PageProperties);
 	}
 
 	//
@@ -36,7 +37,7 @@ public class ActivityEntryController : ControllerBase
 
 		PageProperties.Title = Resources.Views.ActivityEntry.IndexStrings.RecentActivity;
 
-		return File("index.html", "text/html");
+		return _reactIndex.File(PageProperties);
 	}
 }
 

@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Controllers;
 
-public class PlaylistController : Controller
+public class PlaylistController : ControllerBase
 {
 	public IActionResult Index()
 	{
-		return File("index.html", "text/html") ;
+		return _reactIndex.File(PageProperties);
 	}
 }

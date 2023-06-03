@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
 using VocaDb.Web.Code;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers;
 
@@ -27,13 +28,13 @@ public class CommentController : ControllerBase
 			PageProperties.Title = "Comments - " + user.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return File("index.html", "text/html") ;
+			return _reactIndex.File(PageProperties);
 		}
 		else
 		{
 			PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
 
-			return File("index.html", "text/html") ;
+			return _reactIndex.File(PageProperties);
 		}
 	}
 }
