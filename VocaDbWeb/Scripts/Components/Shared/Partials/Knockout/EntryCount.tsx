@@ -22,7 +22,7 @@ export const EntryCount = observer(
 			<Dropdown>
 				<Dropdown.Toggle as={SafeAnchor}>
 					{t('ViewRes.Search:Index.ShowingItemsOf', {
-						0: pagingStore.pageSize,
+						0: Math.min(pagingStore.pageSize, pagingStore.totalItems),
 						1: pagingStore.totalItems,
 					})}
 				</Dropdown.Toggle>
