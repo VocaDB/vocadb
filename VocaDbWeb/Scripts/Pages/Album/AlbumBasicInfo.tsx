@@ -27,6 +27,7 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
 import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
@@ -111,6 +112,7 @@ interface AlbumBasicInfoProps {
 const AlbumBasicInfo = observer(
 	({ model, albumDetailsStore }: AlbumBasicInfoProps): React.ReactElement => {
 		const loginManager = useLoginManager();
+		const { getCodeDescription } = useCultureCodes();
 
 		const { t } = useTranslation([
 			'Resources',
@@ -118,6 +120,14 @@ const AlbumBasicInfo = observer(
 			'ViewRes.Album',
 			'VocaDb.Model.Resources.Albums',
 		]);
+
+		const codeMap = model.cultureCodes
+			.map((l) => getCodeDescription(l)?.englishName ?? '')
+			.filter((l) => l !== '')
+			.groupBy((l) => l);
+		const languages = Object.keys(codeMap)
+			.map((key) => `${key} (${codeMap[key].length})`)
+			.join(', ');
 
 		return (
 			<AlbumDetailsTabs
@@ -414,6 +424,13 @@ const AlbumBasicInfo = observer(
 									<td>
 										<EventLink event={model.releaseEvent} tooltip />
 									</td>
+								</tr>
+							)}
+
+							{model.cultureCodes.length > 0 && (
+								<tr>
+									<td>{t('ViewRes.Album:Details.Languages')}</td>
+									<td>{languages}</td>
 								</tr>
 							)}
 

@@ -1,4 +1,6 @@
+import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { SongAutoComplete } from '@/Components/KnockoutExtensions/SongAutoComplete';
@@ -32,12 +34,16 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import {
+	CsvData,
+	SongInListEditStore,
+	SongListEditStore,
+} from '@/Stores/SongList/SongListEditStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
@@ -197,6 +203,128 @@ const PropertiesTabContent = observer(
 	},
 );
 
+interface SongListDifference {
+	songsAdded: number;
+	songsRemoved: number;
+	songsUpdated: number;
+}
+
+const calcCsvDifference = (
+	store: SongListEditStore,
+	csvData: CsvData[] | null,
+): SongListDifference => {
+	let difference: SongListDifference = {
+		songsAdded: 0,
+		songsRemoved: 0,
+		songsUpdated: 0,
+	};
+
+	if (!csvData) {
+		return difference;
+	}
+
+	const previousSongs = store.songLinks.reduce(
+		(map: { [id: number]: SongInListEditStore }, obj: SongInListEditStore) => {
+			map[obj.song.id] = obj;
+			return map;
+		},
+		{},
+	);
+
+	const newSongs = csvData.reduce(
+		(map: { [id: number]: CsvData }, obj: CsvData) => {
+			map[obj.id] = obj;
+			return map;
+		},
+		{},
+	);
+
+	difference.songsAdded = csvData.filter(
+		(s) => !(s.id in previousSongs),
+	).length;
+	difference.songsRemoved = store.songLinks.filter(
+		(s) => !(s.song.id in newSongs),
+	).length;
+	difference.songsUpdated = store.songLinks.filter((s) => {
+		const id = Number(s.song.id);
+		return (
+			id in newSongs &&
+			(newSongs[id].notes !== previousSongs[id].notes ||
+				newSongs[id].order !== previousSongs[id].order)
+		);
+	}).length;
+
+	return difference;
+};
+
+const verifyCsv = (data: string): boolean => {
+	const orderIds: number[] = [];
+	const formats = data
+		.split('\n')
+		.filter((r) => r !== '')
+		.map((row, index) => {
+			let ret = true;
+			let cols = row.split(',');
+
+			if (isNaN(Number(cols[0]))) {
+				ret = false;
+			} else {
+				orderIds.push(Number(cols[0]));
+			}
+
+			if (isNaN(Number(cols[1]))) {
+				ret = false;
+			}
+
+			if (cols[2] === undefined) {
+				ret = false;
+			}
+
+			return ret ? ret : index === 0;
+		})
+		.every(Boolean);
+
+	orderIds.sort((a, b) => a - b);
+	const unique = new Set(orderIds).size === orderIds.length; // Checks for duplicate order attributes
+	const allOrderIds = orderIds[0] + orderIds.length - 1 === orderIds.at(-1); // Checks that order attributes are continous
+	const startsAt1 = orderIds[0] === 1; // Checks that order ids start at 1
+
+	return formats && unique && allOrderIds && startsAt1;
+};
+
+interface CsvDifferenceAlertProps {
+	store: SongListEditStore;
+	data: CsvData[] | null;
+}
+
+const CsvDifferenceAlert = ({
+	store,
+	data,
+}: CsvDifferenceAlertProps): React.ReactElement => {
+	const diff = calcCsvDifference(store, data);
+	const pluralize = (count: number, suffix = 's'): string =>
+		`${count} Song${count !== 1 ? suffix : ''}`;
+
+	if (data === null) {
+		return <></>;
+	}
+
+	if (diff.songsAdded + diff.songsRemoved + diff.songsUpdated === 0) {
+		return <Alert variant="success">No changes</Alert>;
+	}
+
+	return (
+		<Alert variant="warning">
+			<b>CSV update statistics:</b>
+			<ul>
+				<li>{pluralize(diff.songsAdded)} added</li>
+				<li>{pluralize(diff.songsRemoved)} removed</li>
+				<li>{pluralize(diff.songsUpdated)} updated</li>
+			</ul>
+		</Alert>
+	);
+};
+
 interface SongsTabContentProps {
 	songListEditStore: SongListEditStore;
 }
@@ -204,62 +332,177 @@ interface SongsTabContentProps {
 const SongsTabContent = observer(
 	({ songListEditStore }: SongsTabContentProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.SongList']);
+		const fileInputRef = useRef<HTMLInputElement | null>(null);
+		const [csvData, setCsvData] = useState<string | null>(null);
+
+		const validCsv = csvData ? verifyCsv(csvData) : true;
+
+		const parsedCsvData = !csvData
+			? null
+			: csvData
+					.split('\n')
+					.filter((r) => r !== '')
+					.map((r) => r.split(','))
+					.map((r) => ({
+						order: Number(r[0]),
+						id: Number(r[1]),
+						notes: r[2],
+					}))
+					.filter((r) => !isNaN(r.order))
+					.sort((a, b) => a.order - b.order); // Filter potential header row
+
+		const applyCsv = (): void => {
+			if (!csvData || !parsedCsvData) {
+				return;
+			}
+
+			songListEditStore.importCsvData(parsedCsvData);
+		};
 
 		return (
 			<>
+				<div>
+					<input
+						onChange={(e): void => {
+							if (e.target.files === null) {
+								return;
+							}
+							let reader = new FileReader();
+							reader.readAsText(e.target.files[0]);
+							reader.onloadend = (): void => {
+								setCsvData(reader.result as string);
+							};
+						}}
+						type="file"
+						ref={fileInputRef}
+						accept=".csv"
+						hidden
+					/>
+					<Button onClick={(): void => fileInputRef.current?.click()}>
+						{t('ViewRes:Shared.ImportCsv')}
+					</Button>
+					{csvData && validCsv && (
+						<>
+							{' '}
+							<Button variant="primary" onClick={(): void => applyCsv()}>
+								{t('ViewRes:Shared.ApplyCsv')}
+							</Button>
+						</>
+					)}
+				</div>
+				<br />
+				{validCsv && (
+					<CsvDifferenceAlert store={songListEditStore} data={parsedCsvData} />
+				)}
+				{!validCsv && <Alert variant="error">Invalid CSV {/* LOC */}</Alert>}
+				<br />
 				<table>
-					<ReactSortable
-						tag="tbody"
-						list={songListEditStore.songLinks}
-						setList={(songLinks): void =>
-							runInAction(() => {
-								songListEditStore.songLinks = songLinks;
-							})
-						}
-						handle=".handle"
-					>
-						{songListEditStore.songLinks.map((songLink, index) => (
-							<tr className="ui-state-default" key={index}>
-								<td style={{ cursor: 'move' }} className="handle">
-									<span className="ui-icon ui-icon-arrowthick-2-n-s" />
-								</td>
-								<td>
-									<span>{songLink.order}</span>
-								</td>
-								<td>
-									<span title={songLink.song.additionalNames}>
-										{songLink.song.name}
-									</span>
-									<br />
-									<span className="extraInfo">
-										{songLink.song.artistString}
-									</span>
-								</td>
-								<td>
-									<input
-										type="text"
-										value={songLink.notes}
-										onChange={(e): void =>
-											runInAction(() => {
-												songLink.notes = e.target.value;
-											})
-										}
-										maxLength={200}
-									/>
-								</td>
-								<td>
-									<SafeAnchor
-										href="#"
-										className="iconLink removeLink"
-										title={t('ViewRes.SongList:Edit.RemoveFromList')}
-										onClick={(): void => songListEditStore.removeSong(songLink)}
-									>
-										{t('ViewRes:Shared.Remove')}
-									</SafeAnchor>
-								</td>
-							</tr>
-						))}
-					</ReactSortable>
+					{songListEditStore.csvData && (
+						<ReactSortable
+							tag="tbody"
+							list={songListEditStore.csvData}
+							setList={(csvData): void =>
+								runInAction(() => {
+									songListEditStore.csvData = csvData;
+								})
+							}
+							handle=".handle"
+						>
+							{songListEditStore.csvData.map((song, index) => (
+								<tr className="ui-state-default" key={index}>
+									<td style={{ cursor: 'move' }} className="handle">
+										<span className="ui-icon ui-icon-arrowthick-2-n-s" />
+									</td>
+									<td>
+										<span>{song.order}</span>
+									</td>
+									<td>
+										<span title="SongId">{'ID: ' + song.id}</span>
+									</td>
+									<td>
+										<input
+											type="text"
+											value={song.notes}
+											onChange={(e): void =>
+												runInAction(() => {
+													song.notes = e.target.value;
+												})
+											}
+											maxLength={200}
+										/>
+									</td>
+									{/* <td>
+										<SafeAnchor
+											href="#"
+											className="iconLink removeLink"
+											title={t('ViewRes.SongList:Edit.RemoveFromList')}
+											onClick={(): void =>
+												songListEditStore.removeSong(songLink)
+											}
+										>
+											{t('ViewRes:Shared.Remove')}
+										</SafeAnchor>
+									</td> */}
+								</tr>
+							))}
+						</ReactSortable>
+					)}
+					{!songListEditStore.csvData && (
+						<ReactSortable
+							tag="tbody"
+							list={songListEditStore.songLinks}
+							setList={(songLinks): void =>
+								runInAction(() => {
+									songListEditStore.songLinks = songLinks;
+								})
+							}
+							handle=".handle"
+						>
+							{songListEditStore.songLinks.map((songLink, index) => (
+								<tr className="ui-state-default" key={index}>
+									<td style={{ cursor: 'move' }} className="handle">
+										<span className="ui-icon ui-icon-arrowthick-2-n-s" />
+									</td>
+									<td>
+										<span>{songLink.order}</span>
+									</td>
+									<td>
+										<span title={songLink.song.additionalNames}>
+											{songLink.song.name}
+										</span>
+										<br />
+										<span className="extraInfo">
+											{songLink.song.artistString}
+										</span>
+									</td>
+									<td>
+										<input
+											type="text"
+											value={songLink.notes}
+											onChange={(e): void =>
+												runInAction(() => {
+													songLink.notes = e.target.value;
+												})
+											}
+											maxLength={200}
+										/>
+									</td>
+									<td>
+										<SafeAnchor
+											href="#"
+											className="iconLink removeLink"
+											title={t('ViewRes.SongList:Edit.RemoveFromList')}
+											onClick={(): void =>
+												songListEditStore.removeSong(songLink)
+											}
+										>
+											{t('ViewRes:Shared.Remove')}
+										</SafeAnchor>
+									</td>
+								</tr>
+							))}
+						</ReactSortable>
+					)}
 				</table>
 
 				<br />

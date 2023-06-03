@@ -75,6 +75,9 @@ public sealed record ArtistForEditForApiContract
 	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
+	[DataMember]
+	public string[] CultureCodes { get; set; }
+
 	public ArtistForEditForApiContract()
 	{
 		AssociatedArtists = Array.Empty<ArtistForArtistContract>();
@@ -85,6 +88,7 @@ public sealed record ArtistForEditForApiContract
 		Pictures = Array.Empty<EntryPictureFileContract>();
 		UpdateNotes = string.Empty;
 		WebLinks = Array.Empty<WebLinkForApiContract>();
+		CultureCodes = Array.Empty<string>();
 	}
 
 	public ArtistForEditForApiContract(
@@ -142,5 +146,6 @@ public sealed record ArtistForEditForApiContract
 			)
 			.Select(g => new ArtistForArtistContract(g, languagePreference))
 			.ToArray();
+		CultureCodes = artist.CultureCodes.Select(c => c.CultureCode).ToArray();
 	}
 }

@@ -84,6 +84,11 @@ public class ArtistMap : ClassMap<Artist>
 			c.HasMany(m => m.Usages).Table("ArtistTagUsages").KeyColumn("[Artist]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 		});
 
+		HasMany(m => m.CultureCodes).Table("CultureCodesForArtists").KeyColumn("ArtistId").Component(c =>
+		{
+			c.Map(m => m.CultureCode).Column("CultureCode").Length(3).Not.Nullable();
+		});
+
 		//HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 		HasMany(m => m.OwnerUsers).Inverse().Cache.ReadWrite();
 		HasMany(m => m.Users).Inverse();

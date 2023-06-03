@@ -26,6 +26,8 @@ import {
 	runInAction,
 } from 'mobx';
 
+import { CultureCodesEditStore } from '../CultureCodesEditStore';
+
 export class ArtistForArtistEditStore {
 	@observable linkType: string /* TODO: enum */;
 	parent: ArtistContract;
@@ -66,6 +68,7 @@ export class ArtistEditStore {
 	@observable validationExpanded = false;
 	readonly voiceProvider: BasicEntryLinkStore<ArtistContract>;
 	readonly webLinks: WebLinksEditStore;
+	readonly cultureCodes: CultureCodesEditStore;
 
 	constructor(
 		private readonly values: GlobalValues,
@@ -120,6 +123,7 @@ export class ArtistEditStore {
 			contract.webLinks,
 			Object.values(WebLinkCategory),
 		);
+		this.cultureCodes = new CultureCodesEditStore(contract.cultureCodes);
 
 		reaction(() => this.newAssociatedArtist.entry, this.addAssociatedArtist);
 	}
@@ -131,8 +135,16 @@ export class ArtistEditStore {
 		);
 	};
 
+	private canHaveCultureCodes = (at: ArtistType): boolean => {
+		return ArtistHelper.isVoiceSynthesizerType(at) || at === ArtistType.Unknown;
+	};
+
 	@computed get allowBaseVoicebank(): boolean {
 		return this.canHaveBaseVoicebank(this.artistType);
+	}
+
+	@computed get allowCultureCodes(): boolean {
+		return this.canHaveCultureCodes(this.artistType);
 	}
 
 	@computed get canHaveCircles(): boolean {
@@ -248,6 +260,9 @@ export class ArtistEditStore {
 					updateNotes: this.updateNotes,
 					voiceProvider: this.voiceProvider.entry,
 					webLinks: this.webLinks.toContracts(),
+					cultureCodes: this.cultureCodes
+						.toContracts()
+						.map((c) => c.toString()),
 				},
 				coverPicUpload,
 				pictureUpload,

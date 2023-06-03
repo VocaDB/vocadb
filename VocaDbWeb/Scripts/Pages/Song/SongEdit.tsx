@@ -398,57 +398,62 @@ const BasicInfoTabContent = observer(
 					/>
 				</div>
 
-				<div className="editor-label">
-					<label>Language(s){/* LOC */}</label>
-				</div>
-				<div className="editor-field">
-					<tbody>
-						{songEditStore.cultureCodes.items.map((c, index) => (
-							<tr key={index}>
-								<UserLanguageCultureDropdownList
-									value={c.toString()}
-									placeholder={t(
-										'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
-									)}
-									extended={songEditStore.cultureCodes.extended}
-									onChange={(val): void => {
-										songEditStore.cultureCodes.items[index] = val.target.value;
-									}}
-									key={index}
-								/>
+				{songEditStore.songType !== SongType.Instrumental && (
+					<>
+						<div className="editor-label">
+							<label>Language(s){/* LOC */}</label>
+						</div>
+						<div className="editor-field">
+							<tbody>
+								{songEditStore.cultureCodes.items.map((c, index) => (
+									<tr key={index}>
+										<UserLanguageCultureDropdownList
+											value={c.toString()}
+											placeholder={t(
+												'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+											)}
+											extended={songEditStore.cultureCodes.extended}
+											onChange={(val): void => {
+												songEditStore.cultureCodes.items[index] =
+													val.target.value;
+											}}
+											key={index}
+										/>
+										<SafeAnchor
+											onClick={(): void => songEditStore.cultureCodes.remove(c)}
+											href="#"
+											className="nameDelete textLink deleteLink"
+										>
+											{t('ViewRes:Shared.Delete')}
+										</SafeAnchor>
+										<br />
+									</tr>
+								))}
+							</tbody>
+							{songEditStore.cultureCodes.items.length < 3 && (
 								<SafeAnchor
-									onClick={(): void => songEditStore.cultureCodes.remove(c)}
 									href="#"
-									className="nameDelete textLink deleteLink"
+									className="textLink addLink"
+									onClick={(): void => songEditStore.cultureCodes.add()}
 								>
-									{t('ViewRes:Shared.Delete')}
+									{t('ViewRes:Shared.Add')}
 								</SafeAnchor>
-								<br />
-							</tr>
-						))}
-					</tbody>
-					{songEditStore.cultureCodes.items.length < 3 && (
-						<SafeAnchor
-							href="#"
-							className="textLink addLink"
-							onClick={(): void => songEditStore.cultureCodes.add()}
-						>
-							{t('ViewRes:Shared.Add')}
-						</SafeAnchor>
-					)}
-					{!songEditStore.cultureCodes.extended &&
-						songEditStore.cultureCodes.items.length > 0 && (
-							<SafeAnchor
-								href="#"
-								className="textLink addLink"
-								onClick={(): void => {
-									songEditStore.cultureCodes.extended = true;
-								}}
-							>
-								{t('ViewRes.Song:Edit.LyExtendLanguages')}{' '}
-							</SafeAnchor>
-						)}
-				</div>
+							)}
+							{!songEditStore.cultureCodes.extended &&
+								songEditStore.cultureCodes.items.length > 0 && (
+									<SafeAnchor
+										href="#"
+										className="textLink addLink"
+										onClick={(): void => {
+											songEditStore.cultureCodes.extended = true;
+										}}
+									>
+										{t('ViewRes:EntryEdit.LyExtendLanguages')}{' '}
+									</SafeAnchor>
+								)}
+						</div>
+					</>
+				)}
 
 				<div className="editor-label">
 					<HelpLabel

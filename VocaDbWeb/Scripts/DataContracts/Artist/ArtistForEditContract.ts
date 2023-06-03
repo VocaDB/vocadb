@@ -28,4 +28,5 @@ export interface ArtistForEditContract {
 	updateNotes: string;
 	voiceProvider?: ArtistContract;
 	webLinks: WebLinkContract[];
+	cultureCodes: string[];
 }

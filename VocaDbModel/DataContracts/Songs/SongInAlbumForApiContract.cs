@@ -34,7 +34,7 @@ public class SongInAlbumForApiContract
 				mergeRecord: null,
 				languagePreference: languagePreference,
 				permissionContext,
-				fields: fields
+				fields: fields | SongOptionalFields.CultureCodes
 			)
 			: null;
 
@@ -43,6 +43,15 @@ public class SongInAlbumForApiContract
 			: songInAlbum.Name;
 
 		Rating = rating;
+
+		ComputedCultureCodes = Song is not null ? Song.CultureCodes : Array.Empty<string>();
+		if (ComputedCultureCodes.Length == 0 && song is not null)
+		{
+			ComputedCultureCodes = song.Lyrics
+				.Where(l => l.TranslationType == TranslationType.Original)
+				.SelectMany(l => l.CultureCodes.Select(c => c.CultureCode))
+				.ToArray();
+		}
 	}
 
 	[DataMember]
@@ -62,4 +71,7 @@ public class SongInAlbumForApiContract
 
 	[DataMember]
 	public int TrackNumber { get; init; }
+
+	[DataMember]
+	public string[] ComputedCultureCodes { get; init; }
 }

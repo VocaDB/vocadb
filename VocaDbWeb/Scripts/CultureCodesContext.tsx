@@ -3,35 +3,46 @@ import React, { useEffect, useState } from 'react';
 import { userLanguageCultures } from './Components/userLanguageCultures';
 
 type CodeDescription = { englishName: string; nativeName: string };
-type Codes = { [k: string]: CodeDescription };
+type Codes = Record<string, CodeDescription>;
 
-const CultureCodesContext = React.createContext<Codes | undefined>(undefined);
+const CultureCodesContext = React.createContext<CultureCodeData | undefined>(
+	undefined,
+);
 
 interface CultureCodesProviderProps {
 	children?: React.ReactNode;
 }
 
+interface CultureCodeData {
+	codes?: Codes;
+	iso639to1?: Record<string, string>;
+}
+
 interface CultureCodeTools {
 	codes?: Codes;
 	getCodeDescription: (code: string) => CodeDescription | undefined;
+	iso639to1?: Record<string, string>;
 }
 
 // Lazily loads extendedUserLanguageCultures
 export const CultureCodesProvider = ({
 	children,
 }: CultureCodesProviderProps): React.ReactElement => {
-	const [cultureCodes, setCultureCodes] = useState<Codes | undefined>(
+	const [codeData, setCodeData] = useState<CultureCodeData | undefined>(
 		undefined,
 	);
 
 	useEffect(() => {
-		import('./Components/extendedUserLanguageCultures').then((resp) =>
-			setCultureCodes(resp.extendedUserLanguageCultures),
-		);
+		import('./Components/extendedUserLanguageCultures').then((resp) => {
+			setCodeData({
+				codes: resp.extendedUserLanguageCultures,
+				iso639to1: resp.iso6393To1,
+			});
+		});
 	}, []);
 
 	return (
-		<CultureCodesContext.Provider value={cultureCodes}>
+		<CultureCodesContext.Provider value={codeData}>
 			{children}
 		</CultureCodesContext.Provider>
 	);
@@ -39,14 +50,12 @@ export const CultureCodesProvider = ({
 
 export const useCultureCodes = (): CultureCodeTools => {
 	const codes = React.useContext(CultureCodesContext);
-
 	const getCodeDescription = (code: string): CodeDescription | undefined => {
-		if (code.length > 2 && code !== 'fil') {
-			return codes === undefined ? undefined : codes[code];
+		if (!(code in userLanguageCultures)) {
+			return codes?.codes === undefined ? undefined : codes.codes[code];
 		}
 
 		return userLanguageCultures[code];
 	};
-
-	return { codes, getCodeDescription };
+	return { ...codes, getCodeDescription };
 };

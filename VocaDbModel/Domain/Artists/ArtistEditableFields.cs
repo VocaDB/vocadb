@@ -31,4 +31,6 @@ public enum ArtistEditableFields
 	Status = 1 << 10,
 
 	WebLinks = 1 << 11,
+
+	CultureCodes = 1 << 12,
 }

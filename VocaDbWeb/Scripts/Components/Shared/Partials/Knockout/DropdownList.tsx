@@ -141,11 +141,13 @@ export const UserLanguageCultureDropdownList = React.memo(
 				{props.placeholder !== undefined && (
 					<option value="">{props.placeholder}</option>
 				)}
-				{Object.entries(cultures).map(([key, value]) => (
-					<option value={key} key={key}>
-						{value.nativeName} ({value.englishName /* LOC */})
-					</option>
-				))}
+				{Object.entries(cultures)
+					.sortBy((c) => c[1].englishName)
+					.map(([key, value]) => (
+						<option value={key} key={key}>
+							{value.nativeName} ({value.englishName /* LOC */})
+						</option>
+					))}
 			</select>
 		);
 	},
