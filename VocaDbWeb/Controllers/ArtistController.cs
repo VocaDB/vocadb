@@ -28,7 +28,6 @@ public class ArtistController : ControllerBase
 	private readonly ArtistQueries _queries;
 	private readonly ArtistService _service;
 	private readonly MarkdownParser _markdownParser;
-	private readonly ReactIndex _reactIndex;
 
 	private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist)
 	{

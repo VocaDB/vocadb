@@ -50,7 +50,7 @@ public class SongController : ControllerBase
 		SongListQueries songListQueries,
 		MarkdownParser markdownParser,
 		PVHelper pvHelper,
-		BrandableStringsManager brandableStringsManager,
+		BrandableStringsManager brandableStringsManager
 	)
 	{
 		_service = service;
