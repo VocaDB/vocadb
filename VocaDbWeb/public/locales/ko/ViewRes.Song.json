@@ -76,8 +76,7 @@
     "ReleaseEvent": "게시 행사",
     "PVUnavailable": "(PV is unavailable)",
     "ViewInfo": "정보 보기",
-    "Bpm": "BPM",
-    "Languages": "Language(s)"
+    "Bpm": "BPM"
   },
   "Edit": {
     "ArActions": "액션",
