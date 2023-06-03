@@ -19,10 +19,7 @@ const InnerAppChooser = (): React.ReactElement => {
 	const vdb = useVdb();
 	const beta_enabled = localStorage.getItem('new_beta');
 
-	if (
-		beta_enabled === 'true' &&
-		vdb.values.loggedUser?.stylesheet === 'new_beta'
-	) {
+	if (beta_enabled === 'true') {
 		return <NewApp />;
 	}
 

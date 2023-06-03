@@ -500,7 +500,6 @@ const InterfaceSettingsTabContent = observer(
 								{parsePath(stylesheet).name}
 							</option>
 						))}
-						<option value="new_beta">New Beta</option>
 					</select>
 				</div>
 			</>
