@@ -208,8 +208,11 @@ const LyricsForSongEdit = observer(
 									lyricsForSongEditStore.cultureCodes[0] === '' &&
 									iso639to1 !== undefined
 								) {
-									lyricsForSongEditStore.cultureCodes[0] =
-										iso639to1[franc(lyricsForSongEditStore.value)];
+									const detectedLang = franc(lyricsForSongEditStore.value);
+									if (detectedLang in iso639to1) {
+										lyricsForSongEditStore.cultureCodes[0] =
+											iso639to1[detectedLang];
+									}
 								}
 							}}
 							className="input-xxlarge withMargin"
