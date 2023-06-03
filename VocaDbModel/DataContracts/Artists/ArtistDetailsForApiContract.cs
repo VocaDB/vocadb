@@ -163,6 +163,9 @@ public sealed record ArtistDetailsForApiContract
 	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
+	[DataMember]
+	public string[] CultureCodes { get; init; }
+
 	public ArtistDetailsForApiContract(
 		Artist artist,
 		ContentLanguagePreference languagePreference,
@@ -263,6 +266,18 @@ public sealed record ArtistDetailsForApiContract
 		}
 		else
 			ChildVoicebanks = Array.Empty<ArtistForApiContract>();
+
+		if (artist.CanHaveCultureCodes)
+		{
+			CultureCodes = artist.CultureCodes
+				.Select(c => c.CultureCode)
+				.OrderBy(c => c)
+				.ToArray();
+		}
+		else
+		{
+			CultureCodes = Array.Empty<string>();
+		}
 
 		Groups = artist
 			.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.ManyToOne)

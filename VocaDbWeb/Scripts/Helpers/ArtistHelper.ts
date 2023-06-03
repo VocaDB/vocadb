@@ -42,6 +42,14 @@ export class ArtistHelper {
 		ArtistType.SynthesizerV,
 	];
 
+	private static voiceSynthesizerTypes = [
+		ArtistType.Vocaloid,
+		ArtistType.UTAU,
+		ArtistType.CeVIO,
+		ArtistType.OtherVoiceSynthesizer,
+		ArtistType.SynthesizerV,
+	];
+
 	static canHaveChildVoicebanks(at?: ArtistType): boolean {
 		if (at == null) return false;
 
@@ -186,6 +194,9 @@ export class ArtistHelper {
 		return ArtistHelper.vocalistTypes.includes(artistType);
 	}
 
+	static isVoiceSynthesizerType(artistType: ArtistType): boolean {
+		return ArtistHelper.voiceSynthesizerTypes.includes(artistType);
+	}
 	// Whether default roles should be used for an artist type and roles combination.
 	// Some artist types do not allow customization. If no custom roles are specified default roles will be used.
 	private static useDefaultRoles(

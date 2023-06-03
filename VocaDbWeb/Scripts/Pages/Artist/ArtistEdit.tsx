@@ -14,6 +14,7 @@ import {
 	LanguageSelectionDropdownList,
 	AssociatedArtistTypeDropdownList,
 	EntryStatusDropdownList,
+	UserLanguageCultureDropdownList,
 } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { EntryValidationMessage } from '@/Components/Shared/Partials/Knockout/EntryValidationMessage';
 import { WebLinksEditViewKnockout } from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
@@ -471,6 +472,66 @@ const BasicInfoTabContent = observer(
 					/>
 				</div>
 
+				{artistEditStore.allowCultureCodes && (
+					<>
+						<div className="editor-label">
+							<label>Language(s){/* LOC */}</label>
+						</div>
+						<div className="editor-field">
+							<tbody>
+								{artistEditStore.cultureCodes.items.map((c, index) => (
+									<tr key={index}>
+										<UserLanguageCultureDropdownList
+											value={c.toString()}
+											placeholder={t(
+												'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+											)}
+											extended={artistEditStore.cultureCodes.extended}
+											onChange={(val): void => {
+												artistEditStore.cultureCodes.items[index] =
+													val.target.value;
+											}}
+											key={index}
+										/>
+										<SafeAnchor
+											onClick={(): void =>
+												artistEditStore.cultureCodes.remove(c)
+											}
+											href="#"
+											className="nameDelete textLink deleteLink"
+										>
+											{t('ViewRes:Shared.Delete')}
+										</SafeAnchor>
+										<br />
+									</tr>
+								))}
+							</tbody>
+							{(artistEditStore.cultureCodes.items.length < 5 ||
+								loginManager.canApproveEntries) && (
+								<SafeAnchor
+									href="#"
+									className="textLink addLink"
+									onClick={(): void => artistEditStore.cultureCodes.add()}
+								>
+									{t('ViewRes:Shared.Add')}
+								</SafeAnchor>
+							)}
+							{!artistEditStore.cultureCodes.extended &&
+								artistEditStore.cultureCodes.items.length > 0 && (
+									<SafeAnchor
+										href="#"
+										className="textLink addLink"
+										onClick={(): void => {
+											artistEditStore.cultureCodes.extended = true;
+										}}
+									>
+										{t('ViewRes:EntryEdit.LyExtendLanguages')}{' '}
+									</SafeAnchor>
+								)}
+						</div>
+					</>
+				)}
+
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.Status')}
@@ -503,7 +564,7 @@ const AdditionalPicturesTabContent = observer(
 	({
 		artistEditStore,
 	}: AdditionalPicturesTabContentProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Artist']);
+		const { t } = useTranslation(['ViewRes.Artist', 'VocaDb.Model.Resources']);
 
 		return (
 			<>

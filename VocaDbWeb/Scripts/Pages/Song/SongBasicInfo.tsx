@@ -31,7 +31,6 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { TranslationType } from '@/Models/Globalization/TranslationType';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -417,7 +416,7 @@ const SongBasicInfo = observer(
 
 						{cultureCodes && (
 							<tr>
-								<td>{t('ViewRes.Song:Details.Languages')}</td>
+								<td>{t('ViewRes:EntryDetails.Languages')}</td>
 								<td>
 									{cultureCodes
 										.map(

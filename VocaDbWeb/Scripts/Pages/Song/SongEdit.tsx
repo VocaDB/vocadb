@@ -448,7 +448,7 @@ const BasicInfoTabContent = observer(
 											songEditStore.cultureCodes.extended = true;
 										}}
 									>
-										{t('ViewRes.Song:Edit.LyExtendLanguages')}{' '}
+										{t('ViewRes:EntryEdit.LyExtendLanguages')}{' '}
 									</SafeAnchor>
 								)}
 						</div>
