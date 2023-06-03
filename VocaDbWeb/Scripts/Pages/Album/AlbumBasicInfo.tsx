@@ -121,6 +121,14 @@ const AlbumBasicInfo = observer(
 			'VocaDb.Model.Resources.Albums',
 		]);
 
+		const codeMap = model.cultureCodes
+			.map((l) => getCodeDescription(l)?.englishName ?? '')
+			.filter((l) => l !== '')
+			.groupBy((l) => l);
+		const languages = Object.keys(codeMap)
+			.map((key) => `${key} (${codeMap[key].length})`)
+			.join(', ');
+
 		return (
 			<AlbumDetailsTabs
 				model={model}
@@ -422,12 +430,7 @@ const AlbumBasicInfo = observer(
 							{model.cultureCodes.length > 0 && (
 								<tr>
 									<td>{t('ViewRes.Album:Details.Languages')}</td>
-									<td>
-										{model.cultureCodes
-											.map((l) => getCodeDescription(l)?.englishName ?? '')
-											.filter((l) => l !== '')
-											.join(', ')}
-									</td>
+									<td>{languages}</td>
 								</tr>
 							)}
 
