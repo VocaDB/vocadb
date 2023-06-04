@@ -243,4 +243,24 @@ public static class ArtistQueryableExtensions
 	{
 		return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 	}
+
+	public static IQueryable<Artist> WhereHasLanguage(this IQueryable<Artist> query, string? language)
+	{
+		if (language == null)
+		{
+			return query;
+		}
+
+		return query.Where(s => s.CultureCodes.Any(c => c.CultureCode == language));
+	}
+
+	public static IQueryable<Artist> WhereHasLanguages(this IQueryable<Artist> query, string[]? languages)
+	{
+		if (languages == null || !languages.Any())
+		{
+			return query;
+		}
+
+		return languages.Aggregate(query, WhereHasLanguage);
+	}
 }

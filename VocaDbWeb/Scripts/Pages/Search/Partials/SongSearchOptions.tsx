@@ -245,10 +245,10 @@ const SongSearchOptions = observer(
 					</div>
 					<div className="controls">
 						<UserLanguageCultureDropdownList
-							value={songSearchStore.language}
+							value={songSearchStore.languages}
 							placeholder="(Show all)"
 							onChange={(e): void => {
-								songSearchStore.language = e.target.value;
+								songSearchStore.languages = [e.target.value];
 							}}
 						/>
 					</div>

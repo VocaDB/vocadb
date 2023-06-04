@@ -189,6 +189,7 @@ export class ArtistRepository
 		fields,
 		status,
 		advancedFilters,
+		languages,
 	}: {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
@@ -202,6 +203,7 @@ export class ArtistRepository
 		fields?: ArtistOptionalField[];
 		status?: string;
 		advancedFilters?: AdvancedSearchFilter[];
+		languages?: string[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
 		var data = {
@@ -220,6 +222,7 @@ export class ArtistRepository
 			followedByUserId: followedByUserId,
 			status: status,
 			advancedFilters: advancedFilters,
+			languages,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<ArtistContract>>(

@@ -36,7 +36,8 @@ public class ArtistSearch
 			.WhereIdIs(parsedQuery.Id)
 			.WhereIsFollowedByUser(queryParams.UserFollowerId)
 			.WhereAllowBaseVoicebanks(queryParams.AllowBaseVoicebanks)
-			.WhereMatchFilters(queryParams.AdvancedFilters);
+			.WhereMatchFilters(queryParams.AdvancedFilters)
+			.WhereHasLanguages(queryParams.Languages);
 
 		return query;
 	}

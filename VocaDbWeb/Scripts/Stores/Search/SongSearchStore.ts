@@ -87,7 +87,7 @@ export interface SongSearchRouteParams {
 	tagId?: number | number[];
 	unifyEntryTypesAndTags?: boolean;
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
-	language?: string;
+	languages?: string[];
 }
 
 const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
@@ -120,7 +120,7 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 	'maxMilliBpm',
 	'minLength',
 	'maxLength',
-	'language',
+	'languages',
 ];
 
 export class SongSearchStore
@@ -145,7 +145,7 @@ export class SongSearchStore
 	readonly maxBpmFilter = new SongBpmFilter();
 	readonly minLengthFilter = new SongLengthFilter();
 	readonly maxLengthFilter = new SongLengthFilter();
-	@observable language?: string = undefined;
+	@observable languages?: string[] = undefined;
 
 	constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -257,7 +257,7 @@ export class SongSearchStore
 			maxLength: this.maxLengthFilter.length
 				? this.maxLengthFilter.length
 				: undefined,
-			language: this.language,
+			languages: this.languages,
 		};
 	}
 
@@ -337,7 +337,7 @@ export class SongSearchStore
 			tagId: this.tagIds,
 			unifyEntryTypesAndTags: this.unifyEntryTypesAndTags,
 			viewMode: this.viewMode,
-			language: this.language,
+			languages: this.languages,
 		};
 	}
 	set locationState(value: SongSearchRouteParams) {
