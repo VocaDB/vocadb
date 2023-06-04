@@ -64,7 +64,7 @@ export const useCultureCodes = (): CultureCodeTools => {
 		if (code === '') {
 			return [];
 		}
-		if (code in userLanguageCultureFamilies) {
+		if (!extended && code in userLanguageCultureFamilies) {
 			//@ts-ignore
 			return [code, ...userLanguageCultureFamilies[code]];
 		}

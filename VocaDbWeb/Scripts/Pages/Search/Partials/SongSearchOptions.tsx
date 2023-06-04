@@ -1,3 +1,4 @@
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
@@ -248,12 +249,38 @@ const SongSearchOptions = observer(
 					</div>
 					<div className="controls">
 						<UserLanguageCultureDropdownList
-							value={songSearchStore.languages}
+							value={
+								songSearchStore.languages
+									? songSearchStore.languages[0]
+									: undefined
+							}
 							placeholder="(Show all)"
+							extended={songSearchStore.languagesExtended}
 							onChange={(e): void => {
-								songSearchStore.languages = getCodeGroup(e.target.value);
+								songSearchStore.languages = getCodeGroup(
+									e.target.value,
+									songSearchStore.languagesExtended,
+								);
 							}}
 						/>
+						{!songSearchStore.languagesExtended && (
+							<SafeAnchor
+								onClick={(): void => {
+									songSearchStore.languagesExtended = true;
+									// Required for a refresh of the results
+									if (songSearchStore.languages) {
+										songSearchStore.languages = getCodeGroup(
+											songSearchStore.languages[0],
+											songSearchStore.languagesExtended,
+										);
+									}
+								}}
+								href="#"
+								className="textLink addLink"
+							>
+								{t('ViewRes:EntryEdit.LyExtendLanguages')}
+							</SafeAnchor>
+						)}
 					</div>
 				</div>
 

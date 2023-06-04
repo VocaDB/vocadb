@@ -146,6 +146,7 @@ export class SongSearchStore
 	readonly minLengthFilter = new SongLengthFilter();
 	readonly maxLengthFilter = new SongLengthFilter();
 	@observable languages?: string[] = undefined;
+	@observable languagesExtended: boolean = false;
 
 	constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -382,7 +383,11 @@ export class SongSearchStore
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
-		if (!event.popState && clearResults) this.paging.goToFirstPage();
+		if (!event.popState && clearResults) {
+			this.paging.goToFirstPage();
+		} else {
+			this.languagesExtended = false;
+		}
 
 		this.updateResults(clearResults);
 	};
