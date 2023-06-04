@@ -1,18 +1,18 @@
 {
   "Index": {
-    "Author": "Author",
-    "Comments": "Comments",
-    "Created": "Created",
-    "Discussions": "Discussions",
-    "DoPost": "Post",
-    "Folder": "Folder",
+    "Author": "作者",
+    "Comments": "评论",
+    "Created": "创建",
+    "Discussions": "讨论区",
+    "DoPost": "发布",
+    "Folder": "文件夹",
     "LastComment": "Last comment",
     "LastTopic": "Last topic",
-    "PostContent": "Content",
-    "Preview": "Preview",
-    "RecentTopics": "Recent topics",
-    "Topic": "Topic",
-    "Topics": "Topics",
-    "WriteNewPost": "Write a new post"
+    "PostContent": "内容",
+    "Preview": "预览",
+    "RecentTopics": "近期话题",
+    "Topic": "话题",
+    "Topics": "话题",
+    "WriteNewPost": "发起新话题"
   }
 }

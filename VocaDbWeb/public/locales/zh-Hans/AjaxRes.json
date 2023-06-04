@@ -3,7 +3,7 @@
     "AddedToCollection": "添加到收藏。",
     "AddToTracks": "添加到曲目列表",
     "RemoveFromTracks": "从曲目列表中移除",
-    "AddNewSong": "Add new song called '{{0}}'",
+    "AddNewSong": "添加名为“{{0}}”的新曲目",
     "Download": "下载"
   },
   "EntryIndex": {
@@ -14,7 +14,7 @@
     "TitleFilter": "标题'{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Add custom artist named '{0}'",
+    "AddExtraArtist": "添加名为 '{0}'的自定义艺人",
     "ReportSent": "报告发送成功。谢谢你",
     "Save": "保存",
     "ThanksForRating": "感谢评分！",
