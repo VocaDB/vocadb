@@ -268,7 +268,10 @@ const SongSearchOptions = observer(
 								onClick={(): void => {
 									songSearchStore.languagesExtended = true;
 									// Required for a refresh of the results
-									if (songSearchStore.languages) {
+									if (
+										songSearchStore.languages &&
+										songSearchStore.languages.length > 0
+									) {
 										songSearchStore.languages = getCodeGroup(
 											songSearchStore.languages[0],
 											songSearchStore.languagesExtended,
