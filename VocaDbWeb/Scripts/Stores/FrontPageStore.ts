@@ -2,7 +2,6 @@ import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import type { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { NewsListStore } from '@/Stores/NewsListStore';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
@@ -49,7 +48,6 @@ export class FrontPagePVPlayerStore {
 }
 
 export class FrontPageStore {
-	readonly newsListStore: NewsListStore;
 	readonly pvPlayerStore: FrontPagePVPlayerStore;
 
 	constructor(
@@ -57,7 +55,6 @@ export class FrontPageStore {
 		userRepo: UserRepository,
 		data: FrontPageContract,
 	) {
-		this.newsListStore = new NewsListStore(values.blogUrl);
 		this.pvPlayerStore = new FrontPagePVPlayerStore(values, userRepo, data);
 	}
 }
