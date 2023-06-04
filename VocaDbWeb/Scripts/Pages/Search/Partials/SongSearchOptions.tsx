@@ -1,9 +1,11 @@
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
@@ -25,6 +27,8 @@ const SongSearchOptions = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+
+		const { getCodeGroup } = useCultureCodes();
 
 		return (
 			<div>
@@ -245,12 +249,41 @@ const SongSearchOptions = observer(
 					</div>
 					<div className="controls">
 						<UserLanguageCultureDropdownList
-							value={songSearchStore.languages}
+							value={
+								songSearchStore.languages
+									? songSearchStore.languages[0]
+									: undefined
+							}
 							placeholder="(Show all)"
+							extended={songSearchStore.languagesExtended}
 							onChange={(e): void => {
-								songSearchStore.languages = [e.target.value];
+								songSearchStore.languages = getCodeGroup(
+									e.target.value,
+									songSearchStore.languagesExtended,
+								);
 							}}
 						/>
+						{!songSearchStore.languagesExtended && (
+							<SafeAnchor
+								onClick={(): void => {
+									songSearchStore.languagesExtended = true;
+									// Required for a refresh of the results
+									if (
+										songSearchStore.languages &&
+										songSearchStore.languages.length > 0
+									) {
+										songSearchStore.languages = getCodeGroup(
+											songSearchStore.languages[0],
+											songSearchStore.languagesExtended,
+										);
+									}
+								}}
+								href="#"
+								className="textLink addLink"
+							>
+								{t('ViewRes:EntryEdit.LyExtendLanguages')}
+							</SafeAnchor>
+						)}
 					</div>
 				</div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { userLanguageCultureFamilies } from './Components/userLanguageCultureFamilies';
 import { userLanguageCultures } from './Components/userLanguageCultures';
 
 type CodeDescription = { englishName: string; nativeName: string };
@@ -22,6 +23,7 @@ interface CultureCodeTools {
 	codes?: Codes;
 	getCodeDescription: (code: string) => CodeDescription | undefined;
 	iso639to1?: Record<string, string>;
+	getCodeGroup: (code: string, extended?: boolean) => string[];
 }
 
 // Lazily loads extendedUserLanguageCultures
@@ -57,5 +59,17 @@ export const useCultureCodes = (): CultureCodeTools => {
 
 		return userLanguageCultures[code];
 	};
-	return { ...codes, getCodeDescription };
+
+	const getCodeGroup = (code: string, extended = false): string[] => {
+		if (code === '') {
+			return [];
+		}
+		if (!extended && code in userLanguageCultureFamilies) {
+			//@ts-ignore
+			return [code, ...userLanguageCultureFamilies[code]];
+		}
+		return [code];
+	};
+
+	return { ...codes, getCodeDescription, getCodeGroup };
 };

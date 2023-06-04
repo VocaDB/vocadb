@@ -146,6 +146,7 @@ export class SongSearchStore
 	readonly minLengthFilter = new SongLengthFilter();
 	readonly maxLengthFilter = new SongLengthFilter();
 	@observable languages?: string[] = undefined;
+	@observable languagesExtended: boolean = false;
 
 	constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -374,6 +375,7 @@ export class SongSearchStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
+		this.languages = value.languages ?? [];
 	}
 
 	onLocationStateChange = (
@@ -381,7 +383,11 @@ export class SongSearchStore
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
-		if (!event.popState && clearResults) this.paging.goToFirstPage();
+		if (!event.popState && clearResults) {
+			this.paging.goToFirstPage();
+		} else {
+			this.languagesExtended = false;
+		}
 
 		this.updateResults(clearResults);
 	};

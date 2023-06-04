@@ -455,6 +455,13 @@ public static class SongQueryableExtensions
 			return query;
 		}
 
-		return languages.Aggregate(query, WhereHasLanguage);
+		return query.Where(s => s.CultureCodes
+				.Select(c => c.CultureCode)
+				.Any(c => languages.Contains(c)) ||
+			s.Lyrics
+				.Where(l => l.TranslationType == TranslationType.Original)
+				.Any(l => l.CultureCodes
+					.Select(c => c.CultureCode)
+					.Any(c => languages.Contains(c))));
 	}
 }
