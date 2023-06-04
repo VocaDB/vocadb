@@ -35,7 +35,7 @@ const LyricsForSongEdit = observer(
 				(c) => c.length > 2 && c !== 'fil',
 			).length > 0,
 		);
-		const { getCodeDescription, iso639to1 } = useCultureCodes();
+		const { getCodeDescription, iso639to1, codes } = useCultureCodes();
 
 		return (
 			<Accordion.Item eventKey={eventKey}>
@@ -206,10 +206,14 @@ const LyricsForSongEdit = observer(
 								if (
 									lyricsForSongEditStore.cultureCodes.length === 1 &&
 									lyricsForSongEditStore.cultureCodes[0] === '' &&
-									iso639to1 !== undefined
+									iso639to1 !== undefined &&
+									codes !== undefined
 								) {
 									const detectedLang = franc(lyricsForSongEditStore.value);
-									if (detectedLang in iso639to1) {
+									if (
+										detectedLang in iso639to1 &&
+										iso639to1[detectedLang] in codes
+									) {
 										lyricsForSongEditStore.cultureCodes[0] =
 											iso639to1[detectedLang];
 									}
