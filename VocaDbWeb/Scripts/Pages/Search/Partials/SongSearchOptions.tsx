@@ -4,6 +4,7 @@ import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Kn
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
@@ -25,6 +26,8 @@ const SongSearchOptions = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+
+		const { getCodeGroup } = useCultureCodes();
 
 		return (
 			<div>
@@ -248,7 +251,7 @@ const SongSearchOptions = observer(
 							value={songSearchStore.languages}
 							placeholder="(Show all)"
 							onChange={(e): void => {
-								songSearchStore.languages = [e.target.value];
+								songSearchStore.languages = getCodeGroup(e.target.value);
 							}}
 						/>
 					</div>

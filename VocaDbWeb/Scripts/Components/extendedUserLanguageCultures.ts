@@ -662,7 +662,7 @@ const rawLangs: RawLangs = [
 	[
 		'tg',
 		{
-			languages: ['Tajik', 'Tajiki Persian', 'Tajiki'],
+			languages: ['Tajik', 'Tajiki Persian', 'Tajiki', 'Filipino'],
 		},
 	],
 	[
