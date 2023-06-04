@@ -7,7 +7,6 @@ import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/C
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
-import NewsItems from '@/Pages/Home/Partials/NewsItems';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
@@ -206,8 +205,6 @@ const HomeIndexLayout = ({
 					<EventThumbs events={model.newEvents} />
 				</div>
 			)}
-
-			<NewsItems newsListStore={frontPageStore.newsListStore} />
 
 			<div className="row-fluid">
 				<div id="recentActivity" className="span7">
