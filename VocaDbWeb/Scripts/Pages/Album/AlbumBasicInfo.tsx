@@ -428,7 +428,7 @@ const AlbumBasicInfo = observer(
 
 							{model.cultureCodes.length > 0 && (
 								<tr>
-									<td>{t('ViewRes.Album:Details.Languages')}</td>
+									<td>{t('ViewRes:EntryDetails.Languages')}</td>
 									<td>{languages}</td>
 								</tr>
 							)}
