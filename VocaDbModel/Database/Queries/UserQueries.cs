@@ -651,6 +651,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				return LoginResult.CreateError(LoginError.InvalidPassword);
 			}
 
+
 			// Login attempt successful.
 			ctx.AuditLogger.AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with '{name}'.", user);
 
