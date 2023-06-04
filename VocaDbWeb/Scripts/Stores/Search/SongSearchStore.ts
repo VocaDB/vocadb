@@ -374,6 +374,7 @@ export class SongSearchStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
+		this.languages = value.languages ?? [];
 	}
 
 	onLocationStateChange = (
