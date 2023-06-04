@@ -121,13 +121,12 @@ const AlbumBasicInfo = observer(
 			'VocaDb.Model.Resources.Albums',
 		]);
 
-		const codeMap = model.cultureCodes
-			.map((l) => getCodeDescription(l)?.englishName ?? '')
-			.filter((l) => l !== '')
-			.groupBy((l) => l);
-		const languages = Object.keys(codeMap)
-			.map((key) => `${key} (${codeMap[key].length})`)
-			.join(', ');
+		const distinctLanguages = new Set(
+			model.cultureCodes
+				.map((l) => getCodeDescription(l)?.englishName ?? '')
+				.filter((l) => l !== ''),
+		);
+		const languages = [...distinctLanguages.values()].join(', ');
 
 		return (
 			<AlbumDetailsTabs
