@@ -183,7 +183,8 @@ public class ArtistApiController : ApiController
 		bool preferAccurateMatches = false,
 		NameMatchMode nameMatchMode = NameMatchMode.Exact,
 		ArtistOptionalFields fields = ArtistOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default
+		ContentLanguagePreference lang = ContentLanguagePreference.Default,
+		[FromQuery(Name = "languages[]")] string[]? languages = null
 	)
 	{
 		var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
@@ -197,6 +198,7 @@ public class ArtistApiController : ApiController
 			UserFollowerId = followedByUserId ?? 0,
 			AllowBaseVoicebanks = allowBaseVoicebanks,
 			AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+			Languages = languages
 		};
 		param = param with { Common = param.Common with { EntryStatus = status } };
 
@@ -230,11 +232,11 @@ public class ArtistApiController : ApiController
 	[HttpGet("{id:int}/tagSuggestions")]
 	public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) =>
 		_queries.GetTagSuggestions(id);
-	
+
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);
-	
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _service.GetEntryWithTagUsages(id);
+
 	[HttpGet("versions")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public EntryIdAndVersionContract[] GetVersions() =>

@@ -41,6 +41,7 @@ export interface ArtistSearchRouteParams {
 	sort?: ArtistSortRule;
 	tag?: string;
 	tagId?: number | number[];
+	languages?: string[];
 }
 
 const clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
@@ -55,6 +56,7 @@ const clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
 	'sort',
 	'artistType',
 	'onlyFollowedByMe',
+	'languages',
 	// TODO: onlyRootVoicebanks
 ];
 
@@ -66,6 +68,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 	@observable onlyFollowedByMe = false;
 	@observable onlyRootVoicebanks = false;
 	@observable sort = ArtistSortRule.Name;
+	@observable languages?: string[] = undefined;
 
 	constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -106,6 +109,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 			fields: this.fields,
 			status: this.draftsOnly ? 'Draft' : undefined,
 			advancedFilters: this.advancedFilters.filters,
+			languages: this.languages,
 		});
 	};
 
@@ -131,6 +135,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 			pageSize: this.paging.pageSize,
 			sort: this.sort,
 			tagId: this.tagIds,
+			languages: this.languages,
 		};
 	}
 	set locationState(value: ArtistSearchRouteParams) {
@@ -144,6 +149,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? ArtistSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
+		this.languages = value.languages;
 	}
 
 	onLocationStateChange = (

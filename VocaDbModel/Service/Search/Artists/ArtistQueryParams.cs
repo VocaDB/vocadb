@@ -60,4 +60,6 @@ public sealed record ArtistQueryParams
 	public int[]? TagIds { get; init; }
 
 	public int UserFollowerId { get; init; }
+
+	public string[]? Languages { get; init; }
 }
