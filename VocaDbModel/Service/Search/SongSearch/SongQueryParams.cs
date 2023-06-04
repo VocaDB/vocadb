@@ -153,4 +153,6 @@ public sealed record SongQueryParams
 	public int? MaxLength { get; init; }
 
 	public string? Language { get; init; }
+
+	public string[]? Languages { get; init; }
 }

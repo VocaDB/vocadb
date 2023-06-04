@@ -80,7 +80,7 @@ export interface SongGetListQueryParams {
 	maxMilliBpm?: number;
 	minLength?: number;
 	maxLength?: number;
-	language?: string;
+	languages?: string[];
 }
 
 // Repository for managing songs and related objects.
@@ -392,7 +392,7 @@ export class SongRepository
 			maxMilliBpm,
 			minLength,
 			maxLength,
-			language,
+			languages,
 		} = queryParams;
 
 		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
@@ -428,7 +428,7 @@ export class SongRepository
 			maxMilliBpm: maxMilliBpm,
 			minLength: minLength,
 			maxLength: maxLength,
-			language: language,
+			languages: languages,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<SongContract>>(
