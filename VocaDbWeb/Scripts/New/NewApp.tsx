@@ -8,8 +8,12 @@ import {
 	Text,
 	MantineColor,
 	MantineProvider,
+	MediaQuery,
+	Burger,
+	useMantineTheme,
 } from '@mantine/core';
 import { IconMusic } from '@tabler/icons-react';
+import { useState } from 'react';
 
 const linkData = [
 	{ icon: <IconMusic size="1rem" />, color: 'teal', label: 'Songs' },
@@ -55,8 +59,13 @@ const MainLink = ({
 };
 
 const NewApp = (): React.ReactElement => {
+	const theme = useMantineTheme();
+	const [opened, setOpened] = useState(false);
+
 	return (
 		<MantineProvider
+			withNormalizeCSS
+			withGlobalStyles
 			theme={{
 				colors: {
 					teal: [
@@ -73,20 +82,49 @@ const NewApp = (): React.ReactElement => {
 					],
 				},
 				primaryColor: 'teal',
+				colorScheme: 'dark',
 			}}
 		>
 			<AppShell
 				navbarOffsetBreakpoint="sm"
 				navbar={
-					<Navbar p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+					<Navbar
+						p="md"
+						hiddenBreakpoint="sm"
+						hidden={!opened}
+						width={{ sm: 200, lg: 300 }}
+					>
 						{linkData.map((link) => (
 							<MainLink {...link} key={link.label} />
 						))}
 					</Navbar>
 				}
 				header={
-					<Header height={{ base: 50, md: 70 }} p="md">
-						{/* Header content */}
+					<Header
+						height={{ base: 50, md: 70 }}
+						style={{ display: 'flex' }}
+						px="md"
+					>
+						<MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+							<img
+								style={{ maxHeight: '100%' }}
+								src="/New/VocaDB_Logo_White_Transparent_No_Outline.png"
+								alt=""
+							/>
+						</MediaQuery>
+						<div
+							style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+						>
+							<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+								<Burger
+									opened={opened}
+									onClick={(): void => setOpened((o) => !o)}
+									size="sm"
+									color={theme.colors.gray[6]}
+									mr="xl"
+								/>
+							</MediaQuery>
+						</div>
 					</Header>
 				}
 				// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -99,7 +137,7 @@ const NewApp = (): React.ReactElement => {
 					},
 				})}
 			>
-				{/* Your application here */}
+				<p>Test</p>
 			</AppShell>
 		</MantineProvider>
 	);
