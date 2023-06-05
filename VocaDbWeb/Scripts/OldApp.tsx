@@ -49,11 +49,9 @@ const AppContainer = (): React.ReactElement => {
 						{vdb.values.loggedUser?.stylesheet
 							.toLowerCase()
 							.startsWith('tetodb') && <TetoDB />}
-						{vdb.values.siteName.toLowerCase().includes('utaite') && (
-							<UtaiteDB />
-						)}
 					</>
 				)}
+				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
 			</React.Suspense>
 		</Container>
 	);
