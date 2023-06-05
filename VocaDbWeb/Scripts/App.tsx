@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { CultureCodesProvider } from './CultureCodesContext';
 
-const NewApp = React.lazy(() => import('./NewApp'));
+const NewApp = React.lazy(() => import('./New/NewApp'));
 const OldApp = React.lazy(() => import('./OldApp'));
 
 const InnerAppChooser = (): React.ReactElement => {
