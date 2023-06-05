@@ -153,13 +153,6 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
-		'xct',
-		{
-			languages: ['Central Tibetan'],
-			nativeName: 'དབུས',
-		},
-	],
-	[
 		'dtp',
 		{
 			languages: ['Coastal Kadazan'],
@@ -178,6 +171,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Czech', 'Bohemian'],
 			nativeName: 'čeština',
+		},
+	],
+	[
+		'cdo',
+		{
+			languages: ['Eastern Min'],
+			nativeName: '闽东语',
 		},
 	],
 	[
@@ -457,7 +457,7 @@ const rawLangs: RawLangs = [
 	[
 		'bo',
 		{
-			languages: ['Lhasa Tibetan', 'Standard Tibetan'],
+			languages: ['Tibetan', 'Lhasa Tibetan', 'Standard Tibetan'],
 			nativeName: 'བོད་སྐད་',
 		},
 	],
