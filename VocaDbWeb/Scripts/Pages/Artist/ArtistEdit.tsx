@@ -62,7 +62,12 @@ const BasicInfoTabContent = observer(
 	}: BasicInfoTabContentProps): React.ReactElement => {
 		const loginManager = useLoginManager();
 
-		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Artist']);
+		const { t } = useTranslation([
+			'Resources',
+			'ViewRes',
+			'ViewRes.Artist',
+			'VocaDb.Web.Resources.Domain.Globalization',
+		]);
 
 		const contract = artistEditStore.contract;
 

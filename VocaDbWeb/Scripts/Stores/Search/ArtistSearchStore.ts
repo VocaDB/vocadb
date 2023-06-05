@@ -69,6 +69,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 	@observable onlyRootVoicebanks = false;
 	@observable sort = ArtistSortRule.Name;
 	@observable languages?: string[] = undefined;
+	@observable languagesExtended: boolean = false;
 
 	constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -157,7 +158,11 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
-		if (!event.popState && clearResults) this.paging.goToFirstPage();
+		if (!event.popState && clearResults) {
+			this.paging.goToFirstPage();
+		} else {
+			this.languagesExtended = false;
+		}
 
 		this.updateResults(clearResults);
 	};

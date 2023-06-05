@@ -1,6 +1,8 @@
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { ArtistTypesDropdownKnockout } from '@/Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { ArtistAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { ArtistSearchStore } from '@/Stores/Search/ArtistSearchStore';
 import { runInAction } from 'mobx';
@@ -14,7 +16,8 @@ interface ArtistSearchOptionsProps {
 
 const ArtistSearchOptions = observer(
 	({ artistSearchStore }: ArtistSearchOptionsProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Search']);
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
+		const { getCodeGroup } = useCultureCodes();
 
 		return (
 			<div>
@@ -42,10 +45,33 @@ const ArtistSearchOptions = observer(
 						<UserLanguageCultureDropdownList
 							value={artistSearchStore.languages}
 							placeholder="(Show all)"
+							extended={artistSearchStore.languagesExtended}
 							onChange={(e): void => {
 								artistSearchStore.languages = [e.target.value];
 							}}
 						/>
+
+						{!artistSearchStore.languagesExtended && (
+							<SafeAnchor
+								onClick={(): void => {
+									artistSearchStore.languagesExtended = true;
+									// Required for a refresh of the results
+									if (
+										artistSearchStore.languages &&
+										artistSearchStore.languages.length > 0
+									) {
+										artistSearchStore.languages = getCodeGroup(
+											artistSearchStore.languages[0],
+											artistSearchStore.languagesExtended,
+										);
+									}
+								}}
+								href="#"
+								className="textLink addLink"
+							>
+								{t('ViewRes:EntryEdit.LyExtendLanguages')}
+							</SafeAnchor>
+						)}
 					</div>
 				</div>
 

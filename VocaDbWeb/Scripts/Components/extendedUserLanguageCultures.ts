@@ -209,7 +209,7 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
-		'nld',
+		'nl',
 		{
 			languages: ['Dutch'],
 			nativeName: 'Nederlands',
