@@ -128,7 +128,7 @@ const rawLangs: RawLangs = [
 		'yue',
 		{
 			languages: ['Cantonese', 'Yue Chinese'],
-			nativeName: '廣東話',
+			nativeName: '粵語',
 		},
 	],
 	[
@@ -149,7 +149,7 @@ const rawLangs: RawLangs = [
 		'zh',
 		{
 			languages: ['Chinese'],
-			nativeName: '汉语',
+			nativeName: '漢語',
 		},
 	],
 	[
@@ -327,7 +327,7 @@ const rawLangs: RawLangs = [
 		'hak',
 		{
 			languages: ['Hakka Chinese', 'Keyu', 'Kejiahua', 'Hak-k\u00e2-fa'],
-			nativeName: '客家話',
+			nativeName: '客語',
 		},
 	],
 	[
@@ -430,7 +430,7 @@ const rawLangs: RawLangs = [
 		'cjy',
 		{
 			languages: ['Jin Chinese'],
-			nativeName: '晋语',
+			nativeName: '晉語',
 		},
 	],
 	[
@@ -640,7 +640,7 @@ const rawLangs: RawLangs = [
 		'qry',
 		{
 			languages: ['Ryukyuan', 'Lewchewan', 'Luchuan', 'Japonic', 'Japanic'],
-			nativeName: '琉球語派',
+			nativeName: '琉球語',
 		},
 	],
 	[
@@ -652,6 +652,13 @@ const rawLangs: RawLangs = [
 				'Upper Egyptian Arabic',
 			],
 			nativeName: 'صعيدى',
+		},
+	],
+	[
+		'qsa',
+		{
+			languages: ['Sami', 'Sámi', 'Saami', 'Northern Sami', 'Southern Sami'],
+			nativeName: 'Sami',
 		},
 	],
 	[
@@ -700,7 +707,7 @@ const rawLangs: RawLangs = [
 		'nan',
 		{
 			languages: ['Southern Min', 'Min Nan', 'Minnan', 'Banlam'],
-			nativeName: '閩南語',
+			nativeName: '閩南話',
 		},
 	],
 	[
@@ -831,14 +838,14 @@ const rawLangs: RawLangs = [
 		'wuu',
 		{
 			languages: ['Wu Chinese', 'Shanghainese'],
-			nativeName: '吴语',
+			nativeName: '吳語',
 		},
 	],
 	[
 		'hsn',
 		{
 			languages: ['Xiang Chinese', 'Hsiang', 'Hunanese'],
-			nativeName: '湘语',
+			nativeName: '湘語',
 		},
 	],
 	[
@@ -853,13 +860,6 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Yoruba'],
 			nativeName: 'Èdè Yorùbá',
-		},
-	],
-	[
-		'yue',
-		{
-			languages: ['Yue Chinese', 'Cantonese'],
-			nativeName: '粤语',
 		},
 	],
 	[
