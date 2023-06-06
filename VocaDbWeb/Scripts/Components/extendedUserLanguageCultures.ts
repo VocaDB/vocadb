@@ -177,7 +177,7 @@ const rawLangs: RawLangs = [
 		'cdo',
 		{
 			languages: ['Eastern Min'],
-			nativeName: '闽东语',
+			nativeName: '閩東語',
 		},
 	],
 	[
@@ -359,13 +359,6 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
-		'nan',
-		{
-			languages: ['Hokkien'],
-			nativeName: '閩南話',
-		},
-	],
-	[
 		'hu',
 		{
 			languages: ['Hungarian'],
@@ -423,7 +416,7 @@ const rawLangs: RawLangs = [
 		'jv',
 		{
 			languages: ['Javanese'],
-			nativeName: 'ꦧꦱꦗꦮ',
+			nativeName: 'basa Jawa',
 		},
 	],
 	[
@@ -514,7 +507,7 @@ const rawLangs: RawLangs = [
 		'mr',
 		{
 			languages: ['Marathi'],
-			nativeName: 'Marāṭhī',
+			nativeName: 'मराठी',
 		},
 	],
 	[
@@ -700,14 +693,14 @@ const rawLangs: RawLangs = [
 		'so',
 		{
 			languages: ['Somali'],
-			nativeName: '𐒖𐒍 𐒈𐒝𐒑𐒛𐒐𐒘',
+			nativeName: 'Af-Soomaali',
 		},
 	],
 	[
 		'nan',
 		{
 			languages: ['Southern Min', 'Min Nan', 'Minnan', 'Banlam'],
-			nativeName: '閩南話',
+			nativeName: '閩南語',
 		},
 	],
 	[
