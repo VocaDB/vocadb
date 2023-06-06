@@ -100,6 +100,10 @@ const cultures = Object.fromEntries(
 			nativeName: '\u4E2D\u6587\uFF08\u7B80\u4F53\uFF09',
 			englishName: 'Chinese (Simplified)',
 		},
+		quc: {
+			nativeName: 'Translator view',
+			englishName: 'Experimental',
+		},
 	}).orderBy(([_, value]) => value.nativeName),
 ); /* TODO */
 

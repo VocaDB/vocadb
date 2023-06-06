@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Models.Shared.Partials.Html;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Helpers;
 
@@ -12,12 +13,14 @@ public class ReactIndex
 	private readonly IWebHostEnvironment _env;
 	private readonly BrandableStringsManager _brandableStrings;
 	private readonly VdbConfigManager _config;
+	private readonly IUserPermissionContext _permissionContext;
 
-	public ReactIndex(IWebHostEnvironment env, BrandableStringsManager brandableStrings, VdbConfigManager config)
+	public ReactIndex(IWebHostEnvironment env, BrandableStringsManager brandableStrings, VdbConfigManager config, IUserPermissionContext permissionContext)
 	{
 		_env = env;
 		_brandableStrings = brandableStrings;
 		_config = config;
+		_permissionContext = permissionContext;
 	}
 
 	public ContentResult File(PagePropertiesData properties)
@@ -74,6 +77,14 @@ public class ReactIndex
 			.Replace("{{siteName}}", _brandableStrings.SiteName)
 			.Replace("{{osPath}}", _config.SiteSettings.OpenSearchPath)
 			.ToString();
+
+		// TODO: Make this configurable
+		// Activates the Crowdin In-Context translation feature
+		if (_permissionContext.LoggedUser?.Language == "quc")
+		{
+			content = content.Replace("<!--{incontextloc}", "")
+				.Replace("{incontextloc}-->", "");
+		}
 
 		var preInd = content.IndexOf("</head>");
 

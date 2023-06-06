@@ -16,7 +16,7 @@ i18n
 		react: {
 			useSuspense: false,
 		},
-		supportedLngs: ['de', 'es', 'fi', 'ja', 'en', 'ru', 'ko'],
+		supportedLngs: ['de', 'es', 'fi', 'ja', 'en', 'ru', 'ko', 'quc'],
 		backend: {
 			backends: [I18NextLocalStorageBackend, I18NextHttpBackend],
 			backendOptions: [
@@ -30,6 +30,7 @@ i18n
 						en: 'v1.6',
 						ru: 'v1.6',
 						ko: 'v1.3',
+						quc: 'v1.0',
 					},
 				},
 			],
