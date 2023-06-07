@@ -37,7 +37,7 @@ import {
 	TagSearchStore,
 } from '@/Stores/Search/TagSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
+import { StateChangeEvent, LocationStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import {

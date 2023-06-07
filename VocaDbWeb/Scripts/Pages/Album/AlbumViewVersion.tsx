@@ -14,7 +14,7 @@ import { albumRepo } from '@/Repositories/AlbumRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

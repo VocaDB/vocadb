@@ -17,7 +17,7 @@ import {
 	ActivityEntrySortRule,
 } from '@/Stores/ActivityEntry/ActivityEntryListStore';
 import { useVdb } from '@/VdbContext';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

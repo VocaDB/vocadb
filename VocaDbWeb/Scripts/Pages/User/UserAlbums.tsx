@@ -20,7 +20,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

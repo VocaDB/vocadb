@@ -304,7 +304,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	const activeChildIntervalRef = useCommittedRef(activeChildInterval);
 
 	const prev = useCallback(
-		(event?) => {
+		(event?: any) => {
 			if (isSliding) {
 				return;
 			}
@@ -379,7 +379,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	const directionalClassName = `${prefix}-item-${slideDirection}`;
 
 	const handleEnter = useCallback(
-		(node) => {
+		(node: HTMLElement) => {
 			triggerBrowserReflow(node);
 
 			onSlide?.(renderedActiveIndex, slideDirection);
@@ -394,8 +394,11 @@ const Carousel: BsPrefixRefForwardingComponent<
 	}, [onSlid, renderedActiveIndex, slideDirection]);
 
 	const handleKeyDown = useCallback(
-		(event) => {
-			if (keyboard && !/input|textarea/i.test(event.target.tagName)) {
+		(event: React.KeyboardEvent<HTMLElement>) => {
+			if (
+				keyboard &&
+				!/input|textarea/i.test((event.target as HTMLElement).tagName)
+			) {
 				switch (event.key) {
 					case 'ArrowLeft':
 						event.preventDefault();
@@ -423,7 +426,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	);
 
 	const handleMouseOver = useCallback(
-		(event) => {
+		(event: React.MouseEvent<HTMLElement>) => {
 			if (pause === 'hover') {
 				setPaused(true);
 			}
@@ -434,7 +437,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	);
 
 	const handleMouseOut = useCallback(
-		(event) => {
+		(event: React.MouseEvent<HTMLElement>) => {
 			setPaused(false);
 
 			onMouseOut?.(event);
@@ -447,7 +450,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	const touchUnpauseTimeout = useTimeout();
 
 	const handleTouchStart = useCallback(
-		(event) => {
+		(event: React.TouchEvent<HTMLElement>) => {
 			touchStartXRef.current = event.touches[0].clientX;
 			touchDeltaXRef.current = 0;
 
@@ -461,7 +464,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	);
 
 	const handleTouchMove = useCallback(
-		(event) => {
+		(event: React.TouchEvent<HTMLElement>) => {
 			if (event.touches && event.touches.length > 1) {
 				touchDeltaXRef.current = 0;
 			} else {
@@ -475,7 +478,7 @@ const Carousel: BsPrefixRefForwardingComponent<
 	);
 
 	const handleTouchEnd = useCallback(
-		(event) => {
+		(event: React.TouchEvent<HTMLElement>) => {
 			if (touch) {
 				const touchDeltaX = touchDeltaXRef.current;
 

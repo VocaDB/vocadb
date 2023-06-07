@@ -25,7 +25,7 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
 import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
-import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@/route-sphere';
 import dayjs, { Dayjs } from 'dayjs';
 import UTC from 'dayjs/plugin/utc';
 import { computed, makeObservable, observable } from 'mobx';

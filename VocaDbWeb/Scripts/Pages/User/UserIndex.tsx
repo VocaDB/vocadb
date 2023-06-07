@@ -2,7 +2,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import ListUsers from '@/Pages/User/Partials/ListUsers';
 import { userRepo } from '@/Repositories/UserRepository';
 import { ListUsersStore } from '@/Stores/User/ListUsersStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

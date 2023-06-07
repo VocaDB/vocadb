@@ -4,7 +4,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
-import { LocationStateStore } from '@vocadb/route-sphere';
+import { LocationStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import {
 	action,

@@ -6,7 +6,7 @@ import { useLoginManager } from '@/LoginManagerContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

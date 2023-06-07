@@ -5,11 +5,7 @@ import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
-import {
-	NostalgicDiva,
-	PlayerOptions,
-	PlayerType,
-} from '@vocadb/nostalgic-diva';
+import { NostalgicDiva, PlayerOptions, PlayerType } from '@/nostalgic-diva';
 import React from 'react';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152

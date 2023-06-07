@@ -23,7 +23,7 @@ import {
 	includesAny,
 	StateChangeEvent,
 	LocationStateStore,
-} from '@vocadb/route-sphere';
+} from '@/route-sphere';
 import Ajv from 'ajv';
 import type { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';

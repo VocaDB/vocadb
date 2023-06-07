@@ -10,7 +10,7 @@ interface DataRowProps<T> {
 }
 
 export const DataRow = React.memo(
-	<T,>({
+	<T extends React.ReactNode>({
 		name,
 		val,
 		compareVal,

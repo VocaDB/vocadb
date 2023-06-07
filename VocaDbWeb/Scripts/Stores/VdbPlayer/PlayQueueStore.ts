@@ -23,7 +23,7 @@ import {
 	PlayQueueSongContract,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
-import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import { LocalStorageStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { pull } from 'lodash-es';

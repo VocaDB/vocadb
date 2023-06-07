@@ -28,21 +28,5 @@ export function useBootstrapPrefix(
 	return prefix || prefixes[defaultPrefix] || defaultPrefix;
 }
 
-function createBootstrapComponent(Component: any, opts: any): React.ReactNode {
-	if (typeof opts === 'string') opts = { prefix: opts };
-	const isClassy = Component.prototype && Component.prototype.isReactComponent;
-	// If it's a functional component make sure we don't break it with a ref
-	const { prefix, forwardRefAs = isClassy ? 'ref' : 'innerRef' } = opts;
-
-	const Wrapped = React.forwardRef(({ ...props }: any, ref) => {
-		props[forwardRefAs] = ref;
-		const bsPrefix = useBootstrapPrefix((props as any).bsPrefix, prefix);
-		return <Component {...props} bsPrefix={bsPrefix} />;
-	});
-
-	Wrapped.displayName = `Bootstrap(${Component.displayName || Component.name})`;
-	return Wrapped;
-}
-
-export { createBootstrapComponent, Consumer as ThemeConsumer };
+export { Consumer as ThemeConsumer };
 export default ThemeProvider;

@@ -2,7 +2,7 @@ import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import type { ArchivedEntryRouteParams } from '@/Stores/ArchivedEntryStore';
 import { validate } from '@/Stores/ArchivedEntryStore';
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
-import { LocationStateStore } from '@vocadb/route-sphere';
+import { LocationStateStore } from '@/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 export class ArchivedArtistStore

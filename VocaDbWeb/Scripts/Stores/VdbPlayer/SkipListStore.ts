@@ -4,7 +4,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { includesAny, LocalStorageStateStore } from '@vocadb/route-sphere';
+import { includesAny, LocalStorageStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import { computed, makeObservable, observable } from 'mobx';
 

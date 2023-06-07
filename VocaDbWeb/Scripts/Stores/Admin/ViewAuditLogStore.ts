@@ -3,7 +3,7 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
-import { LocationStateStore, StateChangeEvent } from '@vocadb/route-sphere';
+import { LocationStateStore, StateChangeEvent } from '@/route-sphere';
 import Ajv from 'ajv';
 import { computed, makeObservable, observable } from 'mobx';
 

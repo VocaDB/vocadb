@@ -11,7 +11,7 @@ import { adminRepo } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { ViewAuditLogStore } from '@/Stores/Admin/ViewAuditLogStore';
 import dayjs from '@/dayjs';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import $ from 'jquery';
 import 'jquery-ui';

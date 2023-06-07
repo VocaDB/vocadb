@@ -8,7 +8,7 @@ import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useParams } from 'react-router';

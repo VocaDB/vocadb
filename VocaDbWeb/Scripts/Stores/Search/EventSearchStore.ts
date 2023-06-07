@@ -11,7 +11,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the EventSortRule enum in C#.

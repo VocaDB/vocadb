@@ -1,5 +1,5 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
-import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import { LocalStorageStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';

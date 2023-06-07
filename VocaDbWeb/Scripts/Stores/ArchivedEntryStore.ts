@@ -1,5 +1,5 @@
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
-import { LocationStateStore } from '@vocadb/route-sphere';
+import { LocationStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import { computed, makeObservable, observable } from 'mobx';
 
