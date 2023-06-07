@@ -8,7 +8,6 @@ import { VdbProvider } from '@/VdbContext';
 import '@/i18n';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import React, { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
 import { CultureCodesProvider } from './CultureCodesContext';
 
@@ -31,7 +30,6 @@ const App = (): React.ReactElement => {
 			components={[
 				VdbProvider,
 				LoginManagerProvider,
-				BrowserRouter,
 				NostalgicDivaProvider,
 				VdbPlayerProvider,
 				MutedUsersProvider,

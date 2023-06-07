@@ -13,6 +13,7 @@ import '@/styles/themes/redmond/jquery-ui-1.10.1.custom.min.css';
 import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
+import { BrowserRouter } from 'react-router-dom';
 
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
@@ -22,38 +23,40 @@ const AppContainer = (): React.ReactElement => {
 	const vdb = useVdb();
 
 	return (
-		<Container
-			fluid
-			css={{
-				flex: '1 1 100%',
-				paddingBottom: miniPlayerHeight,
-				minWidth: 0,
-				overflow: 'hidden',
-			}}
-		>
-			<div className="row-fluid">
-				<div className="span12 rightFrame well">
-					<React.Suspense fallback={null /* TODO */}>
-						<AppRoutes />
-					</React.Suspense>
+		<BrowserRouter>
+			<Container
+				fluid
+				css={{
+					flex: '1 1 100%',
+					paddingBottom: miniPlayerHeight,
+					minWidth: 0,
+					overflow: 'hidden',
+				}}
+			>
+				<div className="row-fluid">
+					<div className="span12 rightFrame well">
+						<React.Suspense fallback={null /* TODO */}>
+							<AppRoutes />
+						</React.Suspense>
+					</div>
+					<AboutDisclaimer />
 				</div>
-				<AboutDisclaimer />
-			</div>
-			<React.Suspense fallback={null}>
-				{vdb.values.loggedUser?.stylesheet && (
-					<>
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('darkangel') && <DarkAngel />}
+				<React.Suspense fallback={null}>
+					{vdb.values.loggedUser?.stylesheet && (
+						<>
+							{vdb.values.loggedUser?.stylesheet
+								.toLowerCase()
+								.startsWith('darkangel') && <DarkAngel />}
 
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('tetodb') && <TetoDB />}
-					</>
-				)}
-				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
-			</React.Suspense>
-		</Container>
+							{vdb.values.loggedUser?.stylesheet
+								.toLowerCase()
+								.startsWith('tetodb') && <TetoDB />}
+						</>
+					)}
+					{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
+				</React.Suspense>
+			</Container>
+		</BrowserRouter>
 	);
 };
 

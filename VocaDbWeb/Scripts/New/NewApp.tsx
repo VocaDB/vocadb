@@ -14,6 +14,9 @@ import {
 } from '@mantine/core';
 import { IconMusic } from '@tabler/icons-react';
 import { useState } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import { routes } from './routes';
 
 const linkData = [
 	{ icon: <IconMusic size="1rem" />, color: 'teal', label: 'Songs' },
@@ -61,6 +64,8 @@ const MainLink = ({
 const NewApp = (): React.ReactElement => {
 	const theme = useMantineTheme();
 	const [opened, setOpened] = useState(false);
+
+	const router = createBrowserRouter(routes);
 
 	return (
 		<MantineProvider
@@ -137,7 +142,7 @@ const NewApp = (): React.ReactElement => {
 					},
 				})}
 			>
-				<p>Test</p>
+				<RouterProvider router={router} />
 			</AppShell>
 		</MantineProvider>
 	);
