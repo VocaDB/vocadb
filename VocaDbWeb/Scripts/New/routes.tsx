@@ -1,4 +1,3 @@
-import ActivateNewFrontend from '@/ActivateNewFrontend';
 import { RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
@@ -8,6 +7,6 @@ export const routes: RouteObject[] = [
 	},
 	{
 		path: '/beta',
-		element: <ActivateNewFrontend />,
+		lazy: () => import('../ActivateNewFrontend'),
 	},
 ];

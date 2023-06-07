@@ -23,4 +23,6 @@ const ToggleNewFrontend = (): React.ReactElement => {
 	);
 };
 
+export const Component = ToggleNewFrontend;
+
 export default ToggleNewFrontend;
