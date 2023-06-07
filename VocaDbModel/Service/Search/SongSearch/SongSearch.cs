@@ -72,7 +72,8 @@ public class SongSearch
 			.WhereMilliBpmIsBetween(queryParams.MinMilliBpm, queryParams.MaxMilliBpm)
 			.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength)
 			.WhereHasLanguage(queryParams.Language)
-			.WhereHasLanguages(queryParams.Languages);
+			.WhereHasLanguages(queryParams.Languages)
+			.WhereNotHasTags(queryParams.ExcludedTagIds);
 
 		return query;
 	}
