@@ -13,6 +13,7 @@ import '@/styles/themes/redmond/jquery-ui-1.10.1.custom.min.css';
 import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
+import { BrowserRouter } from 'react-router-dom';
 
 const TouhouDB = React.lazy(() => import('./styles/touhoudb'));
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
@@ -62,7 +63,7 @@ const AppContainer = (): React.ReactElement => {
 
 const OldApp = (): React.ReactElement => {
 	return (
-		<>
+		<BrowserRouter>
 			<ScrollToTop />
 			<Header />
 			<div css={{ display: 'flex' }}>
@@ -71,7 +72,7 @@ const OldApp = (): React.ReactElement => {
 			</div>
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 			<VdbPlayer />{' '}
-		</>
+		</BrowserRouter>
 	);
 };
 

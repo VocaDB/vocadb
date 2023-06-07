@@ -1,18 +1,20 @@
 import {
-	AppShell,
-	Navbar,
-	Header,
-	UnstyledButton,
 	Group,
-	ThemeIcon,
-	Text,
 	MantineColor,
+	Navbar,
+	ThemeIcon,
+	UnstyledButton,
+	Text,
 } from '@mantine/core';
 import { IconMusic } from '@tabler/icons-react';
 
 const linkData = [
-	{ icon: <IconMusic size="1rem" />, color: 'blue', label: 'Songs' },
+	{ icon: <IconMusic size="1rem" />, color: 'teal', label: 'Songs' },
 ];
+
+interface CustomNavbarProps {
+	opened: boolean;
+}
 
 interface MainLinkProps {
 	icon: React.ReactNode;
@@ -35,7 +37,6 @@ const MainLink = ({
 				borderRadius: theme.radius.sm,
 				color:
 					theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
 				'&:hover': {
 					backgroundColor:
 						theme.colorScheme === 'dark'
@@ -48,42 +49,25 @@ const MainLink = ({
 				<ThemeIcon color={color} variant="light">
 					{icon}
 				</ThemeIcon>
-
 				<Text size="sm">{label}</Text>
 			</Group>
 		</UnstyledButton>
 	);
 };
 
-const NewApp = (): React.ReactElement => {
+const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	return (
-		<AppShell
-			navbarOffsetBreakpoint="sm"
-			navbar={
-				<Navbar p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
-					{linkData.map((link) => (
-						<MainLink {...link} key={link.label} />
-					))}
-				</Navbar>
-			}
-			header={
-				<Header height={{ base: 50, md: 70 }} p="md">
-					{/* Header content */}
-				</Header>
-			}
-			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-			styles={(theme) => ({
-				main: {
-					backgroundColor:
-						theme.colorScheme === 'dark'
-							? theme.colors.dark[8]
-							: theme.colors.gray[0],
-				},
-			})}
+		<Navbar
+			p="md"
+			hiddenBreakpoint="sm"
+			hidden={!opened}
+			width={{ sm: 200, lg: 300 }}
 		>
-			{/* Your application here */}
-		</AppShell>
+			{linkData.map((link) => (
+				<MainLink {...link} key={link.label} />
+			))}
+		</Navbar>
 	);
 };
 
-export default NewApp;
+export default CustomNavbar;

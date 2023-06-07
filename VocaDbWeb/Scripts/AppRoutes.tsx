@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import ActivateNewFrontend from './ActivateNewFrontend';
+
 const ActivityEntryRoutes = React.lazy(
 	() => import('@/Pages/ActivityEntry/ActivityEntryRoutes'),
 );
@@ -70,6 +72,8 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="S/:id/*" element={<SongDetails />} />
 			<Route path="T/:id/*" element={<TagDetails />} />
 			<Route path="Profile/:name/*" element={<UserDetails />} />
+
+			<Route path="/beta" element={<ActivateNewFrontend />} />
 
 			<Route path="*" element={<HomeRoutes />} />
 		</Routes>
