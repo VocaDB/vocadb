@@ -13,15 +13,15 @@
     "VoiceManipulator": "Voice manipulator"
   },
   "EventCategoryNames": {
-    "AlbumRelease": "Album release fair",
+    "AlbumRelease": "Albumveröffentlichungsmesse",
     "Anniversary": "Charakterjubiläum",
     "Club": "Club",
-    "Concert": "Concert",
+    "Concert": "Konzert",
     "Contest": "Wettbewerb",
     "Festival": "Festival",
     "Convention": "Convention",
     "Other": "Other",
-    "Unspecified": "Unspecified"
+    "Unspecified": "Undefiniert"
   },
   "EventSortRuleNames": {
     "AdditionDate": "Addition date",
