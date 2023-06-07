@@ -14,6 +14,7 @@ import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
+const TouhouDB = React.lazy(() => import('./styles/touhoudb'));
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
 const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
@@ -51,7 +52,9 @@ const AppContainer = (): React.ReactElement => {
 							.startsWith('tetodb') && <TetoDB />}
 					</>
 				)}
+				{/* TODO: Make this properly configurable */}
 				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
+				{vdb.values.siteName.toLowerCase().includes('touhou') && <TouhouDB />}
 			</React.Suspense>
 		</Container>
 	);

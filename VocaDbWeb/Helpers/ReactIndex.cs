@@ -76,6 +76,7 @@ public class ReactIndex
 			.Replace("{{ogImage}}", properties.OpenGraph.Image)
 			.Replace("{{siteName}}", _brandableStrings.SiteName)
 			.Replace("{{osPath}}", _config.SiteSettings.OpenSearchPath)
+			.Replace("{{favicon}}", !string.IsNullOrEmpty(_config.Assets.FavIconUrl) ? _config.Assets.FavIconUrl : "/Content/favicon.ico")
 			.ToString();
 
 		// TODO: Make this configurable
