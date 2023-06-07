@@ -23,46 +23,44 @@ const AppContainer = (): React.ReactElement => {
 	const vdb = useVdb();
 
 	return (
-		<BrowserRouter>
-			<Container
-				fluid
-				css={{
-					flex: '1 1 100%',
-					paddingBottom: miniPlayerHeight,
-					minWidth: 0,
-					overflow: 'hidden',
-				}}
-			>
-				<div className="row-fluid">
-					<div className="span12 rightFrame well">
-						<React.Suspense fallback={null /* TODO */}>
-							<AppRoutes />
-						</React.Suspense>
-					</div>
-					<AboutDisclaimer />
+		<Container
+			fluid
+			css={{
+				flex: '1 1 100%',
+				paddingBottom: miniPlayerHeight,
+				minWidth: 0,
+				overflow: 'hidden',
+			}}
+		>
+			<div className="row-fluid">
+				<div className="span12 rightFrame well">
+					<React.Suspense fallback={null /* TODO */}>
+						<AppRoutes />
+					</React.Suspense>
 				</div>
-				<React.Suspense fallback={null}>
-					{vdb.values.loggedUser?.stylesheet && (
-						<>
-							{vdb.values.loggedUser?.stylesheet
-								.toLowerCase()
-								.startsWith('darkangel') && <DarkAngel />}
+				<AboutDisclaimer />
+			</div>
+			<React.Suspense fallback={null}>
+				{vdb.values.loggedUser?.stylesheet && (
+					<>
+						{vdb.values.loggedUser?.stylesheet
+							.toLowerCase()
+							.startsWith('darkangel') && <DarkAngel />}
 
-							{vdb.values.loggedUser?.stylesheet
-								.toLowerCase()
-								.startsWith('tetodb') && <TetoDB />}
-						</>
-					)}
-					{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
-				</React.Suspense>
-			</Container>
-		</BrowserRouter>
+						{vdb.values.loggedUser?.stylesheet
+							.toLowerCase()
+							.startsWith('tetodb') && <TetoDB />}
+					</>
+				)}
+				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
+			</React.Suspense>
+		</Container>
 	);
 };
 
 const OldApp = (): React.ReactElement => {
 	return (
-		<>
+		<BrowserRouter>
 			<ScrollToTop />
 			<Header />
 			<div css={{ display: 'flex' }}>
@@ -71,7 +69,7 @@ const OldApp = (): React.ReactElement => {
 			</div>
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 			<VdbPlayer />{' '}
-		</>
+		</BrowserRouter>
 	);
 };
 
