@@ -10,7 +10,7 @@
     "NameHelp": "如果条目存在一个非英语（如日语）或未知语言名称，请将其输入非英语名称字段。如果已知，请同时输入罗马化名称。如果有已知的官方英语名称或英语翻译，请将其输入英语名称字段。",
     "NeedWebLinkOrDescription": "您需要输入描述或外部链接。",
     "Optional": "（选填）",
-    "Picture": "人物",
+    "Picture": "图片",
     "UnableToCreateArtist": "无法创建艺术家。请更正错误并重试。",
     "WebLinkCategory": "类别",
     "WebLinkDescription": "描述",
@@ -33,13 +33,13 @@
     "FollowCount": "被{{0}}位用户关注。",
     "Groups": "所属团体/公司",
     "GroupsHelp": "社团，厂牌或其他团体",
-    "Illustrator": "Illustrated by",
-    "IllustratorOf": "Illustrator of",
+    "Illustrator": "插画师",
+    "IllustratorOf": "插画师：",
     "MainAlbums": "主要专辑",
     "ManagedBy": "Managed by",
     "ManagerOf": "Manager of",
     "Members": "成员",
-    "MostlyUses": "Mostly uses:",
+    "MostlyUses": "最多使用：",
     "MostUsedLanguages": "最常用的语言：",
     "RatedAlbums": "{{0}} 个专辑评分",
     "RatedSongs": "{{0}} 个曲目评分",
@@ -49,7 +49,7 @@
     "RecentSongs": "近期歌曲/PV",
     "ReleaseDate": "发行日期",
     "Share": "分享",
-    "SongsPerMonth": "Songs per month",
+    "SongsPerMonth": "每月歌曲数",
     "SubscriptionEmail": "在网站上提醒我并通过电子邮件发送提醒信息",
     "SubscriptionNoNotification": "不提醒",
     "SubscriptionOnSite": "在网站上提醒我",
@@ -60,8 +60,8 @@
     "ViewModeDetails": "详细信息",
     "ViewModePlayList": "播放列表",
     "ViewModeTiles": "缩略图",
-    "VoiceProvider": "语音提供者",
-    "VoiceProviderOf": "Voice provider of",
+    "VoiceProvider": "声源提供者",
+    "VoiceProviderOf": "声源提供者：",
     "YouHaveRatedSongs": "您已经评分了{{0}}首这位艺术家的歌曲。"
   },
   "Edit": {
@@ -69,7 +69,7 @@
     "BaBaseVoicebank": "基础声库",
     "BaDescription": "描述",
     "BaGroups": "所属团体/圈子",
-    "BaMainPicture": "主要人物",
+    "BaMainPicture": "主要图片",
     "BaNames": "主要名称（至少用一种语言填写）",
     "BaPictureInfo": "允许的类型：{{0}}。大小上限为{{1}}MB。",
     "BaReleaseDate": "声库发行日期",
@@ -77,6 +77,6 @@
     "PiAdd": "添加",
     "PiPictureDescription": "图片描述",
     "PiPicturesNote": "请只上传这位艺术家的相关图片，不要上传不相干的图片。",
-    "TabAdditionalPictures": "其他人物"
+    "TabAdditionalPictures": "其他图片"
   }
 }
