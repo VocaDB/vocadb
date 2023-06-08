@@ -8,10 +8,10 @@
     "ExternalLink": "外部链接 (艺术家网站, Hatsune Miku wiki, NND MyList 等)",
     "Name": "名称（至少需要一个）",
     "NameHelp": "如果条目存在一个非英语（如日语）或未知语言名称，请将其输入非英语名称字段。如果已知，请同时输入罗马化名称。如果有已知的官方英语名称或英语翻译，请将其输入英语名称字段。",
-    "NeedWebLinkOrDescription": "You need to enter a description OR external link.",
-    "Optional": "(optional)",
+    "NeedWebLinkOrDescription": "您需要输入描述或外部链接。",
+    "Optional": "（选填）",
     "Picture": "Picture",
-    "UnableToCreateArtist": "Unable to create artist. Correct the errors and try again.",
+    "UnableToCreateArtist": "无法创建艺术家。请更正错误并重试。",
     "WebLinkCategory": "类别",
     "WebLinkDescription": "描述",
     "WebLinkURL": "网址"
