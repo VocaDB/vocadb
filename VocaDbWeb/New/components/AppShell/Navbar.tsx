@@ -1,19 +1,44 @@
-import { Group, MantineColor, Navbar, ThemeIcon, UnstyledButton, Text } from '@mantine/core';
-import { IconMusic } from '@tabler/icons-react';
+import { Group, Navbar, ThemeIcon, UnstyledButton, Text, useMantineTheme } from '@mantine/core';
+import { IconCalendarStats, IconMusic } from '@tabler/icons-react';
+import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 
-const linkData = [{ icon: <IconMusic size="1rem" />, color: 'teal', label: 'Songs' }];
+const linkData = [
+	{ icon: IconMusic, color: 'teal', label: 'Songs' },
+
+	{
+		label: 'Releases',
+		icon: IconCalendarStats,
+		links: [
+			{ label: 'Upcoming releases', link: '/' },
+			{ label: 'Previous releases', link: '/' },
+			{ label: 'Releases schedule', link: '/' },
+		],
+	},
+];
 
 interface CustomNavbarProps {
 	opened: boolean;
 }
 
-interface MainLinkProps {
-	icon: React.ReactNode;
-	color: MantineColor;
-	label: string;
-}
+const MainLink = ({
+	icon: Icon,
+	label,
+	links,
+	initiallyOpened,
+}: LinksGroupProps): React.ReactElement => {
+	const theme = useMantineTheme();
 
-const MainLink = ({ icon, color, label }: MainLinkProps): React.ReactElement => {
+	if (links) {
+		return (
+			<NavbarLinksGroup
+				icon={Icon}
+				label={label}
+				links={links}
+				initiallyOpened={initiallyOpened}
+			/>
+		);
+	}
+
 	return (
 		<UnstyledButton
 			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -30,8 +55,8 @@ const MainLink = ({ icon, color, label }: MainLinkProps): React.ReactElement => 
 			})}
 		>
 			<Group>
-				<ThemeIcon color={color} variant="light">
-					{icon}
+				<ThemeIcon color={theme.primaryColor} variant="light" size={30}>
+					<Icon size="1.1rem" />
 				</ThemeIcon>
 				<Text size="sm">{label}</Text>
 			</Group>
