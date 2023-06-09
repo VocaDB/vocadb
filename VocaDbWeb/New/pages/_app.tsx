@@ -6,7 +6,6 @@ import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
-import { AddressInfo } from 'net';
 
 export default function App(props: AppProps & { colorScheme: ColorScheme; values: GlobalValues }) {
 	const { Component, pageProps, values } = props;
