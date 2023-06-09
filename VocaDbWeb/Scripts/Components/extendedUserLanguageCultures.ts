@@ -195,6 +195,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'dz',
+		{
+			languages: ['Dzongkha'],
+			nativeName: 'རྫོང་ཁ་',
+		},
+	],
+	[
 		'qdo',
 		{
 			languages: ['Dovahzul'],
