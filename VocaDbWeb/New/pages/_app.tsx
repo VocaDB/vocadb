@@ -1,0 +1,58 @@
+import { useState } from 'react';
+import NextApp, { AppProps, AppContext } from 'next/app';
+import { getCookie, setCookie } from 'cookies-next';
+import Head from 'next/head';
+import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import AppShell from '../components/AppShell/AppShell';
+import { GlobalValues } from '@/types/GlobalValues';
+
+export default function App(props: AppProps & { colorScheme: ColorScheme; values: GlobalValues }) {
+	const { Component, pageProps, values } = props;
+	console.log(values);
+	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+
+	const toggleColorScheme = (value?: ColorScheme) => {
+		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+		setColorScheme(nextColorScheme);
+		setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+	};
+
+	return (
+		<>
+			<Head>
+				<title>VocaDB</title>
+				<meta
+					name="viewport"
+					content="minimum-scale=1, initial-scale=1, width=device-width"
+				/>
+				<link rel="shortcut icon" href="/new/favicon.ico" />
+			</Head>
+
+			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+				<MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+					<AppShell>
+						<Component {...pageProps} />
+					</AppShell>
+					<Notifications />
+				</MantineProvider>
+			</ColorSchemeProvider>
+		</>
+	);
+}
+
+App.getInitialProps = async (appContext: AppContext) => {
+	const isServer = !!appContext.ctx.req;
+	let values;
+	if (isServer) {
+		let host = appContext.ctx.req!.headers['x-forwarded-host'];
+		values = await (await fetch(`http://${host}/api/globals/values`)).json();
+	}
+	const appProps = await NextApp.getInitialProps(appContext);
+	return {
+		...appProps,
+		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+		values,
+	};
+};
+
