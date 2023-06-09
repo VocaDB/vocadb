@@ -3,8 +3,8 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { httpClient } from '@/Shared/HttpClient';
+import { useNostalgicDiva } from '@/nostalgic-diva';
 import { css } from '@emotion/react';
-import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

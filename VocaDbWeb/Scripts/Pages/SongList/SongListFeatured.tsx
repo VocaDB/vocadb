@@ -9,7 +9,7 @@ import { songListRepo } from '@/Repositories/SongListRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { FeaturedSongListsStore } from '@/Stores/SongList/FeaturedSongListsStore';
 import { useVdb } from '@/VdbContext';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

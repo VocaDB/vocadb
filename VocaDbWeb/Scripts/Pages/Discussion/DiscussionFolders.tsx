@@ -2,7 +2,7 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolder from '@/Pages/Discussion/Partials/ViewFolder';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

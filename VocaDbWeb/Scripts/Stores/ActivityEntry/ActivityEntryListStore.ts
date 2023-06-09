@@ -9,7 +9,7 @@ import {
 	includesAny,
 	LocationStateStore,
 	StateChangeEvent,
-} from '@vocadb/route-sphere';
+} from '@/route-sphere';
 import Ajv from 'ajv';
 import {
 	action,

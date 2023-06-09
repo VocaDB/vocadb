@@ -13,7 +13,7 @@ import {
 	includesAny,
 	StateChangeEvent,
 	LocationStateStore,
-} from '@vocadb/route-sphere';
+} from '@/route-sphere';
 import Ajv from 'ajv';
 import { map } from 'lodash-es';
 import {

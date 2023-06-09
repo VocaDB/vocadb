@@ -4,7 +4,7 @@ import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { DeletedAlbumsStore } from '@/Stores/Album/DeletedAlbumsStore';
 import { useVdb } from '@/VdbContext';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

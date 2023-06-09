@@ -16,7 +16,7 @@ import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
 import { useVdb } from '@/VdbContext';
 import dayjs from '@/dayjs';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

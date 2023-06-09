@@ -1,5 +1,5 @@
 import { MutedUsersStore } from '@/Stores/MutedUsersStore';
-import { useLocalStorageStateStore } from '@vocadb/route-sphere';
+import { useLocalStorageStateStore } from '@/route-sphere';
 import React from 'react';
 
 const MutedUsersContext = React.createContext<MutedUsersStore>(undefined!);

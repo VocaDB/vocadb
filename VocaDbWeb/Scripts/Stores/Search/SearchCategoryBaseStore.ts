@@ -8,7 +8,7 @@ import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import dayjs from '@/dayjs';
-import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
+import { StateChangeEvent, LocationStateStore } from '@/route-sphere';
 import UTC from 'dayjs/plugin/utc';
 import {
 	action,

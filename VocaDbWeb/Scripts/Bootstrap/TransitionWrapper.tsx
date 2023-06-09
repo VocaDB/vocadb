@@ -79,6 +79,7 @@ const TransitionWrapper = React.forwardRef<
 				addEndListener={handleAddEndListener}
 				nodeRef={nodeRef}
 			>
+				{/*@ts-ignore*/}
 				{typeof children === 'function'
 					? (
 							status: TransitionStatus,

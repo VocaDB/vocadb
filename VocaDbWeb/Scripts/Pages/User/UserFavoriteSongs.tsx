@@ -10,11 +10,10 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { useVdb } from '@/VdbContext';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
+import '@/styles/Styles/songlist.less';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-
-import '@/styles/Styles/songlist.less'
 
 interface UserFavoriteSongsLayoutProps {
 	user: UserDetailsContract;

@@ -18,14 +18,10 @@ import { VdbPlayerEntryLink } from '@/Components/VdbPlayer/VdbPlayerEntryLink';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayerOptions, TimeEvent, useNostalgicDiva } from '@/nostalgic-diva';
+import { useLocalStorageStateStore } from '@/route-sphere';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import {
-	PlayerOptions,
-	TimeEvent,
-	useNostalgicDiva,
-} from '@vocadb/nostalgic-diva';
-import { useLocalStorageStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';

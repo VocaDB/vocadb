@@ -2,7 +2,7 @@ import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import React from 'react';
 
 interface UserSongsProps {

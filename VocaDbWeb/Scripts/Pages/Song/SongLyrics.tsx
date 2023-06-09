@@ -5,7 +5,7 @@ import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
-import { useLocationStateStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

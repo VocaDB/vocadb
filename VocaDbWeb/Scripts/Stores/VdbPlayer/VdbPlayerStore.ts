@@ -7,7 +7,7 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { PlayQueueRepositoryFactory } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import { LocalStorageStateStore } from '@/route-sphere';
 import Ajv from 'ajv';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
