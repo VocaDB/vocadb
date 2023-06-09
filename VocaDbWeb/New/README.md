@@ -1,16 +1,17 @@
-# Mantine Next.js template
+# Mantine Next Template
 
-This is a template for [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+Get started with Mantine + Next with just a few button clicks.
+Click `Use this template` button at the header of repository or [follow this link](https://github.com/mantinedev/mantine-next-template/generate) and
+create new repository with `@mantine` packages. Note that you have to be logged in to GitHub to generate template.
 
 ## Features
 
-This template comes with the following features:
+This template comes with several essential features:
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
+- Server side rendering setup for Mantine
+- Color scheme is stored in cookie to avoid color scheme mismatch after hydration
+- Storybook with color scheme toggle
+- Jest with react testing library
 - ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
 
 ## npm scripts
@@ -19,6 +20,7 @@ This template comes with the following features:
 
 - `dev` – start dev server
 - `build` – bundle application for production
+- `export` – exports static website to `out` folder
 - `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
 
 ### Testing scripts

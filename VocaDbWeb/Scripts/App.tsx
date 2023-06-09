@@ -10,19 +10,7 @@ import { NostalgicDivaProvider } from '@/nostalgic-diva';
 import React, { Suspense } from 'react';
 
 import { CultureCodesProvider } from './CultureCodesContext';
-
-const NewApp = React.lazy(() => import('./New/NewApp'));
-const OldApp = React.lazy(() => import('./OldApp'));
-
-const InnerAppChooser = (): React.ReactElement => {
-	const beta_enabled = localStorage.getItem('new_beta');
-
-	if (beta_enabled === 'true') {
-		return <NewApp />;
-	}
-
-	return <OldApp />;
-};
+import OldApp from './OldApp';
 
 const App = (): React.ReactElement => {
 	return (
@@ -37,7 +25,7 @@ const App = (): React.ReactElement => {
 			]}
 		>
 			<Suspense fallback={null}>
-				<InnerAppChooser />
+				<OldApp />
 			</Suspense>
 		</Compose>
 	);
