@@ -4,39 +4,46 @@ import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
+import AppShell from '../components/AppShell/AppShell';
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
-  const { Component, pageProps } = props;
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+	const { Component, pageProps } = props;
+	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
-  const toggleColorScheme = (value?: ColorScheme) => {
-    const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
-    setColorScheme(nextColorScheme);
-    setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
-  };
+	const toggleColorScheme = (value?: ColorScheme) => {
+		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+		setColorScheme(nextColorScheme);
+		setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+	};
 
-  return (
-    <>
-      <Head>
-        <title>Mantine next example</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        <link rel="shortcut icon" href="/favicon.svg" />
-      </Head>
+	return (
+		<>
+			<Head>
+				<title>Mantine next example</title>
+				<meta
+					name="viewport"
+					content="minimum-scale=1, initial-scale=1, width=device-width"
+				/>
+				<link rel="shortcut icon" href="/favicon.svg" />
+			</Head>
 
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-          <Component {...pageProps} />
-          <Notifications />
-        </MantineProvider>
-      </ColorSchemeProvider>
-    </>
-  );
+			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+				<MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+					<AppShell>
+						<Component {...pageProps} />
+					</AppShell>
+					<Notifications />
+				</MantineProvider>
+			</ColorSchemeProvider>
+		</>
+	);
 }
 
 App.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await NextApp.getInitialProps(appContext);
-  return {
-    ...appProps,
-    colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
-  };
+	const appProps = await NextApp.getInitialProps(appContext);
+	return {
+		...appProps,
+		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+	};
 };
+
