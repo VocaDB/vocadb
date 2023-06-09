@@ -7,5 +7,5 @@ module.exports = withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  basePath: '/new'
+  basePath: '/new',
 });
