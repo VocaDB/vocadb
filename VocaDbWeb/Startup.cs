@@ -40,11 +40,14 @@ using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
 using OpenTelemetry.Metrics;
+using System.Diagnostics;
 
 namespace VocaDb.Web;
 
 public class Startup
 {
+	private Process nodeProcess;
+
 	public Startup(IConfiguration configuration)
 	{
 		Configuration = configuration;
@@ -144,6 +147,9 @@ public class Startup
 					.AllowCredentials();
 			});
 		});
+
+		services.AddReverseProxy()
+			.LoadFromConfig(Configuration.GetSection("ReverseProxy"));
 	}
 
 	private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -254,7 +260,7 @@ public class Startup
 	}
 
 	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifetime)
 	{
 		if (env.IsDevelopment())
 		{
@@ -364,6 +370,8 @@ public class Startup
 			endpoints.MapControllerRoute("Help", "Help/{**clientPath}", new { controller = "Help", action = "Index" });
 			endpoints.MapControllerRoute("Playlist", "playlist/{**clientPath}", new { controller = "Playlist", action = "Index" });
 
+			endpoints.MapReverseProxy();
+
 			endpoints.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -372,5 +380,47 @@ public class Startup
 		});
 
 		app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
+		StartNextJsServer(env);
+
+		appLifetime.ApplicationStopping.Register(StopNodeServer);
+	}
+
+	private void StartNextJsServer(IWebHostEnvironment env)
+	{
+		var nodeProcessInfo = new ProcessStartInfo
+		{
+			FileName = "npm",
+			Arguments = "run start",
+			UseShellExecute = false,
+			RedirectStandardOutput = true,
+			RedirectStandardError = true,
+			WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New")
+		};
+
+		nodeProcess = new Process { StartInfo = nodeProcessInfo };
+		nodeProcess.OutputDataReceived += (_, e) => Console.WriteLine(e.Data);
+		nodeProcess.ErrorDataReceived += (_, e) => Console.WriteLine(e.Data);
+
+		Console.WriteLine("Starting Node.js server...");
+		nodeProcess.Start();
+
+		nodeProcess.BeginOutputReadLine();
+		nodeProcess.BeginErrorReadLine();
+		Console.WriteLine("Node.js server started");
+	}
+
+	private void StopNodeServer()
+	{
+		if (nodeProcess != null && !nodeProcess.HasExited)
+		{
+			Console.WriteLine("Stopping Node.js server...");
+			nodeProcess.CloseMainWindow();
+			if (!nodeProcess.WaitForExit(5000))
+			{
+				nodeProcess.Kill();
+			}
+			nodeProcess.Dispose();
+		}
 	}
 }
