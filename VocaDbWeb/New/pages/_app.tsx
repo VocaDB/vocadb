@@ -5,9 +5,12 @@ import Head from 'next/head';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
+import { GlobalValues } from '@/types/GlobalValues';
+import { AddressInfo } from 'net';
 
-export default function App(props: AppProps & { colorScheme: ColorScheme }) {
-	const { Component, pageProps } = props;
+export default function App(props: AppProps & { colorScheme: ColorScheme; values: GlobalValues }) {
+	const { Component, pageProps, values } = props;
+	console.log(values);
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
 	const toggleColorScheme = (value?: ColorScheme) => {
@@ -40,10 +43,17 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
 }
 
 App.getInitialProps = async (appContext: AppContext) => {
+	const isServer = !!appContext.ctx.req;
+	let values;
+	if (isServer) {
+		let host = appContext.ctx.req!.headers['x-forwarded-host'];
+		values = await (await fetch(`http://${host}/api/globals/values`)).json();
+	}
 	const appProps = await NextApp.getInitialProps(appContext);
 	return {
 		...appProps,
 		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+		values,
 	};
 };
 
