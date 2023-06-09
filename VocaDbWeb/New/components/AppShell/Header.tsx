@@ -15,22 +15,12 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 		<Header height={{ base: 50, md: 70 }} style={{ display: 'flex' }} px="md">
 			<MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
 				<>
-					{theme.colorScheme === 'dark' && (
-						<Image
-							style={{ objectFit: 'contain', height: '100%' }}
-							height={69}
-							src={DarkLogo}
-							alt=""
-						/>
-					)}
-					{theme.colorScheme === 'light' && (
-						<Image
-							style={{ objectFit: 'contain', height: '100%' }}
-							height={69}
-							src={LightLogo}
-							alt=""
-						/>
-					)}
+					<Image
+						style={{ objectFit: 'contain', height: '100%' }}
+						height={69}
+						src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
+						alt=""
+					/>
 				</>
 			</MediaQuery>
 			<div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
