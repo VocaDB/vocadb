@@ -388,14 +388,13 @@ public class Startup
 
 	private void StartNextJsServer(IWebHostEnvironment env)
 	{
-		var nodeProcessInfo = new ProcessStartInfo
+		var nodeProcessInfo = new ProcessStartInfo("node")
 		{
-			FileName = "npm",
-			Arguments = "run start",
+			Arguments = "server.js",
 			UseShellExecute = false,
 			RedirectStandardOutput = true,
 			RedirectStandardError = true,
-			WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New")
+			WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New", ".next", "standalone")
 		};
 
 		nodeProcess = new Process { StartInfo = nodeProcessInfo };
