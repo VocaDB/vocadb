@@ -1,10 +1,11 @@
 // From https://ui.mantine.dev/component/navbar-links-group
+import { PermissionToken } from '@/types/Models/LoginManager';
 import { Group, Box, ThemeIcon, Text, UnstyledButton, createStyles, rem } from '@mantine/core';
 import Link from 'next/link';
+import { useVdb } from '../Context/VdbContext';
 
 const useStyles = createStyles((theme) => ({
 	control: {
-		fontWeight: 500,
 		display: 'block',
 		width: '100%',
 		padding: `${theme.spacing.xs} `,
@@ -18,10 +19,8 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	link: {
-		fontWeight: 500,
 		display: 'block',
-		textDecoration: 'none',
-		padding: `${theme.spacing.xs} ${theme.spacing.md}`,
+		padding: `${theme.spacing.xs}`,
 		paddingLeft: rem(31),
 		marginLeft: rem(30),
 		fontSize: theme.fontSizes.sm,
@@ -35,27 +34,35 @@ const useStyles = createStyles((theme) => ({
 				theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 		},
 	},
-
-	chevron: {
-		transition: 'transform 200ms ease',
-	},
 }));
 
 export interface LinksGroupProps {
 	icon: React.FC<any>;
 	label: string;
 	link: string;
-	links?: { label: string; link: string }[];
+	permission?: PermissionToken;
+	links?: { label: string; link: string; permission?: PermissionToken }[];
 }
 
-export function NavbarLinksGroup({ icon: Icon, label, links, link }: LinksGroupProps) {
+export function NavbarLinksGroup({ icon: Icon, label, links, link, permission }: LinksGroupProps) {
 	const { classes, theme } = useStyles();
+	const { loginManager } = useVdb();
+
+	if (permission && !loginManager.hasPermission(permission)) {
+		return <></>;
+	}
+
 	const hasLinks = Array.isArray(links);
-	const items = (hasLinks ? links : []).map((link) => (
-		<Text component={Link} className={classes.link} href={link.link} key={link.label}>
-			{link.label}
-		</Text>
-	));
+	const items = (hasLinks ? links : [])
+		.filter((link) => {
+			if (link.permission) return loginManager.hasPermission(link.permission);
+			return true;
+		})
+		.map((link) => (
+			<Text component={Link} className={classes.link} href={link.link} key={link.label}>
+				{link.label}
+			</Text>
+		));
 
 	return (
 		<>

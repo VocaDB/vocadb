@@ -289,6 +289,8 @@ public class Startup
 			c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
 		});
 
+		app.UseForwardedHeaders();
+
 		app.UseRouting();
 
 		app.UseRequestLocalization(options =>

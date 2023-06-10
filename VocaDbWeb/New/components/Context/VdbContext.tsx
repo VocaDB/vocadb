@@ -1,9 +1,15 @@
 'use client';
 
 import { GlobalValues } from '@/types/GlobalValues';
+import { LoginManager } from '@/types/Models/LoginManager';
 import React, { useEffect } from 'react';
 
-const VdbContext = React.createContext<GlobalValues>(undefined!);
+interface VdbContext {
+	values: GlobalValues;
+	loginManager: LoginManager;
+}
+
+const VdbContext = React.createContext<VdbContext>(undefined!);
 
 interface VdbProviderProps {
 	children?: React.ReactNode;
@@ -22,10 +28,16 @@ export const VdbProvider = ({ children, initialValue }: VdbProviderProps): React
 		}
 	}, [vdb]);
 
-	return vdb ? <VdbContext.Provider value={vdb}>{children}</VdbContext.Provider> : <></>;
+	return vdb ? (
+		<VdbContext.Provider value={{ values: vdb, loginManager: new LoginManager(vdb) }}>
+			{children}
+		</VdbContext.Provider>
+	) : (
+		<></>
+	);
 };
 
-export const useVdb = (): GlobalValues => {
+export const useVdb = (): VdbContext => {
 	return React.useContext(VdbContext);
 };
 

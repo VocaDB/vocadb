@@ -1,14 +1,23 @@
 import { AppShell } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Header from './Header';
+import { useRouter } from 'next/router';
 
 interface CustomAppShellProps {
 	children?: React.ReactElement;
 }
 
 const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement => {
+	const router = useRouter();
 	const [opened, setOpened] = useState(false);
+
+	// Close burger menu on navigation
+	useEffect(() => {
+		router.events.on('routeChangeStart', () => {
+			setOpened(false);
+		});
+	}, [router]);
 
 	return (
 		<AppShell
