@@ -13,12 +13,10 @@ export function Welcome() {
 				</Text>
 			</Title>
 			<Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">
-				This starter Next.js project includes a minimal setup for server side rendering, if
-				you want to learn more on Mantine + Next.js integration follow{' '}
-				<Anchor href="https://mantine.dev/guides/next/" size="lg">
-					this guide
+				This will be the frontpage.{' '}
+				<Anchor href="https://vocadb.net" size="lg">
+					Here is a link
 				</Anchor>
-				. To get started edit index.tsx file.
 			</Text>
 		</>
 	);

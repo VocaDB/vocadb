@@ -35,7 +35,7 @@ export function ColorSchemeToggle() {
 				Choose your color!
 			</Text>
 			<Text align="center" variant="dimmed">
-				(Just a idea)
+				(Just an idea)
 			</Text>
 			<Group mt="md" position="center">
 				<Card shadow="sm" radius="md" maw={'20vw'}>
@@ -58,6 +58,32 @@ export function ColorSchemeToggle() {
 						mt="sm"
 						variant="light"
 						color="miku"
+						radius="md"
+						fullWidth
+					>
+						Apply Color
+					</Button>
+				</Card>{' '}
+				<Card shadow="sm" radius="md" maw={'20vw'}>
+					<Image
+						src="/new/Megurine Luka.png"
+						style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
+						width={31.27}
+						height={120}
+						alt="Hatsune Miku"
+					/>
+
+					<Text mt="sm" size="sm" color="dimmed">
+						Ullamco duis exercitation nulla aute id anim sit veniam. Velit sint sint sit
+						do esse incididunt aliquip eu aliquip veniam ad in. Culpa cillum sunt irure
+						quis nostrud qui laborum.
+					</Text>
+
+					<Button
+						onClick={() => setPrimaryColor('luka')}
+						mt="sm"
+						variant="light"
+						color="luka"
 						radius="md"
 						fullWidth
 					>

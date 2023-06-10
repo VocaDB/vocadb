@@ -33,6 +33,18 @@ export default function App(
 				'#00c9b7',
 				'#00ae9e',
 			],
+			luka: [
+				'#ffe8f8',
+				'#ffcfe9',
+				'#ff9bce',
+				'#ff64b4',
+				'#fe389d',
+				'#fe1c8e',
+				'#ff0987',
+				'#e40074',
+				'#cc0067',
+				'#b30059',
+			],
 		},
 	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
