@@ -7,6 +7,7 @@ import { apiFetch } from '@/Helpers/FetchApiHelper';
 export default function HomePage({
 	frontPage,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+	console.log(frontPage);
 	return (
 		<>
 			<Welcome />

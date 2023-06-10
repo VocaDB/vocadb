@@ -2,19 +2,42 @@ import { useEffect, useState } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
-import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
+import {
+	MantineProvider,
+	ColorScheme,
+	ColorSchemeProvider,
+	MantineThemeOverride,
+} from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
 import { VdbProvider } from '@/components/Context/VdbContext';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
+import { ThemeProvider } from '@/components/Context/ThemeContext';
 
 export default function App(
 	props: AppProps & { colorScheme: ColorScheme; values: GlobalValues | undefined }
 ) {
 	const { Component, pageProps, values } = props;
+	const [theme, setTheme] = useState<MantineThemeOverride>({
+		colors: {
+			miku: [
+				'#e4fffe',
+				'#d0fffb',
+				'#a1fef6',
+				'#6ffef1',
+				'#4dfeed',
+				'#3dfeea',
+				'#30fee9',
+				'#21e2ce',
+				'#00c9b7',
+				'#00ae9e',
+			],
+		},
+	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
+	// TODO: This should be moved elsewhere
 	const toggleColorScheme = (value?: ColorScheme) => {
 		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
 		setColorScheme(nextColorScheme);
@@ -37,11 +60,17 @@ export default function App(
 			</Head>
 
 			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-				<MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+				<MantineProvider
+					theme={{ ...theme, colorScheme }}
+					withGlobalStyles
+					withNormalizeCSS
+				>
 					<VdbProvider initialValue={values}>
-						<AppShell>
-							<Component {...pageProps} />
-						</AppShell>
+						<ThemeProvider theme={theme} setTheme={setTheme}>
+							<AppShell>
+								<Component {...pageProps} />
+							</AppShell>
+						</ThemeProvider>
 					</VdbProvider>
 					<Notifications />
 				</MantineProvider>
