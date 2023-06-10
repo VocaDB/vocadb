@@ -275,7 +275,11 @@ public class Startup
 
 		app.UseStatusCodePagesWithRedirects("/Error?code={0}");
 
-		app.UseHttpsRedirection();
+		if (!env.IsDevelopment())
+		{
+			app.UseHttpsRedirection();
+		}
+
 		app.UseStaticFiles();
 
 		// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
@@ -396,6 +400,18 @@ public class Startup
 			RedirectStandardError = true,
 			WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New", ".next", "standalone")
 		};
+
+		if (env.IsDevelopment())
+		{
+			nodeProcessInfo = new ProcessStartInfo("npm")
+			{
+				Arguments = "run dev",
+				UseShellExecute = false,
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+				WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New")
+			};
+		}
 
 		nodeProcess = new Process { StartInfo = nodeProcessInfo };
 		nodeProcess.OutputDataReceived += (_, e) => Console.WriteLine(e.Data);
