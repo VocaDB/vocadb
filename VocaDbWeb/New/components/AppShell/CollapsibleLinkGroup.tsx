@@ -33,10 +33,6 @@ const useStyles = createStyles((theme) => ({
 				theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 		},
 	},
-
-	chevron: {
-		transition: 'transform 200ms ease',
-	},
 }));
 
 export interface LinksGroupProps {
