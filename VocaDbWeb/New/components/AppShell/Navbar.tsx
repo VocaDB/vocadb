@@ -6,6 +6,7 @@ import {
 	Text,
 	useMantineTheme,
 	ScrollArea,
+	rem,
 } from '@mantine/core';
 import {
 	IconBookmarks,
@@ -169,6 +170,7 @@ const MainLink = ({
 
 // TODO: Make profile picture dynamic
 const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
+	const theme = useMantineTheme();
 	const { values } = useVdb();
 
 	const links = linkData;
@@ -196,7 +198,15 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 				))}
 			</Navbar.Section>
 			{values.isLoggedIn && (
-				<Navbar.Section>
+				<Navbar.Section
+					style={{
+						borderTop: `${rem(1)} solid ${
+							theme.colorScheme === 'dark'
+								? theme.colors.dark[4]
+								: theme.colors.gray[3]
+						}`,
+					}}
+				>
 					<UserButton
 						name={values.loggedUser!.name}
 						image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
