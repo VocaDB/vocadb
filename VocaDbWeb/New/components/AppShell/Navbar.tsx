@@ -21,6 +21,7 @@ import {
 import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 import Link from 'next/link';
 import { IconPlaylist } from '@tabler/icons';
+import { UserButton } from './UserButton';
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
@@ -123,6 +124,7 @@ const MainLink = ({ icon: Icon, label, links, link }: LinksGroupProps): React.Re
 				display: 'block',
 				width: '100%',
 				padding: theme.spacing.xs,
+				fontSize: theme.fontSizes.sm,
 				borderRadius: theme.radius.sm,
 				color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 				'&:hover': {
@@ -151,6 +153,13 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 					<MainLink {...link} key={link.label} />
 				))}
 			</ScrollArea>
+			<Navbar.Section>
+				<UserButton
+					name="Placeholder"
+					image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
+					email="Email here?"
+				/>
+			</Navbar.Section>
 		</Navbar>
 	);
 };

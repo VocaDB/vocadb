@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 const useStyles = createStyles((theme) => ({
 	control: {
-		fontWeight: 500,
 		display: 'block',
 		width: '100%',
 		padding: `${theme.spacing.xs} `,
@@ -20,8 +19,7 @@ const useStyles = createStyles((theme) => ({
 	link: {
 		fontWeight: 500,
 		display: 'block',
-		textDecoration: 'none',
-		padding: `${theme.spacing.xs} ${theme.spacing.md}`,
+		padding: `${theme.spacing.xs}`,
 		paddingLeft: rem(31),
 		marginLeft: rem(30),
 		fontSize: theme.fontSizes.sm,
