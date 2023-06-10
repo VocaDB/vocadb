@@ -57,7 +57,7 @@ App.getInitialProps = async (appContext: AppContext) => {
 
 	// TODO: Better check if session is lost
 	if (!hasCookie('vdb-values', appContext.ctx) && isServer) {
-		const res = await apiFetch('/api/globals/values');
+		const res = await apiFetch('/api/globals/values', appContext.ctx.req);
 		values = await res.json();
 	}
 
