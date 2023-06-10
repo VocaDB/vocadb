@@ -12,9 +12,11 @@ import {
 	IconCalendarEvent,
 	IconDisc,
 	IconHome,
+	IconLogin,
 	IconMessageCircle,
 	IconMusic,
 	IconUserCog,
+	IconUserPlus,
 	IconUsers,
 	IconUsersGroup,
 } from '@tabler/icons-react';
@@ -22,6 +24,8 @@ import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 import Link from 'next/link';
 import { IconPlaylist } from '@tabler/icons';
 import { UserButton } from './UserButton';
+import { useVdb } from '../Context/VdbContext';
+import { PermissionToken } from '@/types/Models/LoginManager';
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
@@ -33,6 +37,7 @@ const linkData = [
 			{
 				label: 'Add an artist',
 				link: '/Artist/Create',
+				permission: PermissionToken.ManageDatabase,
 			},
 		],
 	},
@@ -44,6 +49,7 @@ const linkData = [
 			{
 				label: 'Submit an album',
 				link: '/Album/Create',
+				permission: PermissionToken.ManageDatabase,
 			},
 			{
 				label: 'Top rated albums',
@@ -60,7 +66,11 @@ const linkData = [
 		icon: IconMusic,
 		link: '/Search?searchType=Song',
 		links: [
-			{ label: 'Submit a song', link: '/Song/Create' },
+			{
+				label: 'Submit a song',
+				link: '/Song/Create',
+				permission: PermissionToken.ManageDatabase,
+			},
 			{ label: 'Top rated songs', link: '/Song/Rankings?durationHours=168' },
 			{
 				label: 'Recent PVs',
@@ -103,6 +113,7 @@ const linkData = [
 		label: 'Manage',
 		icon: IconUserCog,
 		link: '/Admin',
+		permission: PermissionToken.AccessManageMenu,
 	},
 ];
 
@@ -110,11 +121,22 @@ interface CustomNavbarProps {
 	opened: boolean;
 }
 
-const MainLink = ({ icon: Icon, label, links, link }: LinksGroupProps): React.ReactElement => {
+const MainLink = ({
+	icon: Icon,
+	label,
+	links,
+	link,
+	permission,
+}: LinksGroupProps): React.ReactElement => {
 	const theme = useMantineTheme();
+	const { loginManager } = useVdb();
 
 	if (links) {
 		return <NavbarLinksGroup icon={Icon} label={label} links={links} link={link} />;
+	}
+
+	if (permission && !loginManager.hasPermission(permission)) {
+		return <></>;
 	}
 
 	return (
@@ -145,21 +167,43 @@ const MainLink = ({ icon: Icon, label, links, link }: LinksGroupProps): React.Re
 	);
 };
 
+// TODO: Make profile picture dynamic
 const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
+	const { values } = useVdb();
+
+	const links = linkData;
+
+	if (!values.isLoggedIn) {
+		links.push(
+			{
+				label: 'Log In',
+				icon: IconLogin,
+				link: '/User/Login',
+			},
+			{
+				label: 'Register',
+				icon: IconUserPlus,
+				link: '/User/Create',
+			}
+		);
+	}
+
 	return (
 		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-			<ScrollArea>
-				{linkData.map((link) => (
+			<Navbar.Section component={ScrollArea} grow>
+				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
 				))}
-			</ScrollArea>
-			<Navbar.Section>
-				<UserButton
-					name="Placeholder"
-					image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
-					email="Email here?"
-				/>
 			</Navbar.Section>
+			{values.isLoggedIn && (
+				<Navbar.Section>
+					<UserButton
+						name={values.loggedUser!.name}
+						image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
+						email={"Don't know what to put here yet"}
+					/>
+				</Navbar.Section>
+			)}
 		</Navbar>
 	);
 };
