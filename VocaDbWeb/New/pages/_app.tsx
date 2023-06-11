@@ -16,9 +16,13 @@ import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ThemeProvider } from '@/components/Context/ThemeContext';
 
 export default function App(
-	props: AppProps & { colorScheme: ColorScheme; values: GlobalValues | undefined }
+	props: AppProps & {
+		colorScheme: ColorScheme;
+		primaryColor: string;
+		values: GlobalValues | undefined;
+	}
 ) {
-	const { Component, pageProps, values } = props;
+	const { Component, pageProps, primaryColor, values } = props;
 	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors: {
 			miku: [
@@ -46,6 +50,7 @@ export default function App(
 				'#b30059',
 			],
 		},
+		primaryColor,
 	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
@@ -105,6 +110,7 @@ App.getInitialProps = async (appContext: AppContext) => {
 	return {
 		...appProps,
 		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+		primaryColor: getCookie('mantine-primary-color', appContext.ctx) || 'miku',
 		values,
 	};
 };
