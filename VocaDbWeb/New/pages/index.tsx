@@ -3,14 +3,17 @@ import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeTo
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
+import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
+import { Center } from '@mantine/core';
 
 export default function HomePage({
 	frontPage,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-	console.log(frontPage);
 	return (
 		<>
-			<Welcome />
+			<Center>
+				<HighlightedSongsCarousel songs={frontPage.newSongs} />
+			</Center>
 			<ColorSchemeToggle />
 		</>
 	);

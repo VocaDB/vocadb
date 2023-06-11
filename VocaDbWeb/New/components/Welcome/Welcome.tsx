@@ -7,7 +7,7 @@ export function Welcome() {
 
 	return (
 		<>
-			<Title className={classes.title} align="center" mt={100}>
+			<Title className={classes.title} align="center">
 				Welcome to{' '}
 				<Text
 					c={theme.primaryColor}
@@ -22,12 +22,6 @@ export function Welcome() {
 					VocaDB
 				</Text>
 			</Title>
-			<Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">
-				This will be the frontpage.{' '}
-				<Anchor href="https://vocadb.net" size="lg">
-					Here is a link
-				</Anchor>
-			</Text>
 		</>
 	);
 }
