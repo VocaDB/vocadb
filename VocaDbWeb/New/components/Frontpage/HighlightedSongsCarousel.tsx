@@ -16,10 +16,12 @@ export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProp
 			breakpoints={[{ maxWidth: 'lg', slideSize: '100%', slideGap: 0 }]}
 			loop
 			withIndicators
+			previousControlLabel="Previous highlighted PVs"
+			nextControlLabel="Next hightlighted PV"
 		>
 			{songs.concat(songs).map((song, key) => (
 				<Carousel.Slide key={key}>
-					<HighlightedSongCard song={song} priority={key === 0} />
+					<HighlightedSongCard song={song} priority={key < 3} />
 				</Carousel.Slide>
 			))}
 		</Carousel>
