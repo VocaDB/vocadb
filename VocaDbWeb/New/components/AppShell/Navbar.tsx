@@ -116,6 +116,12 @@ const linkData = [
 		link: '/Admin',
 		permission: PermissionToken.AccessManageMenu,
 	},
+
+	{
+		label: 'Login / Register',
+		icon: IconUserPlus,
+		link: '/User/Login',
+	},
 ];
 
 interface CustomNavbarProps {
@@ -173,22 +179,9 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	const theme = useMantineTheme();
 	const { values } = useVdb();
 
-	const links = linkData;
-
-	if (!values.isLoggedIn) {
-		links.push(
-			{
-				label: 'Log In',
-				icon: IconLogin,
-				link: '/User/Login',
-			},
-			{
-				label: 'Register',
-				icon: IconUserPlus,
-				link: '/User/Create',
-			}
-		);
-	}
+	const links = linkData.filter(
+		({ link }) => !link.startsWith('/User/Login') || !values.isLoggedIn
+	);
 
 	return (
 		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
