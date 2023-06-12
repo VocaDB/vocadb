@@ -15,6 +15,5 @@ module.exports = withBundleAnalyzer({
 			{ protocol: 'https', hostname: 'i2.hdslb.com' },
 		],
 	},
-	basePath: '/new',
 });
 

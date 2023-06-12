@@ -40,7 +40,7 @@ export function ColorSchemeToggle() {
 			<Group mt="md" position="center">
 				<Card shadow="sm" radius="md" maw={'20vw'}>
 					<Image
-						src="/new/Hatsune Miku.png"
+						src="/Hatsune Miku.png"
 						style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
 						width={80}
 						height={120}
@@ -66,7 +66,7 @@ export function ColorSchemeToggle() {
 				</Card>
 				<Card shadow="sm" radius="md" maw={'20vw'}>
 					<Image
-						src="/new/Megurine Luka.png"
+						src="/Megurine Luka.png"
 						style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
 						width={31}
 						height={120}

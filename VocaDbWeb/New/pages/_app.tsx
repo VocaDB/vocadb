@@ -73,7 +73,7 @@ export default function App(
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width"
 				/>
-				<link rel="shortcut icon" href="/new/favicon.ico" />
+				<link rel="shortcut icon" href="/favicon.ico" />
 			</Head>
 
 			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>

@@ -17,7 +17,7 @@ const readCookie = (cookieHeader: string | undefined, name: string): string | nu
 export const apiFetch = (path: string, req?: IncomingMessage): Promise<Response> => {
 	const authCookie = readCookie(req?.headers.cookie, '.AspNetCore.Cookies');
 	return fetch(
-		process.env.NEXT_API_URL + path,
+		process.env.NEXT_PUBLIC_API_URL + path,
 		authCookie
 			? { credentials: 'include', headers: { Cookie: `.AspNetCore.Cookies=${authCookie}` } }
 			: undefined
