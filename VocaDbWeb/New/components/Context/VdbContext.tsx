@@ -25,7 +25,8 @@ export const VdbProvider = ({ children, initialValue }: VdbProviderProps): React
 			// TODO: Error handling
 			apiFetch('/api/globals/values')
 				.then((resp) => resp.json())
-				.then((val) => setVdb(val));
+				.then((val) => setVdb(val))
+				.catch(() => console.log('Invalid vdb-values cookie'));
 		}
 	}, [vdb]);
 
