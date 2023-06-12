@@ -1,5 +1,6 @@
 'use client';
 
+import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { GlobalValues } from '@/types/GlobalValues';
 import { LoginManager } from '@/types/Models/LoginManager';
 import React, { useEffect } from 'react';
@@ -22,7 +23,7 @@ export const VdbProvider = ({ children, initialValue }: VdbProviderProps): React
 	useEffect(() => {
 		if (vdb === undefined) {
 			// TODO: Error handling
-			fetch('/api/globals/values')
+			apiFetch('/api/globals/values')
 				.then((resp) => resp.json())
 				.then((val) => setVdb(val));
 		}

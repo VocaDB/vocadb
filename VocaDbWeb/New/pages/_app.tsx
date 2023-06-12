@@ -98,11 +98,10 @@ export default function App(
 
 App.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await NextApp.getInitialProps(appContext);
-	const isServer = !!appContext.ctx.req;
 	let values;
 
 	// TODO: Better check if session is lost
-	if (!hasCookie('vdb-values', appContext.ctx) && isServer) {
+	if (!hasCookie('vdb-values', appContext.ctx)) {
 		const res = await apiFetch('/api/globals/values', appContext.ctx.req);
 		values = await res.json();
 	}
