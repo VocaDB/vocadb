@@ -13,7 +13,6 @@ import {
 	IconCalendarEvent,
 	IconDisc,
 	IconHome,
-	IconLogin,
 	IconMessageCircle,
 	IconMusic,
 	IconUserCog,
