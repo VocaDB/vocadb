@@ -1,7 +1,8 @@
 'use client';
 
 import { MantineThemeOverride } from '@mantine/core';
-import React from 'react';
+import { setCookie } from 'cookies-next';
+import React, { useEffect } from 'react';
 
 interface ThemeContext {
 	theme: MantineThemeOverride;
@@ -24,6 +25,10 @@ export const ThemeProvider = ({ children, theme, setTheme }: ThemeProviderProps)
 			primaryColor: color,
 		});
 	};
+
+	useEffect(() => {
+		setCookie('mantine-primary-color', theme.primaryColor, { maxAge: 60 * 60 * 24 * 30 });
+	}, [theme.primaryColor]);
 
 	return (
 		<ThemeContext.Provider value={{ theme, setTheme, setPrimaryColor }}>

@@ -63,12 +63,12 @@ export function ColorSchemeToggle() {
 					>
 						Apply Color
 					</Button>
-				</Card>{' '}
+				</Card>
 				<Card shadow="sm" radius="md" maw={'20vw'}>
 					<Image
 						src="/new/Megurine Luka.png"
 						style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
-						width={31.27}
+						width={31}
 						height={120}
 						alt="Hatsune Miku"
 					/>

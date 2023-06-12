@@ -11,7 +11,7 @@ interface CustomHeaderProps {
 const useStyles = createStyles((theme) => ({
 	header: {
 		display: 'flex',
-		justifyContent: 'spaceBetween',
+		justifyContent: 'space-between',
 		[theme.fn.smallerThan('sm')]: {
 			flexDirection: 'row-reverse',
 		},
