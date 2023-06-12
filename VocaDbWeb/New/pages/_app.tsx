@@ -62,7 +62,7 @@ export default function App(
 	};
 
 	useEffect(() => {
-		setCookie('vdb-values', values);
+		setCookie('vdb-values', values?.loggedUser);
 	}, [values]);
 
 	return (
