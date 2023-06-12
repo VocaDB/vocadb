@@ -12,7 +12,6 @@ try
 	// Code from: https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60?view=aspnetcore-6.0&tabs=visual-studio#use-startup-with-the-new-minimal-hosting-model.
 
 	var builder = WebApplication.CreateBuilder(args);
-	builder.Configuration.AddJsonFile("appsettings.json", false, true);
 
 	var startup = new Startup(builder.Configuration);
 

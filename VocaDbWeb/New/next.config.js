@@ -12,8 +12,8 @@ module.exports = withBundleAnalyzer({
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'i1.ytimg.com' },
 			{ protocol: 'https', hostname: 'nicovideo.cdn.nimg.jp' },
-			{ protocol: 'https', hostname: 'img.cdn.nimg.jp' },
 		],
 	},
+	basePath: '/new',
 });
 

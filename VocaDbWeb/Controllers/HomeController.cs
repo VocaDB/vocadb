@@ -42,14 +42,14 @@ public class HomeController : ControllerBase
 	//
 	// GET: /Home/
 
-	// public ActionResult Index()
-	// {
-	// 	PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
-	// 	PageProperties.AddMainScripts = false;
-	// 	PageProperties.CanonicalUrl = UrlMapper.HostAddress;
+	public ActionResult Index()
+	{
+		PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
+		PageProperties.AddMainScripts = false;
+		PageProperties.CanonicalUrl = UrlMapper.HostAddress;
 
-	// 	return ReactIndex.File(PageProperties);
-	// }
+		return ReactIndex.File(PageProperties);
+	}
 
 	[HttpPost]
 	public ActionResult GlobalSearch(GlobalSearchBoxModel model)
