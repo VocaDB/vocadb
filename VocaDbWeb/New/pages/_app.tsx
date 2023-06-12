@@ -26,16 +26,16 @@ export default function App(
 	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors: {
 			miku: [
-				'#e4fffe',
-				'#d0fffb',
-				'#a1fef6',
-				'#6ffef1',
-				'#4dfeed',
-				'#3dfeea',
-				'#30fee9',
-				'#21e2ce',
-				'#00c9b7',
-				'#00ae9e',
+				'#edfcfc',
+				'#ddf5f7',
+				'#b5edef',
+				'#8ce4e8',
+				'#6ddbe1',
+				'#5cd6dd',
+				'#51d5dc',
+				'#43bcc2',
+				'#34a7ad',
+				'#179197',
 			],
 			luka: [
 				'#ffe8f8',
