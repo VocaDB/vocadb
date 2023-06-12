@@ -18,7 +18,7 @@ export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProp
 				breakpoints={[
 					{ maxWidth: 'xl', slideSize: '33.33333%' },
 					{ maxWidth: 'md', slideSize: '50%' },
-					{ maxWidth: 'sm', slideSize: '95%', slideGap: '5%' },
+					{ maxWidth: 'xs', slideSize: '95%', slideGap: '5%' },
 				]}
 				loop
 				previousControlLabel="Previous highlighted PVs"
