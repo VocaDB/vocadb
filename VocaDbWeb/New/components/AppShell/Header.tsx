@@ -12,9 +12,6 @@ const useStyles = createStyles((theme) => ({
 	header: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		[theme.fn.smallerThan('sm')]: {
-			flexDirection: 'row-reverse',
-		},
 	},
 
 	image: {
@@ -28,15 +25,13 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 
 	return (
 		<Header height={{ base: 50, md: 70 }} className={classes.header} px="md">
-			<MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-				<Image
-					className={classes.image}
-					width={167}
-					height={69}
-					src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
-					alt=""
-				/>
-			</MediaQuery>
+			<Image
+				className={classes.image}
+				width={167}
+				height={69}
+				src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
+				alt=""
+			/>
 			<div
 				style={{
 					display: 'flex',

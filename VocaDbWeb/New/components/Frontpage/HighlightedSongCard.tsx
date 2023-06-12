@@ -17,6 +17,8 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
 			radius="md"
 			maw={'100vw'}
+			withBorder
+			shadow="sm"
 		>
 			<Card.Section>
 				<Image

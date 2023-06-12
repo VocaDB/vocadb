@@ -13,9 +13,10 @@ export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProp
 				h={'100%'}
 				sx={{ flex: 1, maxWidth: '100%' }}
 				align="center"
-				slideSize="33.333333%"
+				slideSize="25%"
 				slideGap="md"
 				breakpoints={[
+					{ maxWidth: 'xl', slideSize: '33.33333%' },
 					{ maxWidth: 'md', slideSize: '50%' },
 					{ maxWidth: 'sm', slideSize: '95%', slideGap: '5%' },
 				]}
