@@ -1,8 +1,11 @@
+using System.Runtime.Caching;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -21,15 +24,19 @@ namespace VocaDb.Web.Controllers.Api;
 [ApiController]
 public class PVApiController : ApiController
 {
+	private readonly ObjectCache _cache;
 	private readonly IPVParser _pvParser;
+	private readonly HttpClient _client;
 	private readonly IUserPermissionContext _permissionContext;
 	private readonly PVQueries _queries;
 
-	public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries)
+	public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries, HttpClient client, ObjectCache cache)
 	{
 		_pvParser = pvParser;
 		_permissionContext = permissionContext;
 		_queries = queries;
+		_client = client;
+		_cache = cache;
 	}
 
 	/// <summary>
@@ -51,6 +58,57 @@ public class PVApiController : ApiController
 		bool getTotalCount = false,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default
 	) => _queries.GetList(name, author, service, maxResults, getTotalCount, lang);
+
+	[HttpGet("thumbnail")]
+	public async Task<ActionResult> GetNNDThumbnai(string pvUrl)
+	{
+		var parseResult = await _pvParser.ParseByUrlAsync(pvUrl, false, _permissionContext);
+		if (!parseResult.IsOk)
+		{
+			return BadRequest();
+		}
+
+		var ogImage = await _cache.GetOrInsertAsync(pvUrl, CachePolicy.Never(), async () =>
+		{
+			Console.WriteLine("Cache Miss");
+			return await GetOgImage(pvUrl);
+		});
+
+		if (ogImage == null)
+		{
+			return BadRequest();
+		}
+
+		return RedirectPermanent(ogImage);
+	}
+
+	private async Task<string?> GetOgImage(string pvUrl)
+	{
+
+		var response = await _client.GetAsync(pvUrl);
+
+		if (response.IsSuccessStatusCode)
+		{
+			var html = await response.Content.ReadAsStringAsync();
+			var ogImage = ParseOgImage(html);
+
+			if (!string.IsNullOrEmpty(ogImage))
+			{
+				return ogImage;
+			}
+		}
+
+		return null;
+	}
+
+	private string? ParseOgImage(string html)
+	{
+		var htmlDocument = new HtmlDocument();
+		htmlDocument.LoadHtml(html);
+
+		var ogImageNode = htmlDocument.DocumentNode.SelectSingleNode("//meta[@property='og:image']");
+		return ogImageNode?.GetAttributeValue("content", null);
+	}
 
 	[HttpGet("")]
 	[ApiExplorerSettings(IgnoreApi = true)]
