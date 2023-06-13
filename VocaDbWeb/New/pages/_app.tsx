@@ -65,13 +65,34 @@ export default function App(
 		setCookie('vdb-values', values?.loggedUser);
 	}, [values]);
 
+	useEffect(() => {
+		const setPrimaryShade = (shade: number | undefined): void => {
+			setTheme({
+				...theme,
+				//@ts-ignore
+				primaryShade: shade,
+			});
+		};
+
+		if (theme.primaryColor === 'miku') {
+			setPrimaryShade(9);
+		} else {
+			setPrimaryShade(undefined);
+		}
+	}, [theme]);
+
 	return (
 		<>
 			<Head>
+				<html lang="en" /> {/* TODO: Make this dynamic */}
 				<title>VocaDB</title>
 				<meta
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width"
+				/>
+				<meta
+					name="description"
+					content="VocaDB is a Vocaloid music database with translated artists, albums and songs."
 				/>
 				<link rel="shortcut icon" href="/favicon.ico" />
 			</Head>

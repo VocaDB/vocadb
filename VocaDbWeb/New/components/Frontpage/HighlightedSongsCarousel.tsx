@@ -26,7 +26,7 @@ export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProp
 			>
 				{songs.map((song, key) => (
 					<Carousel.Slide key={key}>
-						<HighlightedSongCard song={song} priority={key < 3} />
+						<HighlightedSongCard song={song} priority={key < 2} />
 					</Carousel.Slide>
 				))}
 			</Carousel>

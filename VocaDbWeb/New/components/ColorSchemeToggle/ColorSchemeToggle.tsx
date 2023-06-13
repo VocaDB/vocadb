@@ -60,6 +60,7 @@ export function ColorSchemeToggle() {
 						color="miku"
 						radius="md"
 						fullWidth
+						title="Color scheme toggle"
 					>
 						Apply Color
 					</Button>
