@@ -84,7 +84,7 @@ export default function App(
 	return (
 		<>
 			<Head>
-				<html lang="en" /> {/* TODO: Make this dynamic */}
+				{/* TODO: Make this dynamic */}
 				<title>VocaDB</title>
 				<meta
 					name="viewport"
