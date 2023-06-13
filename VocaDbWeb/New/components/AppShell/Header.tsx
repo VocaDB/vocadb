@@ -2,6 +2,7 @@ import { Burger, Header, MediaQuery, createStyles, useMantineTheme } from '@mant
 import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
+import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 
 interface CustomHeaderProps {
 	opened: boolean;
@@ -39,6 +40,7 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 					height: '100%',
 				}}
 			>
+				<ColorSchemeToggle />
 				<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
 					<Burger
 						opened={opened}

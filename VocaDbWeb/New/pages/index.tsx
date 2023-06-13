@@ -10,9 +10,10 @@ export default function HomePage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column' }}>
-			<Title order={2}>Highlighted PVs</Title>
+			<Title order={2} mb="xs">
+				Highlighted PVs
+			</Title>
 			<HighlightedSongsCarousel songs={frontPage.newSongs} />
-			<ColorSchemeToggle />
 		</div>
 	);
 }
