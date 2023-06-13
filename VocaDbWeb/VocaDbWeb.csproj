@@ -29,21 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="New\.next\standalone\**" CopyToPublishDirectory="PreserveNewest" />
-    <!-- Move items from New/.next/static to New/.next/standalone/static -->
-    <Content Include="New\.next\static\**">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>New\.next\standalone\.next\static\%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </Content>
-    <Content Include="New\public\**">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>New\.next\standalone\public\%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AspNetCore.CacheOutput.InMemory" Version="2.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="BeginCollectionItemCore" Version="1.1.0" />

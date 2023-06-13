@@ -58,6 +58,8 @@ public class Startup
 	// This method gets called by the runtime. Use this method to add services to the container.
 	public void ConfigureServices(IServiceCollection services)
 	{
+		services.AddHttpClient();
+
 		// Code from: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-5.0
 		services.Configure<SmtpSettings>(Configuration.GetSection(SmtpSettings.Smtp));
 		services.Configure<DiscordWebhookSettings>(Configuration.GetSection(DiscordWebhookSettings.DiscordWebhook));
@@ -144,12 +146,10 @@ public class Startup
 					.AllowAnyHeader()
 					.AllowAnyMethod()
 					.WithOrigins(AppConfig.AllowedCorsOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries))
+					.SetIsOriginAllowedToAllowWildcardSubdomains()
 					.AllowCredentials();
 			});
 		});
-
-		services.AddReverseProxy()
-			.LoadFromConfig(Configuration.GetSection("ReverseProxy"));
 	}
 
 	private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -376,8 +376,6 @@ public class Startup
 			endpoints.MapControllerRoute("Help", "Help/{**clientPath}", new { controller = "Help", action = "Index" });
 			endpoints.MapControllerRoute("Playlist", "playlist/{**clientPath}", new { controller = "Playlist", action = "Index" });
 
-			endpoints.MapReverseProxy();
-
 			endpoints.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -386,58 +384,5 @@ public class Startup
 		});
 
 		app.UseOpenTelemetryPrometheusScrapingEndpoint();
-
-		StartNextJsServer(env);
-
-		appLifetime.ApplicationStopping.Register(StopNodeServer);
-	}
-
-	private void StartNextJsServer(IWebHostEnvironment env)
-	{
-		var nodeProcessInfo = new ProcessStartInfo("node")
-		{
-			Arguments = "server.js",
-			UseShellExecute = false,
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-			WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New", ".next", "standalone")
-		};
-
-		if (env.IsDevelopment())
-		{
-			nodeProcessInfo = new ProcessStartInfo("npm")
-			{
-				Arguments = "run dev",
-				UseShellExecute = false,
-				RedirectStandardOutput = true,
-				RedirectStandardError = true,
-				WorkingDirectory = System.IO.Path.Combine(env.ContentRootPath, "New")
-			};
-		}
-
-		nodeProcess = new Process { StartInfo = nodeProcessInfo };
-		nodeProcess.OutputDataReceived += (_, e) => Console.WriteLine(e.Data);
-		nodeProcess.ErrorDataReceived += (_, e) => Console.WriteLine(e.Data);
-
-		Console.WriteLine("Starting Node.js server...");
-		nodeProcess.Start();
-
-		nodeProcess.BeginOutputReadLine();
-		nodeProcess.BeginErrorReadLine();
-		Console.WriteLine("Node.js server started");
-	}
-
-	private void StopNodeServer()
-	{
-		if (nodeProcess != null && !nodeProcess.HasExited)
-		{
-			Console.WriteLine("Stopping Node.js server...");
-			nodeProcess.CloseMainWindow();
-			if (!nodeProcess.WaitForExit(5000))
-			{
-				nodeProcess.Kill();
-			}
-			nodeProcess.Dispose();
-		}
 	}
 }
