@@ -1,3 +1,5 @@
+import { apiFetch } from '@/Helpers/FetchApiHelper';
+import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Button, Card, Group, Stack, Text } from '@mantine/core';
 import Image from 'next/image';
@@ -8,10 +10,26 @@ interface HighlightedSongCardProps {
 	priority?: boolean;
 }
 
+const PREFERRED_SERVICES = ['Youtube', 'NicoNicoDouga', 'Bilibili', 'Vimeo'];
+
+const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
+	return pvs
+		.filter((pv) => !pv.disabled && pv.url !== undefined)
+		.reduce((currPV: PVContract | undefined, nextPV) => {
+			const currPos = PREFERRED_SERVICES.indexOf(currPV?.service ?? '');
+			const nextPos = PREFERRED_SERVICES.indexOf(nextPV.service ?? '');
+			if (
+				currPV === undefined ||
+				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos > currPos)
+			) {
+				return nextPV;
+			}
+			return currPV;
+		}, undefined)?.url;
+};
+
 // TODO: Move styles to separate file
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
-	const pictureSrc = song.mainPicture?.urlOriginal;
-
 	return (
 		<Card
 			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -21,8 +39,12 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 			shadow="sm"
 		>
 			<Card.Section>
+				{/* TODO: Move the url creation code into a separate function */}
 				<Image
-					src={pictureSrc ?? ''}
+					src={`${
+						process.env.NEXT_PUBLIC_API_URL
+					}/api/pvs/thumbnail?pvUrl=${getBestThumbUrl(song.pvs)}`}
+					blurDataURL={song.mainPicture?.urlSmallThumb}
 					height={240}
 					width={360}
 					style={{ width: '100%', objectFit: 'cover' }}
