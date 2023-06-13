@@ -11,6 +11,7 @@ export function ColorSchemeToggle() {
 		<>
 			<Group position="center" mt="xl">
 				<ActionIcon
+					title="Toogle color scheme"
 					onClick={() => toggleColorScheme()}
 					size="xl"
 					sx={(theme) => ({
@@ -60,7 +61,7 @@ export function ColorSchemeToggle() {
 						color="miku"
 						radius="md"
 						fullWidth
-						title="Color scheme toggle"
+						title="Apply Miku color scheme"
 					>
 						Apply Color
 					</Button>
@@ -87,6 +88,7 @@ export function ColorSchemeToggle() {
 						color="luka"
 						radius="md"
 						fullWidth
+						title="Apply Luka color scheme"
 					>
 						Apply Color
 					</Button>
