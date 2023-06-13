@@ -146,6 +146,7 @@ public class Startup
 					.AllowAnyHeader()
 					.AllowAnyMethod()
 					.WithOrigins(AppConfig.AllowedCorsOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries))
+					.SetIsOriginAllowedToAllowWildcardSubdomains()
 					.AllowCredentials();
 			});
 		});
