@@ -1,4 +1,3 @@
-import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Button, Card, Group, Stack, Text } from '@mantine/core';
@@ -34,7 +33,6 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 		<Card
 			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
 			radius="md"
-			maw={'100vw'}
 			withBorder
 			shadow="sm"
 		>
@@ -61,7 +59,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 				</div>
 
 				<Group position="apart">
-					<Text>{`something something`}</Text>
+					<Text>{`Score: ${song.ratingScore}`}</Text>
 					<Button
 						component={Link}
 						href={`/S/${song.id}`}
