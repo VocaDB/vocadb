@@ -62,17 +62,21 @@ public class PVApiController : ApiController
 	[HttpGet("thumbnail")]
 	public async Task<ActionResult> GetNNDThumbnai(string pvUrl)
 	{
-		var parseResult = await _pvParser.ParseByUrlAsync(pvUrl, false, _permissionContext);
-		if (!parseResult.IsOk)
+		if (!VideoServiceHelper.Services.Any(s => s.IsValidFor(pvUrl)))
 		{
 			return BadRequest();
 		}
 
 		var ogImage = await _cache.GetOrInsertAsync(pvUrl, CachePolicy.Never(), async () =>
 		{
-			Console.WriteLine("Cache Miss");
-			return await GetOgImage(pvUrl);
+			return await GetOgImage(pvUrl) ?? string.Empty;
 		});
+
+		// Recheck if cached item is null
+		if (string.IsNullOrEmpty(ogImage))
+		{
+			return NotFound();
+		}
 
 		if (ogImage == null)
 		{
@@ -82,6 +86,7 @@ public class PVApiController : ApiController
 		return RedirectPermanent(ogImage);
 	}
 
+	// TODO: Move this code in a separate class
 	private async Task<string?> GetOgImage(string pvUrl)
 	{
 
@@ -107,7 +112,13 @@ public class PVApiController : ApiController
 		htmlDocument.LoadHtml(html);
 
 		var ogImageNode = htmlDocument.DocumentNode.SelectSingleNode("//meta[@property='og:image']");
-		return ogImageNode?.GetAttributeValue("content", null);
+		var ogImage = ogImageNode?.GetAttributeValue("content", null);
+
+		// Fallback for piapro
+		var twitterImageNode = htmlDocument.DocumentNode.SelectSingleNode("//meta[@name='twitter:image']");
+		var twitterImage = twitterImageNode?.GetAttributeValue("content", null);
+
+		return ogImage ?? twitterImage;
 	}
 
 	[HttpGet("")]
