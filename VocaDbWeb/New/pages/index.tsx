@@ -1,4 +1,3 @@
-import { Welcome } from '../components/Welcome/Welcome';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
@@ -20,9 +19,12 @@ export default function HomePage({
 
 export const getServerSideProps: GetServerSideProps<{
 	frontPage: FrontPageContract;
-}> = async () => {
-	const res = await apiFetch('/api/frontpage');
-	const frontPage = await res.json();
+}> = async ({ res }) => {
+	res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+
+	const apiResp = await apiFetch('/api/frontpage');
+	const frontPage = await apiResp.json();
+
 	return { props: { frontPage } };
 };
 
