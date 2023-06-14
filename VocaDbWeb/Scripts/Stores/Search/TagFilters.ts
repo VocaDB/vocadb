@@ -41,10 +41,14 @@ export class TagFilters {
 	@action addTag = (tag: TagBaseContract): number =>
 		this.tags.push(TagFilter.fromContract(tag));
 
-	@action addTags = (selectedTagIds: number[]): void => {
+	@action addTags = (selectedTagIds: number[], excluded = false): void => {
 		if (!selectedTagIds) return;
 
-		const filters = selectedTagIds.map((a) => new TagFilter(a));
+		const filters = selectedTagIds.map((a) => {
+			let filter = new TagFilter(a);
+			filter.excluded = excluded;
+			return filter;
+		});
 		this.tags.push(...filters);
 
 		if (!this.tagRepo) return;
@@ -65,6 +69,13 @@ export class TagFilters {
 				});
 		}
 	};
+
+	@action toggleTagExcluded(tagId: number): void {
+		let tag = this.tags.filter(t => t.id === tagId);
+		if (tag.length > 0 ) {
+			tag[0].excluded = !tag[0].excluded;
+		}
+	}
 
 	@action removeTag = (tag: TagFilter): void => {
 		pull(this.tags, tag);
