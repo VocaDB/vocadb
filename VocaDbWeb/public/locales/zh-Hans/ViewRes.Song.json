@@ -1,6 +1,6 @@
 {
   "Create": {
-    "ArtistDesc": "Producers, vocalists and Vocaloids associated with this song.",
+    "ArtistDesc": "与这首歌相关的制作人、歌手和Vocaloids。",
     "ArtistHelp": "If the artist cannot be found it probably hasn't been added yet. Check other possible spellings of that artist's name, and if you're confident there's no entry yet, please create one using the \"Add an artist\" menu. You can do this after the song has already been created. You can't create the artist on this page.",
     "ArtistsInfo": "Artists (need at least one)",
     "Draft": "This entry is a draft",
