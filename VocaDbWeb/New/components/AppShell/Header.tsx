@@ -2,6 +2,7 @@ import { Burger, Header, MediaQuery, createStyles, useMantineTheme } from '@mant
 import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
+import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 
 interface CustomHeaderProps {
 	opened: boolean;
@@ -12,9 +13,6 @@ const useStyles = createStyles((theme) => ({
 	header: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		[theme.fn.smallerThan('sm')]: {
-			flexDirection: 'row-reverse',
-		},
 	},
 
 	image: {
@@ -28,15 +26,13 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 
 	return (
 		<Header height={{ base: 50, md: 70 }} className={classes.header} px="md">
-			<MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-				<Image
-					className={classes.image}
-					width={167}
-					height={69}
-					src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
-					alt=""
-				/>
-			</MediaQuery>
+			<Image
+				className={classes.image}
+				width={167}
+				height={69}
+				src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
+				alt=""
+			/>
 			<div
 				style={{
 					display: 'flex',
@@ -44,6 +40,7 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 					height: '100%',
 				}}
 			>
+				<ColorSchemeToggle />
 				<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
 					<Burger
 						opened={opened}

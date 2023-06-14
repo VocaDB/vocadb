@@ -1,35 +1,35 @@
 {
   "Details": {
-    "Albums": "Albums",
+    "Albums": "专辑",
     "Attending": "Attending",
-    "Category": "Category",
-    "Event": "Event",
-    "OccurrenceDate": "Date",
+    "Category": "类别",
+    "Event": "活动",
+    "OccurrenceDate": "日期",
     "PVs": "PVs",
-    "RemoveAttendance": "Remove from my events",
-    "Series": "Series",
-    "SongList": "Setlist",
-    "Songs": "Songs",
+    "RemoveAttendance": "从我的活动中移除",
+    "Series": "系列",
+    "SongList": "曲目列表",
+    "Songs": "曲目",
     "UserAttending": "I'm attending",
     "UserInterested": "I'm interested",
     "Venue": "Venue"
   },
   "EventsBySeries": {
-    "CreateEvent": "Create event",
-    "CreateSeries": "Create series",
-    "CreateVenue": "Create venue",
-    "ViewByDate": "All by date",
-    "ViewBySeries": "All by series",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Upcoming"
+    "CreateEvent": "创建新活动",
+    "CreateSeries": "创建新系列",
+    "CreateVenue": "创建新地点",
+    "ViewByDate": "按日期排序",
+    "ViewBySeries": "按系列排序",
+    "ViewByVenue": "按地点排序",
+    "ViewList": "即将到来"
   },
   "Find": {
-    "CreateEvent": "Create event",
-    "EventNotFound": "Sorry, an event with this name could not be found. It probably hasn't been added to the database yet.",
-    "FindEvent": "Find event",
+    "CreateEvent": "创建新活动",
+    "EventNotFound": "抱歉，找不到一个具有此名称的活动。它可能还没有被添加到数据库中。",
+    "FindEvent": "搜索活动",
     "Number": "number",
-    "Series": "Series",
-    "UngroupedEventNamed": "Ungrouped event named:",
-    "YouMayAddTheEvent": "You may add the event to the database."
+    "Series": "系列",
+    "UngroupedEventNamed": "未分组活动名称：",
+    "YouMayAddTheEvent": "您可以将活动添加到数据库中。"
   }
 }

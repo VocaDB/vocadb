@@ -1,6 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagFilters as TagFiltersStore } from '@/Stores/Search/TagFilters';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -15,10 +16,7 @@ export const TagFiltersBase = observer(
 			<>
 				{tagFilters.tags.map((tag, index) => (
 					<div className="control-group" key={index}>
-						<div
-							style={{ display: 'inline-block' }}
-							className="input-append input-prepend"
-						>
+						<div className="input-append input-prepend">
 							<Button
 								as={Link}
 								className="btn-nomargin"
@@ -33,6 +31,11 @@ export const TagFiltersBase = observer(
 									readOnly
 									value={tag.name ?? ''}
 								/>
+								<Button
+									onClick={(): any => tagFilters.toggleTagExcluded(tag.id)}
+								>
+									{tag.excluded ? 'Exclude' : 'Include'}
+								</Button>
 								<Button
 									variant="danger"
 									onClick={(): void => tagFilters.removeTag(tag)}

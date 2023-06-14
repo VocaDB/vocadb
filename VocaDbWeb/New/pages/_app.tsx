@@ -26,16 +26,16 @@ export default function App(
 	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors: {
 			miku: [
-				'#e4fffe',
-				'#d0fffb',
-				'#a1fef6',
-				'#6ffef1',
-				'#4dfeed',
-				'#3dfeea',
-				'#30fee9',
-				'#21e2ce',
-				'#00c9b7',
-				'#00ae9e',
+				'#edfcfc',
+				'#ddf5f7',
+				'#b5edef',
+				'#8ce4e8',
+				'#6ddbe1',
+				'#5cd6dd',
+				'#51d5dc',
+				'#43bcc2',
+				'#34a7ad',
+				'#179197',
 			],
 			luka: [
 				'#ffe8f8',
@@ -62,18 +62,39 @@ export default function App(
 	};
 
 	useEffect(() => {
-		setCookie('vdb-values', values);
+		setCookie('vdb-values', values?.loggedUser);
 	}, [values]);
+
+	useEffect(() => {
+		const setPrimaryShade = (shade: number | undefined): void => {
+			setTheme({
+				...theme,
+				//@ts-ignore
+				primaryShade: shade,
+			});
+		};
+
+		if (theme.primaryColor === 'miku') {
+			setPrimaryShade(9);
+		} else {
+			setPrimaryShade(undefined);
+		}
+	}, [theme]);
 
 	return (
 		<>
 			<Head>
+				{/* TODO: Make this dynamic */}
 				<title>VocaDB</title>
 				<meta
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width"
 				/>
-				<link rel="shortcut icon" href="/new/favicon.ico" />
+				<meta
+					name="description"
+					content="VocaDB is a Vocaloid music database with translated artists, albums and songs."
+				/>
+				<link rel="shortcut icon" href="/favicon.ico" />
 			</Head>
 
 			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -98,11 +119,10 @@ export default function App(
 
 App.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await NextApp.getInitialProps(appContext);
-	const isServer = !!appContext.ctx.req;
 	let values;
 
 	// TODO: Better check if session is lost
-	if (!hasCookie('vdb-values', appContext.ctx) && isServer) {
+	if (!hasCookie('vdb-values', appContext.ctx)) {
 		const res = await apiFetch('/api/globals/values', appContext.ctx.req);
 		values = await res.json();
 	}

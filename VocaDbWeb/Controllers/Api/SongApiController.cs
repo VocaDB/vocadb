@@ -343,7 +343,8 @@ public class SongApiController : ApiController
 		int? minLength = null,
 		int? maxLength = null,
 		string? language = null,
-		[FromQuery(Name = "languages[]")] string[]? languages = null
+		[FromQuery(Name = "languages[]")] string[]? languages = null,
+		[FromQuery(Name = "excludedTagIds[]")] int[]? excludedTagIds = null
 	)
 	{
 		var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -388,7 +389,8 @@ public class SongApiController : ApiController
 			MinLength = minLength,
 			MaxLength = maxLength,
 			Language = language,
-			Languages = languages
+			Languages = languages,
+			ExcludedTagIds = excludedTagIds
 		};
 		param = param with { Common = param.Common with { EntryStatus = status } };
 

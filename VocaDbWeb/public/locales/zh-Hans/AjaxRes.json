@@ -10,7 +10,7 @@
     "DraftsOnlyFilter": "草稿状态",
     "ExactTitleFilter": "exact title '{{0}}'",
     "FilterPre": "根据此条件筛选",
-    "StartsWithTitleFilter": "starting with title '{{0}}'",
+    "StartsWithTitleFilter": "以标题‘{{0}}’开始",
     "TitleFilter": "标题'{{0}}'"
   },
   "Shared": {
