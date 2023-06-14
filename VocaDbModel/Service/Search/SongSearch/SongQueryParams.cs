@@ -131,6 +131,8 @@ public sealed record SongQueryParams
 
 	public int[]? TagIds { get; init; }
 
+	public int[]? ExcludedTagIds { get; init; }
+
 	public TimeSpan TimeFilter { get; init; }
 
 	/// <summary>

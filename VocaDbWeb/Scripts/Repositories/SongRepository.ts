@@ -62,6 +62,7 @@ export interface SongGetListQueryParams {
 	afterDate?: Date;
 	beforeDate?: Date;
 	tagIds?: number[];
+	excludedTagIds?: number[];
 	childTags?: boolean;
 	unifyTypesAndTags?: boolean;
 	artistIds?: number[];
@@ -87,7 +88,8 @@ export interface SongGetListQueryParams {
 // Corresponds to the SongController class.
 export class SongRepository
 	extends BaseRepository
-	implements ICommentRepository {
+	implements ICommentRepository
+{
 	private readonly urlMapper: UrlMapper;
 
 	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
@@ -393,6 +395,7 @@ export class SongRepository
 			minLength,
 			maxLength,
 			languages,
+			excludedTagIds,
 		} = queryParams;
 
 		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
@@ -429,6 +432,7 @@ export class SongRepository
 			minLength: minLength,
 			maxLength: maxLength,
 			languages: languages,
+			excludedTagIds: excludedTagIds,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<SongContract>>(

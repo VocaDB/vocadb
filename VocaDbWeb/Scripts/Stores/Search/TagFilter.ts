@@ -1,8 +1,9 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
-import { makeObservable, observable } from 'mobx';
+import {  makeObservable, observable } from 'mobx';
 
 export class TagFilter {
 	@observable name?: string = undefined;
+	@observable excluded: boolean = false;
 	@observable urlSlug?: string = undefined;
 
 	constructor(readonly id: number, name?: string, urlSlug?: string) {

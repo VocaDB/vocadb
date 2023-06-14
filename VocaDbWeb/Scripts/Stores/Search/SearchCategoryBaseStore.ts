@@ -94,20 +94,33 @@ export abstract class SearchCategoryBaseStore<
 		this.commonSearchStore.showTags = value;
 	}
 
-	@computed get tags(): TagFilter[] {
-		return this.commonSearchStore.tagFilters.tags;
+	@computed get includedTags(): TagFilter[] {
+		return this.commonSearchStore.tagFilters.tags.filter(t => !t.excluded);
 	}
 	set tags(value: TagFilter[]) {
 		this.commonSearchStore.tagFilters.tags = value;
 	}
 
+	@computed get excludedTags(): TagFilter[] {
+		return this.commonSearchStore.tagFilters.tags.filter(t => t.excluded);
+	}
+
 	@computed get tagIds(): number[] {
-		return this.tags.map((t) => t.id);
+		return this.includedTags.map((t) => t.id);
 	}
 	set tagIds(value: number[]) {
 		// OPTIMIZE
-		this.commonSearchStore.tagFilters.tags = [];
+		this.commonSearchStore.tagFilters.tags = this.excludedTags;
 		this.commonSearchStore.tagFilters.addTags(value);
+	}
+	
+	@computed get excludedTagIds(): number[] {
+		return this.excludedTags.map((t) => t.id);
+	}
+	set excludedTagIds(value: number[]) {
+		// OPTIMIZE
+		this.commonSearchStore.tagFilters.tags = this.includedTags;
+		this.commonSearchStore.tagFilters.addTags(value, true);
 	}
 
 	formatDate = (dateStr: string): string => {

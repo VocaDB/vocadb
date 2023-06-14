@@ -65,6 +65,7 @@ export interface SongSearchRouteParams {
 	dateMonth?: number;
 	dateDay?: number;
 	draftsOnly?: boolean;
+	excludedTags?: number[];
 	eventId?: number;
 	filter?: string;
 	includeMembers?: boolean;
@@ -120,7 +121,7 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 	'maxMilliBpm',
 	'minLength',
 	'maxLength',
-	'languages',
+	'languages'
 ];
 
 export class SongSearchStore
@@ -259,6 +260,7 @@ export class SongSearchStore
 				? this.maxLengthFilter.length
 				: undefined,
 			languages: this.languages,
+			excludedTagIds: this.excludedTags.map(t => t.id)
 		};
 	}
 
@@ -339,6 +341,7 @@ export class SongSearchStore
 			unifyEntryTypesAndTags: this.unifyEntryTypesAndTags,
 			viewMode: this.viewMode,
 			languages: this.languages,
+			excludedTags: this.excludedTags.map(t => t.id)
 		};
 	}
 	set locationState(value: SongSearchRouteParams) {
@@ -376,6 +379,7 @@ export class SongSearchStore
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
 		this.languages = value.languages ?? [];
+		this.excludedTagIds = ([] as number[]).concat(value.excludedTags ?? []);
 	}
 
 	onLocationStateChange = (

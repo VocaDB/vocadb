@@ -293,6 +293,11 @@ public static class SongQueryableExtensions
 		return query.WhereHasTags<Song, SongTagUsage>(tagId, childTags);
 	}
 
+	public static IQueryable<Song> WhereNotHasTags(this IQueryable<Song> query, int[]? tagId, bool childTags = false)
+	{
+		return query.WhereNotHasTags<Song, SongTagUsage>(tagId, childTags);
+	}
+
 	public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType[] songTypes)
 	{
 		if (!songTypes.Any())
