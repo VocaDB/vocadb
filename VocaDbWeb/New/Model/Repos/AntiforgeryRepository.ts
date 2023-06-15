@@ -1,7 +1,7 @@
-import { apiFetch, readCookie } from '@/Helpers/FetchApiHelper';
+import { readCookie } from '@/Helpers/FetchApiHelper';
 
 export const getXsrfToken = async () => {
-	await apiFetch('/api/antiforgery/token');
+	await fetch('/api/antiforgery/token');
 
 	const xsrfToken = readCookie(document.cookie, 'XSRF-TOKEN');
 
