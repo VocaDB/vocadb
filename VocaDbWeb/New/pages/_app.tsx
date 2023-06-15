@@ -51,6 +51,7 @@ export default function App(
 			],
 		},
 		primaryColor,
+		primaryShade: primaryColor === 'miku' ? 9 : undefined,
 	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
