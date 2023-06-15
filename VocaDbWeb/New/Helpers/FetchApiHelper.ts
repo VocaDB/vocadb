@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 
-const readCookie = (cookieHeader: string | undefined, name: string): string | null => {
+export const readCookie = (cookieHeader: string | undefined, name: string): string | null => {
 	if (!cookieHeader) {
 		return null;
 	}
