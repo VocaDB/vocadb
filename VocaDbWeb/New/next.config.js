@@ -7,6 +7,10 @@ module.exports = withBundleAnalyzer({
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	i18n: {
+		locales: ['en'],
+		defaultLocale: 'en',
+	},
 	images: {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'i1.ytimg.com' },
