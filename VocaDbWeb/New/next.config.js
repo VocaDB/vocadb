@@ -21,5 +21,13 @@ module.exports = withBundleAnalyzer({
 			{ protocol: 'http', hostname: '127.0.0.1' },
 		],
 	},
+	async rewrites() {
+		return [
+			{
+				source: '/api/:slug*',
+				destination: 'https://vocadb.net/api/:slug*',
+			},
+		];
+	},
 });
 
