@@ -47,7 +47,10 @@ const ArtistSearchOptions = observer(
 							placeholder="(Show all)"
 							extended={artistSearchStore.languagesExtended}
 							onChange={(e): void => {
-								artistSearchStore.languages = [e.target.value];
+								artistSearchStore.languages = getCodeGroup(
+									e.target.value,
+									artistSearchStore.languagesExtended,
+								);
 							}}
 						/>
 
