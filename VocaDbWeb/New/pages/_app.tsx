@@ -67,6 +67,10 @@ export default function App(
 
 	useEffect(() => {
 		const setPrimaryShade = (shade: number | undefined): void => {
+			// Prevent infinite update loop
+			if (theme.primaryShade === shade) {
+				return;
+			}
 			setTheme({
 				...theme,
 				//@ts-ignore
