@@ -24,8 +24,8 @@ module.exports = withBundleAnalyzer({
 	async rewrites() {
 		return [
 			{
-				source: '/api/:slug*',
-				destination: 'https://vocadb.net/api/:slug*',
+				source: '/api/antiforgery/token',
+				destination: 'https://vocadb.net/api/antiforgery/token',
 			},
 		];
 	},
