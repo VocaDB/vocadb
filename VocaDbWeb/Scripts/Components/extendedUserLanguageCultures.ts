@@ -455,6 +455,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'lv',
+		{
+			languages: ['Latvian', 'Lettish'],
+			nativeName: 'latviešu valoda',
+		},
+	],
+	[
 		'bo',
 		{
 			languages: ['Tibetan', 'Lhasa Tibetan', 'Standard Tibetan'],

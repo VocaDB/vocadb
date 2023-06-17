@@ -47,9 +47,7 @@ function assertPath(path: any): void {
 }
 
 // Code from: https://github.com/browserify/path-browserify/blob/4df8c2ae7efbecf54538aafc34b295c0934f256e/index.js#L445.
-function parsePath(
-	path: string,
-): {
+function parsePath(path: string): {
 	root: string;
 	dir: string;
 	base: string;
@@ -518,6 +516,7 @@ const ProfileSettingsTabContent = observer(
 		pictureUploadRef,
 	}: ProfileSettingsTabContentProps): React.ReactElement => {
 		const { t } = useTranslation([
+			'ViewRes',
 			'ViewRes.User',
 			'VocaDb.Web.Resources.Domain.Globalization',
 		]);
@@ -560,6 +559,7 @@ const ProfileSettingsTabContent = observer(
 											placeholder={t(
 												'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
 											)}
+											extended={mySettingsStore.extendLanguages}
 											value={knownLanguage.cultureCode}
 											onChange={(e): void =>
 												runInAction(() => {
@@ -602,6 +602,15 @@ const ProfileSettingsTabContent = observer(
 					>
 						{t('ViewRes.User:MySettings.AddKnownLanguage')}
 					</SafeAnchor>
+					{!mySettingsStore.extendLanguages && (
+						<SafeAnchor
+							href="#"
+							className="textLink addLink"
+							onClick={(): any => (mySettingsStore.extendLanguages = true)}
+						>
+							{t('ViewRes:EntryEdit.LyExtendLanguages')}
+						</SafeAnchor>
+					)}
 				</div>
 
 				<div className="editor-label">

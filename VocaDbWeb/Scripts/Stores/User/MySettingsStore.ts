@@ -52,6 +52,7 @@ export class MySettingsStore {
 	@observable submitting = false;
 	@observable unreadNotificationsToKeep: string;
 	@observable username: string;
+	@observable extendLanguages = false;
 	readonly webLinksStore: WebLinksEditStore;
 
 	constructor(
@@ -80,6 +81,10 @@ export class MySettingsStore {
 		this.unreadNotificationsToKeep = contract.unreadNotificationsToKeep.toString();
 		this.username = contract.name;
 		this.webLinksStore = new WebLinksEditStore(contract.webLinks);
+
+		if (contract.knownLanguages.filter(lang => lang.cultureCode.length > 2).length > 0) {
+			this.extendLanguages = true;
+		}
 	}
 
 	// TODO: support showing the verification button by saving email immediately after it's changed
