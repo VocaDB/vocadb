@@ -117,20 +117,18 @@ interface OwnedUserProps {
 	user: UserApiContract;
 }
 
-const OwnedUser = observer(
-	({ user }: OwnedUserProps): React.ReactElement => {
-		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(user.id)) return <></>;
+const OwnedUser = observer(({ user }: OwnedUserProps): React.ReactElement => {
+	const mutedUsers = useMutedUsers();
+	if (mutedUsers.includes(user.id)) return <></>;
 
-		return (
-			<>
-				{/* eslint-disable-next-line react/jsx-pascal-case */}
-				<UserIconLink_UserForApiContract user={user} tooltip={true} />
-				<br />
-			</>
-		);
-	},
-);
+	return (
+		<>
+			{/* eslint-disable-next-line react/jsx-pascal-case */}
+			<UserIconLink_UserForApiContract user={user} tooltip={true} />
+			<br />
+		</>
+	);
+});
 
 interface ArtistBasicInfoProps {
 	artist: ArtistDetailsContract;
@@ -282,7 +280,11 @@ const ArtistBasicInfo = observer(
 									<td>{t('ViewRes:EntryDetails.Languages')}</td>
 									<td>
 										{artist.cultureCodes
-											.map((c) => getCodeDescription(c)?.englishName ?? '')
+											.map(
+												(c) =>
+													getCodeDescription(c)?.englishName ??
+													t('ViewRes.Artist:Details.LyricsLanguageOther'),
+											)
 											.filter((l) => l !== '')
 											.join(', ')}
 									</td>
