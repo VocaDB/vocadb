@@ -122,9 +122,11 @@ const AlbumBasicInfo = observer(
 		]);
 
 		const distinctLanguages = new Set(
-			model.cultureCodes
-				.map((l) => getCodeDescription(l)?.englishName ?? '')
-				.filter((l) => l !== ''),
+			model.cultureCodes.map(
+				(l) =>
+					getCodeDescription(l)?.englishName ??
+					t('ViewRes.Album:Details.Other'),
+			),
 		);
 		const languages = [...distinctLanguages.values()].join(', ');
 
