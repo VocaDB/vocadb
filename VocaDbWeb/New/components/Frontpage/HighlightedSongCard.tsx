@@ -3,6 +3,7 @@ import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPV
 import { Button, Card, Group, Stack, Text } from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
+import useStyles from './HighlightedSongCard.styles';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -27,8 +28,9 @@ const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 		}, undefined)?.url;
 };
 
-// TODO: Move styles to separate file
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
+	const styles = useStyles();
+
 	const bestThumbUrl = getBestThumbUrl(song.pvs);
 
 	if (!bestThumbUrl) {
@@ -36,12 +38,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 	}
 
 	return (
-		<Card
-			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-			radius="md"
-			withBorder
-			shadow="sm"
-		>
+		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
 				<Image
@@ -52,12 +49,12 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					blurDataURL={song.mainPicture?.urlSmallThumb}
 					height={240}
 					width={360}
-					style={{ width: '100%', objectFit: 'cover' }}
+					className={styles.classes.image}
 					alt={`${song.name} thumbnail`}
 					priority={priority}
 				/>
 			</Card.Section>
-			<Stack mt="md" style={{ justifyContent: 'space-between', flex: 2 }}>
+			<Stack mt="md" className={styles.classes.contentStack}>
 				<div>
 					<Text weight={500}>{song.name}</Text>
 					<Text size="sm" color="dimmed">
