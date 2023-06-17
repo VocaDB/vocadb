@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 
-const readCookie = (cookieHeader: string | undefined, name: string): string | null => {
+export const readCookie = (cookieHeader: string | undefined, name: string): string | null => {
 	if (!cookieHeader) {
 		return null;
 	}
@@ -14,13 +14,46 @@ const readCookie = (cookieHeader: string | undefined, name: string): string | nu
 	return null;
 };
 
-export const apiFetch = (path: string, req?: IncomingMessage): Promise<Response> => {
+export const apiFetch = async (path: string, req?: IncomingMessage): Promise<Response> => {
 	const authCookie = readCookie(req?.headers.cookie, '.AspNetCore.Cookies');
-	return fetch(
+	const resp = await fetch(
 		process.env.NEXT_PUBLIC_API_URL + path,
 		authCookie
 			? { credentials: 'include', headers: { Cookie: `.AspNetCore.Cookies=${authCookie}` } }
-			: undefined
+			: { credentials: 'include' }
 	);
+
+	if (!resp.ok) {
+		return Promise.reject(resp);
+	}
+
+	return resp;
+};
+
+export const apiPost = async (
+	path: string,
+	data: any,
+	token?: string | null
+): Promise<Response> => {
+	let headers: any = {
+		'Content-Type': 'application/json',
+	};
+
+	if (token) {
+		headers.requestVerificationToken = token;
+	}
+
+	const resp = await fetch(process.env.NEXT_PUBLIC_API_URL + path, {
+		headers,
+		body: JSON.stringify(data),
+		method: 'POST',
+		credentials: 'include',
+	});
+
+	if (!resp.ok) {
+		return Promise.reject(resp);
+	}
+
+	return resp;
 };
 

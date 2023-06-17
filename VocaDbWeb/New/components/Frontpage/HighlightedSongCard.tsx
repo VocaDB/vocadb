@@ -29,6 +29,12 @@ const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 
 // TODO: Move styles to separate file
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
+	const bestThumbUrl = getBestThumbUrl(song.pvs);
+
+	if (!bestThumbUrl) {
+		return <></>;
+	}
+
 	return (
 		<Card
 			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -39,9 +45,10 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
 				<Image
-					src={`${
-						process.env.NEXT_PUBLIC_API_URL
-					}/api/pvs/thumbnail?pvUrl=${getBestThumbUrl(song.pvs)}`}
+					src={bestThumbUrl}
+					loader={(props) =>
+						`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${props.src}`
+					}
 					blurDataURL={song.mainPicture?.urlSmallThumb}
 					height={240}
 					width={360}
@@ -63,7 +70,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					<Button
 						component={Link}
 						href={`/S/${song.id}`}
-						variant="light"
+						variant="outline"
 						radius="md"
 						title="Song Info"
 					>

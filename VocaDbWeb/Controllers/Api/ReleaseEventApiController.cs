@@ -64,7 +64,7 @@ public class ReleaseEventApiController : ApiController
 	/// </param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "", bool hardDelete = false)
 	{
 		notes ??= string.Empty;
@@ -253,7 +253,7 @@ public class ReleaseEventApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Edit(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] ReleaseEventForEditForApiContract contract,
@@ -313,15 +313,15 @@ public class ReleaseEventApiController : ApiController
 	{
 		return _queries.GetReleaseEventsByVenue();
 	}
-	
+
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _queries.GetEntryWithTagUsages(id);
-	
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _queries.GetEntryWithTagUsages(id);
+
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 	{

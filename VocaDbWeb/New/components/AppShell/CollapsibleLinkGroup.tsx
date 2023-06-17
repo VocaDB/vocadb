@@ -69,7 +69,7 @@ export function NavbarLinksGroup({ icon: Icon, label, links, link, permission }:
 			<UnstyledButton component={Link} href={link} className={classes.control}>
 				<Group position="apart" spacing={0}>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						<ThemeIcon color={theme.primaryColor} variant="light" size={30}>
+						<ThemeIcon color={theme.primaryColor} size={30}>
 							<Icon size="1.1rem" />
 						</ThemeIcon>
 						<Box ml="md">{label}</Box>

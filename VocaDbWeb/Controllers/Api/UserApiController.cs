@@ -733,7 +733,7 @@ public class UserApiController : ApiController
 
 	[Authorize]
 	[HttpPost("{id:int}/reports")]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public bool PostReport(int id, [FromBody] CreateReportModel model) =>
 		_queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason).created;
 
@@ -917,7 +917,7 @@ public class UserApiController : ApiController
 	[Authorize]
 	[HttpPost("{id:int}/status-limited")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) =>
 		_queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
 
@@ -962,7 +962,7 @@ public class UserApiController : ApiController
 	[HttpPost("current/my-settings")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<string>> UpdateMySettings(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] ServerOnlyUpdateUserSettingsForApiContract contract,
@@ -1042,7 +1042,7 @@ public class UserApiController : ApiController
 
 	[HttpPost("register")]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> Create(RegisterModel model)
 	{
@@ -1139,7 +1139,7 @@ public class UserApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult<int> Edit(UserForEditForApiContract contract)
 	{
@@ -1164,7 +1164,7 @@ public class UserApiController : ApiController
 	[HttpPost("login")]
 	[RestrictBannedIP]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> Login(LoginModel model)
 	{
@@ -1194,7 +1194,7 @@ public class UserApiController : ApiController
 	[HttpPost("logout")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> Logout()
 	{
@@ -1204,7 +1204,7 @@ public class UserApiController : ApiController
 
 	[HttpPost("forgot-password")]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> ForgotPassword(ForgotPassword model)
 	{
