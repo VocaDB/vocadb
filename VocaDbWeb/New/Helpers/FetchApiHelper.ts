@@ -20,7 +20,7 @@ export const apiFetch = async (path: string, req?: IncomingMessage): Promise<Res
 		process.env.NEXT_PUBLIC_API_URL + path,
 		authCookie
 			? { credentials: 'include', headers: { Cookie: `.AspNetCore.Cookies=${authCookie}` } }
-			: undefined
+			: { credentials: 'include' }
 	);
 
 	if (!resp.ok) {
