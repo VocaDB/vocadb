@@ -68,7 +68,7 @@ public class SongListApiController : ApiController
 	/// </param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "", bool hardDelete = false)
 	{
 		notes ??= string.Empty;
@@ -321,7 +321,7 @@ public class SongListApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult<int> Edit(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] SongListForEditForApiContract contract

@@ -48,7 +48,7 @@ public class VenueApiController : ApiController
 	/// </param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "", bool hardDelete = false)
 	{
 		notes ??= string.Empty;
@@ -146,7 +146,7 @@ public class VenueApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult<int> Edit(VenueForEditForApiContract contract)
 	{
@@ -174,7 +174,7 @@ public class VenueApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 	{

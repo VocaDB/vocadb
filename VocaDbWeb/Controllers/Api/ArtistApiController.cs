@@ -87,7 +87,7 @@ public class ArtistApiController : ApiController
 	/// <param name="notes">Notes.</param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "") =>
 		_service.Delete(id, notes ?? string.Empty);
 
@@ -290,7 +290,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Create(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateArtistForApiContract contract
@@ -326,7 +326,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Edit(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistForEditForApiContract contract
@@ -395,7 +395,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("{id:int}/merge")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult Merge(int id, int targetArtistId)
 	{
@@ -408,7 +408,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("{id:int}/verifications")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> PostVerification(int id, RequestVerificationContract contract)
 	{
@@ -442,7 +442,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 	{
@@ -454,7 +454,7 @@ public class ArtistApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/revert")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> RevertToVersion(int archivedVersionId)
 	{

@@ -99,7 +99,7 @@ public class SongApiController : ApiController
 	/// <param name="notes">Notes.</param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "") =>
 		_service.Delete(id, notes ?? string.Empty);
 
@@ -600,7 +600,7 @@ public class SongApiController : ApiController
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Create(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateSongForApiContract contract
@@ -631,7 +631,7 @@ public class SongApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Edit(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] SongForEditForApiContract contract
@@ -705,7 +705,7 @@ public class SongApiController : ApiController
 	[HttpPost("{id:int}/merge")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult Merge(int id, int? targetSongId)
 	{
@@ -746,7 +746,7 @@ public class SongApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 	{
@@ -758,7 +758,7 @@ public class SongApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/revert")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult<int> RevertToVersion(int archivedVersionId)
 	{

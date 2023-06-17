@@ -81,7 +81,7 @@ public class AdminApiController : ApiController
 		_adminService.GetEntryReports(status);
 
 	[HttpDelete("reports/{id:int}")]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public ActionResult DeleteEntryReport(int id)
 	{
 		_userContext.VerifyPermission(PermissionToken.ManageEntryReports);

@@ -356,7 +356,7 @@ public class UserController : ControllerBase
 	}
 
 	[HttpPost]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[RestrictBannedIP]
 	public async Task<ActionResult> LoginTwitterComplete(RegisterOpenAuthModel model)
 	{

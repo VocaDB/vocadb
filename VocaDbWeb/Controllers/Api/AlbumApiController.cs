@@ -70,7 +70,7 @@ public class AlbumApiController : ApiController
 	/// <param name="notes">Notes.</param>
 	[HttpDelete("{id:int}")]
 	[Authorize]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	public void Delete(int id, string notes = "") => _service.Delete(id, notes ?? string.Empty);
 
 	/// <summary>
@@ -295,17 +295,17 @@ public class AlbumApiController : ApiController
 
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public EntryWithTagUsagesForApiContract GetTagUsages(int id)  => _service.GetEntryWithTagUsages(id);	/// <summary>
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _service.GetEntryWithTagUsages(id); /// <summary>
 
-	/// Gets tracks for an album.
-	/// </summary>
-	/// <param name="id">Album ID (required).</param>
-	/// <param name="fields">
-	/// List of optional fields (optional). Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
-	/// </param>
-	/// <param name="lang">Content language preference (optional).</param>
-	/// <returns>List of tracks for the album.</returns>
-	/// <example>https://vocadb.net/api/albums/1/tracks</example>
+																										/// Gets tracks for an album.
+																										/// </summary>
+																										/// <param name="id">Album ID (required).</param>
+																										/// <param name="fields">
+																										/// List of optional fields (optional). Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
+																										/// </param>
+																										/// <param name="lang">Content language preference (optional).</param>
+																										/// <returns>List of tracks for the album.</returns>
+																										/// <example>https://vocadb.net/api/albums/1/tracks</example>
 	[HttpGet("{id:int}/tracks")]
 	public SongInAlbumForApiContract[] GetTracks(
 		int id,
@@ -394,7 +394,7 @@ public class AlbumApiController : ApiController
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Create(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateAlbumForApiContract contract
@@ -417,7 +417,7 @@ public class AlbumApiController : ApiController
 	[HttpPost("{id:int}")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult<int>> Edit(
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] AlbumForEditForApiContract contract
@@ -509,7 +509,7 @@ public class AlbumApiController : ApiController
 	[HttpPost("{id:int}/merge")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult Merge(int id, int targetAlbumId)
 	{
@@ -521,7 +521,7 @@ public class AlbumApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 	{
@@ -533,7 +533,7 @@ public class AlbumApiController : ApiController
 	[HttpPost("versions/{archivedVersionId:int}/revert")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult<int> RevertToVersion(int archivedVersionId)
 	{
