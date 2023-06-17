@@ -14,6 +14,7 @@ import { GlobalValues } from '@/types/GlobalValues';
 import { VdbProvider } from '@/components/Context/VdbContext';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ThemeProvider } from '@/components/Context/ThemeContext';
+import { ModalsProvider } from '@mantine/modals';
 
 export default function App(
 	props: AppProps & {
@@ -49,9 +50,33 @@ export default function App(
 				'#cc0067',
 				'#b30059',
 			],
+			gumi: [
+				'#eeffe7',
+				'#dffbd3',
+				'#bef5a6',
+				'#9bef76',
+				'#7dea4e',
+				'#6ae734',
+				'#5fe525',
+				'#4fcb18',
+				'#43b40f',
+				'#339c00',
+			],
+			solaria: [
+				'#fff5e3',
+				'#faead2',
+				'#f0d2a8',
+				'#e7ba7c',
+				'#dfa556',
+				'#da973d',
+				'#d8912e',
+				'#c07d20',
+				'#ab6e19',
+				'#955f0c',
+			],
 		},
 		primaryColor,
-		primaryShade: primaryColor === 'miku' ? 9 : undefined,
+		primaryShade: primaryColor === 'miku' || primaryColor === 'gumi' ? 7 : undefined,
 	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
@@ -65,26 +90,6 @@ export default function App(
 	useEffect(() => {
 		setCookie('vdb-values', values?.loggedUser);
 	}, [values]);
-
-	useEffect(() => {
-		const setPrimaryShade = (shade: number | undefined): void => {
-			// Prevent infinite update loop
-			if (theme.primaryShade === shade) {
-				return;
-			}
-			setTheme({
-				...theme,
-				//@ts-ignore
-				primaryShade: shade,
-			});
-		};
-
-		if (theme.primaryColor === 'miku') {
-			setPrimaryShade(9);
-		} else {
-			setPrimaryShade(undefined);
-		}
-	}, [theme]);
 
 	return (
 		<>
@@ -110,9 +115,11 @@ export default function App(
 				>
 					<VdbProvider initialValue={values}>
 						<ThemeProvider theme={theme} setTheme={setTheme}>
-							<AppShell>
-								<Component {...pageProps} />
-							</AppShell>
+							<ModalsProvider>
+								<AppShell>
+									<Component {...pageProps} />
+								</AppShell>
+							</ModalsProvider>
 						</ThemeProvider>
 					</VdbProvider>
 					<Notifications />

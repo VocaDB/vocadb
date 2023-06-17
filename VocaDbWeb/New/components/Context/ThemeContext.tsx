@@ -23,6 +23,7 @@ export const ThemeProvider = ({ children, theme, setTheme }: ThemeProviderProps)
 		setTheme({
 			...theme,
 			primaryColor: color,
+			primaryShade: color === 'miku' || color === 'gumi' ? 7 : undefined,
 		});
 	};
 
