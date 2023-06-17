@@ -261,6 +261,6 @@ public static class ArtistQueryableExtensions
 			return query;
 		}
 
-		return languages.Aggregate(query, WhereHasLanguage);
+		return query.Where(a => a.CultureCodes.Any(c => languages.Contains(c.CultureCode)));
 	}
 }
