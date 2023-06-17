@@ -164,7 +164,7 @@ const MainLink = ({
 			href={link}
 		>
 			<Group>
-				<ThemeIcon color={theme.primaryColor} variant="light" size={30}>
+				<ThemeIcon color={theme.primaryColor} size={30}>
 					<Icon size="1.1rem" />
 				</ThemeIcon>
 				<Text size="sm">{label}</Text>

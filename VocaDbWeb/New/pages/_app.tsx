@@ -134,7 +134,7 @@ App.getInitialProps = async (appContext: AppContext) => {
 
 	return {
 		...appProps,
-		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'light',
 		primaryColor: getCookie('mantine-primary-color', appContext.ctx) || 'miku',
 		values,
 	};

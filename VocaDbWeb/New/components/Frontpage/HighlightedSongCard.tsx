@@ -70,7 +70,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					<Button
 						component={Link}
 						href={`/S/${song.id}`}
-						variant="light"
+						variant="outline"
 						radius="md"
 						title="Song Info"
 					>
