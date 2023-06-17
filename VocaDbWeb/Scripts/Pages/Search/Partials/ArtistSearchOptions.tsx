@@ -43,7 +43,11 @@ const ArtistSearchOptions = observer(
 					</div>
 					<div className="controls">
 						<UserLanguageCultureDropdownList
-							value={artistSearchStore.languages}
+							value={
+								artistSearchStore.languages
+									? artistSearchStore.languages[0]
+									: undefined
+							}
 							placeholder="(Show all)"
 							extended={artistSearchStore.languagesExtended}
 							onChange={(e): void => {
