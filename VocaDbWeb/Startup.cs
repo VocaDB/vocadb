@@ -120,6 +120,7 @@ public class Startup
 			{
 				options.LoginPath = new PathString("/User/Login");
 				options.Cookie.Domain = Configuration["CookieDomain"];
+				options.Cookie.SameSite = SameSiteMode.None;
 			});
 
 		services.AddLaravelMix();
