@@ -1164,7 +1164,7 @@ public class UserApiController : ApiController
 	[HttpPost("login")]
 	[RestrictBannedIP]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ValidateAntiForgeryToken]
+	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> Login(LoginModel model)
 	{
