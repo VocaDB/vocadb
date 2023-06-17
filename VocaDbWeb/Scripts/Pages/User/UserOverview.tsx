@@ -4,18 +4,14 @@ import { ArtistGrid } from '@/Components/Shared/Partials/Artist/ArtistGrid';
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
 import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
-import { LanguageFlag } from '@/Components/Shared/Partials/Html/LanguageFlag';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { TagLinkList } from '@/Components/Shared/Partials/Tag/TagLinkList';
 import { ProfileIconKnockout } from '@/Components/Shared/Partials/User/ProfileIconKnockout';
 import { showSuccessMessage, showErrorMessage } from '@/Components/ui';
-import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { useCultureCodes } from '@/CultureCodesContext';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
-import {
-	UserKnownLanguageContract,
-	UserLanguageProficiency,
-} from '@/DataContracts/User/UserKnownLanguageContract';
+import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { PermissionToken } from '@/Models/LoginManager';
@@ -37,18 +33,16 @@ interface AvatarImgProps {
 	user: UserDetailsContract;
 }
 
-const AvatarImg = React.memo(
-	({ user }: AvatarImgProps): React.ReactElement => {
-		return (
-			<ProfileIconKnockout
-				icon={`${
-					user.mainPicture?.urlThumb?.split('?')[0] ?? '/Content/unknown.png'
-				}?s=120`}
-				size={120}
-			/>
-		);
-	},
-);
+const AvatarImg = React.memo(({ user }: AvatarImgProps): React.ReactElement => {
+	return (
+		<ProfileIconKnockout
+			icon={`${
+				user.mainPicture?.urlThumb?.split('?')[0] ?? '/Content/unknown.png'
+			}?s=120`}
+			size={120}
+		/>
+	);
+});
 
 interface AvatarProps {
 	user: UserDetailsContract;
@@ -96,6 +90,7 @@ const UserOverview = observer(
 	({ user, userDetailsStore }: UserOverviewProps): React.ReactElement => {
 		const vdb = useVdb();
 		const loginManager = useLoginManager();
+		const { getCodeDescription } = useCultureCodes();
 
 		const { t } = useTranslation([
 			'Resources',
@@ -104,20 +99,6 @@ const UserOverview = observer(
 			'VocaDb.Web.Resources.Domain.Globalization',
 			'VocaDb.Web.Resources.Domain.Users',
 		]);
-
-		const getLanguageName = React.useCallback(
-			(lang: UserKnownLanguageContract): string => {
-				if (!lang.cultureCode) {
-					return t(
-						'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
-					);
-				}
-
-				const culture = userLanguageCultures[lang.cultureCode];
-				return `${culture.nativeName} - ${culture.englishName}`;
-			},
-			[t],
-		);
 
 		const ownProfile =
 			loginManager.loggedUser &&
@@ -307,8 +288,10 @@ const UserOverview = observer(
 								<ul className="user-known-languages">
 									{user.knownLanguages.map((lang) => (
 										<li key={lang.cultureCode}>
-											<LanguageFlag languageCode={lang.cultureCode} />{' '}
-											{getLanguageName(lang)}
+											{getCodeDescription(lang.cultureCode)?.englishName ??
+												t(
+													'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+												)}
 											{lang.proficiency !== UserLanguageProficiency.Nothing && (
 												<>
 													{' '}
