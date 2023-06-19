@@ -4,6 +4,7 @@ import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
 import { Title } from '@mantine/core';
+import { AlbumCards } from '@/components/AlbumCard/AlbumCard';
 
 export default function HomePage({
 	frontPage,
@@ -14,6 +15,14 @@ export default function HomePage({
 				Highlighted PVs
 			</Title>
 			<HighlightedSongsCarousel songs={frontPage.newSongs} />
+			<Title order={2} mt="md" mb="xs">
+				Recent or upcoming albums
+			</Title>
+			<AlbumCards albums={frontPage.newAlbums} />
+			<Title order={2} mt="md" mb="xs">
+				Random popular albums
+			</Title>
+			<AlbumCards albums={frontPage.topAlbums} />
 		</div>
 	);
 }

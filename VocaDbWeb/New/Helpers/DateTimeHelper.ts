@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import UTC from 'dayjs/plugin/utc';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 dayjs.extend(UTC);
+dayjs.extend(LocalizedFormat);
 
 export class DateTimeHelper {
 	private static addLeadingZero(val: any): any {
