@@ -42,10 +42,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
 				<Image
-					src={bestThumbUrl}
-					loader={(props) =>
-						`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${props.src}`
-					}
+					src={`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
 					blurDataURL={song.mainPicture?.urlSmallThumb}
 					height={240}
 					width={360}
