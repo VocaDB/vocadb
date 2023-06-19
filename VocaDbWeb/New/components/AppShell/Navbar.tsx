@@ -201,7 +201,9 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 				>
 					<UserButton
 						name={values.loggedUser!.name}
-						image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
+						image={`${values.staticContentHost}/img/user/mainThumb/${
+							values.loggedUser!.id
+						}.jpg`}
 						email={"Don't know what to put here yet"}
 					/>
 				</Navbar.Section>
