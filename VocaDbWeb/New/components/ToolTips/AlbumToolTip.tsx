@@ -16,7 +16,7 @@ export function AlbumToolTip({ album, children }: AlbumToolTipProps) {
 	);
 
 	return (
-		<HoverCard>
+		<HoverCard shadow="sm">
 			<HoverCard.Target>{children}</HoverCard.Target>
 			<HoverCard.Dropdown>
 				<Text>{album.name}</Text>
