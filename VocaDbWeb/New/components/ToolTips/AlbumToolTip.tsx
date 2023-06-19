@@ -1,6 +1,6 @@
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
-import { Group, HoverCard, Text } from '@mantine/core';
+import { Group, HoverCard, Rating, Text } from '@mantine/core';
 import React from 'react';
 
 interface AlbumToolTipProps {
@@ -27,6 +27,11 @@ export function AlbumToolTip({ album, children }: AlbumToolTipProps) {
 					<Text size="sm" mt="md">
 						{'Released '} {releaseDate}
 					</Text>
+				)}
+				{album.ratingCount > 0 && (
+					<Group mt="xs">
+						<Rating readOnly value={album.ratingAverage} />({album.ratingCount} Ratings)
+					</Group>
 				)}
 			</HoverCard.Dropdown>
 		</HoverCard>
