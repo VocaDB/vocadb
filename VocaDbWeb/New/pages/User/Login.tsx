@@ -14,6 +14,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface FormValues {
 	userName: string;
@@ -24,6 +25,7 @@ interface FormValues {
 }
 
 export default function AuthenticationTitle() {
+	const router = useRouter();
 	const form = useForm<FormValues>({
 		initialValues: {
 			userName: '',
@@ -43,11 +45,13 @@ export default function AuthenticationTitle() {
 					keepLoggedIn,
 				},
 				token
-			).catch((resp: Response) => {
-				resp.json().then((data): void => {
-					form.setFieldValue('errors', data.errors);
+			)
+				.then(() => router.push('/'))
+				.catch((resp: Response) => {
+					resp.json().then((data): void => {
+						form.setFieldValue('errors', data.errors);
+					});
 				});
-			});
 		});
 	};
 
