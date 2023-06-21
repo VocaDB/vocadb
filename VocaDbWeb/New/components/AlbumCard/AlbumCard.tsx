@@ -3,6 +3,7 @@ import { Grid, Title } from '@mantine/core';
 import Image from 'next/image';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 import useStyles from './AlbumCard.styles';
+import CustomImage from '../Image/Image';
 
 interface AlbumCardProps {
 	album: AlbumForApiContract;
@@ -23,13 +24,13 @@ export function AlbumCard({ album }: AlbumCardProps) {
 					}}
 				>
 					<div style={{ overflow: 'hidden' }}>
-						<Image
+						<CustomImage
 							src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
 							className={styles.classes.image}
 							width={250}
 							height={250}
+							mode="crop"
 							alt="Preview"
-							priority
 						/>
 					</div>
 					<div className={styles.classes.cardContent}>

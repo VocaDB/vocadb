@@ -1,10 +1,10 @@
 import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Button, Card, Group, Text } from '@mantine/core';
-import Image from 'next/image';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
+import CustomImage from '../Image/Image';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -42,9 +42,8 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
-				<Image
+				<CustomImage
 					src={`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
-					blurDataURL={song.mainPicture?.urlSmallThumb}
 					height={240}
 					width={360}
 					className={styles.classes.image}

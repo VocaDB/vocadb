@@ -105,6 +105,8 @@ export default function App(
 					content="VocaDB is a Vocaloid music database with translated artists, albums and songs."
 				/>
 				<link rel="shortcut icon" href="/favicon.ico" />
+				<link rel="preconnect" href="https://vocadb.net" />
+				<link rel="preconnect" href="https://wsrv.nl" />
 			</Head>
 
 			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
