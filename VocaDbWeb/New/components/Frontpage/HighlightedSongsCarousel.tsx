@@ -26,7 +26,7 @@ export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProp
 						{ maxWidth: 'xs', slideSize: '95%', slideGap: '5%' },
 					]}
 					loop
-					draggable={isMobile}
+					draggable={true}
 					previousControlLabel="Previous highlighted PVs"
 					nextControlLabel="Next hightlighted PV"
 				>

@@ -15,7 +15,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 			<AlbumToolTip album={album}>
 				<div
 					style={{
-						width: '250px',
+						width: '100%',
 						height: '250px',
 						position: 'relative',
 						display: 'flex',
