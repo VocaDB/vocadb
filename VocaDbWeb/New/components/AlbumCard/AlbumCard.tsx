@@ -20,16 +20,18 @@ export function AlbumCard({ album }: AlbumCardProps) {
 						position: 'relative',
 						display: 'flex',
 						justifyContent: 'center',
-						overflow: 'hidden',
 					}}
 				>
-					<Image
-						src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
-						className={styles.classes.image}
-						width={250}
-						height={250}
-						alt="Preview"
-					/>
+					<div style={{ overflow: 'hidden' }}>
+						<Image
+							src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
+							className={styles.classes.image}
+							width={250}
+							height={250}
+							alt="Preview"
+							priority
+						/>
+					</div>
 					<div className={styles.classes.cardContent}>
 						<div style={{ color: 'white' }}>
 							<Title mx="md" order={3}>
