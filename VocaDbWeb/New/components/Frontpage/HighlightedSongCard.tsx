@@ -1,6 +1,6 @@
 import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
-import { Button, Card, Group, Stack, Text } from '@mantine/core';
+import { Button, Card, Group, Text } from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
@@ -52,9 +52,18 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					priority={priority}
 				/>
 			</Card.Section>
-			<Stack mt="md" className={styles.classes.contentStack}>
+			<div
+				style={{
+					display: 'flex',
+					height: '100%',
+					flexDirection: 'column',
+					justifyContent: 'space-between',
+				}}
+			>
 				<div>
-					<Text weight={500}>{song.name}</Text>
+					<Text mt="xs" weight={500}>
+						{song.name}
+					</Text>
 					<Text size="sm" color="dimmed">
 						{song.artistString}
 					</Text>
@@ -84,7 +93,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 						Song Info
 					</Button>
 				</Group>
-			</Stack>
+			</div>
 		</Card>
 	);
 }

@@ -1,7 +1,6 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
-import { Grid, MediaQuery, Text, Title } from '@mantine/core';
+import { Grid, Title } from '@mantine/core';
 import Image from 'next/image';
-import useStyles from './AlbumCard.styles';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 
 interface AlbumCardProps {
@@ -26,8 +25,8 @@ export function AlbumCard({ album }: AlbumCardProps) {
 							flexDirection: 'column',
 							justifyContent: 'flex-end',
 							top: 0,
-							width: '100%',
-							height: '100%',
+							width: '250px',
+							height: '250px',
 							background: 'linear-gradient(to top, rgba(0, 0, 0, 0.70), transparent)',
 						}}
 					>
@@ -35,7 +34,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 							<Title mx="md" order={3}>
 								{album.name}
 							</Title>
-							<Title mb="md" mx="md" c="dimmed" order={4}>
+							<Title mb="sm" mx="md" c="dimmed" order={4}>
 								{album.artistString.split('feat.')[0]}
 							</Title>
 						</div>
@@ -51,22 +50,11 @@ interface AlbumCardsProps {
 }
 
 export function AlbumCards({ albums }: AlbumCardsProps) {
-	const styles = useStyles();
 	return (
-		<Grid>
-			{albums.slice(0, 4).map((album, index) => (
-				<Grid.Col xl={3} md={4} xs={6} key={album.id}>
-					<MediaQuery
-						smallerThan="xl"
-						largerThan="md"
-						styles={index === 3 ? { display: 'none' } : {}}
-					>
-						<div>
-							<div className={styles.classes.cardWrapper}>
-								<AlbumCard key={album.id} album={album} />
-							</div>
-						</div>
-					</MediaQuery>
+		<Grid style={{ maxWidth: '516px' }}>
+			{albums.slice(0, 4).map((album) => (
+				<Grid.Col xl={6} key={album.id}>
+					<AlbumCard key={album.id} album={album} />
 				</Grid.Col>
 			))}
 		</Grid>

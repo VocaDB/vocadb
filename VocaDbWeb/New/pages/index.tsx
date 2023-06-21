@@ -3,7 +3,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
-import { Title } from '@mantine/core';
+import { Grid, Stack, Title } from '@mantine/core';
 import { AlbumCards } from '@/components/AlbumCard/AlbumCard';
 
 export default function HomePage({
@@ -15,14 +15,24 @@ export default function HomePage({
 				Highlighted PVs
 			</Title>
 			<HighlightedSongsCarousel songs={frontPage.newSongs} />
-			<Title order={2} mt="md" mb="xs">
-				Recent or upcoming albums
-			</Title>
-			<AlbumCards albums={frontPage.newAlbums} />
-			<Title order={2} mt="md" mb="xs">
-				Random popular albums
-			</Title>
-			<AlbumCards albums={frontPage.topAlbums} />
+			<Grid mt="md" style={{ width: '100%', justifyContent: 'center' }}>
+				<Grid.Col md={5} xs={12}>
+					<Stack align="center">
+						<Title align="center" order={2}>
+							Recent or upcoming albums
+						</Title>
+
+						<AlbumCards albums={frontPage.topAlbums} />
+					</Stack>
+				</Grid.Col>
+				<Grid.Col md={5} xs={12} offsetMd={1}>
+					<Stack align="center">
+						<Title order={2}>Random popular albums</Title>
+
+						<AlbumCards albums={frontPage.newAlbums} />
+					</Stack>
+				</Grid.Col>
+			</Grid>
 		</div>
 	);
 }
