@@ -178,6 +178,7 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	const theme = useMantineTheme();
 	const { values } = useVdb();
 
+	// Remove the login link, if the user is logged in
 	const links = linkData.filter(
 		({ link }) => !link.startsWith('/User/Login') || !values.isLoggedIn
 	);
