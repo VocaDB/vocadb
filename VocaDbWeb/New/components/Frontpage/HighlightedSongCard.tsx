@@ -4,6 +4,7 @@ import { Button, Card, Group, Stack, Text } from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
+import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -60,7 +61,19 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 				</div>
 
 				<Group position="apart">
-					<Text>{`Score: ${song.ratingScore}`}</Text>
+					<Group spacing="xs">
+						<>
+							<IconThumbUp stroke={'1.5'} size="1.1rem" />
+
+							<Text style={{ stroke: '1.5' }}>
+								{(song.ratingScore - 3 * (song.favoritedTimes ?? 0)) / 2}
+							</Text>
+						</>
+						<>
+							<IconHeart stroke={'1.5'} size="1.1rem" />
+							<Text style={{ stroke: '1.5' }}>{song.favoritedTimes}</Text>
+						</>
+					</Group>
 					<Button
 						component={Link}
 						href={`/S/${song.id}`}
