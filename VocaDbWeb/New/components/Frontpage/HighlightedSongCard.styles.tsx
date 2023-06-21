@@ -9,6 +9,7 @@ export default createStyles((theme) => ({
 	image: {
 		height: '100%',
 		width: '100%',
+		aspectRatio: '16/9',
 		objectFit: 'cover',
 	},
 	contentStack: {
