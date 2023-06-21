@@ -183,7 +183,7 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	);
 
 	return (
-		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 250 }}>
 			<Navbar.Section scrollHideDelay={100} component={ScrollArea} grow>
 				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
