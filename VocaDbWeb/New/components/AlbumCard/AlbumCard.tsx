@@ -11,7 +11,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 	return (
 		<>
 			<AlbumToolTip album={album}>
-				<div style={{ position: 'relative' }}>
+				<div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
 					<Image
 						src={album.mainPicture?.urlThumb ?? '/unknown.png'}
 						width={250}
@@ -53,7 +53,7 @@ export function AlbumCards({ albums }: AlbumCardsProps) {
 	return (
 		<Grid style={{ maxWidth: '516px' }}>
 			{albums.slice(0, 4).map((album) => (
-				<Grid.Col xl={6} key={album.id}>
+				<Grid.Col xl={6} sm={12} key={album.id}>
 					<AlbumCard key={album.id} album={album} />
 				</Grid.Col>
 			))}

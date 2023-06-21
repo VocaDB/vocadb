@@ -15,7 +15,7 @@ export default function HomePage({
 				Highlighted PVs
 			</Title>
 			<HighlightedSongsCarousel songs={frontPage.newSongs} />
-			<Grid mt="md" style={{ width: '100%', justifyContent: 'center' }}>
+			<Grid mt="md" justify="center" style={{ width: '100%' }}>
 				<Grid.Col md={5} xs={12}>
 					<Stack align="center">
 						<Title align="center" order={2}>
