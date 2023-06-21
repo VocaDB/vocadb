@@ -1,5 +1,5 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
-import { Grid, MediaQuery, Text } from '@mantine/core';
+import { Grid, MediaQuery, Text, Title } from '@mantine/core';
 import Image from 'next/image';
 import useStyles from './AlbumCard.styles';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
@@ -12,14 +12,36 @@ export function AlbumCard({ album }: AlbumCardProps) {
 	return (
 		<>
 			<AlbumToolTip album={album}>
-				<Image
-					src={album.mainPicture?.urlSmallThumb ?? '/unknown.png'}
-					width={150}
-					height={150}
-					alt="Preview"
-				/>
+				<div style={{ position: 'relative' }}>
+					<Image
+						src={album.mainPicture?.urlThumb ?? '/unknown.png'}
+						width={250}
+						height={250}
+						alt="Preview"
+					/>
+					<div
+						style={{
+							position: 'absolute',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'flex-end',
+							top: 0,
+							width: '100%',
+							height: '100%',
+							background: 'linear-gradient(to top, rgba(0, 0, 0, 0.70), transparent)',
+						}}
+					>
+						<div style={{ color: 'white' }}>
+							<Title mx="md" order={3}>
+								{album.name}
+							</Title>
+							<Title mb="md" mx="md" c="dimmed" order={4}>
+								{album.artistString.split('feat.')[0]}
+							</Title>
+						</div>
+					</div>
+				</div>
 			</AlbumToolTip>
-			<Text>{album.name}</Text>
 		</>
 	);
 }
