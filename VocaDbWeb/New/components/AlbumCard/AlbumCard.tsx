@@ -2,34 +2,35 @@ import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiCont
 import { Grid, Title } from '@mantine/core';
 import Image from 'next/image';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
+import useStyles from './AlbumCard.styles';
 
 interface AlbumCardProps {
 	album: AlbumForApiContract;
 }
 
 export function AlbumCard({ album }: AlbumCardProps) {
+	const styles = useStyles();
 	return (
 		<>
 			<AlbumToolTip album={album}>
-				<div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+				<div
+					style={{
+						width: '250px',
+						height: '250px',
+						position: 'relative',
+						display: 'flex',
+						justifyContent: 'center',
+						overflow: 'hidden',
+					}}
+				>
 					<Image
-						src={album.mainPicture?.urlThumb ?? '/unknown.png'}
+						src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
+						className={styles.classes.image}
 						width={250}
 						height={250}
 						alt="Preview"
 					/>
-					<div
-						style={{
-							position: 'absolute',
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'flex-end',
-							top: 0,
-							width: '250px',
-							height: '250px',
-							background: 'linear-gradient(to top, rgba(0, 0, 0, 0.70), transparent)',
-						}}
-					>
+					<div className={styles.classes.cardContent}>
 						<div style={{ color: 'white' }}>
 							<Title mx="md" order={3}>
 								{album.name}
@@ -51,7 +52,7 @@ interface AlbumCardsProps {
 
 export function AlbumCards({ albums }: AlbumCardsProps) {
 	return (
-		<Grid style={{ maxWidth: '516px' }}>
+		<Grid style={{ maxWidth: '532px' }}>
 			{albums.slice(0, 4).map((album) => (
 				<Grid.Col xl={6} sm={12} key={album.id}>
 					<AlbumCard key={album.id} album={album} />
