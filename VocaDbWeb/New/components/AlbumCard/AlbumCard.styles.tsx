@@ -14,6 +14,9 @@ export default createStyles((theme) => ({
 	},
 	image: {
 		transition: 'all 0.5s ease',
+		display: 'block',
+		marginLeft: 'auto',
+		marginRight: 'auto',
 		':hover': {
 			transform: 'scale(1.1)',
 		},

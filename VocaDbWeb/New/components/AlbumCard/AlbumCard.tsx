@@ -1,6 +1,5 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
 import { Grid, Title } from '@mantine/core';
-import Image from 'next/image';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 import useStyles from './AlbumCard.styles';
 import CustomImage from '../Image/Image';
@@ -16,33 +15,27 @@ export function AlbumCard({ album }: AlbumCardProps) {
 			<AlbumToolTip album={album}>
 				<div
 					style={{
-						width: '100%',
-						height: '250px',
-						position: 'relative',
 						display: 'flex',
-						justifyContent: 'center',
+						flexDirection: 'column',
+						alignItems: 'center',
 					}}
 				>
 					<div style={{ overflow: 'hidden' }}>
 						<CustomImage
 							src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
 							className={styles.classes.image}
-							width={250}
-							height={250}
+							width={200}
+							height={200}
 							mode="crop"
 							alt="Preview"
 						/>
 					</div>
-					<div className={styles.classes.cardContent}>
-						<div style={{ color: 'white' }}>
-							<Title mx="md" order={3}>
-								{album.name}
-							</Title>
-							<Title mb="sm" mx="md" c="dimmed" order={4}>
-								{album.artistString.split('feat.')[0]}
-							</Title>
-						</div>
-					</div>
+					<Title style={{ width: '200px' }} mt="xs" order={5}>
+						{album.name}
+					</Title>
+					<Title style={{ width: '200px' }} order={6} color="dimmed">
+						{album.artistString.split('feat.')[0]}
+					</Title>
 				</div>
 			</AlbumToolTip>
 		</>
@@ -55,9 +48,9 @@ interface AlbumCardsProps {
 
 export function AlbumCards({ albums }: AlbumCardsProps) {
 	return (
-		<Grid style={{ maxWidth: '532px' }}>
-			{albums.slice(0, 4).map((album) => (
-				<Grid.Col xl={6} sm={12} key={album.id}>
+		<Grid>
+			{albums.slice(0, 6).map((album) => (
+				<Grid.Col xl={2} sm={12} key={album.id}>
 					<AlbumCard key={album.id} album={album} />
 				</Grid.Col>
 			))}
