@@ -24,16 +24,16 @@ export function AlbumCard({ album }: AlbumCardProps) {
 						<CustomImage
 							src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
 							className={styles.classes.image}
-							width={200}
-							height={200}
+							width={188}
+							height={188}
 							mode="crop"
 							alt="Preview"
 						/>
 					</div>
-					<Title style={{ width: '200px' }} mt="xs" order={5}>
+					<Title style={{ width: '180px' }} mt="xs" order={5}>
 						{album.name}
 					</Title>
-					<Title style={{ width: '200px' }} order={6} color="dimmed">
+					<Title style={{ width: '180px' }} order={6} color="dimmed">
 						{album.artistString.split('feat.')[0]}
 					</Title>
 				</div>
@@ -50,7 +50,7 @@ export function AlbumCards({ albums }: AlbumCardsProps) {
 	return (
 		<Grid>
 			{albums.slice(0, 6).map((album) => (
-				<Grid.Col xl={2} sm={12} key={album.id}>
+				<Grid.Col xl={2} lg={4} xs={6} key={album.id}>
 					<AlbumCard key={album.id} album={album} />
 				</Grid.Col>
 			))}
