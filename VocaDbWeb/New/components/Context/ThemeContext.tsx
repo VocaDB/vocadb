@@ -19,29 +19,10 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children, theme, setTheme }: ThemeProviderProps) => {
-	const calculatePrimaryShade = (
-		color: string
-	): 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | undefined => {
-		if (theme.colorScheme === 'dark') {
-			return undefined;
-		}
-
-		if (color === 'miku' || color === 'gumi') {
-			return 8;
-		}
-
-		if (color === 'solaria') {
-			return 7;
-		}
-
-		return undefined;
-	};
-
 	const setPrimaryColor = (color: string): any => {
 		setTheme({
 			...theme,
 			primaryColor: color,
-			primaryShade: calculatePrimaryShade(color),
 		});
 	};
 

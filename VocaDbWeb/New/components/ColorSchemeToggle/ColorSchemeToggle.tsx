@@ -74,11 +74,7 @@ export function ColorSchemeToggle() {
 			<ColorSwatch<'button'>
 				component="button"
 				onClick={openModal}
-				color={
-					theme.colors[theme.primaryColor][
-						Number.isInteger(theme.primaryShade) ? (theme.primaryShade as number) : 6
-					]
-				}
+				color={theme.colors[theme.primaryColor][6]}
 			/>
 			<Switch
 				checked={colorScheme === 'dark'}

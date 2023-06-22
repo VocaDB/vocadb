@@ -27,16 +27,16 @@ export default function App(
 	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors: {
 			miku: [
-				'#E3FAFC',
-				'#C5F6FA',
-				'#99E9F2',
-				'#66D9E8',
-				'#3BC9DB',
-				'#22B8CF',
-				'#15AABF',
-				'#1098AD',
-				'#0C8599',
-				'#0B7285',
+				'#dbfeff',
+				'#b4f5f9',
+				'#8aedf3',
+				'#5fe6ed',
+				'#38dfe7',
+				'#23c5cd',
+				'#1299a0',
+				'#036e72',
+				'#004346',
+				'#00181a',
 			],
 			luka: [
 				'#ffe8f8',
@@ -76,7 +76,6 @@ export default function App(
 			],
 		},
 		primaryColor,
-		primaryShade: primaryColor === 'miku' || primaryColor === 'gumi' ? 7 : undefined,
 	});
 	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
