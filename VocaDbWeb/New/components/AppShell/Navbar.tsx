@@ -178,12 +178,13 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	const theme = useMantineTheme();
 	const { values } = useVdb();
 
+	// Remove the login link, if the user is logged in
 	const links = linkData.filter(
 		({ link }) => !link.startsWith('/User/Login') || !values.isLoggedIn
 	);
 
 	return (
-		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 250 }}>
 			<Navbar.Section scrollHideDelay={100} component={ScrollArea} grow>
 				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
@@ -201,7 +202,9 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 				>
 					<UserButton
 						name={values.loggedUser!.name}
-						image="https://static.vocadb.net/img/user/mainThumb/14922.jpg?s=120"
+						image={`${values.staticContentHost}/img/user/mainThumb/${
+							values.loggedUser!.id
+						}.jpg`}
 						email={"Don't know what to put here yet"}
 					/>
 				</Navbar.Section>

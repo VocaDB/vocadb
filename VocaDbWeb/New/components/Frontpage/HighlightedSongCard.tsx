@@ -1,8 +1,10 @@
 import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
-import { Button, Card, Group, Stack, Text } from '@mantine/core';
-import Image from 'next/image';
+import { Button, Card, Group, Text } from '@mantine/core';
 import Link from 'next/link';
+import useStyles from './HighlightedSongCard.styles';
+import { IconHeart, IconThumbUp } from '@tabler/icons-react';
+import CustomImage from '../Image/Image';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -27,8 +29,9 @@ const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 		}, undefined)?.url;
 };
 
-// TODO: Move styles to separate file
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
+	const styles = useStyles();
+
 	const bestThumbUrl = getBestThumbUrl(song.pvs);
 
 	if (!bestThumbUrl) {
@@ -36,37 +39,49 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 	}
 
 	return (
-		<Card
-			style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-			radius="md"
-			withBorder
-			shadow="sm"
-		>
+		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
-				<Image
-					src={bestThumbUrl}
-					loader={(props) =>
-						`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${props.src}`
-					}
-					blurDataURL={song.mainPicture?.urlSmallThumb}
+				<CustomImage
+					src={`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
 					height={240}
 					width={360}
-					style={{ width: '100%', objectFit: 'cover' }}
+					className={styles.classes.image}
 					alt={`${song.name} thumbnail`}
 					priority={priority}
 				/>
 			</Card.Section>
-			<Stack mt="md" style={{ justifyContent: 'space-between', flex: 2 }}>
+			<div
+				style={{
+					display: 'flex',
+					height: '100%',
+					flexDirection: 'column',
+					justifyContent: 'space-between',
+				}}
+			>
 				<div>
-					<Text weight={500}>{song.name}</Text>
+					<Text mt="xs" weight={500}>
+						{song.name}
+					</Text>
 					<Text size="sm" color="dimmed">
 						{song.artistString}
 					</Text>
 				</div>
 
 				<Group position="apart">
-					<Text>{`Score: ${song.ratingScore}`}</Text>
+					<Group spacing="xs">
+						<>
+							<IconThumbUp stroke={'1.5'} size="1.1rem" />
+
+							<Text style={{ stroke: '1.5' }}>
+								{(song.ratingScore - 3 * (song.favoritedTimes ?? 0)) / 2}
+							</Text>
+						</>
+						<>
+							<IconHeart stroke={'1.5'} size="1.1rem" />
+							<Text style={{ stroke: '1.5' }}>{song.favoritedTimes}</Text>
+						</>
+					</Group>
 					<Button
 						component={Link}
 						href={`/S/${song.id}`}
@@ -77,7 +92,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 						Song Info
 					</Button>
 				</Group>
-			</Stack>
+			</div>
 		</Card>
 	);
 }
