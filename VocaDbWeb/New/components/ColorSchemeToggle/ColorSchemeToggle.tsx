@@ -149,7 +149,7 @@ const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'CeVIO' },
 	{
 		color: 'solaria',
 		picture: solaria,

@@ -2,14 +2,31 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
-import { Title } from '@mantine/core';
+import { Alert, Anchor, Button, Group, Title } from '@mantine/core';
 import { AlbumCards } from '@/components/AlbumCard/AlbumCard';
+import { IconAlertCircle } from '@tabler/icons-react';
 
 export default function HomePage({
 	frontPage,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column' }}>
+			<Group>
+				<Button variant="light">Test Light</Button>
+				<Button variant="outline">Test Outline</Button>
+				<Button variant="filled">Test Filled</Button>
+				<Anchor href="https://vocadb.net" target="_blank">
+					This is a link{' '}
+				</Anchor>{' '}
+			</Group>
+			<Alert
+				icon={<IconAlertCircle size="1rem" />}
+				title="Color Demo!"
+				my="md"
+				color="default"
+			>
+				Looooooooooooooooooong text
+			</Alert>
 			<Title order={2} mb="xs">
 				Highlighted PVs
 			</Title>
