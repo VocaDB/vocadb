@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
-import { Alert, Anchor, Button, Group, Title } from '@mantine/core';
+import { Alert, Anchor, Avatar, Button, Group, Loader, Progress, Title } from '@mantine/core';
 import { AlbumCards } from '@/components/AlbumCard/AlbumCard';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -16,8 +16,13 @@ export default function HomePage({
 				<Button variant="outline">Test Outline</Button>
 				<Button variant="filled">Test Filled</Button>
 				<Anchor href="https://vocadb.net" target="_blank">
-					This is a link{' '}
-				</Anchor>{' '}
+					This is a link
+				</Anchor>
+				<Loader />
+				<Avatar color="default" radius="xl">
+					MK
+				</Avatar>
+				<Progress w="300px" value={50} />
 			</Group>
 			<Alert
 				icon={<IconAlertCircle size="1rem" />}
