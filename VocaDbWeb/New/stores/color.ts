@@ -9,7 +9,7 @@ interface ColorState {
 }
 
 export const useColorStore = create<ColorState>((set) => ({
-	primaryColor: 'miku',
+	primaryColor: 'kzn',
 	colorScheme: 'light',
 	setPrimaryColor: (color) => set({ primaryColor: color }),
 	toggleColorScheme: () =>

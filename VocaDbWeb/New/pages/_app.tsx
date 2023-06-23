@@ -10,6 +10,7 @@ import { VdbProvider } from '@/components/Context/VdbContext';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/color';
+import { colors } from '@/components/colors';
 
 export default function App(
 	props: AppProps & {
@@ -24,67 +25,7 @@ export default function App(
 		state.colorScheme,
 	]);
 	const theme: MantineThemeOverride = {
-		colors: {
-			miku: [
-				'#dbfeff',
-				'#b4f5f9',
-				'#8aedf3',
-				'#5fe6ed',
-				'#38dfe7',
-				'#23c5cd',
-				'#1299a0',
-				'#036e72',
-				'#004346',
-				'#00181a',
-			],
-			luka: [
-				'#F1E7EC',
-				'#E4C9D8',
-				'#DCAAC5',
-				'#CA95B2',
-				'#B884A0',
-				'#A67690',
-				'#966A82',
-				'#836374',
-				'#735C69',
-			],
-			gumi: [
-				'#eeffe7',
-				'#dffbd3',
-				'#bef5a6',
-				'#9bef76',
-				'#7dea4e',
-				'#6ae734',
-				'#5fe525',
-				'#4fcb18',
-				'#43b40f',
-				'#339c00',
-			],
-			solaria: [
-				'#fff5e3',
-				'#faead2',
-				'#f0d2a8',
-				'#e7ba7c',
-				'#dfa556',
-				'#da973d',
-				'#d8912e',
-				'#c07d20',
-				'#ab6e19',
-				'#955f0c',
-			],
-			una: [
-				'#f5ffdc',
-				'#e7feaf',
-				'#d8fc7f',
-				'#cafb4e',
-				'#bbfa1f',
-				'#a1e005',
-				'#7caf00',
-				'#597d00',
-				'#344b00',
-				'#101a00',
-			],
-		},
+		colors,
 		primaryColor,
 		colorScheme,
 	};

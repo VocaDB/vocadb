@@ -19,7 +19,7 @@ export default function CustomImage(props: CustomImageProps) {
 		base += '&h=' + props.height;
 	}
 
-	if (window.devicePixelRatio) {
+	if (typeof window !== 'undefined' && window.devicePixelRatio) {
 		base += '&dpr=' + window.devicePixelRatio;
 	}
 
