@@ -1,5 +1,6 @@
 import { ColorScheme, MantineColor } from '@mantine/core';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface ColorState {
 	primaryColor: MantineColor;
@@ -8,11 +9,18 @@ interface ColorState {
 	toggleColorScheme: () => void;
 }
 
-export const useColorStore = create<ColorState>((set) => ({
-	primaryColor: 'kzn',
-	colorScheme: 'light',
-	setPrimaryColor: (color) => set({ primaryColor: color }),
-	toggleColorScheme: () =>
-		set((state) => ({ colorScheme: state.colorScheme === 'light' ? 'dark' : 'light' })),
-}));
+export const useColorStore = create<ColorState>()(
+	persist(
+		(set) => ({
+			primaryColor: 'miku',
+			colorScheme: 'light',
+			setPrimaryColor: (color) => set({ primaryColor: color }),
+			toggleColorScheme: () =>
+				set((state) => ({ colorScheme: state.colorScheme === 'light' ? 'dark' : 'light' })),
+		}),
+		{
+			name: 'color-storage',
+		}
+	)
+);
 
