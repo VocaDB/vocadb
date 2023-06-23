@@ -38,7 +38,7 @@ import xingchen from '@/public/characters/Xingchen.png';
 import lumi from '@/public/characters/LUMi.png';
 import nemu from '@/public/characters/Yumemi Nemu.png';
 import pouta from '@/public/characters/Po-uta.png';
-import una from '@/public/characters/Solaria.png';
+import una from '@/public/characters/Otomachi Una.png';
 import kzn from '@/public/characters/#kzn.png';
 import forte from '@/public/characters/Eleanor Forte.png';
 
@@ -110,13 +110,14 @@ const COLORSCHEMES: ColorScheme[] = [
 	{ color: 'yufu', picture: yufu, name: 'Sekka Yufu', description: 'TODO', category: 'UTAU' },
 	{ color: 'fukase', picture: fukase, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
 	{ color: 'seeu', picture: seeu, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
-	{
-		color: 'forte',
-		picture: forte,
-		name: 'Eleanor Forte',
-		description: 'TODO',
-		category: 'Synthesizer V',
-	},
+	// TODO: Fix eleanor forte
+	// {
+	// 	color: 'forte',
+	// 	picture: forte,
+	// 	name: 'Eleanor Forte',
+	// 	description: 'TODO',
+	// 	category: 'Synthesizer V',
+	// },
 	{ color: 'avanna', picture: avanna, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'nana',
