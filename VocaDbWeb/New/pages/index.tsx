@@ -1,4 +1,3 @@
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
@@ -16,14 +15,12 @@ export default function HomePage({
 			</Title>
 			<HighlightedSongsCarousel songs={frontPage.newSongs} />
 			<Title mt="md" mb="xs" order={2}>
-				Recent or upcoming albums
-			</Title>
-
-			<AlbumCards albums={frontPage.topAlbums} />
-			<Title mt="md" mb="xs" order={2}>
 				Random popular albums
 			</Title>
-
+			<AlbumCards albums={frontPage.topAlbums} />
+			<Title mt="md" mb="xs" order={2}>
+				Recent or upcoming albums
+			</Title>
 			<AlbumCards albums={frontPage.newAlbums} />
 		</div>
 	);
