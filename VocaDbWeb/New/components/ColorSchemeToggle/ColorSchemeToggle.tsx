@@ -87,7 +87,7 @@ export function ColorSchemeToggle() {
 				offLabel={
 					<IconMoonStars color={theme.colors.gray[6]} size="1.25rem" stroke={1.5} />
 				}
-				label="Toggle color scheme"
+				aria-label="Toggle color scheme"
 			/>
 		</Group>
 	);
