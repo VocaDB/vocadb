@@ -17,6 +17,7 @@ import miku from '@/public/characters/Hatsune Miku.png';
 import luka from '@/public/characters/Megurine Luka.png';
 import gumi from '@/public/characters/Gumi.png';
 import solaria from '@/public/characters/Solaria.png';
+import { useColorStore } from '@/stores/color';
 
 const COLORSCHEMES = [
 	{ color: 'miku', picture: miku, name: 'Hatsune Miku', description: 'TODO' },
@@ -27,8 +28,11 @@ const COLORSCHEMES = [
 
 export function ColorSchemeToggle() {
 	const theme = useMantineTheme();
-	const { setPrimaryColor } = useThemeOverride();
-	const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+	const [setPrimaryColor, colorScheme, toggleColorScheme] = useColorStore((state) => [
+		state.setPrimaryColor,
+		state.colorScheme,
+		state.toggleColorScheme,
+	]);
 
 	const colorSchemes = COLORSCHEMES.map((scheme) => (
 		<Grid.Col md={6} sm={12} key={scheme.color}>

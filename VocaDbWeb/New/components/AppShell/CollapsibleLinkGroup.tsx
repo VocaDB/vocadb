@@ -3,6 +3,7 @@ import { PermissionToken } from '@/types/Models/LoginManager';
 import { Group, Box, ThemeIcon, Text, UnstyledButton, createStyles, rem } from '@mantine/core';
 import Link from 'next/link';
 import { useVdb } from '../Context/VdbContext';
+import { hasPermission } from '@/Helpers/PermissionsHelper';
 
 const useStyles = createStyles((theme) => ({
 	control: {
@@ -46,16 +47,16 @@ export interface LinksGroupProps {
 
 export function NavbarLinksGroup({ icon: Icon, label, links, link, permission }: LinksGroupProps) {
 	const { classes, theme } = useStyles();
-	const { loginManager } = useVdb();
+	const { values } = useVdb();
 
-	if (permission && !loginManager.hasPermission(permission)) {
+	if (permission && !hasPermission(values, permission)) {
 		return <></>;
 	}
 
 	const hasLinks = Array.isArray(links);
 	const items = (hasLinks ? links : [])
 		.filter((link) => {
-			if (link.permission) return loginManager.hasPermission(link.permission);
+			if (link.permission) return hasPermission(values, link.permission);
 			return true;
 		})
 		.map((link) => (
