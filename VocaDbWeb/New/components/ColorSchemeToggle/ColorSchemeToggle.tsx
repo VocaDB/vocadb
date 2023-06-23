@@ -12,12 +12,35 @@ import {
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 import Image, { StaticImageData } from 'next/image';
+import { useColorStore } from '@/stores/color';
+import { groupBy } from '@/Helpers/Functions';
 import miku from '@/public/characters/Hatsune Miku.png';
 import luka from '@/public/characters/Megurine Luka.png';
 import gumi from '@/public/characters/Gumi.png';
 import solaria from '@/public/characters/Solaria.png';
-import { useColorStore } from '@/stores/color';
-import { groupBy } from '@/Helpers/Functions';
+import rin from '@/public/characters/Kagamine Rin.png';
+import ia from '@/public/characters/IA.png';
+import yukari from '@/public/characters/Yuzuki Yukari.png';
+import teto from '@/public/characters/Kasane Teto.png';
+import kafu from '@/public/characters/Kafu.png';
+import flower from '@/public/characters/v flower.png';
+import kaito from '@/public/characters/Kaito.png';
+import meiko from '@/public/characters/Meiko.png';
+import tianyi from '@/public/characters/Luo Tianyi.png';
+import uta from '@/public/characters/Utane Uta.png';
+import sasara from '@/public/characters/Sato Sasara.png';
+import yufu from '@/public/characters/Sekka Yufu.png';
+import fukase from '@/public/characters/Fukase.png';
+import seeu from '@/public/characters/SeeU.png';
+import avanna from '@/public/characters/AVANNA.png';
+import nana from '@/public/characters/Macne Nana.png';
+import xingchen from '@/public/characters/Xingchen.png';
+import lumi from '@/public/characters/LUMi.png';
+import nemu from '@/public/characters/Yumemi Nemu.png';
+import pouta from '@/public/characters/Po-uta.png';
+import una from '@/public/characters/Solaria.png';
+import kzn from '@/public/characters/#kzn.png';
+import forte from '@/public/characters/Eleanor Forte.png';
 
 interface ColorScheme {
 	color: string;
@@ -37,7 +60,7 @@ const COLORSCHEMES: ColorScheme[] = [
 	},
 	{
 		color: 'rin',
-		picture: miku,
+		picture: rin,
 		name: 'Kagamine Rin',
 		description: 'TODO',
 		category: 'Vocaloid',
@@ -50,76 +73,82 @@ const COLORSCHEMES: ColorScheme[] = [
 		category: 'Vocaloid',
 	},
 	{ color: 'gumi', picture: gumi, name: 'GUMI', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'ia', picture: gumi, name: 'IA', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'yukari',
-		picture: gumi,
+		picture: yukari,
 		name: 'Yuzuki Yukari',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'teto', picture: gumi, name: 'Kasane Teto', description: 'TODO', category: 'UTAU' },
-	{ color: 'kafu', picture: gumi, name: 'KAFU', description: 'TODO', category: 'CeVIO' },
-	{ color: 'flower', picture: gumi, name: 'v flower', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'kaito', picture: gumi, name: 'KAITO', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'meiko', picture: gumi, name: 'MEIKO', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'teto', picture: teto, name: 'Kasane Teto', description: 'TODO', category: 'UTAU' },
+	{ color: 'kafu', picture: kafu, name: 'KAFU', description: 'TODO', category: 'CeVIO' },
+	{
+		color: 'flower',
+		picture: flower,
+		name: 'v flower',
+		description: 'TODO',
+		category: 'Vocaloid',
+	},
+	{ color: 'kaito', picture: kaito, name: 'KAITO', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'meiko', picture: meiko, name: 'MEIKO', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'tianyi',
-		picture: gumi,
+		picture: tianyi,
 		name: 'Luo Tianyi',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'uta', picture: gumi, name: 'Utane Uta', description: 'TODO', category: 'UTAU' },
+	{ color: 'uta', picture: uta, name: 'Utane Uta', description: 'TODO', category: 'UTAU' },
 	{
 		color: 'sasara',
-		picture: gumi,
+		picture: sasara,
 		name: 'Satou Sasara',
 		description: 'TODO',
 		category: 'CeVIO',
 	},
-	{ color: 'yufu', picture: gumi, name: 'Sekka Yufu', description: 'TODO', category: 'UTAU' },
-	{ color: 'fukase', picture: gumi, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'seeu', picture: gumi, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'yufu', picture: yufu, name: 'Sekka Yufu', description: 'TODO', category: 'UTAU' },
+	{ color: 'fukase', picture: fukase, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'seeu', picture: seeu, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'forte',
-		picture: gumi,
+		picture: forte,
 		name: 'Eleanor Forte',
 		description: 'TODO',
-		category: 'Vocaloid',
+		category: 'Synthesizer V',
 	},
-	{ color: 'avanna', picture: gumi, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'avanna', picture: avanna, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'nana',
-		picture: gumi,
+		picture: nana,
 		name: 'Macne Nana',
 		description: 'TODO',
 		category: 'GarageBand',
 	},
 	{
 		color: 'xingchen',
-		picture: gumi,
+		picture: xingchen,
 		name: 'Xingchen',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'lumi', picture: gumi, name: 'LUMi', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'lumi', picture: lumi, name: 'LUMi', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'nemu',
-		picture: gumi,
+		picture: nemu,
 		name: 'Yumemi Nemu',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'pouta', picture: gumi, name: 'Po-Uta', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'pouta', picture: pouta, name: 'Po-Uta', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'una',
-		picture: gumi,
+		picture: una,
 		name: 'Otomachi Una',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'kzn', picture: gumi, name: '#kzn', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'solaria',
 		picture: solaria,
