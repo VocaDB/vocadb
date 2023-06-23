@@ -23,6 +23,7 @@ export interface GlobalValues {
 	songTypes: SongType[];
 	siteName: string;
 	siteTitle: string;
+	staticContentHost: string;
 	bannerUrl?: string;
 	blogUrl?: string;
 	patreonLink?: string;

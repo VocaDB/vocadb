@@ -29,6 +29,7 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 				main: {
 					backgroundColor:
 						theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+					width: 0, // TODO: Remoe this hack (prevents chrome viewport being too large)
 				},
 			})}
 		>

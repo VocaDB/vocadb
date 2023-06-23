@@ -1,45 +1,44 @@
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Carousel } from '@mantine/carousel';
 import { HighlightedSongCard } from './HighlightedSongCard';
-import { Grid, MediaQuery } from '@mantine/core';
+import { useMantineTheme } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface HighlightedSongsCarouselProps {
 	songs: SongWithPVAndVoteContract[];
 }
 
 export function HighlightedSongsCarousel({ songs }: HighlightedSongsCarouselProps) {
+	const theme = useMantineTheme();
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints['lg']})`);
+
 	return (
 		<>
-			<MediaQuery smallerThan="lg" styles={{ display: 'none' }}>
-				<Grid>
-					{songs.slice(0, 4).map((s, index) => (
-						<Grid.Col span={3} key={index}>
-							<HighlightedSongCard song={s} priority />
-						</Grid.Col>
-					))}
-				</Grid>
-			</MediaQuery>
-
 			<div style={{ display: 'flex' }}>
-				<MediaQuery largerThan="lg" styles={{ display: 'none' }}>
-					<Carousel
-						h={'100%'}
-						sx={{ flex: 1, maxWidth: '100%' }}
-						align="center"
-						slideSize="50%"
-						slideGap="md"
-						breakpoints={[{ maxWidth: 'xs', slideSize: '95%', slideGap: '5%' }]}
-						loop
-						previousControlLabel="Previous highlighted PVs"
-						nextControlLabel="Next hightlighted PV"
-					>
-						{songs.map((song, key) => (
-							<Carousel.Slide key={key}>
-								<HighlightedSongCard song={song} priority={key < 2} />
-							</Carousel.Slide>
-						))}
-					</Carousel>
-				</MediaQuery>
+				<Carousel
+					h={'100%'}
+					sx={{ flex: 1, maxWidth: '100%' }}
+					align={isMobile ? 'center' : 'start'}
+					slideSize="25%"
+					slideGap="md"
+					breakpoints={[
+						{ maxWidth: 'lg', slideSize: '50%', slideGap: 'md' },
+						{ maxWidth: 'xs', slideSize: '95%', slideGap: '5%' },
+					]}
+					loop
+					draggable={true}
+					previousControlLabel="Previous highlighted PVs"
+					nextControlLabel="Next hightlighted PV"
+				>
+					{songs.map((song, key) => (
+						<Carousel.Slide key={key}>
+							<HighlightedSongCard
+								song={song}
+								priority={isMobile ? key < 2 || key == songs.length - 1 : key < 4}
+							/>
+						</Carousel.Slide>
+					))}
+				</Carousel>
 			</div>
 		</>
 	);

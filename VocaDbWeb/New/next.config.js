@@ -18,7 +18,9 @@ module.exports = withBundleAnalyzer({
 			{ protocol: 'http', hostname: 'i2.hdslb.com' }, // TODO: Ensure that we never actually use http
 			{ protocol: 'https', hostname: 'i2.hdslb.com' },
 			{ protocol: 'https', hostname: 'vocadb.net' },
+			{ protocol: 'https', hostname: 'static.vocadb.net' },
 			{ protocol: 'http', hostname: '127.0.0.1' },
+			{ protocol: 'https', hostname: 'beta.vocadb.net' },
 		],
 	},
 });
