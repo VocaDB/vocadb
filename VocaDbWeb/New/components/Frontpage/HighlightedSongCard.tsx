@@ -1,6 +1,6 @@
 import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
-import { Button, Card, Group, Text } from '@mantine/core';
+import { Button, Card, Group, Space, Text } from '@mantine/core';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
@@ -67,6 +67,8 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 						{song.artistString}
 					</Text>
 				</div>
+
+				<Space h="md" />
 
 				<Group position="apart">
 					<Group spacing="xs">
