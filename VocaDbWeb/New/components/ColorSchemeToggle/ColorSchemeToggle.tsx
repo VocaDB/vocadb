@@ -2,7 +2,6 @@ import {
 	ColorSwatch,
 	Group,
 	Switch,
-	useMantineColorScheme,
 	useMantineTheme,
 	Text,
 	Grid,
@@ -11,7 +10,6 @@ import {
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
-import { useThemeOverride } from '../Context/ThemeContext';
 import Image from 'next/image';
 import miku from '@/public/characters/Hatsune Miku.png';
 import luka from '@/public/characters/Megurine Luka.png';
@@ -79,6 +77,7 @@ export function ColorSchemeToggle() {
 				component="button"
 				onClick={openModal}
 				color={theme.colors[theme.primaryColor][6]}
+				title="Open color scheme menu"
 			/>
 			<Switch
 				checked={colorScheme === 'dark'}
@@ -88,6 +87,7 @@ export function ColorSchemeToggle() {
 				offLabel={
 					<IconMoonStars color={theme.colors.gray[6]} size="1.25rem" stroke={1.5} />
 				}
+				label="Toggle color scheme"
 			/>
 		</Group>
 	);
