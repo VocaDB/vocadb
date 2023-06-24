@@ -8,6 +8,7 @@ import {
 	Card,
 	Button,
 	Accordion,
+	ActionIcon,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
@@ -40,6 +41,8 @@ import nemu from '@/public/characters/Yumemi Nemu.png';
 import pouta from '@/public/characters/Po-uta.png';
 import una from '@/public/characters/Otomachi Una.png';
 import kzn from '@/public/characters/#kzn.png';
+import { IconInfoCircle } from '@tabler/icons-react';
+import Link from 'next/link';
 
 interface ColorScheme {
 	color: string;
@@ -47,18 +50,41 @@ interface ColorScheme {
 	name: string;
 	description: string;
 	category: string;
+	id?: number;
 }
 
 const COLORSCHEMES: ColorScheme[] = [
-	{ color: 'meiko', picture: meiko, name: 'MEIKO', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'fukase', picture: fukase, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'seeu', picture: seeu, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'meiko',
+		picture: meiko,
+		name: 'MEIKO',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 176,
+	},
+	{
+		color: 'fukase',
+		picture: fukase,
+		name: 'Fukase',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 40866,
+	},
+	{
+		color: 'seeu',
+		picture: seeu,
+		name: 'SeeU',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 113168,
+	},
 	{
 		color: 'rin',
 		picture: rin,
 		name: 'Kagamine Rin',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 14,
 	},
 	{
 		color: 'una',
@@ -66,16 +92,39 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Otomachi Una',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 120224,
 	},
-	{ color: 'gumi', picture: gumi, name: 'GUMI', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'avanna', picture: avanna, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'lumi', picture: lumi, name: 'LUMi', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'gumi',
+		picture: gumi,
+		name: 'GUMI',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 3,
+	},
+	{
+		color: 'avanna',
+		picture: avanna,
+		name: 'AVANNA',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 2803,
+	},
+	{
+		color: 'lumi',
+		picture: lumi,
+		name: 'LUMi',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 58416,
+	},
 	{
 		color: 'nemu',
 		picture: nemu,
 		name: 'Yumemi Nemu',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 56153,
 	},
 	{
 		color: 'miku',
@@ -83,6 +132,7 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Hatsune Miku',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 1,
 	},
 	{
 		color: 'tianyi',
@@ -90,14 +140,23 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Luo Tianyi',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 1778,
 	},
-	{ color: 'kaito', picture: kaito, name: 'KAITO', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'kaito',
+		picture: kaito,
+		name: 'KAITO',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 71,
+	},
 	{
 		color: 'xingchen',
 		picture: xingchen,
 		name: 'Xingchen',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 35966,
 	},
 	{
 		color: 'luka',
@@ -105,6 +164,7 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Megurine Luka',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 2,
 	},
 	{
 		color: 'yukari',
@@ -112,20 +172,57 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Yuzuki Yukari',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 623,
 	},
-	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'pouta', picture: pouta, name: 'Po-Uta', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'uta', picture: uta, name: 'Utane Uta', description: 'TODO', category: 'UTAU' },
+	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
+	{
+		color: 'pouta',
+		picture: pouta,
+		name: 'Po-Uta',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 117049,
+	},
+	{
+		color: 'uta',
+		picture: uta,
+		name: 'Utane Uta',
+		description: 'TODO',
+		category: 'UTAU',
+		id: 803,
+	},
 	{
 		color: 'flower',
 		picture: flower,
 		name: 'v flower',
 		description: 'TODO',
 		category: 'Vocaloid',
+		id: 21165,
 	},
-	{ color: 'teto', picture: teto, name: 'Kasane Teto', description: 'TODO', category: 'UTAU' },
-	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'CeVIO' },
-	{ color: 'kafu', picture: kafu, name: 'KAFU', description: 'TODO', category: 'CeVIO' },
+	{
+		color: 'teto',
+		picture: teto,
+		name: 'Kasane Teto',
+		description: 'TODO',
+		category: 'UTAU',
+		id: 116,
+	},
+	{
+		color: 'kzn',
+		picture: kzn,
+		name: '#kzn',
+		description: 'TODO',
+		category: 'CeVIO',
+		id: 100054,
+	},
+	{
+		color: 'kafu',
+		picture: kafu,
+		name: 'KAFU',
+		description: 'TODO',
+		category: 'CeVIO',
+		id: 83928,
+	},
 
 	{
 		color: 'sasara',
@@ -133,8 +230,16 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Satou Sasara',
 		description: 'TODO',
 		category: 'CeVIO',
+		id: 9874,
 	},
-	{ color: 'yufu', picture: yufu, name: 'Sekka Yufu', description: 'TODO', category: 'UTAU' },
+	{
+		color: 'yufu',
+		picture: yufu,
+		name: 'Sekka Yufu',
+		description: 'TODO',
+		category: 'UTAU',
+		id: 809,
+	},
 	// TODO: Fix eleanor forte
 	// {
 	// 	color: 'forte',
@@ -142,6 +247,7 @@ const COLORSCHEMES: ColorScheme[] = [
 	// 	name: 'Eleanor Forte',
 	// 	description: 'TODO',
 	// 	category: 'Synthesizer V',
+	// id: 66906
 	// },
 	{
 		color: 'nana',
@@ -149,6 +255,7 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'Macne Nana',
 		description: 'TODO',
 		category: 'GarageBand',
+		id: 36099,
 	},
 	{
 		color: 'solaria',
@@ -156,6 +263,7 @@ const COLORSCHEMES: ColorScheme[] = [
 		name: 'SOLARIA',
 		description: 'TODO',
 		category: 'Synthesizer V',
+		id: 76317,
 	},
 ];
 
@@ -166,11 +274,21 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 
 	return (
 		<Card shadow="sm" radius="md">
+			<ActionIcon
+				component={Link}
+				href={`/A/${scheme.id ?? 1}`}
+				size="sm"
+				style={{ position: 'absolute', right: 5 }}
+				variant="subtle"
+				title={`${scheme.name}`}
+			>
+				<IconInfoCircle />
+			</ActionIcon>
 			<Image
 				src={scheme.picture}
 				style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
 				height={120}
-				alt="Hatsune Miku"
+				alt=""
 			/>
 
 			<Text weight={400} align="center" mt="sm">
@@ -188,6 +306,7 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 				color={scheme.color}
 				radius="md"
 				fullWidth
+				title="Apply Color"
 			>
 				Apply Color
 			</Button>
