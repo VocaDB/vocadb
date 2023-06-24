@@ -1,11 +1,22 @@
 import { useColorStore } from '@/stores/color';
-import { Card, ActionIcon, Button, Text, Grid, Stack, ThemeIcon, Space } from '@mantine/core';
+import {
+	Card,
+	ActionIcon,
+	Button,
+	Text,
+	Grid,
+	Stack,
+	ThemeIcon,
+	Space,
+	useMantineTheme,
+} from '@mantine/core';
 import { IconInfoCircle, IconMoonStars, IconSun } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { COLORSCHEMES, ColorScheme } from './colorschemes';
 
 const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
+	const theme = useMantineTheme();
 	const [setPrimaryColor] = useColorStore((state) => [state.setPrimaryColor]);
 
 	const lightMode = !scheme.recommendedMode || scheme.recommendedMode === 'light';
@@ -24,20 +35,20 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 					<IconInfoCircle />
 				</ActionIcon>
 				<ThemeIcon
-					style={{ visibility: lightMode ? 'visible' : 'hidden' }}
+					style={!lightMode ? { visibility: 'hidden', pointerEvents: 'none' } : {}}
 					title="Works well with light mode"
 					variant="subtle"
 					size="sm"
 				>
-					<IconSun />
+					<IconSun color={theme.colors.gray[6]} />
 				</ThemeIcon>
 				<ThemeIcon
-					style={{ visibility: darkMode ? 'visible' : 'hidden' }}
+					style={!darkMode ? { visibility: 'hidden', pointerEvents: 'none' } : {}}
 					title="Works well with dark mode"
 					size="sm"
 					variant="subtle"
 				>
-					<IconMoonStars />
+					<IconMoonStars color={theme.colors.gray[6]} />
 				</ThemeIcon>
 			</Stack>
 			<Image
