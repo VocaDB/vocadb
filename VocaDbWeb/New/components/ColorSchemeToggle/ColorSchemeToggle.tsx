@@ -40,7 +40,6 @@ import nemu from '@/public/characters/Yumemi Nemu.png';
 import pouta from '@/public/characters/Po-uta.png';
 import una from '@/public/characters/Otomachi Una.png';
 import kzn from '@/public/characters/#kzn.png';
-import forte from '@/public/characters/Eleanor Forte.png';
 
 interface ColorScheme {
 	color: string;
@@ -51,6 +50,33 @@ interface ColorScheme {
 }
 
 const COLORSCHEMES: ColorScheme[] = [
+	{ color: 'meiko', picture: meiko, name: 'MEIKO', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'fukase', picture: fukase, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'seeu', picture: seeu, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'rin',
+		picture: rin,
+		name: 'Kagamine Rin',
+		description: 'TODO',
+		category: 'Vocaloid',
+	},
+	{
+		color: 'una',
+		picture: una,
+		name: 'Otomachi Una',
+		description: 'TODO',
+		category: 'Vocaloid',
+	},
+	{ color: 'gumi', picture: gumi, name: 'GUMI', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'avanna', picture: avanna, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'lumi', picture: lumi, name: 'LUMi', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'nemu',
+		picture: nemu,
+		name: 'Yumemi Nemu',
+		description: 'TODO',
+		category: 'Vocaloid',
+	},
 	{
 		color: 'miku',
 		picture: miku,
@@ -59,9 +85,17 @@ const COLORSCHEMES: ColorScheme[] = [
 		category: 'Vocaloid',
 	},
 	{
-		color: 'rin',
-		picture: rin,
-		name: 'Kagamine Rin',
+		color: 'tianyi',
+		picture: tianyi,
+		name: 'Luo Tianyi',
+		description: 'TODO',
+		category: 'Vocaloid',
+	},
+	{ color: 'kaito', picture: kaito, name: 'KAITO', description: 'TODO', category: 'Vocaloid' },
+	{
+		color: 'xingchen',
+		picture: xingchen,
+		name: 'Xingchen',
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
@@ -72,8 +106,6 @@ const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'gumi', picture: gumi, name: 'GUMI', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'yukari',
 		picture: yukari,
@@ -81,8 +113,9 @@ const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'teto', picture: teto, name: 'Kasane Teto', description: 'TODO', category: 'UTAU' },
-	{ color: 'kafu', picture: kafu, name: 'KAFU', description: 'TODO', category: 'CeVIO' },
+	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'pouta', picture: pouta, name: 'Po-Uta', description: 'TODO', category: 'Vocaloid' },
+	{ color: 'uta', picture: uta, name: 'Utane Uta', description: 'TODO', category: 'UTAU' },
 	{
 		color: 'flower',
 		picture: flower,
@@ -90,16 +123,10 @@ const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 	},
-	{ color: 'kaito', picture: kaito, name: 'KAITO', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'meiko', picture: meiko, name: 'MEIKO', description: 'TODO', category: 'Vocaloid' },
-	{
-		color: 'tianyi',
-		picture: tianyi,
-		name: 'Luo Tianyi',
-		description: 'TODO',
-		category: 'Vocaloid',
-	},
-	{ color: 'uta', picture: uta, name: 'Utane Uta', description: 'TODO', category: 'UTAU' },
+	{ color: 'teto', picture: teto, name: 'Kasane Teto', description: 'TODO', category: 'UTAU' },
+	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'CeVIO' },
+	{ color: 'kafu', picture: kafu, name: 'KAFU', description: 'TODO', category: 'CeVIO' },
+
 	{
 		color: 'sasara',
 		picture: sasara,
@@ -108,8 +135,6 @@ const COLORSCHEMES: ColorScheme[] = [
 		category: 'CeVIO',
 	},
 	{ color: 'yufu', picture: yufu, name: 'Sekka Yufu', description: 'TODO', category: 'UTAU' },
-	{ color: 'fukase', picture: fukase, name: 'Fukase', description: 'TODO', category: 'Vocaloid' },
-	{ color: 'seeu', picture: seeu, name: 'SeeU', description: 'TODO', category: 'Vocaloid' },
 	// TODO: Fix eleanor forte
 	// {
 	// 	color: 'forte',
@@ -118,7 +143,6 @@ const COLORSCHEMES: ColorScheme[] = [
 	// 	description: 'TODO',
 	// 	category: 'Synthesizer V',
 	// },
-	{ color: 'avanna', picture: avanna, name: 'AVANNA', description: 'TODO', category: 'Vocaloid' },
 	{
 		color: 'nana',
 		picture: nana,
@@ -126,30 +150,6 @@ const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'GarageBand',
 	},
-	{
-		color: 'xingchen',
-		picture: xingchen,
-		name: 'Xingchen',
-		description: 'TODO',
-		category: 'Vocaloid',
-	},
-	{ color: 'lumi', picture: lumi, name: 'LUMi', description: 'TODO', category: 'Vocaloid' },
-	{
-		color: 'nemu',
-		picture: nemu,
-		name: 'Yumemi Nemu',
-		description: 'TODO',
-		category: 'Vocaloid',
-	},
-	{ color: 'pouta', picture: pouta, name: 'Po-Uta', description: 'TODO', category: 'Vocaloid' },
-	{
-		color: 'una',
-		picture: una,
-		name: 'Otomachi Una',
-		description: 'TODO',
-		category: 'Vocaloid',
-	},
-	{ color: 'kzn', picture: kzn, name: '#kzn', description: 'TODO', category: 'CeVIO' },
 	{
 		color: 'solaria',
 		picture: solaria,
