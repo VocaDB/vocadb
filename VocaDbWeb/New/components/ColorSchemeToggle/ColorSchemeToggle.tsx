@@ -71,6 +71,14 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 40866,
 	},
 	{
+		color: 'teto',
+		picture: teto,
+		name: 'Kasane Teto',
+		description: 'TODO',
+		category: 'UTAU',
+		id: 116,
+	},
+	{
 		color: 'seeu',
 		picture: seeu,
 		name: 'SeeU',
@@ -103,20 +111,20 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 3,
 	},
 	{
+		color: 'nana',
+		picture: nana,
+		name: 'Macne Nana',
+		description: 'TODO',
+		category: 'GarageBand',
+		id: 36099,
+	},
+	{
 		color: 'avanna',
 		picture: avanna,
 		name: 'AVANNA',
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 2803,
-	},
-	{
-		color: 'lumi',
-		picture: lumi,
-		name: 'LUMi',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 58416,
 	},
 	{
 		color: 'nemu',
@@ -135,6 +143,14 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 1,
 	},
 	{
+		color: 'lumi',
+		picture: lumi,
+		name: 'LUMi',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 58416,
+	},
+	{
 		color: 'tianyi',
 		picture: tianyi,
 		name: 'Luo Tianyi',
@@ -151,37 +167,20 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 71,
 	},
 	{
+		color: 'kafu',
+		picture: kafu,
+		name: 'KAFU',
+		description: 'TODO',
+		category: 'CeVIO',
+		id: 83928,
+	},
+	{
 		color: 'xingchen',
 		picture: xingchen,
 		name: 'Xingchen',
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 35966,
-	},
-	{
-		color: 'luka',
-		picture: luka,
-		name: 'Megurine Luka',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 2,
-	},
-	{
-		color: 'yukari',
-		picture: yukari,
-		name: 'Yuzuki Yukari',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 623,
-	},
-	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
-	{
-		color: 'pouta',
-		picture: pouta,
-		name: 'Po-Uta',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 117049,
 	},
 	{
 		color: 'uta',
@@ -192,21 +191,22 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 803,
 	},
 	{
-		color: 'flower',
-		picture: flower,
-		name: 'v flower',
+		color: 'yukari',
+		picture: yukari,
+		name: 'Yuzuki Yukari',
 		description: 'TODO',
 		category: 'Vocaloid',
-		id: 21165,
+		id: 623,
 	},
 	{
-		color: 'teto',
-		picture: teto,
-		name: 'Kasane Teto',
+		color: 'luka',
+		picture: luka,
+		name: 'Megurine Luka',
 		description: 'TODO',
-		category: 'UTAU',
-		id: 116,
+		category: 'Vocaloid',
+		id: 2,
 	},
+	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
 	{
 		color: 'kzn',
 		picture: kzn,
@@ -216,15 +216,6 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 100054,
 	},
 	{
-		color: 'kafu',
-		picture: kafu,
-		name: 'KAFU',
-		description: 'TODO',
-		category: 'CeVIO',
-		id: 83928,
-	},
-
-	{
 		color: 'sasara',
 		picture: sasara,
 		name: 'Satou Sasara',
@@ -233,12 +224,36 @@ const COLORSCHEMES: ColorScheme[] = [
 		id: 9874,
 	},
 	{
+		color: 'solaria',
+		picture: solaria,
+		name: 'SOLARIA',
+		description: 'TODO',
+		category: 'Synthesizer V',
+		id: 76317,
+	},
+	{
+		color: 'pouta',
+		picture: pouta,
+		name: 'Po-Uta',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 117049,
+	},
+	{
 		color: 'yufu',
 		picture: yufu,
 		name: 'Sekka Yufu',
 		description: 'TODO',
 		category: 'UTAU',
 		id: 809,
+	},
+	{
+		color: 'flower',
+		picture: flower,
+		name: 'v flower',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 21165,
 	},
 	// TODO: Fix eleanor forte
 	// {
@@ -249,22 +264,6 @@ const COLORSCHEMES: ColorScheme[] = [
 	// 	category: 'Synthesizer V',
 	// id: 66906
 	// },
-	{
-		color: 'nana',
-		picture: nana,
-		name: 'Macne Nana',
-		description: 'TODO',
-		category: 'GarageBand',
-		id: 36099,
-	},
-	{
-		color: 'solaria',
-		picture: solaria,
-		name: 'SOLARIA',
-		description: 'TODO',
-		category: 'Synthesizer V',
-		id: 76317,
-	},
 ];
 
 const GROUPED_COLORSCHEMES = groupBy(COLORSCHEMES, (val) => val.category);
@@ -321,20 +320,15 @@ export function ColorSchemeToggle() {
 		state.toggleColorScheme,
 	]);
 
-	const colorSchemes = Object.keys(GROUPED_COLORSCHEMES).map((group) => (
-		<Accordion.Item value={group}>
-			<Accordion.Control>{group}</Accordion.Control>
-			<Accordion.Panel>
-				<Grid>
-					{GROUPED_COLORSCHEMES[group].map((scheme) => (
-						<Grid.Col md={4} sm={12}>
-							<ColorSchemeCard scheme={scheme} />
-						</Grid.Col>
-					))}
-				</Grid>
-			</Accordion.Panel>
-		</Accordion.Item>
-	));
+	const colorSchemes = (
+		<Grid>
+			{COLORSCHEMES.map((scheme) => (
+				<Grid.Col key={scheme.id} md={4} sm={12}>
+					<ColorSchemeCard scheme={scheme} />
+				</Grid.Col>
+			))}
+		</Grid>
+	);
 
 	const openModal = () =>
 		modals.open({
