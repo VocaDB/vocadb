@@ -33,6 +33,7 @@ export interface ColorScheme {
 	description: string;
 	category: string;
 	id?: number;
+	recommendedMode?: 'light' | 'dark';
 }
 export const COLORSCHEMES: ColorScheme[] = [
 	{
@@ -74,6 +75,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 14,
+		recommendedMode: 'dark',
 	},
 	{
 		color: 'una',
@@ -82,6 +84,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 120224,
+		recommendedMode: 'dark',
 	},
 	{
 		color: 'gumi',
@@ -98,6 +101,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'GarageBand',
 		id: 36099,
+		recommendedMode: 'dark',
 	},
 	{
 		color: 'avanna',
@@ -106,6 +110,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 2803,
+		recommendedMode: 'light',
 	},
 	{
 		color: 'nemu',
@@ -130,6 +135,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 58416,
+		recommendedMode: 'dark',
 	},
 	{
 		color: 'tianyi',
@@ -146,6 +152,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 71,
+		recommendedMode: 'light',
 	},
 	{
 		color: 'kafu',
@@ -162,6 +169,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 35966,
+		recommendedMode: 'light',
 	},
 	{
 		color: 'uta',
@@ -170,6 +178,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'UTAU',
 		id: 803,
+		recommendedMode: 'light',
 	},
 	{
 		color: 'yukari',
@@ -219,6 +228,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 117049,
+		recommendedMode: 'light',
 	},
 	{
 		color: 'yufu',
@@ -235,6 +245,7 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 21165,
+		recommendedMode: 'light',
 	},
 	// TODO: Fix eleanor forte
 	// {

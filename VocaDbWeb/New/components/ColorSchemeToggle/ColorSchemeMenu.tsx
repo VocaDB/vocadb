@@ -1,6 +1,6 @@
 import { useColorStore } from '@/stores/color';
-import { Card, ActionIcon, Button, Text, Grid } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { Card, ActionIcon, Button, Text, Grid, Stack, ThemeIcon, Space } from '@mantine/core';
+import { IconInfoCircle, IconMoonStars, IconSun } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { COLORSCHEMES, ColorScheme } from './colorschemes';
@@ -8,18 +8,38 @@ import { COLORSCHEMES, ColorScheme } from './colorschemes';
 const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 	const [setPrimaryColor] = useColorStore((state) => [state.setPrimaryColor]);
 
+	const lightMode = !scheme.recommendedMode || scheme.recommendedMode === 'light';
+	const darkMode = !scheme.recommendedMode || scheme.recommendedMode === 'dark';
+
 	return (
 		<Card shadow="sm" radius="md">
-			<ActionIcon
-				component={Link}
-				href={`/A/${scheme.id ?? 1}`}
-				size="sm"
-				style={{ position: 'absolute', right: 5 }}
-				variant="subtle"
-				title={`${scheme.name}`}
-			>
-				<IconInfoCircle />
-			</ActionIcon>
+			<Stack spacing="xs" style={{ position: 'absolute', right: 10 }}>
+				<ActionIcon
+					component={Link}
+					href={`/A/${scheme.id ?? 1}`}
+					size="sm"
+					variant="subtle"
+					title={`${scheme.name}`}
+				>
+					<IconInfoCircle />
+				</ActionIcon>
+				<ThemeIcon
+					style={{ visibility: lightMode ? 'visible' : 'hidden' }}
+					title="Works well with light mode"
+					variant="subtle"
+					size="sm"
+				>
+					<IconSun />
+				</ThemeIcon>
+				<ThemeIcon
+					style={{ visibility: darkMode ? 'visible' : 'hidden' }}
+					title="Works well with dark mode"
+					size="sm"
+					variant="subtle"
+				>
+					<IconMoonStars />
+				</ThemeIcon>
+			</Stack>
 			<Image
 				src={scheme.picture}
 				style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
