@@ -21,6 +21,7 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 
 	const lightMode = !scheme.recommendedMode || scheme.recommendedMode === 'light';
 	const darkMode = !scheme.recommendedMode || scheme.recommendedMode === 'dark';
+	const iconColor = theme.colors.gray[theme.colorScheme === 'dark' ? 2 : 6];
 
 	return (
 		<Card shadow="sm" radius="md">
@@ -40,7 +41,7 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 					variant="subtle"
 					size="sm"
 				>
-					<IconSun color={theme.colors.gray[6]} />
+					<IconSun color={iconColor} />
 				</ThemeIcon>
 				<ThemeIcon
 					style={!darkMode ? { visibility: 'hidden', pointerEvents: 'none' } : {}}
@@ -48,7 +49,7 @@ const ColorSchemeCard = ({ scheme }: { scheme: ColorScheme }) => {
 					size="sm"
 					variant="subtle"
 				>
-					<IconMoonStars color={theme.colors.gray[6]} />
+					<IconMoonStars color={iconColor} />
 				</ThemeIcon>
 			</Stack>
 			<Image
