@@ -37,6 +37,14 @@ export interface ColorScheme {
 }
 export const COLORSCHEMES: ColorScheme[] = [
 	{
+		color: 'teto',
+		picture: teto,
+		name: 'Kasane Teto',
+		description: 'TODO',
+		category: 'UTAU',
+		id: 116,
+	},
+	{
 		color: 'meiko',
 		picture: meiko,
 		name: 'MEIKO',
@@ -53,14 +61,6 @@ export const COLORSCHEMES: ColorScheme[] = [
 		id: 40866,
 	},
 	{
-		color: 'teto',
-		picture: teto,
-		name: 'Kasane Teto',
-		description: 'TODO',
-		category: 'UTAU',
-		id: 116,
-	},
-	{
 		color: 'seeu',
 		picture: seeu,
 		name: 'SeeU',
@@ -69,12 +69,29 @@ export const COLORSCHEMES: ColorScheme[] = [
 		id: 113168,
 	},
 	{
+		color: 'solaria',
+		picture: solaria,
+		name: 'SOLARIA',
+		description: 'TODO',
+		category: 'Synthesizer V',
+		id: 76317,
+	},
+	{
 		color: 'rin',
 		picture: rin,
 		name: 'Kagamine Rin',
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 14,
+		recommendedMode: 'dark',
+	},
+	{
+		color: 'nana',
+		picture: nana,
+		name: 'Macne Nana',
+		description: 'TODO',
+		category: 'GarageBand',
+		id: 36099,
 		recommendedMode: 'dark',
 	},
 	{
@@ -93,15 +110,6 @@ export const COLORSCHEMES: ColorScheme[] = [
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 3,
-	},
-	{
-		color: 'nana',
-		picture: nana,
-		name: 'Macne Nana',
-		description: 'TODO',
-		category: 'GarageBand',
-		id: 36099,
-		recommendedMode: 'dark',
 	},
 	{
 		color: 'avanna',
@@ -146,6 +154,14 @@ export const COLORSCHEMES: ColorScheme[] = [
 		id: 1778,
 	},
 	{
+		color: 'kafu',
+		picture: kafu,
+		name: 'KAFU',
+		description: 'TODO',
+		category: 'CeVIO',
+		id: 83928,
+	},
+	{
 		color: 'kaito',
 		picture: kaito,
 		name: 'KAITO',
@@ -153,14 +169,6 @@ export const COLORSCHEMES: ColorScheme[] = [
 		category: 'Vocaloid',
 		id: 71,
 		recommendedMode: 'light',
-	},
-	{
-		color: 'kafu',
-		picture: kafu,
-		name: 'KAFU',
-		description: 'TODO',
-		category: 'CeVIO',
-		id: 83928,
 	},
 	{
 		color: 'xingchen',
@@ -172,6 +180,14 @@ export const COLORSCHEMES: ColorScheme[] = [
 		recommendedMode: 'light',
 	},
 	{
+		color: 'yukari',
+		picture: yukari,
+		name: 'Yuzuki Yukari',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 623,
+	},
+	{
 		color: 'uta',
 		picture: uta,
 		name: 'Utane Uta',
@@ -181,12 +197,12 @@ export const COLORSCHEMES: ColorScheme[] = [
 		recommendedMode: 'light',
 	},
 	{
-		color: 'yukari',
-		picture: yukari,
-		name: 'Yuzuki Yukari',
+		color: 'kzn',
+		picture: kzn,
+		name: '#kzn',
 		description: 'TODO',
-		category: 'Vocaloid',
-		id: 623,
+		category: 'CeVIO',
+		id: 100054,
 	},
 	{
 		color: 'luka',
@@ -198,28 +214,12 @@ export const COLORSCHEMES: ColorScheme[] = [
 	},
 	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
 	{
-		color: 'kzn',
-		picture: kzn,
-		name: '#kzn',
-		description: 'TODO',
-		category: 'CeVIO',
-		id: 100054,
-	},
-	{
 		color: 'sasara',
 		picture: sasara,
 		name: 'Satou Sasara',
 		description: 'TODO',
 		category: 'CeVIO',
 		id: 9874,
-	},
-	{
-		color: 'solaria',
-		picture: solaria,
-		name: 'SOLARIA',
-		description: 'TODO',
-		category: 'Synthesizer V',
-		id: 76317,
 	},
 	{
 		color: 'pouta',
