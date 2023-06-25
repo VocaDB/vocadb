@@ -37,6 +37,23 @@ export interface ColorScheme {
 }
 export const COLORSCHEMES: ColorScheme[] = [
 	{
+		color: 'luka',
+		picture: luka,
+		name: 'Megurine Luka',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 2,
+	},
+	{
+		color: 'kzn',
+		picture: kzn,
+		name: '#kzn',
+		description: 'TODO',
+		category: 'CeVIO',
+		id: 100054,
+	},
+	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
+	{
 		color: 'teto',
 		picture: teto,
 		name: 'Kasane Teto',
@@ -95,6 +112,14 @@ export const COLORSCHEMES: ColorScheme[] = [
 		recommendedMode: 'dark',
 	},
 	{
+		color: 'gumi',
+		picture: gumi,
+		name: 'GUMI',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 3,
+	},
+	{
 		color: 'una',
 		picture: una,
 		name: 'Otomachi Una',
@@ -102,14 +127,6 @@ export const COLORSCHEMES: ColorScheme[] = [
 		category: 'Vocaloid',
 		id: 120224,
 		recommendedMode: 'dark',
-	},
-	{
-		color: 'gumi',
-		picture: gumi,
-		name: 'GUMI',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 3,
 	},
 	{
 		color: 'avanna',
@@ -121,20 +138,20 @@ export const COLORSCHEMES: ColorScheme[] = [
 		recommendedMode: 'light',
 	},
 	{
-		color: 'nemu',
-		picture: nemu,
-		name: 'Yumemi Nemu',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 56153,
-	},
-	{
 		color: 'miku',
 		picture: miku,
 		name: 'Hatsune Miku',
 		description: 'TODO',
 		category: 'Vocaloid',
 		id: 1,
+	},
+	{
+		color: 'nemu',
+		picture: nemu,
+		name: 'Yumemi Nemu',
+		description: 'TODO',
+		category: 'Vocaloid',
+		id: 56153,
 	},
 	{
 		color: 'lumi',
@@ -196,23 +213,6 @@ export const COLORSCHEMES: ColorScheme[] = [
 		id: 803,
 		recommendedMode: 'light',
 	},
-	{
-		color: 'kzn',
-		picture: kzn,
-		name: '#kzn',
-		description: 'TODO',
-		category: 'CeVIO',
-		id: 100054,
-	},
-	{
-		color: 'luka',
-		picture: luka,
-		name: 'Megurine Luka',
-		description: 'TODO',
-		category: 'Vocaloid',
-		id: 2,
-	},
-	{ color: 'ia', picture: ia, name: 'IA', description: 'TODO', category: 'Vocaloid', id: 504 },
 	{
 		color: 'sasara',
 		picture: sasara,
