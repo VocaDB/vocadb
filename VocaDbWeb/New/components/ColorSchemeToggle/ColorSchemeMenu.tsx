@@ -7,7 +7,6 @@ import {
 	Grid,
 	Stack,
 	ThemeIcon,
-	Space,
 	useMantineTheme,
 } from '@mantine/core';
 import { IconInfoCircle, IconMoonStars, IconSun } from '@tabler/icons-react';

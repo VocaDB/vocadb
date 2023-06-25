@@ -2,7 +2,6 @@
 
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { GlobalValues } from '@/types/GlobalValues';
-import { LoginManager } from '@/types/Models/LoginManager';
 import React, { useEffect } from 'react';
 
 interface VdbContext {
