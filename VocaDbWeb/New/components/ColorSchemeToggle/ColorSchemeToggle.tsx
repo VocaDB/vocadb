@@ -1,7 +1,7 @@
 import { ColorSwatch, Group, Paper, Switch, useMantineTheme } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
-import { useColorStore } from '@/stores/color';
+import { useColorStore } from '@/stores/useColorStore';
 import React, { Suspense } from 'react';
 
 const ColorSchemeMenu = React.lazy(() => import('./ColorSchemeMenu'));

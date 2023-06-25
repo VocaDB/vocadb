@@ -9,7 +9,7 @@ import { GlobalValues } from '@/types/GlobalValues';
 import { VdbProvider } from '@/components/Context/VdbContext';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ModalsProvider } from '@mantine/modals';
-import { useColorStore } from '@/stores/color';
+import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
 
 export default function App(

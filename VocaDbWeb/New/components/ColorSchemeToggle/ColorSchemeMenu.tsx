@@ -1,4 +1,4 @@
-import { useColorStore } from '@/stores/color';
+import { useColorStore } from '@/stores/useColorStore';
 import {
 	Card,
 	ActionIcon,
