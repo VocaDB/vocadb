@@ -1,8 +1,7 @@
 import { DiscussionFolderContract } from '@/types/DataContracts/Discussion/DiscussionFolderContract';
-import { Grid, Title } from '@mantine/core';
 import useStyles from './Folder.styles';
-import { ThemeIcon } from '@mantine/core';
 import { IconBook2 } from '@tabler/icons-react';
+import { Text, Paper, Grid, ThemeIcon } from '@mantine/core';
 
 interface FolderProps {
 	folder: DiscussionFolderContract;
@@ -11,19 +10,23 @@ interface FolderProps {
 export function Folder({ folder }: FolderProps) {
 	const styles = useStyles();
 	return (
-        <>
-            <Title mt="md" mb="xs" order={5} className={styles.classes.folderName}>
-                <ThemeIcon variant="filled" style={{ display: "inline-flex", marginRight: "10px" }}><IconBook2 size="1rem" style={{ display: "inline-flex" }} /></ThemeIcon>{folder.name}
-            </Title>
-            <Title mt="md" mb="xs" order={6} className={styles.classes.folderDescription}>
-                {folder.description}
-            </Title>
-            <Title mt="md" mb="xs" order={6} className={styles.classes.folderTopics}>
-                Topics: {folder.topicCount}
-            </Title>
-            <Title mt="md" mb="xs" order={6} className={styles.classes.folderLastTopicDate}>
-                LastTopic: {new Date(folder.lastTopicDate).toLocaleString()} by {folder.lastTopicAuthor?.name}
-            </Title>
+		<>
+		 	<Text mt="md" mb="xs" className={styles.classes.folderName}>
+				<ThemeIcon variant="filled" mr={6}>
+					<IconBook2 size="1rem" />
+				</ThemeIcon>
+				{folder.name}
+			</Text>
+			<Text mt="md" mb="xs" className={styles.classes.folderDescription}>
+				{folder.description}
+			</Text>
+			<Text mt="md" mb="xs" className={styles.classes.folderTopics}>
+				Topics: {folder.topicCount}
+			</Text>
+			<Text mt="md" mb="xs" className={styles.classes.folderLastTopicDate}>
+				Last topic: {new Date(folder.lastTopicDate).toLocaleString()} by{' '}
+				{folder.lastTopicAuthor?.name}
+			</Text>
 		</>
 	);
 }
@@ -33,14 +36,14 @@ interface FoldersProps {
 }
 
 export function Folders({ folders }: FoldersProps) {
-    const styles = useStyles();
+	const styles = useStyles();
 	return (
 		<Grid className={styles.classes.folderGrid} grow gutter="xl">
 			{folders.map((folder) => (
-				<Grid.Col
-                    span={4}
-                    key={folder.id} className={styles.classes.folderGridList}>
-					<Folder key={folder.id} folder={folder} />
+				<Grid.Col span={6} key={folder.id}>
+					<Paper shadow="sm" radius="md" p="md" withBorder key={folder.id} className={styles.classes.folderGridList}>
+						<Folder key={folder.id} folder={folder} />
+					</Paper>
 				</Grid.Col>
 			))}
 		</Grid>

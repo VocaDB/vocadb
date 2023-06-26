@@ -13,7 +13,7 @@ export default function DiscussionPage({
 	return (
 		<>
 			<Title order={2} mb="xs" mt="md">
-				Discussion
+				Discussions
 			</Title>
 			<Folders folders={discussionFolders} />
 			<Title mt="md" mb="xs" order={2}>
@@ -27,8 +27,7 @@ export default function DiscussionPage({
 export const getServerSideProps: GetServerSideProps<{
 	discussionFolders: DiscussionFolderContract[];
 	recentTopics: DiscussionTopicContract[];
-}
-> = async ({ res }) => {
+}> = async ({ res }) => {
 	res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
 
 	let apiResp = await apiFetch('/api/discussions/folders?fields=TopicCount,LastTopic');
