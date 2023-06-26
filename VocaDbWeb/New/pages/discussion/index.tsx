@@ -30,11 +30,16 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ res }) => {
 	res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
 
-	let apiResp = await apiFetch('/api/discussions/folders?fields=TopicCount,LastTopic');
-	const discussionFolders = await apiResp.json();
+	const apiResp = await Promise.all([
+		apiFetch('/api/discussions/folders?fields=TopicCount,LastTopic'),
+		apiFetch('/api/discussions/topics?sort=DateCreated'),
+	]);
 
-	apiResp = await apiFetch('/api/discussions/topics?sort=DateCreated');
-	const recentTopics = await apiResp.json().then((topics) => topics.items);
+	const [discussionFolders, recentTopics] = await Promise.all([
+		apiResp[0].json(),
+		apiResp[1].json().then((topics) => topics.items),
+	]);
+
 	recentTopics.splice(6);
 
 	return { props: { discussionFolders, recentTopics } };

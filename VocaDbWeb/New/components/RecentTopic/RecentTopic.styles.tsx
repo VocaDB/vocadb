@@ -7,7 +7,6 @@ export default createStyles((theme) => ({
 		flexWrap: 'wrap',
 		justifyContent: 'space-around',
 		overflow: 'hidden',
-		backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
 	},
 	folderGridList: {
 		width: '100%',

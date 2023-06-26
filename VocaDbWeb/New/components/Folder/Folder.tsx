@@ -20,10 +20,10 @@ export function Folder({ folder }: FolderProps) {
 			<Text mt="md" mb="xs" className={styles.classes.folderDescription}>
 				{folder.description}
 			</Text>
-			<Text mt="md" mb="xs" className={styles.classes.folderTopics}>
+			<Text mt="md" mb="xs" className={styles.classes.folderItem}>
 				Topics: {folder.topicCount}
 			</Text>
-			<Text mt="md" mb="xs" className={styles.classes.folderLastTopicDate}>
+			<Text mt="md" mb="xs" className={styles.classes.folderItem}>
 				Last topic: {new Date(folder.lastTopicDate).toLocaleString()} by{' '}
 				{folder.lastTopicAuthor?.name}
 			</Text>
@@ -40,9 +40,9 @@ export function Folders({ folders }: FoldersProps) {
 	return (
 		<Grid className={styles.classes.folderGrid} grow gutter="xl">
 			{folders.map((folder) => (
-				<Grid.Col span={6} key={folder.id}>
-					<Paper shadow="sm" radius="md" p="md" withBorder key={folder.id} className={styles.classes.folderGridList}>
-						<Folder key={folder.id} folder={folder} />
+				<Grid.Col span={6} key={folder.id} style={{ maxWidth: "100%" }}>
+					<Paper shadow="sm" radius="md" p="md" withBorder className={styles.classes.folderGridList}>
+						<Folder folder={folder} />
 					</Paper>
 				</Grid.Col>
 			))}

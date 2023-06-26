@@ -7,7 +7,6 @@ export default createStyles((theme) => ({
 		flexWrap: 'wrap',
 		justifyContent: 'space-around',
 		overflow: 'hidden',
-		backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
 	},
 	folderGridList: {
 		width: '100%',
@@ -33,15 +32,7 @@ export default createStyles((theme) => ({
 		whiteSpace: 'normal',
 		color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[3],
 	},
-	folderTopics: {
-		width: '100%',
-		height: '20px',
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-		color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[3],
-	},
-	folderLastTopicDate: {
+	folderItem: {
 		width: '100%',
 		height: '20px',
 		overflow: 'hidden',
