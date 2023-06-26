@@ -11,6 +11,15 @@ module.exports = withBundleAnalyzer({
 		locales: ['en'],
 		defaultLocale: 'en',
 	},
+	async redirects() {
+		return [
+			{
+				source: '/Song/Details/:id(\\d+)',
+				destination: '/S/:id',
+				permanent: true,
+			},
+		];
+	},
 	images: {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'i1.ytimg.com' },

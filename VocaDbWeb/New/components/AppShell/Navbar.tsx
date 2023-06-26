@@ -27,6 +27,8 @@ import { UserButton } from './UserButton';
 import { useVdb } from '../Context/VdbContext';
 import { PermissionToken } from '@/types/Models/LoginManager';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
+import PlayerControls from './PlayerControls';
+import PVPlayer from '@/nostalgic-darling/PVPlayer';
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
@@ -185,11 +187,15 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	);
 
 	return (
-		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 250 }}>
+		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 220, lg: 300 }}>
 			<Navbar.Section scrollHideDelay={100} component={ScrollArea} grow>
 				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
 				))}
+			</Navbar.Section>
+			<Navbar.Section>
+				<PVPlayer />
+				<PlayerControls />
 			</Navbar.Section>
 			{values.isLoggedIn && (
 				<Navbar.Section
