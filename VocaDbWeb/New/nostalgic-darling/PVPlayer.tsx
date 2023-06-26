@@ -5,7 +5,6 @@ import { usePlayerStore } from './stores/usePlayerStore';
 export default function PVPlayer() {
 	const [song, playerBounds] = usePlayerStore((set) => [set.song, set.playerBounds]);
 	const pv = song?.pvs?.find((pv) => pv.service === PVService.Youtube);
-	console.log(pv?.url);
 
 	return (
 		<div
@@ -13,7 +12,6 @@ export default function PVPlayer() {
 				playerBounds === undefined
 					? {
 							width: '100%',
-							height: '80%',
 					  }
 					: {
 							position: 'absolute',

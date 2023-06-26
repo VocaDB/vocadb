@@ -3,6 +3,7 @@ import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
 import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
+import PlayerControls from './PlayerControls';
 
 interface CustomHeaderProps {
 	opened: boolean;
@@ -33,6 +34,7 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 				src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
 				alt=""
 			/>
+			<PlayerControls />
 			<div
 				style={{
 					display: 'flex',

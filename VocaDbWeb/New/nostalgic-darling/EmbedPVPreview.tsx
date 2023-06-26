@@ -1,16 +1,21 @@
 import React from 'react';
 import { usePlayerStore } from './stores/usePlayerStore';
-import { SongContract } from '@/types/DataContracts/Song/SongContract';
+import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
+import CustomImage from '@/components/Image/Image';
 
 interface EmbedPVPreviewProps {
-	song: SongContract;
+	song: SongApiContract;
 }
 
 export default function EmbedPVPreview({ song }: EmbedPVPreviewProps) {
-	const [setPlayerBounds, setSong] = usePlayerStore((set) => [set.setPlayerBounds, set.loadSong]);
+	const [setPlayerBounds, setSong, currSong] = usePlayerStore((set) => [
+		set.setPlayerBounds,
+		set.loadSong,
+		set.song,
+	]);
 	const embedPVPreviewRef = React.useRef<HTMLDivElement>(undefined!);
 
-	const handleResize = React.useCallback(() => {
+	const updatePlayerBounds = () => {
 		const rect = embedPVPreviewRef.current.getBoundingClientRect();
 		setPlayerBounds({
 			x: rect.x + window.scrollX,
@@ -18,6 +23,13 @@ export default function EmbedPVPreview({ song }: EmbedPVPreviewProps) {
 			width: rect.width,
 			height: rect.height,
 		});
+	};
+
+	const handleResize = React.useCallback(() => {
+		if (currSong?.id !== song.id) {
+			return;
+		}
+		updatePlayerBounds();
 	}, [song]);
 
 	React.useLayoutEffect(() => {
@@ -35,10 +47,23 @@ export default function EmbedPVPreview({ song }: EmbedPVPreviewProps) {
 		};
 	}, []);
 
-	React.useEffect(() => {
-		setSong(song);
-	}, []);
-
-	return <div ref={embedPVPreviewRef} style={{ width: 560, height: 315 }} />;
+	return (
+		<div
+			onClick={() => {
+				setSong(song);
+				updatePlayerBounds();
+			}}
+			ref={embedPVPreviewRef}
+			style={{ width: '30vw', aspectRatio: '16/9' }}
+		>
+			<CustomImage
+				width={500}
+				height={315}
+				style={{ width: '100%', height: '100%' }}
+				src={song.mainPicture?.urlOriginal ?? 'todo: fallback'}
+				alt="Start the song"
+			/>
+		</div>
+	);
 }
 

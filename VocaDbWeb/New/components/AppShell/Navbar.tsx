@@ -31,10 +31,6 @@ import dynamic from 'next/dynamic';
 
 const UserButton = dynamic(() => import('./UserButton').then((imp) => imp.UserButton));
 
-const PlayerControls = dynamic(() => import('./PlayerControls'), {
-	loading: () => null,
-});
-
 const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
 	loading: () => null,
 });
@@ -204,7 +200,6 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 			</Navbar.Section>
 			<Navbar.Section>
 				<PVPlayer />
-				<PlayerControls />
 			</Navbar.Section>
 			{values.isLoggedIn && (
 				<Navbar.Section

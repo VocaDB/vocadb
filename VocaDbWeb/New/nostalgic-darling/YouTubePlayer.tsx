@@ -10,9 +10,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 	const setPlayerApi = React.useRef(usePlayerStore.getState().setPlayerApi);
 	const playerElementRef = React.useRef<IPlayerApi | undefined>(undefined);
 
-	const loadVideo = (id: string) => {
-		setVideoId(id);
-	};
+	const loadVideo = (id: string) => {};
 
 	React.useEffect(() => {
 		return () => {
@@ -32,7 +30,6 @@ export const YouTubePlayer: IPlayer = (props) => {
 				player.pauseVideo();
 			},
 		};
-		setPlayerApi.current(playerElementRef);
 	};
 
 	return (
@@ -42,6 +39,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				height: '100%',
 				playerVars: {
 					controls: 0,
+					modestbranding: 1,
 				},
 			}}
 			style={{
@@ -51,7 +49,10 @@ export const YouTubePlayer: IPlayer = (props) => {
 			videoId={props.videoId}
 			onReady={onReady}
 			onPause={() => setActive(false)}
-			onPlay={() => setActive(true)}
+			onPlay={() => {
+				setPlayerApi.current(playerElementRef);
+				setActive(true);
+			}}
 		/>
 	);
 };
