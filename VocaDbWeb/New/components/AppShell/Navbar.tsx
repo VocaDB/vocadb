@@ -23,12 +23,21 @@ import {
 import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 import Link from 'next/link';
 import { IconPlaylist } from '@tabler/icons';
-import { UserButton } from './UserButton';
 import { useVdb } from '../Context/VdbContext';
 import { PermissionToken } from '@/types/Models/LoginManager';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
-import PlayerControls from './PlayerControls';
-import PVPlayer from '@/nostalgic-darling/PVPlayer';
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const UserButton = dynamic(() => import('./UserButton').then((imp) => imp.UserButton));
+
+const PlayerControls = dynamic(() => import('./PlayerControls'), {
+	loading: () => null,
+});
+
+const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
+	loading: () => null,
+});
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },

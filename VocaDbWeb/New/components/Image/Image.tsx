@@ -6,23 +6,25 @@ interface CustomImageProps extends ImageProps {
 }
 
 export default function CustomImage(props: CustomImageProps) {
-	let base = `//wsrv.nl/?url=${props.src}&output=webp`;
+	return (
+		<Image
+			{...props}
+			src={props.src}
+			width={props.width}
+			height={props.height}
+			loader={(loaderProps) => {
+				let base = `//wsrv.nl/?url=${loaderProps.src}&output=webp`;
 
-	if (props.mode === 'crop') {
-		base += '&fit=cover&a=attention';
-	}
-	if (props.width) {
-		base += '&w=' + props.width;
-	}
+				if (props.mode === 'crop') {
+					base += '&fit=cover&a=attention';
+				}
+				if (props.width) {
+					base += '&w=' + loaderProps.width;
+				}
 
-	if (props.height) {
-		base += '&h=' + props.height;
-	}
-
-	if (typeof window !== 'undefined' && window.devicePixelRatio) {
-		base += '&dpr=' + window.devicePixelRatio;
-	}
-
-	return <Image {...props} src={base} unoptimized />;
+				return base;
+			}}
+		/>
+	);
 }
 
