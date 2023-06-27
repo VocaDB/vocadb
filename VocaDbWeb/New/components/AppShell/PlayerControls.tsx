@@ -9,7 +9,7 @@ export default function PlayerControls() {
 		state.playerApi?.current,
 	]);
 
-	if (song === undefined) {
+	if (typeof window === 'undefined' || song === undefined) {
 		return <></>;
 	}
 
