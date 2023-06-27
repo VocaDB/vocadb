@@ -1,8 +1,9 @@
-import { AppShell } from '@mantine/core';
+import { AppShell, Box } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Header from './Header';
 import { useRouter } from 'next/router';
+import Footer from './Footer';
 
 interface CustomAppShellProps {
 	children?: React.ReactElement;
@@ -32,8 +33,12 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 					width: 0, // TODO: Remoe this hack (prevents chrome viewport being too large)
 				},
 			})}
+			padding={0}
 		>
-			{children}
+			<>
+				<Box p="md">{children}</Box>
+				<Footer />
+			</>
 		</AppShell>
 	);
 };

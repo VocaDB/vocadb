@@ -34,7 +34,6 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 				src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
 				alt=""
 			/>
-			<PlayerControls />
 			<div
 				style={{
 					display: 'flex',

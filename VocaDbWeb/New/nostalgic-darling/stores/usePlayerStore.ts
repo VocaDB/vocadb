@@ -7,6 +7,8 @@ export interface IPlayerApi {
 	loadVideo(id: string): void;
 	play(): void;
 	pause(): void;
+	getCurrentTime(): number;
+	getDuration(): number;
 	// setCurrentTime(seconds: number): Promise<void>;
 	// setVolume(volume: number): Promise<void>;
 	// setMuted(muted: boolean): Promise<void>;
@@ -28,6 +30,7 @@ export interface PlayerState {
 	setPlayerBounds: (bounds: Rectangle | undefined) => void;
 	setActive: (active: boolean) => void;
 	setPlayerApi: (api: React.MutableRefObject<IPlayerApi | undefined> | undefined) => void;
+	onEnd(): void;
 	unload(): void;
 	// playPause(): void;
 	// setCurrentTime(): Promise<void>;
@@ -45,6 +48,7 @@ export const usePlayerStore = create<PlayerState>()(
 			queue: [],
 			active: false,
 			playerBounds: undefined,
+			currentTime: undefined,
 			setPlayerBounds(newBounds) {
 				set({ playerBounds: newBounds });
 			},
@@ -53,6 +57,14 @@ export const usePlayerStore = create<PlayerState>()(
 			},
 			unload() {
 				set({ active: false, song: undefined });
+			},
+			onEnd() {
+				set({
+					active: false,
+					song: undefined,
+					playerApi: undefined,
+					playerBounds: undefined,
+				});
 			},
 			setActive: (active) => set({ active }),
 			setPlayerApi: (api) => set({ playerApi: api }),

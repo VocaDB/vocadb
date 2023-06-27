@@ -6,10 +6,15 @@ import { IPlayer } from './Player';
 export const YouTubePlayer: IPlayer = (props) => {
 	// Prevents infinite rerenders
 	// https://docs.pmnd.rs/zustand/recipes/recipes#transient-updates-(for-frequent-state-changes)
-	const [setActive, unload] = usePlayerStore((set) => [set.setActive, set.unload]);
+	const [setActive, unload, onEnd] = usePlayerStore((set) => [
+		set.setActive,
+		set.unload,
+		set.onEnd,
+	]);
 	const setPlayerApi = React.useRef(usePlayerStore.getState().setPlayerApi);
 	const playerElementRef = React.useRef<IPlayerApi | undefined>(undefined);
 
+	// TODO: Remove this from IPlayerApi
 	const loadVideo = (id: string) => {};
 
 	React.useEffect(() => {
@@ -28,6 +33,12 @@ export const YouTubePlayer: IPlayer = (props) => {
 			},
 			pause() {
 				player.pauseVideo();
+			},
+			getCurrentTime() {
+				return player.getCurrentTime();
+			},
+			getDuration() {
+				return player.getDuration();
 			},
 		};
 		setPlayerApi.current(playerElementRef);
@@ -54,6 +65,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				setPlayerApi.current(playerElementRef);
 				setActive(true);
 			}}
+			onEnd={onEnd}
 		/>
 	);
 };
