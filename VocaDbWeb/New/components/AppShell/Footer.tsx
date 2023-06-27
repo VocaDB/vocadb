@@ -78,53 +78,15 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignContent: 'center',
 		height: '100%',
 	},
 }));
 
 const CustomFooter = () => {
-	const [playerApi] = usePlayerStore((set) => [set.playerApi]);
 	const styles = useStyles();
-	const [progress, setProgress] = useState(0);
-	// https://github.com/mantinedev/mantine/issues/2840
-	const currentState = useRef(playerApi);
-	currentState.current = playerApi;
-
-	const interval = useInterval(() => {
-		if (playerApi === undefined) return;
-		setProgress(playerApi.getCurrentTime() / playerApi.getDuration());
-	}, 500);
-
-	React.useEffect(() => {
-		interval.start();
-		return interval.stop();
-	}, [playerApi]);
-
 	return (
 		<div className={styles.classes.base}>
 			<Paper mx="sm" className={styles.classes.footer} component="footer">
-				{/* <Slider
-					styles={() => ({
-						trackContainer: {},
-					})}
-					w="100%"
-					size="sm"
-					value={progress * 100}
-					showLabelOnHover={false}
-					onChange={(newProgress) => {
-						if (interval.active) interval.stop();
-						setProgress(newProgress / 100);
-					}}
-					label={null}
-					onChangeEnd={(progress) => {
-						interval.start();
-						if (currentState.current === undefined) return;
-						currentState.current.setCurrentTime(
-							(progress / 100) * currentState.current.getDuration()
-						);
-					}}
-				/> */}
 				{/* TODO: Use flex container instead of Center */}
 				<SongInfo />
 				<PlayerControls />
