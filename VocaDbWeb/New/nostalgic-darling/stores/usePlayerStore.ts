@@ -1,10 +1,8 @@
 import { SongContract } from '@/types/DataContracts/Song/SongContract';
-import React from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface IPlayerApi {
-	loadVideo(id: string): void;
 	play(): void;
 	pause(): void;
 	getCurrentTime(): number;
@@ -22,16 +20,15 @@ type Rectangle = { x: number; y: number; width: number; height: number };
 export interface PlayerState {
 	song?: SongContract;
 	queue: SongContract[];
-	playerApi?: React.MutableRefObject<IPlayerApi | undefined>;
+	playerApi?: IPlayerApi | undefined;
 	active: boolean;
 	playerBounds: Rectangle | undefined;
 	// TODO: Remoev this and convert to queue ops
 	loadSong(song: SongContract): void;
 	setPlayerBounds: (bounds: Rectangle | undefined) => void;
 	setActive: (active: boolean) => void;
-	setPlayerApi: (api: React.MutableRefObject<IPlayerApi | undefined> | undefined) => void;
+	setPlayerApi: (api: IPlayerApi | undefined) => void;
 	onEnd(): void;
-	unload(): void;
 	// playPause(): void;
 	// setCurrentTime(): Promise<void>;
 	// setMuted(): Promise<void>;
@@ -39,8 +36,6 @@ export interface PlayerState {
 	// getCurrentTime(): Promise<void>;
 	// getVolume(): Promise<void>;
 }
-
-const DEFAULT_BOUNDS = { x: 0, y: 0, width: 200, height: 200 };
 
 export const usePlayerStore = create<PlayerState>()(
 	persist(
@@ -54,9 +49,6 @@ export const usePlayerStore = create<PlayerState>()(
 			},
 			loadSong(song) {
 				set({ song, active: false });
-			},
-			unload() {
-				set({ active: false, song: undefined });
 			},
 			onEnd() {
 				set({

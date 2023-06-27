@@ -34,15 +34,14 @@ const CustomFooter = () => {
 	const [progress, setProgress] = useState<number>(0);
 
 	const interval = useInterval(() => {
-		if (playerApi?.current === undefined) return;
-		setProgress(playerApi.current.getCurrentTime() / playerApi.current.getDuration());
+		if (playerApi === undefined) return;
+		setProgress(playerApi.getCurrentTime() / playerApi.getDuration());
 	}, 500);
 
 	React.useEffect(() => {
 		interval.start();
 		return interval.stop();
-	}, []);
-	console.log(progress);
+	}, [playerApi]);
 
 	return (
 		<div className={styles.classes.base}>

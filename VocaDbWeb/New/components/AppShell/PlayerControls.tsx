@@ -6,7 +6,7 @@ export default function PlayerControls() {
 	const [song, active, playerApi] = usePlayerStore((state) => [
 		state.song,
 		state.active,
-		state.playerApi?.current,
+		state.playerApi,
 	]);
 
 	if (typeof window === 'undefined' || song === undefined) {

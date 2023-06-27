@@ -4,30 +4,22 @@ import YouTube, { YouTubeEvent } from 'react-youtube';
 import { IPlayer } from './Player';
 
 export const YouTubePlayer: IPlayer = (props) => {
-	// Prevents infinite rerenders
-	// https://docs.pmnd.rs/zustand/recipes/recipes#transient-updates-(for-frequent-state-changes)
-	const [setActive, unload, onEnd] = usePlayerStore((set) => [
+	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
 		set.setActive,
-		set.unload,
 		set.onEnd,
+		set.setPlayerApi,
 	]);
-	const setPlayerApi = React.useRef(usePlayerStore.getState().setPlayerApi);
 	const playerElementRef = React.useRef<IPlayerApi | undefined>(undefined);
-
-	// TODO: Remove this from IPlayerApi
-	const loadVideo = (id: string) => {};
 
 	React.useEffect(() => {
 		return () => {
-			setPlayerApi.current(undefined);
-			unload();
+			setPlayerApi(undefined);
 		};
 	}, []);
 
 	const onReady = (event: YouTubeEvent<any>): void => {
 		const player = event.target;
 		playerElementRef.current = {
-			loadVideo,
 			play() {
 				player.playVideo();
 			},
@@ -41,7 +33,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				return player.getDuration();
 			},
 		};
-		setPlayerApi.current(playerElementRef);
+		setPlayerApi(playerElementRef.current);
 	};
 
 	return (
@@ -62,7 +54,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 			onReady={onReady}
 			onPause={() => setActive(false)}
 			onPlay={() => {
-				setPlayerApi.current(playerElementRef);
+				setPlayerApi(playerElementRef.current);
 				setActive(true);
 			}}
 			onEnd={onEnd}
