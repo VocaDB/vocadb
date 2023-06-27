@@ -49,7 +49,7 @@ export const usePlayerStore = create<PlayerState>()(
 				set({ playerBounds: newBounds });
 			},
 			loadSong(song) {
-				set({ song });
+				set({ song, active: false });
 			},
 			unload() {
 				set({ active: false, song: undefined });
@@ -68,6 +68,7 @@ export const usePlayerStore = create<PlayerState>()(
 		}),
 		{
 			name: 'player-storage',
+			partialize: (state) => ({ song: state.song, queue: state.queue }),
 		}
 	)
 );

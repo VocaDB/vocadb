@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IPlayerApi, usePlayerStore } from './stores/usePlayerStore';
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { IPlayer } from './Player';
@@ -30,6 +30,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				player.pauseVideo();
 			},
 		};
+		setPlayerApi.current(playerElementRef);
 	};
 
 	return (

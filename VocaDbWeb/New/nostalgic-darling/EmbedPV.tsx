@@ -3,13 +3,14 @@ import { PVService } from '@/types/Models/PVs/PVService';
 import { YouTubePlayer } from './YouTubePlayer';
 
 interface EmbedPVProps {
+	songId: number;
 	pv: PVContract;
 }
 
-export default function EmbedPV({ pv }: EmbedPVProps) {
+export default function EmbedPV({ pv, songId }: EmbedPVProps) {
 	switch (pv.service) {
 		case PVService.Youtube:
-			return <YouTubePlayer videoId={pv.pvId} />;
+			return <YouTubePlayer songId={songId} videoId={pv.pvId} />;
 	}
 
 	return <p>Fallback</p>;

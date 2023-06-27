@@ -1,4 +1,5 @@
 export interface PlayerProps {
+	songId: number;
 	videoId: string;
 }
 

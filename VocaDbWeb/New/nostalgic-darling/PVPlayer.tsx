@@ -22,7 +22,7 @@ export default function PVPlayer() {
 					  }
 			}
 		>
-			{pv !== undefined && <EmbedPV pv={pv} />}
+			{pv !== undefined && <EmbedPV pv={pv} songId={song!.id} />}
 		</div>
 	);
 }
