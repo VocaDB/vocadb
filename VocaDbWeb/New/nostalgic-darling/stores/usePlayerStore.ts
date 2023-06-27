@@ -7,6 +7,7 @@ export interface IPlayerApi {
 	pause(): void;
 	getCurrentTime(): number;
 	getDuration(): number;
+	setCurrentTime(newProgress: number): void;
 	// setCurrentTime(seconds: number): Promise<void>;
 	// setVolume(volume: number): Promise<void>;
 	// setMuted(muted: boolean): Promise<void>;

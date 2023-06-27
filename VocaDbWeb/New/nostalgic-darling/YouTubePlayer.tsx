@@ -32,6 +32,9 @@ export const YouTubePlayer: IPlayer = (props) => {
 			getDuration() {
 				return player.getDuration();
 			},
+			setCurrentTime(newProgress) {
+				return player.seekTo(newProgress);
+			},
 		};
 		setPlayerApi(playerElementRef.current);
 	};
