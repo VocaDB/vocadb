@@ -33,6 +33,7 @@ export default function PlayerControls() {
 
 	React.useEffect(() => {
 		interval.start();
+		currentState.current = playerApi;
 		setDuration(playerApi?.getDuration() ?? 0);
 		return interval.stop();
 	}, [playerApi]);

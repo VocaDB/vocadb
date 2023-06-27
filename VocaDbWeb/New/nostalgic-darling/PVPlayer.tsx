@@ -4,7 +4,7 @@ import { usePlayerStore } from './stores/usePlayerStore';
 
 export default function PVPlayer() {
 	const [song, playerBounds] = usePlayerStore((set) => [set.song, set.playerBounds]);
-	const pv = song?.pvs?.find((pv) => pv.service === PVService.Youtube);
+	const pv = song?.pvs?.find((pv) => pv.service === PVService.NicoNicoDouga);
 
 	return (
 		<div

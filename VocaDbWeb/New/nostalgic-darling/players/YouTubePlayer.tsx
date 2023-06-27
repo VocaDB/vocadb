@@ -1,7 +1,7 @@
 import React from 'react';
-import { IPlayerApi, usePlayerStore } from './stores/usePlayerStore';
+import { IPlayerApi, usePlayerStore } from '../stores/usePlayerStore';
 import YouTube, { YouTubeEvent } from 'react-youtube';
-import { IPlayer } from './Player';
+import { IPlayer } from '../Player';
 
 export const YouTubePlayer: IPlayer = (props) => {
 	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
@@ -9,7 +9,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 		set.onEnd,
 		set.setPlayerApi,
 	]);
-	const playerElementRef = React.useRef<IPlayerApi | undefined>(undefined);
+	const playerApiRef = React.useRef<IPlayerApi | undefined>(undefined);
 
 	React.useEffect(() => {
 		return () => {
@@ -19,7 +19,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 
 	const onReady = (event: YouTubeEvent<any>): void => {
 		const player = event.target;
-		playerElementRef.current = {
+		playerApiRef.current = {
 			play() {
 				player.playVideo();
 			},
@@ -42,7 +42,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				return player.getVolume();
 			},
 		};
-		setPlayerApi(playerElementRef.current);
+		setPlayerApi(playerApiRef.current);
 	};
 
 	return (
@@ -63,7 +63,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 			onReady={onReady}
 			onPause={() => setActive(false)}
 			onPlay={() => {
-				setPlayerApi(playerElementRef.current);
+				setPlayerApi(playerApiRef.current);
 				setActive(true);
 			}}
 			onEnd={onEnd}
