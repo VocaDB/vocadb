@@ -5,15 +5,14 @@ import { persist } from 'zustand/middleware';
 export interface IPlayerApi {
 	play(): void;
 	pause(): void;
+	setCurrentTime(newProgress: number): void;
 	getCurrentTime(): number;
 	getDuration(): number;
-	setCurrentTime(newProgress: number): void;
-	// setCurrentTime(seconds: number): Promise<void>;
-	// setVolume(volume: number): Promise<void>;
+	setVolume(volume: number): void;
+	getVolume(): number;
 	// setMuted(muted: boolean): Promise<void>;
 	// getDuration(): Promise<number | undefined>;
 	// getCurrentTime(): Promise<number | undefined>;
-	// getVolume(): Promise<number | undefined>;
 }
 
 type Rectangle = { x: number; y: number; width: number; height: number };

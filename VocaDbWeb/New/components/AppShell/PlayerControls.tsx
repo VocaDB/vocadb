@@ -15,7 +15,6 @@ export default function PlayerControls() {
 
 	return (
 		<Group position="center">
-			{song.name} {' by '} {song.artistString}
 			{active ? (
 				<ActionIcon onClick={() => playerApi?.pause()}>
 					<IconPlayerPause />
