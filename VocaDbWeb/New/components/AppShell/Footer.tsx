@@ -45,6 +45,7 @@ const VolumeControl = () => {
 			<Slider
 				w="10vw"
 				value={volume}
+				label={Math.round(volume)}
 				onChange={(newVolume) => {
 					if (interval.active) interval.stop();
 					if (currentState.current === undefined) return;
