@@ -1,5 +1,5 @@
 import { DiscussionTopicContract } from '@/types/DataContracts/Discussion/DiscussionTopicContract';
-import { Text, Paper, Grid } from '@mantine/core';
+import { Text, Paper, Grid, Anchor } from '@mantine/core';
 import useStyles from './RecentTopic.styles';
 
 interface RecentTopicProps {
@@ -30,9 +30,11 @@ export function RecentTopics({ topics }: RecentTopicsProps) {
 		<Grid className={styles.classes.folderGrid} grow gutter="xl">
 			{topics.map((topic) => (
 				<Grid.Col span={3} key={topic.id} style={{ maxWidth: "100%" }}>
-					<Paper shadow="sm" radius="md" p="md" withBorder className={styles.classes.folderGridList}>
-						<RecentTopic topic={topic} />
-					</Paper>
+					<Anchor href={`/discussion/topics/${topic.id}`}>
+						<Paper shadow="sm" radius="md" p="md" withBorder className={styles.classes.folderGridList}>
+							<RecentTopic topic={topic} />
+						</Paper>
+					</Anchor>
 				</Grid.Col>
 			))}
 		</Grid>

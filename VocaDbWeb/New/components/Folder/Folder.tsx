@@ -1,7 +1,7 @@
 import { DiscussionFolderContract } from '@/types/DataContracts/Discussion/DiscussionFolderContract';
 import useStyles from './Folder.styles';
 import { IconBook2 } from '@tabler/icons-react';
-import { Text, Paper, Grid, ThemeIcon } from '@mantine/core';
+import { Text, Paper, Grid, ThemeIcon, Anchor } from '@mantine/core';
 
 interface FolderProps {
 	folder: DiscussionFolderContract;
@@ -41,9 +41,11 @@ export function Folders({ folders }: FoldersProps) {
 		<Grid className={styles.classes.folderGrid} grow gutter="xl">
 			{folders.map((folder) => (
 				<Grid.Col span={6} key={folder.id} style={{ maxWidth: "100%" }}>
-					<Paper shadow="sm" radius="md" p="md" withBorder className={styles.classes.folderGridList}>
-						<Folder folder={folder} />
-					</Paper>
+					<Anchor href={`/discussion/folders/${folder.id}`}>
+						<Paper shadow="sm" radius="md" p="md" withBorder className={styles.classes.folderGridList}>
+							<Folder folder={folder} />
+						</Paper>
+					</Anchor>
 				</Grid.Col>
 			))}
 		</Grid>
