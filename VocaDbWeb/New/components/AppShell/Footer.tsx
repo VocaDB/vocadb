@@ -1,8 +1,9 @@
-import { Group, Paper, Slider, Text, createStyles, rem } from '@mantine/core';
+import { ActionIcon, Group, Paper, Slider, Text, createStyles, rem } from '@mantine/core';
 import PlayerControls from './PlayerControls';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
 import React, { useRef } from 'react';
-import { IconVolume } from '@tabler/icons-react';
+import { IconMicrophone2, IconVolume, IconVolumeOff } from '@tabler/icons-react';
+import { usePrevious } from '@mantine/hooks';
 
 // Displays the song info on the left side of the footer
 const SongInfo = () => {
@@ -27,15 +28,31 @@ const VolumeControl = () => {
 		set.volume,
 		set.setVolume,
 	]);
+	const lastVolume = usePrevious(volume);
 	// https://github.com/mantinedev/mantine/issues/2840
 	const currentState = useRef(playerApi);
 	currentState.current = playerApi;
 
 	return (
-		<Group>
-			<IconVolume color="gray" />
+		<Group spacing="xs">
+			<ActionIcon size="sm">
+				<IconMicrophone2 color="gray" />
+			</ActionIcon>
+			<ActionIcon
+				size="sm"
+				onClick={() => {
+					if (volume > 0) {
+						setVolume(0);
+					} else {
+						setVolume(lastVolume ?? 100);
+					}
+				}}
+			>
+				{volume > 0 ? <IconVolume color="gray" /> : <IconVolumeOff color="gray" />}
+			</ActionIcon>
 			<Slider
 				w="10vw"
+				size="sm"
 				value={volume}
 				label={Math.round(volume)}
 				onChange={(newVolume) => {
