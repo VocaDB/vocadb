@@ -1,4 +1,13 @@
-import { ActionIcon, Group, Paper, Slider, Text, createStyles, rem } from '@mantine/core';
+import {
+	ActionIcon,
+	Group,
+	Paper,
+	Slider,
+	Text,
+	createStyles,
+	rem,
+	useMantineTheme,
+} from '@mantine/core';
 import PlayerControls from './PlayerControls';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
 import React, { useRef } from 'react';
@@ -23,11 +32,14 @@ const SongInfo = () => {
 };
 
 const VolumeControl = () => {
-	const [playerApi, volume, setVolume] = usePlayerStore((set) => [
+	const [playerApi, volume, setVolume, showLyrics, toggleLyrics] = usePlayerStore((set) => [
 		set.playerApi,
 		set.volume,
 		set.setVolume,
+		set.showLyrics,
+		set.toggleLyrics,
 	]);
+	const theme = useMantineTheme();
 	const lastVolume = usePrevious(volume);
 	// https://github.com/mantinedev/mantine/issues/2840
 	const currentState = useRef(playerApi);
@@ -35,11 +47,17 @@ const VolumeControl = () => {
 
 	return (
 		<Group spacing="xs">
-			<ActionIcon size="sm">
-				<IconMicrophone2 color="gray" />
+			<ActionIcon
+				title={showLyrics ? 'Hide Lyrics' : 'Show lyrics'}
+				color={showLyrics ? 'default' : undefined}
+				onClick={toggleLyrics}
+				size="sm"
+			>
+				<IconMicrophone2 />
 			</ActionIcon>
 			<ActionIcon
 				size="sm"
+				title={volume > 0 ? 'Mute' : 'Unmute'}
 				onClick={() => {
 					if (volume > 0) {
 						setVolume(0);
@@ -48,12 +66,14 @@ const VolumeControl = () => {
 					}
 				}}
 			>
-				{volume > 0 ? <IconVolume color="gray" /> : <IconVolumeOff color="gray" />}
+				{volume > 0 ? <IconVolume /> : <IconVolumeOff />}
 			</ActionIcon>
 			<Slider
 				w="10vw"
 				size="sm"
 				value={volume}
+				title="Song volume"
+				thumbLabel="Song volume thumb"
 				label={Math.round(volume)}
 				onChange={(newVolume) => {
 					setVolume(newVolume);
@@ -92,7 +112,7 @@ const CustomFooter = () => {
 	const styles = useStyles();
 	return (
 		<div className={styles.classes.base}>
-			<Paper mx="sm" className={styles.classes.footer} component="footer">
+			<Paper px="sm" className={styles.classes.footer} component="footer">
 				{/* TODO: Use flex container instead of Center */}
 				<SongInfo />
 				<PlayerControls />

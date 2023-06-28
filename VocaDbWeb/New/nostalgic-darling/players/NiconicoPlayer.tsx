@@ -168,6 +168,7 @@ export const NiconicoPlayer: IPlayer = ({ pv }) => {
 
 	return (
 		<iframe
+			title="NicoNico Player"
 			ref={playerElementRef}
 			src={`https://embed.nicovideo.jp/watch/${pv.pvId}?jsapi=1&playerId=1`}
 			width="100%"

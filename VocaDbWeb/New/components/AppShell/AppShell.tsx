@@ -4,6 +4,9 @@ import Navbar from './Navbar';
 import Header from './Header';
 import { useRouter } from 'next/router';
 import Footer from './Footer';
+import dynamic from 'next/dynamic';
+
+const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
 
 interface CustomAppShellProps {
 	children?: React.ReactElement;
@@ -36,7 +39,10 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 			padding={0}
 		>
 			<>
-				<Box p="md">{children}</Box>
+				<Box p="md" pos="relative" h="calc(100% - 65px)" w="100%">
+					{children}
+					<LyricsContainer />
+				</Box>
 				<Footer />
 			</>
 		</AppShell>

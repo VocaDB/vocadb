@@ -24,6 +24,8 @@ export interface PlayerState {
 	active: boolean;
 	playerBounds: Rectangle | undefined;
 	volume: number;
+	showLyrics: boolean;
+	toggleLyrics(): void;
 	setVolume: (volume: number) => void;
 	// TODO: Remoev this and convert to queue ops
 	loadSong(song: SongContract, pv: PVContract): void;
@@ -47,6 +49,10 @@ export const usePlayerStore = create<PlayerState>()(
 			playerBounds: undefined,
 			currentTime: undefined,
 			volume: 100,
+			showLyrics: false,
+			toggleLyrics() {
+				set({ showLyrics: !get().showLyrics });
+			},
 			setVolume(volume) {
 				set({ volume });
 			},

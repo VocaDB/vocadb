@@ -2,7 +2,7 @@ import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
 import { ActionIcon, Group, Slider, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRef, useState } from 'react';
 
 // Formats 160 to 2:40
@@ -32,7 +32,7 @@ export default function PlayerControls() {
 		setDuration(playerApi.getDuration());
 	}, 500);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		interval.start();
 		currentState.current = playerApi;
 		return interval.stop();
@@ -53,11 +53,11 @@ export default function PlayerControls() {
 			}}
 		>
 			{active ? (
-				<ActionIcon onClick={() => playerApi?.pause()}>
+				<ActionIcon title="Pause" onClick={() => playerApi?.pause()}>
 					<IconPlayerPause />
 				</ActionIcon>
 			) : (
-				<ActionIcon onClick={() => playerApi?.play()}>
+				<ActionIcon title="Play" onClick={() => playerApi?.play()}>
 					<IconPlayerPlay />
 				</ActionIcon>
 			)}
@@ -75,6 +75,8 @@ export default function PlayerControls() {
 				</Text>
 				<Slider
 					w="70%"
+					title="Song progress slider"
+					thumbLabel="Song progress slider thumb"
 					size="sm"
 					value={progress * 100}
 					showLabelOnHover={false}
