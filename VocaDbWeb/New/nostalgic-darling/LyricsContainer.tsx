@@ -54,9 +54,13 @@ export default function LyricsContainer() {
 						{lyrics
 							?.filter((l) => l.translationType === 'Original')[0]
 							.value?.split('\n')
-							.map((line) => (
-								<Text className={styles.classes.lyricLine}>{line}</Text>
-							))}
+							.map((line) =>
+								line === '' || line === '\r' ? (
+									<br />
+								) : (
+									<Text className={styles.classes.lyricLine}>{line}</Text>
+								)
+							)}
 					</div>
 				</div>
 			</Paper>
