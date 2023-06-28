@@ -3,18 +3,19 @@ import { IPlayer } from '../Player';
 import { usePlayerStore } from '../stores/usePlayerStore';
 
 export const BilibiliPlayer: IPlayer = ({ pv }) => {
-	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
+	const [setActive, onEnd, setPlayerApi, volume] = usePlayerStore((set) => [
 		set.setActive,
 		set.onEnd,
 		set.setPlayerApi,
+		set.volume,
 	]);
 
 	const videoRef = useRef<HTMLVideoElement>(undefined!);
 	const audioRef = useRef<HTMLAudioElement>(undefined!);
 
 	const onLoad = () => {
-		//  const el = document.querySelector('.bpx-player-ctrl-play')
 		const player = videoRef.current;
+		audioRef.current.volume = volume;
 		setPlayerApi({
 			play() {
 				player.play();
@@ -31,17 +32,17 @@ export const BilibiliPlayer: IPlayer = ({ pv }) => {
 			setCurrentTime(newProgress) {
 				player.currentTime = newProgress;
 			},
-			setVolume(volume) {
-				audioRef.current.volume = volume / 100;
-			},
-			getVolume() {
-				return audioRef.current.volume * 100;
-			},
 		});
 	};
 
 	useEffect(() => {
+		audioRef.current.volume = volume / 100;
+	}, [volume]);
+
+	useEffect(() => {
 		onLoad();
+
+		return () => setPlayerApi(undefined);
 	}, []);
 
 	return (

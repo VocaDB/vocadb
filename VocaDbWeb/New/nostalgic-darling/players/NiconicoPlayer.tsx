@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { IPlayer } from '../Player';
 import { IPlayerApi, usePlayerStore } from '../stores/usePlayerStore';
 
@@ -51,14 +51,16 @@ enum PlayerStatus {
 const NICO_ORIGIN = 'https://embed.nicovideo.jp';
 
 export const NiconicoPlayer: IPlayer = ({ pv }) => {
-	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
+	const [setActive, onEnd, setPlayerApi, volume, setVolume] = usePlayerStore((set) => [
 		set.setActive,
 		set.onEnd,
 		set.setPlayerApi,
+		set.volume,
+		set.setVolume,
 	]);
 	const durationRef = useRef(0);
 	const currentTimeRef = useRef(0);
-	const volumeRef = useRef(0);
+	const volumeRef = useRef(Math.floor(volume));
 
 	const playerApiRef = useRef<IPlayerApi | undefined>(undefined!);
 	const playerElementRef = useRef<HTMLIFrameElement>(undefined!);
@@ -72,6 +74,13 @@ export const NiconicoPlayer: IPlayer = ({ pv }) => {
 			},
 			NICO_ORIGIN
 		);
+	};
+
+	const setPlayerVolume = (volume: number): void => {
+		postMessage({
+			eventName: 'volumeChange',
+			data: { volume: volume / 100 },
+		});
 	};
 
 	const handleMessage = (e: PlayerEvent): void => {
@@ -107,12 +116,15 @@ export const NiconicoPlayer: IPlayer = ({ pv }) => {
 				currentTimeRef.current =
 					data.data.currentTime === undefined ? 0 : data.data.currentTime / 1000;
 
-				volumeRef.current = data.data.volume * 100;
+				setVolume(data.data.volume * 100);
+				volumeRef.current = Math.floor(data.data.volume * 100);
 
 				break;
 
 			case 'loadComplete':
 				durationRef.current = data.data.videoInfo.lengthInSeconds;
+
+				setPlayerVolume(volume);
 
 				playerApiRef.current = {
 					play() {
@@ -130,15 +142,6 @@ export const NiconicoPlayer: IPlayer = ({ pv }) => {
 					setCurrentTime(newProgress) {
 						postMessage({ eventName: 'seek', data: { time: newProgress * 1000 } });
 					},
-					setVolume(volume) {
-						postMessage({
-							eventName: 'volumeChange',
-							data: { volume: volume / 100 },
-						});
-					},
-					getVolume() {
-						return volumeRef.current;
-					},
 				};
 				setPlayerApi(playerApiRef.current);
 				break;
@@ -148,7 +151,14 @@ export const NiconicoPlayer: IPlayer = ({ pv }) => {
 		}
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// Prevents an infinite rerender loop
+		if (volumeRef.current !== Math.floor(volume)) {
+			setPlayerVolume(volume);
+		}
+	}, [volume]);
+
+	useEffect(() => {
 		window.addEventListener('message', handleMessage);
 		return () => {
 			window.removeEventListener('message', handleMessage);

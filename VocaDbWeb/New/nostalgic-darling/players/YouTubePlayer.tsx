@@ -1,17 +1,19 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { IPlayerApi, usePlayerStore } from '../stores/usePlayerStore';
-import YouTube, { YouTubeEvent } from 'react-youtube';
+import YouTube, { YouTubeEvent, YouTubePlayer as YT } from 'react-youtube';
 import { IPlayer } from '../Player';
 
 export const YouTubePlayer: IPlayer = ({ pv }) => {
-	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
+	const [setActive, onEnd, setPlayerApi, volume] = usePlayerStore((set) => [
 		set.setActive,
 		set.onEnd,
 		set.setPlayerApi,
+		set.volume,
 	]);
-	const playerApiRef = React.useRef<IPlayerApi | undefined>(undefined);
+	const playerElementRef = useRef<YT | undefined>(undefined);
+	const playerApiRef = useRef<IPlayerApi | undefined>(undefined);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		return () => {
 			setPlayerApi(undefined);
 		};
@@ -19,6 +21,8 @@ export const YouTubePlayer: IPlayer = ({ pv }) => {
 
 	const onReady = (event: YouTubeEvent<any>): void => {
 		const player = event.target;
+		playerElementRef.current = player;
+		player.setVolume(volume);
 		playerApiRef.current = {
 			play() {
 				player.playVideo();
@@ -35,15 +39,16 @@ export const YouTubePlayer: IPlayer = ({ pv }) => {
 			setCurrentTime(newProgress) {
 				return player.seekTo(newProgress);
 			},
-			setVolume(volume) {
-				player.setVolume(volume);
-			},
-			getVolume() {
-				return player.getVolume();
-			},
 		};
 		setPlayerApi(playerApiRef.current);
 	};
+
+	useEffect(() => {
+		const player = playerElementRef.current;
+		if (player !== undefined) {
+			playerElementRef.current.setVolume(volume);
+		}
+	}, [volume]);
 
 	return (
 		<YouTube

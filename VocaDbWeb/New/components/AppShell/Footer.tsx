@@ -1,8 +1,7 @@
-import { Center, Group, Paper, Slider, Text, createStyles, rem } from '@mantine/core';
+import { Group, Paper, Slider, Text, createStyles, rem } from '@mantine/core';
 import PlayerControls from './PlayerControls';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import { useInterval } from '@mantine/hooks';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { IconVolume } from '@tabler/icons-react';
 
 // Displays the song info on the left side of the footer
@@ -23,21 +22,14 @@ const SongInfo = () => {
 };
 
 const VolumeControl = () => {
-	const [playerApi] = usePlayerStore((set) => [set.playerApi]);
-	const [volume, setVolume] = useState(100);
+	const [playerApi, volume, setVolume] = usePlayerStore((set) => [
+		set.playerApi,
+		set.volume,
+		set.setVolume,
+	]);
 	// https://github.com/mantinedev/mantine/issues/2840
 	const currentState = useRef(playerApi);
 	currentState.current = playerApi;
-
-	const interval = useInterval(() => {
-		if (playerApi === undefined) return;
-		setVolume(playerApi.getVolume());
-	}, 1000);
-
-	React.useEffect(() => {
-		interval.start();
-		return interval.stop();
-	}, [playerApi]);
 
 	return (
 		<Group>
@@ -47,12 +39,8 @@ const VolumeControl = () => {
 				value={volume}
 				label={Math.round(volume)}
 				onChange={(newVolume) => {
-					if (interval.active) interval.stop();
-					if (currentState.current === undefined) return;
-					currentState.current.setVolume(newVolume);
 					setVolume(newVolume);
 				}}
-				onChangeEnd={() => interval.start()}
 			/>
 		</Group>
 	);

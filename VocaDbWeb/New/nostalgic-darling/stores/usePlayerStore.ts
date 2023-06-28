@@ -9,8 +9,6 @@ export interface IPlayerApi {
 	setCurrentTime(newProgress: number): void;
 	getCurrentTime(): number;
 	getDuration(): number;
-	setVolume(volume: number): void;
-	getVolume(): number;
 	// setMuted(muted: boolean): Promise<void>;
 	// getDuration(): Promise<number | undefined>;
 	// getCurrentTime(): Promise<number | undefined>;
@@ -25,6 +23,8 @@ export interface PlayerState {
 	playerApi?: IPlayerApi | undefined;
 	active: boolean;
 	playerBounds: Rectangle | undefined;
+	volume: number;
+	setVolume: (volume: number) => void;
 	// TODO: Remoev this and convert to queue ops
 	loadSong(song: SongContract, pv: PVContract): void;
 	setPlayerBounds: (bounds: Rectangle | undefined) => void;
@@ -46,6 +46,10 @@ export const usePlayerStore = create<PlayerState>()(
 			active: false,
 			playerBounds: undefined,
 			currentTime: undefined,
+			volume: 100,
+			setVolume(volume) {
+				set({ volume });
+			},
 			setPlayerBounds(newBounds) {
 				set({ playerBounds: newBounds });
 			},
@@ -62,15 +66,6 @@ export const usePlayerStore = create<PlayerState>()(
 			},
 			setActive: (active) => set({ active }),
 			setPlayerApi: (api) => set({ playerApi: api }),
-			// playPause() {
-			// 	if (get().active) {
-			// 		get().playerApi?.current?.pause();
-			// 		set({ active: false });
-			// 	} else {
-			// 		get().playerApi?.current?.play();
-			// 		set({ active: true });
-			// 	}
-			// },
 		}),
 		{
 			name: 'player-storage',
