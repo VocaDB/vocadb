@@ -62,6 +62,13 @@ export const ArtistTypeLabel = React.memo(
 					</span>
 				);
 
+			case ArtistType.NEUTRINO:
+				return (
+					<span className="label" title={title}>
+						N
+					</span>
+				);
+
 			default:
 				return <></>;
 		}

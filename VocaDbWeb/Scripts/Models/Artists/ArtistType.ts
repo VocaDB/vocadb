@@ -28,4 +28,5 @@ export enum ArtistType {
 	Character = 'Character',
 	SynthesizerV = 'SynthesizerV',
 	CoverArtist = 'CoverArtist',
+	NEUTRINO = 'NEUTRINO',
 }

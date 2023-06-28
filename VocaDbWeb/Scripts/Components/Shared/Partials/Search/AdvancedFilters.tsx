@@ -87,6 +87,12 @@ const albumFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Artist type: NEUTRINO' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.NEUTRINO}`,
+		negate: false,
+	},
+	{
 		description: 'Artist type: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -160,6 +166,12 @@ const artistFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Voice provider of: NEUTRINO' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.NEUTRINO}`,
+		negate: false,
+	},
+	{
 		description: 'Voice provider of: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -224,6 +236,12 @@ const songFilters: AdvancedSearchFilter[] = [
 		description: 'Artist type: Synthesizer V' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.SynthesizerV}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: NEUTRINO' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.NEUTRINO}`,
 		negate: false,
 	},
 	{

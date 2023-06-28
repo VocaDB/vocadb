@@ -57,6 +57,8 @@ public enum ArtistType
 	SynthesizerV,
 
 	CoverArtist,
+
+	NEUTRINO
 }
 
 /// <summary>
@@ -105,4 +107,6 @@ public enum ArtistTypes
 	SynthesizerV = 1 << 17,
 
 	CoverArtist = 1 << 18,
+
+	NEUTRINO = 1 << 17
 }

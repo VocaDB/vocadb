@@ -61,6 +61,7 @@ public static class ArtistHelper
 		{ ArtistType.Vocaloid, ArtistCategories.Vocalist },
 		{ ArtistType.Vocalist, ArtistCategories.Vocalist },
 		{ ArtistType.SynthesizerV, ArtistCategories.Vocalist },
+		{ ArtistType.NEUTRINO, ArtistCategories.Vocalist },
 		{ ArtistType.CoverArtist, ArtistCategories.Producer }
 	};
 
@@ -98,14 +99,14 @@ public static class ArtistHelper
 		ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
 		ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
 		ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character,
-		ArtistType.SynthesizerV, ArtistType.CoverArtist,
+		ArtistType.SynthesizerV, ArtistType.CoverArtist, ArtistType.NEUTRINO
 	};
 
 	public static readonly ArtistType[] VocalistTypes =
 	{
 		ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist,
 		ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite, ArtistType.Vocalist,
-		ArtistType.SynthesizerV,
+		ArtistType.SynthesizerV, ArtistType.NEUTRINO
 	};
 
 	/// <summary>
@@ -114,7 +115,7 @@ public static class ArtistHelper
 	public static readonly ArtistType[] VoiceSynthesizerTypes =
 	{
 		ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer,
-		ArtistType.SynthesizerV,
+		ArtistType.SynthesizerV, ArtistType.NEUTRINO
 	};
 
 	/// <summary>

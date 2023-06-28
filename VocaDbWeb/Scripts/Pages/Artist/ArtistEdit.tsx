@@ -433,6 +433,7 @@ const BasicInfoTabContent = observer(
 											ArtistType.OtherVocalist,
 											ArtistType.OtherVoiceSynthesizer,
 											ArtistType.Unknown,
+											ArtistType.NEUTRINO,
 										].join(','),
 									},
 									ignoreId: artistEditStore.contract.id,
