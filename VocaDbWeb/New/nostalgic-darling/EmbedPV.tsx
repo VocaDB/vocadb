@@ -5,11 +5,10 @@ import { NiconicoPlayer } from './players/NiconicoPlayer';
 import { BilibiliPlayer } from './players/BilibiliPlayer';
 
 interface EmbedPVProps {
-	songId: number;
 	pv: PVContract;
 }
 
-export default function EmbedPV({ pv, songId }: EmbedPVProps) {
+export default function EmbedPV({ pv }: EmbedPVProps) {
 	switch (pv.service) {
 		case PVService.Youtube:
 			return <YouTubePlayer pv={pv} />;

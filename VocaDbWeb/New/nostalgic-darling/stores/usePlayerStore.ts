@@ -1,3 +1,4 @@
+import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongContract } from '@/types/DataContracts/Song/SongContract';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -19,12 +20,13 @@ type Rectangle = { x: number; y: number; width: number; height: number };
 
 export interface PlayerState {
 	song?: SongContract;
+	pv?: PVContract;
 	queue: SongContract[];
 	playerApi?: IPlayerApi | undefined;
 	active: boolean;
 	playerBounds: Rectangle | undefined;
 	// TODO: Remoev this and convert to queue ops
-	loadSong(song: SongContract): void;
+	loadSong(song: SongContract, pv: PVContract): void;
 	setPlayerBounds: (bounds: Rectangle | undefined) => void;
 	setActive: (active: boolean) => void;
 	setPlayerApi: (api: IPlayerApi | undefined) => void;
@@ -47,8 +49,8 @@ export const usePlayerStore = create<PlayerState>()(
 			setPlayerBounds(newBounds) {
 				set({ playerBounds: newBounds });
 			},
-			loadSong(song) {
-				set({ song, active: false });
+			loadSong(song, pv) {
+				set({ song, active: false, pv });
 			},
 			onEnd() {
 				set({

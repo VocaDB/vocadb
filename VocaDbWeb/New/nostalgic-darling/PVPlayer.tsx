@@ -1,10 +1,12 @@
-import { PVService } from '@/types/Models/PVs/PVService';
 import EmbedPV from './EmbedPV';
 import { usePlayerStore } from './stores/usePlayerStore';
 
 export default function PVPlayer() {
-	const [song, playerBounds] = usePlayerStore((set) => [set.song, set.playerBounds]);
-	const pv = song?.pvs?.find((pv) => pv.service === PVService.Bilibili);
+	const [playerBounds, pv] = usePlayerStore((set) => [set.playerBounds, set.pv]);
+
+	if (pv === undefined) {
+		return <></>;
+	}
 
 	return (
 		<div
@@ -22,7 +24,7 @@ export default function PVPlayer() {
 					  }
 			}
 		>
-			{pv !== undefined && <EmbedPV pv={pv} songId={song!.id} />}
+			<EmbedPV pv={pv} />
 		</div>
 	);
 }
