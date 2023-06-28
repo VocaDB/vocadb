@@ -15,7 +15,7 @@ export const BilibiliPlayer: IPlayer = ({ pv }) => {
 
 	const onLoad = () => {
 		const player = videoRef.current;
-		audioRef.current.volume = volume;
+		audioRef.current.volume = volume / 100;
 		setPlayerApi({
 			play() {
 				player.play();
@@ -55,6 +55,7 @@ export const BilibiliPlayer: IPlayer = ({ pv }) => {
 				}}
 				onPause={() => audioRef.current.pause()}
 				onSeeked={() => (audioRef.current.currentTime = videoRef.current.currentTime)}
+				onEnded={() => onEnd()}
 				controls
 				width="100%"
 				height="100%"
