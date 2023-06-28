@@ -63,6 +63,7 @@ public enum ArtistType
 	VoiSona,
 
 	NewType,
+
 	Voiceroid
 }
 
