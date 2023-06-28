@@ -3,7 +3,7 @@ import { IPlayerApi, usePlayerStore } from '../stores/usePlayerStore';
 import YouTube, { YouTubeEvent } from 'react-youtube';
 import { IPlayer } from '../Player';
 
-export const YouTubePlayer: IPlayer = (props) => {
+export const YouTubePlayer: IPlayer = ({ pv }) => {
 	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
 		set.setActive,
 		set.onEnd,
@@ -59,7 +59,7 @@ export const YouTubePlayer: IPlayer = (props) => {
 				height: '100%',
 				width: '100%',
 			}}
-			videoId={props.videoId}
+			videoId={pv.pvId}
 			onReady={onReady}
 			onPause={() => setActive(false)}
 			onPlay={() => {

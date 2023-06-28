@@ -50,7 +50,7 @@ enum PlayerStatus {
 }
 const NICO_ORIGIN = 'https://embed.nicovideo.jp';
 
-export const NiconicoPlayer: IPlayer = (props) => {
+export const NiconicoPlayer: IPlayer = ({ pv }) => {
 	const [setActive, onEnd, setPlayerApi] = usePlayerStore((set) => [
 		set.setActive,
 		set.onEnd,
@@ -159,7 +159,7 @@ export const NiconicoPlayer: IPlayer = (props) => {
 	return (
 		<iframe
 			ref={playerElementRef}
-			src={`https://embed.nicovideo.jp/watch/${props.videoId}?jsapi=1&playerId=1`}
+			src={`https://embed.nicovideo.jp/watch/${pv.pvId}?jsapi=1&playerId=1`}
 			width="100%"
 			height="100%"
 			allowFullScreen

@@ -29,12 +29,12 @@ export default function PlayerControls() {
 	const interval = useInterval(() => {
 		if (playerApi === undefined) return;
 		setProgress(playerApi.getCurrentTime() / playerApi.getDuration());
+		setDuration(playerApi.getDuration());
 	}, 500);
 
 	React.useEffect(() => {
 		interval.start();
 		currentState.current = playerApi;
-		setDuration(playerApi?.getDuration() ?? 0);
 		return interval.stop();
 	}, [playerApi]);
 

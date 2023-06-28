@@ -1,6 +1,7 @@
+import { PVContract } from '@/types/DataContracts/PVs/PVContract';
+
 export interface PlayerProps {
-	songId: number;
-	videoId: string;
+	pv: PVContract;
 }
 
 export type IPlayer = React.FC<PlayerProps>;
