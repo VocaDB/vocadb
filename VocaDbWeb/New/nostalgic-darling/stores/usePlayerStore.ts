@@ -63,6 +63,12 @@ export const usePlayerStore = create<PlayerState>()(
 				set({ song, active: false, pv });
 			},
 			onEnd() {
+				if (get().queue.length === 0) {
+					set({ active: false });
+					// YT doesn't pause automatically
+					get().playerApi?.pause();
+					return;
+				}
 				set({
 					active: false,
 					song: undefined,
