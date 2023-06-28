@@ -162,6 +162,10 @@ export class ArtistEditStore {
 			ArtistType.CeVIO,
 			ArtistType.OtherVoiceSynthesizer,
 			ArtistType.SynthesizerV,
+			ArtistType.NEUTRINO,
+			ArtistType.VoiSona,
+			ArtistType.NewType,
+			ArtistType.Voiceroid,
 		];
 		return vocaloidTypes.includes(this.artistType);
 	}

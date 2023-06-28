@@ -57,6 +57,14 @@ public enum ArtistType
 	SynthesizerV,
 
 	CoverArtist,
+
+	NEUTRINO,
+
+	VoiSona,
+
+	NewType,
+
+	Voiceroid
 }
 
 /// <summary>
@@ -105,4 +113,12 @@ public enum ArtistTypes
 	SynthesizerV = 1 << 17,
 
 	CoverArtist = 1 << 18,
+
+	NEUTRINO = 1 << 19,
+
+	VoiSona = 1 << 20,
+
+	NewType = 1 << 21,
+
+	Voiceroid = 1 << 22
 }
