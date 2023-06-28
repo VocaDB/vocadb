@@ -333,7 +333,7 @@ public static class SongQueryableExtensions
 		SongVocalistSelection.UTAU =>
 			query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU)),
 		SongVocalistSelection.Other =>
-			query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer || a.Artist.ArtistType == ArtistType.SynthesizerV || a.Artist.ArtistType == ArtistType.NEUTRINO))),
+			query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer || a.Artist.ArtistType == ArtistType.SynthesizerV || a.Artist.ArtistType == ArtistType.NEUTRINO || a.Artist.ArtistType == ArtistType.VoiSona || a.Artist.ArtistType == ArtistType.NewType || a.Artist.ArtistType == ArtistType.Voiceroid))),
 		_ => query,
 	};
 

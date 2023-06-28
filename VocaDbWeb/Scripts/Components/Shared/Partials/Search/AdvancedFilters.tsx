@@ -93,6 +93,24 @@ const albumFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Artist type: VoiSona' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.VoiSona}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: New Type' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.NewType}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: Voiceroid' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.Voiceroid}`,
+		negate: false,
+	},
+	{
 		description: 'Artist type: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -172,6 +190,24 @@ const artistFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Voice provider of: VoiSona' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.VoiSona}`,
+		negate: false,
+	},
+	{
+		description: 'Voice provider of: New Type' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.NewType}`,
+		negate: false,
+	},
+	{
+		description: 'Voice provider of: Voiceroid' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.Voiceroid}`,
+		negate: false,
+	},
+	{
 		description: 'Voice provider of: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -242,6 +278,24 @@ const songFilters: AdvancedSearchFilter[] = [
 		description: 'Artist type: NEUTRINO' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.NEUTRINO}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: VoiSona' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.VoiSona}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: New Type' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.NewType}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: Voiceroid' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.Voiceroid}`,
 		negate: false,
 	},
 	{

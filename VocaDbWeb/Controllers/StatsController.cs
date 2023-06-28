@@ -300,7 +300,10 @@ public class StatsController : ControllerBase
 						|| r.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer
 						|| r.Artist.ArtistType == ArtistType.Utaite
 						|| r.Artist.ArtistType == ArtistType.SynthesizerV
-						|| r.Artist.ArtistType == ArtistType.NEUTRINO))
+						|| r.Artist.ArtistType == ArtistType.NEUTRINO
+						|| r.Artist.ArtistType == ArtistType.VoiSona
+						|| r.Artist.ArtistType == ArtistType.NewType
+						|| r.Artist.ArtistType == ArtistType.Voiceroid))
 				.OrderBy(a => a.OriginalRelease.ReleaseDate.Year)
 				.ThenBy(a => a.OriginalRelease.ReleaseDate.Month)
 				.GroupBy(a => new
@@ -357,7 +360,10 @@ public class StatsController : ControllerBase
 					a.ArtistType == ArtistType.CeVIO ||
 					a.ArtistType == ArtistType.Utaite ||
 					a.ArtistType == ArtistType.SynthesizerV ||
-					a.ArtistType == ArtistType.NEUTRINO)
+					a.ArtistType == ArtistType.NEUTRINO ||
+					a.ArtistType == ArtistType.VoiSona ||
+					a.ArtistType == ArtistType.NewType ||
+					a.ArtistType == ArtistType.Voiceroid)
 				.Select(a => new StatsQueries.LocalizedValue
 				{
 					Name = new TranslatedString
@@ -596,7 +602,7 @@ public class StatsController : ControllerBase
 
 		return SimpleBarChart<Artist>(
 			q => q
-				.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite || a.ArtistType == ArtistType.SynthesizerV || a.ArtistType == ArtistType.NEUTRINO)
+				.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite || a.ArtistType == ArtistType.SynthesizerV || a.ArtistType == ArtistType.NEUTRINO || a.ArtistType == ArtistType.VoiSona || a.ArtistType == ArtistType.NewType || a.ArtistType == ArtistType.Voiceroid)
 				.Select(a => new StatsQueries.LocalizedValue
 				{
 					Name = new TranslatedString
@@ -627,7 +633,10 @@ public class StatsController : ControllerBase
 				ArtistType.CeVIO,
 				ArtistType.OtherVoiceSynthesizer,
 				ArtistType.SynthesizerV,
-				ArtistType.NEUTRINO
+				ArtistType.NEUTRINO,
+				ArtistType.VoiSona,
+				ArtistType.NewType,
+				ArtistType.Voiceroid,
 			};
 		}
 
@@ -654,7 +663,10 @@ public class StatsController : ControllerBase
 				ArtistType.CeVIO,
 				ArtistType.OtherVoiceSynthesizer,
 				ArtistType.SynthesizerV,
-				ArtistType.NEUTRINO
+				ArtistType.NEUTRINO,
+				ArtistType.VoiSona,
+				ArtistType.NewType,
+				ArtistType.Voiceroid,
 			};
 		}
 

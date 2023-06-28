@@ -41,6 +41,9 @@ export class ArtistHelper {
 		ArtistType.Vocalist,
 		ArtistType.SynthesizerV,
 		ArtistType.NEUTRINO,
+		ArtistType.VoiSona,
+		ArtistType.NewType,
+		ArtistType.Voiceroid,
 	];
 
 	private static voiceSynthesizerTypes = [
@@ -50,6 +53,9 @@ export class ArtistHelper {
 		ArtistType.OtherVoiceSynthesizer,
 		ArtistType.SynthesizerV,
 		ArtistType.NEUTRINO,
+		ArtistType.VoiSona,
+		ArtistType.NewType,
+		ArtistType.Voiceroid,
 	];
 
 	static canHaveChildVoicebanks(at?: ArtistType): boolean {
