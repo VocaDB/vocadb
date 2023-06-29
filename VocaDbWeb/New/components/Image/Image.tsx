@@ -26,7 +26,5 @@ export default function CustomImage(props: CustomImageProps) {
 			}}
 		/>
 	);
-
-	return <Image {...props} src={base} unoptimized />;
 }
 
