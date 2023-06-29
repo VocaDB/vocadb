@@ -126,7 +126,7 @@ public class ArtistController : ControllerBase
 		{
 			prop.OpenGraph.Image = thumbUrl;
 		}
-		prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
+		prop.OpenGraph.Title = $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})";
 		prop.OpenGraph.ShowTwitterCard = true;
 		prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
