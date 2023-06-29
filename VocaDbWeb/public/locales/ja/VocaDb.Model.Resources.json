@@ -40,6 +40,10 @@
     "Vocalist": "ボーカリスト",
     "Character": "人物",
     "SynthesizerV": "Synthesizer V",
+    "NEUTRINO": "Neutrino",
+    "VoiSona": "VoiSona",
+    "NewType": "New Type",
+    "Voiceroid": "Voiceroid",
     "CoverArtist": "カバーアーティスト"
   },
   "ArtistValidationErrors": {
