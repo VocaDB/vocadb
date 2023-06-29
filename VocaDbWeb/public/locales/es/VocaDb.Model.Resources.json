@@ -40,6 +40,10 @@
     "Vocalist": "Vocalista",
     "Character": "Personaje",
     "SynthesizerV": "Synthesizer V",
+    "NEUTRINO": "Neutrino",
+    "VoiSona": "VoiSona",
+    "NewType": "New Type",
+    "Voiceroid": "Voiceroid",
     "CoverArtist": "Artista de covers"
   },
   "ArtistValidationErrors": {
