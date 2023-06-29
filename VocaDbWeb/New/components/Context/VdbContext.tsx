@@ -2,12 +2,10 @@
 
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { GlobalValues } from '@/types/GlobalValues';
-import { LoginManager } from '@/types/Models/LoginManager';
 import React, { useEffect } from 'react';
 
 interface VdbContext {
 	values: GlobalValues;
-	loginManager: LoginManager;
 }
 
 const VdbContext = React.createContext<VdbContext>(undefined!);
@@ -31,9 +29,7 @@ export const VdbProvider = ({ children, initialValue }: VdbProviderProps): React
 	}, [vdb]);
 
 	return vdb ? (
-		<VdbContext.Provider value={{ values: vdb, loginManager: new LoginManager(vdb) }}>
-			{children}
-		</VdbContext.Provider>
+		<VdbContext.Provider value={{ values: vdb }}>{children}</VdbContext.Provider>
 	) : (
 		<></>
 	);

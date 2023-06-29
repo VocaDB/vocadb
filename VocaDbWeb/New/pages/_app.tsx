@@ -1,20 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
-import {
-	MantineProvider,
-	ColorScheme,
-	ColorSchemeProvider,
-	MantineThemeOverride,
-} from '@mantine/core';
+import { MantineProvider, ColorScheme, MantineThemeOverride } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
 import { VdbProvider } from '@/components/Context/VdbContext';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
-import { ThemeProvider } from '@/components/Context/ThemeContext';
 import { ModalsProvider } from '@mantine/modals';
+import { useColorStore } from '@/stores/color';
+import { colors } from '@/components/colors';
 
 export default function App(
 	props: AppProps & {
@@ -23,68 +19,15 @@ export default function App(
 		values: GlobalValues | undefined;
 	}
 ) {
-	const { Component, pageProps, primaryColor, values } = props;
-	const [theme, setTheme] = useState<MantineThemeOverride>({
-		colors: {
-			miku: [
-				'#E3FAFC',
-				'#C5F6FA',
-				'#99E9F2',
-				'#66D9E8',
-				'#3BC9DB',
-				'#22B8CF',
-				'#15AABF',
-				'#1098AD',
-				'#0C8599',
-				'#0B7285',
-			],
-			luka: [
-				'#ffe8f8',
-				'#ffcfe9',
-				'#ff9bce',
-				'#ff64b4',
-				'#fe389d',
-				'#fe1c8e',
-				'#ff0987',
-				'#e40074',
-				'#cc0067',
-				'#b30059',
-			],
-			gumi: [
-				'#eeffe7',
-				'#dffbd3',
-				'#bef5a6',
-				'#9bef76',
-				'#7dea4e',
-				'#6ae734',
-				'#5fe525',
-				'#4fcb18',
-				'#43b40f',
-				'#339c00',
-			],
-			solaria: [
-				'#fff5e3',
-				'#faead2',
-				'#f0d2a8',
-				'#e7ba7c',
-				'#dfa556',
-				'#da973d',
-				'#d8912e',
-				'#c07d20',
-				'#ab6e19',
-				'#955f0c',
-			],
-		},
+	const { Component, pageProps, values } = props;
+	const [primaryColor, colorScheme] = useColorStore((state) => [
+		state.primaryColor,
+		state.colorScheme,
+	]);
+	const theme: MantineThemeOverride = {
+		colors,
 		primaryColor,
-		primaryShade: primaryColor === 'miku' || primaryColor === 'gumi' ? 7 : undefined,
-	});
-	const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
-
-	// TODO: This should be moved elsewhere
-	const toggleColorScheme = (value?: ColorScheme) => {
-		const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
-		setColorScheme(nextColorScheme);
-		setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+		colorScheme,
 	};
 
 	useEffect(() => {
@@ -109,24 +52,16 @@ export default function App(
 				<link rel="preconnect" href="https://wsrv.nl" />
 			</Head>
 
-			<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-				<MantineProvider
-					theme={{ ...theme, colorScheme }}
-					withGlobalStyles
-					withNormalizeCSS
-				>
-					<VdbProvider initialValue={values}>
-						<ThemeProvider theme={theme} setTheme={setTheme}>
-							<ModalsProvider>
-								<AppShell>
-									<Component {...pageProps} />
-								</AppShell>
-							</ModalsProvider>
-						</ThemeProvider>
-					</VdbProvider>
-					<Notifications />
-				</MantineProvider>
-			</ColorSchemeProvider>
+			<MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+				<VdbProvider initialValue={values}>
+					<ModalsProvider>
+						<AppShell>
+							<Component {...pageProps} />
+						</AppShell>
+					</ModalsProvider>
+				</VdbProvider>
+				<Notifications />
+			</MantineProvider>
 		</>
 	);
 }

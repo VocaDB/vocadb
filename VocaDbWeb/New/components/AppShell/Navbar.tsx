@@ -26,6 +26,7 @@ import { IconPlaylist } from '@tabler/icons';
 import { UserButton } from './UserButton';
 import { useVdb } from '../Context/VdbContext';
 import { PermissionToken } from '@/types/Models/LoginManager';
+import { hasPermission } from '@/Helpers/PermissionsHelper';
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
@@ -135,13 +136,13 @@ const MainLink = ({
 	permission,
 }: LinksGroupProps): React.ReactElement => {
 	const theme = useMantineTheme();
-	const { loginManager } = useVdb();
+	const { values } = useVdb();
 
 	if (links) {
 		return <NavbarLinksGroup icon={Icon} label={label} links={links} link={link} />;
 	}
 
-	if (permission && !loginManager.hasPermission(permission)) {
+	if (permission && !hasPermission(values, permission)) {
 		return <></>;
 	}
 

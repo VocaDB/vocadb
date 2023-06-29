@@ -1,5 +1,5 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
-import { Grid, Title } from '@mantine/core';
+import { Grid, Title, UnstyledButton } from '@mantine/core';
 import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 import useStyles from './AlbumCard.styles';
 import CustomImage from '../Image/Image';
@@ -13,7 +13,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 	return (
 		<>
 			<AlbumToolTip album={album}>
-				<div
+				<UnstyledButton
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
@@ -36,7 +36,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 					<Title style={{ width: '180px' }} order={6} color="dimmed">
 						{album.artistString.split('feat.')[0]}
 					</Title>
-				</div>
+				</UnstyledButton>
 			</AlbumToolTip>
 		</>
 	);
