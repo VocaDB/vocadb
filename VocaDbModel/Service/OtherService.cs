@@ -444,7 +444,6 @@ public class OtherService : ServiceBase
 	private ArtistForApiContract[] GetHighlightedArtists(ContentLanguagePreference languagePreference)
 	{
 		const int artistCount = 6;
-		const int sampleSize = 300;
 
 		return HandleQuery(session =>
 		{
@@ -453,7 +452,6 @@ public class OtherService : ServiceBase
 				.Where(a => a.Tags.Usages.Any(usage => usage.Tag.CategoryName == "Genres"))
 				.Where(a => a.AllSongs.Any(s => s.Song.SongType == SongType.Original && s.Song.RatingScore > 0))
 				.Select(a => a.Id)
-				.Take(sampleSize)
 				.ToArray();
 
 			var randomIds = CollectionHelper
