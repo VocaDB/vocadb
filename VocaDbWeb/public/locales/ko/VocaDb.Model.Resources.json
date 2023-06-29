@@ -40,6 +40,10 @@
     "Vocalist": "가수",
     "Character": "캐릭터",
     "SynthesizerV": "신디사이저 V",
+    "NEUTRINO": "Neutrino",
+    "VoiSona": "VoiSona",
+    "NewType": "New Type",
+    "Voiceroid": "Voiceroid",
     "CoverArtist": "커버 아티스트"
   },
   "ArtistValidationErrors": {
