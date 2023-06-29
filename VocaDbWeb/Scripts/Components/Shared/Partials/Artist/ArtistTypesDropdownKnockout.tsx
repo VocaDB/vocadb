@@ -31,6 +31,10 @@ const groupsForTypes: Record<ArtistType, ArtistTypeGroup> = {
 	[ArtistType.Vocaloid]: ArtistTypeGroup.Vocalist,
 	[ArtistType.Vocalist]: ArtistTypeGroup.Vocalist,
 	[ArtistType.SynthesizerV]: ArtistTypeGroup.Vocalist,
+	[ArtistType.NEUTRINO]: ArtistTypeGroup.Vocalist,
+	[ArtistType.VoiSona]: ArtistTypeGroup.Vocalist,
+	[ArtistType.NewType]: ArtistTypeGroup.Vocalist,
+	[ArtistType.Voiceroid]: ArtistTypeGroup.Vocalist,
 	[ArtistType.CoverArtist]: ArtistTypeGroup.Producer,
 };
 

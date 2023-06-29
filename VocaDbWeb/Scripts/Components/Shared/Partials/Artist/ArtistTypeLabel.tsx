@@ -62,6 +62,33 @@ export const ArtistTypeLabel = React.memo(
 					</span>
 				);
 
+			case ArtistType.NEUTRINO:
+				return (
+					<span className="label" title={title}>
+						N
+					</span>
+				);
+
+			case ArtistType.VoiSona:
+				return (
+					<span className="label" title={title}>
+						VS
+					</span>
+				);
+
+			case ArtistType.NewType:
+				return (
+					<span className="label" title={title}>
+						NT
+					</span>
+				);
+
+			case ArtistType.Voiceroid:
+				return (
+					<span className="label" title={title}>
+						VR
+					</span>
+				);
 			default:
 				return <></>;
 		}

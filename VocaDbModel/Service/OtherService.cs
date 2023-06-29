@@ -6,6 +6,7 @@ using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
@@ -431,6 +432,43 @@ public class OtherService : ServiceBase
 				permissionContext: PermissionContext,
 				entryForApiContractFactory: _entryForApiContractFactory
 			);
+		});
+	}
+
+	public ArtistForApiContract[] GetHighlightedArtistsCached(ContentLanguagePreference lang = ContentLanguagePreference.Default)
+	{
+		var cacheKey = $"OtherService.HighlightedArtists.{lang}";
+		return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(12)), () => GetHighlightedArtists(lang));
+	}
+
+	private ArtistForApiContract[] GetHighlightedArtists(ContentLanguagePreference languagePreference)
+	{
+		const int artistCount = 6;
+		const int sampleSize = 300;
+
+		return HandleQuery(session =>
+		{
+			var artistIds = session.Query<Artist>()
+				.Where(a => a.ArtistType == ArtistType.Producer)
+				.Where(a => a.Tags.Usages.Any(usage => usage.Tag.CategoryName == "Genres"))
+				.Where(a => a.AllSongs.Any(s => s.Song.SongType == SongType.Original && s.Song.RatingScore > 0))
+				.Select(a => a.Id)
+				.Take(sampleSize)
+				.ToArray();
+
+			var randomIds = CollectionHelper
+				.GetRandomItems(artistIds, artistCount)
+				.ToArray();
+
+			var random = session.Query<Artist>()
+				.Where(a => randomIds.Contains(a.Id))
+				.ToArray();
+
+			var popularArtistContracts = random
+				.Select(a => new ArtistForApiContract(a, languagePreference, PermissionContext, _thumbPersister, ArtistOptionalFields.None))
+				.ToArray();
+
+			return popularArtistContracts;
 		});
 	}
 
