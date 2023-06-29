@@ -247,6 +247,23 @@ public static class Translate
 
 	public static string ArtistTypeName(ArtistType artistType)
 	{
+		// FIXME: Temporary fix until we move this to nextjs
+		if (artistType == ArtistType.NewType)
+		{
+			return "New Type";
+		}
+		else if (artistType == ArtistType.VoiSona)
+		{
+			return "VoiSona";
+		}
+		else if (artistType == ArtistType.NEUTRINO)
+		{
+			return "NEUTRINO";
+		}
+		else if (artistType == ArtistType.Voiceroid)
+		{
+			return "Voiceroid";
+		}
 		return Model.Resources.ArtistTypeNames.ResourceManager.GetString(artistType.ToString());
 	}
 
