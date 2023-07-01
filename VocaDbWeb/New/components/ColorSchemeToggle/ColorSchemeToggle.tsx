@@ -1,71 +1,26 @@
-import {
-	ColorSwatch,
-	Group,
-	Switch,
-	useMantineColorScheme,
-	useMantineTheme,
-	Text,
-	Grid,
-	Card,
-	Button,
-} from '@mantine/core';
+import { ColorSwatch, Group, Paper, Switch, useMantineTheme } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
-import { useThemeOverride } from '../Context/ThemeContext';
-import Image from 'next/image';
-import miku from '@/public/characters/Hatsune Miku.png';
-import luka from '@/public/characters/Megurine Luka.png';
-import gumi from '@/public/characters/Gumi.png';
-import solaria from '@/public/characters/Solaria.png';
+import { useColorStore } from '@/stores/color';
+import React, { Suspense } from 'react';
 
-const COLORSCHEMES = [
-	{ color: 'miku', picture: miku, name: 'Hatsune Miku', description: 'TODO' },
-	{ color: 'luka', picture: luka, name: 'Megurine Luka', description: 'TODO' },
-	{ color: 'gumi', picture: gumi, name: 'GUMI', description: 'TODO' },
-	{ color: 'solaria', picture: solaria, name: 'Solaria', description: 'TODO' },
-];
+const ColorSchemeMenu = React.lazy(() => import('./ColorSchemeMenu'));
 
 export function ColorSchemeToggle() {
 	const theme = useMantineTheme();
-	const { setPrimaryColor } = useThemeOverride();
-	const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-
-	const colorSchemes = COLORSCHEMES.map((scheme) => (
-		<Grid.Col md={6} sm={12} key={scheme.color}>
-			<Card shadow="sm" radius="md">
-				<Image
-					src={scheme.picture}
-					style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
-					height={120}
-					alt="Hatsune Miku"
-				/>
-
-				<Text mt="sm" size="sm" color="dimmed">
-					Maybe a description here?. Velit sint sint sit do esse incididunt aliquip eu
-					aliquip veniam ad in. Culpa cillum sunt irure quis nostrud qui laborum.
-				</Text>
-
-				<Button
-					onClick={() => setPrimaryColor(scheme.color)}
-					mt="sm"
-					color={scheme.color}
-					radius="md"
-					fullWidth
-				>
-					Apply Color
-				</Button>
-			</Card>
-		</Grid.Col>
-	));
+	const [colorScheme, toggleColorScheme] = useColorStore((state) => [
+		state.colorScheme,
+		state.toggleColorScheme,
+	]);
 
 	const openModal = () =>
 		modals.open({
 			title: 'Change your color scheme',
+			size: 'xl',
 			children: (
-				<>
-					<Text size="sm">You can change your preferred color scheme here.</Text>
-					<Grid>{colorSchemes}</Grid>
-				</>
+				<Suspense fallback={<Paper h="1000px" />}>
+					<ColorSchemeMenu />
+				</Suspense>
 			),
 		});
 
@@ -74,11 +29,8 @@ export function ColorSchemeToggle() {
 			<ColorSwatch<'button'>
 				component="button"
 				onClick={openModal}
-				color={
-					theme.colors[theme.primaryColor][
-						Number.isInteger(theme.primaryShade) ? (theme.primaryShade as number) : 6
-					]
-				}
+				color={theme.colors[theme.primaryColor][6]}
+				title="Open color scheme menu"
 			/>
 			<Switch
 				checked={colorScheme === 'dark'}
@@ -88,6 +40,7 @@ export function ColorSchemeToggle() {
 				offLabel={
 					<IconMoonStars color={theme.colors.gray[6]} size="1.25rem" stroke={1.5} />
 				}
+				aria-label="Toggle color scheme"
 			/>
 		</Group>
 	);

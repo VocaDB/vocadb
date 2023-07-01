@@ -1,4 +1,4 @@
-import { Burger, Header, MediaQuery, createStyles, useMantineTheme } from '@mantine/core';
+import { Burger, Header, MediaQuery, createStyles } from '@mantine/core';
 import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
@@ -47,6 +47,7 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 						onClick={(): void => setOpened((o) => !o)}
 						size="sm"
 						color={theme.colors.gray[6]}
+						title="Open navigation menu"
 					/>
 				</MediaQuery>
 			</div>

@@ -16,7 +16,6 @@ import {
 	IconMusic,
 	IconUser,
 } from '@tabler/icons-react';
-import Image from 'next/image';
 
 const useStyles = createStyles((theme) => ({
 	user: {

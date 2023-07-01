@@ -1,4 +1,4 @@
-import { Title, Text, Anchor, useMantineTheme } from '@mantine/core';
+import { Title, Text, useMantineTheme } from '@mantine/core';
 import useStyles from './Welcome.styles';
 
 export function Welcome() {

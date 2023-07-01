@@ -23,14 +23,14 @@ i18n
 				{
 					expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
 					versions: {
-						de: 'v1.9',
-						es: 'v1.7',
-						fi: 'v1.8',
-						ja: 'v1.8',
-						en: 'v1.8',
-						ru: 'v1.8',
-						ko: 'v1.5',
-						quc: 'v1.2',
+						de: 'v1.10',
+						es: 'v1.8',
+						fi: 'v1.9',
+						ja: 'v1.9',
+						en: 'v1.9',
+						ru: 'v1.9',
+						ko: 'v1.6',
+						quc: 'v1.3',
 					},
 				},
 			],
