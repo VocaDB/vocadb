@@ -64,14 +64,6 @@ public abstract class ServiceBase
 
 	protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
 	{
-		var latestEntries = session.Query<ActivityEntry>()
-			.OrderByDescending(a => a.CreateDate)
-			.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
-			.ToArray();
-
-		if (latestEntries.Any(e => e.IsDuplicate(entry)))
-			return;
-
 		session.Save(entry);
 	}
 

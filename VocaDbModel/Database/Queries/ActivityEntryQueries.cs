@@ -125,7 +125,6 @@ public class ActivityEntryQueries
 				.OrderBy(sortRule)
 				.Take(maxResults)
 				.ToArray()
-				.Where(a => !a.EntryBase.Deleted)
 				.Select(a => new ActivityEntryForApiContract(
 					a,
 					fields.HasFlag(ActivityEntryOptionalFields.Entry)

@@ -70,6 +70,8 @@ public class ArtistService : ServiceBase
 			NHibernateUtil.Initialize(a.Picture);
 			a.Delete();
 
+			AddEntryEditedEntry(session, a, Domain.Activityfeed.EntryEditEvent.Deleted, null);
+
 			Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted, notes);
 		}, PermissionToken.Nothing, skipLog: true);
 	}
