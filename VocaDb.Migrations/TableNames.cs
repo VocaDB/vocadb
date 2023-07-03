@@ -55,6 +55,7 @@ public static class TableNames
 	public const string ReleaseEventComments = nameof(ReleaseEventComments);
 	public const string ReleaseEventWebLinks = nameof(ReleaseEventWebLinks);
 	public const string ReleaseEventSeriesWebLinks = nameof(ReleaseEventSeriesWebLinks);
+	public const string ReleaseEventsForEntries = nameof(ReleaseEventsForEntries);
 	public const string SongsInAlbums = nameof(SongsInAlbums);
 	public const string SongListComments = nameof(SongListComments);
 	public const string SongLists = nameof(SongLists);
