@@ -114,7 +114,6 @@ public class ArtistController : ControllerBase
 
 		var model = _queries.GetDetailsForApi(id, GetHostnameForValidHit());
 
-		var hasDescription = !string.IsNullOrEmpty(model.Description.Original);
 		var prop = PageProperties;
 		prop.GlobalSearchType = EntryType.Artist;
 		prop.Title = model.Name;
