@@ -639,7 +639,7 @@ const SongBasicInfo = observer(
 								<td>
 									{model.releaseEvents.map((event, key) => (
 										<>
-											{key !== 0 ? ', ' : ''}{' '}
+											{key !== 0 ? ', ' : ''}
 											<EventLink event={event} key={key} tooltip />
 										</>
 									))}
