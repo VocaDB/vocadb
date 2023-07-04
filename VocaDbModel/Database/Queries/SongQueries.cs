@@ -1103,6 +1103,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			}
 
 			target.ReleaseEvent ??= source.ReleaseEvent;
+			target.ReleaseEvents = target.ReleaseEvents.Concat(source.ReleaseEvents).Distinct().ToArray();
 
 			// Create merge record
 			var mergeEntry = new SongMergeRecord(source, target);
