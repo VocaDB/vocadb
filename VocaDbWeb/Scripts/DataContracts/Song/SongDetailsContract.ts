@@ -52,6 +52,7 @@ export interface SongDetailsContract {
 	previousSong?: SongInAlbumContract;
 	pvs: PVContract[];
 	releaseEvent?: ReleaseEventContract;
+	releaseEvents: ReleaseEventContract[];
 	song: SongApiContract;
 	songTypeTag: TagBaseContract;
 	subjectsFromParents: ArtistForSongContract[];

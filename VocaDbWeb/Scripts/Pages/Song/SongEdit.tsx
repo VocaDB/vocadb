@@ -19,7 +19,7 @@ import {
 	PVTypeDescriptionsDropdownList,
 } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { EntryValidationMessage } from '@/Components/Shared/Partials/Knockout/EntryValidationMessage';
-import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
+import { ReleaseEventsEditView } from '@/Components/Shared/Partials/Knockout/ReleaseEventsEditView';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { WebLinksEditViewKnockout } from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
 import { ConcurrentEditWarning } from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
@@ -305,10 +305,7 @@ const BasicInfoTabContent = observer(
 					<label>Release event{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
-					<ReleaseEventLockingAutoComplete
-						basicEntryLinkStore={songEditStore.releaseEvent}
-						// TODO: createNewItem="Create new event '{0}'" /* LOC */
-					/>
+					<ReleaseEventsEditView songEditStore={songEditStore} />
 				</div>
 
 				<div className="editor-label">
@@ -343,7 +340,8 @@ const BasicInfoTabContent = observer(
 											<Button
 												onClick={(): void =>
 													runInAction(() => {
-														songEditStore.publishDate = songEditStore.suggestedPublishDate?.date.toDate();
+														songEditStore.publishDate =
+															songEditStore.suggestedPublishDate?.date.toDate();
 													})
 												}
 											>
@@ -369,7 +367,8 @@ const BasicInfoTabContent = observer(
 													<Button
 														onClick={(): void => {
 															runInAction(() => {
-																songEditStore.publishDate = songEditStore.eventDate?.toDate();
+																songEditStore.publishDate =
+																	songEditStore.eventDate?.toDate();
 															});
 														}}
 													>
@@ -1011,10 +1010,12 @@ const SongEdit = (): React.ReactElement => {
 	const artistRoleNames = React.useMemo(
 		() =>
 			Object.fromEntries(
-				vdb.values.artistRoles.map((artistRole): [
-					string,
-					string | undefined,
-				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
+				vdb.values.artistRoles.map(
+					(artistRole): [string, string | undefined] => [
+						artistRole,
+						t(`Resources:ArtistRoleNames.${artistRole}`),
+					],
+				),
 			),
 		[vdb, t],
 	);
