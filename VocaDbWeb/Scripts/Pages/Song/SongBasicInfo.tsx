@@ -633,11 +633,16 @@ const SongBasicInfo = observer(
 							</td>
 						</tr>
 
-						{model.releaseEvent && (
+						{model.releaseEvents.length > 0 && (
 							<tr>
 								<td>{t('ViewRes.Song:Details.ReleaseEvent')}</td>
 								<td>
-									<EventLink event={model.releaseEvent} tooltip />
+									{model.releaseEvents.map((event, key) => (
+										<>
+											{key !== 0 ? ', ' : ''}
+											<EventLink event={event} key={key} tooltip />
+										</>
+									))}
 								</td>
 							</tr>
 						)}

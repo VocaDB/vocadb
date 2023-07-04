@@ -82,6 +82,9 @@ public sealed record SongForEditForApiContract
 	public ReleaseEventForApiContract? ReleaseEvent { get; set; }
 
 	[DataMember]
+	public ReleaseEventForApiContract[] ReleaseEvents { get; set; }
+
+	[DataMember]
 	[JsonConverter(typeof(StringEnumConverter))]
 	public SongType SongType { get; init; }
 
@@ -112,6 +115,7 @@ public sealed record SongForEditForApiContract
 		PVs = Array.Empty<PVContract>();
 		Tags = Array.Empty<int>();
 		UpdateNotes = string.Empty;
+		ReleaseEvents = Array.Empty<ReleaseEventForApiContract>();
 		WebLinks = Array.Empty<WebLinkForApiContract>();
 		CultureCodes = Array.Empty<string>();
 	}
@@ -174,6 +178,15 @@ public sealed record SongForEditForApiContract
 				thumbPersister: null
 			)
 			: null;
+		ReleaseEvents = song.ReleaseEvents.Select(e =>
+			new ReleaseEventForApiContract(
+				rel: e,
+				languagePreference: languagePreference,
+				permissionContext,
+				fields: ReleaseEventOptionalFields.None,
+				thumbPersister: null
+			)
+		).ToArray();
 		SongType = song.SongType;
 		Status = song.Status;
 		Tags = song.Tags.Tags

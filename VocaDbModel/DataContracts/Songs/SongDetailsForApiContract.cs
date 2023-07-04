@@ -121,6 +121,9 @@ public sealed record SongDetailsForApiContract
 	public ReleaseEventForApiContract? ReleaseEvent { get; init; }
 
 	[DataMember]
+	public ReleaseEventForApiContract[] ReleaseEvents { get; init; }
+
+	[DataMember]
 	public SongForApiContract Song { get; init; }
 
 	[DataMember]
@@ -242,6 +245,16 @@ public sealed record SongDetailsForApiContract
 				thumbPersister: thumbPersister
 			)
 			: null;
+
+		ReleaseEvents = song.ReleaseEvents.Select(e =>
+			new ReleaseEventForApiContract(
+				rel: e,
+				languagePreference: languagePreference,
+				userContext,
+				fields: ReleaseEventOptionalFields.None,
+				thumbPersister: null
+			)
+		).ToArray();
 
 		SongTypeTag = songTypeTag != null
 			? new TagBaseContract(tag: songTypeTag, languagePreference: languagePreference)

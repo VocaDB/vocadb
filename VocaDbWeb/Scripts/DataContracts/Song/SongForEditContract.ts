@@ -31,6 +31,7 @@ export interface SongForEditContract {
 	publishDate?: string;
 	pvs: PVContract[];
 	releaseEvent?: ReleaseEventContract;
+	releaseEvents: ReleaseEventContract[];
 	songType: SongType;
 	status: EntryStatus;
 	tags: number[];

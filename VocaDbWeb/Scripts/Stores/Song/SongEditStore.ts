@@ -49,6 +49,7 @@ export class SongEditStore {
 	private readonly albumEventId?: number;
 	private readonly albumReleaseDate?: Dayjs;
 	// List of artist links for this song.
+	// eslint-disable-next-line prettier/prettier
 	@observable artistLinks: ArtistForAlbumEditStore[] = [];
 	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
 	@observable defaultNameLanguage: string; /* TODO: enum */
@@ -68,6 +69,7 @@ export class SongEditStore {
 	@observable publishDate?: Date;
 	readonly pvs: PVListEditStore;
 	readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
+	@observable releaseEvents: BasicEntryLinkStore<ReleaseEventContract>[];
 	@observable songType: SongType;
 	@observable status: EntryStatus;
 	@observable submitting = false;
@@ -82,7 +84,7 @@ export class SongEditStore {
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
-		eventRepo: ReleaseEventRepository,
+		readonly eventRepo: ReleaseEventRepository,
 		urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
 		readonly contract: SongForEditContract,
@@ -111,6 +113,15 @@ export class SongEditStore {
 		this.releaseEvent = new BasicEntryLinkStore<ReleaseEventContract>(
 			(entryId) => eventRepo.getOne({ id: entryId }),
 		);
+
+		this.releaseEvents = contract.releaseEvents.map((e) => {
+			const store = new BasicEntryLinkStore<ReleaseEventContract>(
+				(entryId) => eventRepo.getOne({ id: entryId})
+			)
+			store.id = e.id;
+				
+			return store;
+		})
 
 		this.albumEventId = contract.albumEventId;
 		this.albumReleaseDate = contract.albumReleaseDate
@@ -311,6 +322,14 @@ export class SongEditStore {
 			.head();
 	}
 
+	addReleaseEvent = (): void =>  {
+		this.releaseEvents.push(
+			new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
+				this.eventRepo.getOne({ id: entryId }),
+			)
+		)
+	}
+
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
 	// customArtistName: Name of the custom artist being added. Can be null, if existing artist.
@@ -421,6 +440,7 @@ export class SongEditStore {
 					: undefined,
 				pvs: this.pvs.toContracts(),
 				releaseEvent: this.releaseEvent.entry,
+				releaseEvents: this.releaseEvents.map(e => e.entry).filter(e => e !== undefined) as ReleaseEventContract[],
 				songType: this.songType,
 				status: this.status,
 				tags: this.tags,

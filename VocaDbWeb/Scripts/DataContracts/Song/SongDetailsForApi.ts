@@ -64,6 +64,7 @@ export class SongDetailsForApi {
 	readonly publishDate?: string;
 	readonly ratingScore: number;
 	readonly releaseEvent?: ReleaseEventContract;
+	readonly releaseEvents: ReleaseEventContract[];
 	readonly songType: SongType;
 	readonly songTypeTag: TagBaseContract;
 	readonly status: EntryStatus;
@@ -116,6 +117,7 @@ export class SongDetailsForApi {
 		this.publishDate = contract.song.publishDate;
 		this.ratingScore = contract.song.ratingScore;
 		this.releaseEvent = contract.releaseEvent;
+		this.releaseEvents = contract.releaseEvents;
 		this.songType = contract.song.songType;
 		this.songTypeTag = contract.songTypeTag;
 		this.status = contract.song.status;

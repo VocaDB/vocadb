@@ -57,6 +57,7 @@ public class Song :
 	private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
 	private IList<SongWebLink> _webLinks = new List<SongWebLink>();
 	private IList<OptionalCultureCode> _cultureCodes = new List<OptionalCultureCode>();
+	private IList<ReleaseEvent> _releaseEvents = new List<ReleaseEvent>();
 
 	public virtual int GetLengthFromPV()
 	{
@@ -263,6 +264,16 @@ public class Song :
 		}
 	}
 
+	public virtual IList<ReleaseEvent> ReleaseEvents
+	{
+		get => _releaseEvents;
+		set
+		{
+			ParamIs.NotNull(() => value);
+			_releaseEvents = value;
+		}
+	}
+
 	public virtual IEnumerable<ArtistForSong> GetCharactersFromParents()
 	{
 		if (!AppConfig.EnableArtistInheritance || OriginalVersion == null)
@@ -397,6 +408,7 @@ public class Song :
 
 	public virtual int RatingScore { get; set; }
 
+	[Obsolete]
 	public virtual ReleaseEvent? ReleaseEvent { get; set; }
 
 	public virtual string? PersonalDescriptionText { get; set; }
@@ -744,6 +756,7 @@ public class Song :
 		original?.AllAlternateVersions.Add(this);
 	}
 
+	[Obsolete]
 	public virtual void SetReleaseEvent(ReleaseEvent? releaseEvent)
 	{
 		if (Equals(ReleaseEvent, releaseEvent))
