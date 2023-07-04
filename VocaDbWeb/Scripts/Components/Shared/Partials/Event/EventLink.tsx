@@ -7,11 +7,18 @@ import { Link } from 'react-router-dom';
 
 interface EventLinkBaseProps {
 	event: ReleaseEventContract;
+	bold?: boolean;
 }
 
-const EventLinkBase = ({ event }: EventLinkBaseProps): React.ReactElement => {
+const EventLinkBase = ({
+	event,
+	bold,
+}: EventLinkBaseProps): React.ReactElement => {
 	return (
-		<Link to={EntryUrlMapper.details(EntryType.ReleaseEvent, event.id)}>
+		<Link
+			style={bold ? { fontWeight: 700 } : undefined}
+			to={EntryUrlMapper.details(EntryType.ReleaseEvent, event.id)}
+		>
 			{event.name}
 		</Link>
 	);
@@ -20,15 +27,17 @@ const EventLinkBase = ({ event }: EventLinkBaseProps): React.ReactElement => {
 interface EventLinkProps {
 	event: ReleaseEventContract;
 	tooltip?: boolean;
+	bold?: boolean;
 }
 
 export const EventLink = ({
 	event,
 	tooltip,
+	bold,
 }: EventLinkProps): React.ReactElement => {
 	return tooltip ? (
 		<EventToolTip id={event.id}>
-			<EventLinkBase event={event} />
+			<EventLinkBase bold={bold} event={event} />
 		</EventToolTip>
 	) : (
 		<EventLinkBase event={event} />
