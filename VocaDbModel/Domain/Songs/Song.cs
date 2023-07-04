@@ -57,6 +57,7 @@ public class Song :
 	private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
 	private IList<SongWebLink> _webLinks = new List<SongWebLink>();
 	private IList<OptionalCultureCode> _cultureCodes = new List<OptionalCultureCode>();
+	public IList<ReleaseEvent> ReleaseEvents = new List<ReleaseEvent>();
 
 	public virtual int GetLengthFromPV()
 	{
@@ -399,7 +400,6 @@ public class Song :
 
 	[Obsolete]
 	public virtual ReleaseEvent? ReleaseEvent { get; set; }
-	public virtual IList<ReleaseEvent> ReleaseEvents { get; set; }
 
 	public virtual string? PersonalDescriptionText { get; set; }
 
