@@ -14,11 +14,11 @@ public class ParsedAlbumQuery
 
 	public int ArtistId { get; set; }
 
-	public string Name { get; set; }
+	public SearchTextQuery Name { get; set; }
 
 	public string TagName { get; set; }
 
 	public IPV PV { get; set; }
 
-	public bool HasNameQuery => !string.IsNullOrEmpty(Name);
+	public bool HasNameQuery => !SearchTextQuery.IsNullOrEmpty(Name);
 }

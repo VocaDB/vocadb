@@ -25,7 +25,14 @@ public class AlbumSearch
 		NameMatchMode? nameMatchMode = null)
 	{
 		var artistIds = EntryIdsCollection.CreateWithFallback(queryParams.ArtistParticipation.ArtistIds.Ids, parsedQuery.ArtistId);
-		var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
+		var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name)
+			? new SearchTextQuery(
+				query: parsedQuery.Name.Query,
+				matchMode: nameMatchMode ?? parsedQuery.Name.MatchMode,
+				originalQuery: parsedQuery.Name.OriginalQuery
+			)
+			: SearchTextQuery.Empty;
+
 		var query = Query<Album>()
 			.WhereIsDeleted(queryParams.Deleted)
 			.WhereHasName(textQuery, allowCatNum: true)
@@ -64,20 +71,15 @@ public class AlbumSearch
 
 		var term = GetTerm(query.Trim(), "tag", "artist");
 
-		if (term != null)
+		return (term?.PropertyName) switch
 		{
-			switch (term.PropertyName)
+			"tag" => new ParsedAlbumQuery { TagName = term.Value },
+			_ => ParseReferenceQuery(query.Trim(), query) ?? new ParsedAlbumQuery
 			{
-				case "tag":
-					return new ParsedAlbumQuery { TagName = term.Value };
-				case "artist":
-					if (int.TryParse(term.Value, out _))
-						return new ParsedAlbumQuery { ArtistId = int.Parse(term.Value) };
-					break;
+				Name = textQuery
 			}
-		}
+		};
 
-		return ParseReferenceQuery(query.Trim(), query) ?? new ParsedAlbumQuery { Name = query };
 	}
 
 	private ParsedAlbumQuery ParseReferenceQuery(string trimmed, string query)
@@ -195,7 +197,6 @@ public class AlbumSearch
 
 	public PartialFindResult<Album> Find(AlbumQueryParams queryParams)
 	{
-		var query = queryParams.Common.Query ?? string.Empty;
 		var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
 		var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
