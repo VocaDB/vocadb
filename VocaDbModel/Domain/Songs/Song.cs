@@ -57,7 +57,7 @@ public class Song :
 	private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
 	private IList<SongWebLink> _webLinks = new List<SongWebLink>();
 	private IList<OptionalCultureCode> _cultureCodes = new List<OptionalCultureCode>();
-	public IList<ReleaseEvent> ReleaseEvents = new List<ReleaseEvent>();
+	private IList<ReleaseEvent> _releaseEvents = new List<ReleaseEvent>();
 
 	public virtual int GetLengthFromPV()
 	{
@@ -261,6 +261,16 @@ public class Song :
 		{
 			ParamIs.NotNull(() => value);
 			_lyrics = value;
+		}
+	}
+
+	public virtual IList<ReleaseEvent> ReleaseEvents
+	{
+		get => _releaseEvents;
+		set
+		{
+			ParamIs.NotNull(() => value);
+			_releaseEvents = value;
 		}
 	}
 
