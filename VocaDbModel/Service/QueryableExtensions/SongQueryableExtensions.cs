@@ -412,7 +412,7 @@ public static class SongQueryableExtensions
 		if (eventId == 0)
 			return query;
 
-		return query.Where(s => s.ReleaseEvent.Id == eventId);
+		return query.Where(s => s.ReleaseEvents.Any((e) => e.Id == eventId));
 	}
 
 	public static IQueryable<Song> WhereMilliBpmIsBetween(this IQueryable<Song> query, int? minMilliBpm, int? maxMilliBpm)

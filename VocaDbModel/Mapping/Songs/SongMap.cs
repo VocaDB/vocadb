@@ -31,7 +31,7 @@ public class SongMap : ClassMap<Song>
 
 		References(m => m.OriginalVersion).Nullable();
 		References(m => m.ReleaseEvent).Nullable();
-		HasManyToMany(m => m._releaseEvents).Table("ReleaseEventsForEntries").ParentKeyColumn("Song").ChildKeyColumn("ReleaseEvent").LazyLoad().Cascade.All().Cache.ReadWrite();
+		HasManyToMany(m => m.ReleaseEvents).Table("ReleaseEventsForEntries").ParentKeyColumn("Song").ChildKeyColumn("ReleaseEvent").LazyLoad().Cascade.All().Cache.ReadWrite();
 
 		Component(m => m.ArchivedVersionsManager,
 			c => c.HasMany(m => m.Versions).KeyColumn("[Song]").Inverse().Cascade.All().OrderBy("Created DESC"));

@@ -399,7 +399,7 @@ public class Song :
 
 	[Obsolete]
 	public virtual ReleaseEvent? ReleaseEvent { get; set; }
-	public virtual IList<ReleaseEvent> _releaseEvents { get; set; }
+	public virtual IList<ReleaseEvent> ReleaseEvents { get; set; }
 
 	public virtual string? PersonalDescriptionText { get; set; }
 
@@ -457,16 +457,6 @@ public class Song :
 		{
 			ParamIs.NotNull(() => value);
 			_webLinks = value;
-		}
-	}
-
-	public virtual IList<ReleaseEvent> ReleaseEvents
-	{
-		get => _releaseEvents;
-		set
-		{
-			ParamIs.NotNull(() => value);
-			_releaseEvents = value;
 		}
 	}
 
