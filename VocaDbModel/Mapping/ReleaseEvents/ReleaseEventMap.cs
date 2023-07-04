@@ -27,7 +27,8 @@ public class ReleaseEventMap : ClassMap<ReleaseEvent>
 
 		HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 		HasMany(m => m.AllArtists).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-		HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
+		// HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
+		HasManyToMany(m => m.AllSongs).Table("ReleaseEventsForEntries").ParentKeyColumn("ReleaseEvent").ChildKeyColumn("Song").Inverse().Cache.ReadWrite();
 		HasMany(m => m.AllComments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
 		HasMany(m => m.Users).Inverse().Cascade.All().Cache.ReadWrite();
 		HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
