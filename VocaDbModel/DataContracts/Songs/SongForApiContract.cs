@@ -101,15 +101,25 @@ public class SongForApiContract : IEntryBase
 				.ToArray();
 		}
 
-		if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null)
+		if (fields.HasFlag(SongOptionalFields.ReleaseEvent))
 		{
-			ReleaseEvent = new ReleaseEventForApiContract(
-				song.ReleaseEvent,
+			if (song.ReleaseEvent != null)
+			{
+				ReleaseEvent = new ReleaseEventForApiContract(
+					song.ReleaseEvent,
+					languagePreference,
+					permissionContext,
+					ReleaseEventOptionalFields.None,
+					null
+				);
+			}
+			ReleaseEvents = song.ReleaseEvents.Select(e => new ReleaseEventForApiContract(
+				e,
 				languagePreference,
 				permissionContext,
 				ReleaseEventOptionalFields.None,
 				null
-			);
+			)).ToArray();
 		}
 
 		if (fields.HasFlag(SongOptionalFields.Tags))
@@ -260,7 +270,11 @@ public class SongForApiContract : IEntryBase
 	public int RatingScore { get; init; }
 
 	[DataMember(EmitDefaultValue = false)]
+	[Obsolete]
 	public ReleaseEventForApiContract? ReleaseEvent { get; init; }
+
+	[DataMember(EmitDefaultValue = false)]
+	public ReleaseEventForApiContract[] ReleaseEvents { get; init; }
 
 	[DataMember]
 	[JsonConverter(typeof(StringEnumConverter))]

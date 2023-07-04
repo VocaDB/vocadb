@@ -1365,6 +1365,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			if (webLinkDiff.Changed)
 				diff.WebLinks.Set();
 
+			var newReleaseEvents = properties.ReleaseEvents.Select(e => new CreateEventQuery().FindOrCreate(ctx, PermissionContext, e, song));
+			if (!song.ReleaseEvents.SequenceEqual(newReleaseEvents))
+			{
+				song.ReleaseEvents = newReleaseEvents.ToArray();
+				diff.Status.Set();
+			}
+
 			if (song.Status != properties.Status)
 			{
 				song.Status = properties.Status;

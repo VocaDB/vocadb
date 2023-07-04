@@ -11,16 +11,15 @@ public class MultipleReleaseEvents : Migration
 	public override void Up()
 	{
 		Create.Table(TableNames.ReleaseEventsForEntries)
-			.WithColumn("EntryType").AsString(20).NotNullable()
 			.WithColumn("ReleaseEvent").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed()
 			.WithColumn("Album").AsInt32().Nullable().ForeignKey(TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed()
 			.WithColumn("Song").AsInt32().Nullable().ForeignKey(TableNames.Songs, "Id").OnDelete(Rule.Cascade).Indexed();
 
-		Execute.Sql($@"insert into {TableNames.ReleaseEventsForEntries} (EntryType, ReleaseEvent, Album, Song)
-			select 'Album', ReleaseEvent, Id, null from Albums
+		Execute.Sql($@"insert into {TableNames.ReleaseEventsForEntries} (ReleaseEvent, Album, Song)
+			select ReleaseEvent, Id, null from Albums
 			where ReleaseEvent is not null
 			union
-			select 'Song', ReleaseEvent, null, Id from Songs
+			select ReleaseEvent, null, Id from Songs
 			where ReleaseEvent is not null
 		");
 	}
