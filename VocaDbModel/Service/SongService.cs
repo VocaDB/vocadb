@@ -84,13 +84,15 @@ public class SongService : ServiceBase
 
 	public void Delete(int id, string notes)
 	{
-		UpdateEntity<Song>(id, (session, song) =>
+		UpdateEntity<Song>(id, async (session, song) =>
 		{
 			EntryPermissionManager.VerifyDelete(PermissionContext, song);
 
 			AuditLog($"deleting song {EntryLinkFactory.CreateEntryLink(song)}", session);
 
 			song.Delete();
+
+			AddEntryEditedEntry(session, song, Domain.Activityfeed.EntryEditEvent.Deleted, null);
 
 			Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted, notes);
 		}, PermissionToken.Nothing, skipLog: true);

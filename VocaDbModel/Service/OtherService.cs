@@ -381,7 +381,8 @@ public class OtherService : ServiceBase
 
 	public async Task<FrontPageForApiContract> GetFrontPageForApiContent()
 	{
-		const int maxActivityEntries = 15;
+		const int maxFetchActivityEntries = 60;
+		const int maxDisplayedActivityEntries = 15;
 
 		return await HandleQueryAsync(async session =>
 		{
@@ -389,9 +390,11 @@ public class OtherService : ServiceBase
 			// See also: https://github.com/VocaDB/vocadb/pull/663#pullrequestreview-545596680
 			var activityEntries = (await session.Query<ActivityEntry>()
 				.OrderByDescending(a => a.CreateDate)
-				.Take(maxActivityEntries)
+				.Take(maxFetchActivityEntries)
 				.ToListAsync())
-				.Where(a => !a.EntryBase.Deleted);
+				.Where(a => !a.EntryBase.Deleted)
+				.DistinctBy(a => new { EID = a.EntryBase.Id, AID = a.Author.Id })
+				.Take(maxDisplayedActivityEntries);
 
 			var newAlbums = GetRecentAlbums(
 				session: session,
