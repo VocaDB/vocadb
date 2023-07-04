@@ -1,4 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +13,9 @@ interface ReleaseEventsEditViewProps {
 export const ReleaseEventsEditView = observer(
 	({ songEditStore }: ReleaseEventsEditViewProps) => {
 		const { t } = useTranslation(['ViewRes', 'HelperRes']);
+		const loginManager = useLoginManager();
 
 		const releaseEvents = songEditStore.releaseEvents;
-		console.log(releaseEvents);
 
 		return (
 			<tbody>
@@ -28,13 +29,15 @@ export const ReleaseEventsEditView = observer(
 				))}
 
 				<tr>
-					<SafeAnchor
-						href="#"
-						className="textLink addLink"
-						onClick={songEditStore.addReleaseEvent}
-					>
-						{t('HelperRes:Helper.WebLinkNewRow')}
-					</SafeAnchor>
+					{(releaseEvents.length < 5 || loginManager.canApproveEntries) && (
+						<SafeAnchor
+							href="#"
+							className="textLink addLink"
+							onClick={songEditStore.addReleaseEvent}
+						>
+							{t('HelperRes:Helper.WebLinkNewRow')}
+						</SafeAnchor>
+					)}
 				</tr>
 			</tbody>
 		);
