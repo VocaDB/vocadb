@@ -51,6 +51,7 @@ public class AlbumMap : ClassMap<Album>
 		{
 			c.Map(m => m.CatNum, "ReleaseCatNum");
 			c.References(m => m.ReleaseEvent).Nullable();
+			c.HasManyToMany(m => m.ReleaseEvents).Table("ReleaseEventsForEntries").ParentKeyColumn("Album").ChildKeyColumn("ReleaseEvent").LazyLoad().Cascade.All().Cache.ReadWrite();
 			c.Component(m => m.ReleaseDate, c2 =>
 			{
 				c2.Map(m => m.Year, "ReleaseYear");

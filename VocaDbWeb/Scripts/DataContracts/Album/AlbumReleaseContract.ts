@@ -7,4 +7,6 @@ export interface AlbumReleaseContract {
 	releaseDate?: OptionalDateTimeContract;
 
 	releaseEvent?: ReleaseEventContract;
+
+	releaseEvents: ReleaseEventContract[];
 }

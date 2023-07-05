@@ -19,6 +19,7 @@ public class ArchivedAlbumReleaseContract : IAlbumRelease
 		ReleaseDate = release.ReleaseDate != null ? new OptionalDateTimeContract(release.ReleaseDate) : null;
 
 		ReleaseEvent = ObjectRefContract.Create(release.ReleaseEvent);
+		ReleaseEvents = release.ReleaseEvents.Select(e => ObjectRefContract.Create(e)).ToArray();
 	}
 
 	[DataMember]
@@ -31,4 +32,7 @@ public class ArchivedAlbumReleaseContract : IAlbumRelease
 
 	[DataMember]
 	public ObjectRefContract? ReleaseEvent { get; init; }
+
+	[DataMember]
+	public ObjectRefContract[]? ReleaseEvents { get; init; }
 }

@@ -485,7 +485,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 			foreach (var song in entry.AllSongs)
 			{
-				song.ReleaseEvent = null;
+				song.ReleaseEvents = song.ReleaseEvents.Where(e => e.Id != eventId).ToList();
 			}
 
 			var ctxActivity = ctx.OfType<ReleaseEventActivityEntry>();

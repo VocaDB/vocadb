@@ -42,6 +42,7 @@ import {
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionStore {
 	// Whether this artist has been selected.
+	// eslint-disable-next-line prettier/prettier
 	@observable selected: boolean;
 
 	constructor(
@@ -124,6 +125,7 @@ export class AlbumEditStore {
 	readonly pvs: PVListEditStore;
 	@observable releaseDay?: number;
 	readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
+	@observable releaseEvents: BasicEntryLinkStore<ReleaseEventContract>[];
 	@observable releaseMonth?: number;
 	@observable releaseYear?: number;
 	@observable status: EntryStatus;
@@ -145,7 +147,7 @@ export class AlbumEditStore {
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
-		eventRepo: ReleaseEventRepository,
+		readonly eventRepo: ReleaseEventRepository,
 		urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
 		webLinkCategories: WebLinkCategory[],
@@ -166,6 +168,15 @@ export class AlbumEditStore {
 		this.releaseEvent = new BasicEntryLinkStore<ReleaseEventContract>(
 			(entryId) => eventRepo.getOne({ id: entryId }),
 		);
+
+		this.releaseEvents = contract.originalRelease.releaseEvents.map((e) => {
+			const store = new BasicEntryLinkStore<ReleaseEventContract>(
+				(entryId) => eventRepo.getOne({ id: entryId})
+			)
+			store.id = e.id;
+				
+			return store;
+		})
 
 		this.catalogNumber = contract.originalRelease.catNum;
 		this.defaultNameLanguage = contract.defaultNameLanguage;
@@ -305,6 +316,14 @@ export class AlbumEditStore {
 		this.releaseYear = value?.year();
 		this.releaseMonth = value ? value.month() + 1 : undefined;
 		this.releaseDay = value?.date();
+	}
+	
+	addReleaseEvent = (): void =>  {
+		this.releaseEvents.push(
+			new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
+				this.eventRepo.getOne({ id: entryId }),
+			)
+		)
 	}
 
 	@action acceptTrackSelection = async (
@@ -506,6 +525,7 @@ export class AlbumEditStore {
 							year: this.releaseYear,
 						},
 						releaseEvent: this.releaseEvent.entry,
+						releaseEvents: this.releaseEvents.map(e => e.entry).filter(e => e !== undefined) as ReleaseEventContract[]
 					},
 					pictures: this.pictures.toContracts(),
 					pvs: this.pvs.toContracts(),

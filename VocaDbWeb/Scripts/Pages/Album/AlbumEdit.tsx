@@ -19,6 +19,7 @@ import {
 } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { EntryValidationMessage } from '@/Components/Shared/Partials/Knockout/EntryValidationMessage';
 import { ReleaseEventLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
+import { ReleaseEventsEditView } from '@/Components/Shared/Partials/Knockout/ReleaseEventsEditView';
 import { WebLinksEditViewKnockout } from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
 import { ConcurrentEditWarning } from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
@@ -222,10 +223,7 @@ const BasicInfoTabContent = observer(
 					<label>{t('ViewRes.Album:Edit.BaReleaseEvent')}</label>
 				</div>
 				<div className="editor-field">
-					<ReleaseEventLockingAutoComplete
-						basicEntryLinkStore={albumEditStore.releaseEvent}
-						// TODO: createNewItem="Create new event '{0}'" /* LOC */
-					/>
+					<ReleaseEventsEditView editStore={albumEditStore} />
 				</div>
 
 				<table>
@@ -1148,10 +1146,12 @@ const AlbumEdit = (): React.ReactElement => {
 	const artistRoleNames = React.useMemo(
 		() =>
 			Object.fromEntries(
-				vdb.values.artistRoles.map((artistRole): [
-					string,
-					string | undefined,
-				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
+				vdb.values.artistRoles.map(
+					(artistRole): [string, string | undefined] => [
+						artistRole,
+						t(`Resources:ArtistRoleNames.${artistRole}`),
+					],
+				),
 			),
 		[vdb, t],
 	);

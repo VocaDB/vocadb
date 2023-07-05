@@ -419,11 +419,23 @@ const AlbumBasicInfo = observer(
 								</tr>
 							)}
 
-							{model.releaseEvent && (
+							{model.releaseEvents.length > 0 && (
 								<tr>
 									<td>{t('ViewRes.Album:Details.ReleaseEvent')}</td>
 									<td>
-										<EventLink event={model.releaseEvent} tooltip />
+										{model.releaseEvents
+											.slice()
+											.sort(
+												(a, b) =>
+													(a.date ? new Date(a.date).getTime() : Infinity) -
+													(b.date ? new Date(b.date).getTime() : Infinity),
+											)
+											.map((event, key) => (
+												<span key={key}>
+													{key !== 0 ? ', ' : ''}
+													<EventLink bold={key === 0} event={event} tooltip />
+												</span>
+											))}
 									</td>
 								</tr>
 							)}

@@ -21,7 +21,13 @@ public sealed class AlbumReleaseContract : IAlbumRelease
 	[DataMember]
 	public ReleaseEventForApiContract? ReleaseEvent { get; init; }
 
-	public AlbumReleaseContract() { }
+	[DataMember]
+	public ReleaseEventForApiContract[] ReleaseEvents { get; init; }
+
+	public AlbumReleaseContract()
+	{
+		ReleaseEvents = Array.Empty<ReleaseEventForApiContract>();
+	}
 
 	public AlbumReleaseContract(
 		AlbumRelease release,
@@ -46,5 +52,13 @@ public sealed class AlbumReleaseContract : IAlbumRelease
 				null
 			)
 			: null;
+
+		ReleaseEvents = release.ReleaseEvents.Select(e => new ReleaseEventForApiContract(
+			e,
+			languagePreference,
+			permissionContext,
+			ReleaseEventOptionalFields.None,
+			null
+		)).ToArray();
 	}
 }
