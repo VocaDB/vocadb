@@ -1028,6 +1028,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 			var newEvents = properties.OriginalRelease.ReleaseEvents.Select(e => new CreateEventQuery().FindOrCreate(session, PermissionContext, e, album));
 			var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvents.ToArray()) : new AlbumRelease());
+			newOriginalRelease.ReleaseEvents = newOriginalRelease.ReleaseEvents.DistinctBy(e => e.Id).ToArray();
 
 			if (album.OriginalRelease == null)
 				album.OriginalRelease = new AlbumRelease();
