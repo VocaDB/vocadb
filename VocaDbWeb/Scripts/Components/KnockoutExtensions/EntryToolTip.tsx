@@ -147,7 +147,7 @@ interface EventToolTipProps {
 }
 
 export const EventToolTip = React.memo(
-	({ id, children, bold }: EventToolTipProps): React.ReactElement => {
+	({ id, children }: EventToolTipProps): React.ReactElement => {
 		const [show, setShow] = React.useState(false);
 
 		const [event, setEvent] = React.useState<ReleaseEventContract>();
