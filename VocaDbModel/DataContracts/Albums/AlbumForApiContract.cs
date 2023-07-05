@@ -112,6 +112,13 @@ public class AlbumForApiContract : IEntryBase
 					thumbPersister
 				)
 				: null;
+			ReleaseEvents = album.OriginalRelease != null ? album.OriginalRelease.ReleaseEvents.Select(e => new ReleaseEventForApiContract(
+				e,
+				languagePreference,
+				permissionContext,
+				ReleaseEventOptionalFields.None,
+				thumbPersister
+			)).ToArray() : Array.Empty<ReleaseEventForApiContract>();
 		}
 
 		if (fields.HasFlag(AlbumOptionalFields.Tags))
@@ -248,6 +255,9 @@ public class AlbumForApiContract : IEntryBase
 	/// </summary>
 	[DataMember]
 	public ReleaseEventForApiContract? ReleaseEvent { get; init; }
+
+	[DataMember]
+	public ReleaseEventForApiContract[] ReleaseEvents { get; init; }
 
 	[DataMember]
 	public EntryStatus Status { get; init; }

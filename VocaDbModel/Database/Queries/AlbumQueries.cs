@@ -785,6 +785,8 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			if (target.OriginalReleaseDate.Day == null && source.OriginalRelease != null)
 				target.OriginalReleaseDate.Day = source.OriginalReleaseDate.Day;
 
+			target.OriginalRelease.ReleaseEvents = target.OriginalRelease.ReleaseEvents.Concat(source.OriginalRelease.ReleaseEvents).Distinct().ToArray();
+
 			// Create merge record
 			var mergeEntry = new AlbumMergeRecord(source, target);
 			session.Save(mergeEntry);
@@ -890,7 +892,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 			// Original release
 			album.OriginalRelease = fullProperties.OriginalRelease != null
-				? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent))
+				? new AlbumRelease(fullProperties.OriginalRelease, fullProperties.OriginalRelease.ReleaseEvents.Select(e => session.NullSafeLoad<ReleaseEvent>(e)).ToArray())
 				: null;
 
 			// Artists
@@ -1013,8 +1015,8 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			if (webLinkDiff.Changed)
 				diff.WebLinks.Set();
 
-			var newEvent = new CreateEventQuery().FindOrCreate(session, PermissionContext, properties.OriginalRelease.ReleaseEvent, album);
-			var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvent) : new AlbumRelease());
+			var newEvents = properties.OriginalRelease.ReleaseEvents.Select(e => new CreateEventQuery().FindOrCreate(session, PermissionContext, e, album));
+			var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvents.ToArray()) : new AlbumRelease());
 
 			if (album.OriginalRelease == null)
 				album.OriginalRelease = new AlbumRelease();

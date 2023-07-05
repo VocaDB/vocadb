@@ -108,6 +108,7 @@ export class AlbumDetailsForApi {
 	readonly ratingCount: number;
 	readonly releaseDate?: OptionalDateTimeContract;
 	readonly releaseEvent?: ReleaseEventContract;
+	readonly releaseEvents: ReleaseEventContract[] = [];
 	readonly reviewCount: number;
 	readonly status: EntryStatus;
 	readonly subject: ArtistForAlbumContract[];
@@ -184,6 +185,7 @@ export class AlbumDetailsForApi {
 		if (contract.originalRelease) {
 			this.catNum = contract.originalRelease.catNum;
 			this.releaseEvent = contract.originalRelease.releaseEvent;
+			this.releaseEvents = contract.originalRelease.releaseEvents;
 			this.releaseDate = contract.originalRelease.releaseDate;
 			this.fullReleaseDate =
 				this.releaseDate &&

@@ -645,15 +645,10 @@ const SongBasicInfo = observer(
 												(b.date ? new Date(b.date).getTime() : Infinity),
 										)
 										.map((event, key) => (
-											<>
+											<span key={key}>
 												{key !== 0 ? ', ' : ''}
-												<EventLink
-													bold={key === 0}
-													event={event}
-													key={key}
-													tooltip
-												/>
-											</>
+												<EventLink bold={key === 0} event={event} tooltip />
+											</span>
 										))}
 								</td>
 							</tr>

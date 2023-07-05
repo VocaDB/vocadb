@@ -305,7 +305,7 @@ const BasicInfoTabContent = observer(
 					<label>Release event{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
-					<ReleaseEventsEditView songEditStore={songEditStore} />
+					<ReleaseEventsEditView editStore={songEditStore} />
 				</div>
 
 				<div className="editor-label">
