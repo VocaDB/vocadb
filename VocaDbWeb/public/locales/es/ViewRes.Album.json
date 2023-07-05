@@ -78,7 +78,7 @@
     "BaPictureInfo": "Se admiten los formatos: {{0}}. El archivo no puede pesar mas de {{1}} MB para ser admitido por el sistema.",
     "BaReleaseDate": "Fecha de lanzamiento",
     "BaReleaseDay": "Día",
-    "BaReleaseEvent": "Evento de salida",
+    "BaReleaseEvent": "Release events",
     "BaReleaseMonth": "Mes",
     "BaReleaseYear": "Año",
     "ImagePreview": "Pre-visualización de imagen",

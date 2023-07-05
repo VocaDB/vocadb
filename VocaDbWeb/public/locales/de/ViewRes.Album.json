@@ -78,7 +78,7 @@
     "BaPictureInfo": "Erlaubte Dateiendungen: {{0}}. Die maximale Dateigröße beträgt {{1}} MB.",
     "BaReleaseDate": "Erscheinungstermin",
     "BaReleaseDay": "Tag",
-    "BaReleaseEvent": "Erscheinungs Event",
+    "BaReleaseEvent": "Release events",
     "BaReleaseMonth": "Monat",
     "BaReleaseYear": "Jahr",
     "ImagePreview": "Bildervorschau",
