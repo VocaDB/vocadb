@@ -31,10 +31,6 @@ import dynamic from 'next/dynamic';
 
 const UserButton = dynamic(() => import('./UserButton').then((imp) => imp.UserButton));
 
-const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
-	loading: () => null,
-});
-
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
 	{
@@ -197,9 +193,6 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
 				))}
-			</Navbar.Section>
-			<Navbar.Section>
-				<PVPlayer />
 			</Navbar.Section>
 			{values.isLoggedIn && (
 				<Navbar.Section

@@ -13,12 +13,12 @@ export default function PVPlayer() {
 			style={
 				playerBounds === undefined
 					? {
-							width: '100%',
+							display: 'none',
 					  }
 					: {
-							position: 'absolute',
+							position: 'fixed',
 							left: playerBounds.x,
-							top: playerBounds.y - 70, // We have to subtract the header height
+							top: playerBounds.y, // We have to subtract the header height
 							width: playerBounds.width,
 							height: playerBounds.height,
 					  }

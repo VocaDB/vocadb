@@ -7,6 +7,9 @@ import Footer from './Footer';
 import dynamic from 'next/dynamic';
 
 const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
+const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
+	loading: () => null,
+});
 
 interface CustomAppShellProps {
 	children?: React.ReactElement;
@@ -42,6 +45,7 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 				<Box p="md" pos="relative" h="calc(100% - 65px)" w="100%">
 					{children}
 					<LyricsContainer />
+					<PVPlayer />
 				</Box>
 				<Footer />
 			</>

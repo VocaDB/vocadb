@@ -30,19 +30,29 @@ const useStyles = createStyles((theme) => ({
 
 export default function LyricsContainer() {
 	const theme = useMantineTheme();
-	const [song, showLyrics] = usePlayerStore((set) => [set.song, set.showLyrics]);
+	const [song, showLyrics, setLyricsAvailable] = usePlayerStore((set) => [
+		set.song,
+		set.showLyrics,
+		set.setLyricsAvailable,
+	]);
 	const styles = useStyles();
-	const [lyrics, setLyrics] = useState<LyricsForSongContract[] | undefined>();
+	const [lyrics, setLyrics] = useState<LyricsForSongContract | undefined>();
 
 	useEffect(() => {
-		if (showLyrics && song !== undefined && lyrics === undefined) {
+		if (song !== undefined) {
 			apiFetch(`/api/songs/${song.id}?fields=Lyrics`)
 				.then((resp) => resp.json())
-				.then((resp) => setLyrics(resp.lyrics));
+				.then((resp) => resp.lyrics as LyricsForSongContract[])
+				.then((lyrics) => lyrics.filter((l) => l.translationType === 'Original')[0])
+				.then((lyrics) => setLyrics(lyrics));
 		}
-	}, [showLyrics]);
+	}, [song]);
 
-	if (!showLyrics) {
+	useEffect(() => {
+		setLyricsAvailable(lyrics !== undefined);
+	}, [lyrics]);
+
+	if (!showLyrics || lyrics === undefined) {
 		return <></>;
 	}
 
@@ -51,9 +61,8 @@ export default function LyricsContainer() {
 			<Paper component={ScrollArea} h="100%" bg={theme.colors[theme.primaryColor][7]}>
 				<div className={styles.classes.lyricsContainer}>
 					<div className={styles.classes.lyricsWrapper}>
-						{lyrics
-							?.filter((l) => l.translationType === 'Original')[0]
-							.value?.split('\n')
+						{lyrics.value
+							?.split('\n')
 							.map((line) =>
 								line === '' || line === '\r' ? (
 									<br />

@@ -1,5 +1,5 @@
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import { ActionIcon, Group, Slider, Text } from '@mantine/core';
+import { ActionIcon, Slider, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
@@ -13,7 +13,11 @@ const formatNumberToTime = (number: number): string => {
 	return `${minutes}:${(remaining < 10 ? '0' : '') + remaining}`;
 };
 
-export default function PlayerControls() {
+interface PlayerControlsProps {
+	showMobileLayout?: boolean;
+}
+
+export default function PlayerControls({ showMobileLayout }: PlayerControlsProps) {
 	const [song, active, playerApi] = usePlayerStore((state) => [
 		state.song,
 		state.active,
@@ -48,7 +52,7 @@ export default function PlayerControls() {
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
-				alignItems: 'center',
+				alignItems: showMobileLayout ? 'flex-end' : 'center',
 				width: '25vw',
 			}}
 		>
@@ -63,7 +67,7 @@ export default function PlayerControls() {
 			)}
 			<div
 				style={{
-					display: 'flex',
+					display: showMobileLayout ? 'none' : 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
 					justifyContent: 'space-between',
