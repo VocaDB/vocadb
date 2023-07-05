@@ -891,9 +891,20 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			}
 
 			// Original release
-			album.OriginalRelease = fullProperties.OriginalRelease != null
-				? new AlbumRelease(fullProperties.OriginalRelease, fullProperties.OriginalRelease.ReleaseEvents.Select(e => session.NullSafeLoad<ReleaseEvent>(e)).ToArray())
-				: null;
+			if (fullProperties.OriginalRelease != null)
+			{
+				if (fullProperties.OriginalRelease.ReleaseEvents != null)
+				{
+					album.OriginalRelease =
+						 new AlbumRelease(fullProperties.OriginalRelease, fullProperties.OriginalRelease.ReleaseEvents.Select(e => session.NullSafeLoad<ReleaseEvent>(e)).ToArray());
+				}
+				else if (fullProperties.OriginalRelease.ReleaseEvent != null)
+				{
+
+					album.OriginalRelease =
+						 new AlbumRelease(fullProperties.OriginalRelease, new ReleaseEvent[] { session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent) });
+				}
+			}
 
 			// Artists
 			DatabaseContextHelper.RestoreObjectRefs(
