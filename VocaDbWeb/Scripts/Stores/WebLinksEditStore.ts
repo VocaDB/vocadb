@@ -12,7 +12,10 @@ export class WebLinksEditStore extends BasicListEditStore<
 		webLinkContracts: WebLinkContract[],
 		readonly categories?: WebLinkCategory[],
 	) {
-		super(WebLinkEditStore, webLinkContracts);
+		super(
+			WebLinkEditStore,
+			webLinkContracts.sortBy((c) => c.description),
+		);
 
 		makeObservable(this);
 	}
