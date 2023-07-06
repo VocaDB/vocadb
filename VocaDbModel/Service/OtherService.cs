@@ -450,26 +450,17 @@ public class OtherService : ServiceBase
 
 		return HandleQuery(session =>
 		{
-			var artistIds = session.Query<Artist>()
+			// TODO: Imeplemnt daily rotation
+			var artists = session.Query<Artist>()
 				.Where(a => a.ArtistType == ArtistType.Producer)
 				.Where(a => a.Tags.Usages.Any(usage => usage.Tag.CategoryName == "Genres"))
-				.Where(a => a.AllSongs.Any(s => s.Song.SongType == SongType.Original && s.Song.RatingScore > 0))
-				.Select(a => a.Id)
-				.ToArray();
-
-			var randomIds = CollectionHelper
-				.GetRandomItems(artistIds, artistCount)
-				.ToArray();
-
-			var random = session.Query<Artist>()
-				.Where(a => randomIds.Contains(a.Id))
-				.ToArray();
-
-			var popularArtistContracts = random
+				.Where(a => a.Users.Count > 0)
+				.OrderBy(a => a.AllSongs.Select(s => s.Song.RatingScore).Sum() / a.Users.Count)
+				.Take(artistCount)
 				.Select(a => new ArtistForApiContract(a, languagePreference, PermissionContext, _thumbPersister, ArtistOptionalFields.None))
 				.ToArray();
 
-			return popularArtistContracts;
+			return artists;
 		});
 	}
 
