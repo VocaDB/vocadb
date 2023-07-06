@@ -1,37 +1,55 @@
-import { apiFetch } from '@/Helpers/FetchApiHelper';
+import { apiFetch, apiPost } from '@/Helpers/FetchApiHelper';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
-import { PVContract } from '@/types/DataContracts/PVs/PVContract';
+import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
-import { PVService } from '@/types/Models/PVs/PVService';
-import { Button, Group } from '@mantine/core';
+import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
+import { ActionIcon, Group } from '@mantine/core';
+import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-	const router = useRouter();
-	const [pv, setPv] = useState<PVContract | undefined>(undefined);
+interface SongActionsProps {
+	details: SongDetailsContract;
+}
+
+const SongActions = ({ details }: SongActionsProps) => {
+	const [userRating, setUserRating] = useState<SongVoteRating>(
+		parseSongVoteRating(details.userRating)
+	);
+
+	const setRating = (newRating: SongVoteRating): void => {
+		apiPost(`/api/songs/${details.song.id}/ratings`, { rating: SongVoteRating[newRating] });
+	};
 
 	return (
+		<Group>
+			<ActionIcon
+				variant={userRating === SongVoteRating.Like ? 'filled' : undefined}
+				radius="xl"
+				size="lg"
+			>
+				<IconThumbUp />
+			</ActionIcon>
+			<ActionIcon
+				variant={userRating === SongVoteRating.Favorite ? 'filled' : undefined}
+				radius="xl"
+				size="lg"
+			>
+				<IconHeart />
+			</ActionIcon>
+		</Group>
+	);
+};
+
+export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+	return (
 		<>
-			{pv !== undefined && <EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={pv} />}
-			<Group mt="md">
-				{song.pvs.map((pv) => (
-					<Button
-						disabled={
-							![
-								PVService.Bilibili,
-								PVService.Youtube,
-								PVService.NicoNicoDouga,
-							].includes(pv.service)
-						}
-						onClick={() => setPv(pv)}
-						key={pv.url}
-					>
-						{pv.service}
-					</Button>
-				))}
-			</Group>
+			<div style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: 'max-content' }}>
+				{song.pvs.length > 0 && (
+					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={song.pvs[0]} />
+				)}
+				<SongActions details={song} />
+			</div>
 		</>
 	);
 }
