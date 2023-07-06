@@ -4,7 +4,9 @@ import { DiscussionTopicContract } from '@/types/DataContracts/Discussion/Discus
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import useStyles from './[id].styles';
 import { IconBook2 } from '@tabler/icons-react';
-import { Text, Anchor, ThemeIcon, Pagination, Table } from '@mantine/core';
+import { Text, Box, ThemeIcon, Pagination, Table, useMantineTheme } from '@mantine/core';
+import Link from 'next/link';
+import CustomImage from '@/components/Image/Image';
 
 export default function FolderPage({
 	folder,
@@ -17,13 +19,12 @@ export default function FolderPage({
 	const setPage = (page: number) => {
 		window.location.href = `/discussion/folders/${folder.id}?page=${page}`;
 	};
+	const theme = useMantineTheme();
 	return (
 		<>
-			<Anchor href="/discussion" className={styles.classes.folderBackButton}>
-				<Text size="sm" variant="link">
-					&lt; Back to discussion index page
-				</Text>
-			</Anchor>
+			<Text size="sm" component={Link} href="/discussion" variant="link" color={theme.primaryColor}>
+				&lt; Back to discussion index page
+			</Text>
 			<Text mt="md" mb="xs" className={styles.classes.folderHeaderName}>
 				<ThemeIcon variant="filled" mr={6}>
 					<IconBook2 size="1rem" />
@@ -43,11 +44,7 @@ export default function FolderPage({
 				onChange={setPage}
 				className={styles.classes.folderPagination}
 			/>
-			<Table
-				withBorder
-				withColumnBorders
-				className={styles.classes.folderTable}
-			>
+			<Table withBorder withColumnBorders className={styles.classes.folderTable}>
 				<thead>
 					<tr>
 						<th>Topic</th>
@@ -62,35 +59,34 @@ export default function FolderPage({
 					{topics.map((topic) => (
 						<tr key={topic.id}>
 							<td>
-								<Anchor href={`/discussion/topics/${topic.id}`}>
+								<Text component={Link} href={`/discussion/topics/${topic.id}`} color={theme.primaryColor}>
 									{topic.name}
-								</Anchor>
+								</Text>
 							</td>
 							<td>
-								<Anchor href={`/Profile/${topic.author.name}`}>
-									<img
-										src={
-											topic.author.mainPicture?.urlTinyThumb ?? '/unknown.png'
-										}
+								<Box component={Link} href={`/Profile/${topic.author.name}`} style={{ textDecoration: 'none' }}>
+									<CustomImage
+										src={topic.author.mainPicture?.urlTinyThumb ?? ''}
+										height={50}
+										width={50}
+										alt={topic.author?.name ?? 'Unknown'}
 									/>
 									<br />
-									{topic.author?.name}
-								</Anchor>
+									<Text size="sm" color={theme.primaryColor}>
+										{topic.author?.name}
+									</Text>
+								</Box>
 							</td>
 							<td>{topic.commentCount}</td>
 							<td>{new Date(topic.created).toLocaleString()}</td>
 							<td>
 								{topic.comments.length > 0
-									? new Date(
-											topic.comments[topic.comments.length - 1]?.created
-									  ).toLocaleString()
+									? new Date(topic.comments.at(-1)?.created!).toLocaleString()
 									: ''}
 							</td>
 							<td>
 								{topic.comments.length > 0
-									? new Date(
-											topic.comments[topic.comments.length - 1]?.created
-									  ).toLocaleString()
+									? new Date(topic.comments.at(-1)?.created!).toLocaleString()
 									: new Date(topic.created).toLocaleString()}
 							</td>
 						</tr>
@@ -137,17 +133,16 @@ export const getServerSideProps: GetServerSideProps<{
 		),
 	]);
 
-	const [folders, topics] = await Promise.all([
-		apiResp[0].json(),
-		apiResp[1].json().then((topics) => topics.items),
-	]);
+	const [folders, topics]: [DiscussionFolderContract[], DiscussionTopicContract[]] =
+		await Promise.all([apiResp[0].json(), apiResp[1].json().then((topics) => topics.items)]);
 
-	const folder = folders.find((folder: any) => folder.id === id);
+	const folder = folders.find((folder) => folder.id === id);
 	if (!folder) {
 		return { notFound: true };
 	}
 
-	const totalPage = Math.ceil(parseFloat(folder.topicCount) / perPage);
+	const totalPage = Math.ceil(folder.topicCount / perPage);
 
 	return { props: { folder, start, page, totalPage, topics } };
 };
+

@@ -30,7 +30,6 @@ export default createStyles((theme) => ({
     folderTable: {
         width: '100%',
 		margin: '0 auto',
-		maxWidth: '1024px',
 		tableLayout: 'fixed',
 		wordBreak: 'break-all',
 		wordWrap: 'break-word',
@@ -120,8 +119,6 @@ export default createStyles((theme) => ({
 				fontSize: '0.8rem',
 
 				'& img': {
-					width: '50px',
-					height: '50px',
 					borderRadius: '50%',
 				},
 			},
