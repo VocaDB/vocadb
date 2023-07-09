@@ -1,7 +1,6 @@
 import {
 	ActionIcon,
 	Group,
-	MediaQuery,
 	Paper,
 	Slider,
 	Text,

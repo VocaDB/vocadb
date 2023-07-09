@@ -40,6 +40,7 @@ export default function LyricsContainer() {
 
 	useEffect(() => {
 		if (song !== undefined) {
+			// TOOD: Add lyrics to SongApiContract and change this to apiGet
 			apiFetch(`/api/songs/${song.id}?fields=Lyrics`)
 				.then((resp) => resp.json())
 				.then((resp) => resp.lyrics as LyricsForSongContract[])
