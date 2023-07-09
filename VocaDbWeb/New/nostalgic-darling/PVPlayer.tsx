@@ -13,7 +13,8 @@ export default function PVPlayer() {
 			style={
 				playerBounds === undefined
 					? {
-							display: 'none',
+							position: 'relative',
+							zIndex: -10,
 					  }
 					: {
 							position: 'fixed',

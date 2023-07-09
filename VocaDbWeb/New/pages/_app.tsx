@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
-import { getCookie, hasCookie, setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
 import { MantineProvider, ColorScheme, MantineThemeOverride } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
 import { VdbProvider } from '@/components/Context/VdbContext';
-import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
@@ -68,19 +67,11 @@ export default function App(
 
 App.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await NextApp.getInitialProps(appContext);
-	let values;
-
-	// TODO: Better check if session is lost
-	if (!hasCookie('vdb-values', appContext.ctx)) {
-		const res = await apiFetch('/api/globals/values', appContext.ctx.req);
-		values = await res.json();
-	}
 
 	return {
 		...appProps,
 		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'light',
 		primaryColor: getCookie('mantine-primary-color', appContext.ctx) || 'miku',
-		values,
 	};
 };
 

@@ -11,9 +11,10 @@ import {
 } from '@mantine/core';
 import PlayerControls from './PlayerControls';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { IconMicrophone2, IconVolume, IconVolumeOff } from '@tabler/icons-react';
 import { useMediaQuery, usePrevious } from '@mantine/hooks';
+import { motion } from 'framer-motion';
 
 interface SongInfoProps {
 	showMobileLayout?: boolean;
@@ -126,6 +127,7 @@ const CustomFooter = () => {
 	const theme = useMantineTheme();
 	const styles = useStyles();
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints['sm']})`);
+	const [expanded, setExpanded] = useState(false);
 
 	// TODO: Maybe move this check to Footer component
 	if (typeof window === 'undefined') {
@@ -134,10 +136,29 @@ const CustomFooter = () => {
 
 	return (
 		<div className={styles.classes.base}>
-			<Paper px="sm" className={styles.classes.footer} component="footer">
+			<Paper
+				onClick={() => setExpanded(isMobile && !expanded)}
+				px="sm"
+				className={styles.classes.footer}
+				component="footer"
+			>
 				<SongInfo showMobileLayout={isMobile} />
 				<PlayerControls showMobileLayout={isMobile} />
 				{!isMobile && <VolumeControl />}
+			</Paper>
+			<Paper
+				component={motion.div}
+				onClick={() => setExpanded(isMobile && !expanded)}
+				bg="blue"
+				animate={{
+					position: 'fixed',
+					top: expanded ? 50 : '100vh',
+					bottom: 64,
+					width: '100%',
+					zIndex: 100,
+				}}
+			>
+				<p>Text</p>
 			</Paper>
 		</div>
 	);

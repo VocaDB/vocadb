@@ -1,6 +1,6 @@
 'use client';
 
-import { apiFetch } from '@/Helpers/FetchApiHelper';
+import { apiGet } from '@/Helpers/FetchApiHelper';
 import { GlobalValues } from '@/types/GlobalValues';
 import React, { useEffect } from 'react';
 
@@ -21,8 +21,7 @@ export const VdbProvider = ({ children, initialValue }: VdbProviderProps): React
 	useEffect(() => {
 		if (vdb === undefined) {
 			// TODO: Error handling
-			apiFetch('/api/globals/values')
-				.then((resp) => resp.json())
+			apiGet<GlobalValues>('/api/globals/values', { credentials: true })
 				.then((val) => setVdb(val))
 				.catch(() => console.log('Invalid vdb-values cookie'));
 		}

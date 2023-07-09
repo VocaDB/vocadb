@@ -1,37 +1,52 @@
-import { apiFetch, apiPost } from '@/Helpers/FetchApiHelper';
+import { apiFetch, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
-import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
 import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
 import { ActionIcon, Group } from '@mantine/core';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useState } from 'react';
+import useSWR from 'swr';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
 }
 
 const SongActions = ({ details }: SongActionsProps) => {
-	const [userRating, setUserRating] = useState<SongVoteRating>(
-		parseSongVoteRating(details.userRating)
+	const { data, mutate } = useSWR(
+		'/api/users/current/ratedSongs/' + details.song.id,
+		authApiGet<string>
 	);
 
-	const setRating = (newRating: SongVoteRating): void => {
-		apiPost(`/api/songs/${details.song.id}/ratings`, { rating: SongVoteRating[newRating] });
+	const postNewRating = async (newRating: SongVoteRating) => {
+		await apiPost(`/api/songs/${details.song.id}/ratings`, {
+			rating: SongVoteRating[newRating],
+		});
 	};
+
+	const setRating = async (clickedRating: SongVoteRating) => {
+		const newRating =
+			SongVoteRating[clickedRating] === data ? SongVoteRating.Nothing : clickedRating;
+		await postNewRating(newRating);
+		mutate(SongVoteRating[newRating]);
+	};
+
+	const rating = parseSongVoteRating(data ?? SongVoteRating[SongVoteRating.Nothing]);
 
 	return (
 		<Group>
 			<ActionIcon
-				variant={userRating === SongVoteRating.Like ? 'filled' : undefined}
+				variant={rating === SongVoteRating.Like ? 'filled' : undefined}
+				onClick={() => setRating(SongVoteRating.Like)}
+				color="default"
 				radius="xl"
 				size="lg"
 			>
 				<IconThumbUp />
 			</ActionIcon>
 			<ActionIcon
-				variant={userRating === SongVoteRating.Favorite ? 'filled' : undefined}
+				variant={rating === SongVoteRating.Favorite ? 'filled' : undefined}
+				onClick={() => setRating(SongVoteRating.Favorite)}
+				color="default"
 				radius="xl"
 				size="lg"
 			>
