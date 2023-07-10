@@ -2,9 +2,12 @@ import { ColorSwatch, Group, Paper, Switch, useMantineTheme } from '@mantine/cor
 import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 import { useColorStore } from '@/stores/useColorStore';
-import React, { Suspense } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-const ColorSchemeMenu = React.lazy(() => import('./ColorSchemeMenu'));
+const ColorSchemeMenu = dynamic(() => import('./ColorSchemeMenu'), {
+	loading: () => <Paper h="1000px" />,
+});
 
 export function ColorSchemeToggle() {
 	const theme = useMantineTheme();
@@ -17,11 +20,7 @@ export function ColorSchemeToggle() {
 		modals.open({
 			title: 'Change your color scheme',
 			size: 'xl',
-			children: (
-				<Suspense fallback={<Paper h="1000px" />}>
-					<ColorSchemeMenu />
-				</Suspense>
-			),
+			children: <ColorSchemeMenu />,
 		});
 
 	return (
