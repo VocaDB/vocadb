@@ -1,17 +1,10 @@
+import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
 import { ActionIcon, Slider, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react';
 import React, { useEffect } from 'react';
 import { useRef, useState } from 'react';
-
-// Formats 160 to 2:40
-const formatNumberToTime = (number: number): string => {
-	const rounded = Math.round(number);
-	const minutes = Math.floor(rounded / 60);
-	const remaining = rounded - 60 * minutes;
-	return `${minutes}:${(remaining < 10 ? '0' : '') + remaining}`;
-};
 
 interface PlayerControlsProps {
 	showMobileLayout?: boolean;

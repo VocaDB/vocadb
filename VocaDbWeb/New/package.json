@@ -33,6 +33,7 @@
 		"@tabler/icons-react": "^2.22.0",
 		"cookies-next": "^2.1.1",
 		"dayjs": "^1.11.8",
+		"decimal.js-light": "^2.5.1",
 		"embla-carousel-react": "^7.1.0",
 		"framer-motion": "^10.12.18",
 		"next": "13.2.4",
