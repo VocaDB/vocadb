@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Header from './Header';
 import { useRouter } from 'next/router';
-import Footer from './Footer';
 import dynamic from 'next/dynamic';
 
+const Footer = dynamic(() => import('./Footer'));
 const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
 const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
 	loading: () => null,

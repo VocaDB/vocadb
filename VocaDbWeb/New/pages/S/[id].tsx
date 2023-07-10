@@ -1,8 +1,8 @@
 import { formatFromMilliBpm } from '@/Helpers/BpmHelper';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
-import { apiFetch, apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
-import { useVdb } from '@/components/Context/VdbContext';
+import { apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
+import { useVdbStore } from '@/stores/useVdbStore';
 import { ArtistForSongContract } from '@/types/DataContracts/Song/ArtistForSongContract';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
 import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
@@ -28,7 +28,7 @@ interface SongActionsProps {
 }
 
 const SongActions = ({ details }: SongActionsProps) => {
-	const { values } = useVdb();
+	const [values] = useVdbStore((set) => [set.values]);
 	const { data, mutate } = useSWR(
 		'/api/users/current/ratedSongs/' + details.song.id,
 		authApiGet<string>
@@ -56,7 +56,7 @@ const SongActions = ({ details }: SongActionsProps) => {
 			color="default"
 			radius="xl"
 			size="lg"
-			disabled={!values.isLoggedIn}
+			disabled={values !== undefined && !values.isLoggedIn}
 		>
 			{icon}
 		</ActionIcon>

@@ -2,8 +2,8 @@
 import { PermissionToken } from '@/types/Models/LoginManager';
 import { Group, Box, ThemeIcon, Text, UnstyledButton, createStyles, rem } from '@mantine/core';
 import Link from 'next/link';
-import { useVdb } from '../Context/VdbContext';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
+import { useVdbStore } from '@/stores/useVdbStore';
 
 const useStyles = createStyles((theme) => ({
 	control: {
@@ -47,7 +47,7 @@ export interface LinksGroupProps {
 
 export function NavbarLinksGroup({ icon: Icon, label, links, link, permission }: LinksGroupProps) {
 	const { classes, theme } = useStyles();
-	const { values } = useVdb();
+	const [values] = useVdbStore((set) => [set.values]);
 
 	if (permission && !hasPermission(values, permission)) {
 		return <></>;

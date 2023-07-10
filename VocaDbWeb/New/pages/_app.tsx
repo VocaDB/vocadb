@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import Head from 'next/head';
 import { MantineProvider, ColorScheme, MantineThemeOverride } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
-import { VdbProvider } from '@/components/Context/VdbContext';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
+import { useEffect } from 'react';
+import { useVdbStore } from '@/stores/useVdbStore';
 
 export default function App(
 	props: AppProps & {
@@ -18,7 +18,7 @@ export default function App(
 		values: GlobalValues | undefined;
 	}
 ) {
-	const { Component, pageProps, values } = props;
+	const { Component, pageProps } = props;
 	const [primaryColor, colorScheme] = useColorStore((state) => [
 		state.primaryColor,
 		state.colorScheme,
@@ -28,10 +28,11 @@ export default function App(
 		primaryColor,
 		colorScheme,
 	};
+	const [fetchValues] = useVdbStore((set) => [set.fetchValues]);
 
 	useEffect(() => {
-		setCookie('vdb-values', values?.loggedUser);
-	}, [values]);
+		fetchValues();
+	}, []);
 
 	return (
 		<>
@@ -52,13 +53,11 @@ export default function App(
 			</Head>
 
 			<MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-				<VdbProvider initialValue={values}>
-					<ModalsProvider>
-						<AppShell>
-							<Component {...pageProps} />
-						</AppShell>
-					</ModalsProvider>
-				</VdbProvider>
+				<ModalsProvider>
+					<AppShell>
+						<Component {...pageProps} />
+					</AppShell>
+				</ModalsProvider>
 				<Notifications />
 			</MantineProvider>
 		</>
