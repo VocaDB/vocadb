@@ -1,10 +1,10 @@
 import { AppShell, Box } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import Navbar from './Navbar';
 import Header from './Header';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-const Navbar = dynamic(() => import('./Navbar'));
 const Footer = dynamic(() => import('./Footer'));
 const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
 const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
