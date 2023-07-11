@@ -1,6 +1,7 @@
 import { formatFromMilliBpm } from '@/Helpers/BpmHelper';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
 import { apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
+import { ArtistLink } from '@/components/Links/ArtistLink';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
 import { useVdbStore } from '@/stores/useVdbStore';
 import { ArtistForSongContract } from '@/types/DataContracts/Song/ArtistForSongContract';
@@ -153,7 +154,7 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 			</SongProperty>
 			<SongProperty name="Producers" show={producers.length > 0}>
 				{producers.map((a) => (
-					<Text>{a.name}</Text>
+					<ArtistLink artist={a.artist} />
 				))}
 			</SongProperty>
 			<SongProperty name="Band" show={bands.length > 0}>
@@ -248,13 +249,7 @@ const SongTabs = ({ details }: SongTabsProps) => {
 export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	return (
 		<>
-			<div
-				style={{
-					marginRight: 'auto',
-					marginLeft: 'auto',
-					maxWidth: 'max-content',
-				}}
-			>
+			<div style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: 'max-content' }}>
 				{song.pvs.length > 0 && (
 					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={song.pvs[0]} />
 				)}
