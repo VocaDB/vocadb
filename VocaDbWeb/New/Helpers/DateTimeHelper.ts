@@ -1,4 +1,7 @@
 import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(LocalizedFormat);
 
 // Formats 160 to 2:40
 export const formatNumberToTime = (number: number): string => {

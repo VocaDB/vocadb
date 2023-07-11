@@ -144,17 +144,17 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 			</SongProperty>
 			<SongProperty name="Vocalists" show={artists.length > 0}>
 				{artists.map((a) => (
-					<Text>{a.name}</Text>
+					<ArtistLink artist={a.artist} key={a.artist.id} />
 				))}
 			</SongProperty>
 			<SongProperty name="Subject" show={subjects.length > 0}>
 				{subjects.map((a) => (
-					<Text>{a.name}</Text>
+					<ArtistLink artist={a.artist} key={a.artist.id} />
 				))}
 			</SongProperty>
 			<SongProperty name="Producers" show={producers.length > 0}>
 				{producers.map((a) => (
-					<ArtistLink artist={a.artist} />
+					<ArtistLink artist={a.artist} key={a.artist.id} />
 				))}
 			</SongProperty>
 			<SongProperty name="Band" show={bands.length > 0}>
