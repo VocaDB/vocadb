@@ -43,17 +43,19 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 		>
 			<>
 				<Box
-					style={{ overflow: 'scroll' }}
-					p="md"
 					pos="relative"
-					h="calc(100% - 65px)"
+					p="md"
+					h="calc(100vh - 70px - 64px)"
+					style={{ overflow: 'hidden' }}
 					w="100%"
 				>
 					{children}
 					<LyricsContainer />
 					<PVPlayer />
 				</Box>
-				<Footer />
+				<div style={{ height: '64px' }}>
+					<Footer />
+				</div>
 			</>
 		</AppShell>
 	);
