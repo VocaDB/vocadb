@@ -137,7 +137,7 @@ const CustomFooter = () => {
 		<div className={styles.classes.base}>
 			<Paper
 				onClick={() => setExpanded(isMobile && !expanded)}
-				px="sm"
+				px="md"
 				className={styles.classes.footer}
 				component="footer"
 			>
