@@ -18,6 +18,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+						width: '100%',
 					}}
 				>
 					<div style={{ overflow: 'hidden' }}>
