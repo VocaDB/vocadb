@@ -1,8 +1,8 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
 import { Grid, Title, UnstyledButton } from '@mantine/core';
-import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 import useStyles from './AlbumCard.styles';
 import CustomImage from '../Image/Image';
+import { AlbumToolTip } from '../ToolTips/AlbumToolTip';
 
 interface AlbumCardProps {
 	album: AlbumForApiContract;
