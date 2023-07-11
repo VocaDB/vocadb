@@ -22,6 +22,7 @@ import {
 } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
+import React from 'react';
 import useSWR from 'swr';
 
 interface SongActionsProps {
@@ -134,6 +135,15 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 	const originalPVs = details.pvs?.filter((pv) => pv.pvType === PVType.Original);
 	const otherPVs = details.pvs?.filter((pv) => pv.pvType !== PVType.Original);
 
+	const mapArtists = (artists: ArtistForSongContract[]): JSX.Element[] => {
+		return artists.map((a, index) => (
+			<React.Fragment key={a.artist.id}>
+				{index !== 0 ? ', ' : ''}
+				<ArtistLink artist={a.artist} />
+			</React.Fragment>
+		));
+	};
+
 	return (
 		<Grid mt="md">
 			<SongProperty name="Name">
@@ -143,34 +153,22 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 				</Text>
 			</SongProperty>
 			<SongProperty name="Vocalists" show={artists.length > 0}>
-				{artists.map((a) => (
-					<ArtistLink artist={a.artist} key={a.artist.id} />
-				))}
+				{mapArtists(artists)}
 			</SongProperty>
 			<SongProperty name="Subject" show={subjects.length > 0}>
-				{subjects.map((a) => (
-					<ArtistLink artist={a.artist} key={a.artist.id} />
-				))}
+				{mapArtists(subjects)}
 			</SongProperty>
 			<SongProperty name="Producers" show={producers.length > 0}>
-				{producers.map((a) => (
-					<ArtistLink artist={a.artist} key={a.artist.id} />
-				))}
+				{mapArtists(producers)}
 			</SongProperty>
 			<SongProperty name="Band" show={bands.length > 0}>
-				{bands.map((a) => (
-					<Text>{a.name}</Text>
-				))}
+				{mapArtists(bands)}
 			</SongProperty>
 			<SongProperty name="Animators" show={animators.length > 0}>
-				{animators.map((a) => (
-					<Text>{a.name}</Text>
-				))}
+				{mapArtists(animators)}
 			</SongProperty>
 			<SongProperty name="Other artists" show={otherArtists.length > 0}>
-				{otherArtists.map((a) => (
-					<Text>{a.name}</Text>
-				))}
+				{mapArtists(otherArtists)}
 			</SongProperty>
 			<SongProperty name="Type">
 				<Link href={'/T/' + details.songTypeTag.id}>{details.song.songType}</Link>
