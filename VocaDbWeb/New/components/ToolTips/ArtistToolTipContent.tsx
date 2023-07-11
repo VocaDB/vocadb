@@ -67,7 +67,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipContentPro
 				<Text size="sm" color="dimmed">
 					{artist.additionalNames
 						.split(', ')
-						.filter((name, index) => index < 3)
+						.filter((_name, index) => index < 3)
 						.join(', ')}
 				</Text>
 			</div>
