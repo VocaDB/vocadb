@@ -46,7 +46,7 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 					pos="relative"
 					p="md"
 					h="calc(100vh - 70px - 64px)"
-					style={{ overflow: 'hidden' }}
+					style={{ overflowY: 'scroll' }}
 					w="100%"
 				>
 					{children}
