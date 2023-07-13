@@ -8,7 +8,7 @@ interface EntryToolTipCardProps {
 export default function EntryToolTipCard({ children, tooltip }: EntryToolTipCardProps) {
 	return (
 		<Tooltip
-			w="15vw"
+			w="300px"
 			multiline
 			styles={{
 				tooltip: {
