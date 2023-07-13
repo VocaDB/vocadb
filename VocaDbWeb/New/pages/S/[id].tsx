@@ -8,6 +8,7 @@ import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
 import { useVdbStore } from '@/stores/useVdbStore';
 import { ArtistForSongContract } from '@/types/DataContracts/Song/ArtistForSongContract';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
+import { TagBaseContract } from '@/types/DataContracts/Tag/TagBaseContract';
 import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
 import { TranslationType } from '@/types/Models/Globalization/TranslationType';
 import { PVType } from '@/types/Models/PVs/PVType';
@@ -152,6 +153,17 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 		});
 	};
 
+	const mapTags = (tags: TagBaseContract[]): JSX.Element[] => {
+		return tags.map((t, index) => {
+			return (
+				<React.Fragment key={index}>
+					{index !== 0 ? ', ' : ''}
+					<TagLink tag={t} />
+				</React.Fragment>
+			);
+		});
+	};
+
 	return (
 		<Grid mt="md">
 			<SongProperty name="Name">
@@ -197,9 +209,7 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 			<SongProperty name="Albums" show={details.albums.length > 0}>
 				<Text>{details.albums.map((a) => a.name).join(', ')}</Text>
 			</SongProperty>
-			<SongProperty name="Tags">
-				<Text>{details.tags.map((t) => t.tag.name).join(', ')}</Text>
-			</SongProperty>
+			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
 				<Text>{details.pools.map((pool) => pool.name).join(', ')}</Text>
 			</SongProperty>

@@ -11,7 +11,7 @@ export interface TagToolTipProps {
 
 export default function TagToolTipContent({ tag }: TagToolTipProps) {
 	const { data } = useSWR(
-		`/api/tags/${tag.id}?fields=MainPicture,AdditionalNames`,
+		`/api/tags/${tag.id}?fields=MainPicture,AdditionalNames,Description`,
 		apiGet<TagApiContract>
 	);
 
@@ -26,6 +26,7 @@ export default function TagToolTipContent({ tag }: TagToolTipProps) {
 						<Text color="dimmed">{data.additionalNames}</Text>
 					</div>
 					<Text>{data.categoryName}</Text>
+					<Text lineClamp={2}>{data.description}</Text>
 				</>
 			)}
 		</Stack>
