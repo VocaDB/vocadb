@@ -1,7 +1,9 @@
 import { formatFromMilliBpm } from '@/Helpers/BpmHelper';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
 import { apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
-import { ArtistLink } from '@/components/Links/ArtistLink';
+import ArtistLink from '@/components/Links/ArtistLink';
+import TagLink from '@/components/Links/TagLink';
+import EntryToolTip from '@/components/ToolTips/EntryToolTip';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
 import { useVdbStore } from '@/stores/useVdbStore';
 import { ArtistForSongContract } from '@/types/DataContracts/Song/ArtistForSongContract';
@@ -177,7 +179,7 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 				{mapArtists(otherArtists)}
 			</SongProperty>
 			<SongProperty name="Type">
-				<Link href={'/T/' + details.songTypeTag.id}>{details.song.songType}</Link>
+				<TagLink tag={details.songTypeTag} />
 			</SongProperty>
 			<SongProperty name="Duration">
 				<Text>{formatNumberToTime(details.song.lengthSeconds)}</Text>

@@ -7,7 +7,7 @@ interface ArtistLinkProps {
 	artist: ArtistApiContract;
 }
 
-export function ArtistLink({ artist }: ArtistLinkProps) {
+export default function ArtistLink({ artist }: ArtistLinkProps) {
 	return (
 		<EntryToolTip entry="artist" artist={artist}>
 			<Anchor component={Link} href={'/Ar/' + artist.id}>
