@@ -1,11 +1,14 @@
 import { formatFromMilliBpm } from '@/Helpers/BpmHelper';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
 import { apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
+import AlbumLink from '@/components/Links/AlbumLink';
 import ArtistLink from '@/components/Links/ArtistLink';
 import TagLink from '@/components/Links/TagLink';
-import EntryToolTip from '@/components/ToolTips/EntryToolTip';
+import PVButton from '@/components/PVButton/PVButton';
 import EmbedPVPreview from '@/nostalgic-darling/EmbedPVPreview';
 import { useVdbStore } from '@/stores/useVdbStore';
+import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
+import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { ArtistForSongContract } from '@/types/DataContracts/Song/ArtistForSongContract';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
 import { TagBaseContract } from '@/types/DataContracts/Tag/TagBaseContract';
@@ -13,7 +16,7 @@ import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
 import { TranslationType } from '@/types/Models/Globalization/TranslationType';
 import { PVType } from '@/types/Models/PVs/PVType';
 import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
-import { ActionIcon, Grid, Group, Tabs, Text } from '@mantine/core';
+import { ActionIcon, Grid, Group, Stack, Tabs, Text } from '@mantine/core';
 import {
 	IconAffiliate,
 	IconAlignJustified,
@@ -24,8 +27,7 @@ import {
 	IconThumbUp,
 } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 
 interface SongActionsProps {
@@ -99,9 +101,10 @@ const SongProperty = ({
 
 interface SongBasicInfoProps {
 	details: SongDetailsContract;
+	setPV: (pv: PVContract) => any;
 }
 
-const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
+const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 	const artistIsType = (artist: ArtistForSongContract, type: ArtistCategories): boolean => {
 		return artist.categories
 			.split(',')
@@ -164,6 +167,17 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 		});
 	};
 
+	const mapAlbums = (albums: AlbumForApiContract[]): JSX.Element[] => {
+		return albums.map((a, index) => {
+			return (
+				<React.Fragment key={index}>
+					{index !== 0 ? ', ' : ''}
+					<AlbumLink album={a} />
+				</React.Fragment>
+			);
+		});
+	};
+
 	return (
 		<Grid mt="md">
 			<SongProperty name="Name">
@@ -207,7 +221,7 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 				<Text>{formatFromMilliBpm(details.minMilliBpm, details.maxMilliBpm)}</Text>
 			</SongProperty>
 			<SongProperty name="Albums" show={details.albums.length > 0}>
-				<Text>{details.albums.map((a) => a.name).join(', ')}</Text>
+				{mapAlbums(details.albums)}
 			</SongProperty>
 			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
@@ -217,10 +231,18 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 				name="Original media"
 				show={originalPVs !== undefined && originalPVs.length > 0}
 			>
-				<Text>{originalPVs?.map((pv) => pv.url).join(', ')}</Text>
+				<Stack align="flex-start">
+					{originalPVs.map((pv) => (
+						<PVButton onClick={() => setPV(pv)} pv={pv} />
+					))}
+				</Stack>
 			</SongProperty>
 			<SongProperty name="Other media" show={otherPVs !== undefined && otherPVs.length > 0}>
-				<Text>{otherPVs?.map((pv) => pv.url).join(', ')}</Text>
+				<Stack align="flex-start">
+					{otherPVs.map((pv) => (
+						<PVButton onClick={() => setPV(pv)} pv={pv} />
+					))}
+				</Stack>
 			</SongProperty>
 		</Grid>
 	);
@@ -228,9 +250,10 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 
 interface SongTabsProps {
 	details: SongDetailsContract;
+	setPV: (pv: PVContract) => any;
 }
 
-const SongTabs = ({ details }: SongTabsProps) => {
+const SongTabs = ({ details, setPV }: SongTabsProps) => {
 	return (
 		<Tabs mt="md" defaultValue="info">
 			<Tabs.List>
@@ -252,7 +275,7 @@ const SongTabs = ({ details }: SongTabsProps) => {
 			</Tabs.List>
 
 			<Tabs.Panel value="info">
-				<SongBasicInfo details={details} />
+				<SongBasicInfo setPV={setPV} details={details} />
 			</Tabs.Panel>
 			<Tabs.Panel value="lyrics">Lyrics</Tabs.Panel>
 			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
@@ -263,15 +286,16 @@ const SongTabs = ({ details }: SongTabsProps) => {
 };
 
 export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+	const [pv, setPV] = useState<PVContract | undefined>(undefined);
 	return (
 		<>
 			<div style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: 'max-content' }}>
-				{song.pvs.length > 0 && (
-					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={song.pvs[0]} />
+				{pv !== undefined && (
+					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={pv} />
 				)}
 				<SongActions details={song} />
 			</div>
-			<SongTabs details={song} />
+			<SongTabs setPV={setPV} details={song} />
 		</>
 	);
 }

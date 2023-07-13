@@ -23,7 +23,12 @@ export default function TagToolTipContent({ tag }: TagToolTipProps) {
 				<>
 					<div>
 						<Text weight={500}>{data.name}</Text>
-						<Text color="dimmed">{data.additionalNames}</Text>
+						<Text color="dimmed">
+							{data.additionalNames
+								?.split(',')
+								.filter((_tag, index) => index < 3)
+								.join(',')}
+						</Text>
 					</div>
 					<Text>{data.categoryName}</Text>
 					<Text lineClamp={2}>{data.description}</Text>
