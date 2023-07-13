@@ -136,12 +136,18 @@ const SongBasicInfo = ({ details }: SongBasicInfoProps) => {
 	const otherPVs = details.pvs?.filter((pv) => pv.pvType !== PVType.Original);
 
 	const mapArtists = (artists: ArtistForSongContract[]): JSX.Element[] => {
-		return artists.map((a, index) => (
-			<React.Fragment key={a.artist.id}>
-				{index !== 0 ? ', ' : ''}
-				<ArtistLink artist={a.artist} />
-			</React.Fragment>
-		));
+		return artists.map((a, index) => {
+			return (
+				<React.Fragment key={index}>
+					{index !== 0 ? ', ' : ''}
+					{a.artist === undefined ? (
+						<Text span>{a.name}</Text>
+					) : (
+						<ArtistLink artist={a.artist} />
+					)}
+				</React.Fragment>
+			);
+		});
 	};
 
 	return (
