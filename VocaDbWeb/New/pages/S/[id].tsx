@@ -29,6 +29,8 @@ import {
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import React, { useState } from 'react';
 import useSWR from 'swr';
+// TODO: Lazy load this
+import { extendedUserLanguageCultures } from '@/Helpers/userLanguageCultures';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -90,12 +92,14 @@ const SongProperty = ({
 		return <></>;
 	}
 	return (
-		<>
-			<Grid.Col span={2}>
+		<React.Fragment>
+			<Grid.Col span={4} md={2}>
 				<Text>{name}</Text>
 			</Grid.Col>
-			<Grid.Col span={10}>{children}</Grid.Col>
-		</>
+			<Grid.Col span={8} md={10}>
+				{children}
+			</Grid.Col>
+		</React.Fragment>
 	);
 };
 
@@ -215,7 +219,11 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 				show={cultureCodes !== undefined && cultureCodes.length > 0}
 			>
 				{/** TODO: Culture code -> Language */}
-				<Text>{cultureCodes?.map((c) => c).join(', ')}</Text>
+				<Text>
+					{cultureCodes
+						?.map((c) => extendedUserLanguageCultures[c].englishName)
+						.join(', ')}
+				</Text>
 			</SongProperty>
 			<SongProperty name="BPM" show={!!details.minMilliBpm}>
 				<Text>{formatFromMilliBpm(details.minMilliBpm, details.maxMilliBpm)}</Text>
@@ -286,7 +294,7 @@ const SongTabs = ({ details, setPV }: SongTabsProps) => {
 };
 
 export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-	const [pv, setPV] = useState<PVContract | undefined>(undefined);
+	const [pv, setPV] = useState<PVContract | undefined>(song.pvs[0]);
 	return (
 		<>
 			<div style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: 'max-content' }}>

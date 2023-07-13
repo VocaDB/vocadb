@@ -22,7 +22,7 @@ export const useColorStore = create<ColorState>()(
 			toggleColorScheme() {
 				const newColorScheme = get().colorScheme === 'light' ? 'dark' : 'light';
 				setCookie('mantine-color-scheme', newColorScheme);
-				set((state) => ({ colorScheme: newColorScheme }));
+				set(() => ({ colorScheme: newColorScheme }));
 			},
 		}),
 		{
