@@ -4,6 +4,7 @@ import React from 'react';
 import AlbumToolTipContent from './AlbumToolTipContent';
 
 export interface AlbumToolTipProps {
+	entry: 'album';
 	album: AlbumForApiContract;
 	children?: React.ReactNode;
 }

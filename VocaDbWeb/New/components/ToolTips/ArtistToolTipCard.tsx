@@ -4,6 +4,7 @@ import { ArtistApiContract } from '@/types/DataContracts/Artist/ArtistApiContrac
 import ArtistToolTipContent from './ArtistToolTipContent';
 
 export interface ArtistToolTipProps {
+	entry: 'artist';
 	artist: ArtistApiContract;
 	children?: React.ReactNode;
 }

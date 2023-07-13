@@ -1,7 +1,7 @@
 import { ArtistApiContract } from '@/types/DataContracts/Artist/ArtistApiContract';
 import { Anchor } from '@mantine/core';
 import Link from 'next/link';
-import { ArtistToolTip } from '../ToolTips/ArtistToolTip';
+import EntryToolTip from '../ToolTips/EntryToolTip';
 
 interface ArtistLinkProps {
 	artist: ArtistApiContract;
@@ -9,11 +9,11 @@ interface ArtistLinkProps {
 
 export function ArtistLink({ artist }: ArtistLinkProps) {
 	return (
-		<ArtistToolTip artist={artist}>
+		<EntryToolTip entry="artist" artist={artist}>
 			<Anchor component={Link} href={'/Ar/' + artist.id}>
 				{artist.name}
 			</Anchor>
-		</ArtistToolTip>
+		</EntryToolTip>
 	);
 }
 
