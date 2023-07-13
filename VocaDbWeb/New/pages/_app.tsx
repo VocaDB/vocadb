@@ -8,7 +8,7 @@ import { GlobalValues } from '@/types/GlobalValues';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useVdbStore } from '@/stores/useVdbStore';
 
 export default function App(
@@ -18,21 +18,34 @@ export default function App(
 		values: GlobalValues | undefined;
 	}
 ) {
-	const { Component, pageProps } = props;
+	const {
+		Component,
+		pageProps,
+		colorScheme: cookieColorScheme,
+		primaryColor: cookiePrimaryColor,
+	} = props;
 	const [primaryColor, colorScheme] = useColorStore((state) => [
 		state.primaryColor,
 		state.colorScheme,
 	]);
-	const theme: MantineThemeOverride = {
+	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors,
-		primaryColor,
-		colorScheme,
-	};
+		primaryColor: cookiePrimaryColor ? cookiePrimaryColor : 'miku',
+		colorScheme: cookieColorScheme ? cookieColorScheme : 'light',
+	});
 	const [fetchValues] = useVdbStore((set) => [set.fetchValues]);
 
 	useEffect(() => {
 		fetchValues();
 	}, []);
+
+	useEffect(() => {
+		setTheme({
+			colors,
+			primaryColor,
+			colorScheme,
+		});
+	}, [primaryColor, colorScheme]);
 
 	return (
 		<>
@@ -69,8 +82,8 @@ App.getInitialProps = async (appContext: AppContext) => {
 
 	return {
 		...appProps,
-		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'light',
-		primaryColor: getCookie('mantine-primary-color', appContext.ctx) || 'miku',
+		colorScheme: getCookie('mantine-color-scheme', appContext.ctx),
+		primaryColor: getCookie('mantine-primary-color', appContext.ctx),
 	};
 };
 
