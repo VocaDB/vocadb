@@ -1,4 +1,4 @@
-import { AppShell, Box } from '@mantine/core';
+import { AppShell, Box, MediaQuery } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Header from './Header';
@@ -41,7 +41,7 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 			})}
 			padding={0}
 		>
-			<>
+			<MediaQuery smallerThan="md" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
 				<Box
 					pos="relative"
 					p="md"
@@ -53,10 +53,8 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 					<LyricsContainer />
 					<PVPlayer />
 				</Box>
-				<div style={{ height: '64px' }}>
-					<Footer />
-				</div>
-			</>
+			</MediaQuery>
+			<Footer />
 		</AppShell>
 	);
 };
