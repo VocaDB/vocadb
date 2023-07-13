@@ -13,6 +13,9 @@ export default function CustomImage(props: CustomImageProps) {
 			width={props.width}
 			height={props.height}
 			loader={(loaderProps) => {
+				if (loaderProps.src === '/unknown.png') {
+					return '/unknown.webp';
+				}
 				let base = `//wsrv.nl/?url=${loaderProps.src}&output=webp`;
 
 				if (props.mode === 'crop') {
