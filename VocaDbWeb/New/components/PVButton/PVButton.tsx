@@ -97,7 +97,7 @@ export default function PVButton({ pv, onClick }: PVButtonProps) {
 	}
 
 	return (
-		<Button onClick={onClick} variant="default" leftIcon={<ServiceIcon />}>
+		<Button maw="100%" onClick={onClick} variant="default" leftIcon={<ServiceIcon />}>
 			{pv.name}
 		</Button>
 	);
