@@ -1,4 +1,4 @@
-import { HoverCard } from '@mantine/core';
+import { Paper, Tooltip } from '@mantine/core';
 import React from 'react';
 import { ArtistApiContract } from '@/types/DataContracts/Artist/ArtistApiContract';
 import ArtistToolTipContent from './ArtistToolTipContent';
@@ -8,15 +8,22 @@ export interface ArtistToolTipProps {
 	children?: React.ReactNode;
 }
 
-// TODO: Make the whole Tooltip lazy to prevent loading the HoverCard js
-export default function AlbumToolTip({ artist, children }: ArtistToolTipProps) {
+export default function ArtistToolTip({ artist, children }: ArtistToolTipProps) {
 	return (
-		<HoverCard shadow="sm">
-			<HoverCard.Target>{children}</HoverCard.Target>
-			<HoverCard.Dropdown>
-				<ArtistToolTipContent artist={artist} />
-			</HoverCard.Dropdown>
-		</HoverCard>
+		<Tooltip
+			styles={{
+				tooltip: {
+					padding: 0,
+				},
+			}}
+			label={
+				<Paper radius="xs" p="md">
+					<ArtistToolTipContent artist={artist} />
+				</Paper>
+			}
+		>
+			{children}
+		</Tooltip>
 	);
 }
 

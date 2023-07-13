@@ -32,7 +32,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipContentPro
 	};
 
 	return (
-		<Group maw="20vw">
+		<Group>
 			{isLoading && <div style={{ width: 70 }} />}
 			{isHuman(data?.artistType) && !isLoading ? (
 				<div>
@@ -55,7 +55,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipContentPro
 					)}
 				</div>
 			)}
-			<div style={{ maxWidth: 'calc(20vw - 90px)' }}>
+			<div>
 				<Text>
 					{artist.name}
 					<Text span>
