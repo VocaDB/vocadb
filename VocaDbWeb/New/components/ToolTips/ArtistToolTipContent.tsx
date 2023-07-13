@@ -5,11 +5,12 @@ import useSWR from 'swr';
 import { apiGet } from '@/Helpers/FetchApiHelper';
 import { ArtistType } from '@/types/Models/Artists/ArtistType';
 
-interface ArtistToolTipContentProps {
+export interface ArtistToolTipProps {
+	entry: 'artist';
 	artist: ArtistApiContract;
 }
 
-export default function ArtistToolTipContent({ artist }: ArtistToolTipContentProps) {
+export default function ArtistToolTipContent({ artist }: ArtistToolTipProps) {
 	const { data, isLoading } = useSWR(
 		`/api/artists/${artist.id}?fields=AdditionalNames,MainPicture`,
 		apiGet<ArtistApiContract>

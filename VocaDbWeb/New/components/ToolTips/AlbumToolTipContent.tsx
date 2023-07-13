@@ -2,11 +2,12 @@ import { formatComponentDate } from '@/Helpers/DateTimeHelper';
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
 import { Group, Rating, Text } from '@mantine/core';
 
-interface AlbumToolTipContentProps {
+export interface AlbumToolTipProps {
+	entry: 'album';
 	album: AlbumForApiContract;
 }
 
-export default function AlbumToolTipContent({ album }: AlbumToolTipContentProps) {
+export default function AlbumToolTipContent({ album }: AlbumToolTipProps) {
 	const releaseDate = formatComponentDate(
 		album.releaseDate.year,
 		album.releaseDate.month,
