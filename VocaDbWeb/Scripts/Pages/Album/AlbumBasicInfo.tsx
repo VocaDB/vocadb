@@ -44,6 +44,7 @@ import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
+import dayjs from 'dayjs';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
@@ -430,12 +431,33 @@ const AlbumBasicInfo = observer(
 													(a.date ? new Date(a.date).getTime() : Infinity) -
 													(b.date ? new Date(b.date).getTime() : Infinity),
 											)
-											.map((event, key) => (
-												<span key={key}>
-													{key !== 0 ? ', ' : ''}
-													<EventLink bold={key === 0} event={event} tooltip />
-												</span>
-											))}
+											.map((event, key) => {
+												return (
+													<span key={key}>
+														{key !== 0 ? ', ' : ''}
+														<EventLink
+															entryReleaseDate={((): string | undefined => {
+																if (
+																	!model.releaseDate?.year ||
+																	!model.releaseDate.month ||
+																	!model.releaseDate.day
+																) {
+																	return undefined;
+																}
+																const eventDate = dayjs()
+																	.year(model.releaseDate?.year)
+																	.month(model.releaseDate?.month - 1)
+																	.date(model.releaseDate?.day)
+																	.toString();
+																return eventDate;
+															})()}
+															bold={key === 0}
+															event={event}
+															tooltip
+														/>
+													</span>
+												);
+											})}
 									</td>
 								</tr>
 							)}
