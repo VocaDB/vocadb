@@ -84,7 +84,7 @@ public class SongService : ServiceBase
 
 	public void Delete(int id, string notes)
 	{
-		UpdateEntity<Song>(id, async (session, song) =>
+		UpdateEntity<Song>(id, (session, song) =>
 		{
 			EntryPermissionManager.VerifyDelete(PermissionContext, song);
 
