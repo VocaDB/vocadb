@@ -39,7 +39,7 @@ const EventLinkBase = ({
 			>
 				{event.name}
 			</Link>
-			{eventDelta &&
+			{eventDelta !== undefined &&
 				Math.abs(eventDelta) > 7 &&
 				` (${eventDelta > 0 ? '+' : ''}${eventDelta} days)`}
 		</>
