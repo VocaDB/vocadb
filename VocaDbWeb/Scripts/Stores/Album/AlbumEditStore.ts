@@ -178,6 +178,10 @@ export class AlbumEditStore {
 			return store;
 		})
 
+		if (this.releaseEvents.length === 0) {
+			this.addReleaseEvent()
+		}
+
 		this.catalogNumber = contract.originalRelease.catNum;
 		this.defaultNameLanguage = contract.defaultNameLanguage;
 		this.description = new EnglishTranslatedStringEditStore(
