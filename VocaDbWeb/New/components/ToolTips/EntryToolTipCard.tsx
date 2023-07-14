@@ -16,7 +16,7 @@ export default function EntryToolTipCard({ children, tooltip }: EntryToolTipCard
 				},
 			}}
 			label={
-				<Paper radius="xs" p="md">
+				<Paper shadow="xs" withBorder radius="xs" p="md">
 					{tooltip}
 				</Paper>
 			}
