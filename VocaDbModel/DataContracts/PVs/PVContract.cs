@@ -22,6 +22,7 @@ public class PVContract : IPVWithThumbnail
 		Author = pv.Author;
 		ExtendedMetadata = pv.ExtendedMetadata;
 		Id = pv.Id;
+		Disabled = pv.Disabled;
 		Name = pv.Name;
 		PVId = pv.PVId;
 		Service = pv.Service;
@@ -40,6 +41,7 @@ public class PVContract : IPVWithThumbnail
 		PVId = contract.PVId;
 		Service = contract.Service;
 		PVType = contract.PVType;
+		Disabled = contract.Disabled;
 	}
 #nullable disable
 

@@ -10,6 +10,7 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PVEditStore {
+	// eslint-disable-next-line prettier/prettier
 	@observable disabled: boolean;
 	readonly lengthFormatted: string;
 	@observable name: string;

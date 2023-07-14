@@ -16,7 +16,10 @@ public class PVForAlbum : PV, IEntryWithIntId
 		: base(contract)
 	{
 		Album = album;
+		Disabled = contract.Disabled;
 	}
+
+	public override bool Disabled { get; set; }
 
 	public virtual Album Album
 	{
@@ -40,7 +43,7 @@ public class PVForAlbum : PV, IEntryWithIntId
 		if (Id == 0)
 			return false;
 
-		return Id == another.Id;
+		return Id == another.Id && Disabled == another.Disabled;
 	}
 
 	public override bool Equals(object? obj)

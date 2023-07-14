@@ -190,7 +190,7 @@ export class AlbumEditStore {
 			contract.pvs,
 			canBulkDeletePVs,
 			true,
-			false,
+			true,
 		);
 		this.releaseDay = contract.originalRelease.releaseDate?.day;
 		this.releaseMonth = contract.originalRelease.releaseDate?.month;
