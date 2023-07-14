@@ -842,7 +842,7 @@ public class Album :
 	{
 		ParamIs.NotNull(() => newPVs);
 
-		var diff = CollectionHelper.Diff(PVs, newPVs, (n1, n2) => n1.Id == n2.Id);
+		var diff = CollectionHelper.Diff(PVs, newPVs, (n1, n2) => n1.Id == n2.Id && n1.Disabled == n2.Disabled);
 		var created = new List<PVForAlbum>();
 		var edited = new List<PVForAlbum>();
 

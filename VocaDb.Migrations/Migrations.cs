@@ -4,6 +4,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2023_07_14_2127)]
+public class CrossfadesUnavailable : Migration
+{
+
+	public override void Up()
+	{
+		Create.Column("Disabled")
+			.OnTable(TableNames.PVsForAlbums)
+			.AsBoolean()
+			.NotNullable()
+			.WithDefaultValue(false);
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 // Migration version format: YYYY_MM_DD_HHmm
 [Migration(2023_07_04_1239)]
 public class MultipleReleaseEvents : Migration
