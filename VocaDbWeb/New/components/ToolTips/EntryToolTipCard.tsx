@@ -10,6 +10,7 @@ export default function EntryToolTipCard({ children, tooltip }: EntryToolTipCard
 		<Tooltip
 			w="300px"
 			multiline
+			openDelay={150}
 			styles={{
 				tooltip: {
 					padding: 0,
