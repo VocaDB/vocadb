@@ -647,7 +647,12 @@ const SongBasicInfo = observer(
 										.map((event, key) => (
 											<span key={key}>
 												{key !== 0 ? ', ' : ''}
-												<EventLink bold={key === 0} event={event} tooltip />
+												<EventLink
+													entryReleaseDate={model.publishDate}
+													bold={key === 0}
+													event={event}
+													tooltip
+												/>
 											</span>
 										))}
 								</td>
