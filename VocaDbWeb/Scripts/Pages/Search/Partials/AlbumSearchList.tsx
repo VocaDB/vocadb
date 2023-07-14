@@ -196,19 +196,21 @@ const AlbumSearchList = observer(
 												album.releaseDate.day,
 											)}
 										</span>
-										{album.releaseEvent && (
-											<span>
-												<br />
-												<Link
-													to={EntryUrlMapper.details(
-														EntryType.ReleaseEvent,
-														album.releaseEvent.id,
-													)}
-												>
-													{album.releaseEvent.name}
-												</Link>
-											</span>
-										)}
+										{album.releaseEvents
+											.filter((_e, index) => index < 3)
+											.map((e, index) => (
+												<span key={index}>
+													{index === 0 ? <br /> : ', '}
+													<Link
+														to={EntryUrlMapper.details(
+															EntryType.ReleaseEvent,
+															e.id,
+														)}
+													>
+														{e.name}
+													</Link>
+												</span>
+											))}
 									</td>
 									<td style={{ width: '150px' }}>
 										<span title={`${album.ratingAverage}`}>

@@ -123,6 +123,10 @@ export class SongEditStore {
 			return store;
 		})
 
+		if (this.releaseEvents.length === 0) {
+			this.addReleaseEvent()
+		}
+
 		this.albumEventId = contract.albumEventId;
 		this.albumReleaseDate = contract.albumReleaseDate
 			? dayjs(contract.albumReleaseDate)

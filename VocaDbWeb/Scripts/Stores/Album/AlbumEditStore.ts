@@ -178,6 +178,10 @@ export class AlbumEditStore {
 			return store;
 		})
 
+		if (this.releaseEvents.length === 0) {
+			this.addReleaseEvent()
+		}
+
 		this.catalogNumber = contract.originalRelease.catNum;
 		this.defaultNameLanguage = contract.defaultNameLanguage;
 		this.description = new EnglishTranslatedStringEditStore(
@@ -299,9 +303,14 @@ export class AlbumEditStore {
 	}
 
 	@computed get eventDate(): Dayjs | undefined {
-		return this.releaseEvent.entry && this.releaseEvent.entry.date
-			? dayjs(this.releaseEvent.entry.date)
-			: undefined;
+		return this.releaseEvents
+			.map(e => e.entry)
+			.filter(e => e !== undefined)
+			.sort(
+				(a, b) =>
+					(a!.date ? new Date(a!.date).getTime() : Infinity) -
+					(b!.date ? new Date(b!.date).getTime() : Infinity),
+			).map(e => dayjs(e!.date))[0]
 	}
 
 	@computed get releaseDate(): Dayjs | undefined {
