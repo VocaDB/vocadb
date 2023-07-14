@@ -19,7 +19,7 @@ public static class NicoLogHelper
 
 	private static async Task<HtmlDocument?> GetVideoHtmlPage(string videoId)
 	{
-		var url = $"https://nicolog.jp/watch/{videoId}";
+		var url = $"https://dream-traveler.fly.dev/nicolog?id={videoId}";
 
 		// NicoLog only support TLS 1.3
 		var handler = new HttpClientHandler
