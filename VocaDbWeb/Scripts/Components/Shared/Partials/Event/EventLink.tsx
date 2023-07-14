@@ -21,10 +21,10 @@ const EventLinkBase = ({
 	if (entryReleaseDate !== undefined && event.date !== undefined) {
 		let endEventDelta =
 			event.endDate !== undefined
-				? Math.floor(dayjs(event.endDate).diff(entryReleaseDate, 'days', true))
+				? Math.floor(dayjs(entryReleaseDate).diff(event.endDate, 'days', true))
 				: Infinity;
 		eventDelta = Math.ceil(
-			dayjs(event.date).diff(entryReleaseDate, 'days', true),
+			dayjs(entryReleaseDate).diff(event.date, 'days', true),
 		);
 		if (Math.abs(endEventDelta) < Math.abs(eventDelta)) {
 			eventDelta = endEventDelta;
