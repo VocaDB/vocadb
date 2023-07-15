@@ -5,7 +5,7 @@ import Header from './Header';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-const Footer = dynamic(() => import('./Footer'));
+const Footer = dynamic(() => import('./Footer'), { ssr: false });
 const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
 const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
 	loading: () => null,

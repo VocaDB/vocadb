@@ -1,4 +1,4 @@
-import { apiGet, authApiGet } from '@/Helpers/FetchApiHelper';
+import { authApiGet } from '@/Helpers/FetchApiHelper';
 import { GlobalValues } from '@/types/GlobalValues';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -22,3 +22,4 @@ export const useVdbStore = create<VdbState>()(
 		}
 	)
 );
+

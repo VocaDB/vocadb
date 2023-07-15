@@ -8,7 +8,7 @@ import { GlobalValues } from '@/types/GlobalValues';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { useVdbStore } from '@/stores/useVdbStore';
 
 export default function App(
@@ -36,7 +36,9 @@ export default function App(
 	const [fetchValues] = useVdbStore((set) => [set.fetchValues]);
 
 	useEffect(() => {
-		fetchValues();
+		startTransition(() => {
+			fetchValues();
+		});
 	}, []);
 
 	useEffect(() => {
