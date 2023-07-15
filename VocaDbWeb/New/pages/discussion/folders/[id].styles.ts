@@ -5,15 +5,6 @@ export default createStyles((theme) => ({
 		width: '100%',
 		textAlign: 'left',
 	},
-	folderHeaderName: {
-		width: '100%',
-		height: '40px',
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-		fontWeight: 'bold',
-        fontSize: '1.2rem',
-	},
 	folderHeaderDescription: {
 		width: '100%',
 		textOverflow: 'ellipsis',
@@ -38,7 +29,7 @@ export default createStyles((theme) => ({
 			width: '100%',
 			backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
 
-			'&:first-child': {
+			'&:first-of-type': {
 				width: '39%',
 				[theme.fn.smallerThan('md')]: {
 					width: '40%',
@@ -46,7 +37,7 @@ export default createStyles((theme) => ({
 				textAlign: 'center',
 			},
 
-			'&:nth-child(2)': {
+			'&:nth-of-type(2)': {
 				width: '19%',
 				[theme.fn.smallerThan('md')]: {
 					width: '30%',
@@ -55,7 +46,7 @@ export default createStyles((theme) => ({
 				textAlign: 'center',
 			},
 
-			'&:nth-child(3)': {
+			'&:nth-of-type(3)': {
 				width: '12%',
 				[theme.fn.smallerThan('md')]: {
 					display: 'none',
@@ -63,21 +54,21 @@ export default createStyles((theme) => ({
 				textAlign: 'center',
 			},
 
-			'&:nth-child(4)': {
+			'&:nth-of-type(4)': {
 				width: '15%',
 				[theme.fn.smallerThan('md')]: {
 					display: 'none',
 				},
 				textAlign: 'center',
 			},
-			'&:nth-child(5)': {
+			'&:nth-of-type(5)': {
 				width: '15%',
 				[theme.fn.smallerThan('md')]: {
 					display: 'none',
 				},
 				textAlign: 'center',
 			},
-			'&:nth-child(6)': {
+			'&:nth-of-type(6)': {
 				width: '30%',
 				display: 'none',
 				[theme.fn.smallerThan('md')]: {
@@ -87,10 +78,13 @@ export default createStyles((theme) => ({
 			},
 		},
 
-		'& tr': {
+		'& th, & td': {
 			width: '100%',
-			
-			'&:nth-child(even)': {
+			wordBreak: 'break-word',
+		},
+
+		'& tr': {
+			'&:nth-of-type(even)': {
 				backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
 			},
 			'&:hover': {
@@ -99,17 +93,14 @@ export default createStyles((theme) => ({
 		},
 
 		'& td': {
-			width: '100%',
-			wordBreak: 'break-word',
-
-			'&:first-child': {
+			'&:first-of-type': {
 				width: '39%',
 				[theme.fn.smallerThan('md')]: {
 					width: '40%',
 				},
 			},
 
-			'&:nth-child(2)': {
+			'&:nth-of-type(2)': {
 				width: '19%',
 				[theme.fn.smallerThan('md')]: {
 					width: '30%',
@@ -123,7 +114,7 @@ export default createStyles((theme) => ({
 				},
 			},
 
-			'&:nth-child(3)': {
+			'&:nth-of-type(3)': {
 				width: '12%',
 				textAlign: 'center',
 				[theme.fn.smallerThan('md')]: {
@@ -131,7 +122,7 @@ export default createStyles((theme) => ({
 				},
 			},
 
-			'&:nth-child(4)': {
+			'&:nth-of-type(4)': {
 				width: '15%',
 				textAlign: 'center',
 				[theme.fn.smallerThan('md')]: {
@@ -139,7 +130,7 @@ export default createStyles((theme) => ({
 				},
 			},
 
-			'&:nth-child(5)': {
+			'&:nth-of-type(5)': {
 				width: '15%',
 				textAlign: 'center',
 				[theme.fn.smallerThan('md')]: {
@@ -147,7 +138,7 @@ export default createStyles((theme) => ({
 				},
 			},
 
-			'&:nth-child(6)': {
+			'&:nth-of-type(6)': {
 				width: '30%',
 				display: 'none',
 				textAlign: 'center',

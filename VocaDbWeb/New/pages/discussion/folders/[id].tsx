@@ -4,9 +4,10 @@ import { DiscussionTopicContract } from '@/types/DataContracts/Discussion/Discus
 import { apiFetch } from '@/Helpers/FetchApiHelper';
 import useStyles from './[id].styles';
 import { IconBook2 } from '@tabler/icons-react';
-import { Text, Box, ThemeIcon, Pagination, Table, useMantineTheme } from '@mantine/core';
+import { Text, Box, ThemeIcon, Pagination, Table, useMantineTheme, Title } from '@mantine/core';
 import Link from 'next/link';
 import CustomImage from '@/components/Image/Image';
+import { useRouter } from 'next/router'
 
 export default function FolderPage({
 	folder,
@@ -15,9 +16,10 @@ export default function FolderPage({
 	totalPage,
 	topics,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+	const router = useRouter();
 	const styles = useStyles();
 	const setPage = (page: number) => {
-		window.location.href = `/discussion/folders/${folder.id}?page=${page}`;
+		router.push(`/discussion/folders/${folder.id}?page=${page}`);
 	};
 	const theme = useMantineTheme();
 	return (
@@ -25,12 +27,12 @@ export default function FolderPage({
 			<Text size="sm" component={Link} href="/discussion" variant="link" color={theme.primaryColor}>
 				&lt; Back to discussion index page
 			</Text>
-			<Text mt="md" mb="xs" className={styles.classes.folderHeaderName}>
+			<Title order={2}>
 				<ThemeIcon variant="filled" mr={6}>
 					<IconBook2 size="1rem" />
 				</ThemeIcon>
 				{folder.name}
-			</Text>
+			</Title>
 			<Text mt="md" mb="xs" className={styles.classes.folderHeaderDescription}>
 				{folder.description}
 			</Text>
