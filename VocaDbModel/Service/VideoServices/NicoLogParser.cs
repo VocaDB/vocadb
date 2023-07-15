@@ -21,13 +21,7 @@ public static class NicoLogHelper
 	{
 		var url = $"https://dream-traveler.fly.dev/nicolog?id={videoId}";
 
-		// NicoLog only support TLS 1.3
-		var handler = new HttpClientHandler
-		{
-			SslProtocols = System.Security.Authentication.SslProtocols.Tls13
-		};
-
-		using var client = new HttpClient(handler);
+		using var client = new HttpClient();
 		client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 		HttpResponseMessage response;
 
