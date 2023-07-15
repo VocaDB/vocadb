@@ -16,7 +16,7 @@ export default function TagToolTipContent({ tag }: TagToolTipProps) {
 	);
 
 	return (
-		<Stack maw="20vw">
+		<Stack>
 			{data === undefined ? (
 				<div style={{ width: 70 }} />
 			) : (

@@ -56,7 +56,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipProps) {
 					)}
 				</div>
 			)}
-			<div>
+			<div style={{ flex: 1 }}>
 				<Text>
 					{artist.name}
 					<Text span>
