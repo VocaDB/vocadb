@@ -1,14 +1,24 @@
-import { AppShell, Box, MediaQuery } from '@mantine/core';
+import { AppShell, Box, MediaQuery, Navbar as MantineNavbar } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
 import Header from './Header';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
+const Navbar = dynamic(() => import('./Navbar'), {
+	ssr: false,
+	loading: () => (
+		<MantineNavbar p="md" hiddenBreakpoint="sm" hidden={false} width={{ sm: 220, lg: 300 }}>
+			<div style={{ height: '100%' }} />
+		</MantineNavbar>
+	),
+});
 const Footer = dynamic(() => import('./Footer'), { ssr: false });
-const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'));
+const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'), {
+	ssr: false,
+});
 const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
 	loading: () => null,
+	ssr: false,
 });
 
 interface CustomAppShellProps {

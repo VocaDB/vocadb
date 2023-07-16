@@ -8,7 +8,8 @@ import { GlobalValues } from '@/types/GlobalValues';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
-import { startTransition, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { authApiGet } from '@/Helpers/FetchApiHelper';
 import { useVdbStore } from '@/stores/useVdbStore';
 
 export default function App(
@@ -24,30 +25,34 @@ export default function App(
 		colorScheme: cookieColorScheme,
 		primaryColor: cookiePrimaryColor,
 	} = props;
-	const [primaryColor, colorScheme] = useColorStore((state) => [
-		state.primaryColor,
-		state.colorScheme,
-	]);
+	const stored = useColorStore((state) => [state.primaryColor, state.colorScheme]);
+	const setValues = useVdbStore((set) => set.setValues);
+
 	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors,
 		primaryColor: cookiePrimaryColor ? cookiePrimaryColor : 'miku',
 		colorScheme: cookieColorScheme ? cookieColorScheme : 'light',
 	});
-	const [fetchValues] = useVdbStore((set) => [set.fetchValues]);
 
 	useEffect(() => {
-		startTransition(() => {
-			fetchValues();
-		});
-	}, []);
+		if (
+			stored !== undefined &&
+			(stored[0] !== cookiePrimaryColor || stored[1] !== cookieColorScheme)
+		) {
+			setTheme({
+				colors,
+				primaryColor: stored[0],
+				//@ts-ignore
+				colorScheme: stored[1],
+			});
+		}
+	}, [stored]);
 
 	useEffect(() => {
-		setTheme({
-			colors,
-			primaryColor,
-			colorScheme,
-		});
-	}, [primaryColor, colorScheme]);
+		authApiGet<GlobalValues>('/api/globals/values')
+			.then((values) => setValues(values))
+			.catch((e) => console.log(e));
+	}, [setValues]);
 
 	return (
 		<>
