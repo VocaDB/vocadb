@@ -25,7 +25,10 @@ export default function App(
 		colorScheme: cookieColorScheme,
 		primaryColor: cookiePrimaryColor,
 	} = props;
-	const stored = useColorStore((state) => [state.primaryColor, state.colorScheme]);
+	const [storedPrimaryColor, storedColorScheme] = useColorStore((state) => [
+		state.primaryColor,
+		state.colorScheme,
+	]);
 	const setValues = useVdbStore((set) => set.setValues);
 
 	const [theme, setTheme] = useState<MantineThemeOverride>({
@@ -36,17 +39,18 @@ export default function App(
 
 	useEffect(() => {
 		if (
-			stored !== undefined &&
-			(stored[0] !== cookiePrimaryColor || stored[1] !== cookieColorScheme)
+			(storedPrimaryColor !== cookiePrimaryColor ||
+				storedColorScheme !== cookieColorScheme) &&
+			(storedPrimaryColor !== theme.primaryColor || storedColorScheme !== theme.colorScheme)
 		) {
 			setTheme({
 				colors,
-				primaryColor: stored[0],
+				primaryColor: storedPrimaryColor,
 				//@ts-ignore
-				colorScheme: stored[1],
+				colorScheme: storedColorScheme,
 			});
 		}
-	}, [stored]);
+	}, [storedColorScheme, storedPrimaryColor]);
 
 	useEffect(() => {
 		authApiGet<GlobalValues>('/api/globals/values')
