@@ -7,8 +7,12 @@ const ALWAYS_PERMISSIONS = [
 	PermissionToken.ViewOtherPVs,
 ];
 
-export const hasPermission = (values: GlobalValues, token: PermissionToken): boolean => {
+export const hasPermission = (
+	values: GlobalValues | undefined,
+	token: PermissionToken
+): boolean => {
 	if (token === PermissionToken.Nothing) return true;
+	if (values === undefined) return false;
 
 	if (values.alwaysPermissions) {
 		if (ALWAYS_PERMISSIONS.includes(token)) {

@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
-import { getCookie, hasCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import Head from 'next/head';
 import { MantineProvider, ColorScheme, MantineThemeOverride } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import AppShell from '../components/AppShell/AppShell';
 import { GlobalValues } from '@/types/GlobalValues';
-import { VdbProvider } from '@/components/Context/VdbContext';
-import { apiFetch } from '@/Helpers/FetchApiHelper';
 import { ModalsProvider } from '@mantine/modals';
-import { useColorStore } from '@/stores/color';
+import { useColorStore } from '@/stores/useColorStore';
 import { colors } from '@/components/colors';
+import { useEffect, useState } from 'react';
+import { authApiGet } from '@/Helpers/FetchApiHelper';
+import { useVdbStore } from '@/stores/useVdbStore';
 
 export default function App(
 	props: AppProps & {
@@ -19,20 +19,40 @@ export default function App(
 		values: GlobalValues | undefined;
 	}
 ) {
-	const { Component, pageProps, values } = props;
-	const [primaryColor, colorScheme] = useColorStore((state) => [
+	const {
+		Component,
+		pageProps,
+		colorScheme: cookieColorScheme,
+		primaryColor: cookiePrimaryColor,
+	} = props;
+	const [storedPrimaryColor, storedColorScheme] = useColorStore((state) => [
 		state.primaryColor,
 		state.colorScheme,
 	]);
-	const theme: MantineThemeOverride = {
+	const setValues = useVdbStore((set) => set.setValues);
+
+	const [theme, setTheme] = useState<MantineThemeOverride>({
 		colors,
-		primaryColor,
-		colorScheme,
-	};
+		primaryColor: cookiePrimaryColor ? cookiePrimaryColor : 'miku',
+		colorScheme: cookieColorScheme ? cookieColorScheme : 'light',
+	});
 
 	useEffect(() => {
-		setCookie('vdb-values', values?.loggedUser);
-	}, [values]);
+		if (storedPrimaryColor !== theme.primaryColor || storedColorScheme !== theme.colorScheme) {
+			setTheme({
+				colors,
+				primaryColor: storedPrimaryColor,
+				//@ts-ignore
+				colorScheme: storedColorScheme,
+			});
+		}
+	}, [storedColorScheme, storedPrimaryColor]);
+
+	useEffect(() => {
+		authApiGet<GlobalValues>('/api/globals/values')
+			.then((values) => setValues(values))
+			.catch((e) => console.log(e));
+	}, [setValues]);
 
 	return (
 		<>
@@ -53,13 +73,11 @@ export default function App(
 			</Head>
 
 			<MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-				<VdbProvider initialValue={values}>
-					<ModalsProvider>
-						<AppShell>
-							<Component {...pageProps} />
-						</AppShell>
-					</ModalsProvider>
-				</VdbProvider>
+				<ModalsProvider>
+					<AppShell>
+						<Component {...pageProps} />
+					</AppShell>
+				</ModalsProvider>
 				<Notifications />
 			</MantineProvider>
 		</>
@@ -68,19 +86,11 @@ export default function App(
 
 App.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await NextApp.getInitialProps(appContext);
-	let values;
-
-	// TODO: Better check if session is lost
-	if (!hasCookie('vdb-values', appContext.ctx)) {
-		const res = await apiFetch('/api/globals/values', appContext.ctx.req);
-		values = await res.json();
-	}
 
 	return {
 		...appProps,
-		colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'light',
-		primaryColor: getCookie('mantine-primary-color', appContext.ctx) || 'miku',
-		values,
+		colorScheme: getCookie('mantine-color-scheme', appContext.ctx),
+		primaryColor: getCookie('mantine-primary-color', appContext.ctx),
 	};
 };
 

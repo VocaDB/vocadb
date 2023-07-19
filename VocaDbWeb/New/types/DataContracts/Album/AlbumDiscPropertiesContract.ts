@@ -1,4 +1,7 @@
-import { DiscMediaType } from '@/types/DataContracts/Album/AlbumDetailsForApi';
+export enum DiscMediaType {
+	Audio = 'Audio',
+	Video = 'Video',
+}
 
 export interface AlbumDiscPropertiesContract {
 	discNumber?: number;

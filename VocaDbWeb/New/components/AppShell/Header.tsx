@@ -9,7 +9,7 @@ interface CustomHeaderProps {
 	setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	header: {
 		display: 'flex',
 		justifyContent: 'space-between',

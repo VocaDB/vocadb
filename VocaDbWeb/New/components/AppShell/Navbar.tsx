@@ -23,10 +23,13 @@ import {
 import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 import Link from 'next/link';
 import { IconPlaylist } from '@tabler/icons';
-import { UserButton } from './UserButton';
-import { useVdb } from '../Context/VdbContext';
 import { PermissionToken } from '@/types/Models/LoginManager';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { useVdbStore } from '@/stores/useVdbStore';
+
+const UserButton = dynamic(() => import('./UserButton').then((imp) => imp.UserButton));
 
 const linkData = [
 	{ icon: IconHome, label: 'Home', link: '/' },
@@ -136,7 +139,7 @@ const MainLink = ({
 	permission,
 }: LinksGroupProps): React.ReactElement => {
 	const theme = useMantineTheme();
-	const { values } = useVdb();
+	const [values] = useVdbStore((set) => [set.values]);
 
 	if (links) {
 		return <NavbarLinksGroup icon={Icon} label={label} links={links} link={link} />;
@@ -177,21 +180,21 @@ const MainLink = ({
 // TODO: Make profile picture dynamic
 const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	const theme = useMantineTheme();
-	const { values } = useVdb();
+	const [values] = useVdbStore((set) => [set.values]);
 
 	// Remove the login link, if the user is logged in
 	const links = linkData.filter(
-		({ link }) => !link.startsWith('/User/Login') || !values.isLoggedIn
+		({ link }) => !link.startsWith('/User/Login') || !values?.isLoggedIn
 	);
 
 	return (
-		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 250 }}>
+		<Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 220, lg: 300 }}>
 			<Navbar.Section scrollHideDelay={100} component={ScrollArea} grow>
 				{links.map((link) => (
 					<MainLink {...link} key={link.label} />
 				))}
 			</Navbar.Section>
-			{values.isLoggedIn && (
+			{values?.isLoggedIn && (
 				<Navbar.Section
 					style={{
 						borderTop: `${rem(1)} solid ${
