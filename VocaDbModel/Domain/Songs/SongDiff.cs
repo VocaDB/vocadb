@@ -17,6 +17,7 @@ public class SongDiff : EntryDiff<SongEditableFields>
 	public EnumFieldAccessor<SongEditableFields> PublishDate => Field(SongEditableFields.PublishDate);
 	public EnumFieldAccessor<SongEditableFields> PVs => Field(SongEditableFields.PVs);
 	public EnumFieldAccessor<SongEditableFields> ReleaseEvent => Field(SongEditableFields.ReleaseEvent);
+	public EnumFieldAccessor<SongEditableFields> ReleaseEvents => Field(SongEditableFields.ReleaseEvents);
 	public EnumFieldAccessor<SongEditableFields> SongType => Field(SongEditableFields.SongType);
 	public EnumFieldAccessor<SongEditableFields> Status => Field(SongEditableFields.Status);
 	public EnumFieldAccessor<SongEditableFields> WebLinks => Field(SongEditableFields.WebLinks);

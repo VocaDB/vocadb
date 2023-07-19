@@ -26,6 +26,7 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -1254,12 +1255,23 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				{
 					var newLyrics = fullProperties.Lyrics.First(l => l.Id == lyrics.Id);
 
-					lyrics.CultureCodes = newLyrics.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
+					// TODO: Parse old CultureCode attribute
+					lyrics.CultureCodes = newLyrics.CultureCodes == null ? new List<OptionalCultureCode> { new OptionalCultureCode(string.Empty) } : newLyrics.CultureCodes.Select(c => new OptionalCultureCode(c)).ToArray();
 					lyrics.TranslationType = newLyrics.TranslationType;
 					lyrics.Source = newLyrics.Source ?? string.Empty;
 					lyrics.Value = newLyrics.Value;
 					session.Update(lyrics);
 				}
+			}
+
+			// Release events
+			if (fullProperties.ReleaseEvents != null)
+			{
+				song.ReleaseEvents = fullProperties.ReleaseEvents.Select(e => session.NullSafeLoad<ReleaseEvent>(e)).ToArray();
+			}
+			else if (fullProperties.ReleaseEvent != null)
+			{
+				song.ReleaseEvents = new ReleaseEvent[] { session.NullSafeLoad<ReleaseEvent>(fullProperties.ReleaseEvent) };
 			}
 
 			// PVs
@@ -1370,7 +1382,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			if (!song.ReleaseEvents.SequenceEqual(newReleaseEvents))
 			{
 				song.ReleaseEvents = newReleaseEvents.ToArray();
-				diff.Status.Set();
+				diff.ReleaseEvents.Set();
 			}
 
 			if (song.Status != properties.Status)

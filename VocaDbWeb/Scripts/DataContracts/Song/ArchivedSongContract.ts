@@ -24,6 +24,7 @@ export interface ArchivedSongContract {
 	publishDate?: string;
 	pvs?: ArchivedPVContract[];
 	releaseEvent?: ObjectRefContract;
+	releaseEvents?: ObjectRefContract[];
 	songType: SongType;
 	translatedName: ArchivedTranslatedStringContract;
 	webLinks?: ArchivedWebLinkContract[];

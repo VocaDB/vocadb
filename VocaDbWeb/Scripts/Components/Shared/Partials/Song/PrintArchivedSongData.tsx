@@ -92,11 +92,16 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Release event" /* LOC */
+							name="Release events" /* LOC */
 							comparedVersions={comparedSongs}
-							valGetter={(data): React.ReactNode => (
-								<ObjectRefInfo objRef={data.releaseEvent} />
-							)}
+							valGetter={(data): React.ReactNode[] | React.ReactNode => {
+								if (data.releaseEvent !== undefined) {
+									return <ObjectRefInfo objRef={data.releaseEvent} />;
+								}
+								return data.releaseEvents!.map((e, index) => (
+									<ObjectRefInfo objRef={e} key={index} />
+								));
+							}}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract

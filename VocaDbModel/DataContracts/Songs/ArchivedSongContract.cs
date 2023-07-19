@@ -70,6 +70,7 @@ public class ArchivedSongContract
 		data.OriginalVersion = thisVersion.OriginalVersion;
 		data.PublishDate = thisVersion.PublishDate;
 		data.ReleaseEvent = thisVersion.ReleaseEvent;
+		data.ReleaseEvents = thisVersion.ReleaseEvents;
 		data.SongType = thisVersion.SongType;
 		data.TranslatedName = thisVersion.TranslatedName;
 		data.MinMilliBpm = thisVersion.MinMilliBpm;
@@ -107,6 +108,7 @@ public class ArchivedSongContract
 		PublishDate = song.PublishDate;
 		PVs = diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null;
 		ReleaseEvent = ObjectRefContract.Create(song.ReleaseEvent);
+		ReleaseEvents = song.ReleaseEvents.Select(e => ObjectRefContract.Create(e)).ToArray();
 		SongType = song.SongType;
 		TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
 		WebLinks = diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
@@ -159,6 +161,10 @@ public class ArchivedSongContract
 
 	[DataMember]
 	public ObjectRefContract? ReleaseEvent { get; set; }
+
+
+	[DataMember]
+	public ObjectRefContract[]? ReleaseEvents { get; set; }
 
 	[DataMember]
 	[JsonConverter(typeof(StringEnumConverter))]

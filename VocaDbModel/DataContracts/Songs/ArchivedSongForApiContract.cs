@@ -58,6 +58,9 @@ public sealed record ArchivedSongForApiContract
 	public required ObjectRefContract? ReleaseEvent { get; init; }
 
 	[DataMember]
+	public required ObjectRefContract[]? ReleaseEvents { get; init; }
+
+	[DataMember]
 	[JsonConverter(typeof(StringEnumConverter))]
 	public required SongType SongType { get; init; }
 
@@ -90,6 +93,7 @@ public sealed record ArchivedSongForApiContract
 				? contract.PVs
 				: contract.PVs?.Where(pv => pv.PVType == PVType.Original).ToArray(),
 			ReleaseEvent = contract.ReleaseEvent,
+			ReleaseEvents = contract.ReleaseEvents,
 			SongType = contract.SongType,
 			TranslatedName = contract.TranslatedName,
 			WebLinks = contract.WebLinks,

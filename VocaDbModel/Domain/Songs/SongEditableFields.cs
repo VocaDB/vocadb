@@ -39,4 +39,6 @@ public enum SongEditableFields
 	Bpm = 1 << 14,
 
 	CultureCodes = 1 << 15,
+
+	ReleaseEvents = 1 << 16,
 }
