@@ -5,4 +5,5 @@ export interface ArchivedAlbumReleaseContract {
 	catNum?: string;
 	releaseDate?: OptionalDateTimeContract;
 	releaseEvent?: ObjectRefContract;
+	releaseEvents?: ObjectRefContract[];
 }

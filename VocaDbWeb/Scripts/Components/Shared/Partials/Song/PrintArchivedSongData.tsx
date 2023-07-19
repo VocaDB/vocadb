@@ -98,9 +98,11 @@ export const PrintArchivedSongData = React.memo(
 								if (data.releaseEvent !== undefined) {
 									return <ObjectRefInfo objRef={data.releaseEvent} />;
 								}
-								return data.releaseEvents!.map((e, index) => (
-									<ObjectRefInfo objRef={e} key={index} />
-								));
+								return data.releaseEvents === undefined
+									? []
+									: data.releaseEvents.map((e, index) => (
+											<ObjectRefInfo objRef={e} key={index} />
+									  ));
 							}}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}

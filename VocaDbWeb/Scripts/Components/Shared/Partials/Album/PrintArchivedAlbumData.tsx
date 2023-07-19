@@ -114,9 +114,20 @@ export const PrintArchivedAlbumData = React.memo(
 						<DataRow_ComparedVersionsContract
 							name="Release event" /* LOC */
 							comparedVersions={comparedAlbums}
-							valGetter={(data): React.ReactNode => (
-								<ObjectRefInfo objRef={data.originalRelease?.releaseEvent} />
-							)}
+							valGetter={(data): React.ReactNode => {
+								if (data.originalRelease?.releaseEvent !== undefined) {
+									return (
+										<ObjectRefInfo
+											objRef={data.originalRelease?.releaseEvent}
+										/>
+									);
+								}
+								return data.originalRelease?.releaseEvents === undefined
+									? []
+									: data.originalRelease.releaseEvents.map((e, index) => (
+											<ObjectRefInfo objRef={e} key={index} />
+									  ));
+							}}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
