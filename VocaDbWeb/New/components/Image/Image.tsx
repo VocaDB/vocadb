@@ -22,7 +22,8 @@ export default function CustomImage(props: CustomImageProps) {
 					base += '&fit=cover&a=attention';
 				}
 				if (props.width) {
-					base += '&w=' + loaderProps.width;
+					base += '&w=' + props.width;
+					base += '&h=' + props.height;
 				}
 
 				return base;

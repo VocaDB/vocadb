@@ -240,15 +240,15 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 				show={originalPVs !== undefined && originalPVs.length > 0}
 			>
 				<Stack align="flex-start">
-					{originalPVs.map((pv) => (
-						<PVButton onClick={() => setPV(pv)} pv={pv} />
+					{originalPVs.map((pv, key) => (
+						<PVButton key={key} onClick={() => setPV(pv)} pv={pv} />
 					))}
 				</Stack>
 			</SongProperty>
 			<SongProperty name="Other media" show={otherPVs !== undefined && otherPVs.length > 0}>
 				<Stack align="flex-start">
-					{otherPVs.map((pv) => (
-						<PVButton onClick={() => setPV(pv)} pv={pv} />
+					{otherPVs.map((pv, key) => (
+						<PVButton key={key} onClick={() => setPV(pv)} pv={pv} />
 					))}
 				</Stack>
 			</SongProperty>

@@ -38,11 +38,7 @@ export default function App(
 	});
 
 	useEffect(() => {
-		if (
-			(storedPrimaryColor !== cookiePrimaryColor ||
-				storedColorScheme !== cookieColorScheme) &&
-			(storedPrimaryColor !== theme.primaryColor || storedColorScheme !== theme.colorScheme)
-		) {
+		if (storedPrimaryColor !== theme.primaryColor || storedColorScheme !== theme.colorScheme) {
 			setTheme({
 				colors,
 				primaryColor: storedPrimaryColor,

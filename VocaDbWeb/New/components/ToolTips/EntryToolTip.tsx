@@ -22,10 +22,6 @@ export default function EntryToolTip(props: EntryToolTipProps) {
 			return <TagToolTipContent {...props} />;
 		}
 	};
-	return (
-		<React.Suspense fallback={props.children}>
-			<EntryToolTipCard tooltip={getToolTip()}>{props.children}</EntryToolTipCard>
-		</React.Suspense>
-	);
+	return <EntryToolTipCard tooltip={getToolTip()}>{props.children}</EntryToolTipCard>;
 }
 

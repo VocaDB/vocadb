@@ -35,7 +35,7 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 		updatePlayerBounds();
 	}, [song]);
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		window.addEventListener('resize', handleResize);
 		handleResize();
 
@@ -44,7 +44,7 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 		};
 	}, [handleResize]);
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		return (): void => {
 			setPlayerBounds(undefined);
 		};
@@ -66,8 +66,8 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 			style={{ width: '30vw', aspectRatio: '16/9' }}
 		>
 			<CustomImage
-				width={500}
-				height={315}
+				width={540}
+				height={405}
 				style={{ width: '100%', height: '100%' }}
 				src={song.mainPicture?.urlOriginal ?? 'todo: fallback'}
 				alt="Start the song"
