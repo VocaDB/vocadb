@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlbumToolTipProps } from './AlbumToolTipContent';
 import { ArtistToolTipProps } from './ArtistToolTipContent';
 import { TagToolTipProps } from './TagToolTipContent';
@@ -13,6 +13,9 @@ type EntryToolTipProps = (AlbumToolTipProps | ArtistToolTipProps | TagToolTipPro
 };
 
 export default function EntryToolTip(props: EntryToolTipProps) {
+	// Fixes nextjs hydration issues
+	// TODO: Investigate if this will be needed in app router
+	const [tooltip, setTooltip] = useState<JSX.Element | undefined>(undefined);
 	const getToolTip = () => {
 		if (props.entry === 'album') {
 			return <AlbumToolTipContent {...props} />;
@@ -22,6 +25,15 @@ export default function EntryToolTip(props: EntryToolTipProps) {
 			return <TagToolTipContent {...props} />;
 		}
 	};
-	return <EntryToolTipCard tooltip={getToolTip()}>{props.children}</EntryToolTipCard>;
+
+	useEffect(() => {
+		setTooltip(getToolTip());
+	}, [props]);
+
+	return (
+		<React.Suspense fallback={props.children}>
+			<EntryToolTipCard tooltip={tooltip}>{props.children}</EntryToolTipCard>
+		</React.Suspense>
+	);
 }
 
