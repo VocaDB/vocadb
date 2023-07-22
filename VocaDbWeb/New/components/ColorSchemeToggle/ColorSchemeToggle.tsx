@@ -9,7 +9,7 @@ const ColorSchemeMenu = dynamic(() => import('./ColorSchemeMenu'), {
 	loading: () => <Paper h="1000px" />,
 });
 
-export function ColorSchemeToggle() {
+export default function ColorSchemeToggle() {
 	const theme = useMantineTheme();
 	const [colorScheme, toggleColorScheme] = useColorStore((state) => [
 		state.colorScheme,
