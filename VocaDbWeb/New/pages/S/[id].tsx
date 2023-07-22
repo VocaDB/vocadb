@@ -16,19 +16,7 @@ import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
 import { TranslationType } from '@/types/Models/Globalization/TranslationType';
 import { PVType } from '@/types/Models/PVs/PVType';
 import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
-import {
-	ActionIcon,
-	Box,
-	Card,
-	Container,
-	Grid,
-	Group,
-	SimpleGrid,
-	Stack,
-	Tabs,
-	Text,
-	useMantineTheme,
-} from '@mantine/core';
+import { ActionIcon, Grid, Group, Stack, Tabs, Text, Title } from '@mantine/core';
 import {
 	IconAffiliate,
 	IconAlignJustified,
@@ -43,10 +31,6 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 // TODO: Lazy load this
 import { extendedUserLanguageCultures } from '@/Helpers/userLanguageCultures';
-import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
-import CustomImage from '@/components/Image/Image';
-import { RelatedSongs } from '@/types/DataContracts/Song/RelatedSongs';
-import { getBestThumbUrl } from '@/components/Frontpage/HighlightedSongCard';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -88,7 +72,7 @@ const SongActions = ({ details }: SongActionsProps) => {
 	);
 
 	return (
-		<Group mt="sm">
+		<Group mt="xs">
 			{SongVoteButton(SongVoteRating.Like, <IconThumbUp />)}
 			{SongVoteButton(SongVoteRating.Favorite, <IconHeart />)}
 		</Group>
@@ -272,37 +256,6 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 	);
 };
 
-interface SongCardProps {
-	song: SongApiContract;
-}
-
-const SongCard = ({ song }: SongCardProps) => {
-	const bestThumbUrl = getBestThumbUrl(song.pvs ?? []);
-	const theme = useMantineTheme();
-
-	return (
-		<Card bg="#f8f9fa" withBorder radius={0} p={0}>
-			{/* TODO: Use real bacgground theme color*/}
-			<Group noWrap spacing={0}>
-				<CustomImage
-					style={{ objectFit: 'contain' }}
-					mode="crop"
-					src={'/api/pvs/thumbnail?pvUrl=' + bestThumbUrl}
-					width={101}
-					height={78.75}
-					alt=""
-				/>
-				<div style={{ padding: theme.spacing.md }}>
-					<Text fw={700} lh={1.2}>
-						{song.name}
-					</Text>
-					<Text>{song.artistString}</Text>
-				</div>
-			</Group>
-		</Card>
-	);
-};
-
 interface SongTabsProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
@@ -340,39 +293,21 @@ const SongTabs = ({ details, setPV }: SongTabsProps) => {
 	);
 };
 
-const RelatedSongs = ({ id }: { id: number }) => {
-	const { data, isLoading } = useSWR(
-		`/api/songs/${id}/related?fields=MainPicture,PVs`,
-		apiGet<RelatedSongs>
-	);
-
-	return (
-		<Box h="100%" style={{ border: '1px lightgrey solid' }}>
-			{!isLoading &&
-				data?.artistMatches.map((song) => <SongCard key={song.id} song={song} />)}
-		</Box>
-	);
-};
-
 export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	const [pv, setPV] = useState<PVContract | undefined>(song.pvs[0]);
 	return (
-		<Grid>
-			<Grid.Col span={8}>
-				<div>
-					<div>
-						{pv !== undefined && (
-							<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={pv} />
-						)}
-						<SongActions details={song} />
-					</div>
-					<SongTabs setPV={setPV} details={song} />
-				</div>
-			</Grid.Col>
-			<Grid.Col span={4}>
-				<RelatedSongs id={song.song.id} />
-			</Grid.Col>
-		</Grid>
+		<>
+			<Title mb="md" order={2}>
+				{song.song.name} feat. {song.song.artistString}
+			</Title>
+			<div>
+				{pv !== undefined && (
+					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={pv} />
+				)}
+				<SongActions details={song} />
+			</div>
+			<SongTabs setPV={setPV} details={song} />
+		</>
 	);
 }
 
