@@ -30,7 +30,9 @@ export default function SongVersionsList({ songs }: SongVersionsList) {
 			{!expanded && songs.length >= 3 && (
 				<>
 					<Space h="xs" />
-					<Anchor onClick={() => setExpanded(true)}>Show all ({songs.length})</Anchor>
+					<Anchor td="underline" onClick={() => setExpanded(true)}>
+						Show all ({songs.length})
+					</Anchor>
 				</>
 			)}
 		</>
