@@ -7,6 +7,7 @@ export interface AlbumToolTipProps {
 	album: AlbumForApiContract;
 }
 
+// TODO: Add image
 export default function AlbumToolTipContent({ album }: AlbumToolTipProps) {
 	const releaseDate = formatComponentDate(
 		album.releaseDate.year,
