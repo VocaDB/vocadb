@@ -37,6 +37,8 @@
 		"decimal.js-light": "^2.5.1",
 		"embla-carousel-react": "^7.1.0",
 		"framer-motion": "^10.12.18",
+		"html-react-parser": "^4.2.0",
+		"micromark": "^4.0.0",
 		"next": "13.2.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

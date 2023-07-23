@@ -16,7 +16,17 @@ import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
 import { TranslationType } from '@/types/Models/Globalization/TranslationType';
 import { PVType } from '@/types/Models/PVs/PVType';
 import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
-import { ActionIcon, Grid, Group, Stack, Tabs, Text, Title } from '@mantine/core';
+import {
+	ActionIcon,
+	Grid,
+	Group,
+	SegmentedControl,
+	Stack,
+	Tabs,
+	Text,
+	Title,
+	TypographyStylesProvider,
+} from '@mantine/core';
 import {
 	IconAffiliate,
 	IconAlignJustified,
@@ -31,6 +41,8 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 // TODO: Lazy load this
 import { extendedUserLanguageCultures } from '@/Helpers/userLanguageCultures';
+import { micromark } from 'micromark';
+import parse from '@/Helpers/markdown';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -106,9 +118,13 @@ const SongProperty = ({
 interface SongBasicInfoProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
+	notesEnglish: string;
+	notesOriginal: string;
 }
 
-const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
+const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasicInfoProps) => {
+	const [notesLanguage, setNotesLanguage] = useState<'english' | 'original'>('english');
+
 	const artistIsType = (artist: ArtistForSongContract, type: ArtistCategories): boolean => {
 		return artist.categories
 			.split(',')
@@ -252,6 +268,25 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 					))}
 				</Stack>
 			</SongProperty>
+			<SongProperty
+				name="Description"
+				show={details.notes.original.length > 0 || details.notes.english.length > 0}
+			>
+				<Group>
+					<TypographyStylesProvider maw={{ md: '70%' }}>
+						{parse(notesLanguage === 'original' ? notesOriginal : notesEnglish)}
+					</TypographyStylesProvider>
+					<SegmentedControl
+						value={notesLanguage}
+						onChange={(value: 'english' | 'original') => setNotesLanguage(value)}
+						mb="1.25rem"
+						data={[
+							{ label: 'Original', value: 'original' },
+							{ label: 'English', value: 'english' },
+						]}
+					/>
+				</Group>
+			</SongProperty>
 		</Grid>
 	);
 };
@@ -259,9 +294,11 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 interface SongTabsProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
+	notesOriginal: string;
+	notesEnglish: string;
 }
 
-const SongTabs = ({ details, setPV }: SongTabsProps) => {
+const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps) => {
 	return (
 		<Tabs mt="md" defaultValue="info">
 			<Tabs.List>
@@ -283,7 +320,12 @@ const SongTabs = ({ details, setPV }: SongTabsProps) => {
 			</Tabs.List>
 
 			<Tabs.Panel value="info">
-				<SongBasicInfo setPV={setPV} details={details} />
+				<SongBasicInfo
+					setPV={setPV}
+					details={details}
+					notesEnglish={notesEnglish}
+					notesOriginal={notesOriginal}
+				/>
 			</Tabs.Panel>
 			<Tabs.Panel value="lyrics">Lyrics</Tabs.Panel>
 			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
@@ -293,7 +335,11 @@ const SongTabs = ({ details, setPV }: SongTabsProps) => {
 	);
 };
 
-export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page({
+	song,
+	notesEnglish,
+	notesOriginal,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	const [pv, setPV] = useState<PVContract | undefined>(song.pvs[0]);
 	return (
 		<>
@@ -306,15 +352,28 @@ export default function Page({ song }: InferGetServerSidePropsType<typeof getSer
 				)}
 				<SongActions details={song} />
 			</div>
-			<SongTabs setPV={setPV} details={song} />
+			<SongTabs
+				setPV={setPV}
+				details={song}
+				notesEnglish={notesEnglish}
+				notesOriginal={notesOriginal}
+			/>
 		</>
 	);
 }
 
 export const getServerSideProps: GetServerSideProps<{
 	song: SongDetailsContract;
+	notesOriginal: string;
+	notesEnglish: string;
 }> = async ({ query }) => {
 	const song = await apiGet<SongDetailsContract>(`/api/songs/${query.id}/details`);
-	return { props: { song } };
+	return {
+		props: {
+			song,
+			notesEnglish: micromark(song.notes.english),
+			notesOriginal: micromark(song.notes.original),
+		},
+	};
 };
 
