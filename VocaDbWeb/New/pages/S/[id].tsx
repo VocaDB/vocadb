@@ -47,8 +47,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
-import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
-import SongLink from '@/components/Links/SongLink';
+import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -253,6 +252,7 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 			<SongProperty name="Albums" show={details.albums.length > 0}>
 				{mapAlbums(details.albums)}
 			</SongProperty>
+			{/*  Sort tags by genre */}
 			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
 				<Text>{details.pools.map((pool) => pool.name).join(', ')}</Text>
@@ -275,20 +275,7 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 				</Stack>
 			</SongProperty>
 			<SongProperty name="Alternate versions" show={details.alternateVersions.length > 0}>
-				{details.alternateVersions.map((s) => {
-					// TODO: Song type badge
-					return (
-						<>
-							<Text>
-								<SongLink song={s} />
-								{` (${formatNumberToTime(s.lengthSeconds)})`}
-							</Text>
-							<Text color="dimmed" size="sm">
-								{s.artistString}
-							</Text>
-						</>
-					);
-				})}
+				<SongVersionsList songs={details.alternateVersions} />
 			</SongProperty>
 			<SongProperty
 				name="Description"
