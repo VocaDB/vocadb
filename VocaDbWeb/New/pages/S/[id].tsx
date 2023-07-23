@@ -41,8 +41,12 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 // TODO: Lazy load this
 import { extendedUserLanguageCultures } from '@/Helpers/userLanguageCultures';
-import { micromark } from 'micromark';
 import parse from '@/Helpers/markdown';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+import remarkBreaks from 'remark-breaks';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -244,10 +248,7 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 			<SongProperty name="BPM" show={!!details.minMilliBpm}>
 				<Text>{formatFromMilliBpm(details.minMilliBpm, details.maxMilliBpm)}</Text>
 			</SongProperty>
-			<SongProperty name="Albums" show={details.albums.length > 0}>
-				{mapAlbums(details.albums)}
-			</SongProperty>
-			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
+
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
 				<Text>{details.pools.map((pool) => pool.name).join(', ')}</Text>
 			</SongProperty>
@@ -272,20 +273,24 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 				name="Description"
 				show={details.notes.original.length > 0 || details.notes.english.length > 0}
 			>
-				<Group>
-					<TypographyStylesProvider maw={{ md: '70%' }}>
+				<Group align="flex-start">
+					<TypographyStylesProvider className="description" maw={{ md: '70%' }}>
 						{parse(notesLanguage === 'original' ? notesOriginal : notesEnglish)}
 					</TypographyStylesProvider>
 					<SegmentedControl
 						value={notesLanguage}
 						onChange={(value: 'english' | 'original') => setNotesLanguage(value)}
-						mb="1.25rem"
 						data={[
 							{ label: 'Original', value: 'original' },
 							{ label: 'English', value: 'english' },
 						]}
 					/>
 				</Group>
+			</SongProperty>
+			<SongProperty name="Statistics">
+				<Text>
+					{(details.song.favoritedTimes ?? 0) + 'test'} {details.likeCount}
+				</Text>
 			</SongProperty>
 		</Grid>
 	);
@@ -368,11 +373,17 @@ export const getServerSideProps: GetServerSideProps<{
 	notesEnglish: string;
 }> = async ({ query }) => {
 	const song = await apiGet<SongDetailsContract>(`/api/songs/${query.id}/details`);
+	// TODO: Move to markdown helper
+	const processer = unified()
+		.use(remarkParse)
+		.use(remarkBreaks)
+		.use(remarkRehype)
+		.use(rehypeStringify);
 	return {
 		props: {
 			song,
-			notesEnglish: micromark(song.notes.english),
-			notesOriginal: micromark(song.notes.original),
+			notesEnglish: String(processer.processSync(song.notes.english)),
+			notesOriginal: String(processer.processSync(song.notes.original)),
 		},
 	};
 };

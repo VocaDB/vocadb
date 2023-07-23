@@ -67,6 +67,8 @@ export default function App(
 					name="description"
 					content="VocaDB is a Vocaloid music database with translated artists, albums and songs."
 				/>
+				{/* Fixes spacing issues in the basic info pages */}
+				<style>{'.description > p:last-child { margin-bottom: 0px}'}</style>
 				<link rel="shortcut icon" href="/favicon.ico" />
 				<link rel="preconnect" href="https://vocadb.net" />
 				<link rel="preconnect" href="https://wsrv.nl" />
