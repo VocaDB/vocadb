@@ -4,6 +4,7 @@ import { Button } from '@mantine/core';
 import {
 	IconBrandBandcamp,
 	IconBrandBilibili,
+	IconBrandSoundcloud,
 	IconBrandVimeo,
 	IconBrandYoutube,
 	IconVideo,
@@ -81,6 +82,9 @@ export default function PVButton({ pv, onClick }: PVButtonProps) {
 			break;
 		case PVService.Bandcamp:
 			ServiceIcon = IconBrandBandcamp;
+			break;
+		case PVService.SoundCloud:
+			ServiceIcon = IconBrandSoundcloud;
 			break;
 		case PVService.Bilibili:
 			ServiceIcon = IconBrandBilibili;
