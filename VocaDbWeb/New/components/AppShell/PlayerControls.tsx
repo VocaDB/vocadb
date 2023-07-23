@@ -19,9 +19,6 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 
 	const [duration, setDuration] = useState(0);
 	const [progress, setProgress] = useState(0);
-	// https://github.com/mantinedev/mantine/issues/2840
-	const currentState = useRef(playerApi);
-	currentState.current = playerApi;
 
 	const interval = useInterval(() => {
 		if (playerApi === undefined) return;
@@ -31,7 +28,6 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 
 	useEffect(() => {
 		interval.start();
-		currentState.current = playerApi;
 		return interval.stop();
 	}, [playerApi]);
 
@@ -84,10 +80,8 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 					label={null}
 					onChangeEnd={(progress) => {
 						interval.start();
-						if (currentState.current === undefined) return;
-						currentState.current.setCurrentTime(
-							(progress / 100) * currentState.current.getDuration()
-						);
+						if (playerApi === undefined) return;
+						playerApi.setCurrentTime((progress / 100) * playerApi.getDuration());
 					}}
 				/>
 				<Text size="sm" color="dimmed">
