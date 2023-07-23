@@ -48,6 +48,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
 import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
+import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -117,6 +118,50 @@ const SongProperty = ({
 				{children}
 			</Grid.Col>
 		</React.Fragment>
+	);
+};
+
+interface LyricsTabProps {
+	lyrics: LyricsForSongContract[];
+}
+
+const LyricsTab = ({ lyrics }: LyricsTabProps) => {
+	// TODO: Select based on preferred content language
+	const mainLyrics = lyrics.reduce((prev, curr) => {
+		if (curr.translationType === 'Original') {
+			return curr;
+		}
+		return prev;
+	});
+	const [curr, setCurr] = useState<LyricsForSongContract>(mainLyrics);
+	const { data, isLoading } = useSWR(
+		'/api/songs/lyrics/' + curr.id,
+		apiGet<LyricsForSongContract>
+	);
+
+	return (
+		<>
+			<SegmentedControl
+				mt="md"
+				mb="xs"
+				value={curr.id?.toString() ?? '0'}
+				onChange={(id) => setCurr(lyrics.find((val) => val.id?.toString() === id)!)}
+				data={lyrics.map((l) => {
+					let label;
+					if (l.translationType === 'Original') {
+						label = 'Original';
+					} else if (l.translationType === 'Romanized') {
+						label = 'Romanized';
+					} else {
+						label = l.cultureCodes?.map((c) => (c === '' ? 'Other' : c)).join(', ');
+					}
+					label ??= 'Other';
+
+					return { label, value: l.id?.toString() ?? '0' };
+				})}
+			/>
+			<div style={{ whiteSpace: 'pre-line' }}>{data?.value ?? ''}</div>
+		</>
 	);
 };
 
@@ -349,7 +394,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					notesOriginal={notesOriginal}
 				/>
 			</Tabs.Panel>
-			<Tabs.Panel value="lyrics">Lyrics</Tabs.Panel>
+			<Tabs.Panel value="lyrics">
+				<LyricsTab lyrics={details.lyricsFromParents} />
+			</Tabs.Panel>
 			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
 			<Tabs.Panel value="related">Related Songs</Tabs.Panel>
 			<Tabs.Panel value="share">Share</Tabs.Panel>
