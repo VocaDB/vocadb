@@ -47,6 +47,8 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
+import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
+import SongLink from '@/components/Links/SongLink';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -248,7 +250,10 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 			<SongProperty name="BPM" show={!!details.minMilliBpm}>
 				<Text>{formatFromMilliBpm(details.minMilliBpm, details.maxMilliBpm)}</Text>
 			</SongProperty>
-
+			<SongProperty name="Albums" show={details.albums.length > 0}>
+				{mapAlbums(details.albums)}
+			</SongProperty>
+			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
 				<Text>{details.pools.map((pool) => pool.name).join(', ')}</Text>
 			</SongProperty>
@@ -269,6 +274,22 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 					))}
 				</Stack>
 			</SongProperty>
+			<SongProperty name="Alternate versions" show={details.alternateVersions.length > 0}>
+				{details.alternateVersions.map((s) => {
+					// TODO: Song type badge
+					return (
+						<>
+							<Text>
+								<SongLink song={s} />
+								{` (${formatNumberToTime(s.lengthSeconds)})`}
+							</Text>
+							<Text color="dimmed" size="sm">
+								{s.artistString}
+							</Text>
+						</>
+					);
+				})}
+			</SongProperty>
 			<SongProperty
 				name="Description"
 				show={details.notes.original.length > 0 || details.notes.english.length > 0}
@@ -288,9 +309,18 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 				</Group>
 			</SongProperty>
 			<SongProperty name="Statistics">
+				{/* TODO: Link favorites and likes */}
 				<Text>
-					{(details.song.favoritedTimes ?? 0) + 'test'} {details.likeCount}
+					{`${details.song.favoritedTimes ?? 0} favorite(s), ${
+						details.likeCount
+					} like(s), ${details.hits} hit(s), ${details.song.ratingScore} total score`}
 				</Text>
+			</SongProperty>
+			<SongProperty name="Published" show={details.song.publishDate !== undefined}>
+				<Text>{new Date(details.song.publishDate!).toLocaleDateString()}</Text>
+			</SongProperty>
+			<SongProperty name="Addition date" show={details.song.createDate !== undefined}>
+				<Text>{new Date(details.song.createDate!).toLocaleString()}</Text>
 			</SongProperty>
 		</Grid>
 	);
