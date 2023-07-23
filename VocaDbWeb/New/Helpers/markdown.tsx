@@ -21,7 +21,10 @@ interface EntryLinkProps {
 
 const EntryLink = ({ itemUrl, children }: EntryLinkProps) => {
 	const [hovered, setHovered] = useState(false);
-	const apiUrl = itemUrl.replace('/Ar/', '/artists/').replace('/Al/', '/albums/');
+	const apiUrl = itemUrl
+		.replace('/Ar/', '/artists/')
+		.replace('/Al/', '/albums/')
+		.replace('/S/', '/songs/');
 	const { data, isLoading } = useSWR(
 		hovered ? `/api${apiUrl}?fields=AdditionalNames` : null,
 		apiGet,
@@ -30,7 +33,13 @@ const EntryLink = ({ itemUrl, children }: EntryLinkProps) => {
 			revalidateIfStale: false,
 		}
 	);
-	const entry = itemUrl.includes('/Ar/') ? 'artist' : itemUrl.includes('/Al/') ? 'album' : 'tag';
+	const entry = itemUrl.includes('/Ar/')
+		? 'artist'
+		: itemUrl.includes('/Al/')
+		? 'album'
+		: itemUrl.includes('/S/')
+		? 'song'
+		: 'tag';
 
 	const child = (
 		<Link
@@ -47,7 +56,7 @@ const EntryLink = ({ itemUrl, children }: EntryLinkProps) => {
 		child
 	) : (
 		//@ts-ignore
-		<EntryToolTip artist={data} album={data} entry={entry}>
+		<EntryToolTip artist={data} album={data} song={data} entry={entry}>
 			{child}
 		</EntryToolTip>
 	);
@@ -58,7 +67,7 @@ export default function parse(html: string): string | JSX.Element | JSX.Element[
 		replace: (domNode) => {
 			if (isElement(domNode) && domNode.name === 'a' && domNode.attribs.href !== undefined) {
 				const href = domNode.attribs.href.replace(/https?:\/\/vocadb.net/, '');
-				if (href.startsWith('/Ar/') || href.startsWith('/Al/')) {
+				if (href.startsWith('/Ar/') || href.startsWith('/Al/') || href.startsWith('/S/')) {
 					return <EntryLink itemUrl={href}>{domToReact(domNode.childNodes)}</EntryLink>;
 				}
 				return <Link href={href}>{domToReact(domNode.childNodes)}</Link>;
