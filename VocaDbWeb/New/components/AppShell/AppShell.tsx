@@ -53,6 +53,7 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 		>
 			<MediaQuery smallerThan="md" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
 				<Box
+					id="main-content"
 					pos="relative"
 					p="md"
 					h="calc(100vh - 70px - 64px)"

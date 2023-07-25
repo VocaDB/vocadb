@@ -20,9 +20,11 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 
 	const updatePlayerBounds = () => {
 		const rect = embedPVPreviewRef.current.getBoundingClientRect();
+		const scrollLeft = document.getElementById('main-content')?.scrollLeft ?? 0;
+		const scrollTop = document.getElementById('main-content')?.scrollTop ?? 0;
 		setPlayerBounds({
-			x: rect.x + window.scrollX,
-			y: rect.y + window.scrollY,
+			x: rect.x + scrollLeft,
+			y: rect.y + scrollTop,
 			width: rect.width,
 			height: rect.height,
 		});
