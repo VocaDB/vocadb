@@ -134,16 +134,14 @@ const LyricsTab = ({ lyrics }: LyricsTabProps) => {
 		return prev;
 	});
 	const [curr, setCurr] = useState<LyricsForSongContract>(mainLyrics);
-	const { data, isLoading } = useSWR(
-		'/api/songs/lyrics/' + curr.id,
-		apiGet<LyricsForSongContract>
-	);
+	const { data } = useSWR('/api/songs/lyrics/' + curr.id, apiGet<LyricsForSongContract>);
 
 	return (
 		<>
 			<SegmentedControl
 				mt="md"
 				mb="xs"
+				color="default"
 				value={curr.id?.toString() ?? '0'}
 				onChange={(id) => setCurr(lyrics.find((val) => val.id?.toString() === id)!)}
 				data={lyrics.map((l) => {
