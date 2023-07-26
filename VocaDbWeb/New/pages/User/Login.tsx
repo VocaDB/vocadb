@@ -76,8 +76,8 @@ export default function AuthenticationTitle() {
 
 				<Paper withBorder shadow="md" p={30} mt={30} radius="md">
 					<TextInput
-						label="Email"
-						placeholder="email@vocadb.net"
+						label="Username"
+						placeholder="Name"
 						required
 						{...form.getInputProps('userName')}
 					/>
