@@ -49,7 +49,8 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 			{active ? (
 				<ActionIcon
 					title="Pause"
-					onClick={(e) => {
+					// Typescript can't seem to infer this type
+					onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 						e.stopPropagation();
 						playerApi?.pause();
 					}}
@@ -59,7 +60,7 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 			) : (
 				<ActionIcon
 					title="Play"
-					onClick={(e) => {
+					onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 						e.stopPropagation();
 						playerApi?.play();
 					}}

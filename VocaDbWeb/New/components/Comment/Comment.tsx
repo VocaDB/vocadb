@@ -11,7 +11,10 @@ import {
 	Anchor,
 } from '@mantine/core';
 import Link from 'next/link';
-import CustomImage from '../Image/Image';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 interface CommentProps {
 	comment: CommentContract;
@@ -35,7 +38,8 @@ const useStyles = createStyles((theme) => ({
 	},
 }));
 
-export function Comment({ comment }: CommentProps) {
+// Imports dayjs/plugin/relativeTime and should be lazy loaded
+export default function Comment({ comment }: CommentProps) {
 	const { classes } = useStyles();
 	return (
 		<Paper maw={700} withBorder radius="md" className={classes.comment}>
@@ -50,7 +54,7 @@ export function Comment({ comment }: CommentProps) {
 						{comment.authorName}
 					</Anchor>
 					<Text fz="xs" c="dimmed">
-						{comment.created}
+						{dayjs(comment.created).fromNow()}
 					</Text>
 				</div>
 			</Group>

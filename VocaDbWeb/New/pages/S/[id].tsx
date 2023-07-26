@@ -33,7 +33,6 @@ import {
 	IconHeart,
 	IconInfoCircle,
 	IconMessageCircle,
-	IconShare,
 	IconThumbUp,
 } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -50,7 +49,9 @@ import remarkBreaks from 'remark-breaks';
 import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
 import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
 import { CommentContract } from '@/types/DataContracts/CommentContract';
-import { Comment } from '@/components/Comment/Comment';
+import dynamic from 'next/dynamic';
+
+const Comment = dynamic(() => import('@/components/Comment/Comment'));
 
 interface SongActionsProps {
 	details: SongDetailsContract;
