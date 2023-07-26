@@ -15,6 +15,7 @@ export default function PVPlayer() {
 
 	// Values from Navbar.tsx
 	const subtractLeft = isMobile ? 0 : isIpad ? 220 : 300;
+	const subtractTop = isMobile ? 50 : 70;
 
 	return (
 		<div
@@ -27,7 +28,7 @@ export default function PVPlayer() {
 					: {
 							position: 'absolute',
 							left: playerBounds.x - subtractLeft,
-							top: playerBounds.y - 70, // TODO: The header height is 65 on smaller viewports
+							top: playerBounds.y - subtractTop,
 							width: playerBounds.width,
 							height: playerBounds.height,
 					  }
