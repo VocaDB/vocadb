@@ -46,48 +46,62 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 			}}
 		>
 			{active ? (
-				<ActionIcon title="Pause" onClick={() => playerApi?.pause()}>
+				<ActionIcon
+					title="Pause"
+					onClick={(e) => {
+						e.stopPropagation();
+						playerApi?.pause();
+					}}
+				>
 					<IconPlayerPause />
 				</ActionIcon>
 			) : (
-				<ActionIcon title="Play" onClick={() => playerApi?.play()}>
+				<ActionIcon
+					title="Play"
+					onClick={(e) => {
+						e.stopPropagation();
+						playerApi?.play();
+					}}
+				>
 					<IconPlayerPlay />
 				</ActionIcon>
 			)}
-			<div
-				style={{
-					display: showMobileLayout ? 'none' : 'flex',
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'space-between',
-					width: '100%',
-				}}
-			>
-				<Text size="sm" color="dimmed">
-					{formatNumberToTime(progress * duration)}
-				</Text>
-				<Slider
-					w="70%"
-					title="Song progress slider"
-					thumbLabel="Song progress slider thumb"
-					size="sm"
-					value={progress * 100}
-					showLabelOnHover={false}
-					onChange={(newProgress) => {
-						if (interval.active) interval.stop();
-						setProgress(newProgress / 100);
+			{!showMobileLayout && (
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+						width: '100%',
 					}}
-					label={null}
-					onChangeEnd={(progress) => {
-						interval.start();
-						if (playerApi === undefined) return;
-						playerApi.setCurrentTime((progress / 100) * playerApi.getDuration());
-					}}
-				/>
-				<Text size="sm" color="dimmed">
-					{formatNumberToTime(duration)}
-				</Text>
-			</div>
+				>
+					<Text size="sm" color="dimmed">
+						{formatNumberToTime(progress * duration)}
+					</Text>
+					<Slider
+						w="70%"
+						title="Song progress slider"
+						thumbLabel="Song progress slider thumb"
+						size="sm"
+						value={progress * 100}
+						showLabelOnHover={false}
+						onChange={(newProgress) => {
+							if (interval.active) interval.stop();
+							setProgress(newProgress / 100);
+						}}
+						label={null}
+						onChangeEnd={(progress) => {
+							interval.start();
+							if (playerApi === undefined) return;
+							playerApi.setCurrentTime((progress / 100) * playerApi.getDuration());
+						}}
+					/>
+					<Text size="sm" color="dimmed">
+						{formatNumberToTime(duration)}
+					</Text>
+				</div>
+			)}
 		</div>
 	);
 }

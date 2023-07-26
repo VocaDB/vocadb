@@ -13,7 +13,7 @@ import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
 import React, { useRef, useState } from 'react';
 import { IconMicrophone2, IconVolume, IconVolumeOff } from '@tabler/icons-react';
 import { useMediaQuery, usePrevious } from '@mantine/hooks';
-import { motion } from 'framer-motion';
+import MobilePlayer from './MobilePlayer';
 
 interface SongInfoProps {
 	showMobileLayout?: boolean;
@@ -44,19 +44,14 @@ const SongInfo = ({ showMobileLayout }: SongInfoProps) => {
 };
 
 const VolumeControl = () => {
-	const [playerApi, volume, setVolume, lyricsAvailable, showLyrics, toggleLyrics] =
-		usePlayerStore((set) => [
-			set.playerApi,
-			set.volume,
-			set.setVolume,
-			set.lyricsAvailable,
-			set.showLyrics,
-			set.toggleLyrics,
-		]);
+	const [volume, setVolume, lyricsAvailable, showLyrics, toggleLyrics] = usePlayerStore((set) => [
+		set.volume,
+		set.setVolume,
+		set.lyricsAvailable,
+		set.showLyrics,
+		set.toggleLyrics,
+	]);
 	const lastVolume = usePrevious(volume);
-	// https://github.com/mantinedev/mantine/issues/2840
-	const currentState = useRef(playerApi);
-	currentState.current = playerApi;
 
 	return (
 		<Group spacing="xs">
@@ -125,13 +120,8 @@ const useStyles = createStyles((theme) => ({
 const CustomFooter = () => {
 	const theme = useMantineTheme();
 	const styles = useStyles();
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints['sm']})`);
 	const [expanded, setExpanded] = useState(false);
-
-	// TODO: Maybe move this check to Footer component
-	if (typeof window === 'undefined') {
-		return <></>;
-	}
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints['sm']})`);
 
 	return (
 		<div className={styles.classes.base}>
@@ -145,20 +135,7 @@ const CustomFooter = () => {
 				<PlayerControls showMobileLayout={isMobile} />
 				{!isMobile && <VolumeControl />}
 			</Paper>
-			<Paper
-				component={motion.div}
-				onClick={() => setExpanded(isMobile && !expanded)}
-				bg="blue"
-				animate={{
-					position: 'fixed',
-					top: expanded ? 50 : '100vh',
-					bottom: 64,
-					width: '100%',
-					zIndex: 100,
-				}}
-			>
-				<p>Text</p>
-			</Paper>
+			<MobilePlayer expanded={expanded} onClose={() => setExpanded(false)} />
 		</div>
 	);
 };
