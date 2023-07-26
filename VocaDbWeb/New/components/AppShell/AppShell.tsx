@@ -51,13 +51,17 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 			})}
 			padding={0}
 		>
-			<MediaQuery smallerThan="md" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
-				<Box id="main-content" pos="relative" h="calc(100vh - 70px - 64px)">
-					<Box p="md" style={{ overflowY: 'scroll', height: '100%' }}>
-						{children}
-						<LyricsContainer />
-						<PVPlayer />
-					</Box>
+			<MediaQuery smallerThan="sm" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
+				<Box
+					id="main-content"
+					p="md"
+					pos="relative"
+					h="calc(100vh - 70px - 64px)"
+					style={{ overflowY: 'scroll' }}
+				>
+					{children}
+					<LyricsContainer />
+					<PVPlayer />
 				</Box>
 			</MediaQuery>
 			<Footer />

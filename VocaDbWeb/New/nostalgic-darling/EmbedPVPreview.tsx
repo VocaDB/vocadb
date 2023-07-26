@@ -65,11 +65,11 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 				updatePlayerBounds();
 			}}
 			ref={embedPVPreviewRef}
-			style={{ maxWidth: 540, aspectRatio: '16/9' }}
+			style={{ maxWidth: 405 }}
 		>
 			<CustomImage
-				width={540}
-				height={405}
+				width={405}
+				height={304}
 				style={{ width: '100%', height: '100%' }}
 				src={song.mainPicture?.urlOriginal ?? 'todo: fallback'}
 				alt="Start the song"
