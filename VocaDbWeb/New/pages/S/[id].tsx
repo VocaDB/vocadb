@@ -381,9 +381,6 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 				<Tabs.Tab value="related" icon={<IconAffiliate size="0.8rem" />}>
 					Related Songs
 				</Tabs.Tab>
-				<Tabs.Tab value="share" icon={<IconShare size="0.8rem" />}>
-					Share
-				</Tabs.Tab>
 			</Tabs.List>
 
 			<Tabs.Panel value="info">
@@ -401,7 +398,6 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 			)}
 			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
 			<Tabs.Panel value="related">Related Songs</Tabs.Panel>
-			<Tabs.Panel value="share">Share</Tabs.Panel>
 		</Tabs>
 	);
 };
