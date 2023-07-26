@@ -49,6 +49,8 @@ import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
 import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
 import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
+import { CommentContract } from '@/types/DataContracts/CommentContract';
+import { Comment } from '@/components/Comment/Comment';
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -356,6 +358,24 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 	);
 };
 
+interface CommentTabProps {
+	details: SongDetailsContract;
+}
+
+const CommentTab = ({ details }: CommentTabProps) => {
+	const { data } = useSWR(`/api/songs/${details.song.id}/comments`, apiGet<CommentContract[]>);
+
+	if (data === undefined) return <></>;
+
+	return (
+		<Stack mt="md">
+			{data.map((c) => (
+				<Comment comment={c} key={c.id} />
+			))}
+		</Stack>
+	);
+};
+
 interface SongTabsProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
@@ -376,7 +396,7 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					</Tabs.Tab>
 				)}
 				<Tabs.Tab value="discussion" icon={<IconMessageCircle size="0.8rem" />}>
-					Discussion
+					Discussion{` (${details.commentCount})`}
 				</Tabs.Tab>
 				<Tabs.Tab value="related" icon={<IconAffiliate size="0.8rem" />}>
 					Related Songs
@@ -396,7 +416,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					<LyricsTab lyrics={details.lyricsFromParents} />
 				</Tabs.Panel>
 			)}
-			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
+			<Tabs.Panel value="discussion">
+				<CommentTab details={details} />
+			</Tabs.Panel>
 			<Tabs.Panel value="related">Related Songs</Tabs.Panel>
 		</Tabs>
 	);

@@ -14,17 +14,20 @@ export default function CustomImage(props: CustomImageProps) {
 			width={props.width}
 			height={props.height}
 			loader={(loaderProps) => {
+				let baseOverride;
 				if (
 					loaderProps.src === '/unknown.png' ||
 					loaderProps.src === '/unknown.webp' ||
 					props.src === undefined
 				) {
-					return '/unknown.webp';
+					baseOverride = 'https://vocadb.vercel.app/unknown.webp';
 				}
 
-				let base = `//wsrv.nl/?url=${
-					loaderProps.src.startsWith('/') ? process.env.NEXT_PUBLIC_API_URL : ''
-				}${loaderProps.src}&output=webp`;
+				let base = baseOverride
+					? baseOverride
+					: `//wsrv.nl/?url=${
+							loaderProps.src.startsWith('/') ? process.env.NEXT_PUBLIC_API_URL : ''
+					  }${loaderProps.src}&output=webp`;
 
 				if (props.mode === 'crop') {
 					base += '&fit=cover&a=attention';
