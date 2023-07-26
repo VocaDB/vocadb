@@ -22,7 +22,7 @@ export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 			const nextPos = PREFERRED_SERVICES.indexOf(nextPV.service ?? '');
 			if (
 				currPV === undefined ||
-				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos > currPos)
+				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos < currPos)
 			) {
 				return nextPV;
 			}

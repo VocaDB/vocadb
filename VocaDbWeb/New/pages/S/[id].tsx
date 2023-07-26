@@ -414,8 +414,9 @@ export default function Page({
 	const [pv, setPV] = useState<PVContract | undefined>(song.pvs[0]);
 	return (
 		<>
-			<Title mb="md" order={2}>
-				{song.song.name} feat. {song.song.artistString}
+			<Title order={2}>{song.song.name}</Title>
+			<Title mb="sm" order={3} color="dimmed">
+				{song.artistString}
 			</Title>
 			<div>
 				{pv !== undefined && (

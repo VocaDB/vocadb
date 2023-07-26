@@ -28,10 +28,11 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 
 	useEffect(() => {
 		interval.start();
-		return interval.stop();
+		return interval.stop;
 	}, [playerApi]);
 
-	if (typeof window === 'undefined' || song === undefined) {
+	// TODO: Move this check into the footer component
+	if (song === undefined) {
 		return <></>;
 	}
 
