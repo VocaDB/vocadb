@@ -14,7 +14,11 @@ export default function CustomImage(props: CustomImageProps) {
 			width={props.width}
 			height={props.height}
 			loader={(loaderProps) => {
-				if (loaderProps.src === '/unknown.png' || props.src === undefined) {
+				if (
+					loaderProps.src === '/unknown.png' ||
+					loaderProps.src === '/unknown.webp' ||
+					props.src === undefined
+				) {
 					return '/unknown.webp';
 				}
 
