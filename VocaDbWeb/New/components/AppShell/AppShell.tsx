@@ -1,4 +1,4 @@
-import { AppShell, Box, MediaQuery, Navbar as MantineNavbar } from '@mantine/core';
+import { AppShell, Box, MediaQuery, Navbar as MantineNavbar, ScrollArea } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import Header from './Header';
 import { useRouter } from 'next/router';
@@ -52,17 +52,12 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 			padding={0}
 		>
 			<MediaQuery smallerThan="md" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
-				<Box
-					id="main-content"
-					pos="relative"
-					p="md"
-					h="calc(100vh - 70px - 64px)"
-					style={{ overflowY: 'scroll' }}
-					w="100%"
-				>
-					{children}
-					<LyricsContainer />
-					<PVPlayer />
+				<Box id="main-content" pos="relative" h="calc(100vh - 70px - 64px)">
+					<Box p="md" style={{ overflowY: 'scroll', height: '100%' }}>
+						{children}
+						<LyricsContainer />
+						<PVPlayer />
+					</Box>
 				</Box>
 			</MediaQuery>
 			<Footer />
