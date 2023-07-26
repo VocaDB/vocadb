@@ -65,7 +65,7 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 				updatePlayerBounds();
 			}}
 			ref={embedPVPreviewRef}
-			style={{ width: '80vw', aspectRatio: '16/9' }}
+			style={{ maxWidth: 540, aspectRatio: '16/9' }}
 		>
 			<CustomImage
 				width={540}
