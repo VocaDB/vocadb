@@ -134,7 +134,7 @@ const LyricsTab = ({ lyrics }: LyricsTabProps) => {
 		return prev;
 	});
 	const [curr, setCurr] = useState<LyricsForSongContract>(mainLyrics);
-	const { data } = useSWR('/api/songs/lyrics/' + curr.id, apiGet<LyricsForSongContract>);
+	const { data } = useSWR('/api/songs/lyrics/' + curr?.id, apiGet<LyricsForSongContract>);
 
 	return (
 		<>
@@ -370,9 +370,11 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 				<Tabs.Tab value="info" icon={<IconInfoCircle size="0.8rem" />}>
 					Basic Info
 				</Tabs.Tab>
-				<Tabs.Tab value="lyrics" icon={<IconAlignJustified size="0.8rem" />}>
-					Lyrics
-				</Tabs.Tab>
+				{details.lyricsFromParents.length > 0 && (
+					<Tabs.Tab value="lyrics" icon={<IconAlignJustified size="0.8rem" />}>
+						Lyrics
+					</Tabs.Tab>
+				)}
 				<Tabs.Tab value="discussion" icon={<IconMessageCircle size="0.8rem" />}>
 					Discussion
 				</Tabs.Tab>
@@ -392,9 +394,11 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					notesOriginal={notesOriginal}
 				/>
 			</Tabs.Panel>
-			<Tabs.Panel value="lyrics">
-				<LyricsTab lyrics={details.lyricsFromParents} />
-			</Tabs.Panel>
+			{details.lyricsFromParents.length > 0 && (
+				<Tabs.Panel value="lyrics">
+					<LyricsTab lyrics={details.lyricsFromParents} />
+				</Tabs.Panel>
+			)}
 			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
 			<Tabs.Panel value="related">Related Songs</Tabs.Panel>
 			<Tabs.Panel value="share">Share</Tabs.Panel>
