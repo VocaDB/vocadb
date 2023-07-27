@@ -16,14 +16,23 @@ import { ArtistCategories } from '@/types/Models/Artists/ArtistCategories';
 import { TranslationType } from '@/types/Models/Globalization/TranslationType';
 import { PVType } from '@/types/Models/PVs/PVType';
 import { SongVoteRating, parseSongVoteRating } from '@/types/Models/SongVoteRating';
-import { ActionIcon, Grid, Group, Stack, Tabs, Text } from '@mantine/core';
+import {
+	ActionIcon,
+	Grid,
+	Group,
+	SegmentedControl,
+	Stack,
+	Tabs,
+	Text,
+	Title,
+	TypographyStylesProvider,
+} from '@mantine/core';
 import {
 	IconAffiliate,
 	IconAlignJustified,
 	IconHeart,
 	IconInfoCircle,
 	IconMessageCircle,
-	IconShare,
 	IconThumbUp,
 } from '@tabler/icons-react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -31,6 +40,18 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 // TODO: Lazy load this
 import { extendedUserLanguageCultures } from '@/Helpers/userLanguageCultures';
+import parse from '@/Helpers/markdown';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+import remarkBreaks from 'remark-breaks';
+import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
+import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
+import { CommentContract } from '@/types/DataContracts/CommentContract';
+import dynamic from 'next/dynamic';
+
+const Comment = dynamic(() => import('@/components/Comment/Comment'));
 
 interface SongActionsProps {
 	details: SongDetailsContract;
@@ -65,14 +86,14 @@ const SongActions = ({ details }: SongActionsProps) => {
 			color="default"
 			radius="xl"
 			size="lg"
-			disabled={values !== undefined && !values.isLoggedIn}
+			disabled={values !== undefined ? !values.isLoggedIn : true}
 		>
 			{icon}
 		</ActionIcon>
 	);
 
 	return (
-		<Group mt="sm">
+		<Group mt="xs">
 			{SongVoteButton(SongVoteRating.Like, <IconThumbUp />)}
 			{SongVoteButton(SongVoteRating.Favorite, <IconHeart />)}
 		</Group>
@@ -103,12 +124,58 @@ const SongProperty = ({
 	);
 };
 
+interface LyricsTabProps {
+	lyrics: LyricsForSongContract[];
+}
+
+const LyricsTab = ({ lyrics }: LyricsTabProps) => {
+	// TODO: Select based on preferred content language
+	const mainLyrics = lyrics.reduce((prev, curr) => {
+		if (curr.translationType === 'Original') {
+			return curr;
+		}
+		return prev;
+	});
+	const [curr, setCurr] = useState<LyricsForSongContract>(mainLyrics);
+	const { data } = useSWR('/api/songs/lyrics/' + curr?.id, apiGet<LyricsForSongContract>);
+
+	return (
+		<>
+			<SegmentedControl
+				mt="md"
+				mb="xs"
+				color="default"
+				value={curr.id?.toString() ?? '0'}
+				onChange={(id) => setCurr(lyrics.find((val) => val.id?.toString() === id)!)}
+				data={lyrics.map((l) => {
+					let label;
+					if (l.translationType === 'Original') {
+						label = 'Original';
+					} else if (l.translationType === 'Romanized') {
+						label = 'Romanized';
+					} else {
+						label = l.cultureCodes?.map((c) => (c === '' ? 'Other' : c)).join(', ');
+					}
+					label ??= 'Other';
+
+					return { label, value: l.id?.toString() ?? '0' };
+				})}
+			/>
+			<div style={{ whiteSpace: 'pre-line' }}>{data?.value ?? ''}</div>
+		</>
+	);
+};
+
 interface SongBasicInfoProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
+	notesEnglish: string;
+	notesOriginal: string;
 }
 
-const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
+const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasicInfoProps) => {
+	const [notesLanguage, setNotesLanguage] = useState<'english' | 'original'>('english');
+
 	const artistIsType = (artist: ArtistForSongContract, type: ArtistCategories): boolean => {
 		return artist.categories
 			.split(',')
@@ -231,6 +298,7 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 			<SongProperty name="Albums" show={details.albums.length > 0}>
 				{mapAlbums(details.albums)}
 			</SongProperty>
+			{/*  Sort tags by genre */}
 			<SongProperty name="Tags">{mapTags(details.tags.map((t) => t.tag))}</SongProperty>
 			<SongProperty name="Pools and song lists" show={details.pools.length > 0}>
 				<Text>{details.pools.map((pool) => pool.name).join(', ')}</Text>
@@ -252,66 +320,157 @@ const SongBasicInfo = ({ details, setPV }: SongBasicInfoProps) => {
 					))}
 				</Stack>
 			</SongProperty>
+			<SongProperty name="Alternate versions" show={details.alternateVersions.length > 0}>
+				<SongVersionsList songs={details.alternateVersions} />
+			</SongProperty>
+			<SongProperty
+				name="Description"
+				show={details.notes.original.length > 0 || details.notes.english.length > 0}
+			>
+				<Group align="flex-start">
+					<TypographyStylesProvider className="description" maw={{ md: '70%' }}>
+						{parse(notesLanguage === 'original' ? notesOriginal : notesEnglish)}
+					</TypographyStylesProvider>
+					<SegmentedControl
+						value={notesLanguage}
+						onChange={(value: 'english' | 'original') => setNotesLanguage(value)}
+						data={[
+							{ label: 'Original', value: 'original' },
+							{ label: 'English', value: 'english' },
+						]}
+					/>
+				</Group>
+			</SongProperty>
+			<SongProperty name="Statistics">
+				{/* TODO: Link favorites and likes */}
+				<Text>
+					{`${details.song.favoritedTimes ?? 0} favorite(s), ${
+						details.likeCount
+					} like(s), ${details.hits} hit(s), ${details.song.ratingScore} total score`}
+				</Text>
+			</SongProperty>
+			<SongProperty name="Published" show={details.song.publishDate !== undefined}>
+				<Text>{new Date(details.song.publishDate!).toLocaleDateString()}</Text>
+			</SongProperty>
+			<SongProperty name="Addition date" show={details.song.createDate !== undefined}>
+				<Text>{new Date(details.song.createDate!).toLocaleString()}</Text>
+			</SongProperty>
 		</Grid>
+	);
+};
+
+interface CommentTabProps {
+	details: SongDetailsContract;
+}
+
+const CommentTab = ({ details }: CommentTabProps) => {
+	const { data } = useSWR(`/api/songs/${details.song.id}/comments`, apiGet<CommentContract[]>);
+
+	if (data === undefined) return <></>;
+
+	return (
+		<Stack mt="md">
+			{data.map((c) => (
+				<Comment comment={c} key={c.id} />
+			))}
+		</Stack>
 	);
 };
 
 interface SongTabsProps {
 	details: SongDetailsContract;
 	setPV: (pv: PVContract) => any;
+	notesOriginal: string;
+	notesEnglish: string;
 }
 
-const SongTabs = ({ details, setPV }: SongTabsProps) => {
+const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps) => {
 	return (
 		<Tabs mt="md" defaultValue="info">
 			<Tabs.List>
 				<Tabs.Tab value="info" icon={<IconInfoCircle size="0.8rem" />}>
 					Basic Info
 				</Tabs.Tab>
-				<Tabs.Tab value="lyrics" icon={<IconAlignJustified size="0.8rem" />}>
-					Lyrics
-				</Tabs.Tab>
+				{details.lyricsFromParents.length > 0 && (
+					<Tabs.Tab value="lyrics" icon={<IconAlignJustified size="0.8rem" />}>
+						Lyrics
+					</Tabs.Tab>
+				)}
 				<Tabs.Tab value="discussion" icon={<IconMessageCircle size="0.8rem" />}>
-					Discussion
+					Discussion{` (${details.commentCount})`}
 				</Tabs.Tab>
 				<Tabs.Tab value="related" icon={<IconAffiliate size="0.8rem" />}>
 					Related Songs
 				</Tabs.Tab>
-				<Tabs.Tab value="share" icon={<IconShare size="0.8rem" />}>
-					Share
-				</Tabs.Tab>
 			</Tabs.List>
 
 			<Tabs.Panel value="info">
-				<SongBasicInfo setPV={setPV} details={details} />
+				<SongBasicInfo
+					setPV={setPV}
+					details={details}
+					notesEnglish={notesEnglish}
+					notesOriginal={notesOriginal}
+				/>
 			</Tabs.Panel>
-			<Tabs.Panel value="lyrics">Lyrics</Tabs.Panel>
-			<Tabs.Panel value="discussion">Discussion</Tabs.Panel>
+			{details.lyricsFromParents.length > 0 && (
+				<Tabs.Panel value="lyrics">
+					<LyricsTab lyrics={details.lyricsFromParents} />
+				</Tabs.Panel>
+			)}
+			<Tabs.Panel value="discussion">
+				<CommentTab details={details} />
+			</Tabs.Panel>
 			<Tabs.Panel value="related">Related Songs</Tabs.Panel>
-			<Tabs.Panel value="share">Share</Tabs.Panel>
 		</Tabs>
 	);
 };
 
-export default function Page({ song }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page({
+	song,
+	notesEnglish,
+	notesOriginal,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	const [pv, setPV] = useState<PVContract | undefined>(song.pvs[0]);
 	return (
 		<>
-			<div style={{ marginRight: 'auto', marginLeft: 'auto', maxWidth: 'max-content' }}>
+			<Title order={2}>{song.song.name}</Title>
+			<Title mb="sm" order={3} color="dimmed">
+				{song.artistString}
+			</Title>
+			<div>
 				{pv !== undefined && (
 					<EmbedPVPreview song={{ ...song.song, pvs: song.pvs }} pv={pv} />
 				)}
 				<SongActions details={song} />
 			</div>
-			<SongTabs setPV={setPV} details={song} />
+			<SongTabs
+				setPV={setPV}
+				details={song}
+				notesEnglish={notesEnglish}
+				notesOriginal={notesOriginal}
+			/>
 		</>
 	);
 }
 
 export const getServerSideProps: GetServerSideProps<{
 	song: SongDetailsContract;
+	notesOriginal: string;
+	notesEnglish: string;
 }> = async ({ query }) => {
 	const song = await apiGet<SongDetailsContract>(`/api/songs/${query.id}/details`);
-	return { props: { song } };
+	// TODO: Move to markdown helper
+	const processer = unified()
+		.use(remarkParse)
+		.use(remarkBreaks)
+		.use(remarkRehype)
+		.use(rehypeStringify);
+	return {
+		props: {
+			song,
+			notesEnglish: String(processer.processSync(song.notes.english)),
+			notesOriginal: String(processer.processSync(song.notes.original)),
+		},
+	};
 };
 

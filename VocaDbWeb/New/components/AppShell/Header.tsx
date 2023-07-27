@@ -2,7 +2,11 @@ import { Burger, Header, MediaQuery, createStyles } from '@mantine/core';
 import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
-import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
+import dynamic from 'next/dynamic';
+// TODO: Properly fix the ColorSchemeToggle hydration issues
+const ColorSchemeToggle = dynamic(() => import('../ColorSchemeToggle/ColorSchemeToggle'), {
+	ssr: false,
+});
 
 interface CustomHeaderProps {
 	opened: boolean;
@@ -25,7 +29,7 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 	const { classes, theme } = useStyles();
 
 	return (
-		<Header height={{ base: 50, md: 70 }} className={classes.header} px="md">
+		<Header height={{ base: 50, sm: 70 }} className={classes.header} px="md">
 			<Image
 				className={classes.image}
 				width={167}

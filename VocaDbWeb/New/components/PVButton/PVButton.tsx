@@ -4,6 +4,7 @@ import { Button } from '@mantine/core';
 import {
 	IconBrandBandcamp,
 	IconBrandBilibili,
+	IconBrandSoundcloud,
 	IconBrandVimeo,
 	IconBrandYoutube,
 	IconVideo,
@@ -20,9 +21,9 @@ const NicoNicoIcon = () => {
 		<svg
 			fill="none"
 			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 			role="img"
 			viewBox="0 0 24 24"
 			width="20"
@@ -40,9 +41,9 @@ const PiaproIcon = () => {
 		<svg
 			fill="none"
 			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 			width="24"
 			height="24"
 			viewBox="0 0 20 20"
@@ -81,6 +82,9 @@ export default function PVButton({ pv, onClick }: PVButtonProps) {
 			break;
 		case PVService.Bandcamp:
 			ServiceIcon = IconBrandBandcamp;
+			break;
+		case PVService.SoundCloud:
+			ServiceIcon = IconBrandSoundcloud;
 			break;
 		case PVService.Bilibili:
 			ServiceIcon = IconBrandBilibili;

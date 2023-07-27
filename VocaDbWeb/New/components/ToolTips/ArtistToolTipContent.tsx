@@ -40,7 +40,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipProps) {
 					<CustomImage
 						width={70}
 						height={70}
-						src={data?.mainPicture.urlOriginal ?? '/unknown.png'}
+						src={data?.mainPicture?.urlOriginal ?? '/unknown.png'}
 						alt=""
 					/>
 				</div>
@@ -49,7 +49,7 @@ export default function ArtistToolTipContent({ artist }: ArtistToolTipProps) {
 					{data !== undefined && (
 						<CustomImage
 							style={{ objectFit: 'contain' }}
-							src={data.mainPicture.urlOriginal ?? '/unknown.png'}
+							src={data.mainPicture?.urlOriginal ?? '/unknown.png'}
 							fill
 							alt=""
 						/>

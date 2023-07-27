@@ -13,7 +13,8 @@ interface HighlightedSongCardProps {
 
 const PREFERRED_SERVICES = ['Youtube', 'NicoNicoDouga', 'Bilibili', 'Vimeo'];
 
-const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
+// TODO: Extract this into a helper
+export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 	return pvs
 		.filter((pv) => !pv.disabled && pv.url !== undefined)
 		.reduce((currPV: PVContract | undefined, nextPV) => {
@@ -21,7 +22,7 @@ const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 			const nextPos = PREFERRED_SERVICES.indexOf(nextPV.service ?? '');
 			if (
 				currPV === undefined ||
-				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos > currPos)
+				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos < currPos)
 			) {
 				return nextPV;
 			}
@@ -43,7 +44,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 			<Card.Section>
 				{/* TODO: Move the url creation code into a separate function */}
 				<CustomImage
-					src={`${process.env.NEXT_PUBLIC_API_URL}/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
+					src={`/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
 					height={240}
 					width={360}
 					className={styles.classes.image}

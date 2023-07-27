@@ -20,9 +20,11 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 
 	const updatePlayerBounds = () => {
 		const rect = embedPVPreviewRef.current.getBoundingClientRect();
+		const scrollLeft = document.getElementById('main-content')?.scrollLeft ?? 0;
+		const scrollTop = document.getElementById('main-content')?.scrollTop ?? 0;
 		setPlayerBounds({
-			x: rect.x + window.scrollX,
-			y: rect.y + window.scrollY,
+			x: rect.x + scrollLeft,
+			y: rect.y + scrollTop,
 			width: rect.width,
 			height: rect.height,
 		});
@@ -63,11 +65,11 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 				updatePlayerBounds();
 			}}
 			ref={embedPVPreviewRef}
-			style={{ width: '30vw', aspectRatio: '16/9' }}
+			style={{ maxWidth: 405 }}
 		>
 			<CustomImage
-				width={540}
-				height={405}
+				width={405}
+				height={304}
 				style={{ width: '100%', height: '100%' }}
 				src={song.mainPicture?.urlOriginal ?? 'todo: fallback'}
 				alt="Start the song"

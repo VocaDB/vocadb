@@ -19,9 +19,6 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 
 	const [duration, setDuration] = useState(0);
 	const [progress, setProgress] = useState(0);
-	// https://github.com/mantinedev/mantine/issues/2840
-	const currentState = useRef(playerApi);
-	currentState.current = playerApi;
 
 	const interval = useInterval(() => {
 		if (playerApi === undefined) return;
@@ -31,11 +28,11 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 
 	useEffect(() => {
 		interval.start();
-		currentState.current = playerApi;
-		return interval.stop();
+		return interval.stop;
 	}, [playerApi]);
 
-	if (typeof window === 'undefined' || song === undefined) {
+	// TODO: Move this check into the footer component
+	if (song === undefined) {
 		return <></>;
 	}
 
@@ -50,50 +47,63 @@ export default function PlayerControls({ showMobileLayout }: PlayerControlsProps
 			}}
 		>
 			{active ? (
-				<ActionIcon title="Pause" onClick={() => playerApi?.pause()}>
+				<ActionIcon
+					title="Pause"
+					// Typescript can't seem to infer this type
+					onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+						e.stopPropagation();
+						playerApi?.pause();
+					}}
+				>
 					<IconPlayerPause />
 				</ActionIcon>
 			) : (
-				<ActionIcon title="Play" onClick={() => playerApi?.play()}>
+				<ActionIcon
+					title="Play"
+					onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+						e.stopPropagation();
+						playerApi?.play();
+					}}
+				>
 					<IconPlayerPlay />
 				</ActionIcon>
 			)}
-			<div
-				style={{
-					display: showMobileLayout ? 'none' : 'flex',
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'space-between',
-					width: '100%',
-				}}
-			>
-				<Text size="sm" color="dimmed">
-					{formatNumberToTime(progress * duration)}
-				</Text>
-				<Slider
-					w="70%"
-					title="Song progress slider"
-					thumbLabel="Song progress slider thumb"
-					size="sm"
-					value={progress * 100}
-					showLabelOnHover={false}
-					onChange={(newProgress) => {
-						if (interval.active) interval.stop();
-						setProgress(newProgress / 100);
+			{!showMobileLayout && (
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'space-between',
+						width: '100%',
 					}}
-					label={null}
-					onChangeEnd={(progress) => {
-						interval.start();
-						if (currentState.current === undefined) return;
-						currentState.current.setCurrentTime(
-							(progress / 100) * currentState.current.getDuration()
-						);
-					}}
-				/>
-				<Text size="sm" color="dimmed">
-					{formatNumberToTime(duration)}
-				</Text>
-			</div>
+				>
+					<Text size="sm" color="dimmed">
+						{formatNumberToTime(progress * duration)}
+					</Text>
+					<Slider
+						w="70%"
+						title="Song progress slider"
+						thumbLabel="Song progress slider thumb"
+						size="sm"
+						value={progress * 100}
+						showLabelOnHover={false}
+						onChange={(newProgress) => {
+							if (interval.active) interval.stop();
+							setProgress(newProgress / 100);
+						}}
+						label={null}
+						onChangeEnd={(progress) => {
+							interval.start();
+							if (playerApi === undefined) return;
+							playerApi.setCurrentTime((progress / 100) * playerApi.getDuration());
+						}}
+					/>
+					<Text size="sm" color="dimmed">
+						{formatNumberToTime(duration)}
+					</Text>
+				</div>
+			)}
 		</div>
 	);
 }
