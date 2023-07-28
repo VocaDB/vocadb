@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useStyles } from './Comment.styles';
+import MarkdownRenderer from '../Markdown/MarkownRenderer';
 
 dayjs.extend(relativeTime);
 
@@ -34,7 +35,10 @@ export default function Comment({ comment }: CommentProps) {
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
 				{/* TODO: Markdown rendering */}
-				<div className={classes.content}>{comment.message}</div>
+
+				<div className={classes.content}>
+					<MarkdownRenderer>{comment.message}</MarkdownRenderer>
+				</div>
 			</TypographyStylesProvider>
 		</Paper>
 	);
