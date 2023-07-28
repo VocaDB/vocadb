@@ -34,8 +34,6 @@ export default function Comment({ comment }: CommentProps) {
 				</div>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
-				{/* TODO: Markdown rendering */}
-
 				<div className={classes.content}>
 					<MarkdownRenderer>{comment.message}</MarkdownRenderer>
 				</div>

@@ -71,7 +71,7 @@ export default function EmbedPVPreview({ song, pv }: EmbedPVPreviewProps) {
 				width={405}
 				height={304}
 				style={{ width: '100%', height: '100%' }}
-				src={song.mainPicture?.urlOriginal ?? 'todo: fallback'}
+				src={song.mainPicture?.urlOriginal}
 				alt="Start the song"
 			/>
 		</div>
