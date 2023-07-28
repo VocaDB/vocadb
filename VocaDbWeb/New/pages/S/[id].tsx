@@ -154,7 +154,11 @@ const LyricsTab = ({ lyrics }: LyricsTabProps) => {
 					} else if (l.translationType === 'Romanized') {
 						label = 'Romanized';
 					} else {
-						label = l.cultureCodes?.map((c) => (c === '' ? 'Other' : c)).join(', ');
+						label = l.cultureCodes
+							?.map((c) =>
+								c === '' ? 'Other' : extendedUserLanguageCultures[c].englishName
+							)
+							.join(', ');
 					}
 					label ??= 'Other';
 
@@ -285,7 +289,6 @@ const SongBasicInfo = ({ details, setPV, notesEnglish, notesOriginal }: SongBasi
 				name="Languages"
 				show={cultureCodes !== undefined && cultureCodes.length > 0}
 			>
-				{/** TODO: Culture code -> Language */}
 				<Text>
 					{cultureCodes
 						?.map((c) => extendedUserLanguageCultures[c].englishName)
