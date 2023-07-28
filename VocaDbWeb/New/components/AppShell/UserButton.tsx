@@ -16,6 +16,7 @@ import {
 	IconMusic,
 	IconUser,
 } from '@tabler/icons-react';
+import CustomImage from '../Image/Image';
 
 const useStyles = createStyles((theme) => ({
 	user: {
@@ -45,14 +46,6 @@ export function UserButton({ image, name, email, ...others }: UserButtonProps) {
 			<Menu.Target>
 				<UnstyledButton className={classes.user} {...others}>
 					<Group>
-						{/* TODO: Find out why this looks bad * }
-						{/* <Image
-							alt={name}
-							src={image}
-							style={{ borderRadius: '50%', objectFit: 'cover' }}
-							width={38}
-							height={38}
-						/> */}
 						<Avatar alt={name} src={image} radius="xl" />
 
 						<div style={{ flex: 1 }}>

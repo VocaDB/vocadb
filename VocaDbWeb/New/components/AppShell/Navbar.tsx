@@ -177,7 +177,6 @@ const MainLink = ({
 	);
 };
 
-// TODO: Make profile picture dynamic
 const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 	const theme = useMantineTheme();
 	const [values] = useVdbStore((set) => [set.values]);

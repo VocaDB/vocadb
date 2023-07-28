@@ -1,4 +1,4 @@
-import { Paper, ScrollArea, Text, createStyles, useMantineTheme } from '@mantine/core';
+import { FocusTrap, Paper, ScrollArea, Text, createStyles, useMantineTheme } from '@mantine/core';
 import { usePlayerStore } from './stores/usePlayerStore';
 import { useEffect, useState } from 'react';
 import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
@@ -58,32 +58,34 @@ export default function LyricsContainer() {
 	}
 
 	return (
-		<div
-			style={{
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				height: '100%',
-				width: '100%',
-				zIndex: 100,
-			}}
-		>
-			<Paper component={ScrollArea} h="100%" bg={theme.colors[theme.primaryColor][7]}>
-				<div className={styles.classes.lyricsContainer}>
-					<div className={styles.classes.lyricsWrapper}>
-						{lyrics.value
-							?.split('\n')
-							.map((line) =>
-								line === '' || line === '\r' ? (
-									<br />
-								) : (
-									<Text className={styles.classes.lyricLine}>{line}</Text>
-								)
-							)}
+		<FocusTrap>
+			<div
+				style={{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					height: '100%',
+					width: '100%',
+					zIndex: 100,
+				}}
+			>
+				<Paper component={ScrollArea} h="100%" bg={theme.colors[theme.primaryColor][7]}>
+					<div className={styles.classes.lyricsContainer}>
+						<div className={styles.classes.lyricsWrapper}>
+							{lyrics.value
+								?.split('\n')
+								.map((line) =>
+									line === '' || line === '\r' ? (
+										<br />
+									) : (
+										<Text className={styles.classes.lyricLine}>{line}</Text>
+									)
+								)}
+						</div>
 					</div>
-				</div>
-			</Paper>
-		</div>
+				</Paper>
+			</div>
+		</FocusTrap>
 	);
 }
 
