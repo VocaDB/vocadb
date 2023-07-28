@@ -1,13 +1,5 @@
 // https://github.com/mantinedev/ui.mantine.dev/blob/master/components/UserButton/UserButton.tsx
-import {
-	UnstyledButton,
-	UnstyledButtonProps,
-	Group,
-	Avatar,
-	Text,
-	createStyles,
-	Menu,
-} from '@mantine/core';
+import { UnstyledButton, UnstyledButtonProps, Group, Avatar, Text, Menu } from '@mantine/core';
 import {
 	IconAdjustments,
 	IconChevronRight,
@@ -16,21 +8,7 @@ import {
 	IconMusic,
 	IconUser,
 } from '@tabler/icons-react';
-import CustomImage from '../Image/Image';
-
-const useStyles = createStyles((theme) => ({
-	user: {
-		display: 'block',
-		width: '100%',
-		padding: theme.spacing.md,
-		color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-		'&:hover': {
-			backgroundColor:
-				theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-		},
-	},
-}));
+import { useStyles } from './UserButton.styles';
 
 interface UserButtonProps extends UnstyledButtonProps {
 	image: string;

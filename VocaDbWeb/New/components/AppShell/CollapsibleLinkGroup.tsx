@@ -1,6 +1,6 @@
 // From https://ui.mantine.dev/component/navbar-links-group
 import { PermissionToken } from '@/types/Models/LoginManager';
-import { Group, Box, ThemeIcon, Text, UnstyledButton, createStyles, rem } from '@mantine/core';
+import { Group, Box, ThemeIcon, Text, UnstyledButton } from '@mantine/core';
 import Link from 'next/link';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
 import { useVdbStore } from '@/stores/useVdbStore';
