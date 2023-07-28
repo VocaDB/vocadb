@@ -2,7 +2,11 @@ import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 
 const PREFERRED_SERVICES = ['Youtube', 'NicoNicoDouga', 'Bilibili', 'Vimeo'];
 
-export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
+export const getBestThumbUrl = (pvs: PVContract[] | undefined): string | undefined => {
+	if (pvs === undefined) {
+		return undefined;
+	}
+
 	return pvs
 		.filter((pv) => !pv.disabled && pv.url !== undefined)
 		.reduce((currPV: PVContract | undefined, nextPV) => {
@@ -17,3 +21,12 @@ export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
 			return currPV;
 		}, undefined)?.url;
 };
+
+export const getBestThumbImageUrl = (pvs: PVContract[] | undefined): string => {
+	const bestThumbUrl = getBestThumbUrl(pvs);
+
+	return bestThumbUrl === undefined
+		? `/unknown.webp`
+		: `/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`;
+};
+

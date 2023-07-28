@@ -4,7 +4,7 @@ import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import CustomImage from '../Image/Image';
-import { getBestThumbUrl } from '@/Helpers/getBestThumbUrl';
+import { getBestThumbImageUrl } from '@/Helpers/getBestThumbUrl';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -14,18 +14,13 @@ interface HighlightedSongCardProps {
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
 	const styles = useStyles();
 
-	const bestThumbUrl = getBestThumbUrl(song.pvs);
-
-	if (!bestThumbUrl) {
-		return <></>;
-	}
+	const bestThumbImageUrl = getBestThumbImageUrl(song.pvs);
 
 	return (
 		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
 			<Card.Section>
-				{/* TODO: Move the url creation code into a separate function */}
 				<CustomImage
-					src={`/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
+					src={bestThumbImageUrl}
 					height={240}
 					width={360}
 					className={styles.classes.image}
