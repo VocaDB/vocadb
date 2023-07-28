@@ -1,42 +1,17 @@
 // https://ui.mantine.dev/component/comment-html
 import { CommentContract } from '@/types/DataContracts/CommentContract';
-import {
-	createStyles,
-	Text,
-	Avatar,
-	Group,
-	TypographyStylesProvider,
-	Paper,
-	rem,
-	Anchor,
-} from '@mantine/core';
+import { Text, Avatar, Group, TypographyStylesProvider, Paper, Anchor } from '@mantine/core';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useStyles } from './Comment.styles';
+import MarkdownRenderer from '../Markdown/MarkownRenderer';
 
 dayjs.extend(relativeTime);
 
 interface CommentProps {
 	comment: CommentContract;
 }
-
-const useStyles = createStyles((theme) => ({
-	comment: {
-		padding: `${theme.spacing.lg} ${theme.spacing.xl}`,
-	},
-
-	body: {
-		paddingLeft: rem(54),
-		paddingTop: theme.spacing.sm,
-		fontSize: theme.fontSizes.sm,
-	},
-
-	content: {
-		'& > p:last-child': {
-			marginBottom: 0,
-		},
-	},
-}));
 
 // Imports dayjs/plugin/relativeTime and should be lazy loaded
 export default function Comment({ comment }: CommentProps) {
@@ -59,8 +34,9 @@ export default function Comment({ comment }: CommentProps) {
 				</div>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
-				{/* TODO: Markdown rendering */}
-				<div className={classes.content}>{comment.message}</div>
+				<div className={classes.content}>
+					<MarkdownRenderer>{comment.message}</MarkdownRenderer>
+				</div>
 			</TypographyStylesProvider>
 		</Paper>
 	);

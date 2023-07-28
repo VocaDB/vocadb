@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { useStyles } from './AppShell.styles';
 
 const Navbar = dynamic(() => import('./Navbar'), {
 	ssr: false,
@@ -28,6 +29,7 @@ interface CustomAppShellProps {
 const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement => {
 	const router = useRouter();
 	const [opened, setOpened] = useState(false);
+	const { classes } = useStyles();
 
 	// Close burger menu on navigation
 	useEffect(() => {
@@ -51,19 +53,11 @@ const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement =
 			})}
 			padding={0}
 		>
-			<MediaQuery smallerThan="sm" styles={{ height: 'calc(100vh - 50px - 64px)' }}>
-				<Box
-					id="main-content"
-					p="md"
-					pos="relative"
-					h="calc(100vh - 70px - 64px)"
-					style={{ overflowY: 'scroll' }}
-				>
-					{children}
-					<LyricsContainer />
-					<PVPlayer />
-				</Box>
-			</MediaQuery>
+			<Box id="main-content" className={classes.box}>
+				{children}
+				<LyricsContainer />
+				<PVPlayer />
+			</Box>
 			<Footer />
 		</AppShell>
 	);

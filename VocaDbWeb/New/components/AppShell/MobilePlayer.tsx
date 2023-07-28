@@ -2,12 +2,12 @@ import { Group, Paper, Slider, Space, Title, useMantineTheme } from '@mantine/co
 import Sheet from 'react-modal-sheet';
 import CustomImage from '../Image/Image';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import { getBestThumbUrl } from '../Frontpage/HighlightedSongCard';
 import { IconPlayerPause, IconPlayerPlay, IconPlayerTrackPrev } from '@tabler/icons';
 import { IconPlayerTrackNext } from '@tabler/icons-react';
 import { useInterval } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
+import { getBestThumbImageUrl } from '@/Helpers/getBestThumbUrl';
 
 const MobilePlayerSheet = () => {
 	const [song, active, playerApi] = usePlayerStore((state) => [
@@ -15,7 +15,7 @@ const MobilePlayerSheet = () => {
 		state.active,
 		state.playerApi,
 	]);
-	const bestUrl = getBestThumbUrl(song?.pvs ?? []);
+	const bestUrl = getBestThumbImageUrl(song?.pvs);
 
 	const [duration, setDuration] = useState(0);
 	const [progress, setProgress] = useState(0);
@@ -42,9 +42,7 @@ const MobilePlayerSheet = () => {
 				height={300}
 				width={300}
 				style={{ maxHeight: '50vh' }}
-				src={
-					bestUrl === undefined ? '/unknown.webp' : '/api/pvs/thumbnail?pvUrl=' + bestUrl
-				}
+				src={bestUrl}
 				mode="crop"
 				alt="Song thumbnail"
 			/>

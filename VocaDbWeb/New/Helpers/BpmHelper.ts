@@ -1,12 +1,13 @@
-import Decimal from 'decimal.js-light';
-// TODO: Check if we can implement this algorithm without decimal.js
+const div = (num: number): number => {
+	return Math.round(num / 1000);
+};
 
 export const formatFromMilliBpm = (minMilliBpm?: number, maxMilliBpm?: number): string => {
 	if (minMilliBpm && maxMilliBpm && maxMilliBpm > minMilliBpm) {
-		return `${new Decimal(minMilliBpm).div(1000)} - ${new Decimal(maxMilliBpm).div(1000)}`;
+		return `${div(minMilliBpm)} - ${div(maxMilliBpm)}`;
 	}
 
-	if (minMilliBpm) return `${new Decimal(minMilliBpm).div(1000)}`;
+	if (minMilliBpm) return `${div(minMilliBpm)}`;
 
 	return '';
 };

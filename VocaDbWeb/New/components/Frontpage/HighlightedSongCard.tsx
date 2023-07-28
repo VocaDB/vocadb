@@ -1,50 +1,26 @@
-import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Button, Card, Group, Space, Text } from '@mantine/core';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import CustomImage from '../Image/Image';
+import { getBestThumbImageUrl } from '@/Helpers/getBestThumbUrl';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
 	priority?: boolean;
 }
 
-const PREFERRED_SERVICES = ['Youtube', 'NicoNicoDouga', 'Bilibili', 'Vimeo'];
-
-// TODO: Extract this into a helper
-export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
-	return pvs
-		.filter((pv) => !pv.disabled && pv.url !== undefined)
-		.reduce((currPV: PVContract | undefined, nextPV) => {
-			const currPos = PREFERRED_SERVICES.indexOf(currPV?.service ?? '');
-			const nextPos = PREFERRED_SERVICES.indexOf(nextPV.service ?? '');
-			if (
-				currPV === undefined ||
-				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos < currPos)
-			) {
-				return nextPV;
-			}
-			return currPV;
-		}, undefined)?.url;
-};
-
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
 	const styles = useStyles();
 
-	const bestThumbUrl = getBestThumbUrl(song.pvs);
-
-	if (!bestThumbUrl) {
-		return <></>;
-	}
+	const bestThumbImageUrl = getBestThumbImageUrl(song.pvs);
 
 	return (
 		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
 			<Card.Section>
-				{/* TODO: Move the url creation code into a separate function */}
 				<CustomImage
-					src={`/api/pvs/thumbnail?pvUrl=${bestThumbUrl}`}
+					src={bestThumbImageUrl}
 					height={240}
 					width={360}
 					className={styles.classes.image}
@@ -52,14 +28,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					priority={priority}
 				/>
 			</Card.Section>
-			<div
-				style={{
-					display: 'flex',
-					height: '100%',
-					flexDirection: 'column',
-					justifyContent: 'space-between',
-				}}
-			>
+			<div className={styles.classes.textSectionWrapper}>
 				<div>
 					<Text mt="xs" weight={500}>
 						{song.name}
