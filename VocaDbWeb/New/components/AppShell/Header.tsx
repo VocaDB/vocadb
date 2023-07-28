@@ -3,6 +3,7 @@ import Image from 'next/image';
 import DarkLogo from '../../public/VocaDB_Logo_White_Transparent_No_Outline.png';
 import LightLogo from '../../public/VocaDB_Logo_Black_Transparent_No_Outline.png';
 import dynamic from 'next/dynamic';
+import { useStyles } from './Header.styles';
 // TODO: Properly fix the ColorSchemeToggle hydration issues
 const ColorSchemeToggle = dynamic(() => import('../ColorSchemeToggle/ColorSchemeToggle'), {
 	ssr: false,
@@ -12,18 +13,6 @@ interface CustomHeaderProps {
 	opened: boolean;
 	setOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const useStyles = createStyles(() => ({
-	header: {
-		display: 'flex',
-		justifyContent: 'space-between',
-	},
-
-	image: {
-		objectFit: 'contain',
-		height: '100%',
-	},
-}));
 
 const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElement => {
 	const { classes, theme } = useStyles();
@@ -37,23 +26,16 @@ const Customheader = ({ opened, setOpened }: CustomHeaderProps): React.ReactElem
 				src={theme.colorScheme === 'dark' ? DarkLogo : LightLogo}
 				alt=""
 			/>
-			<div
-				style={{
-					display: 'flex',
-					alignItems: 'center',
-					height: '100%',
-				}}
-			>
+			<div className={classes.rightSectionWrapper}>
 				<ColorSchemeToggle />
-				<MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-					<Burger
-						opened={opened}
-						onClick={(): void => setOpened((o) => !o)}
-						size="sm"
-						color={theme.colors.gray[6]}
-						title="Open navigation menu"
-					/>
-				</MediaQuery>
+				<Burger
+					opened={opened}
+					onClick={(): void => setOpened((o) => !o)}
+					size="sm"
+					color={theme.colors.gray[6]}
+					title="Open navigation menu"
+					className={classes.burger}
+				/>
 			</div>
 		</Header>
 	);

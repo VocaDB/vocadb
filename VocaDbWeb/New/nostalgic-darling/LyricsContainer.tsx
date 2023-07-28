@@ -1,32 +1,9 @@
-import { FocusTrap, Paper, ScrollArea, Text, createStyles, useMantineTheme } from '@mantine/core';
+import { FocusTrap, Paper, ScrollArea, Text, useMantineTheme } from '@mantine/core';
 import { usePlayerStore } from './stores/usePlayerStore';
 import { useEffect, useState } from 'react';
 import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
 import { apiFetch } from '@/Helpers/FetchApiHelper';
-
-// TODO: Move this in a separate file
-const useStyles = createStyles((theme) => ({
-	lyricsContainer: {
-		display: 'grid',
-		justifyContent: 'center',
-	},
-	lyricsWrapper: {
-		maxWidth: 'max-content',
-		[theme.fn.smallerThan('sm')]: {
-			marginLeft: theme.spacing.sm,
-			marginRight: theme.spacing.sm,
-		},
-	},
-	lyricLine: {
-		lineHeight: '1.5em',
-		fontSize: '2rem',
-		fontWeight: 700,
-		color: 'white',
-		[theme.fn.smallerThan('lg')]: {
-			fontSize: '1.5rem',
-		},
-	},
-}));
+import { useStyles } from './LyricsContainer.styles';
 
 export default function LyricsContainer() {
 	const theme = useMantineTheme();
@@ -59,16 +36,7 @@ export default function LyricsContainer() {
 
 	return (
 		<FocusTrap>
-			<div
-				style={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					height: '100%',
-					width: '100%',
-					zIndex: 100,
-				}}
-			>
+			<div className={styles.classes.divWrapper}>
 				<Paper component={ScrollArea} h="100%" bg={theme.colors[theme.primaryColor][7]}>
 					<div className={styles.classes.lyricsContainer}>
 						<div className={styles.classes.lyricsWrapper}>

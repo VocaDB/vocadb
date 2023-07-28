@@ -33,14 +33,7 @@ export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps
 					priority={priority}
 				/>
 			</Card.Section>
-			<div
-				style={{
-					display: 'flex',
-					height: '100%',
-					flexDirection: 'column',
-					justifyContent: 'space-between',
-				}}
-			>
+			<div className={styles.classes.textSectionWrapper}>
 				<div>
 					<Text mt="xs" weight={500}>
 						{song.name}

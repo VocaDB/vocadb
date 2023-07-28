@@ -1,13 +1,4 @@
-import {
-	Group,
-	Navbar,
-	ThemeIcon,
-	UnstyledButton,
-	Text,
-	useMantineTheme,
-	ScrollArea,
-	rem,
-} from '@mantine/core';
+import { Group, Navbar, ThemeIcon, UnstyledButton, Text, ScrollArea } from '@mantine/core';
 import {
 	IconBookmarks,
 	IconCalendarEvent,
@@ -28,6 +19,7 @@ import { hasPermission } from '@/Helpers/PermissionsHelper';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { useVdbStore } from '@/stores/useVdbStore';
+import { useStyles } from './NavBar.styles';
 
 const UserButton = dynamic(() => import('./UserButton').then((imp) => imp.UserButton));
 
@@ -138,7 +130,7 @@ const MainLink = ({
 	link,
 	permission,
 }: LinksGroupProps): React.ReactElement => {
-	const theme = useMantineTheme();
+	const { classes, theme } = useStyles();
 	const [values] = useVdbStore((set) => [set.values]);
 
 	if (links) {
@@ -152,18 +144,7 @@ const MainLink = ({
 	return (
 		<UnstyledButton
 			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-			sx={(theme) => ({
-				display: 'block',
-				width: '100%',
-				padding: theme.spacing.xs,
-				fontSize: theme.fontSizes.sm,
-				borderRadius: theme.radius.sm,
-				color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-				'&:hover': {
-					backgroundColor:
-						theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-				},
-			})}
+			className={classes.mainLinkButton}
 			component={Link}
 			href={link}
 		>
@@ -178,7 +159,7 @@ const MainLink = ({
 };
 
 const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
-	const theme = useMantineTheme();
+	const { classes } = useStyles();
 	const [values] = useVdbStore((set) => [set.values]);
 
 	// Remove the login link, if the user is logged in
@@ -194,15 +175,7 @@ const CustomNavbar = ({ opened }: CustomNavbarProps): React.ReactElement => {
 				))}
 			</Navbar.Section>
 			{values?.isLoggedIn && (
-				<Navbar.Section
-					style={{
-						borderTop: `${rem(1)} solid ${
-							theme.colorScheme === 'dark'
-								? theme.colors.dark[4]
-								: theme.colors.gray[3]
-						}`,
-					}}
-				>
+				<Navbar.Section className={classes.navbarSection}>
 					<UserButton
 						name={values.loggedUser!.name}
 						image={`${values.staticContentHost}/img/user/mainThumb/${
