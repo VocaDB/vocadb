@@ -2,12 +2,12 @@ import { Group, Paper, Slider, Space, Title, useMantineTheme } from '@mantine/co
 import Sheet from 'react-modal-sheet';
 import CustomImage from '../Image/Image';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import { getBestThumbUrl } from '../Frontpage/HighlightedSongCard';
 import { IconPlayerPause, IconPlayerPlay, IconPlayerTrackPrev } from '@tabler/icons';
 import { IconPlayerTrackNext } from '@tabler/icons-react';
 import { useInterval } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
+import { getBestThumbUrl } from '@/Helpers/getBestThumbUrl';
 
 const MobilePlayerSheet = () => {
 	const [song, active, playerApi] = usePlayerStore((state) => [

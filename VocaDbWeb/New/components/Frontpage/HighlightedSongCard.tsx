@@ -1,34 +1,15 @@
-import { PVContract } from '@/types/DataContracts/PVs/PVContract';
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
 import { Button, Card, Group, Space, Text } from '@mantine/core';
 import Link from 'next/link';
 import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import CustomImage from '../Image/Image';
+import { getBestThumbUrl } from '@/Helpers/getBestThumbUrl';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
 	priority?: boolean;
 }
-
-const PREFERRED_SERVICES = ['Youtube', 'NicoNicoDouga', 'Bilibili', 'Vimeo'];
-
-// TODO: Extract this into a helper
-export const getBestThumbUrl = (pvs: PVContract[]): string | undefined => {
-	return pvs
-		.filter((pv) => !pv.disabled && pv.url !== undefined)
-		.reduce((currPV: PVContract | undefined, nextPV) => {
-			const currPos = PREFERRED_SERVICES.indexOf(currPV?.service ?? '');
-			const nextPos = PREFERRED_SERVICES.indexOf(nextPV.service ?? '');
-			if (
-				currPV === undefined ||
-				(PREFERRED_SERVICES.includes(nextPV.service) && nextPos < currPos)
-			) {
-				return nextPV;
-			}
-			return currPV;
-		}, undefined)?.url;
-};
 
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
 	const styles = useStyles();
