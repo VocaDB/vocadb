@@ -1,4 +1,5 @@
 import { apiGet } from '@/Helpers/FetchApiHelper';
+import { unmark } from '@/Helpers/markdown';
 import { TagApiContract } from '@/types/DataContracts/Tag/TagApiContract';
 import { TagBaseContract } from '@/types/DataContracts/Tag/TagBaseContract';
 import { Stack, Text } from '@mantine/core';
@@ -31,7 +32,7 @@ export default function TagToolTipContent({ tag }: TagToolTipProps) {
 						</Text>
 					</div>
 					<Text>{data.categoryName}</Text>
-					<Text lineClamp={2}>{data.description}</Text>
+					<Text lineClamp={2}>{unmark(data.description)}</Text>
 				</>
 			)}
 		</Stack>
