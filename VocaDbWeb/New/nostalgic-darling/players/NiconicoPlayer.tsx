@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { IPlayer } from '../Player';
 import { IPlayerApi, usePlayerStore } from '../stores/usePlayerStore';
 
-// TODO: Move these into a separate file
 export interface PlayerStatusEvent {
 	eventName: 'playerStatusChange';
 	data: {
