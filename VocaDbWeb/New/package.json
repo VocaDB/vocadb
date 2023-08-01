@@ -45,6 +45,7 @@
 		"rehype-sanitize": "^5.0.1",
 		"rehype-stringify": "^9.0.3",
 		"remark-breaks": "^3.0.3",
+		"remark-mentions": "^1.0.2",
 		"remark-parse": "^10.0.2",
 		"remark-rehype": "^10.1.0",
 		"sharp": "^0.32.1",
