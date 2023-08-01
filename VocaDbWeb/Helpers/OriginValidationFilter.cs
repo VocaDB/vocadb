@@ -5,7 +5,7 @@ public class OriginValidationFilter : IActionFilter
 {
 	public void OnActionExecuting(ActionExecutingContext context)
 	{
-		var requestOrigin = context.HttpContext.Request.Headers["Origin"].First();
+		var requestOrigin = context.HttpContext.Request.Headers["Origin"].FirstOrDefault();
 		// TODO: Make this list configurable
 		var allowedOrigins = new[] { "https://vocadb.net", "https://touhoudb.com", "https://utaitedb.net", "http://localhost:56401", "https://vocadb.vercel.app", "https://beta.vocadb.net", "http://localhost:5173" };
 
