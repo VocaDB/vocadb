@@ -793,6 +793,13 @@ public class StatsController : ControllerBase
 		return SimpleBarChart("Views per song", "Hits", categories, data);
 	}
 
+	public ActionResult SongHits(int songId)
+	{
+		var dataSeries = _queries.SongHits(songId);
+
+		return LowercaseJson(dataSeries);
+	}
+
 	public ActionResult HitsPerSongOverTime(DateTime? cutoff)
 	{
 		var data = _queries.HitsPerSongOverTime(cutoff);

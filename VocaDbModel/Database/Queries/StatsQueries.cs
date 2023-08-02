@@ -246,6 +246,17 @@ public class StatsQueries
 	}
 #nullable disable
 
+	public IEnumerable<DateTime> SongHits(int songId)
+	{
+		return _repository.HandleQuery(ctx =>
+		{
+			return ctx.Query<SongHit>()
+				.Where(s => s.Entry.Id == songId)
+				.Select(s => s.Date)
+				.ToArray();
+		});
+	}
+
 	public IEnumerable<EntryWithIdAndData<LocalizedValue>> HitsPerSongOverTime(DateTime? cutoff)
 	{
 		return _repository.HandleQuery(ctx =>
