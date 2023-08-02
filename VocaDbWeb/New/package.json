@@ -30,6 +30,7 @@
 		"@mantine/nprogress": "^6.0.17",
 		"@mantine/prism": "6.0.17",
 		"@next/bundle-analyzer": "^13.1.6",
+		"@nivo/line": "^0.83.0",
 		"@tabler/icons": "^1.107.0",
 		"@tabler/icons-react": "^2.22.0",
 		"cookies-next": "^2.1.1",

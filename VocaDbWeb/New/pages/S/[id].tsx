@@ -1,5 +1,5 @@
 import { formatFromMilliBpm } from '@/Helpers/BpmHelper';
-import { formatNumberToTime } from '@/Helpers/DateTimeHelper';
+import { formatNumberToTime, sumDatesInOneDay } from '@/Helpers/DateTimeHelper';
 import { apiGet, apiPost, authApiGet } from '@/Helpers/FetchApiHelper';
 import AlbumLink from '@/components/Links/AlbumLink';
 import ArtistLink from '@/components/Links/ArtistLink';
@@ -26,10 +26,12 @@ import {
 	Text,
 	Title,
 	TypographyStylesProvider,
+	useMantineTheme,
 } from '@mantine/core';
 import {
 	IconAffiliate,
 	IconAlignJustified,
+	IconChartLine,
 	IconHeart,
 	IconInfoCircle,
 	IconMessageCircle,
@@ -50,6 +52,12 @@ import SongVersionsList from '@/components/SongVersionsList/SongVersionsList';
 import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongContract';
 import { CommentContract } from '@/types/DataContracts/CommentContract';
 import dynamic from 'next/dynamic';
+import { RatedSongForUserForApiContract } from '@/types/DataContracts/User/RatedSongForUserForApiContract';
+import { useColorStore } from '@/stores/useColorStore';
+
+const ResponsiveLine = dynamic(() => import('@nivo/line').then((m) => m.Line), {
+	ssr: false,
+});
 
 const Comment = dynamic(() => import('@/components/Comment/Comment'));
 
@@ -387,6 +395,107 @@ interface SongTabsProps {
 	notesEnglish: string;
 }
 
+const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
+	<g>
+		<circle fill="#fff" r={size / 2} strokeWidth={borderWidth} stroke={borderColor} />
+		<circle
+			r={size / 5}
+			strokeWidth={borderWidth}
+			stroke={borderColor}
+			fill={color}
+			fillOpacity={0.35}
+		/>
+	</g>
+);
+
+interface StatsTabProps {
+	details: SongDetailsContract;
+}
+
+const StatsTab = ({ details }: StatsTabProps) => {
+	const { data } = useSWR(
+		`/api/songs/${details.song.id}/ratings`,
+		apiGet<RatedSongForUserForApiContract[]>
+	);
+	const theme = useMantineTheme();
+
+	if (data === undefined) return <></>;
+
+	return (
+		<>
+			<Title order={4} mt="md" mb="xs">
+				Rating over time
+			</Title>
+			<ResponsiveLine
+				width={900}
+				height={400}
+				margin={{ top: 30, right: 20, bottom: 30, left: 80 }}
+				theme={{ background: 'white', tooltip: { basic: { color: 'black' } } }}
+				// colors={{ scheme: theme.colorScheme === 'dark' ? 'dark2' : 'nivo' }}
+				// theme={{
+				// 	textColor: theme.colorScheme === 'dark' ? 'white' : 'black',
+				// 	grid: {
+				// 		line: {
+				// 			stroke: 'white',
+				// 		},
+				// 	},
+				// }}
+				data={[
+					{
+						id: 'fake corp. A',
+						data: sumDatesInOneDay(data.map((rating) => rating.date)).map(
+							(dateStat) => ({
+								x: dateStat.date,
+								y: dateStat.count,
+							})
+						),
+						// data: [
+						// 	{ x: '2018-01-01', y: 7 },
+						// 	{ x: '2018-01-02', y: 5 },
+						// 	{ x: '2018-01-03', y: 11 },
+						// 	{ x: '2018-01-04', y: 9 },
+						// 	{ x: '2018-01-05', y: 12 },
+						// 	{ x: '2018-01-06', y: 16 },
+						// 	{ x: '2018-01-07', y: 13 },
+						// 	{ x: '2018-01-08', y: 13 },
+						// ],
+					},
+				]}
+				xScale={{
+					type: 'time',
+					format: '%Y-%m-%d',
+					useUTC: false,
+					precision: 'day',
+				}}
+				xFormat="time:%Y-%m-%d"
+				yScale={{
+					type: 'linear',
+				}}
+				axisLeft={{
+					legend: 'linear scale',
+					legendOffset: 12,
+				}}
+				axisBottom={{
+					format: '%b %d',
+					legend: 'time scale',
+					legendOffset: -12,
+				}}
+				curve="catmullRom"
+				enablePointLabel={true}
+				pointSymbol={CustomSymbol}
+				pointSize={16}
+				pointBorderWidth={1}
+				pointBorderColor={{
+					from: 'color',
+					modifiers: [['darker', 0.3]],
+				}}
+				useMesh={true}
+				enableSlices={false}
+			/>
+		</>
+	);
+};
+
 const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps) => {
 	return (
 		<Tabs mt="md" defaultValue="info">
@@ -399,6 +508,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 						Lyrics
 					</Tabs.Tab>
 				)}
+				<Tabs.Tab value="stats" icon={<IconChartLine size="0.8rem" />}>
+					Statistics
+				</Tabs.Tab>
 				<Tabs.Tab value="discussion" icon={<IconMessageCircle size="0.8rem" />}>
 					Discussion{` (${details.commentCount})`}
 				</Tabs.Tab>
@@ -420,6 +532,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					<LyricsTab lyrics={details.lyricsFromParents} />
 				</Tabs.Panel>
 			)}
+			<Tabs.Panel value="stats">
+				<StatsTab details={details} />
+			</Tabs.Panel>
 			<Tabs.Panel value="discussion">
 				<CommentTab details={details} />
 			</Tabs.Panel>
@@ -468,6 +583,7 @@ export const getServerSideProps: GetServerSideProps<{
 		.use(remarkBreaks)
 		.use(remarkRehype)
 		.use(rehypeStringify);
+
 	return {
 		props: {
 			song,
