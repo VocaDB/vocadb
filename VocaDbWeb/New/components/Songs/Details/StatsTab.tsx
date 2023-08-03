@@ -2,13 +2,9 @@ import { sumDatesInOneDay } from '@/Helpers/DateTimeHelper';
 import { apiGet } from '@/Helpers/FetchApiHelper';
 import { SongDetailsContract } from '@/types/DataContracts/Song/SongDetailsContract';
 import { RatedSongForUserForApiContract } from '@/types/DataContracts/User/RatedSongForUserForApiContract';
-import { useMantineTheme, Title } from '@mantine/core';
-import dynamic from 'next/dynamic';
+import { Title } from '@mantine/core';
+import { Line } from '@nivo/line';
 import useSWR from 'swr';
-
-const ResponsiveLine = dynamic(() => import('@nivo/line').then((m) => m.Line), {
-	ssr: false,
-});
 
 interface CustomSymbolProps {
 	size: number;
@@ -39,7 +35,6 @@ export default function StatsTab({ details }: StatsTabProps) {
 		`/api/songs/${details.song.id}/ratings`,
 		apiGet<RatedSongForUserForApiContract[]>
 	);
-	const theme = useMantineTheme();
 
 	if (data === undefined) return <></>;
 
@@ -48,7 +43,7 @@ export default function StatsTab({ details }: StatsTabProps) {
 			<Title order={4} mt="md" mb="xs">
 				Rating over time
 			</Title>
-			<ResponsiveLine
+			<Line
 				width={900}
 				height={400}
 				margin={{ top: 30, right: 20, bottom: 30, left: 80 }}
@@ -71,16 +66,6 @@ export default function StatsTab({ details }: StatsTabProps) {
 								y: dateStat.count,
 							})
 						),
-						// data: [
-						// 	{ x: '2018-01-01', y: 7 },
-						// 	{ x: '2018-01-02', y: 5 },
-						// 	{ x: '2018-01-03', y: 11 },
-						// 	{ x: '2018-01-04', y: 9 },
-						// 	{ x: '2018-01-05', y: 12 },
-						// 	{ x: '2018-01-06', y: 16 },
-						// 	{ x: '2018-01-07', y: 13 },
-						// 	{ x: '2018-01-08', y: 13 },
-						// ],
 					},
 				]}
 				xScale={{
