@@ -7,10 +7,10 @@ public class OriginValidationFilter : IActionFilter
 	{
 		var requestOrigin = context.HttpContext.Request.Headers["Origin"].First();
 		// TODO: Make this list configurable
-		var allowedOrigins = new[] { "https://vocadb.net", "https://touhoudb.com", "https://utaitedb.net", "http://localhost:56401", "https://vocadb.vercel.app", "https://beta.vocadb.net", "http://localhost:5173" };
+		var allowedOrigins = new[] { "https://vocadb.net", "https://touhoudb.com", "https://utaitedb.net", "https://vocadb.vercel.app", "https://beta.vocadb.net" };
 
 		// TODO: Don't allow a null origin (Breaking Change)
-		if (requestOrigin != null && !allowedOrigins.Contains(requestOrigin))
+		if (requestOrigin != null && !allowedOrigins.Contains(requestOrigin) && !requestOrigin.StartsWith("http://localhost"))
 		{
 			context.Result = new BadRequestResult();
 		}

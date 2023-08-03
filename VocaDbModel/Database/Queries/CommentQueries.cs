@@ -4,10 +4,15 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -42,6 +47,11 @@ public class CommentQueries
 	private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) => entryType switch
 	{
 		EntryType.ReleaseEvent => new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+		EntryType.Song => new CommentQueries<SongComment, Song>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+		EntryType.Album => new CommentQueries<AlbumComment, Album>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+		EntryType.Artist => new CommentQueries<ArtistComment, Artist>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+		EntryType.DiscussionTopic => new CommentQueries<DiscussionComment, DiscussionTopic>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+		EntryType.User => new CommentQueries<UserComment, User>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
 		_ => throw new ArgumentException($"Unsupported entry type: {entryType}", nameof(entryType)),
 	};
 
