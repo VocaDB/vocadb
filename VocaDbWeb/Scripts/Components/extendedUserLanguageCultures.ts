@@ -483,6 +483,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'jbo',
+		{
+			languages: ['Lojban'],
+			nativeName: 'la .lojban.',
+		},
+	],
+	[
 		'mai',
 		{
 			languages: ['Maithili'],
