@@ -10,33 +10,33 @@ interface AlbumCardProps {
 
 export function AlbumCard({ album }: AlbumCardProps) {
 	return (
-		// <EntryToolTip entry="album" album={album}>
-		<UnstyledButton
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				width: '100%',
-			}}
-		>
-			<div style={{ overflow: 'hidden' }}>
-				<CustomImage
-					src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
-					className={styles.image}
-					width={188}
-					height={188}
-					mode="crop"
-					alt="Preview"
-				/>
-			</div>
-			<Title style={{ width: '180px' }} mt="xs" order={5}>
-				{album.name}
-			</Title>
-			<Title style={{ width: '180px' }} order={6} color="dimmed">
-				{album.artistString.split('feat.')[0]}
-			</Title>
-		</UnstyledButton>
-		// </EntryToolTip>
+		<EntryToolTip entry="album" album={album}>
+			<UnstyledButton
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '100%',
+				}}
+			>
+				<div style={{ overflow: 'hidden' }}>
+					<CustomImage
+						src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
+						className={styles.image}
+						width={188}
+						height={188}
+						mode="crop"
+						alt="Preview"
+					/>
+				</div>
+				<Title style={{ width: '180px' }} mt="xs" order={5}>
+					{album.name}
+				</Title>
+				<Title style={{ width: '180px' }} order={6} color="dimmed">
+					{album.artistString.split('feat.')[0]}
+				</Title>
+			</UnstyledButton>
+		</EntryToolTip>
 	);
 }
 

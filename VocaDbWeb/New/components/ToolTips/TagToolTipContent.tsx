@@ -1,3 +1,4 @@
+'use client';
 import { apiGet } from '@/Helpers/FetchApiHelper';
 import { unmark } from '@/Helpers/markdown';
 import { TagApiContract } from '@/types/DataContracts/Tag/TagApiContract';
@@ -23,8 +24,8 @@ export default function TagToolTipContent({ tag }: TagToolTipProps) {
 			) : (
 				<>
 					<div>
-						<Text weight={500}>{data.name}</Text>
-						<Text color="dimmed">
+						<Text fw={500}>{data.name}</Text>
+						<Text c="dimmed">
 							{data.additionalNames
 								?.split(',')
 								.filter((_tag, index) => index < 3)

@@ -1,3 +1,4 @@
+'use client';
 import { ArtistApiContract } from '@/types/DataContracts/Artist/ArtistApiContract';
 import { Group, Text } from '@mantine/core';
 import CustomImage from '../Image/Image';

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { AlbumToolTipProps } from './AlbumToolTipContent';
-import { ArtistToolTipProps } from './ArtistToolTipContent';
-import { TagToolTipProps } from './TagToolTipContent';
-import { SongToolTipProps } from './SongToolTIpContent';
+import React from 'react';
+import AlbumToolTipContent, { AlbumToolTipProps } from './AlbumToolTipContent';
+import ArtistToolTipContent, { ArtistToolTipProps } from './ArtistToolTipContent';
+import TagToolTipContent, { TagToolTipProps } from './TagToolTipContent';
+import SongToolTipContent, { SongToolTipProps } from './SongToolTIpContent';
+import EntryToolTipCard from './EntryToolTipCard';
 
-const EntryToolTipCard = React.lazy(() => import('./EntryToolTipCard'));
-const ArtistToolTipContent = React.lazy(() => import('./ArtistToolTipContent'));
-const AlbumToolTipContent = React.lazy(() => import('./AlbumToolTipContent'));
-const TagToolTipContent = React.lazy(() => import('./TagToolTipContent'));
-const SongToolTipContent = React.lazy(() => import('./SongToolTIpContent'));
+// const EntryToolTipCard = React.lazy(() => import('./EntryToolTipCard'));
+// const ArtistToolTipContent = React.lazy(() => import('./ArtistToolTipContent'));
+// const AlbumToolTipContent = React.lazy(() => import('./AlbumToolTipContent'));
+// const TagToolTipContent = React.lazy(() => import('./TagToolTipContent'));
+// const SongToolTipContent = React.lazy(() => import('./SongToolTIpContent'));
 
 type EntryToolTipProps = (
 	| AlbumToolTipProps
@@ -21,7 +22,6 @@ type EntryToolTipProps = (
 
 // TODO: Investigate hydration suspenbse issues
 export default function EntryToolTip(props: EntryToolTipProps) {
-	const [tooltip, setTooltip] = useState<JSX.Element | undefined>(undefined);
 	const getToolTip = () => {
 		if (props.entry === 'album') {
 			return <AlbumToolTipContent {...props} />;
@@ -34,13 +34,9 @@ export default function EntryToolTip(props: EntryToolTipProps) {
 		}
 	};
 
-	useEffect(() => {
-		setTooltip(getToolTip());
-	}, [props]);
-
 	return (
 		<React.Suspense fallback={props.children}>
-			<EntryToolTipCard tooltip={tooltip}>{props.children}</EntryToolTipCard>
+			<EntryToolTipCard tooltip={getToolTip()}>{props.children}</EntryToolTipCard>
 		</React.Suspense>
 	);
 }

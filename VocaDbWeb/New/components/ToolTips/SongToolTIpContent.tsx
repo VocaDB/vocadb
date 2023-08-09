@@ -1,3 +1,4 @@
+'use client';
 import { SongApiContract } from '@/types/DataContracts/Song/SongApiContract';
 import { Group, Text } from '@mantine/core';
 import CustomImage from '../Image/Image';
@@ -10,10 +11,7 @@ export interface SongToolTipProps {
 }
 
 export default function SongToolTipContent({ song }: SongToolTipProps) {
-	const { data, isLoading } = useSWR(
-		`/api/songs/${song.id}?fields=ThumbUrl`,
-		apiGet<SongApiContract>
-	);
+	const { data } = useSWR(`/api/songs/${song.id}?fields=ThumbUrl`, apiGet<SongApiContract>);
 
 	return (
 		<Group>
