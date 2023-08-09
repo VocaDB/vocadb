@@ -9,4 +9,6 @@ export interface RatedSongForUserForApiContract {
 	song?: SongApiContract;
 
 	user?: UserApiContract;
+
+	date: string;
 }

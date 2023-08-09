@@ -30,6 +30,7 @@ import {
 import {
 	IconAffiliate,
 	IconAlignJustified,
+	IconChartLine,
 	IconHeart,
 	IconInfoCircle,
 	IconMessageCircle,
@@ -51,6 +52,7 @@ import { LyricsForSongContract } from '@/types/DataContracts/Song/LyricsForSongC
 import { CommentContract } from '@/types/DataContracts/CommentContract';
 import dynamic from 'next/dynamic';
 
+const StatsTab = dynamic(() => import('@/components/Songs/Details/StatsTab'), { ssr: false });
 const Comment = dynamic(() => import('@/components/Comment/Comment'));
 
 interface SongActionsProps {
@@ -399,6 +401,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 						Lyrics
 					</Tabs.Tab>
 				)}
+				<Tabs.Tab value="stats" icon={<IconChartLine size="0.8rem" />}>
+					Statistics
+				</Tabs.Tab>
 				<Tabs.Tab value="discussion" icon={<IconMessageCircle size="0.8rem" />}>
 					Discussion{` (${details.commentCount})`}
 				</Tabs.Tab>
@@ -420,6 +425,9 @@ const SongTabs = ({ details, setPV, notesEnglish, notesOriginal }: SongTabsProps
 					<LyricsTab lyrics={details.lyricsFromParents} />
 				</Tabs.Panel>
 			)}
+			<Tabs.Panel value="stats">
+				<StatsTab details={details} />
+			</Tabs.Panel>
 			<Tabs.Panel value="discussion">
 				<CommentTab details={details} />
 			</Tabs.Panel>
@@ -468,6 +476,7 @@ export const getServerSideProps: GetServerSideProps<{
 		.use(remarkBreaks)
 		.use(remarkRehype)
 		.use(rehypeStringify);
+
 	return {
 		props: {
 			song,

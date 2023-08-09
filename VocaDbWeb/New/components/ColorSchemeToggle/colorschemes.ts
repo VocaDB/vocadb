@@ -23,7 +23,7 @@ import lumi from '@/public/characters/LUMi.png';
 import nemu from '@/public/characters/Yumemi Nemu.png';
 import pouta from '@/public/characters/Po-uta.png';
 import una from '@/public/characters/Otomachi Una.png';
-import kzn from '@/public/characters/#kzn.png';
+import kzn from '@/public/characters/kzn.png';
 import { StaticImageData } from 'next/image';
 
 export interface ColorScheme {

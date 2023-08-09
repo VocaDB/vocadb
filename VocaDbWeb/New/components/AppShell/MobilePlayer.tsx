@@ -1,9 +1,13 @@
-import { Group, Paper, Slider, Space, Title, useMantineTheme } from '@mantine/core';
+import { Group, Slider, Space, Title, useMantineTheme } from '@mantine/core';
 import Sheet from 'react-modal-sheet';
 import CustomImage from '../Image/Image';
 import { usePlayerStore } from '@/nostalgic-darling/stores/usePlayerStore';
-import { IconPlayerPause, IconPlayerPlay, IconPlayerTrackPrev } from '@tabler/icons';
-import { IconPlayerTrackNext } from '@tabler/icons-react';
+import {
+	IconPlayerPause,
+	IconPlayerPlay,
+	IconPlayerTrackPrev,
+	IconPlayerTrackNext,
+} from '@tabler/icons-react';
 import { useInterval } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { formatNumberToTime } from '@/Helpers/DateTimeHelper';

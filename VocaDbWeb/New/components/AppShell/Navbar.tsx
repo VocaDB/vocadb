@@ -4,6 +4,7 @@ import {
 	IconCalendarEvent,
 	IconDisc,
 	IconHome,
+	IconPlaylist,
 	IconMessageCircle,
 	IconMusic,
 	IconUserCog,
@@ -13,7 +14,6 @@ import {
 } from '@tabler/icons-react';
 import { LinksGroupProps, NavbarLinksGroup } from './CollapsibleLinkGroup';
 import Link from 'next/link';
-import { IconPlaylist } from '@tabler/icons';
 import { PermissionToken } from '@/types/Models/LoginManager';
 import { hasPermission } from '@/Helpers/PermissionsHelper';
 import React from 'react';

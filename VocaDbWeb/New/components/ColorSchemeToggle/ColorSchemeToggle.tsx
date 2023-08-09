@@ -1,6 +1,6 @@
 import { ColorSwatch, Group, Paper, Switch, useMantineTheme } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { IconSun, IconMoonStars } from '@tabler/icons';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 import { useColorStore } from '@/stores/useColorStore';
 import React from 'react';
 import dynamic from 'next/dynamic';
