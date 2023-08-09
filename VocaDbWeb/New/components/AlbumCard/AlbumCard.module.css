@@ -1,0 +1,22 @@
+.cardContent {
+	pointer-events: none;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	top: 0;
+	width: 250px;
+	height: 250px;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.image {
+	transition: all 0.5s ease;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	@mixin hover {
+		transform: scale(1.1);
+	}
+}
+
