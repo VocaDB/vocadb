@@ -24,11 +24,11 @@ export default function CustomImage(props: CustomImageProps) {
 					baseOverride = 'https://vocadb.vercel.app/unknown.webp';
 				}
 
-				let base = baseOverride
-					? baseOverride
-					: `//wsrv.nl/?url=${
-							loaderProps.src.startsWith('/') ? process.env.NEXT_PUBLIC_API_URL : ''
-					  }${loaderProps.src}&output=webp`;
+				let base = `//wsrv.nl/?url=${
+					loaderProps.src.startsWith('/') && !baseOverride
+						? process.env.NEXT_PUBLIC_API_URL
+						: ''
+				}${baseOverride ? baseOverride : loaderProps.src}&output=webp`;
 
 				if (props.mode === 'crop') {
 					base += '&fit=cover&a=attention';
