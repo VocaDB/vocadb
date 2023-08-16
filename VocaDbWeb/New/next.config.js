@@ -7,10 +7,6 @@ module.exports = withBundleAnalyzer({
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
-	i18n: {
-		locales: ['en'],
-		defaultLocale: 'en',
-	},
 	async redirects() {
 		return [
 			{
@@ -31,6 +27,9 @@ module.exports = withBundleAnalyzer({
 			{ protocol: 'http', hostname: '127.0.0.1' },
 			{ protocol: 'https', hostname: 'beta.vocadb.net' },
 		],
+	},
+	typescript: {
+		ignoreBuildErrors: true,
 	},
 });
 

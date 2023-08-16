@@ -11,17 +11,10 @@ interface AlbumCardProps {
 export function AlbumCard({ album }: AlbumCardProps) {
 	return (
 		<EntryToolTip entry="album" album={album}>
-			<UnstyledButton
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '100%',
-				}}
-			>
+			<UnstyledButton className={styles.button}>
 				<div style={{ overflow: 'hidden' }}>
 					<CustomImage
-						src={album.mainPicture?.urlOriginal ?? '/unknown.png'}
+						src={album.mainPicture?.urlOriginal}
 						className={styles.image}
 						width={188}
 						height={188}
@@ -32,7 +25,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
 				<Title style={{ width: '180px' }} mt="xs" order={5}>
 					{album.name}
 				</Title>
-				<Title style={{ width: '180px' }} order={6} color="dimmed">
+				<Title style={{ width: '180px' }} order={6} c="dimmed">
 					{album.artistString.split('feat.')[0]}
 				</Title>
 			</UnstyledButton>
@@ -49,7 +42,7 @@ export function AlbumCards({ albums }: AlbumCardsProps) {
 		<Grid>
 			{albums.slice(0, 6).map((album) => (
 				<GridCol span={{ base: 12, xs: 6, lg: 4, xl: 2 }} key={album.id}>
-					<AlbumCard key={album.id} album={album} />
+					<AlbumCard album={album} />
 				</GridCol>
 			))}
 		</Grid>

@@ -1,9 +1,8 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { FrontPageContract } from '@/types/DataContracts/FrontPageContract';
-import { apiFetch, apiGet } from '@/Helpers/FetchApiHelper';
-import { HighlightedSongsCarousel } from '@/components/Frontpage/HighlightedSongsCarousel';
+import { apiGet } from '@/Helpers/FetchApiHelper';
 import { Title } from '@mantine/core';
 import { AlbumCards } from '@/components/AlbumCard/AlbumCard';
+import HighlightedSongsCarousel from '@/components/Frontpage/HighlightedSongsCarousel';
 
 const fetchData = async () => {
 	return await apiGet<FrontPageContract>('/api/frontpage');
@@ -14,10 +13,10 @@ export default async function Page() {
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column' }}>
-			{/* <Title order={2} mb="xs">
+			<Title order={2} mb="xs">
 				Highlighted PVs
 			</Title>
-			<HighlightedSongsCarousel songs={frontPage.newSongs} /> */}
+			<HighlightedSongsCarousel songs={frontPage.newSongs} />
 			<Title mt="md" mb="xs" order={2}>
 				Random popular albums
 			</Title>

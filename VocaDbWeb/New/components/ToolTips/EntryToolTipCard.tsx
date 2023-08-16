@@ -1,4 +1,4 @@
-import { Paper, Tooltip } from '@mantine/core';
+import { Container, Paper, Tooltip } from '@mantine/core';
 
 interface EntryToolTipCardProps {
 	children: JSX.Element;
@@ -10,17 +10,15 @@ export default function EntryToolTipCard({ children, tooltip }: EntryToolTipCard
 		<Tooltip
 			w="300px"
 			multiline
+			color="white"
 			openDelay={150}
 			styles={{
 				tooltip: {
 					padding: 0,
+					border: '1px solid gray',
 				},
 			}}
-			label={
-				<Paper shadow="xs" withBorder radius="xs" p="md">
-					{tooltip}
-				</Paper>
-			}
+			label={<Container p="md">{tooltip}</Container>}
 		>
 			{children}
 		</Tooltip>

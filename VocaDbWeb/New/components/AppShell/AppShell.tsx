@@ -1,67 +1,33 @@
-import { AppShell, Box, MediaQuery, Navbar as MantineNavbar, ScrollArea } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import Header from './Header';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import { useStyles } from './AppShell.styles';
+'use client';
 
-const Navbar = dynamic(() => import('./Navbar'), {
-	ssr: false,
-	loading: () => (
-		<MantineNavbar p="md" hiddenBreakpoint="sm" hidden={false} width={{ sm: 220, lg: 300 }}>
-			<div style={{ height: '100%' }} />
-		</MantineNavbar>
-	),
-});
-const Footer = dynamic(() => import('./Footer'), { ssr: false });
-const LyricsContainer = dynamic(() => import('@/nostalgic-darling/LyricsContainer'), {
-	ssr: false,
-});
-const PVPlayer = dynamic(() => import('@/nostalgic-darling/PVPlayer'), {
-	loading: () => null,
+import { AppShell, Burger, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const Logo = dynamic(() => import('./Logo'), { ssr: false });
+const ColorSchemeToggle = dynamic(() => import('../ColorSchemeToggle/ColorSchemeToggle'), {
 	ssr: false,
 });
 
 interface CustomAppShellProps {
-	children?: React.ReactElement;
+	children?: React.ReactNode;
 }
 
-const CustomAppShell = ({ children }: CustomAppShellProps): React.ReactElement => {
-	const router = useRouter();
-	const [opened, setOpened] = useState(false);
-	const { classes } = useStyles();
-
-	// Close burger menu on navigation
-	useEffect(() => {
-		router.events.on('routeChangeStart', () => {
-			setOpened(false);
-		});
-	}, [router]);
+export default function CustomAppShell({ children }: CustomAppShellProps) {
+	const [opened, { toggle }] = useDisclosure();
 
 	return (
-		<AppShell
-			navbarOffsetBreakpoint="sm"
-			navbar={<Navbar opened={opened} />}
-			header={<Header opened={opened} setOpened={setOpened} />}
-			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-			styles={(theme) => ({
-				main: {
-					backgroundColor:
-						theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-					width: 0, // TODO: Remoe this hack (prevents chrome viewport being too large)
-				},
-			})}
-			padding={0}
-		>
-			<Box id="main-content" className={classes.box}>
-				{children}
-				<LyricsContainer />
-				<PVPlayer />
-			</Box>
-			<Footer />
+		<AppShell header={{ height: 60 }} padding="md">
+			<AppShell.Header>
+				<Group h="100%" px="md">
+					<Burger opened={opened} onClick={toggle} hiddenFrom="sm" />
+					<Logo />
+					<ColorSchemeToggle />
+				</Group>
+			</AppShell.Header>
+			<AppShell.Main>{children}</AppShell.Main>
 		</AppShell>
 	);
-};
-
-export default CustomAppShell;
+}
 

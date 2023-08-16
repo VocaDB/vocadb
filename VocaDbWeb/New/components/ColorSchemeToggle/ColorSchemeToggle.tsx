@@ -1,5 +1,13 @@
-import { ColorSwatch, Group, Paper, Switch, useMantineTheme } from '@mantine/core';
-import { modals } from '@mantine/modals';
+import {
+	ColorSwatch,
+	Group,
+	Paper,
+	Switch,
+	useComputedColorScheme,
+	useMantineColorScheme,
+	useMantineTheme,
+} from '@mantine/core';
+// import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
 import { useColorStore } from '@/stores/useColorStore';
 import React from 'react';
@@ -11,23 +19,25 @@ const ColorSchemeMenu = dynamic(() => import('./ColorSchemeMenu'), {
 
 export default function ColorSchemeToggle() {
 	const theme = useMantineTheme();
-	const [colorScheme, toggleColorScheme] = useColorStore((state) => [
-		state.colorScheme,
-		state.toggleColorScheme,
-	]);
+	const { setColorScheme } = useMantineColorScheme();
+	const colorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
-	const openModal = () =>
-		modals.open({
-			title: 'Change your color scheme',
-			size: 'xl',
-			children: <ColorSchemeMenu />,
-		});
+	const toggleColorScheme = () => {
+		setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+	};
+
+	// const openModal = () =>
+	// 	modals.open({
+	// 		title: 'Change your color scheme',
+	// 		size: 'xl',
+	// 		children: <ColorSchemeMenu />,
+	// 	});
 
 	return (
-		<Group position="center" mr={10}>
+		<Group justify="center" mr={10}>
 			<ColorSwatch<'button'>
 				component="button"
-				onClick={openModal}
+				// onClick={openModal}
 				color={theme.colors[theme.primaryColor][6]}
 				title="Open color scheme menu"
 			/>

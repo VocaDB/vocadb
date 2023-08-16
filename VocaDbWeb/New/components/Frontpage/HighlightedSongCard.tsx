@@ -1,10 +1,10 @@
 import { SongWithPVAndVoteContract } from '@/types/DataContracts/Song/SongWithPVAndVoteContract';
-import { Button, Card, Group, Space, Text } from '@mantine/core';
+import { Button, Card, CardSection, Group, Space, Text } from '@mantine/core';
 import Link from 'next/link';
-import useStyles from './HighlightedSongCard.styles';
 import { IconHeart, IconThumbUp } from '@tabler/icons-react';
 import CustomImage from '../Image/Image';
 import { getBestThumbImageUrl } from '@/Helpers/getBestThumbUrl';
+import styles from './HighlightedSongCard.module.css';
 
 interface HighlightedSongCardProps {
 	song: SongWithPVAndVoteContract;
@@ -12,36 +12,34 @@ interface HighlightedSongCardProps {
 }
 
 export function HighlightedSongCard({ song, priority }: HighlightedSongCardProps) {
-	const styles = useStyles();
-
 	const bestThumbImageUrl = getBestThumbImageUrl(song.pvs);
 
 	return (
-		<Card className={styles.classes.card} radius="md" withBorder shadow="sm">
-			<Card.Section>
+		<Card className={styles.card} radius="md" withBorder shadow="sm">
+			<CardSection>
 				<CustomImage
 					src={bestThumbImageUrl}
 					height={240}
 					width={360}
-					className={styles.classes.image}
+					className={styles.image}
 					alt={`${song.name} thumbnail`}
 					priority={priority}
 				/>
-			</Card.Section>
-			<div className={styles.classes.textSectionWrapper}>
+			</CardSection>
+			<div className={styles.textSectionWrapper}>
 				<div>
-					<Text mt="xs" weight={500}>
+					<Text mt="xs" fw={500}>
 						{song.name}
 					</Text>
-					<Text size="sm" color="dimmed">
+					<Text size="sm" c="dimmed">
 						{song.artistString}
 					</Text>
 				</div>
 
 				<Space h="md" />
 
-				<Group position="apart">
-					<Group spacing="xs">
+				<Group justify="space-between">
+					<Group gap="xs">
 						<>
 							<IconThumbUp stroke={'1.5'} size="1.1rem" />
 

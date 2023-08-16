@@ -17,7 +17,7 @@ export default function AlbumToolTipContent({ album }: AlbumToolTipProps) {
 	return (
 		<>
 			<Text>{album.name}</Text>
-			<Text size="sm" color="dimmed">
+			<Text size="sm" c="dimmed">
 				{album.artistString}
 			</Text>
 			{!album.releaseDate.isEmpty && (

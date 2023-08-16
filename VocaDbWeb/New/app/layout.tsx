@@ -1,6 +1,7 @@
 import '@mantine/core/styles.css';
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+import CustomAppShell from '@/components/AppShell/AppShell';
 
 export const metadata = {
 	title: 'My Mantine app',
@@ -11,10 +12,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<head>
-				<ColorSchemeScript />
+				<ColorSchemeScript defaultColorScheme="light" />
 			</head>
 			<body>
-				<MantineProvider>{children}</MantineProvider>
+				<MantineProvider>
+					<CustomAppShell>{children}</CustomAppShell>
+				</MantineProvider>
 			</body>
 		</html>
 	);
