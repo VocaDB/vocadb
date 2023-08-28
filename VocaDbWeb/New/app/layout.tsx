@@ -2,10 +2,12 @@ import '@mantine/core/styles.css';
 
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import CustomAppShell from '@/components/AppShell/AppShell';
+import { ModalsProvider } from '@mantine/modals';
+import { colors } from '@/components/colors';
 
 export const metadata = {
-	title: 'My Mantine app',
-	description: 'I have followed setup instructions carefully',
+	title: 'VocaDB',
+	description: '',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,8 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<ColorSchemeScript defaultColorScheme="light" />
 			</head>
 			<body>
-				<MantineProvider>
-					<CustomAppShell>{children}</CustomAppShell>
+				<MantineProvider theme={{ colors: colors }}>
+					<ModalsProvider>
+						<CustomAppShell>{children}</CustomAppShell>
+					</ModalsProvider>
 				</MantineProvider>
 			</body>
 		</html>

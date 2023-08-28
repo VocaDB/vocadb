@@ -1,3 +1,4 @@
+// TODO: Should this be rendered on the server?
 'use client';
 import { apiGet } from '@/Helpers/FetchApiHelper';
 import Link from 'next/link';

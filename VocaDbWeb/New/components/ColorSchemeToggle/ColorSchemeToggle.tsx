@@ -7,7 +7,7 @@ import {
 	useMantineColorScheme,
 	useMantineTheme,
 } from '@mantine/core';
-// import { modals } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
 import { useColorStore } from '@/stores/useColorStore';
 import React from 'react';
@@ -26,18 +26,18 @@ export default function ColorSchemeToggle() {
 		setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
 	};
 
-	// const openModal = () =>
-	// 	modals.open({
-	// 		title: 'Change your color scheme',
-	// 		size: 'xl',
-	// 		children: <ColorSchemeMenu />,
-	// 	});
+	const openModal = () =>
+		modals.open({
+			title: 'Change your color scheme',
+			size: 'xl',
+			children: <ColorSchemeMenu />,
+		});
 
 	return (
 		<Group justify="center" mr={10}>
 			<ColorSwatch<'button'>
 				component="button"
-				// onClick={openModal}
+				onClick={openModal}
 				color={theme.colors[theme.primaryColor][6]}
 				title="Open color scheme menu"
 			/>
