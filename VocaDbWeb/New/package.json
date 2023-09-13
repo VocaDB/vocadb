@@ -17,11 +17,11 @@
 		"storybook:build": "build-storybook"
 	},
 	"dependencies": {
-		"@mantine/carousel": "^7.0.0-alpha.22",
-		"@mantine/core": "^7.0.0-alpha.22",
-		"@mantine/form": "^7.0.0-alpha.22",
-		"@mantine/hooks": "^7.0.0-alpha.22",
-		"@mantine/modals": "^7.0.0-alpha.22",
+		"@mantine/carousel": "^7.0.0-beta.5",
+		"@mantine/core": "^7.0.0-beta.5",
+		"@mantine/form": "^7.0.0-beta.5",
+		"@mantine/hooks": "^7.0.0-beta.5",
+		"@mantine/modals": "^7.0.0-beta.5",
 		"@next/bundle-analyzer": "^13.4.12",
 		"@nivo/line": "^0.83.0",
 		"@tabler/icons": "^2.30.0",

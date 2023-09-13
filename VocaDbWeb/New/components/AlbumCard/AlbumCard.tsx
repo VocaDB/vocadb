@@ -1,5 +1,5 @@
 import { AlbumForApiContract } from '@/types/DataContracts/Album/AlbumForApiContract';
-import { Grid, GridCol, Title, UnstyledButton } from '@mantine/core';
+import { Grid, GridCol, UnstyledButton, Text } from '@mantine/core';
 import CustomImage from '../Image/Image';
 import EntryToolTip from '../ToolTips/EntryToolTip';
 import styles from './AlbumCard.module.css';
@@ -22,12 +22,12 @@ export function AlbumCard({ album }: AlbumCardProps) {
 						alt="Preview"
 					/>
 				</div>
-				<Title style={{ width: '180px' }} mt="xs" order={5}>
+				<Text fw={1000} w={180} mt="xs">
 					{album.name}
-				</Title>
-				<Title style={{ width: '180px' }} order={6} c="dimmed">
+				</Text>
+				<Text w={180} fw={500} c="dimmed">
 					{album.artistString.split('feat.')[0]}
-				</Title>
+				</Text>
 			</UnstyledButton>
 		</EntryToolTip>
 	);
