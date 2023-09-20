@@ -97,7 +97,9 @@ export default function ColorSchemeMenu() {
 
 	return (
 		<>
-			<Text size="sm">You can change your preferred color scheme here.</Text>
+			<Text size="sm" mb="md">
+				You can change your preferred color scheme here.
+			</Text>
 
 			{colorSchemes}
 		</>

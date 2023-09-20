@@ -1,11 +1,11 @@
-import { ColorScheme, MantineColor } from '@mantine/core';
+import { MantineColor, MantineColorScheme } from '@mantine/core';
 import { setCookie } from 'cookies-next';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface ColorState {
 	primaryColor: MantineColor;
-	colorScheme: ColorScheme;
+	colorScheme: MantineColorScheme;
 	setPrimaryColor: (color: MantineColor) => void;
 	toggleColorScheme: () => void;
 }
