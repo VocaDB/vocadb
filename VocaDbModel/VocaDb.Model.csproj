@@ -45,7 +45,7 @@
     <PackageReference Include="FluentNHibernate" Version="3.1.0" />
     <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="HtmlSanitizer" Version="7.1.542" />
+    <PackageReference Include="HtmlSanitizer" Version="8.0.723" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="IvanAkcheurov.NTextCat.Lib" Version="0.2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="7.0.5" />
