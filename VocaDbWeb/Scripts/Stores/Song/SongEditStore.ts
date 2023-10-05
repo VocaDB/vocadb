@@ -185,7 +185,7 @@ export class SongEditStore {
 	}
 
 	@computed get canHaveOriginalVersion(): boolean {
-		return this.songType !== SongType.Original;
+		return true;
 	}
 
 	@computed get showInstrumentalNote(): boolean {
