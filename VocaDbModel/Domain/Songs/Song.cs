@@ -227,7 +227,7 @@ public class Song :
 	/// This method also tests that the song type isn't "Original", because original songs aren't supposed to have parent songs.
 	/// </summary>
 	[MemberNotNullWhen(true, nameof(OriginalVersion))]
-	public virtual bool HasOriginalVersion => SongType != SongType.Original && OriginalVersion != null;
+	public virtual bool HasOriginalVersion => OriginalVersion != null;
 
 	public virtual IList<SongHit> Hits
 	{
