@@ -1,12 +1,6 @@
-import {
-  LucideProps,
-  Moon,
-  SunMedium,
-  Twitter,
-  type Icon as LucideIcon,
-} from "lucide-react"
+import { LucideProps, Moon, SunMedium, Twitter } from "lucide-react"
 
-export type Icon = LucideIcon
+import { cn } from "@/lib/utils"
 
 export const Icons = {
   sun: SunMedium,
@@ -17,12 +11,12 @@ export const Icons = {
       <img
         src="/VocaDB_Logo_Black_Transparent_No_Outline.png"
         {...props}
-        className={"dark:hidden " + props.className}
+        className={cn("dark:hidden", props.className)}
       />
       <img
         src="/VocaDB_Logo_White_Transparent_No_Outline.png"
         {...props}
-        className={"hidden dark:block " + props.className}
+        className={cn("hidden dark:block", props.className)}
       />
     </>
   ),

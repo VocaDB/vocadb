@@ -1,48 +1,56 @@
 import Link from "next/link"
+import { SiDiscord, SiGithub, SiTwitter } from "@icons-pack/react-simple-icons"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
+
+import { AddEntryButton } from "./buttons/add-entry"
+
+interface SocialLinkProps {
+  href: string
+  name: string
+  icon: JSX.Element
+}
+
+export function SocialLink({ href, name, icon }: SocialLinkProps) {
+  return (
+    <Link href={href} target="_blank">
+      <div className={buttonVariants({ variant: "ghost", size: "icon" })}>
+        {icon}
+        <span className="sr-only">{name}</span>
+      </div>
+    </Link>
+  )
+}
 
 export function SiteHeader() {
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav items={siteConfig.mainNav} />
+        <div className="flex grow justify-center">
+          <input placeholder="Search" />
+        </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
+          <AddEntryButton />
           <nav className="flex items-center space-x-1">
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.gitHub className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
-              </div>
-            </Link>
-            <Link
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.twitter className="h-5 w-5 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </div>
-            </Link>
+            <SocialLink
+              icon={<SiDiscord />}
+              name="Discord"
+              href="//discord.com/invite/3bwXQNXKCz"
+            />
+            <SocialLink
+              icon={<SiGithub className="h-5 w-5" />}
+              name="GitHub"
+              href="//github.com/vocadb/vocadb"
+            />
+            <SocialLink
+              icon={<SiTwitter className="h-5 w-5" />}
+              name="Twitter"
+              href="//twitter.com/vocadb"
+            />
             <ThemeToggle />
           </nav>
         </div>
