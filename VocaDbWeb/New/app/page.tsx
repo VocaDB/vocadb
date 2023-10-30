@@ -1,11 +1,21 @@
 import Link from "next/link"
+import { apiGet } from "@/client/fetch"
 
+import { FrontPageContract } from "@/types/api/frontpage"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 
 import { FeaturedSongsCarousel } from "./featured-songs"
 
-export default function IndexPage() {
+async function getData() {
+  const res = await apiGet<FrontPageContract>("/frontpage")
+
+  return res
+}
+
+export default async function IndexPage() {
+  const data = await getData()
+
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <FeaturedSongsCarousel />
