@@ -5,7 +5,7 @@ import { FrontPageContract } from "@/types/api/frontpage"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 
-import { FeaturedSongsCarousel } from "./featured-songs"
+import { FeaturedSongsCarousel } from "../components/featured-songs"
 
 async function getData() {
   const res = await apiGet<FrontPageContract>("/frontpage")
@@ -18,7 +18,7 @@ export default async function IndexPage() {
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      <FeaturedSongsCarousel />
+      <FeaturedSongsCarousel songs={data.newSongs} />
       <div className="flex max-w-[980px] flex-col items-start gap-2">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Beautifully designed components <br className="hidden sm:inline" />

@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import {
   LucideBookOpen,
   LucideCalendar,
@@ -52,9 +53,11 @@ interface NavLinkProps {
 
 export function NavLink({ icon, name, href }: NavLinkProps) {
   return (
-    <Button variant="ghost" className="w-full justify-start">
-      {icon}
-      {name}
+    <Button variant="ghost" className="w-full justify-start" asChild>
+      <Link href={href}>
+        {icon}
+        {name}
+      </Link>
     </Button>
   )
 }
