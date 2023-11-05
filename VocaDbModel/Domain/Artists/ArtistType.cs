@@ -64,7 +64,9 @@ public enum ArtistType
 
 	NewType,
 
-	Voiceroid
+	Voiceroid,
+
+	Instrumentalist
 }
 
 /// <summary>
@@ -120,5 +122,7 @@ public enum ArtistTypes
 
 	NewType = 1 << 21,
 
-	Voiceroid = 1 << 22
+	Voiceroid = 1 << 22,
+
+	Instrumentalist = 1 << 23
 }
