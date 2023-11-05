@@ -138,6 +138,16 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'www.dizzylab.net',
+			desc: 'Dizzylab',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.dlsite.com',
+			desc: 'DLsite',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'exittunes.com/',
 			desc: 'Exit Tunes',
 			cat: WebLinkCategory.Official,

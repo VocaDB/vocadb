@@ -1,425 +1,534 @@
 a.extLink {
-	 padding: 2px 0 2px 20px;
-	 background: url('/Content/Icons/world.png');
-	 background-repeat: no-repeat;
-	 background-position-x: left;
-	 background-position-y: 50%;
+	padding: 2px 0 2px 20px;
+	background: url('/Content/Icons/world.png');
+	background-repeat: no-repeat;
+	background-position-x: left;
+	background-position-y: 50%;
+}
+a.extLink[href^="http://about.me/"], a.extLink[href^="https://about.me/"]
+{
+	background-image: url('/Content/ExtIcons/aboutme.png');
+}
+a.extLink[href^="http://ec.akbh.jp/products/detail.php"], a.extLink[href^="https://ec.akbh.jp/products/detail.php"], a.extLink[href^="http://shop.akbh.jp/"], a.extLink[href^="https://shop.akbh.jp/"]
+{
+	background-image: url('/Content/ExtIcons/akibahobby.png');
+}
+a.extLink[href^="http://www.amazon.co.jp/"], a.extLink[href^="https://www.amazon.co.jp/"], a.extLink[href^="http://www.amazon.com/"], a.extLink[href^="https://www.amazon.com/"], a.extLink[href^="https://amzn.to/"], a.extLink[href^="https://www.amazon.de/"]
+{
+	background-image: url('/Content/ExtIcons/amazon.png');
+}
+a.extLink[href^="http://music.amazon.com"], a.extLink[href^="https://music.amazon.com"], a.extLink[href^="http://music.amazon.co.jp"], a.extLink[href^="https://music.amazon.co.jp"]
+{
+	background-image: url('/Content/ExtIcons/amazonmp3.png');
+}
+a.extLink[href^="http://www.animate-onlineshop.jp/"], a.extLink[href^="https://www.animate-onlineshop.jp/"]
+{
+	background-image: url('/Content/ExtIcons/animate.png');
+}
+a.extLink[href^="http://web.archive.org/"], a.extLink[href^="https://web.archive.org/"]
+{
+	background-image: url('/Content/ExtIcons//archive.png');
+}
+a.extLink[href^="http://www5.atwiki.jp/hmiku/"], a.extLink[href^="https://www5.atwiki.jp/hmiku/"], a.extLink[href^="https://w.atwiki.jp/hmiku/"], a.extLink[href*="atwiki.jp/cevio_synthv/"]
+{
+	background-image: url('/Content/ExtIcons/atwiki.png');
+}
+a.extLink[href*='.bilibili.tv/'],
+a.extLink[href*='.bilibili.com/'] {
+	background-image: url('/Content/ExtIcons/bilibili.png');
+}
+a.extLink[href*='booth.pm/'] {
+	background-image: url('/Content/ExtIcons/booth.png');
 }
- a.extLink[href^="http://about.me/"], a.extLink[href^="https://about.me/"] {
-	 background-image: url('/Content/ExtIcons/aboutme.png');
+a.extLink[href^="https://creofuga.net/"], a.extLink[href^="https://en.creofuga.net/"]
+{
+	background-image: url('/Content/ExtIcons/creofuga.png');
 }
- a.extLink[href^="http://ec.akbh.jp/products/detail.php"], a.extLink[href^="https://ec.akbh.jp/products/detail.php"], a.extLink[href^="http://shop.akbh.jp/"], a.extLink[href^="https://shop.akbh.jp/"] {
-	 background-image: url('/Content/ExtIcons/akibahobby.png');
+a.extLink[href^="http://d-stage.com/"]
+{
+	background-image: url('/Content/ExtIcons/dstage.png');
 }
- a.extLink[href^="http://www.amazon.co.jp/"], a.extLink[href^="https://www.amazon.co.jp/"], a.extLink[href^="http://www.amazon.com/"], a.extLink[href^="https://www.amazon.com/"], a.extLink[href^="https://amzn.to/"], a.extLink[href^="https://www.amazon.de/"] {
-	 background-image: url('/Content/ExtIcons/amazon.png');
+a.extLink[href*='deviantart.com/'] {
+	background-image: url('/Content/ExtIcons/dA.png');
+}
+a.extLink[href^="http://www.discogs.com/"], a.extLink[href^="https://www.discogs.com/"]
+{
+	background-image: url('/Content/ExtIcons/discogs.png');
 }
- a.extLink[href^="http://music.amazon.com"], a.extLink[href^="https://music.amazon.com"], a.extLink[href^="http://music.amazon.co.jp"], a.extLink[href^="https://music.amazon.co.jp"] {
-	 background-image: url('/Content/ExtIcons/amazonmp3.png');
+a.extLink[href^="https://www.dizzylab.net/"]
+{
+	background-image: url('/Content/ExtIcons/dizzylabs.png');
 }
- a.extLink[href^="http://www.animate-onlineshop.jp/"], a.extLink[href^="https://www.animate-onlineshop.jp/"] {
-	 background-image: url('/Content/ExtIcons/animate.png');
+a.extLink[href^="https://www.dlsite.com/"]
+{
+	background-image: url('/Content/ExtIcons/dlsite.png');
 }
- a.extLink[href^="http://web.archive.org/"], a.extLink[href^="https://web.archive.org/"] {
-	 background-image: url("/Content/ExtIcons//archive.png");
+a.extLink[href^="http://shop.fasic.jp/"]
+{
+	background-image: url('/Content/ExtIcons/fasic.png');
 }
- a.extLink[href^="http://www5.atwiki.jp/hmiku/"], a.extLink[href^="https://www5.atwiki.jp/hmiku/"], a.extLink[href^="https://w.atwiki.jp/hmiku/"], a.extLink[href*="atwiki.jp/cevio_synthv/"] {
-	 background-image: url('/Content/ExtIcons/atwiki.png');
+a.extLink[href^="https://play.google.com/"]
+{
+	background-image: url('/Content/ExtIcons/google-play.png');
 }
- a.extLink[href*='.bilibili.tv/'], a.extLink[href*='.bilibili.com/'] {
-	 background-image: url('/Content/ExtIcons/bilibili.png');
+a.extLink[href^="http://www.grep-shop.com/"]
+{
+	background-image: url('/Content/ExtIcons/grepshop.png');
 }
- a.extLink[href*='booth.pm/'] {
-	 background-image: url('/Content/ExtIcons/booth.png');
+a.extLink[href^="http://www.hmv.co.jp/"], a.extLink[href^="https://www.hmv.co.jp/"]
+{
+	background-image: url('/Content/ExtIcons/hmv.png');
 }
- a.extLink[href^="https://creofuga.net/"], a.extLink[href^="https://en.creofuga.net/"] {
-	 background-image: url('/Content/ExtIcons/creofuga.png');
+a.extLink[href^="https://www.instagram.com/"], a.extLink[href^="https://instagram.com/"]
+{
+	background-image: url('/Content/ExtIcons/instagram.png');
 }
- a.extLink[href^="http://d-stage.com/"] {
-	 background-image: url('/Content/ExtIcons/dstage.png');
+a.extLink[href*='kkbox.fm/'],
+a.extLink[href*='kkbox.com/'] {
+	background-image: url('/Content/ExtIcons/kkbox.png');
 }
- a.extLink[href*='deviantart.com/'] {
-	 background-image: url('/Content/ExtIcons/dA.png');
+a.extLink[href^="https://music.line.me/"], a.extLink[href^="http://music.line.me/"], a.extLink[href^="http://lin.ee/"], a.extLink[href^="https://lin.ee/"], a.extLink[href^="http://line.me/"], a.extLink[href^="https://line.me/"]
+{
+	background-image: url('/Content/ExtIcons/linemusic.png');
 }
- a.extLink[href^="http://www.discogs.com/"], a.extLink[href^="https://www.discogs.com/"] {
-	 background-image: url('/Content/ExtIcons/discogs.png');
+a.extLink[href^="http://shop.melonbooks.co.jp/"], a.extLink[href^="https://www.melonbooks.co.jp/"]
+{
+	background-image: url('/Content/ExtIcons/melonbooks.png');
 }
- a.extLink[href^="http://shop.fasic.jp/"] {
-	 background-image: url('/Content/ExtIcons/fasic.png');
+a.extLink[href^="http://mikumikudance.wikia.com/wiki/"], a.extLink[href^="https://mikumikudance.fandom.com/wiki/"]
+{
+	background-image: url('/Content/ExtIcons/mmdwiki.png');
 }
- a.extLink[href^="https://play.google.com/"] {
-	 background-image: url('/Content/ExtIcons/google-play.png');
+a.extLink[href^="http://music-book.jp/"], a.extLink[href^="https://music-book.jp/"]
+{
+	background-image: url('/Content/ExtIcons/musicbook.png');
 }
- a.extLink[href^="http://www.grep-shop.com/"] {
-	 background-image: url('/Content/ExtIcons/grepshop.png');
+a.extLink[href^="https://musicbrainz.org/"]
+{
+	background-image: url('/Content/ExtIcons/musicbrainz.png');
 }
- a.extLink[href^="http://www.hmv.co.jp/"], a.extLink[href^="https://www.hmv.co.jp/"] {
-	 background-image: url('/Content/ExtIcons/hmv.png');
+a.extLink[href^="https://mysound.jp/"]
+{
+	background-image: url('/Content/ExtIcons/mysound.png');
 }
- a.extLink[href^="https://www.instagram.com/"], a.extLink[href^="https://instagram.com/"] {
-	 background-image: url('/Content/ExtIcons/instagram.png');
+a.extLink[href^="http://www.pixiv.net/"], a.extLink[href^="https://www.pixiv.net/"]
+{
+	background-image: url('/Content/ExtIcons/pixiv.png');
 }
- a.extLink[href*='kkbox.fm/'], a.extLink[href*='kkbox.com/'] {
-	 background-image: url('/Content/ExtIcons/kkbox.png');
+a.extLink[href^="http://www.play-asia.com/"], a.extLink[href^="https://www.play-asia.com/"]
+{
+	background-image: url('/Content/ExtIcons/playasia.png');
 }
- a.extLink[href^="https://music.line.me/"], a.extLink[href^="http://music.line.me/"], a.extLink[href^="http://lin.ee/"], a.extLink[href^="https://lin.ee/"], a.extLink[href^="http://line.me/"], a.extLink[href^="https://line.me/"] {
-	 background-image: url('/Content/ExtIcons/linemusic.png');
+a.extLink[href^="https://play.spotify.com/"], a.extLink[href^="https://open.spotify.com/"]
+{
+	background-image: url('/Content/ExtIcons/spotify.png');
 }
- a.extLink[href^="http://shop.melonbooks.co.jp/"], a.extLink[href^="https://www.melonbooks.co.jp/"] {
-	 background-image: url('/Content/ExtIcons/melonbooks.png');
+a.extLink[href^="http://www.lagoa.jp/"]
+{
+	background-image: url('/Content/ExtIcons/three.png');
 }
- a.extLink[href^="http://mikumikudance.wikia.com/wiki/"], a.extLink[href^="https://mikumikudance.fandom.com/wiki/"] {
-	 background-image: url('/Content/ExtIcons/mmdwiki.png');
+a.extLink[href^="https://www.metal-archives.com/"]
+{
+	background-image: url('/Content/ExtIcons/ma.png');
 }
- a.extLink[href^="http://music-book.jp/"], a.extLink[href^="https://music-book.jp/"] {
-	 background-image: url('/Content/ExtIcons/musicbook.png');
+a.extLink[href^="http://music.oricon.co.jp/"], a.extLink[href^="https://music.oricon.co.jp/"]
+{
+	background-image: url('/Content/ExtIcons/oriconmusic.png');
 }
- a.extLink[href^="https://musicbrainz.org/"] {
-	 background-image: url('/Content/ExtIcons/musicbrainz.png');
+a.extLink[href^="http://oricon.co.jp/"], a.extLink[href^="https://oricon.co.jp/"]
+{
+	background-image: url('/Content/ExtIcons/oricon.png');
 }
- a.extLink[href^="https://mysound.jp/"] {
-	 background-image: url('/Content/ExtIcons/mysound.png');
+a.extLink[href^="https://ototoy.jp/"], a.extLink[href^="http://ototoy.jp/"]
+{
+	background-image: url('/Content/ExtIcons/ototoy.png');
 }
- a.extLink[href^="http://www.pixiv.net/"], a.extLink[href^="https://www.pixiv.net/"] {
-	 background-image: url('/Content/ExtIcons/pixiv.png');
+a.extLink[href^="https://potune.jp/"], a.extLink[href^="http://ototoy.jp/"]
+{
+	background-image: url('/Content/ExtIcons/potune.png');
 }
- a.extLink[href^="http://www.play-asia.com/"], a.extLink[href^="https://www.play-asia.com/"] {
-	 background-image: url('/Content/ExtIcons/playasia.png');
+a.extLink[href^="http://sonicwire.com"], a.extLink[href^="https://sonicwire.com"]
+{
+	background-image: url('/Content/ExtIcons/sonicwire.png');
 }
- a.extLink[href^="https://play.spotify.com/"], a.extLink[href^="https://open.spotify.com/"] {
-	 background-image: url('/Content/ExtIcons/spotify.png');
+a.extLink[href*='.taobao.com'] {
+	background-image: url('/Content/ExtIcons/itemtaobao.png');
 }
- a.extLink[href^="http://www.lagoa.jp/"] {
-	 background-image: url('/Content/ExtIcons/three.png');
+a.extLink[href^="https://www.tanocstore.net/"], a.extLink[href^="http://www.tanocstore.net/"]
+{
+	background-image: url('/Content/ExtIcons/tanocstore.png');
 }
- a.extLink[href^="https://www.metal-archives.com/"] {
-	 background-image: url('/Content/ExtIcons/ma.png');
+a.extLink[href^="http://www.toranoana.jp/"], a.extLink[href^="https://www.toranoana.jp/"]
+{
+	background-image: url('/Content/ExtIcons/tora.png');
 }
- a.extLink[href^="http://music.oricon.co.jp/"], a.extLink[href^="https://music.oricon.co.jp/"] {
-	 background-image: url('/Content/ExtIcons/oriconmusic.png');
+a.extLink[href*='ec.toranoana.shop/'] {
+	background-image: url('/Content/ExtIcons/tora.png');
 }
- a.extLink[href^="http://oricon.co.jp/"], a.extLink[href^="https://oricon.co.jp/"] {
-	 background-image: url('/Content/ExtIcons/oricon.png');
+a.extLink[href^="http://tower.com/"], a.extLink[href^="https://tower.com/"], a.extLink[href^="http://tower.jp/"], a.extLink[href^="https://tower.jp/"]
+{
+	background-image: url('/Content/ExtIcons/towerrecords.png');
 }
- a.extLink[href^="https://ototoy.jp/"], a.extLink[href^="http://ototoy.jp/"] {
-	 background-image: url('/Content/ExtIcons/ototoy.png');
+a.extLink[href^="http://www.tower.jp/"], a.extLink[href^="https://www.tower.jp/"]
+{
+	background-image: url('/Content/ExtIcons/towerrecords.png');
 }
- a.extLink[href^="https://potune.jp/"], a.extLink[href^="http://ototoy.jp/"] {
-	 background-image: url('/Content/ExtIcons/potune.png');
+a.extLink[href^="https://touhoudb.com"]
+{
+	background-image: url('/Content/ExtIcons/touhoudb.png');
 }
- a.extLink[href^="http://sonicwire.com"], a.extLink[href^="https://sonicwire.com"] {
-	 background-image: url('/Content/ExtIcons/sonicwire.png');
+a.extLink[href^="http://www.tsutaya.co.jp/"], a.extLink[href^="https://tsutaya.tsite.jp/"]
+{
+	background-image: url('/Content/ExtIcons/tsutaya.png');
 }
- a.extLink[href*='.taobao.com'] {
-	 background-image: url('/Content/ExtIcons/itemtaobao.png');
+a.extLink[href^="http://twipla.jp/"], a.extLink[href^="https://twipla.jp/"]
+{
+	background-image: url('/Content/ExtIcons/twipla.png');
 }
- a.extLink[href^="https://www.tanocstore.net/"], a.extLink[href^="http://www.tanocstore.net/"] {
-	 background-image: url('/Content/ExtIcons/tanocstore.png');
+a.extLink[href^="https://en.touhouwiki.net/wiki/"]
+{
+	background-image: url('/Content/ExtIcons/touhouwiki.png');
 }
- a.extLink[href^="http://www.toranoana.jp/"], a.extLink[href^="https://www.toranoana.jp/"] {
-	 background-image: url('/Content/ExtIcons/tora.png');
+a.extLink[href^="http://utaitedb.net/"], a.extLink[href^="https://utaitedb.net/"]
+{
+	background-image: url('/Content/ExtIcons/utaitedb.png');
 }
- a.extLink[href*='ec.toranoana.shop/'] {
-	 background-image: url('/Content/ExtIcons/tora.png');
+a.extLink[href^="http://utaite.wikia.com/wiki/"], a.extLink[href^="https://utaite.fandom.com/wiki/"]
+{
+	background-image: url('/Content/ExtIcons/utaitewikia.png');
 }
- a.extLink[href^="http://tower.com/"], a.extLink[href^="https://tower.com/"], a.extLink[href^="http://tower.jp/"], a.extLink[href^="https://tower.jp/"] {
-	 background-image: url('/Content/ExtIcons/towerrecords.png');
+a.extLink[href^="https://vvstore.jp/"], a.extLink[href^="http://vvstore.jp/"]
+{
+	background-image: url('/Content/ExtIcons/villagevanguard.png');
 }
- a.extLink[href^="http://www.tower.jp/"], a.extLink[href^="https://www.tower.jp/"] {
-	 background-image: url('/Content/ExtIcons/towerrecords.png');
+a.extLink[href^="http://vgmdb.net/"], a.extLink[href^="https://vgmdb.net/"]
+{
+	background-image: url('/Content/ExtIcons/vgmdb.png');
 }
- a.extLink[href^="https://touhoudb.com"] {
-	 background-image: url('/Content/ExtIcons/touhoudb.png');
+a.extLink[href^="http://vk.com/"], a.extLink[href^="https://vk.com/"]
+{
+	background-image: url('/Content/ExtIcons/vk.png');
 }
- a.extLink[href^="http://www.tsutaya.co.jp/"], a.extLink[href^="https://tsutaya.tsite.jp/"] {
-	 background-image: url('/Content/ExtIcons/tsutaya.png');
+a.extLink[href^="http://vocadb.net/"], a.extLink[href^="https://vocadb.net/"]
+{
+	background-image: url('/Content/ExtIcons/vocadb.png');
 }
- a.extLink[href^="http://twipla.jp/"], a.extLink[href^="https://twipla.jp/"] {
-	 background-image: url('/Content/ExtIcons/twipla.png');
+a.extLink[href^="http://www.vocallective.net"]
+{
+	background-image: url('/Content/ExtIcons/vocallective.png');
 }
- a.extLink[href^="https://en.touhouwiki.net/wiki/"] {
-	 background-image: url('/Content/ExtIcons/touhouwiki.png');
+a.extLink[href^="http://www.vocaloidotaku.net"]
+{
+	background-image: url('/Content/ExtIcons/vo.png');
 }
- a.extLink[href^="http://utaitedb.net/"], a.extLink[href^="https://utaitedb.net/"] {
-	 background-image: url('/Content/ExtIcons/utaitedb.png');
+a.extLink[href^="http://weibo.com/"], a.extLink[href^="http://www.weibo.com/"], a.extLink[href^="https://www.weibo.com/"], a.extLink[href^="https://weibo.com/"]
+{
+	background-image: url('/Content/ExtIcons/weibo.png');
 }
- a.extLink[href^="http://utaite.wikia.com/wiki/"], a.extLink[href^="https://utaite.fandom.com/wiki/"] {
-	 background-image: url('/Content/ExtIcons/utaitewikia.png');
+a.extLink[href^="http://cevio.wikia.com/wiki/"], a.extLink[href^="http://alterego.wikia.com/wiki/"]
+{
+	background-image: url('/Content/ExtIcons/wikia.png');
 }
- a.extLink[href^="https://vvstore.jp/"], a.extLink[href^="http://vvstore.jp/"] {
-	 background-image: url('/Content/ExtIcons/villagevanguard.png');
+a.extLink[href^="https://www.vocaloid.com/"]
+{
+	background-image: url('/Content/ExtIcons/vocaloidshop.png');
 }
- a.extLink[href^="http://vgmdb.net/"], a.extLink[href^="https://vgmdb.net/"] {
-	 background-image: url('/Content/ExtIcons/vgmdb.png');
+a.extLink[href^="https://zh.moegirl.org/"], a.extLink[href^="https://en.moegirl.org/"], a.extLink[href^="https://ja.moegirl.org/"]
+{
+	background-image: url('/Content/ExtIcons/moegirl.png');
 }
- a.extLink[href^="http://vk.com/"], a.extLink[href^="https://vk.com/"] {
-	 background-image: url('/Content/ExtIcons/vk.png');
+a.extLink[href^="http://music.163.com/"], a.extLink[href^="https://music.163.com/"]
+{
+	background-image: url('/Content/ExtIcons/ncm.png');
 }
- a.extLink[href^="http://vocadb.net/"], a.extLink[href^="https://vocadb.net/"] {
-	 background-image: url('/Content/ExtIcons/vocadb.png');
+a.extLink[href^="http://5sing.kugou.com/"], a.extLink[href^="https://5sing.kugou.com/"]
+{
+	background-image: url('/Content/ExtIcons/5sing.png');
 }
- a.extLink[href^="http://www.vocallective.net"] {
-	 background-image: url('/Content/ExtIcons/vocallective.png');
+a.extLink[href*='.lofter.com/'] {
+	background-image: url('/Content/ExtIcons/lofter.png');
 }
- a.extLink[href^="http://www.vocaloidotaku.net"] {
-	 background-image: url('/Content/ExtIcons/vo.png');
+a.extLink[href^="http://www.akibaoo.com/"]
+{
+	background-image: url('/Content/ExtIcons/akibaoo.png');
 }
- a.extLink[href^="http://weibo.com/"], a.extLink[href^="http://www.weibo.com/"], a.extLink[href^="https://www.weibo.com/"], a.extLink[href^="https://weibo.com/"] {
-	 background-image: url('/Content/ExtIcons/weibo.png');
+a.extLink[href^="http://diverse.direct/"], a.extLink[href^="https://diverse.direct/"]
+{
+	background-image: url('/Content/ExtIcons/diversedirect.png');
 }
- a.extLink[href^="http://cevio.wikia.com/wiki/"], a.extLink[href^="http://alterego.wikia.com/wiki/"] {
-	 background-image: url('/Content/ExtIcons/wikia.png');
+a.extLink[href^="http://skeb.jp/"], a.extLink[href^="https://skeb.jp/"]
+{
+	background-image: url('/Content/ExtIcons/skeb.png');
 }
- a.extLink[href^="https://www.vocaloid.com/"] {
-	 background-image: url('/Content/ExtIcons/vocaloidshop.png');
+a.extLink[href^='mailto:'] {
+	background-image: url('/Content/Icons/email.png');
 }
- a.extLink[href^="https://zh.moegirl.org/"], a.extLink[href^="https://en.moegirl.org/"], a.extLink[href^="https://ja.moegirl.org/"] {
-	 background-image: url('/Content/ExtIcons/moegirl.png');
+a.extLink[href^="http://alice-books.com/"]
+{
+	background-image: url('/Content/ExtIcons/alicebooks.png');
 }
- a.extLink[href^="http://music.163.com/"], a.extLink[href^="https://music.163.com/"] {
-	 background-image: url('/Content/ExtIcons/ncm.png');
+a.extLink[href^="http://ameblo.jp/"], a.extLink[href^="https://ameblo.jp/"]
+{
+	background: url('/Content/ExtIcons/ameblo.png') no-repeat left 50%;
 }
- a.extLink[href^="http://5sing.kugou.com/"], a.extLink[href^="https://5sing.kugou.com/"] {
-	 background-image: url('/Content/ExtIcons/5sing.png');
+a.extLink[href^="http://www.amiami.com/"], a.extLink[href^="https://www.amiami.com/"]
+{
+	background: url('/Content/ExtIcons/amiami.png') no-repeat left 50%;
 }
- a.extLink[href*='.lofter.com/'] {
-	 background-image: url('/Content/ExtIcons/lofter.png');
+a.extLink[href*='bandcamp.com'] {
+	background-image: url('/Content/ExtIcons/bandcamp.png');
 }
- a.extLink[href^="http://www.akibaoo.com/"] {
-	 background-image: url('/Content/ExtIcons/akibaoo.png');
+a.extLink[href^="http://www.cdjapan.co.jp/"], a.extLink[href^="https://www.cdjapan.co.jp/"]
+{
+	background: url('/Content/ExtIcons/cdjapan.png') no-repeat left 50%;
 }
- a.extLink[href^="http://diverse.direct/"], a.extLink[href^="https://diverse.direct/"] {
-	 background-image: url('/Content/ExtIcons/diversedirect.png');
+a.extLink[href^="http://www.crypton.co.jp/"], a.extLink[href^="https://ec.crypton.co.jp/"], a.extLink[href^="https://www.crypton.co.jp/"]
+{
+	background: url('/Content/ExtIcons/cfm.png') no-repeat left 50%;
 }
- a.extLink[href^="http://skeb.jp/"], a.extLink[href^="https://skeb.jp/"] {
-	 background-image: url('/Content/ExtIcons/skeb.png');
+a.extLink[href^="http://exittunes.com/"], a.extLink[href^="https://exittunes.com/"]
+{
+	background: url('/Content/ExtIcons/exittunes.png') no-repeat left 50%;
 }
- a.extLink[href^='mailto:'] {
-	 background-image: url('/Content/Icons/email.png');
+a.extLink[href*='www.facebook.com/'] {
+	background: url('/Content/ExtIcons/facebook.png') no-repeat left 50%;
 }
- a.extLink[href^="http://alice-books.com/"] {
-	 background-image: url('/Content/ExtIcons/alicebooks.png');
+a.extLink[href^="https://plus.google.com/"]
+{
+	background: url('/Content/ExtIcons/google_plus.png') no-repeat left 50%;
 }
- a.extLink[href^="http://ameblo.jp/"], a.extLink[href^="https://ameblo.jp/"] {
-	 background: url('/Content/ExtIcons/ameblo.png') no-repeat left 50%;
+a.extLink[href^="https://itunes.apple.com/"], a.extLink[href^="http://itunes.apple.com/"], a.extLink[href^="https://www.apple.com"], a.extLink[href^="http://www.apple.com"], a.extLink[href^="https://music.apple.com"], a.extLink[href^="https://music.apple.com"]
+{
+	background: url('/Content/ExtIcons/itunes.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www.amiami.com/"], a.extLink[href^="https://www.amiami.com/"] {
-	 background: url('/Content/ExtIcons/amiami.png') no-repeat left 50%;
+a.extLink[href^="http://karent.jp/"], a.extLink[href^="https://karent.jp/"]
+{
+	background: url('/Content/ExtIcons/karent.png') no-repeat left 50%;
 }
- a.extLink[href*='bandcamp.com'] {
-	 background-image: url('/Content/ExtIcons/bandcamp.png');
+a.extLink[href*='last.fm/'] {
+	background: url('/Content/ExtIcons/lastfm.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www.cdjapan.co.jp/"], a.extLink[href^="https://www.cdjapan.co.jp/"] {
-	 background: url('/Content/ExtIcons/cdjapan.png') no-repeat left 50%;
+a.extLink[href*='listography.com/'] {
+	background: url('/Content/ExtIcons/listography.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www.crypton.co.jp/"], a.extLink[href^="https://ec.crypton.co.jp/"], a.extLink[href^="https://www.crypton.co.jp/"] {
-	 background: url('/Content/ExtIcons/cfm.png') no-repeat left 50%;
+a.extLink[href^="http://listen.jp/store/"]
+{
+	background: url('/Content/ExtIcons/listenjapan.png') no-repeat left 50%;
 }
- a.extLink[href^="http://exittunes.com/"], a.extLink[href^="https://exittunes.com/"] {
-	 background: url('/Content/ExtIcons/exittunes.png') no-repeat left 50%;
+a.extLink[href^="http://mikudb.com/"]
+{
+	background: url('/Content/ExtIcons/mikudb.png') no-repeat left 50%;
 }
- a.extLink[href*='www.facebook.com/'] {
-	 background: url('/Content/ExtIcons/facebook.png') no-repeat left 50%;
+a.extLink[href^="http://www.mikustar.com/"]
+{
+	background-image: url('/Content/ExtIcons/mikustar.png');
 }
- a.extLink[href^="https://plus.google.com/"] {
-	 background: url('/Content/ExtIcons/google_plus.png') no-repeat left 50%;
+a.extLink[href^="http://mora.jp/"], a.extLink[href^="https://mora.jp/"]
+{
+	background: url('/Content/ExtIcons/mora.png') no-repeat left 50%;
 }
- a.extLink[href^="https://itunes.apple.com/"], a.extLink[href^="http://itunes.apple.com/"], a.extLink[href^="https://www.apple.com"], a.extLink[href^="http://www.apple.com"], a.extLink[href^="https://music.apple.com"], a.extLink[href^="https://music.apple.com"] {
-	 background: url('/Content/ExtIcons/itunes.png') no-repeat left 50%;
+a.extLink[href^="http://dic.nicovideo.jp/"], a.extLink[href^="https://dic.nicovideo.jp/"]
+{
+	background: url('/Content/ExtIcons/nicopedia.png') no-repeat left 50%;
 }
- a.extLink[href^="http://karent.jp/"], a.extLink[href^="https://karent.jp/"] {
-	 background: url('/Content/ExtIcons/karent.png') no-repeat left 50%;
+a.extLink[href^="http://com.nicovideo.jp/community/"], a.extLink[href^="http://ch.nicovideo.jp/community/"], a.extLink[href^="https://com.nicovideo.jp/community/"], a.extLink[href^="https://ch.nicovideo.jp/community/"]
+{
+	background-image: url('/Content/nico.png');
 }
- a.extLink[href*='last.fm/'] {
-	 background: url('/Content/ExtIcons/lastfm.png') no-repeat left 50%;
+a.extLink[href^="http://www.nicovideo.jp/"], a.extLink[href^="https://www.nicovideo.jp/"]
+{
+	background: url('/Content/nico.png') no-repeat left 50%;
 }
- a.extLink[href*='listography.com/'] {
-	 background: url('/Content/ExtIcons/listography.png') no-repeat left 50%;
+a.extLink[href^="http://chokuhan.nicovideo.jp/"]
+{
+	background-image: url('/Content/ExtIcons/nicochokuhan.png');
 }
- a.extLink[href^="http://listen.jp/store/"] {
-	 background: url('/Content/ExtIcons/listenjapan.png') no-repeat left 50%;
+a.extLink[href^="http://piapro.jp/"], a.extLink[href^="http://www.piapro.jp/"], a.extLink[href^="https://piapro.jp/"], a.extLink[href^="https://www.piapro.jp/"]
+{
+	background-image: url('/Content/ExtIcons/piapro.png');
 }
- a.extLink[href^="http://mikudb.com/"] {
-	 background: url('/Content/ExtIcons/mikudb.png') no-repeat left 50%;
+a.extLink[href^="http://books.rakuten.co.jp/"], a.extLink[href^="https://books.rakuten.co.jp/"], a.extLink[href^="http://music.rakuten.co.jp/"], a.extLink[href^="https://music.rakuten.co.jp/"]
+{
+	background: url('/Content/ExtIcons/rakuten.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www.mikustar.com/"] {
-	 background-image: url('/Content/ExtIcons/mikustar.png');
+a.extLink[href^="http://soundcloud.com/"], a.extLink[href^="https://soundcloud.com/"], a.extLink[href^="http://www.soundcloud.com/"], a.extLink[href^="https://www.soundcloud.com/"]
+{
+	background: url('/Content/Icons/soundcloud.png') no-repeat left 50%;
 }
- a.extLink[href^="http://mora.jp/"], a.extLink[href^="https://mora.jp/"] {
-	 background: url('/Content/ExtIcons/mora.png') no-repeat left 50%;
+a.extLink[href*='tumblr.com'] {
+	background-image: url('/Content/ExtIcons/tumblr.png');
 }
- a.extLink[href^="http://dic.nicovideo.jp/"], a.extLink[href^="https://dic.nicovideo.jp/"] {
-	 background: url('/Content/ExtIcons/nicopedia.png') no-repeat left 50%;
+a.extLink[href*='twitter.com/'] {
+	background: url('/Content/ExtIcons/twitter.png') no-repeat left 50%;
 }
- a.extLink[href^="http://com.nicovideo.jp/community/"], a.extLink[href^="http://ch.nicovideo.jp/community/"], a.extLink[href^="https://com.nicovideo.jp/community/"], a.extLink[href^="https://ch.nicovideo.jp/community/"] {
-	 background-image: url('/Content/nico.png');
+a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://w.atwiki.jp/utauuuta/pages/"]
+{
+	background: url('/Content/ExtIcons/atwiki.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www.nicovideo.jp/"], a.extLink[href^="https://www.nicovideo.jp/"] {
-	 background: url('/Content/nico.png') no-repeat left 50%;
+a.extLink[href^="http://vimeo.com/"], a.extLink[href^="https://vimeo.com/"]
+{
+	background: url('/Content/ExtIcons/vimeo.png') no-repeat left 50%;
 }
- a.extLink[href^="http://chokuhan.nicovideo.jp/"] {
-	 background-image: url('/Content/ExtIcons/nicochokuhan.png');
+a.extLink[href*='wikipedia.org'] {
+	background-image: url('/Content/ExtIcons/wikipedia.png');
 }
- a.extLink[href^="http://piapro.jp/"], a.extLink[href^="http://www.piapro.jp/"], a.extLink[href^="https://piapro.jp/"], a.extLink[href^="https://www.piapro.jp/"] {
-	 background-image: url('/Content/ExtIcons/piapro.png');
+a.extLink[href^="http://shop.vocaloidstore.com/"]
+{
+	background: url('/Content/ExtIcons/vocastore.png') no-repeat left 50%;
 }
- a.extLink[href^="http://books.rakuten.co.jp/"], a.extLink[href^="https://books.rakuten.co.jp/"], a.extLink[href^="http://music.rakuten.co.jp/"], a.extLink[href^="https://music.rakuten.co.jp/"] {
-	 background: url('/Content/ExtIcons/rakuten.png') no-repeat left 50%;
+a.extLink[href^="http://www.yesasia.com/"], a.extLink[href^="https://www.yesasia.com/"]
+{
+	background: url('/Content/ExtIcons/yesasia.png') no-repeat left 50%;
 }
- a.extLink[href^="http://soundcloud.com/"], a.extLink[href^="https://soundcloud.com/"], a.extLink[href^="http://www.soundcloud.com/"], a.extLink[href^="https://www.soundcloud.com/"] {
-	 background: url('/Content/Icons/soundcloud.png') no-repeat left 50%;
+a.extLink[href^="http://music.youtube.com/"], a.extLink[href^="https://music.youtube.com/"]
+{
+	background-image: url('/Content/ExtIcons/youtubemusic.png');
 }
- a.extLink[href*='tumblr.com'] {
-	 background-image: url('/Content/ExtIcons/tumblr.png');
+a.extLink[href^="http://www.youtube.com/"], a.extLink[href^="https://www.youtube.com/"], a.extLink[href^="http://youtube.com/"], a.extLink[href^="https://youtube.com/"], a.extLink[href^="http://youtu.be/"], a.extLink[href^="https://youtu.be/"]
+{
+	background-image: url('/Content/youtube.png');
 }
- a.extLink[href*='twitter.com/'] {
-	 background: url('/Content/ExtIcons/twitter.png') no-repeat left 50%;
+a.extLink[href^="http://vocaloid.wikia.com/wiki/"], a.extLink[href^="https://vocaloid.fandom.com/wiki/"]
+{
+	background: url('/Content/ExtIcons/vocawiki.png') no-repeat left 50%;
 }
- a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://w.atwiki.jp/utauuuta/pages/"] {
-	 background: url('/Content/ExtIcons/atwiki.png') no-repeat left 50%;
+a.extLink[href^="http://linkco.re/"], a.extLink[href^="https://linkco.re/"]
+{
+	background-image: url('/Content/ExtIcons/linkcore.png');
 }
- a.extLink[href^="http://vimeo.com/"], a.extLink[href^="https://vimeo.com/"] {
-	 background: url('/Content/ExtIcons/vimeo.png') no-repeat left 50%;
+a.extLink[href^="http://www.tunecore.co.jp/"], a.extLink[href^="https://www.tunecore.co.jp/"]
+{
+	background-image: url('/Content/ExtIcons/tunecore.png');
 }
- a.extLink[href*='wikipedia.org'] {
-	 background-image: url('/Content/ExtIcons/wikipedia.png');
+a.extLink[href^="http://s.awa.fm/"], a.extLink[href^="https://s.awa.fm/"]
+{
+	background-image: url('/Content/ExtIcons/awa.png');
 }
- a.extLink[href^="http://shop.vocaloidstore.com/"] {
-	 background: url('/Content/ExtIcons/vocastore.png') no-repeat left 50%;
+a.extLink[href^="http://recochoku.jp/"], a.extLink[href^="https://recochoku.jp/"]
+{
+	background-image: url('/Content/ExtIcons/recochoku.png');
 }
- a.extLink[href^="http://www.yesasia.com/"], a.extLink[href^="https://www.yesasia.com/"] {
-	 background: url('/Content/ExtIcons/yesasia.png') no-repeat left 50%;
+a.extLink[href^="https://www.deezer.com/"], a.extLink[href^="http://www.deezer.com/"]
+{
+	background-image: url('/Content/ExtIcons/deezer.png');
 }
- a.extLink[href^="http://music.youtube.com/"], a.extLink[href^="https://music.youtube.com/"] {
-	 background-image: url('/Content/ExtIcons/youtubemusic.png');
+a.extLink[href^="https://commons.nicovideo.jp/"], a.extLink[href^="http://commons.nicovideo.jp/"]
+{
+	background-image: url('/Content/ExtIcons/nicommons.png');
 }
- a.extLink[href^="http://www.youtube.com/"], a.extLink[href^="https://www.youtube.com/"], a.extLink[href^="http://youtube.com/"], a.extLink[href^="https://youtube.com/"], a.extLink[href^="http://youtu.be/"], a.extLink[href^="https://youtu.be/"] {
-	 background-image: url('/Content/youtube.png');
+a.extLink[href^="https://seiga.nicovideo.jp/"], a.extLink[href^="http://seiga.nicovideo.jp/"]
+{
+	background-image: url('/Content/ExtIcons/seiga.png');
 }
- a.extLink[href^="http://vocaloid.wikia.com/wiki/"], a.extLink[href^="https://vocaloid.fandom.com/wiki/"] {
-	 background: url('/Content/ExtIcons/vocawiki.png') no-repeat left 50%;
+a.extLink[href^="http://music.dmkt-sp.jp/"], a.extLink[href^="https://music.dmkt-sp.jp/"]
+{
+	background-image: url('/Content/ExtIcons/dmusic.png');
 }
- a.extLink[href^="http://linkco.re/"], a.extLink[href^="https://linkco.re/"] {
-	 background-image: url('/Content/ExtIcons/linkcore.png');
+a.extLink[href^="http://linktr.ee/"], a.extLink[href^="https://linktr.ee/"]
+{
+	background-image: url('/Content/ExtIcons/linktree.png');
 }
- a.extLink[href^="http://www.tunecore.co.jp/"], a.extLink[href^="https://www.tunecore.co.jp/"] {
-	 background-image: url('/Content/ExtIcons/tunecore.png');
+a.extLink[href^="http://musicstore.auone.jp/"], a.extLink[href^="https://musicstore.auone.jp/"]
+{
+	background-image: url('/Content/ExtIcons/auone.png');
 }
- a.extLink[href^="http://s.awa.fm/"], a.extLink[href^="https://s.awa.fm/"] {
-	 background-image: url('/Content/ExtIcons/awa.png');
+a.extLink[href^="http://nex-tone.link/"], a.extLink[href^="https://nex-tone.link/"]
+{
+	background-image: url('/Content/ExtIcons/nextone.png');
 }
- a.extLink[href^="http://recochoku.jp/"], a.extLink[href^="https://recochoku.jp/"] {
-	 background-image: url('/Content/ExtIcons/recochoku.png');
+a.extLink[href^="http://pc.animelo.jp/"], a.extLink[href^="https://pc.animelo.jp/"]
+{
+	background-image: url('/Content/ExtIcons/animelo.png');
 }
- a.extLink[href^="https://www.deezer.com/"], a.extLink[href^="http://www.deezer.com/"] {
-	 background-image: url('/Content/ExtIcons/deezer.png');
+a.extLink[href^="http://pc.dwango.jp/"], a.extLink[href^="https://pc.dwango.jp/"]
+{
+	background-image: url('/Content/ExtIcons/animelo.png');
 }
- a.extLink[href^="https://commons.nicovideo.jp/"], a.extLink[href^="http://commons.nicovideo.jp/"] {
-	 background-image: url('/Content/ExtIcons/nicommons.png');
+a.extLink[href*='beatport.com'] {
+	background-image: url('/Content/ExtIcons/beatport.png');
 }
- a.extLink[href^="https://seiga.nicovideo.jp/"], a.extLink[href^="http://seiga.nicovideo.jp/"] {
-	 background-image: url('/Content/ExtIcons/seiga.png');
+a.extLink[href^="http://www.e-onkyo.com/"], a.extLink[href^="https://www.e-onkyo.com/"]
+{
+	background-image: url('/Content/ExtIcons/eonkyo.png');
 }
- a.extLink[href^="http://music.dmkt-sp.jp/"], a.extLink[href^="https://music.dmkt-sp.jp/"] {
-	 background-image: url('/Content/ExtIcons/dmusic.png');
+a.extLink[href*='jimdo.com'],
+a.extLink[href*='jimdofree.com'] {
+	background-image: url('/Content/ExtIcons/jimdo.png');
 }
- a.extLink[href^="http://linktr.ee/"], a.extLink[href^="https://linktr.ee/"] {
-	 background-image: url('/Content/ExtIcons/linktree.png');
+a.extLink[href*='seesaa.net'] {
+	background-image: url('/Content/ExtIcons/seesaa.png');
 }
- a.extLink[href^="http://musicstore.auone.jp/"], a.extLink[href^="https://musicstore.auone.jp/"] {
-	 background-image: url('/Content/ExtIcons/auone.png');
+a.extLink[href*='jugem.jp'] {
+	background-image: url('/Content/ExtIcons/jugem.png');
 }
- a.extLink[href^="http://nex-tone.link/"], a.extLink[href^="https://nex-tone.link/"] {
-	 background-image: url('/Content/ExtIcons/nextone.png');
+a.extLink[href*='fanbox.cc'] {
+	background-image: url('/Content/ExtIcons/fanbox.png');
 }
- a.extLink[href^="http://pc.animelo.jp/"], a.extLink[href^="https://pc.animelo.jp/"] {
-	 background-image: url('/Content/ExtIcons/animelo.png');
+a.extLink[href*='blogspot'] {
+	background-image: url('/Content/ExtIcons/blogspot.png');
 }
- a.extLink[href^="http://pc.dwango.jp/"], a.extLink[href^="https://pc.dwango.jp/"] {
-	 background-image: url('/Content/ExtIcons/animelo.png');
+a.extLink[href*='wixsite.com'] {
+	background-image: url('/Content/ExtIcons/wix.png');
 }
- a.extLink[href*='beatport.com'] {
-	 background-image: url('/Content/ExtIcons/beatport.png');
+a.extLink[href*='twpf.jp'] {
+	background-image: url('/Content/ExtIcons/twpf.png');
 }
- a.extLink[href^="http://www.e-onkyo.com/"], a.extLink[href^="https://www.e-onkyo.com/"] {
-	 background-image: url('/Content/ExtIcons/eonkyo.png');
+a.extLink[href*='tiktok.com'] {
+	background-image: url('/Content/ExtIcons/tiktok.png');
 }
- a.extLink[href*='jimdo.com'], a.extLink[href*='jimdofree.com'] {
-	 background-image: url('/Content/ExtIcons/jimdo.png');
+a.extLink[href*='blog.livedoor.jp'] {
+	background-image: url('/Content/ExtIcons/livedoor.png');
 }
- a.extLink[href*='seesaa.net'] {
-	 background-image: url('/Content/ExtIcons/seesaa.png');
+a.extLink[href*='suzuri.jp'] {
+	background-image: url('/Content/ExtIcons/suzuri.png');
 }
- a.extLink[href*='jugem.jp'] {
-	 background-image: url('/Content/ExtIcons/jugem.png');
+a.extLink[href*='coconala.com'] {
+	background-image: url('/Content/ExtIcons/coconala.png');
 }
- a.extLink[href*='fanbox.cc'] {
-	 background-image: url('/Content/ExtIcons/fanbox.png');
+a.extLink[href^="https://music.tower.jp"]
+{
+	background-image: url('/Content/ExtIcons/towerrecordsmusic.png');
 }
- a.extLink[href*='blogspot'] {
-	 background-image: url('/Content/ExtIcons/blogspot.png');
+a.extLink[href*='itch.io'] {
+	background-image: url('/Content/ExtIcons/itch_io.png');
 }
- a.extLink[href*='wixsite.com'] {
-	 background-image: url('/Content/ExtIcons/wix.png');
+a.extLink[href*='myspace.com'] {
+	background-image: url('/Content/ExtIcons/myspace.png');
 }
- a.extLink[href*='twpf.jp'] {
-	 background-image: url('/Content/ExtIcons/twpf.png');
+a.extLink[href*='skima.jp'] {
+	background-image: url('/Content/ExtIcons/skima.png');
 }
- a.extLink[href*='tiktok.com'] {
-	 background-image: url('/Content/ExtIcons/tiktok.png');
+a.extLink[href*='plurk.com'] {
+	background-image: url('/Content/ExtIcons/plurk.png');
 }
- a.extLink[href*='blog.livedoor.jp'] {
-	 background-image: url('/Content/ExtIcons/livedoor.png');
+a.extLink[href*='note.com'] {
+	background-image: url('/Content/ExtIcons/note.png');
 }
- a.extLink[href*='suzuri.jp'] {
-	 background-image: url('/Content/ExtIcons/suzuri.png');
+a.extLink[href*='tinami.com'],
+a.extLink[href*='tinami.jp'] {
+	background-image: url('/Content/ExtIcons/tinami.png');
 }
- a.extLink[href*='coconala.com'] {
-	 background-image: url('/Content/ExtIcons/coconala.png');
+a.extLink[href*='weebly.com'] {
+	background-image: url('/Content/ExtIcons/weebly.png');
 }
- a.extLink[href^="https://music.tower.jp"] {
-	 background-image: url('/Content/ExtIcons/towerrecordsmusic.png');
+a.extLink[href*='bowlroll.net'] {
+	background-image: url('/Content/ExtIcons/bowlroll.png');
 }
- a.extLink[href*='itch.io'] {
-	 background-image: url('/Content/ExtIcons/itch_io.png');
+a.extLink[href*='hatenadiary.org'] {
+	background-image: url('/Content/ExtIcons/hatena_diary.png');
 }
- a.extLink[href*='myspace.com'] {
-	 background-image: url('/Content/ExtIcons/myspace.png');
+a.extLink[href*='nana-music.com'] {
+	background-image: url('/Content/ExtIcons/nana.png');
 }
- a.extLink[href*='skima.jp'] {
-	 background-image: url('/Content/ExtIcons/skima.png');
+a.extLink[href*='peing.net'] {
+	background-image: url('/Content/ExtIcons/peing.png');
 }
- a.extLink[href*='plurk.com'] {
-	 background-image: url('/Content/ExtIcons/plurk.png');
+a.extLink[href*='artstation.com'] {
+	background-image: url('/Content/ExtIcons/artstation.png');
 }
- a.extLink[href*='note.com'] {
-	 background-image: url('/Content/ExtIcons/note.png');
+a.extLink[href*='streamlink.to'] {
+	background-image: url('/Content/ExtIcons/streamlink.png');
 }
- a.extLink[href*='tinami.com'], a.extLink[href*='tinami.jp'] {
-	 background-image: url('/Content/ExtIcons/tinami.png');
+a.extLink[href*='selection.music.dmkt-sp.jp'] {
+	background-image: url('/Content/ExtIcons/d-hits.png');
 }
- a.extLink[href*='weebly.com'] {
-	 background-image: url('/Content/ExtIcons/weebly.png');
-}
- a.extLink[href*='bowlroll.net'] {
-	 background-image: url('/Content/ExtIcons/bowlroll.png');
-}
- a.extLink[href*='hatenadiary.org'] {
-	 background-image: url('/Content/ExtIcons/hatena_diary.png');
-}
- a.extLink[href*='nana-music.com'] {
-	 background-image: url('/Content/ExtIcons/nana.png');
-}
- a.extLink[href*='peing.net'] {
-	 background-image: url('/Content/ExtIcons/peing.png');
-}
- a.extLink[href*='artstation.com'] {
-	 background-image: url('/Content/ExtIcons/artstation.png');
-}
- a.extLink[href*='streamlink.to'] {
-	 background-image: url('/Content/ExtIcons/streamlink.png');
-}
- a.extLink[href*='selection.music.dmkt-sp.jp'] {
-	 background-image: url('/Content/ExtIcons/d-hits.png');
-}
- 

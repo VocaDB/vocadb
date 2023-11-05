@@ -280,6 +280,7 @@ const BasicInfoTabContent = observer(
 															ArtistType.OtherIndividual,
 															ArtistType.CoverArtist,
 															ArtistType.Instrumentalist,
+															ArtistType.Utaite,
 														].join(','),
 													},
 												}}
