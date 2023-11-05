@@ -6,6 +6,7 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { functions } from '@/Shared/GlobalFunctions';
 import { useVdb } from '@/VdbContext';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -44,10 +45,17 @@ export const ReleaseEventAutoComplete = ({
 				},
 			);
 		},
-		createOptionFirstRow: (item) =>
-			`${item.name} (${t(
+		createOptionFirstRow: (item) => {
+			const date = item.date !== undefined ? dayjs(item.date).format('ll') : '';
+			const end_date =
+				item.endDate !== undefined ? dayjs(item.endDate).format('ll') : '';
+			const localized_category = t(
 				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${item.category}`,
-			)})`,
+			);
+			return `${item.name} (${localized_category}) (${date}${
+				end_date !== '' ? ' - ' + end_date : ''
+			})`;
+		},
 		extraQueryParams: queryParams,
 	};
 
