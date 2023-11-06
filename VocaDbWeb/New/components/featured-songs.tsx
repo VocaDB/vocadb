@@ -18,7 +18,7 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
   const artist_split = song.artistString.split("feat.")
 
   return (
-    <Card className="h-full">
+    <Card className="h-full sm:w-5/6 w-full">
       <CardContent className="pt-5">
         <CustomImage
           className="rounded-sm"
@@ -55,13 +55,17 @@ export const FeaturedSongsCarousel = ({
       items: 2,
     },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 640, min: 0 },
       items: 1,
     },
   }
 
   return (
-    <Carousel autoPlay infinite responsive={responsive}>
+    <Carousel
+      itemClass="flex flex-col items-center"
+      infinite
+      responsive={responsive}
+    >
       {songs.map((song) => (
         <FeaturedSongCard song={song} key={song.id} />
       ))}
