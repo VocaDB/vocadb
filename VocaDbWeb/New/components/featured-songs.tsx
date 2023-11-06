@@ -7,6 +7,8 @@ import { getBestThumbImageUrl } from "@/lib/utils"
 
 import "react-multi-carousel/lib/styles.css"
 
+import Link from "next/link"
+
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import CustomImage from "@/components/image"
 
@@ -18,27 +20,29 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
   const artist_split = song.artistString.split("feat.")
 
   return (
-    <Card className="h-full sm:w-5/6 w-full">
-      <CardContent className="pt-5">
-        <CustomImage
-          className="rounded-sm"
-          width={320}
-          height={180}
-          src={getBestThumbImageUrl(song.pvs)}
-          mode="crop"
-          alt=""
-        />
-      </CardContent>
-      <CardFooter className="flex-col">
-        <p className="font-bold text-center">{song.name}</p>
-        <p className="font-light text-center">{artist_split[0]}</p>
-        {artist_split.length > 1 && (
-          <p className="font-light text-center line-clamp-1">{`feat. ${
-            artist_split[1] ?? ""
-          }`}</p>
-        )}
-      </CardFooter>
-    </Card>
+    <Link className="h-full sm:w-5/6 w-full" href={`/S/${song.id}`}>
+      <Card className="h-full hover:bg-gray-100 cursor-pointer">
+        <CardContent className="pt-5">
+          <CustomImage
+            className="rounded-sm"
+            width={320}
+            height={180}
+            src={getBestThumbImageUrl(song.pvs)}
+            mode="crop"
+            alt=""
+          />
+        </CardContent>
+        <CardFooter className="flex-col">
+          <p className="font-bold text-center">{song.name}</p>
+          <p className="font-light text-center">{artist_split[0]}</p>
+          {artist_split.length > 1 && (
+            <p className="font-light text-center line-clamp-1">{`feat. ${
+              artist_split[1] ?? ""
+            }`}</p>
+          )}
+        </CardFooter>
+      </Card>
+    </Link>
   )
 }
 
