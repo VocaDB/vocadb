@@ -30,9 +30,13 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
         />
       </CardContent>
       <CardFooter className="flex-col">
-        <p className="font-bold">{song.name}</p>
-        <p className="font-light">{artist_split[0]}</p>
-        <p className="font-light">{`feat. ${artist_split[1] ?? ""}`}</p>
+        <p className="font-bold text-center">{song.name}</p>
+        <p className="font-light text-center">{artist_split[0]}</p>
+        {artist_split.length > 1 && (
+          <p className="font-light text-center line-clamp-1">{`feat. ${
+            artist_split[1] ?? ""
+          }`}</p>
+        )}
       </CardFooter>
     </Card>
   )
