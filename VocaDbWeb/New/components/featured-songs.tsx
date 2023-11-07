@@ -20,7 +20,11 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
   const artist_split = song.artistString.split("feat.")
 
   return (
-    <Link className="h-full sm:w-5/6 w-full" href={`/S/${song.id}`}>
+    <Link
+      draggable={false}
+      className="h-full sm:w-5/6 w-full select-none"
+      href={`/S/${song.id}`}
+    >
       <Card className="h-full hover:bg-gray-100 cursor-pointer">
         <CardContent className="pt-5">
           <CustomImage
