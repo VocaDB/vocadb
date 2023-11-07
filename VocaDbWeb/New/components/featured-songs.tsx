@@ -23,10 +23,7 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
 
   const onDragStart = () => {
     setDragging(true)
-  }
-
-  const onDragEnd = () => {
-    setDragging(false)
+    window.addEventListener("mouseup", () => setDragging(false), { once: true })
   }
 
   return (
@@ -38,7 +35,6 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
     >
       <Card
         onMouseDown={onDragStart}
-        onMouseUp={onDragEnd}
         className="h-full hover:bg-accent cursor-pointer"
       >
         <CardContent className="pt-5">
