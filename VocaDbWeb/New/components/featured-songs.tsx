@@ -39,7 +39,7 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
       <Card
         onMouseDown={onDragStart}
         onMouseUp={onDragEnd}
-        className="h-full hover:bg-gray-100 cursor-pointer"
+        className="h-full hover:bg-accent cursor-pointer"
       >
         <CardContent className="pt-5">
           <CustomImage

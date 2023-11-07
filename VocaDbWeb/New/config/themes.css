@@ -1,3 +1,49 @@
+/* Miku: https://www.realtimecolors.com/?colors=050a0a-f8fbfc-11878d-c0f9fc-cd376e&fonts=Inter-Inter */
+
+.theme-miku {
+  --background: 0 0% 100%;
+  --foreground: 178 53% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 178 53% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 178 53% 10%;
+  --primary: 179 41% 49%;
+  --primary-foreground: 178 53% 10%;
+  --secondary: 180 51% 84%;
+  --secondary-foreground: 178 53% 10%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 178 53% 70%;
+  --accent: 338 60% 51%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 85% 60%;
+  --destructive-foreground: 178 53% 10%;
+  --input: 0 0% 20%;
+  --ring: 338 60% 40%;
+  --radius: 0.5rem;
+}
+
+.dark .theme-miku {
+  --background: 0 0% 0%;
+  --foreground: 178 53% 90%;
+  --card: 0 0% 0%;
+  --card-foreground: 178 53% 90%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 178 53% 90%;
+  --primary: 179 41% 51%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 180 51% 16%;
+  --secondary-foreground: 178 53% 90%;
+  --muted: 0 0% 80%;
+  --muted-foreground: 178 53% 90%;
+  --accent: 338 60% 49%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 178 53% 10%;
+  --border: 240 3.7% 15.9%;
+  --input: 0 0% 80%;
+  --ring: 338 60% 60%;
+}
+
 .theme-zinc {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
