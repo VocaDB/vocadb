@@ -7,6 +7,7 @@ import { getBestThumbImageUrl } from "@/lib/utils"
 
 import "react-multi-carousel/lib/styles.css"
 
+import { useState } from "react"
 import Link from "next/link"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -18,14 +19,28 @@ interface FeaturedSongCardProps {
 
 const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
   const artist_split = song.artistString.split("feat.")
+  const [dragging, setDragging] = useState(false)
+
+  const onDragStart = () => {
+    setDragging(true)
+  }
+
+  const onDragEnd = () => {
+    setDragging(false)
+  }
 
   return (
     <Link
       draggable={false}
       className="h-full sm:w-5/6 w-full select-none"
       href={`/S/${song.id}`}
+      style={{ pointerEvents: dragging ? "none" : "auto" }}
     >
-      <Card className="h-full hover:bg-gray-100 cursor-pointer">
+      <Card
+        onMouseDown={onDragStart}
+        onMouseUp={onDragEnd}
+        className="h-full hover:bg-gray-100 cursor-pointer"
+      >
         <CardContent className="pt-5">
           <CustomImage
             className="rounded-sm"
