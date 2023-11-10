@@ -33,4 +33,5 @@ export enum ArtistType {
 	NewType = 'NewType',
 	Voiceroid = 'Voiceroid',
 	Instrumentalist = 'Instrumentalist',
+	Designer = 'Designer',
 }

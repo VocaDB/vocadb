@@ -22,6 +22,7 @@ export class ArtistHelper {
 		ArtistType.Unknown,
 		ArtistType.CoverArtist,
 		ArtistType.Instrumentalist,
+		ArtistType.Designer,
 	];
 
 	// Artist types that are groups (excluding Unknown)

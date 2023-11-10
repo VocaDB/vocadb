@@ -45,7 +45,8 @@
 		"NewType": "New Type",
 		"Voiceroid": "Voiceroid",
 		"CoverArtist": "Cover artist",
-		"Instrumentalist": "Instrumentalist"
+		"Instrumentalist": "Instrumentalist",
+		"Designer": "Designer"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "Artist needs a description OR at least one external link as a reference.",

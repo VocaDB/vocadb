@@ -66,7 +66,9 @@ public enum ArtistType
 
 	Voiceroid,
 
-	Instrumentalist
+	Instrumentalist,
+
+	Designer
 }
 
 /// <summary>
