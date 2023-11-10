@@ -103,14 +103,18 @@ public class ActivityEntryQueries
 		{
 			var query = ctx.Query<ActivityEntry>();
 
+			// TODO: Properly set time locale to UTC and migrate database
+			DateTime? easternBefore = before?.ToLocalTime();
+			DateTime? easternSince = since?.ToLocalTime();
+
 			if (before.HasValue && !since.HasValue)
-				query = query.Where(a => a.CreateDate < before.Value);
+				query = query.Where(a => a.CreateDate < easternBefore.Value);
 
 			if (!before.HasValue && since.HasValue)
-				query = query.Where(a => a.CreateDate > since.Value);
+				query = query.Where(a => a.CreateDate > easternSince.Value);
 
 			if (before.HasValue && since.HasValue)
-				query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
+				query = query.Where(a => a.CreateDate > easternSince.Value && a.CreateDate < before.Value);
 
 			if (userId.HasValue)
 				query = query.Where(a => a.Author.Id == userId.Value);
