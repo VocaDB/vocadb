@@ -44,7 +44,9 @@
 		"VoiSona": "VoiSona",
 		"NewType": "New Type",
 		"Voiceroid": "Voiceroid",
-		"CoverArtist": "커버 아티스트"
+		"CoverArtist": "커버 아티스트",
+		"Instrumentalist": "Instrumentalist",
+		"Designer": "Designer"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "아티스트에는 설명 또는 최소 한 개 이상의 참조문헌으로서의 외부링크가 필요합니다.",
