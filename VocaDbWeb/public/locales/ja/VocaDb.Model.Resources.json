@@ -44,7 +44,9 @@
 		"VoiSona": "VoiSona",
 		"NewType": "New Type",
 		"Voiceroid": "Voiceroid",
-		"CoverArtist": "カバーアーティスト"
+		"CoverArtist": "カバーアーティスト",
+		"Instrumentalist": "Instrumentalist",
+		"Designer": "Designer"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "アーティスト概要、又はすくなくとも１つ外部参照リンクが必要です。",
