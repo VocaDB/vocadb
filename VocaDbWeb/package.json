@@ -74,7 +74,7 @@
 		"@tiptap/starter-kit": "^2.0.3",
 		"ajv": "^8.12.0",
 		"ajv-formats": "^2.1.1",
-		"axios": "^0.21.4",
+		"axios": "^1.6.0",
 		"classnames": "^2.3.2",
 		"dayjs": "^1.11.8",
 		"decimal.js-light": "^2.5.1",
