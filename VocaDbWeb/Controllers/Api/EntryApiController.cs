@@ -89,7 +89,7 @@ public class EntryApiController : ApiController
 		maxResults = GetMaxResults(maxResults);
 
 		return _queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
-			start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
+			start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true, searchTags: true);
 	}
 
 	/// <summary>

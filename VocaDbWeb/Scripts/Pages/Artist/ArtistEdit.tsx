@@ -282,6 +282,7 @@ const BasicInfoTabContent = observer(
 															ArtistType.CoverArtist,
 															ArtistType.Instrumentalist,
 															ArtistType.Designer,
+															ArtistType.Utaite,
 														].join(','),
 													},
 												}}
