@@ -44,7 +44,9 @@
 		"VoiSona": "VoiSona",
 		"NewType": "New Type",
 		"Voiceroid": "Voiceroid",
-		"CoverArtist": "Cover artist"
+		"CoverArtist": "Cover artist",
+		"Instrumentalist": "Instrumentalist",
+		"Designer": "Designer"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "O artista precisa de uma descrição OU pelo menos um link externo de referência.",
