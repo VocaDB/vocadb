@@ -247,6 +247,8 @@ const BasicInfoTabContent = observer(
 															ArtistType.OtherGroup,
 															ArtistType.OtherIndividual,
 															ArtistType.CoverArtist,
+															ArtistType.Instrumentalist,
+															ArtistType.Designer,
 														].join(','),
 													},
 												}}
@@ -278,6 +280,8 @@ const BasicInfoTabContent = observer(
 															ArtistType.OtherVocalist,
 															ArtistType.OtherIndividual,
 															ArtistType.CoverArtist,
+															ArtistType.Instrumentalist,
+															ArtistType.Designer,
 															ArtistType.Utaite,
 														].join(','),
 													},
@@ -353,6 +357,8 @@ const BasicInfoTabContent = observer(
 															ArtistType.OtherGroup,
 															ArtistType.OtherIndividual,
 															ArtistType.CoverArtist,
+															ArtistType.Instrumentalist,
+															ArtistType.Designer,
 														].join(','),
 													},
 												}}
