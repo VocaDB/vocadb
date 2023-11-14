@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { SiDiscord, SiGithub, SiTwitter } from "@icons-pack/react-simple-icons"
+import { SiDiscord, SiTwitter } from "@icons-pack/react-simple-icons"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -7,6 +7,7 @@ import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 import { AddEntryButton } from "./buttons/add-entry"
+import { ColorThemeSwitcher } from "./color-menu"
 
 interface SocialLinkProps {
   href: string
@@ -42,15 +43,11 @@ export function SiteHeader() {
               href="//discord.com/invite/3bwXQNXKCz"
             />
             <SocialLink
-              icon={<SiGithub className="h-5 w-5" />}
-              name="GitHub"
-              href="//github.com/vocadb/vocadb"
-            />
-            <SocialLink
               icon={<SiTwitter className="h-5 w-5" />}
               name="Twitter"
               href="//twitter.com/vocadb"
             />
+            <ColorThemeSwitcher />
             <ThemeToggle />
           </nav>
         </div>

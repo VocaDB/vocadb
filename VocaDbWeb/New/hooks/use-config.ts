@@ -4,7 +4,7 @@ import { atomWithStorage } from "jotai/utils"
 import { Theme } from "@/config/themes"
 
 type ThemeConfig = {
-  theme: Theme["name"]
+  theme: Theme
 }
 
 const themeConfigAtom = atomWithStorage<ThemeConfig>("themeConfig", {

@@ -6,16 +6,12 @@ import {
   LucideCalendar,
   LucideDisc,
   LucideHelpCircle,
-  LucideIcon,
   LucideListMusic,
   LucideMedal,
-  LucideMessageSquare,
   LucideMessagesSquare,
-  LucideMic,
   LucideMic2,
   LucideMusic,
   LucidePlayCircle,
-  LucideProps,
   LucideTag,
 } from "lucide-react"
 

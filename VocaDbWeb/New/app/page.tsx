@@ -4,6 +4,7 @@ import { apiGet } from "@/client/fetch"
 import { FrontPageContract } from "@/types/api/frontpage"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
+import { ColorThemeSwitcher } from "@/components/color-menu"
 
 import { FeaturedSongsCarousel } from "../components/featured-songs"
 
@@ -46,6 +47,7 @@ export default async function IndexPage() {
         >
           GitHub
         </Link>
+        <ColorThemeSwitcher />
       </div>
     </section>
   )
