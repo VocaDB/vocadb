@@ -17,9 +17,11 @@
   --accent-foreground: 0 0% 100%;
   --destructive: 0 85% 60%;
   --destructive-foreground: 178 53% 10%;
-  --input: 0 0% 20%;
   --ring: 338 60% 40%;
   --radius: 0.5rem;
+
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
 }
 
 .dark .theme-miku {
@@ -42,6 +44,55 @@
   --border: 240 3.7% 15.9%;
   --input: 0 0% 80%;
   --ring: 338 60% 60%;
+}
+
+/* Kagamine: https://www.realtimecolors.com/?colors=fdfae2-000000-b7a801-302c03-65d7e6&fonts=Inter-Inter */
+
+.theme-kagamine {
+  --background: 0 0% 100%;
+  --foreground: 53 87% 6%;
+  --card: 0 0% 100%;
+  --card-foreground: 53 87% 6%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 53 87% 6%;
+  --primary: 55 99% 64%;
+  --primary-foreground: 53 87% 6%;
+  --secondary: 55 88% 90%;
+  --secondary-foreground: 53 87% 6%;
+  --accent: 187 72% 35%;
+  --accent-foreground: 53 87% 6%;
+  --destructive: 0 85% 60%;
+  --destructive-foreground: 53 87% 6%;
+  --ring: 187 72% 40%;
+  --radius: 0.5rem;
+
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+}
+
+.dark .theme-kagamine {
+  --background: 0 0% 0%;
+  --foreground: 53 87% 94%;
+  --card: 0 0% 0%;
+  --card-foreground: 53 87% 94%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 53 87% 94%;
+  --primary: 55 99% 36%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 55 88% 10%;
+  --secondary-foreground: 53 87% 94%;
+  --muted: 0 0% 80%;
+  --muted-foreground: 53 87% 94%;
+  --accent: 187 72% 65%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 53 88% 10%;
+  --border: 240 3.7% 15.9%;
+  --input: 0 0% 80%;
+  --ring: 187 72% 60%;
 }
 
 .theme-zinc {

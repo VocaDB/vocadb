@@ -30,7 +30,7 @@ export function MainNav({ items }: MainNavProps) {
                 <p
                   onClick={() =>
                     setConfig({
-                      theme: config.theme !== "miku" ? "miku" : "zinc",
+                      theme: config.theme !== "kagamine" ? "kagamine" : "zinc",
                     })
                   }
                   key={index}
