@@ -35,11 +35,11 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
     >
       <Card
         onMouseDown={onDragStart}
-        className="h-full hover:bg-accent cursor-pointer"
+        className="h-full hover:bg-accent hover:text-accent-foreground cursor-pointer"
       >
         <CardContent className="pt-5">
           <CustomImage
-            className="rounded-sm"
+            className="rounded-sm pointer-events-none"
             width={320}
             height={180}
             src={getBestThumbImageUrl(song.pvs)}
@@ -74,7 +74,7 @@ export const FeaturedSongsCarousel = ({
       items: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1280, min: 464 },
       items: 2,
     },
     mobile: {
