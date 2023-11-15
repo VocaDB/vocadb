@@ -7,9 +7,9 @@ public class RelatedAlbumsContract
 {
 	public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
-	public AlbumContract[] ArtistMatches { get; init; }
+	public AlbumForApiContract[] ArtistMatches { get; init; }
 
-	public AlbumContract[] LikeMatches { get; init; }
+	public AlbumForApiContract[] LikeMatches { get; init; }
 
-	public AlbumContract[] TagMatches { get; init; }
+	public AlbumForApiContract[] TagMatches { get; init; }
 }
