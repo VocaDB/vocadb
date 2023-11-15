@@ -45,8 +45,8 @@
 		"NewType": "New Type",
 		"Voiceroid": "Voiceroid",
 		"CoverArtist": "カバーアーティスト",
-		"Instrumentalist": "Instrumentalist",
-		"Designer": "Designer"
+		"Instrumentalist": "演奏",
+		"Designer": "デザイナー"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "アーティスト概要、又はすくなくとも１つ外部参照リンクが必要です。",
