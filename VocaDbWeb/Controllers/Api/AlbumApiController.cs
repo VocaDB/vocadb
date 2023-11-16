@@ -542,4 +542,10 @@ public class AlbumApiController : ApiController
 		return result.Id;
 	}
 #nullable disable
+
+	[HttpGet("{id:int}/related")]
+	public RelatedAlbumsContract GetRelated(
+		int id, AlbumOptionalFields fields = AlbumOptionalFields.None,
+		ContentLanguagePreference lang = ContentLanguagePreference.Default
+	) => _queries.GetRelatedAlbums(id, fields, lang);
 }

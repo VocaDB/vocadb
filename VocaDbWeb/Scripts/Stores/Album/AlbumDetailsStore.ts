@@ -1,5 +1,6 @@
 import { AlbumDetailsAjax } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { RelatedAlbums } from '@/DataContracts/Album/RelatedAlbums';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import {
 	AlbumForUserForApiContract,
@@ -15,6 +16,7 @@ import {
 	AlbumRepository,
 } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -272,9 +274,9 @@ export class AlbumDetailsStore {
 	@observable userCollectionsPopupVisible = false;
 
 	constructor(
-		values: GlobalValues,
+		private readonly values: GlobalValues,
 		loginManager: LoginManager,
-		albumRepo: AlbumRepository,
+		private readonly albumRepo: AlbumRepository,
 		userRepo: UserRepository,
 		artistRepo: ArtistRepository,
 		data: AlbumDetailsAjax,
@@ -364,6 +366,8 @@ export class AlbumDetailsStore {
 			canDeleteAllComments,
 			loginManager.loggedUserId,
 		);
+
+		this.albumRepo = albumRepo
 	}
 
 	getUsers = async (): Promise<void> => {
@@ -378,4 +382,12 @@ export class AlbumDetailsStore {
 			},
 		);
 	};
+
+	getRelated = (): Promise<RelatedAlbums> => {
+		return this.albumRepo.getRelated({
+			albumId: this.id,
+			lang: this.values.languagePreference,
+			fields: AlbumOptionalField.MainPicture
+		})
+	}
 }

@@ -623,8 +623,11 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 		);
 	}
 
-	public RelatedAlbumsContract GetRelatedAlbums(int albumId)
+	public RelatedAlbumsContract GetRelatedAlbums(int albumId, AlbumOptionalFields fields, ContentLanguagePreference? lang = null)
 	{
+
+		var language = lang ?? _permissionContext.LanguagePreference;
+
 		return _repository.HandleQuery(ctx =>
 		{
 			var album = ctx.Load(albumId);
@@ -635,17 +638,17 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			{
 				ArtistMatches =
 					albums.ArtistMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				LikeMatches =
 					albums.LikeMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				TagMatches =
 					albums.TagMatches
-					.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference, PermissionContext))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray()
 			};

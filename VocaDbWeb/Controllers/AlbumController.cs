@@ -248,7 +248,7 @@ public class AlbumController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
-		var related = _queries.GetRelatedAlbums(id);
+		var related = _queries.GetRelatedAlbums(id, AlbumOptionalFields.None);
 		return PartialView("RelatedAlbums", related);
 	}
 
