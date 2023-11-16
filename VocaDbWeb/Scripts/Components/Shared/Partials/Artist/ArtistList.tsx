@@ -3,6 +3,7 @@ import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeL
 import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
 import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -54,9 +55,10 @@ export const ArtistList = ({
 }: ArtistListProps): React.ReactElement => {
 	const { t } = useTranslation(['Resources']);
 
-	const ordered = React.useMemo(() => artists.sortBy((a) => a.isSupport), [
-		artists,
-	]);
+	const ordered = React.useMemo(
+		() => artists.sortBy((a) => a.isSupport),
+		[artists],
+	);
 
 	return (
 		<>
@@ -71,7 +73,10 @@ export const ArtistList = ({
 							{showType && (
 								<ArtistTypeLabel artistType={artist.artist.artistType} />
 							)}
-							{showType && ' '}
+							{/* Quick fix for TOuhouDB, see #1621 for more information */}
+							{showType &&
+								artist.artist.artistType !== ArtistType.Vocalist &&
+								' '}
 							<ArtistLink
 								artist={artist.artist}
 								name={artist.name}
