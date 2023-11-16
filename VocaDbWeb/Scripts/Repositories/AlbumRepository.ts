@@ -5,6 +5,7 @@ import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
+import { RelatedAlbums } from '@/DataContracts/Album/RelatedAlbums';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
@@ -55,7 +56,8 @@ export enum AlbumOptionalField {
 // Corresponds to the AlbumController class.
 export class AlbumRepository
 	extends BaseRepository
-	implements ICommentRepository {
+	implements ICommentRepository
+{
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 
@@ -506,6 +508,24 @@ export class AlbumRepository
 			),
 			undefined,
 			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	getRelated = ({
+		albumId,
+		lang,
+		fields,
+	}: {
+		albumId: number;
+		lang: ContentLanguagePreference;
+		fields: AlbumOptionalField;
+	}): Promise<RelatedAlbums> => {
+		return this.httpClient.get<RelatedAlbums>(
+			this.urlMapper.mapRelative(`/api/albums/${albumId}/related`),
+			{
+				lang,
+				fields,
+			},
 		);
 	};
 }
