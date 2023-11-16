@@ -44,7 +44,9 @@
 		"VoiSona": "crwdns16895:0crwdne16895:0",
 		"NewType": "crwdns16897:0crwdne16897:0",
 		"Voiceroid": "crwdns16899:0crwdne16899:0",
-		"CoverArtist": "crwdns16539:0crwdne16539:0"
+		"CoverArtist": "crwdns16539:0crwdne16539:0",
+		"Instrumentalist": "crwdns16906:0crwdne16906:0",
+		"Designer": "crwdns16908:0crwdne16908:0"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "crwdns16541:0crwdne16541:0",
