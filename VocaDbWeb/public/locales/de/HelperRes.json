@@ -23,7 +23,7 @@
     "EntryValidationNoErrors": "Dieser Eintrag enthält alle benötigten Informationen.",
     "EntryValidationNoErrorsDraft": "Dieser Eintrag enthält alle erforderlichen Informationen, um als abgeschlossen markiert zu werden (nicht Entwurf).",
     "EntryValidationWarningDetails": "Details",
-    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "GitHubMarkdown": "GitHub-flavored Anmerkung",
     "IsSupportedForFormatting": "wird für die Formatierung unterstützt",
     "NameLangTitle": "Sprache",
     "NameNewRow": "Neue Zeile",
