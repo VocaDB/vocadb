@@ -2,8 +2,10 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagSearchStore, TagSortRule } from '@/Stores/Search/TagSearchStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -11,8 +13,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+interface ITagSearchStore {
+	loading: boolean;
+	page: TagApiContract[];
+	paging: ServerSidePagingStore;
+	sort: TagSortRule;
+}
+
 interface TagSearchListProps {
-	tagSearchStore: TagSearchStore;
+	tagSearchStore: ITagSearchStore;
 }
 
 const TagSearchList = observer(

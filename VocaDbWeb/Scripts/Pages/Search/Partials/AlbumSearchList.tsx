@@ -197,7 +197,7 @@ const AlbumSearchList = observer(
 											)}
 										</span>
 										{album.releaseEvents
-											.filter((_e, index) => index < 3)
+											?.filter((_e, index) => index < 3)
 											.map((e, index) => (
 												<span key={index}>
 													{index === 0 ? <br /> : ', '}

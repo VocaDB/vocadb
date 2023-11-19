@@ -51,7 +51,7 @@ public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken
 	/// </summary>
 	public static readonly PermissionToken DeleteComments = New("1b1dfcfa-6b96-4a8a-8aca-d76465439ffb", nameof(DeleteComments));
 	/// <summary>
-	/// Delete any entry (entry state still matters, meaning edit permission is required).
+	/// Delete any entry (entry state still matters, meaning edit permission is required). Can also see the deleted tags list.
 	/// </summary>
 	public static readonly PermissionToken DeleteEntries = New("cc51c6b6-be93-4942-a6e4-fdf88f4520b9", nameof(DeleteEntries));
 	public static readonly PermissionToken DesignatedStaff = New("b995a14b-49b4-4f1e-8fac-36a34967ddb0", nameof(DesignatedStaff));

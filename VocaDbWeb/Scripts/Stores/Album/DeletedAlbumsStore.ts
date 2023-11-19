@@ -74,9 +74,7 @@ export class DeletedAlbumsStore
 	};
 
 	private updateResults = async (clearResults: boolean): Promise<void> => {
-		if (clearResults) {
-			this.paging.goToFirstPage();
-		}
+		this.loading = true;
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 		const result = await this.albumRepo.getList({
@@ -101,10 +99,11 @@ export class DeletedAlbumsStore
 		});
 
 		runInAction(() => {
-			this.page = result.items;
-
 			if (pagingProperties.getTotalCount)
 				this.paging.totalItems = result.totalCount;
+
+			this.page = result.items;
+			this.loading = false;
 		});
 	};
 

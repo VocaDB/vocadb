@@ -25,7 +25,7 @@ public class TagSearch
 		var textQuery = TagSearchTextQuery.Create(queryText, nameMatchMode);
 
 		var query = _dbContext.Query()
-			.WhereIsDeleted(false)
+			.WhereIsDeleted(queryParams.Deleted)
 			.WhereHasName(textQuery)
 			.WhereAllowChildren(queryParams.AllowChildren)
 			.WhereHasCategoryName(queryParams.CategoryName)

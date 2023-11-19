@@ -12,54 +12,52 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const AlbumDeleted = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
+const AlbumDeleted = observer((): React.ReactElement => {
+	const vdb = useVdb();
 
-		const [deletedAlbumsStore] = React.useState(
-			() => new DeletedAlbumsStore(vdb.values, albumRepo),
-		);
+	const [deletedAlbumsStore] = React.useState(
+		() => new DeletedAlbumsStore(vdb.values, albumRepo),
+	);
 
-		const { t } = useTranslation(['ViewRes']);
+	const { t } = useTranslation(['ViewRes']);
 
-		const title = 'Deleted albums'; /* LOC */
+	const title = 'Deleted albums'; /* LOC */
 
-		useLocationStateStore(deletedAlbumsStore);
+	useLocationStateStore(deletedAlbumsStore);
 
-		return (
-			<Layout
-				pageTitle={title}
-				ready={true}
-				title={title}
-				parents={
-					<>
-						<Breadcrumb.Item
-							linkAs={Link}
-							linkProps={{
-								to: '/Album',
-							}}
-						>
-							{t('ViewRes:Shared.Albums')}
-						</Breadcrumb.Item>
-					</>
+	return (
+		<Layout
+			pageTitle={title}
+			ready={true}
+			title={title}
+			parents={
+				<>
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{
+							to: '/Album',
+						}}
+					>
+						{t('ViewRes:Shared.Albums')}
+					</Breadcrumb.Item>
+				</>
+			}
+		>
+			<DebounceInput
+				type="text"
+				value={deletedAlbumsStore.searchTerm}
+				onChange={(e): void =>
+					runInAction(() => {
+						deletedAlbumsStore.searchTerm = e.target.value;
+					})
 				}
-			>
-				<DebounceInput
-					type="text"
-					value={deletedAlbumsStore.searchTerm}
-					onChange={(e): void =>
-						runInAction(() => {
-							deletedAlbumsStore.searchTerm = e.target.value;
-						})
-					}
-					maxLength={200}
-					debounceTimeout={300}
-				/>
+				maxLength={200}
+				debounceTimeout={300}
+			/>
 
-				<AlbumSearchList albumSearchStore={deletedAlbumsStore} />
-			</Layout>
-		);
-	},
-);
+			<AlbumSearchList albumSearchStore={deletedAlbumsStore} />
+		</Layout>
+	);
+});
 
 export default AlbumDeleted;
