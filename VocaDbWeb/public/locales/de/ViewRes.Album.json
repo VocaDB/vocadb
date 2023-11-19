@@ -52,7 +52,7 @@
     "ReleaseDateIsInTheFarFuture": "(Not released)",
     "ReleaseDateIsInTheNearFuture": "(Coming soon)",
     "ReleaseDateIsInThePast": "(Released)",
-    "TotalLength": "total length {{0}}",
+    "TotalLength": "Gesamtlänge {{0}}",
     "HiddenCollections": "+ {{0}} hidden",
     "Illustrators": "Illustrators",
     "ReviewAlreadySubmitted": "You have already submitted a review in this language. Multiple reviews in the same language are not allowed.",
