@@ -473,12 +473,5 @@ public class TagApiController : ApiController
 
 		return NoContent();
 	}
-
-	[HttpGet("deleted")]
-	[Authorize]
-	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[OriginHeaderCheck]
-	[ApiExplorerSettings(IgnoreApi = true)]
-	public EntryWithArchivedVersionsForApiContract<TagForApiContract>[] GetDeleted() => _queries.GetDeleted();
 #nullable disable
 }

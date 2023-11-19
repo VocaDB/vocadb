@@ -1053,24 +1053,6 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			.ToArray();
 	}
 
-	//TODO: Optimize this query
-	public EntryWithArchivedVersionsForApiContract<TagForApiContract>[] GetDeleted(ContentLanguagePreference lang = ContentLanguagePreference.Default)
-	{
-		PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
-
-		return HandleQuery(ctx =>
-		{
-			int[] deletedTagIds = ctx.Query<Tag>()
-				.WhereIsDeleted(true)
-				.Select(t => t.Id)
-				.ToArray();
-
-			EntryWithArchivedVersionsForApiContract<TagForApiContract>[] entries = deletedTagIds.Select(id => GetTagWithArchivedVersionsForApi(id)).ToArray();
-
-			return entries;
-		});
-	}
-
 	public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 	public int InstrumentalTagId => HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
