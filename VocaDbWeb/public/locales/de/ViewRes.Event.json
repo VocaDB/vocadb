@@ -1,8 +1,8 @@
 {
   "Details": {
-    "Albums": "Albums",
+    "Albums": "Alben",
     "Attending": "Nehme teil",
-    "Category": "Category",
+    "Category": "Kategorie",
     "Event": "Event",
     "OccurrenceDate": "Ereignistermin",
     "PVs": "PVs",
@@ -10,9 +10,9 @@
     "Series": "Reihe",
     "SongList": "Setliste",
     "Songs": "Songs",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
-    "Venue": "Venue"
+    "UserAttending": "Ich nehme teil",
+    "UserInterested": "Ich bin interessiert",
+    "Venue": "Veranstaltungsort"
   },
   "EventsBySeries": {
     "CreateEvent": "Event erstellen",
