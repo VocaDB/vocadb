@@ -339,6 +339,7 @@ export interface TagQueryParams extends CommonQueryParams {
 	// Comma-separated list of optional fields
 	fields?: TagOptionalField[];
 	sort?: string;
+	deleted?: boolean;
 }
 
 export const tagRepo = new TagRepository(httpClient, vdbConfig.baseAddress);

@@ -20,11 +20,9 @@ const AdminIndex = (): React.ReactElement => {
 				<Link to="/Comment">View recent comments{/* LOC */}</Link>
 			</p>
 
-			{loginManager.canDeleteEntries && (
-				<p>
-					<Link to="/Admin/DeletedTags">View deleted tags {/* LOC */}</Link>
-				</p>
-			)}
+			<p>
+				<Link to="/Tag/Deleted">View deleted tags {/* LOC */}</Link>
+			</p>
 
 			{loginManager.canViewAuditLog && (
 				<p>

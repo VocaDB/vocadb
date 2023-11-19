@@ -19,7 +19,6 @@ const AdminViewEntryReports = React.lazy(
 	() => import('./AdminManageEntryReports'),
 );
 const AdminPVsByAuthor = React.lazy(() => import('./AdminPVsByAuthor'));
-const AdminDeletedTags = React.lazy(() => import('./AdminDeletedTags'));
 
 const AdminRoutes = (): React.ReactElement => {
 	return (
@@ -36,7 +35,6 @@ const AdminRoutes = (): React.ReactElement => {
 			<Route path="ViewAuditLog" element={<AdminViewAuditLog />} />
 			<Route path="ViewEntryReports" element={<AdminViewEntryReports />} />
 			<Route path="PVsByAuthor" element={<AdminPVsByAuthor />} />
-			<Route path="DeletedTags" element={<AdminDeletedTags />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);
