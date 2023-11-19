@@ -105,8 +105,8 @@
     "UsernameIsRequired": "Der Benutzername wird benötigt"
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "Gruppe",
+    "KnowsLanguage": "Kennt Sprache",
     "ShowDisabledUsers": "Deaktivierte Benutzerkonten anzeigen",
     "VerifiedArtists": "Künstler-Benutzerkonten"
   },
