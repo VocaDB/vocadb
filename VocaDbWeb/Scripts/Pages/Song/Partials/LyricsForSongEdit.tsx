@@ -3,6 +3,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
 import { useCultureCodes } from '@/CultureCodesContext';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	LyricsForSongEditStore,
 	LyricsForSongListEditStore,
@@ -36,6 +37,7 @@ const LyricsForSongEdit = observer(
 			).length > 0,
 		);
 		const { getCodeDescription, iso639to1, codes } = useCultureCodes();
+		const loginManager = useLoginManager();
 
 		return (
 			<Accordion.Item eventKey={eventKey}>
@@ -125,7 +127,8 @@ const LyricsForSongEdit = observer(
 										)}
 									</tbody>
 									{lyricsForSongEditStore.allowMultipleLanguages &&
-										lyricsForSongEditStore.cultureCodes.length < 3 && (
+										(lyricsForSongEditStore.cultureCodes.length < 3 ||
+											loginManager.canApproveEntries) && (
 											<SafeAnchor
 												onClick={(): void =>
 													lyricsForSongEditStore.addCultureCode('')
