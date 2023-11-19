@@ -1,7 +1,7 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Älteste",
+    "CreateDateDescending": "Neueste"
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
@@ -38,13 +38,13 @@
     "Tracks": "Songs",
     "WebLinks": "Externe Links\n",
     "Barcode": "Barcode",
-    "Identifiers": "Identifiers",
+    "Identifiers": "Identifikatoren",
     "Discs": "Discs"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "Digitaler Download",
     "Other": "Andere",
-    "PhysicalDisc": "Physikalische Disc"
+    "PhysicalDisc": "Physische Disc"
   },
   "AlbumSortRuleNames": {
     "AdditionDate": "Hinzufügungsdatum",
@@ -66,7 +66,7 @@
   "ArtistEditableFieldNames": {
     "Albums": "Alben",
     "ArtistType": "Art des Künstlers",
-    "BaseVoicebank": "Base voicebank",
+    "BaseVoicebank": "Basis Voicebank",
     "Description": "Beschreibung",
     "Groups": "Gruppen",
     "Names": "Namen",
@@ -107,8 +107,8 @@
     "SongRating": "Insgesamte Songbewertung"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Älteste",
+    "CreateDateDescending": "Neueste"
   },
   "CommonMessages": {
     "EntryDeleted": "Dieser Eintrag wurde gelöscht. Er ist zwar temporär noch abrufbar, aber wird nicht mehr aufgelistet.",
@@ -116,7 +116,7 @@
     "EntryStatusExplanation": "Entwurf = Einreichung, bei der einige wesentliche Informationen noch immer fehlen. Dieser Status lässt darauf schließen, dass du zusätzliche Informationen anforderst, die hinzugefügt oder korrigiert werden sollen.<br />\nAbgeschlossen = Dieser Einreichung hat alle notwendigen Informationen, aber wurde noch nicht von einem vertrauenswürdigen Benutzer überprüft.<br />\nGenehmigt = Diese Einreichung wurde geprüft und von einem vertrauenswürdigen Benutzer genehmigt. Genehmigte Einreichungen können nur von einem vertrauenswürdigen Benutzer bearbeitet werden.",
     "Locked": "Diese Einreichung ist gesperrt. Das bedeutet, dass nur Moderatoren Änderungen daran vornehmen können.",
     "NameLanguageHelp": "Wähle die Sprache für den Namen. \"Original\" ist der Name in seiner ursprünglichen Sprache, sofern es sich hierbei nicht um Englisch handelt, z.B. Japanisch. Wenn Englisch die ursprüngliche Sprache ist, füge den Namen nicht in die \"Original\"-Sprache ein.",
-    "RevisionHidden": "This page revision has been hidden."
+    "RevisionHidden": "Die Versionsgeschichte dieser Seite wurde ausgeblendet."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Original",
@@ -149,7 +149,7 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Zugriff verwalten-Menü",
     "Admin": "Administrative Datenbankaufgaben",
-    "AddRawFileMedia": "Add raw media",
+    "AddRawFileMedia": "Rohmedien hinzufügen",
     "ApplyAnyTag": "Jedes Schlagwort zum Eintrag hinzufügen",
     "ApproveEntries": "Genehmigte Einreichungen",
     "BulkDeletePVs": "Mehrere PVs löschen",
@@ -180,7 +180,7 @@
     "UploadMedia": "Eigene Medien hochladen",
     "ViewAuditLog": "Ereignisprotokoll ansehen",
     "ViewHiddenRatings": "Ausgeblendete Bewertungen anzeigen",
-    "ViewHiddenRevisions": "View hidden revisions",
+    "ViewHiddenRevisions": "Versteckte Versionen anzeigen",
     "ManageWebhooks": "Webhooks verwalten",
     "CreateDatabaseDump": "Datenbank-Dump erstellen"
   },
@@ -199,21 +199,21 @@
   },
   "ReleaseEventEditableFieldNames": {
     "Artists": "Künstler",
-    "Category": "Category",
+    "Category": "Kategorie",
     "Date": "Datum",
     "Description": "Beschreibung",
-    "MainPicture": "Main picture",
+    "MainPicture": "Hauptbild",
     "Names": "Namen",
-    "OriginalName": "Default name language",
+    "OriginalName": "Standardsprache für Namen",
     "PVs": "PVs",
-    "Series": "Series",
+    "Series": "Reihe",
     "SeriesNumber": "Anzahl Events",
     "SeriesSuffix": "Seriensuffix",
     "SongList": "Setliste",
     "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "Venue": "Veranstaltungsort",
+    "VenueName": "Name des Veranstaltungsorts",
+    "WebLinks": "Externe Links"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automatisch importiert von MikuDB",
@@ -241,9 +241,9 @@
     "Status": "Status",
     "WebLinks": "Externe Links",
     "ReleaseEvent": "Erscheinungs Event",
-    "ReleaseEvents": "Release events",
+    "ReleaseEvents": "Erscheinungsevents",
     "Bpm": "BPM",
-    "CultureCodes": "Languages"
+    "CultureCodes": "Sprachen"
   },
   "SongListEditableFieldNames": {
     "Description": "Beschreibung",
