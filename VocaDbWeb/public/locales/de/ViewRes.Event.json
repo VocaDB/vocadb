@@ -17,11 +17,11 @@
   "EventsBySeries": {
     "CreateEvent": "Event erstellen",
     "CreateSeries": "Reihe erstellen",
-    "CreateVenue": "Create venue",
-    "ViewByDate": "All by date",
-    "ViewBySeries": "All by series",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Upcoming"
+    "CreateVenue": "Veranstaltungsort hinzufügen",
+    "ViewByDate": "Alle nach Datum",
+    "ViewBySeries": "Alle nach Reihe",
+    "ViewByVenue": "Alle nach Veranstaltungsort",
+    "ViewList": "Bevorstehend"
   },
   "Find": {
     "CreateEvent": "Event erstellen",
