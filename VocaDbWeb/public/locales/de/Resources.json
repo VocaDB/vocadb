@@ -44,7 +44,7 @@
   "AlbumMediaTypeNames": {
     "DigitalDownload": "Digitaler Download",
     "Other": "Andere",
-    "PhysicalDisc": "Physikalische Disc"
+    "PhysicalDisc": "Physische Disc"
   },
   "AlbumSortRuleNames": {
     "AdditionDate": "Hinzufügungsdatum",
