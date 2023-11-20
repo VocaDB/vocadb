@@ -146,6 +146,7 @@ export class TagRepository extends BaseRepository {
 			categoryName: queryParams.categoryName,
 			lang: queryParams.lang,
 			sort: queryParams.sort,
+			deleted: queryParams.deleted,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<TagApiContract>>(
