@@ -70,9 +70,9 @@ export const useLocationStateStore = <TState,>(
 	const stateSetter = useLocationStateSetter(store);
 	const stateGetter = useLocationStateGetter(store);
 	useLocationStateHandler(
-		store.validateLocationState.bind(store),
+		store.validateLocationState,
 		stateSetter,
-		store.onLocationStateChange?.bind(store),
+		store.onLocationStateChange,
 		stateGetter,
 	);
 };
