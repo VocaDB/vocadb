@@ -1,5 +1,6 @@
 [submodule "VocaDbWeb/wwwroot/Content/ExtIcons"]
 	path = VocaDbWeb/public/Content/ExtIcons
+	branch = main
 	url = https://github.com/VocaDB/ExtIcons.git
 [submodule "vocadb-loc"]
 	path = vocadb-loc
