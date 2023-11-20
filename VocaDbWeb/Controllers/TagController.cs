@@ -197,4 +197,12 @@ public class TagController : ControllerBase
 
 		return ReactIndex.File(PageProperties);
 	}
+
+	[Authorize]
+	public ActionResult Deleted()
+	{
+		PageProperties.Title = "Deleted Tags";
+
+		return ReactIndex.File(PageProperties);
+	}
 }

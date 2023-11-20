@@ -211,7 +211,8 @@ public class TagApiController : ApiController
 		bool preferAccurateMatches = false,
 		TagOptionalFields fields = TagOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default,
-		TagTargetTypes target = TagTargetTypes.All
+		TagTargetTypes target = TagTargetTypes.All,
+		bool deleted = false
 	)
 	{
 		maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? AbsoluteMax : int.MaxValue);
@@ -222,7 +223,8 @@ public class TagApiController : ApiController
 			CategoryName = categoryName,
 			SortRule = sort ?? TagSortRule.Name,
 			LanguagePreference = lang,
-			Target = target
+			Target = target,
+			Deleted = deleted
 		};
 
 		var tags = _queries.Find(queryParams, fields, lang);
