@@ -59,7 +59,7 @@ a.extLink[href^="https://www.dizzylab.net/"]
 {
 	background-image: url('/Content/ExtIcons/dizzylabs.png');
 }
-a.extLink[href^="https://www.dlsite.com/"]
+a.extLink[href^="http://www.dlsite.com/"], a.extLink[href^="https://www.dlsite.com/"]
 {
 	background-image: url('/Content/ExtIcons/dlsite.png');
 }
