@@ -13,10 +13,10 @@
     "WelcomeSubtitle": "Die kollaborative Datenbank für Vocaloid, UTAU und andere Gesangssynthesizer, mit Künstlern, Diskografie, PVs und mehr."
   },
   "LayoutRes": {
-    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "Keywords": "Vocaloid, VocaDB, Vocaloid Datenbank, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB ist ein gemeinnütziges Projekt. Jede Einnahme wird für die Weiterentwicklung, Serverkosten und Software-Lizenzen verwendet.",
     "SiteName": "VocaDB",
-    "SiteTitle": "Vocaloid Database"
+    "SiteTitle": "Vocaloid Datenbank"
   },
   "SongRes": {
     "NewSongInfo": "Bitte versichere dich, dass der Song den du einreichen willst noch nicht hinzugefügt wurde. Du musst mindestens einen Namen und einen Künstler angeben. Ein Link zu dem originalen PV ist sehr wünschenswert.<br /><br />\nBitte beachte, dass Songs ohne Vocaloid-Stimmen nur genehmigt werden, wenn sie sich auf einem Album mit Vocaloid-Songs befinden. UTAU und andere Sprach-Synthesizer sind auch erlaubt, aber von Menschen gesungene Cover sind es nicht.",
