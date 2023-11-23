@@ -1,13 +1,13 @@
 {
   "EnglishTranslatedString": {
     "Original": "Original",
-    "ShowFullDescription": "Show full description",
-    "Translated": "Translated"
+    "ShowFullDescription": "Vollständige Beschreibung anzeigen",
+    "Translated": "Übersetzt"
   },
   "PlayList": {
     "Autoplay": "Autoplay",
-    "AutoplayNote": "Autoplay is supported only for YouTube and SoundCloud",
+    "AutoplayNote": "Autoplay wird nur für YouTube und SoundCloud unterstützt",
     "NextSong": "Nächster Song",
-    "Shuffle": "Shuffle"
+    "Shuffle": "Mix"
   }
 }
