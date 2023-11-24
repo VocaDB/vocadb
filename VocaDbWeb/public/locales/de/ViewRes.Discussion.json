@@ -1,18 +1,18 @@
 {
   "Index": {
-    "Author": "Author",
+    "Author": "Verfasser",
     "Comments": "Kommentare",
-    "Created": "Created",
+    "Created": "Erstellt",
     "Discussions": "Diskussionen",
-    "DoPost": "Post",
+    "DoPost": "Posten",
     "Folder": "Verzeichnis",
-    "LastComment": "Last comment",
+    "LastComment": "Letzter Kommentar",
     "LastTopic": "Neuestes Thema",
-    "PostContent": "Content",
-    "Preview": "Preview",
+    "PostContent": "Inhalt",
+    "Preview": "Vorschau",
     "RecentTopics": "Neue Themen",
-    "Topic": "Topic",
+    "Topic": "Thema",
     "Topics": "Themen",
-    "WriteNewPost": "Write a new post"
+    "WriteNewPost": "Erstelle einen neuen Beitrag"
   }
 }
