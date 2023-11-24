@@ -1,35 +1,35 @@
 {
   "Details": {
-    "Date": "Date: {{0}}.",
+    "Date": "Datum: {{0}}.",
     "DefaultSortRule": "Default",
     "Details": "Details",
     "Events": "Events",
-    "Export": "Export",
+    "Export": "Exportieren",
     "Playlist": "Playlist",
-    "Preview": "Preview",
+    "Preview": "Vorschau",
     "ShowTags": "Schlagwörter anzeigen",
     "SongList": "Songliste",
     "Songs": "Song(s)"
   },
   "Edit": {
     "AddSong": "Song hinzufügen",
-    "ConfirmDelete": "Are you sure you want to delete this list?",
+    "ConfirmDelete": "Bist du sicher, dass du diese Liste löschen möchtest?",
     "CreateTitle": "Erstelle eine Songliste",
-    "Description": "Description",
-    "EditTitle": "Edit list - {{0}}",
+    "Description": "Beschreibung",
+    "EditTitle": "Liste bearbeiten - {{0}}",
     "EventDate": "Event Zeitpunkt",
-    "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
-    "FeaturedCategory": "Featured category",
+    "EventDateHelp": "Wenn diese Liste mit einem Ereignis wie einem Konzert oder Rankings zusammenhängt, kann hier das Datum des Ereignisses eingegeben werden.",
+    "FeaturedCategory": "Empfohlene Kategorie",
     "Name": "Name",
-    "RemoveFromList": "Remove from list",
-    "Status": "Entry status",
-    "TabProperties": "Properties",
+    "RemoveFromList": "Von der Liste entfernen",
+    "Status": "Status des Eintrags",
+    "TabProperties": "Eigenschaften",
     "TabSongs": "Songs",
     "Thumbnail": "Thumbnail",
-    "UnableToSave": "Unable to save list"
+    "UnableToSave": "Liste kann nicht gespeichert werden"
   },
   "Featured": {
     "Import": "Importiere von YouTube oder NicoNico",
-    "SortBy": "Sort by"
+    "SortBy": "Sortieren nach"
   }
 }
