@@ -1,6 +1,6 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
+    "NewAlbumArtistDesc": "Künstler, die diesem Album zugeordnet sind.",
     "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
   },
   "ArtistRes": {
