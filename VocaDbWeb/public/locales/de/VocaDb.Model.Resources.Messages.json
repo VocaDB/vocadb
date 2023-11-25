@@ -1,6 +1,6 @@
 {
   "EntryReport": {
-    "EntryVersionReportBody": "Entry '{{0}}', which you have edited, was reported with the following message: '{{1}}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.",
+    "EntryVersionReportBody": "Eintrag '{{0}}', den du bearbeitet hast, wurde mit der folgenden Nachricht gemeldet: '{{1}}'. Keine Sorge, wahrscheinlich ist es nichts ernstes. Bitte überprüfe den Eintrag, und wenn etwas korrigiert werden muss, mache bitte die notwendigen Änderungen, es sei denn, jemand anderes hat sich bereits darum kümmert.",
     "EntryVersionReportTitle": "Eintrag-Fehlermeldung zu {{0}}"
   },
   "UserAccount": {
