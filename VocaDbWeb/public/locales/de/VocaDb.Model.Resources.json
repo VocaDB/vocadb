@@ -3,7 +3,7 @@
 		"DuplicateArtist": "Der gleiche Künstler kann nicht zweimal hinzugefügt werden. Bitte entferne das Duplikat und bearbeite die Rollen entsprechend.",
 		"NeedArtist": "Das Album benötigt mindestens einen Künstler.",
 		"NeedCover": "Das Album benötigt ein Cover.",
-		"NeedReferences": "Album needs a description or links for reference.",
+		"NeedReferences": "Das Album benötigt eine Beschreibung oder Links zur Referenz.",
 		"NeedReleaseYear": "Das Veröffentlichungsjahr muss angegeben werden.",
 		"NeedTracks": "Das Album benötigt eine Songliste.",
 		"NeedType": "Die Art der Disc muss angegeben werden.",
@@ -12,12 +12,12 @@
 	"ArtistCategoriesNames": {
 		"Animator": "Animator",
 		"Band": "Band",
-		"Circle": "Circle",
+		"Circle": "Personenkreis",
 		"Illustrator": "Illustrator",
 		"Label": "Label",
-		"Other": "Other",
+		"Other": "Andere",
 		"Producer": "Produzent",
-		"Subject": "Subject",
+		"Subject": "Gegenstand",
 		"Vocalist": "Sänger"
 	},
 	"ArtistTypeNames": {
@@ -42,7 +42,7 @@
 		"SynthesizerV": "Synthesizer V",
 		"NEUTRINO": "NEUTRINO",
 		"VoiSona": "VoiSona",
-		"NewType": "New Type",
+		"NewType": "Neuer Typ",
 		"Voiceroid": "Voiceroid",
 		"CoverArtist": "Cover-Künstler",
 		"Instrumentalist": "Instrumentalist",
@@ -61,12 +61,12 @@
 	"SongValidationErrors": {
 		"DuplicateArtist": "Der gleiche Künstler kann nicht zweimal hinzugefügt werden. Bitte entferne das Duplikat und bearbeite die Rollen entsprechend.",
 		"NeedArtist": "Der Song benötigt mindestens einen Künstler.",
-		"NeedOriginal": "Derived songs need to have an original version specified, if it's in the database, or the original needs to be mentioned in notes.",
+		"NeedOriginal": "Abgeleitete Lieder müssen eine Originalversion angegeben haben, wenn sie in der Datenbank vorhanden sind, oder das Original muss in der Beschreibung erwähnt werden.",
 		"NeedProducer": "Der Song sollte mindestens eine Produzentenrolle (Komponist, Arrangeur oder Animator) aufweisen.",
-		"NeedReferences": "Song needs notes, PVs or links for reference.",
+		"NeedReferences": "Der Song benötigt eine Beschreibung, PVs oder Links zur Referenz.",
 		"NeedType": "Die Art des Song muss angegeben werden.",
 		"NonInstrumentalSongNeedsVocalists": "Dieser Song hat keine Sänger. Originale Instrumentalstücke müssen mit dem Schlagwort 'instrumental' gekennzeichnet sein. Instrumentale (Karaoke) Versionen von existierenden Songs sollten den Songtyp 'Instrumental' verwenden. Andernfalls, füge Sänger hinzu.",
-		"RedundantEvent": "The same release event does not need to be specified for both the song and album.",
+		"RedundantEvent": "Das gleiche Release-Ereignis muss nicht sowohl für den Song als auch für das Album angegeben werden.",
 		"RedundantRoles": "Die Rolle des Produzenten muss nicht angegeben werden, wenn dieser der einzige Produzent ist.",
 		"UnspecifiedNames": "Der Song benötigt einen primären Namen."
 	}
