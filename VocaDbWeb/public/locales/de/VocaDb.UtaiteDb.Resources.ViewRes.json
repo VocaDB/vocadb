@@ -1,7 +1,7 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "Utaites und andere Künstler in Verbindung mit diesem Album.",
-    "NewAlbumInfo": "The album needs to have at least one track with an utaite to be allowed on UtaiteDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumInfo": "Das Album muss mindestens einen Track im Zusammenhang mit der UtaiteDB haben, um auf UtaiteDB zugelassen zu sein. Inoffizielle Fan-Compilationen (Bootlegs) sind ebenfalls nicht erlaubt. Weitere Informationen findest du in der Hilfe/den Richtlinien."
   },
   "ArtistRes": {
     "AuthoredBy": "UtaiteDB-Konto",
@@ -9,17 +9,17 @@
   },
   "HomeRes": {
     "SiteDescription": "UtaiteDB ist eine Utaite Musikdatenbank mit detaillierten Informationen zu Künstlern, Alben und Songs.",
-    "Welcome": "Welcome to the Utaite Database!",
+    "Welcome": "Willkommen bei der Utaite Datenbank!",
     "WelcomeSubtitle": "Die kollaborative Datenbank mit Utaite-Künstlern, Diskografie, PVs und mehr."
   },
   "LayoutRes": {
-    "Keywords": "Utaite, UtaiteDB, Utaite database",
-    "PaypalDonateTitle": "UtaiteDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "Keywords": "Utaite, UtaiteDB, Utaite Datenbank",
+    "PaypalDonateTitle": "",
     "SiteName": "UtaiteDB",
-    "SiteTitle": "Utaite Database"
+    "SiteTitle": "Utaite Datenbank"
   },
   "SongRes": {
     "NewSongInfo": "Bitte stelle sicher, dass deine Song-Einreichung bislang noch nicht existiert. Du musst mindestens einen Namen und einen Künstler nennen. Ein Link zum originalen PV ist sehr wünschenswert.",
-    "RankingsTitle": "UtaiteDB song rankings"
+    "RankingsTitle": "UtaiteDB Song-Rangliste"
   }
 }
