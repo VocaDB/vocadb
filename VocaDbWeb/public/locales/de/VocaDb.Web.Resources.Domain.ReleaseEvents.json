@@ -5,12 +5,12 @@
     "DJ": "DJ",
     "Instrumentalist": "Instrumentalist",
     "Organizer": "Veranstalter",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
+    "Other": "Andere",
+    "OtherPerformer": "Anderer Performer",
     "Promoter": "Promoter",
     "VJ": "VJ",
     "Vocalist": "Sänger",
-    "VoiceManipulator": "Voice manipulator"
+    "VoiceManipulator": "Stimmenmanipulator"
   },
   "EventCategoryNames": {
     "AlbumRelease": "Albumveröffentlichungsmesse",
@@ -20,24 +20,24 @@
     "Contest": "Wettbewerb",
     "Festival": "Festival",
     "Convention": "Convention",
-    "Other": "Other",
+    "Other": "Andere",
     "Unspecified": "Undefiniert"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
+    "AdditionDate": "Einreichungsdatum",
+    "Date": "Datum",
     "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "SeriesName": "Serie",
+    "VenueName": "Veranstaltungsort"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
+    "Category": "Kategorie",
+    "Description": "Beschreibung",
     "Name": "Name",
     "Names": "Namen",
-    "OriginalName": "Default name language",
-    "Picture": "Main picture",
+    "OriginalName": "Standard-Namenssprache",
+    "Picture": "Hauptbild",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "Externe Links"
   }
 }
