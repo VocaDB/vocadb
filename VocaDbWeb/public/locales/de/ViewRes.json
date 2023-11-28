@@ -65,7 +65,7 @@
   "EntryEdit": {
     "Aliases": "Alias (optional)",
     "AliasesDesc": "Alias sind ergänzende, häufig verwendete Namen für eine Einreichung. Oft handelt es sich hierbei um keine Übersetzung des primären Namen, wenngleich bekannte Übersetzungen als Alias hinzugefügt werden können. Aliase können in einer Sprache sein.",
-    "BasicInfo": "Stammdaten",
+    "BasicInfo": "Allgemeine Information",
     "ConcurrentEditWarning": "{{0}} hat diese Einreichung vor {{1}} Minute(n) bearbeitet.",
     "ConcurrentEditWarningNow": "{{0}} bearbeitet in diesem Moment auch diese Einreichung!",
     "ConfirmDelete": "Bitte bestätigen Sie, dass Sie diesen Eintrag löschen möchten. Sie können (optional) weitere Erläuterungen unten angeben.",
@@ -130,7 +130,7 @@
     "SocialSites": "Community",
     "Tags": "Schlagwörter / Genres",
     "UnreadMessages": "Du hast ungelesene Nachrichten",
-    "UpcomingEvents": "Anstehende events",
+    "UpcomingEvents": "Anstehende Events",
     "Welcome": "Willkommen",
     "Wiki": "Wiki"
   },
