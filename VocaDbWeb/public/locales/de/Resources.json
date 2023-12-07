@@ -280,7 +280,7 @@
     "Description": "Beschreibung",
     "HideFromSuggestions": "Aus Vorschlägen ausblenden",
     "Names": "Namen",
-    "OriginalName": "Default name language",
+    "OriginalName": "Standardsprache für Namen",
     "Parent": "Übergeordnetes Schlagwort\n",
     "Picture": "Bild",
     "RelatedTags": "Verwandte Schlagwörter",
@@ -302,14 +302,14 @@
     "Trusted": "Vertrauenswürdiger Benutzer"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
+    "Address": "Adresse",
+    "AddressCountryCode": "Land/Region",
+    "Coordinates": "Koordinaten",
+    "Description": "Beschreibung",
     "Names": "Namen",
-    "OriginalName": "Default name language",
+    "OriginalName": "Standardsprache für Namen",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "Externe Links"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Kommerziell",

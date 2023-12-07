@@ -1,16 +1,16 @@
 {
   "Details": {
-    "Address": "Address",
-    "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Address": "Adresse",
+    "Aliases": "Aliase",
+    "Country": "Land/Region",
+    "Venue": "Veranstaltungsort"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
-    "Latitude": "Latitude",
-    "Location": "Location",
-    "Longitude": "Longitude"
+    "Address": "Adresse",
+    "Coordinates": "Koordinaten",
+    "Country": "Land/Region",
+    "Latitude": "Breitengrad",
+    "Location": "Standort",
+    "Longitude": "Längengrad"
   }
 }
