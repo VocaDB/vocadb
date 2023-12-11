@@ -103,13 +103,16 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 				.SelectEntryBase(lang, EntryType.ReleaseEvent)
 				.ToArray() : null;
 
-			var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
+   			// We don't want to search for tags, if the user has selected a tag filter
+			var hasTagFilter = tagIds != null && tagIds.Length > 0;
+
+			var tagQuery = searchTags && !hasTagFilter ? ctx.OfType<Tag>().Query()
 				.WhereEntryTypeIsIncluded(entryTypes, EntryType.Tag)
 				.WhereNotDeleted()
 				.WhereHasName(textQuery)
 				.WhereStatusIs(status) : null;
 
-			var tagNames = searchTags ? tagQuery!
+			var tagNames = searchTags && !hasTagFilter ? tagQuery!
 				.OrderBy(sort, lang)
 				.Take(start + maxResults)
 				.SelectEntryBase(lang, EntryType.Tag)
@@ -184,7 +187,7 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 					(songNames.Length >= maxResults ? songQuery.Count() : songNames.Length);
 
 				var tagCount =
-					searchTags ? (tagNames!.Length >= maxResults ? tagQuery!.Count() : tagNames.Length) : 0;
+					searchTags && !hasTagFilter ? (tagNames!.Length >= maxResults ? tagQuery!.Count() : tagNames.Length) : 0;
 
 				var eventCount =
 					searchEvents ? (eventNames!.Length >= maxResults ? eventQuery!.Count() : eventNames.Length) : 0;
