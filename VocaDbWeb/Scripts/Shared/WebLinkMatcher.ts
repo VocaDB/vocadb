@@ -459,7 +459,7 @@ export class WebLinkMatcher {
 		{
 			url: 'www.suruga-ya.jp/',
 			desc: 'Suruga-ya',
-			cat: WebLinkCategory.Commercial,
+			cat: WebLinkCategory.Other,
 		},
 		{
 			url: 'synthv.fandom.com/wiki/',
