@@ -707,6 +707,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'sr',
+		{
+			languages: ['Serbian'],
+			nativeName: 'српски језик'
+		}
+	],
+	[
 		'snd',
 		{
 			languages: ['Sindhi'],
