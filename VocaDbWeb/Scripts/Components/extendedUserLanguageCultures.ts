@@ -340,7 +340,7 @@ const rawLangs: RawLangs = [
 	[
 		'hnm',
 		{
-			languages: ['Hainanese'],
+			languages: ['Hainan Min', 'Hainanese'],
 			nativeName: '海南話',
 		},
 	],
@@ -393,7 +393,7 @@ const rawLangs: RawLangs = [
 			nativeName: '𖬌𖬣𖬵',
 		},
 	],
-	['hbl', { languages: ['Hokkien'], nativeName: '闽南语' }],
+	['hbl', { languages: ['Quanzhang Min', 'Hokkien'], nativeName: '閩南話' }],
 	[
 		'hu',
 		{
@@ -881,8 +881,8 @@ const rawLangs: RawLangs = [
 	[
 		'tws',
 		{
-			languages: ['Teochew'],
-			nativeName: '潮州話',
+			languages: ['Chaoshan Min', 'Teochew'],
+			nativeName: '潮汕話',
 		},
 	],
 	[
