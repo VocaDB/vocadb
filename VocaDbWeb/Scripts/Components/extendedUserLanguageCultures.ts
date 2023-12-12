@@ -121,8 +121,8 @@ const rawLangs: RawLangs = [
 		'bnn',
 		{
 			languages: ['Bunun'],
-			nativeName: 'Bunun'
-		}
+			nativeName: 'Bunun',
+		},
 	],
 	[
 		'my',
@@ -341,8 +341,8 @@ const rawLangs: RawLangs = [
 		'hnm',
 		{
 			languages: ['Hainanese'],
-			nativeName: '海南話'
-		}
+			nativeName: '海南話',
+		},
 	],
 	[
 		'hak',
@@ -355,8 +355,8 @@ const rawLangs: RawLangs = [
 		'hni',
 		{
 			languages: ['Hani'],
-			nativeName: 'Haqniqdoq'
-		}
+			nativeName: 'Haqniqdoq',
+		},
 	],
 	[
 		'ha',
@@ -390,12 +390,10 @@ const rawLangs: RawLangs = [
 		'hmn',
 		{
 			languages: ['Hmong', 'Mong'],
-			nativeName: '𖬌𖬣𖬵'
-		}
+			nativeName: '𖬌𖬣𖬵',
+		},
 	],
-	[
-		'hbl', { languages: ['Hokkien'], nativeName: '闽南语' }
-	],
+	['hbl', { languages: ['Hokkien'], nativeName: '闽南语' }],
 	[
 		'hu',
 		{
@@ -468,8 +466,8 @@ const rawLangs: RawLangs = [
 		'doc',
 		{
 			languages: ['Kam', 'Gam', 'Dong'],
-			nativeName: 'Gaeml'
-		}
+			nativeName: 'Gaeml',
+		},
 	],
 	[
 		'kn',
@@ -552,8 +550,8 @@ const rawLangs: RawLangs = [
 		'mnc',
 		{
 			languages: ['Manchu'],
-			nativeName: 'ᠮᠠᠨᠵᡠ ᡤᡳᠰᡠᠨ'
-		}
+			nativeName: 'ᠮᠠᠨᠵᡠ ᡤᡳᠰᡠᠨ',
+		},
 	],
 	[
 		'cmn',
@@ -587,8 +585,8 @@ const rawLangs: RawLangs = [
 		'okm',
 		{
 			languages: ['Middle Korean'],
-			nativeName: '중세 한국어'
-		}
+			nativeName: '중세 한국어',
+		},
 	],
 	[
 		'arb',
@@ -629,8 +627,8 @@ const rawLangs: RawLangs = [
 		'ii',
 		{
 			languages: ['Nuosu', 'Nosu'],
-			nativeName: 'ꆈꌠꉙ'
-		}
+			nativeName: 'ꆈꌠꉙ',
+		},
 	],
 	[
 		'ori',
@@ -688,7 +686,13 @@ const rawLangs: RawLangs = [
 			nativeName: 'ਪੰਜਾਬੀ',
 		},
 	],
-	['cpx', { languages: ['Pu-Xian', 'Pu-Xian Min', 'Xinghua', 'Henghwa'], nativeName: '莆仙語' }],
+	[
+		'cpx',
+		{
+			languages: ['Pu-Xian', 'Pu-Xian Min', 'Xinghua', 'Henghwa'],
+			nativeName: '莆仙語',
+		},
+	],
 	[
 		'que',
 		{
@@ -700,8 +704,8 @@ const rawLangs: RawLangs = [
 		'cng',
 		{
 			languages: ['Qiang', 'Rma', 'Rme'],
-			nativeName: '尔玛'
-		}
+			nativeName: '尔玛',
+		},
 	],
 	[
 		'ro',
@@ -739,8 +743,8 @@ const rawLangs: RawLangs = [
 		'qsb',
 		{
 			languages: ['Sambahsa'],
-			nativeName: 'Sambahsa-Mundialect'
-		}
+			nativeName: 'Sambahsa-Mundialect',
+		},
 	],
 	[
 		'qsa',
@@ -767,8 +771,8 @@ const rawLangs: RawLangs = [
 		'sr',
 		{
 			languages: ['Serbian'],
-			nativeName: 'српски језик'
-		}
+			nativeName: 'српски језик',
+		},
 	],
 	[
 		'snd',
@@ -878,8 +882,8 @@ const rawLangs: RawLangs = [
 		'tws',
 		{
 			languages: ['Teochew'],
-			nativeName: '潮州話'
-		}
+			nativeName: '潮州話',
+		},
 	],
 	[
 		'th',
@@ -906,8 +910,8 @@ const rawLangs: RawLangs = [
 		'tji',
 		{
 			languages: ['Tujia'],
-			nativeName: 'Bifzivsar'
-		}
+			nativeName: 'Bifzivsar',
+		},
 	],
 	[
 		'tr',
@@ -934,8 +938,8 @@ const rawLangs: RawLangs = [
 		'ug',
 		{
 			languages: ['Uyghur', 'Uighur', ' Eastern Turki'],
-			nativeName: 'ئۇيغۇرچە'
-		}
+			nativeName: 'ئۇيغۇرچە',
+		},
 	],
 	[
 		'vi',
@@ -983,8 +987,8 @@ const rawLangs: RawLangs = [
 		'za',
 		{
 			languages: ['Zhuang', 'Chuang'],
-			nativeName: 'Vahcuengh'
-		}
+			nativeName: 'Vahcuengh',
+		},
 	],
 	[
 		'zu',
