@@ -557,6 +557,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'lit.link',
+			desc: 'Lit.Link',
+			cat: WebLinkCategory.Reference
+		},
+		{
 			url: 'music.dmkt-sp.jp/',
 			desc: 'd music',
 			cat: WebLinkCategory.Commercial,
@@ -1037,5 +1042,5 @@ export class WebLinkMatcher {
 		public url: string,
 		public desc: string,
 		public cat: WebLinkCategory,
-	) {}
+	) { }
 }
