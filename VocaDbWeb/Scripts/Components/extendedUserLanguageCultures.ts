@@ -118,6 +118,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'bnn',
+		{
+			languages: ['Bunun'],
+			nativeName: 'Bunun',
+		},
+	],
+	[
 		'my',
 		{
 			languages: ['Burmese', 'Myanmar language'],
@@ -331,10 +338,24 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'hnm',
+		{
+			languages: ['Hainanese'],
+			nativeName: '海南話',
+		},
+	],
+	[
 		'hak',
 		{
 			languages: ['Hakka Chinese', 'Keyu', 'Kejiahua', 'Hak-k\u00e2-fa'],
 			nativeName: '客語',
+		},
+	],
+	[
+		'hni',
+		{
+			languages: ['Hani'],
+			nativeName: 'Haqniqdoq',
 		},
 	],
 	[
@@ -365,6 +386,14 @@ const rawLangs: RawLangs = [
 			nativeName: 'हिंदी',
 		},
 	],
+	[
+		'hmn',
+		{
+			languages: ['Hmong', 'Mong'],
+			nativeName: '𖬌𖬣𖬵',
+		},
+	],
+	['hbl', { languages: ['Hokkien'], nativeName: '闽南语' }],
 	[
 		'hu',
 		{
@@ -431,6 +460,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Jin Chinese'],
 			nativeName: '晉語',
+		},
+	],
+	[
+		'doc',
+		{
+			languages: ['Kam', 'Gam', 'Dong'],
+			nativeName: 'Gaeml',
 		},
 	],
 	[
@@ -511,6 +547,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'mnc',
+		{
+			languages: ['Manchu'],
+			nativeName: 'ᠮᠠᠨᠵᡠ ᡤᡳᠰᡠᠨ',
+		},
+	],
+	[
 		'cmn',
 		{
 			languages: ['Mandarin Chinese', 'Northern Chinese'],
@@ -536,6 +579,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Middle Chinese', 'Ancient Chinese', 'Qieyun system'],
 			nativeName: '中古漢語',
+		},
+	],
+	[
+		'okm',
+		{
+			languages: ['Middle Korean'],
+			nativeName: '중세 한국어',
 		},
 	],
 	[
@@ -571,6 +621,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Norwegian'],
 			nativeName: 'norsk',
+		},
+	],
+	[
+		'ii',
+		{
+			languages: ['Nuosu', 'Nosu'],
+			nativeName: 'ꆈꌠꉙ',
 		},
 	],
 	[
@@ -630,10 +687,24 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'cpx',
+		{
+			languages: ['Pu-Xian', 'Pu-Xian Min', 'Xinghua', 'Henghwa'],
+			nativeName: '莆仙語',
+		},
+	],
+	[
 		'que',
 		{
 			languages: ['Quechua', 'Runasimi', 'Kichwa'],
 			nativeName: 'Runasimi',
+		},
+	],
+	[
+		'cng',
+		{
+			languages: ['Qiang', 'Rma', 'Rme'],
+			nativeName: '尔玛',
 		},
 	],
 	[
@@ -669,6 +740,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'qsb',
+		{
+			languages: ['Sambahsa'],
+			nativeName: 'Sambahsa-Mundialect',
+		},
+	],
+	[
 		'qsa',
 		{
 			languages: ['Sami', 'Sámi', 'Saami', 'Northern Sami', 'Southern Sami'],
@@ -687,6 +765,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Scottish Gaelic', 'Scots Gaelic', 'Gaelic'],
 			nativeName: 'Gàidhlig',
+		},
+	],
+	[
+		'sr',
+		{
+			languages: ['Serbian'],
+			nativeName: 'српски језик',
 		},
 	],
 	[
@@ -785,11 +870,19 @@ const rawLangs: RawLangs = [
 			nativeName: 'தமிழ்',
 		},
 	],
+	['txg', { languages: ['Tangut'], nativeName: '𗼇𗟲' }],
 	[
 		'te',
 		{
 			languages: ['Telugu'],
 			nativeName: 'తెలుగు',
+		},
+	],
+	[
+		'tws',
+		{
+			languages: ['Teochew'],
+			nativeName: '潮州話',
 		},
 	],
 	[
@@ -814,6 +907,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'tji',
+		{
+			languages: ['Tujia'],
+			nativeName: 'Bifzivsar',
+		},
+	],
+	[
 		'tr',
 		{
 			languages: ['Turkish'],
@@ -832,6 +932,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Urdu'],
 			nativeName: 'اردو',
+		},
+	],
+	[
+		'ug',
+		{
+			languages: ['Uyghur', 'Uighur', ' Eastern Turki'],
+			nativeName: 'ئۇيغۇرچە',
 		},
 	],
 	[
@@ -874,6 +981,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Yoruba'],
 			nativeName: 'Èdè Yorùbá',
+		},
+	],
+	[
+		'za',
+		{
+			languages: ['Zhuang', 'Chuang'],
+			nativeName: 'Vahcuengh',
 		},
 	],
 	[

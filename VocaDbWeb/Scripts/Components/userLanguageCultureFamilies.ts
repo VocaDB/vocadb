@@ -11,6 +11,11 @@ export const userLanguageCultureFamilies = {
 		'och',
 		'ltc',
 		'cdo',
+		'hbl',
+		'tws',
+		'hnm',
+		'cpx'
 	],
 	ja: ['ain', 'ojp', 'qry'],
+	ko: ['okm']
 };
