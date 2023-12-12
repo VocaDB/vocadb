@@ -331,6 +331,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'hnm',
+		{
+			languages: ['Hainanese'],
+			nativeName: '海南話'
+		}
+	],
+	[
 		'hak',
 		{
 			languages: ['Hakka Chinese', 'Keyu', 'Kejiahua', 'Hak-k\u00e2-fa'],
@@ -364,6 +371,9 @@ const rawLangs: RawLangs = [
 			languages: ['Hindi'],
 			nativeName: 'हिंदी',
 		},
+	],
+	[
+		'hbl', { languages: ['Hokkien'], nativeName: '闽南语' }
 	],
 	[
 		'hu',
@@ -669,6 +679,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'qsb',
+		{
+			languages: ['Sambahsa'],
+			nativeName: 'Sambahsa-Mundialect'
+		}
+	],
+	[
 		'qsa',
 		{
 			languages: ['Sami', 'Sámi', 'Saami', 'Northern Sami', 'Southern Sami'],
@@ -791,6 +808,13 @@ const rawLangs: RawLangs = [
 			languages: ['Telugu'],
 			nativeName: 'తెలుగు',
 		},
+	],
+	[
+		'tws',
+		{
+			languages: ['Teochew'],
+			nativeName: '潮州話'
+		}
 	],
 	[
 		'th',
