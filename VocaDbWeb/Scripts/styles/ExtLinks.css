@@ -147,7 +147,8 @@ a.extLink[href^="https://mysound.jp/"] {
 }
 
 a.extLink[href^="http://www.pixiv.net/"],
-a.extLink[href^="https://www.pixiv.net/"] {
+a.extLink[href^="https://www.pixiv.net/"],
+a.extLink[href*='dic.pixiv.net'] {
 	background-image: url('/Content/ExtIcons/pixiv.png');
 }
 
@@ -204,7 +205,8 @@ a.extLink[href^="http://www.tanocstore.net/"] {
 }
 
 a.extLink[href^="http://www.toranoana.jp/"],
-a.extLink[href^="https://www.toranoana.jp/"] {
+a.extLink[href^="https://www.toranoana.jp/"],
+a.extLink[href*='ec.toranoana.jp'] {
 	background-image: url('/Content/ExtIcons/tora.png');
 }
 
@@ -296,7 +298,7 @@ a.extLink[href^="https://www.vocaloid.com/"] {
 	background-image: url('/Content/ExtIcons/vocaloidshop.png');
 }
 
-a.extLink[href^="https://zh.moegirl.org/"],
+a.extLink[href*="zh.moegirl.org"],
 a.extLink[href^="https://en.moegirl.org/"],
 a.extLink[href^="https://ja.moegirl.org/"] {
 	background-image: url('/Content/ExtIcons/moegirl.png');
@@ -421,9 +423,8 @@ a.extLink[href^="https://dic.nicovideo.jp/"] {
 }
 
 a.extLink[href^="http://com.nicovideo.jp/community/"],
-a.extLink[href^="http://ch.nicovideo.jp/community/"],
 a.extLink[href^="https://com.nicovideo.jp/community/"],
-a.extLink[href^="https://ch.nicovideo.jp/community/"] {
+a.extLink[href*='ch.nicovideo.jp'] {
 	background-image: url('/Content/nico.png');
 }
 
@@ -686,4 +687,69 @@ a.extLink[href*='streamlink.to'] {
 
 a.extLink[href*='selection.music.dmkt-sp.jp'] {
 	background-image: url('/Content/ExtIcons/d-hits.png');
+}
+
+a.extLink[href*='potofu.me'] {
+	background-image: url('/Content/ExtIcons/potofu.png');
+}
+
+a.extLink[href*='fantia.jp'] {
+	background-image: url('/Content/ExtIcons/fantia.png');
+}
+
+a.extLink[href*='lit.link'] {
+	background-image: url('/Content/ExtIcons/litlink.png');
+}
+
+a.extLink[href*='carrd.co'] {
+	background-image: url('/Content/ExtIcons/carrd.png');
+}
+
+a.extLink[href*='y.qq.com'] {
+	background-image: url('/Content/ExtIcons/qq.png');
+}
+
+a.extLink[href*='otakurepublic.com'] {
+	background-image: url('/Content/ExtIcons/otakurepublic.png');
+}
+
+a.extLink[href*='goodsrepublic.com'] {
+	background-image: url('/Content/ExtIcons/goodsrepublic.png');
+}
+
+a.extLink[href*='mixi.jp'] {
+	background-image: url('/Content/ExtIcons/mixi.png');
+}
+
+a.extLink[href*='bgm.tv'] {
+	background-image: url('/Content/ExtIcons/bangumi.png');
+}
+
+a.extLink[href*='twitch.tv'] {
+	background-image: url('/Content/ExtIcons/twitch.png');
+}
+
+/*  bangumi*/
+a.extLink[href*='ko-fi.com'] {
+	background-image: url('/Content/ExtIcons/kofi.png');
+}
+
+a.extLink[href*='twvt.me'] {
+	background-image: url('/Content/ExtIcons/twinvite.png');
+}
+
+a.extLink[href*='poppro.cn'] {
+	background-image: url('/Content/ExtIcons/poppro.png');
+}
+
+a.extLink[href*='kuwo.cn'] {
+	background-image: url('/Content/ExtIcons/kuwo.png');
+}
+
+a.extLink[href*='ep.kugou.com'] {
+	background-image: url('/Content/ExtIcons/kugou.png');
+}
+
+a.extLink[href*='allcpp.cn'] {
+	background-image: url('/Content/ExtIcons/allcpp.png');
 }
