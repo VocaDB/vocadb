@@ -1,3 +1,4 @@
+import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
 import { WebLinkCategory } from './WebLinkCategory';
 
 export class WebLinkMatcher {
@@ -97,6 +98,7 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{ url: 'booth.pm/', desc: 'Booth', cat: WebLinkCategory.Commercial },
+		{ url: 'carrd.co', desc: 'Carrd', cat: WebLinkCategory.Official },
 		{
 			url: 'www.cdjapan.co.jp/detailview.html',
 			desc: 'CDJapan',
@@ -157,6 +159,8 @@ export class WebLinkMatcher {
 			desc: 'Facebook',
 			cat: WebLinkCategory.Official,
 		},
+		{ url: 'fantia.jp', desc: 'Fantia', cat: WebLinkCategory.Official },
+		{ url: 'geocities.jp', desc: 'Website', cat: WebLinkCategory.Official },
 		{
 			url: 'grep-shop.com/',
 			desc: 'Grep Shop',
@@ -219,6 +223,11 @@ export class WebLinkMatcher {
 			desc: 'iTunes',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'iza-yoi.net',
+			desc: 'Website',
+			cat: WebLinkCategory.Official
+		},
 		{ url: 'karent.jp/', desc: 'KarenT', cat: WebLinkCategory.Commercial },
 		{ url: 'kkbox.fm/', desc: 'KKBOX', cat: WebLinkCategory.Commercial },
 		{
@@ -247,6 +256,11 @@ export class WebLinkMatcher {
 			url: 'www.instagram.com/',
 			desc: 'Instagram',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'mailto:',
+			desc: 'e-mail',
+			cat: WebLinkCategory.Official
 		},
 		{
 			url: 'shop.melonbooks.co.jp/',
@@ -416,9 +430,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{ url: 'piapro.jp/', desc: 'Piapro', cat: WebLinkCategory.Official },
+		{ url: 'potofu.me', desc: 'POTOFU', cat: WebLinkCategory.Official },
 		{ url: 'poppro.cn/', desc: 'Poppro', cat: WebLinkCategory.Official },
 		{ url: 'potune.jp/', desc: 'Potune', cat: WebLinkCategory.Commercial },
 		{ url: 'www.pixiv.net/', desc: 'Pixiv', cat: WebLinkCategory.Official },
+		{ url: 'dic.pixiv.net', desc: 'Pixiv Encyclopedia', cat: WebLinkCategory.Reference },
 		{
 			url: 'books.rakuten.co.jp/',
 			desc: 'Rakuten books',
@@ -560,6 +576,11 @@ export class WebLinkMatcher {
 			url: 'toranoana.shop/',
 			desc: 'Toranoana',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'ec.toranoana.jp',
+			desc: 'Toranoana',
+			cat: WebLinkCategory.Commercial
 		},
 		{
 			url: 'touhoudb.com/',
@@ -969,5 +990,5 @@ export class WebLinkMatcher {
 		public url: string,
 		public desc: string,
 		public cat: WebLinkCategory,
-	) {}
+	) { }
 }
