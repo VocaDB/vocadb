@@ -33,7 +33,7 @@ export function ColorCard({ colorTheme }: ColorCardProps) {
       </CardHeader>
       <CardContent>
         <Image
-          className="ml-auto mr-auto"
+          className="mx-auto"
           height={120}
           src={colorTheme.image}
           alt={colorTheme.name}
@@ -67,7 +67,7 @@ export function ColorThemeSwitcher() {
             indicate, if a color scheme is suitable for light/dark mode.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex space-x-4 justify-center">
+        <div className="flex justify-center space-x-4">
           {colorThemes.map((theme) => (
             <ColorCard colorTheme={theme} key={theme.id} />
           ))}
