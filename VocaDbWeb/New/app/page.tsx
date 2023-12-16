@@ -9,9 +9,7 @@ import { ColorThemeSwitcher } from "@/components/color-menu"
 import { FeaturedSongsCarousel } from "../components/featured-songs"
 
 async function getData() {
-  const res = await apiGet<FrontPageContract>("/frontpage")
-
-  return res
+  return await apiGet<FrontPageContract>("/frontpage")
 }
 
 export default async function IndexPage() {

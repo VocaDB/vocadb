@@ -7,11 +7,15 @@
     "prettier",
     "plugin:tailwindcss/recommended",
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "plugins": [
     "tailwindcss",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "sonarjs",
+    "react-hooks"
   ],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
