@@ -7,7 +7,6 @@ import { ColorTheme, colorThemes } from "@/config/themes"
 import { cn } from "@/lib/utils"
 import { useConfig } from "@/hooks/use-config"
 
-import CustomImage from "./image"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import {

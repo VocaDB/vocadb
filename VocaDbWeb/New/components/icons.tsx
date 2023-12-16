@@ -8,11 +8,13 @@ export const Icons = {
   twitter: Twitter,
   logo: (props: JSX.IntrinsicElements["img"]) => (
     <>
+      {/* eslint-disable-next-line */}
       <img
         src="/VocaDB_Logo_Black_Transparent_No_Outline.png"
         {...props}
         className={cn("dark:hidden", props.className)}
       />
+      {/* eslint-disable-next-line */}
       <img
         src="/VocaDB_Logo_White_Transparent_No_Outline.png"
         {...props}

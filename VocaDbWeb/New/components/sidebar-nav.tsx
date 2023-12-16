@@ -21,7 +21,6 @@ import { Button } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  playlists: Playlist[]
 }
 
 export type Playlist = (typeof playlists)[number]
@@ -76,7 +75,7 @@ export function Topic({ className, topic, links }: TopicProps) {
   )
 }
 
-export function Sidebar({ className, playlists }: SidebarProps) {
+export function Sidebar({ className }: SidebarProps) {
   return (
     <ScrollArea className="h-[calc(100vh-4rem)] border-r">
       <div className={cn("pb-12", className)}>
