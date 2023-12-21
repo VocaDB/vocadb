@@ -10,7 +10,9 @@ export function apiGet<T>(path: string, options?: ApiFetchOptions): Promise<T> {
 }
 
 interface ApiFetchOptions {
-  credentials?: boolean
+  credentials?: boolean,
+  method?: "GET" | "POST",
+  mode?: RequestMode,
 }
 /**  If an endpoint returns JSON Data, apiGet should be used instead. */
 export const apiFetch = async (
@@ -19,7 +21,7 @@ export const apiFetch = async (
 ): Promise<Response> => {
   const resp = await fetch(
     process.env.NEXT_PUBLIC_API_URL + path,
-    options?.credentials ? { credentials: "include" } : {}
+    { credentials: options?.credentials ? "include" : undefined, method: options?.method, mode: options?.mode, headers: { "Content-Type": "application/json" } }
   )
 
   if (!resp.ok) {
