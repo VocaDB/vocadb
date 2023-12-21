@@ -1,22 +1,31 @@
 "use client"
 import { apiFetch } from "@/client/fetch"
-import { useEffect } from "react"
+import { useState } from "react"
 
 export default function DiscussionPage() {
 
-  useEffect(() => {
-    const run = async () => {
-      await apiFetch("/antiforgery/token", {
-      })
-      await apiFetch("/users/login", {
-        credentials: true,
-        method: "POST",
-        mode: "cors",
-      })
-    }
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-    run()
-  }, [])
+  const run = async () => {
+    await apiFetch("/antiforgery/token", {
+    })
+    await apiFetch("/users/login", {
+      credentials: true,
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify({
+        keepLoggedIn: true,
+        password,
+        userName: email
+      })
+    })
+  }
 
-  return <></>
+
+  return <>
+    <input value={email} onChange={(e) => setEmail(e.target.value)} />
+    <input value={password} onChange={(e) => setPassword(e.target.value)} />
+    <button onClick={() => run()}>Send</button>
+  </>
 }
