@@ -4,10 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Web;
-using Discord;
 using FluentValidation;
 using NHibernate;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -2259,6 +2257,28 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 		return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference, PermissionContext));
+	}
+	
+	public UserRewindForApiContract GetRewindStats(int id)
+	{
+		return HandleQuery(ctx =>
+		{
+			var dayWithMostSongHits = ctx.OfType<SongHit>().Query()
+				.Where(h => h.Date.Year == 2023 && h.Agent == id)
+				.GroupBy(h => h.Date.Date)
+				.OrderByDescending(grouping => grouping.Count())
+				.Select(h => new SongHitOnDay
+				{
+					Date = h.Key.Date,
+					Count = h.Count()
+				})
+				.ToArray();
+			
+			return new UserRewindForApiContract()
+			{
+				SongHitsOnDays = dayWithMostSongHits
+			};
+		});
 	}
 #nullable disable
 }

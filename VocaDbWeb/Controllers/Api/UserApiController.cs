@@ -1235,5 +1235,13 @@ public class UserApiController : ApiController
 			return BadRequest();
 		}
 	}
+
+	[HttpGet("rewind")]
+	[OriginHeaderCheck]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public UserRewindForApiContract Rewind()
+	{
+		return _queries.GetRewindStats(_permissionContext.LoggedUserId);
+	}
 #nullable disable
 }
