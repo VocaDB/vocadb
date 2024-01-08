@@ -190,6 +190,10 @@ a.extLink[href^="http://ototoy.jp/"] {
 	background-image: url('/Content/ExtIcons/potune.png');
 }
 
+a.extLink[href^="https://remywiki.com/"] {
+	background-image: url('/Content/ExtIcons/remywiki.png');
+}
+
 a.extLink[href^="http://sonicwire.com"],
 a.extLink[href^="https://sonicwire.com"] {
 	background-image: url('/Content/ExtIcons/sonicwire.png');
