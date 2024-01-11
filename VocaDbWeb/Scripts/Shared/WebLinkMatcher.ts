@@ -572,6 +572,11 @@ export class WebLinkMatcher {
 			desc: 'Rakuten music',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'remywiki.com/',
+			desc: 'RemyWiki',
+			cat: WebLinkCategory.Reference,
+		},
 		{ 
 			url: 'skeb.jp/', 
 			desc: 'Skeb', 
@@ -747,6 +752,11 @@ export class WebLinkMatcher {
 			desc: 'Toranoana',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'touhou.arrangement-chronicle.com',
+			desc: 'Touhou Arrangement Chronicle',
+			cat: WebLinkCategory.Reference,
+		}/* TouhouDB */,
 		{
 			url: 'touhoudb.com/',
 			desc: 'TouhouDB',
