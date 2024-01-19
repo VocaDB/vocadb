@@ -757,6 +757,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					song.Song.UpdateArtistString();
 					await ctx.UpdateAsync(song);
 				}
+
+				foreach (var album in artist.Albums)
+				{
+					album.Album.UpdateArtistString();
+					await ctx.UpdateAsync(album);
+				}
 			}
 
 			var newGroups = properties.Groups
