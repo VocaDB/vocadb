@@ -1239,9 +1239,17 @@ public class UserApiController : ApiController
 	[HttpGet("rewind")]
 	[OriginHeaderCheck]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public UserRewindForApiContract Rewind()
+	public ActionResult<UserRewindForApiContract> Rewind(int? userId)
 	{
-		return _queries.GetRewindStats(_permissionContext.LoggedUserId);
+		userId ??= _permissionContext.LoggedUserId;
+
+		if (userId != _permissionContext.LoggedUserId &&
+		    !_permissionContext.HasPermission(PermissionToken.DesignatedStaff))
+		{
+			return Unauthorized();
+		}
+		
+		return _queries.GetRewindStats(userId.Value);
 	}
 #nullable disable
 }
