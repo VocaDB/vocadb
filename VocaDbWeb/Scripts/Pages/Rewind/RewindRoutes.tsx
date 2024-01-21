@@ -2,15 +2,15 @@ import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const CommentIndex = React.lazy(() => import('./Rewind'));
+const RewindIndex = React.lazy(() => import('./Rewind'));
 
-const CommentRoutes = (): React.ReactElement => {
+const RewindRoutes = (): React.ReactElement => {
 	return (
 		<Routes>
-			<Route path="" element={<CommentIndex />} />
+			<Route path="" element={<RewindIndex />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);
 };
 
-export default CommentRoutes;
+export default RewindRoutes;
