@@ -37,7 +37,7 @@ export default function RewindPage(): React.ReactElement {
 			onLoad={(): any => postMessage()}
 			title="VocaDB Rewind"
 			id="rewind_iframe"
-			src="http://localhost:5174/"
+			src="https://vocadb-rewind-page.vercel.app/"
 		/>
 	);
 }
