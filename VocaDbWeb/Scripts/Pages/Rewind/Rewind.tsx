@@ -1,23 +1,30 @@
-import { RewindVideo } from '@/vocadb-rewind/src/rewind/Rewind';
-import { Player } from '@remotion/player';
-import React, { useEffect, useRef } from 'react';
-
-import data from './shiro.json';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function RewindPage(): React.ReactElement {
 	const iframeRef = useRef<HTMLIFrameElement | null>(null);
+	const [rewindData, setRewindData] = useState<null | object>(null);
 
 	const postMessage = (): void => {
 		console.log('Sending rewind data');
 		const iframe = iframeRef.current;
 		if (iframe) {
-			iframe.contentWindow?.postMessage(data, '*');
+			iframe.contentWindow?.postMessage(rewindData, '*');
 		} else {
 			console.log('iframeRef is null');
 		}
 	};
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		httpClient
+			.get<object>(urlMapper.mapRelative('/api/users/rewind'))
+			.then((resp) => setRewindData(resp));
+	}, []);
+
+	useEffect(() => {
+		postMessage();
+	}, [rewindData]);
 
 	return (
 		<iframe
@@ -30,8 +37,7 @@ export default function RewindPage(): React.ReactElement {
 			onLoad={(): any => postMessage()}
 			title="VocaDB Rewind"
 			id="rewind_iframe"
-			scrolling="no"
-			src="http://vocadb-rewind-page.vercel.app"
+			src="http://localhost:5174/"
 		/>
 	);
 }
