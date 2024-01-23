@@ -41,16 +41,19 @@ public class ReleaseEventApiController : ApiController
 	private readonly EventQueries _queries;
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 	private readonly IUserPermissionContext _permissionContext;
+	private readonly EditRateLimitService _rateLimitService;
 
 	public ReleaseEventApiController(
 		EventQueries queries,
 		IAggregatedEntryImageUrlFactory thumbPersister,
-		IUserPermissionContext permissionContext
+		IUserPermissionContext permissionContext,
+		EditRateLimitService rateLimitService
 	)
 	{
 		_queries = queries;
 		_thumbPersister = thumbPersister;
 		_permissionContext = permissionContext;
+		_rateLimitService = rateLimitService;
 	}
 
 	/// <summary>
@@ -260,6 +263,8 @@ public class ReleaseEventApiController : ApiController
 		IFormFile? pictureUpload
 	)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+		
 		// Either series or name must be specified. If series is specified, name is generated automatically.
 		if (contract.Series.IsNullOrDefault() || contract.CustomName)
 		{
