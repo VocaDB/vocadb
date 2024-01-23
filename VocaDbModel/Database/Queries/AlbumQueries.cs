@@ -915,6 +915,11 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					album.OriginalReleaseDate.Month = rd.Month;
 					album.OriginalReleaseDate.Day = rd.Day;
 				}
+
+				if (fullProperties.OriginalRelease.CatNum != null)
+				{
+					album.OriginalRelease.CatNum = fullProperties.OriginalRelease.CatNum;
+				}
 			}
 
 			// Artists
