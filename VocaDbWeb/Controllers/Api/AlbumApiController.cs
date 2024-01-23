@@ -47,13 +47,15 @@ public class AlbumApiController : ApiController
 	private readonly AlbumQueries _queries;
 	private readonly AlbumService _service;
 	private readonly IUserPermissionContext _permissionContext;
+	private readonly EditRateLimitService _rateLimitService;
 
 	public AlbumApiController(
 		AlbumQueries queries,
 		AlbumService service,
 		OtherService otherService,
 		IAggregatedEntryImageUrlFactory thumbPersister,
-		IUserPermissionContext permissionContext
+		IUserPermissionContext permissionContext,
+		EditRateLimitService rateLimitService
 	)
 	{
 		_queries = queries;
@@ -61,6 +63,7 @@ public class AlbumApiController : ApiController
 		_otherService = otherService;
 		_thumbPersister = thumbPersister;
 		_permissionContext = permissionContext;
+		_rateLimitService = rateLimitService;
 	}
 
 	/// <summary>
@@ -423,6 +426,8 @@ public class AlbumApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] AlbumForEditForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+		
 		// Unable to continue if viewmodel is null because we need the ID at least
 		if (contract is null)
 		{

@@ -151,6 +151,8 @@ public class Startup
 					.AllowCredentials();
 			});
 		});
+
+		services.AddSingleton<EditRateLimitService>();
 	}
 
 	private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());

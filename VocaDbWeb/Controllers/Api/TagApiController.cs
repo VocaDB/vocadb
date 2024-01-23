@@ -42,16 +42,19 @@ public class TagApiController : ApiController
 	private readonly TagQueries _queries;
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 	private readonly IUserPermissionContext _permissionContext;
+	private readonly EditRateLimitService _rateLimitService;
 
 	public TagApiController(
 		TagQueries queries,
 		IAggregatedEntryImageUrlFactory thumbPersister,
-		IUserPermissionContext permissionContext
+		IUserPermissionContext permissionContext,
+		EditRateLimitService rateLimitService
 	)
 	{
 		_queries = queries;
 		_thumbPersister = thumbPersister;
 		_permissionContext = permissionContext;
+		_rateLimitService = rateLimitService;
 	}
 
 	/// <summary>
@@ -397,6 +400,8 @@ public class TagApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] TagForEditForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+		
 		var coverPicUpload = Request.Form.Files["thumbPicUpload"];
 		UploadedFileContract? uploadedPicture = null;
 		if (coverPicUpload is not null && coverPicUpload.Length > 0)

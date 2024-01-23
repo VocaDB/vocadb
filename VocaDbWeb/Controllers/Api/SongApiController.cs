@@ -54,6 +54,7 @@ public class SongApiController : ApiController
 	private readonly UserService _userService;
 	private readonly IUserPermissionContext _userPermissionContext;
 	private readonly PVHelper _pvHelper;
+	private readonly EditRateLimitService _rateLimitService;
 
 	/// <summary>
 	/// Initializes controller.
@@ -66,7 +67,8 @@ public class SongApiController : ApiController
 		IUserPermissionContext userPermissionContext,
 		UserService userService,
 		OtherService otherService,
-		PVHelper pvHelper
+		PVHelper pvHelper,
+		EditRateLimitService rateLimitService
 	)
 	{
 		_service = service;
@@ -77,6 +79,7 @@ public class SongApiController : ApiController
 		_userPermissionContext = userPermissionContext;
 		_otherService = otherService;
 		_pvHelper = pvHelper;
+		_rateLimitService = rateLimitService;
 	}
 
 	/// <summary>
@@ -637,6 +640,8 @@ public class SongApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] SongForEditForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_userPermissionContext);
+		
 		// Unable to continue if viewmodel is null because we need the ID at least
 		if (contract is null)
 		{

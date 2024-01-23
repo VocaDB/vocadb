@@ -45,13 +45,15 @@ public class ArtistApiController : ApiController
 	private readonly ArtistService _service;
 	private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 	private readonly IUserPermissionContext _permissionContext;
+	private readonly EditRateLimitService _rateLimitService;
 
 	public ArtistApiController(
 		ArtistQueries queries,
 		ArtistService service,
 		IAggregatedEntryImageUrlFactory thumbPersister,
 		ObjectCache cache,
-		IUserPermissionContext permissionContext
+		IUserPermissionContext permissionContext,
+		EditRateLimitService rateLimitService
 	)
 	{
 		_queries = queries;
@@ -59,6 +61,7 @@ public class ArtistApiController : ApiController
 		_thumbPersister = thumbPersister;
 		_cache = cache;
 		_permissionContext = permissionContext;
+		_rateLimitService = rateLimitService;
 	}
 
 	private ArtistForApiContract GetArtist(
@@ -332,6 +335,8 @@ public class ArtistApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistForEditForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+		
 		// Unable to continue if viewmodel is null because we need the ID at least
 		if (contract is null)
 		{
