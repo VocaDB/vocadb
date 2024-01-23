@@ -907,6 +907,14 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					album.OriginalRelease =
 						 new AlbumRelease(fullProperties.OriginalRelease, new ReleaseEvent[] { session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent) });
 				}
+
+				if (fullProperties.OriginalRelease.ReleaseDate != null)
+				{
+					var rd = fullProperties.OriginalRelease.ReleaseDate;
+					album.OriginalReleaseDate.Year = rd.Year;
+					album.OriginalReleaseDate.Month = rd.Month;
+					album.OriginalReleaseDate.Day = rd.Day;
+				}
 			}
 
 			// Artists
