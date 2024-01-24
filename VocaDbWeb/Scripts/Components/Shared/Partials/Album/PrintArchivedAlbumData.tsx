@@ -134,7 +134,7 @@ export const PrintArchivedAlbumData = React.memo(
 							name="Barcodes" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
-								data.identifiers.map((identifier) => identifier.value)
+								data.identifiers?.map((identifier) => identifier.value) ?? []
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}

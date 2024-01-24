@@ -17,7 +17,7 @@ export interface ArchivedAlbumContract {
 	discs?: AlbumDiscPropertiesContract[];
 	discType: AlbumType;
 	id: number;
-	identifiers: AlbumIdentifierContract[];
+	identifiers?: AlbumIdentifierContract[];
 	mainPictureMime?: string;
 	names?: LocalizedStringContract[];
 	originalRelease?: ArchivedAlbumReleaseContract;
