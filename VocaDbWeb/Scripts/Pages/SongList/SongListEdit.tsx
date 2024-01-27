@@ -264,7 +264,7 @@ const verifyCsv = (data: string): boolean => {
 		.filter((r) => r !== '')
 		.map((row, index) => {
 			let ret = true;
-			let cols = row.split(',');
+			let cols = row.split(/\r?\n/);
 
 			if (isNaN(Number(cols[0]))) {
 				ret = false;
