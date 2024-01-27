@@ -1,5 +1,6 @@
 import { WebLinkCategory } from './WebLinkCategory';
 
+/*Links are alphabetized by description with websites and blogs at the end.*/
 export class WebLinkMatcher {
 	public static matchers: WebLinkMatcher[] = [
 		{
@@ -10,7 +11,7 @@ export class WebLinkMatcher {
 		{ 
 			url: 'about.me/', 
 			desc: 'about.me', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: '.akbh.jp/',
@@ -31,6 +32,16 @@ export class WebLinkMatcher {
 			url: 'allcpp.cn',
 			desc: 'AllCPP',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'alterego.wikia.com/wiki/',
+			desc: 'Alter/Ego Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'alterego.fandom.com/wiki/',
+			desc: 'Alter/Ego Wiki',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'music.amazon.co.jp/',
@@ -70,12 +81,12 @@ export class WebLinkMatcher {
 		{ 
 			url: 'amzn.to/', 
 			desc: 'Amazon', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Commercial,
 		},
-		{ 
-			url: 'ameblo.jp/', 
-			desc: 'Blog', 
-			cat: WebLinkCategory.Official 
+		{
+			url: 'amazon.de/',
+			desc: 'Amazon',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'lofter.com/',
@@ -95,6 +106,21 @@ export class WebLinkMatcher {
 		{
 			url: 'www.animate-onlineshop.jp/',
 			desc: 'Animate Online Shop',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'pc.animelo.jp/',
+			desc: 'animelo mix',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'artstation.com',
+			desc: 'ArtStation',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 's.awa.fm/',
+			desc: 'AWA',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -127,6 +153,11 @@ export class WebLinkMatcher {
 			desc: 'Booth', 
 			cat: WebLinkCategory.Commercial 
 		},
+		{
+			url: 'bowlroll.net',
+			desc: 'Bowlroll',
+			cat: WebLinkCategory.Official,
+		},
 		{ 
 			url: 'carrd.co', 
 			desc: 'Carrd', 
@@ -143,9 +174,39 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'cevio.wikia.com/wiki/',
+			desc: 'CeVIO Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'cevio.fandom.com/wiki/',
+			desc: 'CeVIO Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'atwiki.jp/cevio_synthv',
+			desc: 'CeVIO/SynthV Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'coconala.com',
+			desc: 'Coconala',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'creofuga.net/',
 			desc: 'Creofuga',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'selection.music.dmkt-sp.jp',
+			desc: 'd hits',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'music.dmkt-sp.jp/',
+			desc: 'd music',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'd-stage.com/shop/',
@@ -153,8 +214,8 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'diverse.direct/',
-			desc: 'Diverse Direct',
+			url: 'www.deezer.com/',
+			desc: 'Deezer',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -173,6 +234,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'diverse.direct/',
+			desc: 'Diverse Direct',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'www.dizzylab.net',
 			desc: 'Dizzylab',
 			cat: WebLinkCategory.Commercial,
@@ -182,6 +248,21 @@ export class WebLinkMatcher {
 			desc: 'DLsite',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'dojin-music.info',
+			desc: 'Dojin Music Info',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'pc.dwango.jp/',
+			desc: 'dwango.jp',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.e-onkyo.com/',
+			desc: 'e-onkyo music',
+			cat: WebLinkCategory.Commercial,
+		} /* UtaiteDB */,
 		{
 			url: 'exittunes.com/',
 			desc: 'Exit Tunes',
@@ -195,21 +276,26 @@ export class WebLinkMatcher {
 		{ 
 			url: 'fantia.jp', 
 			desc: 'Fantia', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'shop.fasic.jp/',
+			desc: 'fasic',
+			cat: WebLinkCategory.Commercial,
+		} /* UtaiteDB */,
 		{ 
-			url: 'geocities.jp', 
-			desc: 'Website', 
-			cat: WebLinkCategory.Official 
+			url: 'foriio.com', 
+			desc: 'Foriio', 
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'goodsrepublic.com',
 			desc: 'Goods Republic',
 			cat: WebLinkCategory.Other,
-		},
+		},	
 		{
-			url: 'grep-shop.com/',
-			desc: 'Grep Shop',
+			url: 'play.google.com/',
+			desc: 'Google Play',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -218,38 +304,13 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'shop.fasic.jp/',
-			desc: 'fasic',
+			url: 'grep-shop.com/',
+			desc: 'Grep Shop',
 			cat: WebLinkCategory.Commercial,
-		} /* UtaiteDB */,
-		{
-			url: 'utaudatabase.wiki.fc2.com/',
-			desc: 'UTAU Visual Archive',
-			cat: WebLinkCategory.Reference,
-		},
-		{ 
-			url: '.web.fc2.com', 
-			desc: 'Website', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: 'fc2web.com', 
-			desc: 'Website', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: '.fc2.com', 
-			desc: 'Blog', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: 'foriio.com', 
-			desc: 'Foriio', 
-			cat: WebLinkCategory.Official 
 		},
 		{
-			url: 'play.google.com/',
-			desc: 'Google Play',
+			url: 'music.hikaritv.net/',
+			desc: 'Hikari TV Music',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -258,7 +319,27 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'www.instagram.com/',
+			desc: 'Instagram',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'itunes.apple.com/',
+			desc: 'iTunes',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'music.apple.com/',
+			desc: 'iTunes',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'itunes.apple.com/us/',
+			desc: 'iTunes (US)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'music.apple.com/us/',
 			desc: 'iTunes (US)',
 			cat: WebLinkCategory.Commercial,
 		},
@@ -268,39 +349,44 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'itunes.apple.com/',
-			desc: 'iTunes',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'music.apple.com/us/',
-			desc: 'iTunes (US)',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
 			url: 'music.apple.com/jp/',
 			desc: 'iTunes (JP)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'music.apple.com/',
-			desc: 'iTunes',
+			url: 'itch.io',
+			desc: 'Itch.io',
 			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'iza-yoi.net',
-			desc: 'Website',
-			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'karent.jp/', 
 			desc: 'KarenT', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Commercial,
 		},
 		{ 
 			url: 'kkbox.fm/', 
 			desc: 'KKBOX', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'kkbox.com/',
+			desc: 'KKBOX',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'ko-fi.com',
+			desc: 'Ko-fi',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'ep.kugou.com',
+			desc: 'KuGou',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'kuwo.cn',
+			desc: 'Kuwo',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'last.fm/user/',
@@ -323,6 +409,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial 
 		},
 		{
+			url: 'linktr.ee/',
+			desc: 'Linktree',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'listography.com',
 			desc: 'Listography',
 			cat: WebLinkCategory.Official,
@@ -333,8 +424,8 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'www.instagram.com/',
-			desc: 'Instagram',
+			url: 'lit.link',
+			desc: 'Lit.Link',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -390,17 +481,42 @@ export class WebLinkMatcher {
 		{ 
 			url: 'mixi.jp', 
 			desc: 'Mixi', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'mmdelight.blogspot.com',
+			desc: 'MMDownload',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'en.moegirl.org/',
+			desc: 'Moegirlpedia (EN)',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'zh.moegirl.org',
+			desc: 'Moegirlpedia (zh-cn)',
+			cat: WebLinkCategory.Reference,
 		},
 		{ 
 			url: 'mora.jp/', 
 			desc: 'mora', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'mqube.net/user/',
 			desc: 'MQube',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'musescore.com/',
+			desc: 'Musescore',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'musicstore.auone.jp/',
+			desc: 'Music Store',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'music-book.jp/',
@@ -413,19 +529,29 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'www.muzie.ne.jp/',
+			desc: 'Muzie',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'mysound.jp/',
 			desc: 'MySound',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'www.muzie.ne.jp/',
-			desc: 'Muzie',
+			url: 'myspace.com',
+			desc: 'MySpace',
 			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'myfigurecollection.net/',
 			desc: 'MyFigureCollection',
 			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'nana-music.com',
+			desc: 'Nana Music',
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'music.163.com/#/user/home',
@@ -456,6 +582,11 @@ export class WebLinkMatcher {
 			url: 'newgrounds.com',
 			desc: 'Newgrounds',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'nex-tone.link/',
+			desc: 'NexTone.Link',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'nicovideo.jp/watch',
@@ -513,6 +644,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'note.com',
+			desc: 'Note',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.oricon.co.jp/',
 			desc: 'ORICON MUSIC',
 			cat: WebLinkCategory.Commercial,
@@ -522,7 +658,16 @@ export class WebLinkMatcher {
 			desc: 'ORICON',
 			cat: WebLinkCategory.Commercial,
 		},
-		{ url: 'ototoy.jp/', desc: 'OTOTOY', cat: WebLinkCategory.Commercial },
+		{
+			url: 'otakurepublic.com',
+			desc: 'Otaku Republic',
+			cat: WebLinkCategory.Other,
+		},
+		{
+			url: 'ototoy.jp/',
+			desc: 'OTOTOY',
+			cat: WebLinkCategory.Commercial,
+		},
 		{
 			url: 'otoyapage.jp/user/',
 			desc: 'Otoya Page',
@@ -533,34 +678,60 @@ export class WebLinkMatcher {
 			desc: 'Patreon',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'pawoo.net/',
+			desc: 'Pawoo',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'peing.net',
+			desc: 'Peing',
+			cat: WebLinkCategory.Official,
+		},
 		{ 
 			url: 'piapro.jp/', 
 			desc: 'Piapro', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: 'potofu.me', 
-			desc: 'POTOFU', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: 'poppro.cn/', 
-			desc: 'Poppro', 
-			cat: WebLinkCategory.Official 
-		},
-		{ 
-			url: 'potune.jp/', 
-			desc: 'Potune', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'www.pixiv.net/', 
 			desc: 'Pixiv', 
-			cat: WebLinkCategory.Official },
+			cat: WebLinkCategory.Official,
+		},
 		{
 			url: 'dic.pixiv.net',
 			desc: 'Pixiv Encyclopedia',
 			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'fanbox.cc',
+			desc: 'Pixiv Fanbox',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'plurk.com',
+			desc: 'Plurk',
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'potofu.me', 
+			desc: 'POTOFU', 
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'poppro.cn/', 
+			desc: 'Poppro', 
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'potune.jp/', 
+			desc: 'Potune', 
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'y.qq.com',
+			desc: 'QQ Music',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'books.rakuten.co.jp/',
@@ -573,6 +744,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'recochoku.jp/',
+			desc: 'recochoku',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'remywiki.com/',
 			desc: 'RemyWiki',
 			cat: WebLinkCategory.Reference,
@@ -580,7 +756,12 @@ export class WebLinkMatcher {
 		{ 
 			url: 'skeb.jp/', 
 			desc: 'Skeb', 
-			cat: WebLinkCategory.Commercial 
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'skima.jp',
+			desc: 'Skima',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'spotify.com/',
@@ -593,9 +774,19 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'streamlink.to',
+			desc: 'Streamlink',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'www.suruga-ya.jp/',
 			desc: 'Suruga-ya',
 			cat: WebLinkCategory.Other,
+		},
+		{
+			url: 'suzuri.jp',
+			desc: 'Suzuri',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'synthv.fandom.com/wiki/',
@@ -612,131 +803,36 @@ export class WebLinkMatcher {
 			desc: 'Taobao',
 			cat: WebLinkCategory.Commercial,
 		},
-		{
-			url: 'www.lagoa.jp/',
-			desc: 'THREE!',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'linkco.re/',
-			desc: 'TuneCore Japan',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'tunecore.co.jp/',
-			desc: 'TuneCore Japan',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 's.awa.fm/',
-			desc: 'AWA',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'recochoku.jp/',
-			desc: 'recochoku',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'amazon.de/',
-			desc: 'Amazon',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'kkbox.com/',
-			desc: 'KKBOX',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'ko-fi.com',
-			desc: 'Ko-fi',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'ep.kugou.com',
-			desc: 'KuGou',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'kuwo.cn',
-			desc: 'Kuwo',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'www.deezer.com/',
-			desc: 'Deezer',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'linktr.ee/',
-			desc: 'Linktree',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'lit.link',
-			desc: 'Lit.Link',
-			cat: WebLinkCategory.Reference
-		},
-		{
-			url: 'music.dmkt-sp.jp/',
-			desc: 'd music',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'music.hikaritv.net/',
-			desc: 'Hikari TV Music',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'musicstore.auone.jp/',
-			desc: 'Music Store',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'nex-tone.link/',
-			desc: 'NexTone.Link',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'otakurepublic.com',
-			desc: 'Otaku Republic',
-			cat: WebLinkCategory.Other,
-		},
-		{
-			url: 'pc.animelo.jp/',
-			desc: 'animelo mix',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'pc.dwango.jp/',
-			desc: 'dwango.jp',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'y.qq.com',
-			desc: 'QQ Music',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'uta.573.jp/',
-			desc: 'KONAMI MUSIC',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'www.e-onkyo.com/',
-			desc: 'e-onkyo music',
-			cat: WebLinkCategory.Commercial,
-		} /* UtaiteDB */,
 		{ 
 			url: '.taobao.com', 
 			desc: 'Taobao', 
 			cat: WebLinkCategory.Commercial 
 		},
 		{
+			url: 'www.lagoa.jp/',
+			desc: 'THREE!',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'thwiki.cc/',
 			desc: 'THBWiki',
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
+		{
+			url: 'tiktok.com',
+			desc: 'TikTok',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tinami.com',
+			desc: 'TINAMI',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tinami.jp',
+			desc: 'TINAMI',
+			cat: WebLinkCategory.Official,
+		},
 		{
 			url: 'toranoana.jp/mailorder/article/',
 			desc: 'Toranoana',
@@ -778,34 +874,54 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'w.atwiki.jp/sagararyou/',
+			desc: 'Touhou Lyrics Wiki',
+			cat: WebLinkCategory.Reference,
+		}/* TouhouDB */,
+		{
 			url: 'en.touhouwiki.net/wiki/',
 			desc: 'Touhou Wiki',
 			cat: WebLinkCategory.Reference,
-		},
+		}/* TouhouDB */,
 		{ 
 			url: 'tumblr.com/', 
 			desc: 'Tumblr', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'linkco.re/',
+			desc: 'TuneCore Japan',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'tunecore.co.jp/',
+			desc: 'TuneCore Japan',
+			cat: WebLinkCategory.Commercial,
 		},
 		{ 
 			url: 'twitch.tv', 
 			desc: 'Twitch', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'twitter.com/', 
 			desc: 'Twitter', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'twvt.me', 
 			desc: 'twinvite', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'twipla.jp/', 
 			desc: 'TwiPla', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'twpf.jp',
+			desc: 'Twpf',
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'utaitedb.net/',
@@ -820,6 +936,11 @@ export class WebLinkMatcher {
 		{
 			url: 'utaulyrics.fandom.com/wiki/',
 			desc: 'UTAU Lyrics Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'utaudatabase.wiki.fc2.com/',
+			desc: 'UTAU Visual Archive',
 			cat: WebLinkCategory.Reference,
 		},
 		{
@@ -865,7 +986,7 @@ export class WebLinkMatcher {
 		{ 
 			url: 'vgmdb.net/', 
 			desc: 'VGMdb', 
-			cat: WebLinkCategory.Reference 
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'vvstore.jp/',
@@ -875,17 +996,17 @@ export class WebLinkMatcher {
 		{ 
 			url: 'vimeo.com/', 
 			desc: 'Vimeo', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: '://vk.com/', 
 			desc: 'VK', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
 		},
 		{ 
 			url: 'vocadb.net/', 
 			desc: 'VocaDB', 
-			cat: WebLinkCategory.Reference 
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'vocaloiders.com/',
@@ -923,26 +1044,6 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
-			url: 'cevio.wikia.com/wiki/',
-			desc: 'CeVIO Wiki',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'cevio.fandom.com/wiki/',
-			desc: 'CeVIO Wiki',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'alterego.wikia.com/wiki/',
-			desc: 'Alter/Ego Wiki',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'alterego.fandom.com/wiki/',
-			desc: 'Alter/Ego Wiki',
-			cat: WebLinkCategory.Reference,
-		},
-		{
 			url: 'www.vocaloid.com/products/',
 			desc: 'VOCALOID SHOP (JPN)',
 			cat: WebLinkCategory.Commercial,
@@ -965,7 +1066,12 @@ export class WebLinkMatcher {
 		{ 
 			url: 'weibo.com/', 
 			desc: 'Weibo', 
-			cat: WebLinkCategory.Official 
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'de.wikipedia.org/wiki/',
+			desc: 'Wikipedia (DE)',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'en.wikipedia.org/wiki/',
@@ -982,20 +1088,6 @@ export class WebLinkMatcher {
 			desc: 'Wikipedia',
 			cat: WebLinkCategory.Reference,
 		},
-		{
-			url: 'zh.moegirl.org',
-			desc: 'Moegirlpedia (zh-cn)',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'en.moegirl.org/',
-			desc: 'Moegirlpedia (EN)',
-			cat: WebLinkCategory.Reference,
-		},
-		{ 
-			url: 'wixsite.com/', 
-			desc: 'Website', 
-			cat: WebLinkCategory.Official },
 		{
 			url: 'www.yesasia.com/',
 			desc: 'YesAsia',
@@ -1041,6 +1133,11 @@ export class WebLinkMatcher {
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
 		},
+		{ 
+			url: 'wixsite.com/', 
+			desc: 'Website', 
+			cat: WebLinkCategory.Official,
+		},
 		{
 			url: 'jimdofree.com',
 			desc: 'Website',
@@ -1050,6 +1147,41 @@ export class WebLinkMatcher {
 			url: 'jimdo.com',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'weebly.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sakura.ne.jp',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'iza-yoi.net',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: '.web.fc2.com', 
+			desc: 'Website', 
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'fc2web.com', 
+			desc: 'Website', 
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'geocities.jp', 
+			desc: 'Website', 
+			cat: WebLinkCategory.Official,
+		},
+		{ 
+			url: 'ameblo.jp/', 
+			desc: 'Blog', 
+			cat: WebLinkCategory.Official 
 		},
 		{
 			url: 'seesaa.net',
@@ -1067,33 +1199,8 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'fanbox.cc',
-			desc: 'Pixiv Fanbox',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'mmdelight.blogspot.com',
-			desc: 'MMDownload',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'blogspot',
+			url: 'blogspot.com',
 			desc: 'Blog',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'vocalotracks.ssw.co.jp',
-			desc: 'Vocalotracks',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'twpf.jp',
-			desc: 'Twpf',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'tiktok.com',
-			desc: 'TikTok',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -1102,104 +1209,19 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'suzuri.jp',
-			desc: 'Suzuri',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'coconala.com',
-			desc: 'Coconala',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'streamlink.to',
-			desc: 'Streamlink',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'artstation.com',
-			desc: 'ArtStation',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'peing.net',
-			desc: 'Peing',
-			cat: WebLinkCategory.Official,
-		},
-		{
 			url: 'hatenadiary.org',
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'nana-music.com',
-			desc: 'Nana Music',
+			url: 'wordpress.com',
+			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
-		{
-			url: 'bowlroll.net',
-			desc: 'Bowlroll',
+		{ 
+			url: '.fc2.com', 
+			desc: 'Blog', 
 			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'weebly.com',
-			desc: 'Website',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'sakura.ne.jp',
-			desc: 'Website',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'tinami.com',
-			desc: 'Tinami',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'tinami.com',
-			desc: 'Tinami',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'tinami.jp',
-			desc: 'TINAMI',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'note.com',
-			desc: 'Note',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'plurk.com',
-			desc: 'Plurk',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'skima.jp',
-			desc: 'Skima',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'atwiki.jp/cevio_synthv',
-			desc: 'CeVIO/SynthV Wiki',
-			cat: WebLinkCategory.Reference,
-		},
-		{
-			url: 'myspace.com',
-			desc: 'MySpace',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'itch.io',
-			desc: 'Itch.io',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'selection.music.dmkt-sp.jp',
-			desc: 'd hits',
-			cat: WebLinkCategory.Commercial,
 		},
 	];
 
