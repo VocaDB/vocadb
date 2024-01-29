@@ -24,7 +24,7 @@ import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface PVPlayerProps {
 	model: FrontPageContract;
@@ -33,82 +33,114 @@ interface PVPlayerProps {
 
 const PVPlayer = observer(
 	({ model, pvPlayerStore }: PVPlayerProps): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.Comment', 'ViewRes.Home']);
+		const navigate = useNavigate();
+		const vdb = useVdb();
+
 		return (
-			<div className="pvPlayer">
-				<div className="scrollable-navi">
-					<SafeAnchor
-						href="#"
-						className={classNames(
-							'prev',
-							'scrollable-browse-up',
-							pvPlayerStore.paging.isFirstPage && 'disabled',
-						)}
-						onClick={pvPlayerStore.paging.previousPage}
-					/>
-					<div className="scrollable scrollable-vertical" id="songs-navi">
-						<div
-							className="scrollable-items"
-							style={{ top: -384 * (pvPlayerStore.paging.page - 1) }}
-						>
-							{model.newSongs.chunk(4).map((chunk, index) => (
-								<div key={index}>
-									{chunk.map((song) => (
-										<div
-											className={classNames(
-												'scrollable-item',
-												'alignTop',
-												song.id === pvPlayerStore.selectedSong?.id && 'active',
-											)}
-											key={song.id}
-											onClick={(): void =>
-												runInAction(() => {
-													pvPlayerStore.selectedSong = song;
-												})
-											}
-										>
-											<input
-												type="hidden"
-												className="js-songId"
-												value={song.id}
-											/>
-											{song.mainPicture && song.mainPicture.urlThumb && (
-												<img
-													src={UrlHelper.upgradeToHttps(
-														song.mainPicture.urlThumb,
+			<>
+				<div className="pvPlayer">
+					<div>
+						<h3 className="withMargin">
+							{t('ViewRes.Home:Index.RecentSongs')} (
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Song,
+									sort: SongSortRule.AdditionDate,
+									onlyWithPVs: true,
+								})}`}
+							>
+								{t('ViewRes.Home:Index.ViewMore')}
+							</Link>
+							)
+						</h3>
+						<div className="scrollable-navi">
+							<SafeAnchor
+								href="#"
+								className={classNames(
+									'prev',
+									'scrollable-browse-up',
+									pvPlayerStore.paging.isFirstPage && 'disabled',
+								)}
+								onClick={pvPlayerStore.paging.previousPage}
+							/>
+							<div className="scrollable scrollable-vertical" id="songs-navi">
+								<div
+									className="scrollable-items"
+									style={{ top: -384 * (pvPlayerStore.paging.page - 1) }}
+								>
+									{model.newSongs.chunk(4).map((chunk, index) => (
+										<div key={index}>
+											{chunk.map((song) => (
+												<div
+													className={classNames(
+														'scrollable-item',
+														'alignTop',
+														song.id === pvPlayerStore.selectedSong?.id &&
+															'active',
 													)}
-													alt="Cover" /* LOC */
-													className="coverPicThumb"
-													referrerPolicy="same-origin"
-												/>
-											)}
-											<strong className="songName">{song.name}</strong>
-											<span className="songArtists">{song.artistString}</span>
+													key={song.id}
+													onClick={(): void =>
+														runInAction(() => {
+															pvPlayerStore.selectedSong = song;
+														})
+													}
+												>
+													<input
+														type="hidden"
+														className="js-songId"
+														value={song.id}
+													/>
+													{song.mainPicture && song.mainPicture.urlThumb && (
+														<img
+															src={UrlHelper.upgradeToHttps(
+																song.mainPicture.urlThumb,
+															)}
+															alt="Cover" /* LOC */
+															className="coverPicThumb"
+															referrerPolicy="same-origin"
+														/>
+													)}
+													<strong className="songName">{song.name}</strong>
+													<span className="songArtists">
+														{song.artistString}
+													</span>
+												</div>
+											))}
 										</div>
 									))}
 								</div>
-							))}
+							</div>
+							<SafeAnchor
+								href="#"
+								className={classNames(
+									'next',
+									'scrollable-browse-down',
+									pvPlayerStore.paging.isLastPage && 'disabled',
+								)}
+								onClick={pvPlayerStore.paging.nextPage}
+							/>
+						</div>
+
+						<div id="songPreview" className="pvViewerContent">
+							{pvPlayerStore.selectedSong && (
+								<PVContent
+									pvPlayerStore={pvPlayerStore}
+									selectedSong={pvPlayerStore.selectedSong}
+								/>
+							)}
 						</div>
 					</div>
-					<SafeAnchor
-						href="#"
-						className={classNames(
-							'next',
-							'scrollable-browse-down',
-							pvPlayerStore.paging.isLastPage && 'disabled',
-						)}
-						onClick={pvPlayerStore.paging.nextPage}
-					/>
+					<div className="banner-button">
+						<button
+							onClick={(): void => navigate('/rewind')}
+							className="button"
+						>
+							<span>Go to {vdb.values.siteName} Rewind 2023 →</span>
+						</button>
+					</div>
 				</div>
-
-				<div id="songPreview" className="pvViewerContent">
-					{pvPlayerStore.selectedSong && (
-						<PVContent
-							pvPlayerStore={pvPlayerStore}
-							selectedSong={pvPlayerStore.selectedSong}
-						/>
-					)}
-				</div>
-			</div>
+			</>
 		);
 	},
 );
@@ -136,20 +168,6 @@ const HomeIndexLayout = ({
 
 			{model.newSongs && (
 				<div id="recentSongs">
-					<h3 className="withMargin">
-						{t('ViewRes.Home:Index.RecentSongs')} (
-						<Link
-							to={`/Search?${qs.stringify({
-								searchType: SearchType.Song,
-								sort: SongSortRule.AdditionDate,
-								onlyWithPVs: true,
-							})}`}
-						>
-							{t('ViewRes.Home:Index.ViewMore')}
-						</Link>
-						)
-					</h3>
-
 					<PVPlayer
 						model={model}
 						pvPlayerStore={frontPageStore.pvPlayerStore}
