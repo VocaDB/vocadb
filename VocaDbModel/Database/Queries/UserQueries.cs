@@ -1268,14 +1268,8 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			var genreQuery = ctx
 				.OfType<SongTagUsage>()
 				.Query()
-				.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == tagCategory);
+				.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId && (releaseYear == null || f.Date.Year == releaseYear)) && u.Tag.CategoryName == tagCategory);
 
-			if (releaseYear != null)
-			{
-
-				genreQuery = genreQuery.Where(u =>
-					u.Entry.PublishDate.DateTime.HasValue && u.Entry.PublishDate.DateTime.Value.Year == releaseYear);
-			}
 			// NH doesn't support ? operator, instead casting ID to nullable works
 			var genres = genreQuery.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 				.Select(g => new
@@ -2271,7 +2265,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		return HandleQuery(ctx =>
 		{
 			var year = 2023;
-			
+
 			var dayWithMostSongHits = ctx.OfType<SongHit>().Query()
 				.Where(h => h.Date.Year == year && h.Agent == id)
 				.GroupBy(h => h.Date.Date)
@@ -2300,8 +2294,8 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 			var favoriteArtists = ctx.OfType<ArtistForSong>().Query()
 				.Where(s => s.Artist != null && s.Song.PublishDate.DateTime.HasValue &&
-				            s.Song.PublishDate.DateTime.Value.Year == year &&
-				            s.Song.UserFavorites.Any(u => u.User.Id == id ))
+							s.Song.PublishDate.DateTime.Value.Year == year &&
+							s.Song.UserFavorites.Any(u => u.User.Id == id))
 				.GroupBy(s => new { ArtistId = s.Artist!.Id, ArtistType = s.Artist!.ArtistType })
 				.OrderByDescending(c => c.Count())
 				.Select(g => g.Key)
@@ -2320,12 +2314,12 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				.ToArray();
 
 			var favoriteProducerIds = favoriteArtists.Where(a => a.ArtistType == ArtistType.Producer).Select(a => a.ArtistId).Take(5);
-			
+
 			var favoriteProducers = ctx.OfType<Artist>().Query()
 				.Where(id => favoriteProducerIds.Contains(id.Id))
 				.Select(a => new ArtistForApiContract(a, _permissionContext.LanguagePreference, _permissionContext, _entryImagePersister, ArtistOptionalFields.MainPicture | ArtistOptionalFields.Names))
 				.ToArray();
-			
+
 			var popularSongsKey = $"Rewind.PopularSongs";
 
 			var popularSongs = _cache.GetOrInsert(popularSongsKey, CachePolicy.Never(), () =>
