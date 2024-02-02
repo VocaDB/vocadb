@@ -32,6 +32,7 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
@@ -341,7 +342,9 @@ const BasicInfoTabContent = observer(
 												onClick={(): void =>
 													runInAction(() => {
 														songEditStore.publishDate =
-															songEditStore.suggestedPublishDate?.date.toDate();
+															DateTimeHelper.convertToUtc(
+																songEditStore.suggestedPublishDate?.date.toDate(),
+															) ?? undefined;
 													})
 												}
 											>
