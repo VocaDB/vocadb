@@ -260,11 +260,11 @@ const calcCsvDifference = (
 const verifyCsv = (data: string): boolean => {
 	const orderIds: number[] = [];
 	const formats = data
-		.split('\n')
+		.split(/\r?\n/)
 		.filter((r) => r !== '')
 		.map((row, index) => {
 			let ret = true;
-			let cols = row.split(/\r?\n/);
+			let cols = row.split(',');
 
 			if (isNaN(Number(cols[0]))) {
 				ret = false;
