@@ -173,7 +173,7 @@ export class AlbumReviewsStore {
 
 	@action createNewReview = async (): Promise<void> => {
 		const contract = {
-			date: new Date().toLocaleDateString(),
+			date: new Date().toISOString(),
 			languageCode: this.languageCode,
 			text: this.newReviewText,
 			title: this.newReviewTitle,
