@@ -359,7 +359,7 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 					list.Status = contract.Status;
 				}
 
-				var songDiff = list.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.Song.Id));
+				var songDiff = list.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Get(c.Song.Id));
 
 				if (songDiff.Changed)
 				{
