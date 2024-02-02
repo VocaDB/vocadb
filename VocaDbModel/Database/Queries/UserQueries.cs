@@ -2293,9 +2293,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 				.ToArray();
 
 			var favoriteArtists = ctx.OfType<ArtistForSong>().Query()
-				.Where(s => s.Artist != null && s.Song.PublishDate.DateTime.HasValue &&
-							s.Song.PublishDate.DateTime.Value.Year == year &&
-							s.Song.UserFavorites.Any(u => u.User.Id == id))
+				.Where(s => s.Artist != null && s.Song.UserFavorites.Any(u => u.User.Id == id && u.Date.Year == year))
 				.GroupBy(s => new { ArtistId = s.Artist!.Id, ArtistType = s.Artist!.ArtistType })
 				.OrderByDescending(c => c.Count())
 				.Select(g => g.Key)

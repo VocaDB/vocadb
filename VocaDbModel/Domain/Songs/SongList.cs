@@ -238,7 +238,7 @@ public class SongList :
 
 	public virtual CollectionDiffWithValue<SongInList, SongInList> SyncSongs(
 		IEnumerable<SongInListEditContract> newTracks,
-		Func<SongInListEditContract, Song> songGetter
+		Func<SongInListEditContract, Song?> songGetter
 	)
 	{
 		var diff = CollectionHelper.Diff(SongLinks, newTracks, (n1, n2) => n1.Id == n2.SongInListId);
@@ -254,6 +254,8 @@ public class SongList :
 		{
 			var song = songGetter(newEntry);
 
+			// TODO: Properly report deleted songs to the frontend
+			if (song == null || song.Deleted) continue;
 			var link = AddSong(song, newEntry.Order, newEntry.Notes ?? string.Empty);
 			created.Add(link);
 		}
