@@ -3,18 +3,24 @@ import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { PVForSongContract } from '@/DataContracts/PVForSongContract';
 import { useLoginManager } from '@/LoginManagerContext';
 import { adminRepo } from '@/Repositories/AdminRepository';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 
-const AdminPVsByAuthor = () => {
+const AdminPVsByAuthor = (): React.ReactElement => {
 	const [pvs, setPVs] = useState<PVForSongContract[]>([]);
-	const [author, setAuthor] = useState('');
+	const [searchParams] = useSearchParams();
+	const [author, setAuthor] = useState(searchParams.get('author') ?? '');
 	const loginManager = useLoginManager();
 
 	const onSubmit = (): void => {
 		adminRepo.getPVsByAuthor(author).then((resp) => setPVs(resp));
 	};
+
+	useEffect(() => {
+		if (author !== '') onSubmit();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<React.Fragment>

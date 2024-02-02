@@ -114,7 +114,7 @@ public class ActivityEntryQueries
 				query = query.Where(a => a.CreateDate > easternSince.Value);
 
 			if (before.HasValue && since.HasValue)
-				query = query.Where(a => a.CreateDate > easternSince.Value && a.CreateDate < before.Value);
+				query = query.Where(a => a.CreateDate > easternSince.Value && a.CreateDate < easternBefore.Value);
 
 			if (userId.HasValue)
 				query = query.Where(a => a.Author.Id == userId.Value);
