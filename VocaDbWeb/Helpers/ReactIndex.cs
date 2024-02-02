@@ -3,7 +3,6 @@ using VocaDb.Web.Code;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils.Config;
-using VocaDb.Web.Models.Shared.Partials.Html;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Helpers;
@@ -70,14 +69,16 @@ public class ReactIndex
 
 		// Read the content of index.html file
 		var content = System.IO.File.ReadAllText(filePath)
-			.Replace("{{title}}", (!string.IsNullOrEmpty(properties.PageTitle) ? properties.PageTitle + " - " : "") + _brandableStrings.SiteTitle)
+			.Replace("{{title}}",
+				(!string.IsNullOrEmpty(properties.PageTitle) ? properties.PageTitle + " - " : "") +
+				_brandableStrings.SiteTitle)
 			.Replace("{{summarizedDescription}}", properties.SummarizedDescription)
 			.Replace("{{keywords}}", _brandableStrings.Layout.Keywords)
 			.Replace("{{ogImage}}", properties.OpenGraph.Image)
 			.Replace("{{siteName}}", _brandableStrings.SiteName)
 			.Replace("{{osPath}}", _config.SiteSettings.OpenSearchPath)
-			.Replace("{{favicon}}", !string.IsNullOrEmpty(_config.Assets.FavIconUrl) ? _config.Assets.FavIconUrl : "/Content/favicon.ico")
-			.ToString();
+			.Replace("{{favicon}}",
+				!string.IsNullOrEmpty(_config.Assets.FavIconUrl) ? _config.Assets.FavIconUrl : "/Content/favicon.ico");
 
 		// TODO: Make this configurable
 		// Activates the Crowdin In-Context translation feature
@@ -86,8 +87,20 @@ public class ReactIndex
 			content = content.Replace("<!--{incontextloc}", "")
 				.Replace("{incontextloc}-->", "");
 		}
+		
+		// TODO: Make this configurable
+		// Activates umami tracking
+		if (_env.IsProduction())
+		{
+			content = content.Replace("<!--{trackingcode}", "")
+				.Replace("{trackingcode}-->", "")
+				.Replace("{{dataWebsiteId}}",
+					_brandableStrings.SiteName == "VocaDB" ? "981e1817-1212-4ff5-ac3a-67fceaa9912d" :
+					_brandableStrings.SiteName == "UtaiteDB" ? "9ee1b267-bdbe-4949-b5cb-ca4e112adc8c" :
+					"57cf43f5-3fbd-4ac1-9c7b-0e95bc8a098c");
+		}
 
-		var preInd = content.IndexOf("</head>");
+		var preInd = content.IndexOf("</head>", StringComparison.Ordinal);
 
 		if (!string.IsNullOrEmpty(properties.Robots))
 		{
