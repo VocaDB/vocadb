@@ -129,6 +129,16 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'bangumi.tv',
+			desc: 'Bangumi',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'chii.in',
+			desc: 'Bangumi',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'bgm.tv',
 			desc: 'Bangumi',
 			cat: WebLinkCategory.Reference,
@@ -254,6 +264,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'music.douban.com',
+			desc: 'douban',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'pc.dwango.jp/',
 			desc: 'dwango.jp',
 			cat: WebLinkCategory.Commercial,
@@ -309,8 +324,18 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'vocaloid.blog120.fc2.com',
+			desc: 'Hatsune Miku Miku',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'music.hikaritv.net/',
 			desc: 'Hikari TV Music',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'hmv.co.jp',
+			desc: 'HMV',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -579,6 +604,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'neowing.co.jp',
+			desc: 'Neowing',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'newgrounds.com',
 			desc: 'Newgrounds',
 			cat: WebLinkCategory.Official,
@@ -742,6 +772,11 @@ export class WebLinkMatcher {
 			url: 'music.rakuten.co.jp/',
 			desc: 'Rakuten music',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'rateyourmusic.com',
+			desc: 'Rate Your Music',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'recochoku.jp/',
