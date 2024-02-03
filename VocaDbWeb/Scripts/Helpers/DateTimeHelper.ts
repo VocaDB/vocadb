@@ -42,8 +42,8 @@ export class DateTimeHelper {
 		//return new Date(utcDate.getFullYear(), utcDate.getMonth(), utcDate.getDate());
 	}
 
-	static convertToUtc(localDate: Date): Date | null {
-		if (localDate == null) return null;
+	static convertToUtc(localDate: Date | undefined): Date | null {
+		if (localDate === null || localDate === undefined) return null;
 		return dayjs
 			.utc()
 			.year(localDate.getFullYear())

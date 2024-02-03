@@ -40,7 +40,7 @@ const PVPlayer = observer(
 		return (
 			<>
 				<div className="pvPlayer">
-					<div>
+					<div style={{ flex: 1, width: '100%' }}>
 						<h3 className="withMargin">
 							{t('ViewRes.Home:Index.RecentSongs')} (
 							<Link

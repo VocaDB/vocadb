@@ -703,6 +703,13 @@ div.item {
 	justify-content: space-between;
 }
 
+@media (max-width: 1500px) {
+	.pvPlayer {
+		flex-direction: column;
+		align-items: baseline;
+	}
+}
+
 .banner-button {
   text-align: center;
   max-width: fit-content;
