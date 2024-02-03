@@ -1242,7 +1242,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 				foreach (var lyrics in lyricsDiff.Added)
 				{
-					session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source ?? string.Empty, lyrics.URL, lyrics.TranslationType, lyrics.CultureCodes));
+					session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source ?? string.Empty, lyrics.URL ?? string.Empty, lyrics.TranslationType, lyrics.CultureCodes));
 				}
 
 				foreach (var lyrics in lyricsDiff.Removed)
