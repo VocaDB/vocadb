@@ -822,7 +822,9 @@ a.extLink[href*='mixi.jp'] {
 	background-image: url('/Content/ExtIcons/mixi.png');
 }
 
-a.extLink[href*='bgm.tv'] {
+a.extLink[href*='bgm.tv'],
+a.extLink[href*='bangumi.tv'],
+a.extLink[href*='chii.in'] {
 	background-image: url('/Content/ExtIcons/bangumi.png');
 }
 
@@ -853,4 +855,24 @@ a.extLink[href*='ep.kugou.com'] {
 
 a.extLink[href*='allcpp.cn'] {
 	background-image: url('/Content/ExtIcons/allcpp.png');
+}
+
+a.extLink[href*='music.douban.com'] {
+	background-image: url('/Content/ExtIcons/douban.png');
+}
+
+a.extLink[href*='vocaloid.blog120.fc2.com'] {
+	background-image: url('/Content/ExtIcons/mikumiku.png');
+}
+
+a.extLink[href*='hmv.co.jp'] {
+	background-image: url('/Content/ExtIcons/hmv.png');
+}
+
+a.extLink[href*='neowing.co.jp'] {
+	background-image: url('/Content/ExtIcons/neowing.png');
+}
+
+a.extLink[href*='rateyourmusic.com'] {
+	background-image: url('/Content/ExtIcons/rateyourmusic.png');
 }
