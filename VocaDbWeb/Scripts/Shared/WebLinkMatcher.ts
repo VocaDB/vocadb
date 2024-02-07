@@ -349,16 +349,6 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'itunes.apple.com/',
-			desc: 'iTunes',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'music.apple.com/',
-			desc: 'iTunes',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
 			url: 'itunes.apple.com/us/',
 			desc: 'iTunes (US)',
 			cat: WebLinkCategory.Commercial,
@@ -376,6 +366,16 @@ export class WebLinkMatcher {
 		{
 			url: 'music.apple.com/jp/',
 			desc: 'iTunes (JP)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'itunes.apple.com/',
+			desc: 'iTunes',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'music.apple.com/',
+			desc: 'iTunes',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
