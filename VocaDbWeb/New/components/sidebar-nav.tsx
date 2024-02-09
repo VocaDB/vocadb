@@ -20,25 +20,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-}
-
-export type Playlist = (typeof playlists)[number]
-
-export const playlists = [
-  "Recently Added",
-  "Recently Played",
-  "Top Songs",
-  "Top Albums",
-  "Top Artists",
-  "Logic Discography",
-  "Bedtime Beats",
-  "Feeling Happy",
-  "I miss Y2K Pop",
-  "Runtober",
-  "Mellow Days",
-  "Eminem Essentials",
-]
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 interface NavLinkProps {
   name: string

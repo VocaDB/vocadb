@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import Image, { ImageProps } from "next/image"
 
@@ -26,10 +28,11 @@ export default function CustomImage(props: CustomImageProps) {
 
         let base = baseOverride
           ? baseOverride
-          : `//wsrv.nl/?url=${loaderProps.src.startsWith("/")
-            ? process.env.NEXT_PUBLIC_API_URL?.replace("/api", "")
-            : ""
-          }${loaderProps.src}&output=webp`
+          : `//wsrv.nl/?url=${
+              loaderProps.src.startsWith("/")
+                ? process.env.NEXT_PUBLIC_API_URL?.replace("/api", "")
+                : ""
+            }${loaderProps.src}&output=webp`
 
         if (props.mode === "crop") {
           base += "&fit=cover&a=attention"

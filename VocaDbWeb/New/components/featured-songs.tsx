@@ -1,23 +1,26 @@
-"use client"
-
-import Carousel from "react-multi-carousel"
-
 import { SongWithPVAndVoteContract } from "@/types/api/song"
 import { getBestThumbImageUrl } from "@/lib/utils"
 
 import "react-multi-carousel/lib/styles.css"
 
-import { useState } from "react"
 import Link from "next/link"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import CustomImage from "@/components/image"
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel"
+
 interface FeaturedSongCardProps {
   song: SongWithPVAndVoteContract
 }
 
-const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
+/* const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
   const artist_split = song.artistString.split("feat.")
   const [dragging, setDragging] = useState(false)
 
@@ -33,10 +36,7 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
       href={`/S/${song.id}`}
       style={{ pointerEvents: dragging ? "none" : "auto" }}
     >
-      <Card
-        onMouseDown={onDragStart}
-        className="h-full cursor-pointer hover:bg-accent hover:text-accent-foreground"
-      >
+      <Card onMouseDown={onDragStart} className="h-full cursor-pointer">
         <CardContent className="pt-5">
           <CustomImage
             className="pointer-events-none rounded-sm"
@@ -60,6 +60,24 @@ const FeaturedSongCard = ({ song }: FeaturedSongCardProps) => {
     </Link>
   )
 }
+ */
+const FeaturedSongCard2 = ({ song }: FeaturedSongCardProps) => {
+  return (
+    <Link href={`/S/${song.id}`}>
+      <Card>
+        <CardContent>
+          <CustomImage
+            alt=""
+            width={320}
+            height={180}
+            mode="crop"
+            src={getBestThumbImageUrl(song.pvs)}
+          />
+        </CardContent>
+      </Card>
+    </Link>
+  )
+}
 
 interface FeaturedSongsCarouselProps {
   songs: SongWithPVAndVoteContract[]
@@ -68,30 +86,17 @@ interface FeaturedSongsCarouselProps {
 export const FeaturedSongsCarousel = ({
   songs,
 }: FeaturedSongsCarouselProps) => {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1280, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 640, min: 0 },
-      items: 1,
-    },
-  }
-
   return (
-    <Carousel
-      itemClass="flex flex-col items-center"
-      infinite
-      responsive={responsive}
-    >
-      {songs.map((song) => (
-        <FeaturedSongCard song={song} key={song.id} />
-      ))}
+    <Carousel opts={{ loop: true }} className="w-full max-w-4xl">
+      <CarouselContent>
+        {songs.map((song) => (
+          <CarouselItem className="basis-1/3" key={song.id}>
+            <FeaturedSongCard2 song={song} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   )
 }
