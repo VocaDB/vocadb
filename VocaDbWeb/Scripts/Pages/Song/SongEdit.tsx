@@ -341,10 +341,10 @@ const BasicInfoTabContent = observer(
 											<Button
 												onClick={(): void =>
 													runInAction(() => {
+														// Both PV and album release dates should use UTC
 														songEditStore.publishDate =
-															DateTimeHelper.convertToUtc(
-																songEditStore.suggestedPublishDate?.date.toDate(),
-															) ?? undefined;
+															songEditStore.suggestedPublishDate?.date.toDate() ??
+															undefined;
 													})
 												}
 											>

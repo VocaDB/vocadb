@@ -129,7 +129,7 @@ export class SongEditStore {
 
 		this.albumEventId = contract.albumEventId;
 		this.albumReleaseDate = contract.albumReleaseDate
-			? dayjs(contract.albumReleaseDate)
+			? dayjs.utc(contract.albumReleaseDate)
 			: undefined;
 		this.artistLinks = contract.artists.map(
 			(artist) => new ArtistForAlbumEditStore(artist),
@@ -310,7 +310,7 @@ export class SongEditStore {
 			.filter(
 				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
 			)
-			.map((pv) => dayjs(pv.contract.publishDate))
+			.map((pv) => dayjs.utc(pv.contract.publishDate))
 			.sortBy((p) => p)
 			.head();
 	}
