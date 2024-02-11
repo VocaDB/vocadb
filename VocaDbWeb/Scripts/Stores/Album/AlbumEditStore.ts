@@ -310,7 +310,7 @@ export class AlbumEditStore {
 				(a, b) =>
 					(a!.date ? new Date(a!.date).getTime() : Infinity) -
 					(b!.date ? new Date(b!.date).getTime() : Infinity),
-			).map(e => dayjs(e!.date))[0]
+			).map(e => dayjs.utc(e!.date))[0]
 	}
 
 	@computed get releaseDate(): Dayjs | undefined {
