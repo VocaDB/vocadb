@@ -301,7 +301,7 @@ export class SongEditStore {
 
 	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvent.entry && this.releaseEvent.entry.date
-			? dayjs(this.releaseEvent.entry.date)
+			? dayjs.utc(this.releaseEvent.entry.date)
 			: undefined;
 	}
 
