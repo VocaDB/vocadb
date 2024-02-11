@@ -305,7 +305,7 @@ export class AlbumEditStore {
 	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvents
 			.map(e => e.entry)
-			.filter(e => e !== undefined)
+			.filter(e => e !== undefined && e.date !== undefined)
 			.sort(
 				(a, b) =>
 					(a!.date ? new Date(a!.date).getTime() : Infinity) -
