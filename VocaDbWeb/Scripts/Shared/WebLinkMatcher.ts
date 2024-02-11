@@ -159,6 +159,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'bsky.app',
+			desc: 'Bluesky',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'booth.pm/',
 			desc: 'Booth',
 			cat: WebLinkCategory.Commercial,
