@@ -709,28 +709,3 @@ div.item {
 		align-items: baseline;
 	}
 }
-
-.banner-button {
-  text-align: center;
-  max-width: fit-content;
-  margin-right: 20px;
-  min-width: min(400px, 95vw);
-}
-
-.banner-button > .button {
-  display: inline-block;
-  padding: 20px 40px;
-  font-size: 24px;
-  font-weight: bold;
-  background-color: #ffffff;
-  border: 3px solid transparent;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: #359bb9;
-  color: white;
-}
-
-.banner-button > .button:hover {
-  background-color: #257289;
-}

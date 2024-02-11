@@ -662,7 +662,9 @@ const SongBasicInfo = observer(
 						{model.publishDate && (
 							<tr>
 								<td>{t('ViewRes:EntryDetails.PublishDate')}</td>
-								<td>{dayjs(model.publishDate).format('ll') /* REVIEW */}</td>
+								<td>
+									{dayjs.utc(model.publishDate).format('ll') /* REVIEW */}
+								</td>
 							</tr>
 						)}
 

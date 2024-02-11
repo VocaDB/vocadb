@@ -22,7 +22,7 @@ export const FormatPVLink = React.memo(
 				) : (
 					<a
 						title="See this page archived on the Wayback Machine" /* LOC */
-						href={`https://web.archive.org/web/*/$${pv.url}`}
+						href={`https://web.archive.org/web/*/${pv.url}`}
 						style={{ textDecoration: 'line-through' }}
 					>
 						<img src="/Content/ExtIcons/archive.png" alt="Internet Archive" />{' '}
