@@ -130,6 +130,13 @@ export const MainNavigationItems = React.memo((): React.ReactElement => {
 					{t('ViewRes:Shared.Users')}
 				</Nav.Link>
 			</Nav.Item>
+			{vdb.values.isLoggedIn && (
+				<Nav.Item>
+					<Nav.Link as={Link} to="/rewind">
+						Rewind 2023
+					</Nav.Link>
+				</Nav.Item>
+			)}
 			<Nav.Item>
 				<Nav.Link as={Link} to="/Help">
 					{t('ViewRes:Layout.Help')}

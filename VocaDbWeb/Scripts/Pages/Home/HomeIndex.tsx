@@ -131,14 +131,6 @@ const PVPlayer = observer(
 							)}
 						</div>
 					</div>
-					<div className="banner-button">
-						<button
-							onClick={(): void => navigate('/rewind')}
-							className="button"
-						>
-							<span>Go to {vdb.values.siteName} Rewind 2023 →</span>
-						</button>
-					</div>
 				</div>
 			</>
 		);
