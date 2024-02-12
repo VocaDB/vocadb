@@ -273,6 +273,9 @@ public class ArtistService : ServiceBase
 			}
 
 			target.Description.CopyIfEmpty(source.Description);
+			
+			// Tags
+			source.Tags.MoveVotes(target.Tags, (tag) => new ArtistTagUsage(target, tag));
 
 			// Create merge record
 			var mergeEntry = new ArtistMergeRecord(source, target);
