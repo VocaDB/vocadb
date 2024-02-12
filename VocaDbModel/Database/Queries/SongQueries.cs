@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.Caching;
 using System.Web;
-using Newtonsoft.Json.Serialization;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
