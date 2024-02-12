@@ -789,6 +789,9 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				target.OriginalReleaseDate.Day = source.OriginalReleaseDate.Day;
 
 			target.OriginalRelease.ReleaseEvents = target.OriginalRelease.ReleaseEvents.Concat(source.OriginalRelease.ReleaseEvents).Distinct().ToArray();
+			
+			// Tags
+			source.Tags.MoveVotes(target.Tags, (tag) => new AlbumTagUsage(target, tag));
 
 			// Create merge record
 			var mergeEntry = new AlbumMergeRecord(source, target);

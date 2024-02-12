@@ -108,6 +108,25 @@ public class TagManager<T> : ITagManager where T : TagUsage
 
 		return modifiedTags.ToArray();
 	}
+
+	public virtual void MoveVotes(TagManager<T> targetManager, Func<Tag, T> tagUsageCreation)
+	{
+		foreach (var sourceUsage in Usages.ToArray())
+		{
+			T usage =  targetManager.HasTag(sourceUsage.Tag) ? 
+				targetManager.GetTagUsage(sourceUsage.Tag)! : 
+				tagUsageCreation(sourceUsage.Tag);
+			targetManager.Usages.Add(usage);
+			sourceUsage.Tag.UsageCount++;
+
+			foreach (var sourceVote in sourceUsage.VotesBase)
+			{
+				var vote = usage.CreateVote(sourceVote.User);
+
+				if (vote == null) continue;
+			}
+		}
+	}
 }
 
 public interface ITagManager
