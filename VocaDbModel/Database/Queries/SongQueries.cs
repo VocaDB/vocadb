@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Runtime.Caching;
 using System.Web;
+using Newtonsoft.Json.Serialization;
 using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -1105,6 +1106,24 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 			target.ReleaseEvent ??= source.ReleaseEvent;
 			target.ReleaseEvents = target.ReleaseEvents.Concat(source.ReleaseEvents).Distinct().ToArray();
+
+			// Tags
+			var tagusages = source.Tags.Usages.ToArray();
+			foreach (var sourceUsage in tagusages)
+			{
+				var usage = target.AddTag(sourceUsage.Tag);
+				
+				foreach (var sourceVote in sourceUsage.Votes)
+				{
+					ctx.Save(usage.Result);
+					var vote = usage.Result.CreateVote(sourceVote.User);
+
+					if (vote == null) continue;
+
+					ctx.Save(vote);
+					ctx.Update(usage.Result.Tag);
+				}
+			}
 
 			// Create merge record
 			var mergeEntry = new SongMergeRecord(source, target);
