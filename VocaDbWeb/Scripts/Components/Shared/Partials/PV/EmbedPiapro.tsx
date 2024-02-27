@@ -14,7 +14,7 @@ export const EmbedPiapro = React.memo(
 				width={width}
 				height={height}
 				style={{ border: 0 }}
-				src={`//piapro.jp/html5_player_popup/?id=${pv.pvId}`}
+				src={`//piapro.jp/content/${pv.pvId}`}
 			/>
 		);
 	},
