@@ -138,11 +138,6 @@ export const MainNavigationItems = React.memo((): React.ReactElement => {
 				</Nav.Item>
 			)}
 			<Nav.Item>
-				<Nav.Link as={Link} to="/Help">
-					{t('ViewRes:Layout.Help')}
-				</Nav.Link>
-			</Nav.Item>
-			<Nav.Item>
 				<Nav.Link as={Link} to="/discussion">
 					{t('ViewRes:Layout.Discussions')}
 				</Nav.Link>
@@ -151,6 +146,9 @@ export const MainNavigationItems = React.memo((): React.ReactElement => {
 				<Nav.Link href="https://wiki.vocadb.net/">
 					{t('ViewRes:Layout.Wiki')}
 				</Nav.Link>
+			</Nav.Item>
+			<Nav.Item>
+				<Nav.Link href="/stats">{t('ViewRes:Layout.Stats')}</Nav.Link>
 			</Nav.Item>
 			{loginManager.canMikuDbImport && (
 				<Nav.Item>
