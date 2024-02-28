@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
-using VocaDb.PiaproClient;
+using VocaDb.Model.Service.VideoServices.PiaproClient;
 
 namespace VocaDb.Model.Service.VideoServices;
 
