@@ -17,7 +17,7 @@ create a fork and you can fix it there and create a pull request back to the mai
 
 ## Web API
 
-We have a [comprehensive web API](https://github.com/VocaDB/vocadb/wiki/Public-API) for programmatic access. The [full list of available endpoints](https://vocadb.net/swagger/index.html) is documented using OpenAPI Please take a look if you're interested.
+We have a [comprehensive web API](https://github.com/VocaDB/vocadb/wiki/Public-API) for programmatic access. The [full list of available endpoints](https://vocadb.net/swagger/index.html) is documented using OpenAPI. Please take a look if you're interested.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyNzEyOTU2NV19
+eyJoaXN0b3J5IjpbMTU1OTQyODkxOV19
 -->
