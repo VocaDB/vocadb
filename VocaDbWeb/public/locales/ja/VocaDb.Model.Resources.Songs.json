@@ -12,6 +12,8 @@
     "Other": "その他",
     "Remaster": "リマスター",
     "Remix": "リミックス",
-    "Unspecified": "指定なし"
+    "Unspecified": "指定なし",
+    "Rearrangement": "再編曲",
+    "ShortVersion": "ショートバージョン"
   }
 }

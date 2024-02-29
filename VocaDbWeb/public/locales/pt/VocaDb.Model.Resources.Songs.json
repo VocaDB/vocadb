@@ -2,7 +2,7 @@
   "SongTypeNames": {
     "Arrangement": "Arrangement",
     "Cover": "Cover",
-    "DramaPV": "Drama PV",
+    "DramaPV": "Drama",
     "Illustration": "Illustration",
     "Instrumental": "Instrumental",
     "Live": "Gravação ao vivo",
@@ -12,6 +12,8 @@
     "Other": "Outro",
     "Remaster": "Remaster",
     "Remix": "Remix",
-    "Unspecified": "Não especificado"
+    "Unspecified": "Não especificado",
+    "Rearrangement": "Rearrangement",
+    "ShortVersion": "Short version"
   }
 }

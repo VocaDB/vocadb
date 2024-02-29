@@ -4,13 +4,14 @@
     "Artbook": "画集",
     "Compilation": "コンピレーションアルバム",
     "EP": "E.P.",
-    "Fanmade": "Fanmade/doujin",
-    "Game": "Game",
+    "Fanmade": "アルバム",
+    "Game": "ゲーム",
     "Instrumental": "インストゥメンタル",
     "Other": "その他",
     "Single": "シングル",
     "SplitAlbum": "スプリットアルバム",
     "Unknown": "指定なし",
-    "Video": "ビデオ"
+    "Video": "ビデオ",
+    "Drama": "ドラマ"
   }
 }

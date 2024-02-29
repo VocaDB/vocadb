@@ -12,6 +12,8 @@
     "Other": "Anderes",
     "Remaster": "Remaster",
     "Remix": "Remix",
-    "Unspecified": "Keine Angabe"
+    "Unspecified": "Keine Angabe",
+    "Rearrangement": "Rearrangement",
+    "ShortVersion": "Short version"
   }
 }
