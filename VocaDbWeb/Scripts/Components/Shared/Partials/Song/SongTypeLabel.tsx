@@ -83,6 +83,20 @@ export const SongTypeLabel = React.memo(
 					</span>
 				);
 
+			case SongType.Rearrangement:
+				return (
+					<span className="label" title={title}>
+						RE
+					</span>
+				);
+
+			case SongType.ShortVersion:
+				return (
+					<span className="label" title={title}>
+						S
+					</span>
+				);
+
 			default:
 				return <></>;
 		}

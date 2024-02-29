@@ -16,7 +16,7 @@ public class SongValidator
 		if (song.SongType == SongType.Unspecified)
 			errors.Add(SongValidationErrors.NeedType);
 
-		var derivedTypes = new[] { SongType.Remaster, SongType.Cover, SongType.Instrumental, SongType.MusicPV, SongType.Other, SongType.Remix };
+		var derivedTypes = new[] { SongType.Remaster, SongType.Cover, SongType.Instrumental, SongType.MusicPV, SongType.Other, SongType.Remix, SongType.Rearrangement, SongType.ShortVersion };
 
 		if (song.Notes.IsEmpty && !song.HasOriginalVersion && derivedTypes.Contains(song.SongType))
 		{

@@ -27,8 +27,19 @@ public enum SongType
 	Illustration = 1 << 10,
 
 	Other = 1 << 11,
+	
+	/// <summary>
+	/// For TouhouDB
+	/// </summary>
+	Rearrangement = 1 << 12,
+	
+	/// <summary>
+	/// For TouhouDB
+	/// </summary>
+	ShortVersion = 1 << 13,
 }
 
+// Deprecated
 [Flags]
 public enum SongTypes
 {
