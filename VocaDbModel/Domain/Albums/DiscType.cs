@@ -37,4 +37,9 @@ public enum DiscType
 	Instrumental = 1 << 9,
 
 	Other = 1 << 10,
+
+	/// <summary>
+	/// For TouhouDB
+	/// </summary>
+	Drama = 1 << 11,
 }

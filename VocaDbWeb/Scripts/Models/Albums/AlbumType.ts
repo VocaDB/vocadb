@@ -11,4 +11,6 @@ export enum AlbumType {
 	Fanmade = 'Fanmade',
 	Instrumental = 'Instrumental',
 	Other = 'Other',
+	// For TouhouDB
+	Drama = 'Drama',
 }
