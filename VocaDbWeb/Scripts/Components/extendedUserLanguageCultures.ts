@@ -7,6 +7,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'ami',
+		{
+			languages: ['Amis', 'Pangcah'],
+			nativeName: '\'Amis',
+		},
+	],
+	[
 		'arq',
 		{
 			languages: ['Algerian Arabic', 'Dziria', 'Darja', 'Derja'],
@@ -362,7 +369,7 @@ const rawLangs: RawLangs = [
 		'ha',
 		{
 			languages: ['Hausa'],
-			nativeName: 'هَرْشَن هَوْسَ',
+			nativeName: 'Harshen Hausa',
 		},
 	],
 	[
