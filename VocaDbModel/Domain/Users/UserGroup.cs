@@ -28,7 +28,9 @@ public class UserGroup
 		PermissionToken.ManageDatabase,
 		PermissionToken.EditTags,
 		PermissionToken.ReportUser,
-		PermissionToken.ManageEventSeries
+		PermissionToken.ManageEventSeries,
+		PermissionToken.ViewLyrics,
+		PermissionToken.ViewCoverArtImages
 	);
 
 	private static readonly UserGroup s_trusted = new(
