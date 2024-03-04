@@ -102,7 +102,7 @@ public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 			return false;
 
 		return (TranslationType == contract.TranslationType
-			&& CultureCodes.Select(c => c.CultureCode) == contract.CultureCodes
+			&& CultureCodes.Select(c => c.CultureCode).SequenceEqual(contract.CultureCodes ?? new string[] {})
 			&& Source == contract.Source
 			&& URL == contract.URL
 			&& Value == contract.Value);
