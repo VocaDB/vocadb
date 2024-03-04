@@ -239,9 +239,9 @@ const ArtistBasicInfo = observer(
 								typeLabel={true}
 								releaseYear={true}
 							/>
-							<ArtistRow
+							<ArtistListRow
 								label={t('ViewRes.Artist:Details.CharacterDesigner')}
-								artist={artist.characterDesigner}
+								artists={artist.characterDesigners}
 								typeLabel={false}
 							/>
 							<ArtistListRow
