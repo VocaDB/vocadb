@@ -40,6 +40,9 @@ public sealed record ArtistDetailsForApiContract
 
 	[DataMember]
 	public ArtistForApiContract? CharacterDesigner { get; init; }
+	
+	[DataMember]
+	public ArtistForApiContract[] CharacterDesigners { get; init; }
 
 	[DataMember]
 	public ArtistForApiContract[] CharacterDesignerOf { get; init; }
@@ -221,6 +224,7 @@ public sealed record ArtistDetailsForApiContract
 			.Select(w => new WebLinkForApiContract(webLink: w))
 			.ToArray();
 
+		// Deprecated
 		CharacterDesigner = artist
 			.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
 			.Select(g => new ArtistForApiContract(
@@ -231,6 +235,17 @@ public sealed record ArtistDetailsForApiContract
 				includedFields: ArtistOptionalFields.None
 			))
 			.FirstOrDefault();
+        
+		CharacterDesigners = artist
+			.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
+			.Select(g => new ArtistForApiContract(
+				artist: g,
+				languagePreference: languagePreference,
+				userContext,
+				thumbPersister: null,
+				includedFields: ArtistOptionalFields.None
+			))
+			.ToArray();
 
 		CharacterDesignerOf = artist
 			.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.OneToMany)

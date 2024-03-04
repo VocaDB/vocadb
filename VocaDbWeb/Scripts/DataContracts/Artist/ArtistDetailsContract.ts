@@ -44,7 +44,7 @@ export interface ArtistDetailsContract {
 	artistTypeTag: TagBaseContract;
 	baseVoicebank?: ArtistApiContract;
 	canRemoveTagUsages: boolean;
-	characterDesigner?: ArtistApiContract;
+	characterDesigners: ArtistApiContract[];
 	characterDesignerOf: ArtistApiContract[];
 	childVoicebanks: ArtistApiContract[];
 	commentCount: number;
