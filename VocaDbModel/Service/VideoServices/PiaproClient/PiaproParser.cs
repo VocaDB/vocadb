@@ -67,13 +67,12 @@ public class PiaproParser
 		// Find both piapro.jp and www.piapro.jp
 		// Note: HtmlAgilityPack does not support regex (XPath 2.0) :(
 		var relatedMovieSpan = doc.DocumentNode.SelectSingleNode(
-			"//a[starts-with(@href, \"/content/relate_movie/\")]" +
-			"|//a[starts-with(@href, \"/content_list_recommend/\")]"
+			"//a[starts-with(@href, \"/content/relation\")]"
 		);
 
 		var relatedMovieMatch = relatedMovieSpan != null
 			? Regex.Match(relatedMovieSpan.Attributes["href"].Value,
-				@"/content(?:/relate_movie|_list_recommend)/\?id=([\d\w]+)")
+				@"/content/relation/\?id=([\d\w]+)")
 			: null;
 		var contentId = relatedMovieMatch != null && relatedMovieMatch.Success
 			? relatedMovieMatch.Groups[1].Value
@@ -144,12 +143,12 @@ public class PiaproParser
 		}
 
 		var timestamp = GetDate(dateElem);
-		
+
 		if (timestamp == null)
 		{
 			throw new PiaproException("Could not find timestamp");
 		}
-		
+
 		var contentId = GetContentId(doc);
 
 		if (contentId == null)
