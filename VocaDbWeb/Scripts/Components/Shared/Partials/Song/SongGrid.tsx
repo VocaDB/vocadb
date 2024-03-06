@@ -73,7 +73,7 @@ export const SongGrid = ({
 											<i
 												className="icon-calendar"
 												title={`Published: ${
-													dayjs(song.publishDate).utc().format('l') /* REVIEW */
+													dayjs.utc(song.publishDate).format('l') /* REVIEW */
 												}`} /* LOC */
 												/* TODO: tooltip */
 											/>

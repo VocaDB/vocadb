@@ -355,7 +355,7 @@ const SongListDetailsLayout = observer(
 						{songList.eventDate && (
 							<p>
 								{t('ViewRes.SongList:Details.Date', {
-									0: dayjs(songList.eventDate).format('l'),
+									0: dayjs.utc(songList.eventDate).format('l'),
 								})}
 							</p>
 						)}
@@ -526,7 +526,8 @@ const SongListDetailsLayout = observer(
 					<Button
 						onClick={(): void =>
 							runInAction(() => {
-								songListStore.showAdvancedFilters = !songListStore.showAdvancedFilters;
+								songListStore.showAdvancedFilters =
+									!songListStore.showAdvancedFilters;
 							})
 						}
 						className={classNames(

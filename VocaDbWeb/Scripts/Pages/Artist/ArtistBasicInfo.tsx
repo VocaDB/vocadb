@@ -202,7 +202,9 @@ const ArtistBasicInfo = observer(
 							{artist.releaseDate && (
 								<tr>
 									<td>{t('ViewRes.Artist:Details.ReleaseDate')}</td>
-									<td>{dayjs(artist.releaseDate).format('l') /* REVIEW */}</td>
+									<td>
+										{dayjs.utc(artist.releaseDate).format('l') /* REVIEW */}
+									</td>
 								</tr>
 							)}
 

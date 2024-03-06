@@ -140,7 +140,7 @@ const SongRankingsTableRow = observer(
 						/>
 					)}
 				</td>
-				<td>{dayjs(song.publishDate).format('l')}</td>
+				<td>{dayjs.utc(song.publishDate).format('l')}</td>
 				<td className="search-tags-column">
 					{song.tags && song.tags.length > 0 && (
 						<>
