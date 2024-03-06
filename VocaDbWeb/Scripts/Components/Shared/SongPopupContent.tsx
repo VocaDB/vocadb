@@ -38,7 +38,7 @@ export const SongPopupContent = React.memo(
 				{song.publishDate && (
 					<p>
 						{t('ViewRes:EntryDetails.PublishDate')}{' '}
-						{dayjs(song.publishDate).format('ll')}
+						{dayjs.utc(song.publishDate).format('ll')}
 					</p>
 				)}
 
