@@ -25,23 +25,21 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const SongRankingsTableHeader = React.memo(
-	(): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Song']);
+const SongRankingsTableHeader = React.memo((): React.ReactElement => {
+	const { t } = useTranslation(['ViewRes.Song']);
 
-		return (
-			<thead>
-				<tr>
-					<th></th>
-					<th colSpan={2}>{t('ViewRes.Song:Rankings.ColName')}</th>
-					<th>{t('ViewRes.Song:Rankings.ColPublished')}</th>
-					<th>{t('ViewRes.Song:Rankings.ColTags')}</th>
-					<th>{t('ViewRes.Song:Rankings.ColRating')}</th>
-				</tr>
-			</thead>
-		);
-	},
-);
+	return (
+		<thead>
+			<tr>
+				<th></th>
+				<th colSpan={2}>{t('ViewRes.Song:Rankings.ColName')}</th>
+				<th>{t('ViewRes.Song:Rankings.ColPublished')}</th>
+				<th>{t('ViewRes.Song:Rankings.ColTags')}</th>
+				<th>{t('ViewRes.Song:Rankings.ColRating')}</th>
+			</tr>
+		</thead>
+	);
+});
 
 interface SongRankingsTableRowProps {
 	rankingsStore: RankingsStore;
@@ -204,208 +202,204 @@ const SongRankingsTable = observer(
 	},
 );
 
-const SongRankings = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
+const SongRankings = observer((): React.ReactElement => {
+	const vdb = useVdb();
 
-		const [rankingsStore] = React.useState(
-			() =>
-				new RankingsStore(
-					httpClient,
-					urlMapper,
-					songRepo,
-					userRepo,
-					vdb.values.languagePreference,
-				),
-		);
+	const [rankingsStore] = React.useState(
+		() =>
+			new RankingsStore(
+				httpClient,
+				urlMapper,
+				songRepo,
+				userRepo,
+				vdb.values.languagePreference,
+			),
+	);
 
-		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
+	const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
-		useLocationStateStore(rankingsStore);
+	useLocationStateStore(rankingsStore);
 
-		return (
-			<Layout
-				pageTitle={vdb.resources.song.rankingsTitle}
-				ready={true}
-				title={vdb.resources.song.rankingsTitle}
-				parents={
-					<>
-						<Breadcrumb.Item
-							linkAs={Link}
-							linkProps={{
-								to: `/Search?${qs.stringify({ searchType: SearchType.Song })}`,
-							}}
-						>
-							{t('ViewRes:Shared.Songs')}
-						</Breadcrumb.Item>
-					</>
-				}
-			>
-				<ButtonGroup>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.durationHours = 24;
-							})
-						}
-						className={classNames(
-							rankingsStore.durationHours === 24 && 'active',
-						)}
+	return (
+		<Layout
+			pageTitle={vdb.resources.song.rankingsTitle}
+			ready={true}
+			title={vdb.resources.song.rankingsTitle}
+			parents={
+				<>
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{
+							to: `/Search?${qs.stringify({ searchType: SearchType.Song })}`,
+						}}
 					>
-						{t('ViewRes.Song:Rankings.DurationDaily')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.durationHours = 168;
-							})
-						}
-						className={classNames(
-							rankingsStore.durationHours === 168 && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.DurationWeekly')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.durationHours = 720;
-							})
-						}
-						className={classNames(
-							rankingsStore.durationHours === 720 && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.DurationMonthly')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.durationHours = undefined;
-							})
-						}
-						className={classNames(
-							rankingsStore.durationHours === undefined && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.DurationOverall')}
-					</Button>
-				</ButtonGroup>{' '}
-				<ButtonGroup>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.dateFilterType = 'CreateDate';
-							})
-						}
-						className={classNames(
-							rankingsStore.dateFilterType === 'CreateDate' && 'active',
-							!rankingsStore.durationHours && 'disabled',
-						)}
-						title={t('ViewRes.Song:Rankings.FilterCreateDateDescription')}
-					>
-						{t('ViewRes.Song:Rankings.FilterCreateDate')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.dateFilterType = 'PublishDate';
-							})
-						}
-						className={classNames(
-							rankingsStore.dateFilterType === 'PublishDate' && 'active',
-							!rankingsStore.durationHours && 'disabled',
-						)}
-						title={t('ViewRes.Song:Rankings.FilterPublishDateDescription')}
-					>
-						{t('ViewRes.Song:Rankings.FilterPublishDate')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.dateFilterType = 'Popularity';
-							})
-						}
-						className={classNames(
-							rankingsStore.dateFilterType === 'Popularity' && 'active',
-							!rankingsStore.durationHours && 'disabled',
-						)}
-						title={t('ViewRes.Song:Rankings.FilterPopularityDescription')}
-					>
-						{t('ViewRes.Song:Rankings.FilterPopularity')}
-					</Button>
-				</ButtonGroup>{' '}
-				<ButtonGroup>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.vocalistSelection = undefined;
-							})
-						}
-						className={classNames(
-							rankingsStore.vocalistSelection === undefined && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.VocalistAll')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.vocalistSelection = 'Vocaloid';
-							})
-						}
-						className={classNames(
-							rankingsStore.vocalistSelection === 'Vocaloid' && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.VocalistVocaloid')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.vocalistSelection = 'UTAU';
-							})
-						}
-						className={classNames(
-							rankingsStore.vocalistSelection === 'UTAU' && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.VocalistUTAU')}
-					</Button>
-					<Button
-						href="#"
-						onClick={(): void =>
-							runInAction(() => {
-								rankingsStore.vocalistSelection = 'Other';
-							})
-						}
-						className={classNames(
-							rankingsStore.vocalistSelection === 'Other' && 'active',
-						)}
-					>
-						{t('ViewRes.Song:Rankings.VocalistOther')}
-					</Button>
-				</ButtonGroup>
-				{rankingsStore.songs.length === 0 ? (
-					<Alert variant="alert" className="withMargin">
-						{t('ViewRes.Song:Rankings.NoSongs')}
-					</Alert>
-				) : (
-					<SongRankingsTable rankingsStore={rankingsStore} />
-				)}
-			</Layout>
-		);
-	},
-);
+						{t('ViewRes:Shared.Songs')}
+					</Breadcrumb.Item>
+				</>
+			}
+		>
+			<ButtonGroup>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.durationHours = 24;
+						})
+					}
+					className={classNames(rankingsStore.durationHours === 24 && 'active')}
+				>
+					{t('ViewRes.Song:Rankings.DurationDaily')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.durationHours = 168;
+						})
+					}
+					className={classNames(
+						rankingsStore.durationHours === 168 && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.DurationWeekly')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.durationHours = 720;
+						})
+					}
+					className={classNames(
+						rankingsStore.durationHours === 720 && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.DurationMonthly')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.durationHours = undefined;
+						})
+					}
+					className={classNames(
+						rankingsStore.durationHours === undefined && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.DurationOverall')}
+				</Button>
+			</ButtonGroup>{' '}
+			<ButtonGroup>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.dateFilterType = 'CreateDate';
+						})
+					}
+					className={classNames(
+						rankingsStore.dateFilterType === 'CreateDate' && 'active',
+						!rankingsStore.durationHours && 'disabled',
+					)}
+					title={t('ViewRes.Song:Rankings.FilterCreateDateDescription')}
+				>
+					{t('ViewRes.Song:Rankings.FilterCreateDate')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.dateFilterType = 'PublishDate';
+						})
+					}
+					className={classNames(
+						rankingsStore.dateFilterType === 'PublishDate' && 'active',
+						!rankingsStore.durationHours && 'disabled',
+					)}
+					title={t('ViewRes.Song:Rankings.FilterPublishDateDescription')}
+				>
+					{t('ViewRes.Song:Rankings.FilterPublishDate')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.dateFilterType = 'Popularity';
+						})
+					}
+					className={classNames(
+						rankingsStore.dateFilterType === 'Popularity' && 'active',
+						!rankingsStore.durationHours && 'disabled',
+					)}
+					title={t('ViewRes.Song:Rankings.FilterPopularityDescription')}
+				>
+					{t('ViewRes.Song:Rankings.FilterPopularity')}
+				</Button>
+			</ButtonGroup>{' '}
+			<ButtonGroup>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.vocalistSelection = undefined;
+						})
+					}
+					className={classNames(
+						rankingsStore.vocalistSelection === undefined && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.VocalistAll')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.vocalistSelection = 'Vocaloid';
+						})
+					}
+					className={classNames(
+						rankingsStore.vocalistSelection === 'Vocaloid' && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.VocalistVocaloid')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.vocalistSelection = 'UTAU';
+						})
+					}
+					className={classNames(
+						rankingsStore.vocalistSelection === 'UTAU' && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.VocalistUTAU')}
+				</Button>
+				<Button
+					href="#"
+					onClick={(): void =>
+						runInAction(() => {
+							rankingsStore.vocalistSelection = 'Other';
+						})
+					}
+					className={classNames(
+						rankingsStore.vocalistSelection === 'Other' && 'active',
+					)}
+				>
+					{t('ViewRes.Song:Rankings.VocalistOther')}
+				</Button>
+			</ButtonGroup>
+			{rankingsStore.songs.length === 0 ? (
+				<Alert variant="alert" className="withMargin">
+					{t('ViewRes.Song:Rankings.NoSongs')}
+				</Alert>
+			) : (
+				<SongRankingsTable rankingsStore={rankingsStore} />
+			)}
+		</Layout>
+	);
+});
 
 export default SongRankings;
