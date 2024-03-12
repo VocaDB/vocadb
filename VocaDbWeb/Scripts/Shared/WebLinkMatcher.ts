@@ -919,7 +919,7 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
-			url: 'en.touhouwiki.net/wiki/',
+			url: 'en.touhouwiki.net/',
 			desc: 'Touhou Wiki',
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
