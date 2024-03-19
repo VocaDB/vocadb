@@ -76,9 +76,7 @@ export class SongDetailsForApi {
 	constructor(readonly contract: SongDetailsContract, primaryPV: PVContract | undefined) {
 		this.additionalNames = contract.additionalNames;
 		this.albums = contract.albums;
-		this.alternateVersions = contract.alternateVersions.filter(
-			(a) => a.songType !== SongType.Original
-		);
+		this.alternateVersions = contract.alternateVersions;
 		this.artistString = contract.artistString;
 		this.browsedAlbumId = contract.album?.id;
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
@@ -101,10 +99,7 @@ export class SongDetailsForApi {
 		this.minMilliBpm = contract.minMilliBpm;
 		this.name = contract.song.name;
 		this.notes = contract.notes;
-
-		this.originalVersion =
-			contract.song.songType !== SongType.Original ? contract.originalVersion : undefined;
-
+		this.originalVersion = contract.originalVersion;
 		this.personalDescriptionAuthor = contract.personalDescriptionAuthor;
 		this.personalDescriptionText = contract.personalDescriptionText;
 		this.pools = contract.pools;

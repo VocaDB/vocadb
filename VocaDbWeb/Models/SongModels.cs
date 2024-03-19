@@ -34,7 +34,7 @@ public class SongDetails
 		Contract = contract;
 		AdditionalNames = contract.AdditionalNames;
 		Albums = contract.Albums;
-		AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
+		AlternateVersions = contract.AlternateVersions;
 		ArtistString = contract.ArtistString;
 		BrowsedAlbumId = contract.Album?.Id;
 		CanEdit = EntryPermissionManager.CanEdit(userContext, contract.Song);
@@ -58,7 +58,7 @@ public class SongDetails
 		Name = contract.Song.Name;
 		NicoId = contract.Song.NicoId;
 		Notes = contract.Notes;
-		OriginalVersion = (contract.Song.SongType != SongType.Original ? contract.OriginalVersion : null);
+		OriginalVersion = contract.OriginalVersion;
 		Pools = contract.Pools;
 		PublishDate = contract.Song.PublishDate;
 		RatingScore = contract.Song.RatingScore;

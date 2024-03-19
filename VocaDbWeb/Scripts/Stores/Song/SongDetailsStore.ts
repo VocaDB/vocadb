@@ -308,7 +308,7 @@ export class SongDetailsStore {
 
 		this.tagUsages = new TagListStore(data.tagUsages);
 
-		if (data.songType !== SongType.Original && !this.originalVersion.entry) {
+		if (!this.originalVersion.entry) {
 			this.getOriginal(data.linkedPages);
 		}
 	}
