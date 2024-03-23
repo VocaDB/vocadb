@@ -211,7 +211,7 @@ const EventSeriesDetailsLayout = ({
 						{event.date && (
 							<>
 								{' '}
-								<small>({dayjs(event.date).format('l')})</small>
+								<small>({dayjs.utc(event.date).format('l')})</small>
 							</>
 						)}
 					</li>

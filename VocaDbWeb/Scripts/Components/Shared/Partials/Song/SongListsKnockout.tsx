@@ -22,15 +22,16 @@ export const SongListsKnockout = observer(
 				<tbody>
 					{songListsBaseStore.items.map((item, index) => (
 						<React.Fragment key={item.id}>
-							{groupByYear && songListsBaseStore.isFirstForYear(item, index) && (
-								<tr>
-									<td colSpan={3}>
-										<h3 className="song-list-year">
-											{dayjs(item.eventDate).format('YYYY')}
-										</h3>
-									</td>
-								</tr>
-							)}
+							{groupByYear &&
+								songListsBaseStore.isFirstForYear(item, index) && (
+									<tr>
+										<td colSpan={3}>
+											<h3 className="song-list-year">
+												{dayjs.utc(item.eventDate).format('YYYY')}
+											</h3>
+										</td>
+									</tr>
+								)}
 							<tr>
 								<td style={{ width: '75px' }}>
 									{item.mainPicture && item.mainPicture.urlSmallThumb && (
@@ -54,7 +55,7 @@ export const SongListsKnockout = observer(
 									</Link>
 									{item.eventDate && (
 										<div>
-											<small>{dayjs(item.eventDate).format('l')}</small>
+											<small>{dayjs.utc(item.eventDate).format('l')}</small>
 										</div>
 									)}
 								</td>
