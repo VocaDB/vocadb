@@ -20,124 +20,116 @@ const categories = Object.values(SongListFeaturedCategory).filter(
 	(value) => value !== SongListFeaturedCategory.Nothing,
 );
 
-const SongListFeatured = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
-		const loginManager = useLoginManager();
+const SongListFeatured = observer((): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
-		const [featuredSongListsStore] = React.useState(
-			() =>
-				new FeaturedSongListsStore(
-					vdb.values,
-					songListRepo,
-					tagRepo,
-					[],
-					categories,
-				),
-		);
+	const [featuredSongListsStore] = React.useState(
+		() =>
+			new FeaturedSongListsStore(
+				vdb.values,
+				songListRepo,
+				tagRepo,
+				[],
+				categories,
+			),
+	);
 
-		const { t, ready } = useTranslation([
-			'Resources',
-			'ViewRes',
-			'ViewRes.SongList',
-			'ViewRes.User',
-		]);
+	const { t, ready } = useTranslation([
+		'Resources',
+		'ViewRes',
+		'ViewRes.SongList',
+		'ViewRes.User',
+	]);
 
-		const title = t('ViewRes:Shared.FeaturedSongLists');
+	const title = t('ViewRes:Shared.FeaturedSongLists');
 
-		useLocationStateStore(featuredSongListsStore);
+	useLocationStateStore(featuredSongListsStore);
 
-		return (
-			<Layout
-				pageTitle={title}
-				ready={ready}
-				title={title}
-				toolbar={
-					<>
-						{loginManager.canEditFeaturedLists && (
+	return (
+		<Layout
+			pageTitle={title}
+			ready={ready}
+			title={title}
+			toolbar={
+				<>
+					{loginManager.canEditFeaturedLists && (
+						<JQueryUIButton
+							as={Link}
+							to="/SongList/Edit"
+							icons={{
+								primary: 'ui-icon-plusthick',
+							}}
+						>
+							{t('ViewRes.User:Details.CreateNewList')}
+						</JQueryUIButton>
+					)}
+					{loginManager.canEditProfile && (
+						<>
+							{' '}
 							<JQueryUIButton
 								as={Link}
-								to="/SongList/Edit"
+								to="/SongList/Import"
 								icons={{
 									primary: 'ui-icon-plusthick',
 								}}
 							>
-								{t('ViewRes.User:Details.CreateNewList')}
+								{t('ViewRes.SongList:Featured.Import')}
 							</JQueryUIButton>
-						)}
-						{loginManager.canEditProfile && (
-							<>
-								{' '}
-								<JQueryUIButton
-									as={Link}
-									to="/SongList/Import"
-									icons={{
-										primary: 'ui-icon-plusthick',
-									}}
-								>
-									{t('ViewRes.SongList:Featured.Import')}
-								</JQueryUIButton>
-							</>
-						)}
-					</>
-				}
-			>
-				<ul className="nav nav-pills">
-					{categories.map((category) => (
-						<li
-							className={classNames(
-								featuredSongListsStore.category === category && 'active',
-							)}
-							key={category}
-						>
-							<SafeAnchor
-								onClick={(): void =>
-									featuredSongListsStore.setCategory(category)
-								}
-							>
-								{t(`Resources:SongListFeaturedCategoryNames.${category}`)}
-							</SafeAnchor>
-						</li>
-					))}
-				</ul>
-
+						</>
+					)}
+				</>
+			}
+		>
+			<ul className="nav nav-pills">
 				{categories.map((category) => (
-					<React.Fragment key={category}>
-						{featuredSongListsStore.category === category ? (
-							<div>
-								<SongListsFilters
-									songListsBaseStore={
-										featuredSongListsStore.categories[category]
-									}
-								/>
-
-								<SongListsKnockout
-									songListsBaseStore={
-										featuredSongListsStore.categories[category]
-									}
-									groupByYear={true}
-								/>
-
-								{featuredSongListsStore.categories[category].hasMore && (
-									<h3>
-										<SafeAnchor
-											onClick={(): void => {
-												featuredSongListsStore.categories[category].loadMore();
-											}}
-										>
-											{t('ViewRes:Shared.ShowMore')}
-										</SafeAnchor>
-									</h3>
-								)}
-							</div>
-						) : (
-							<></>
+					<li
+						className={classNames(
+							featuredSongListsStore.category === category && 'active',
 						)}
-					</React.Fragment>
+						key={category}
+					>
+						<SafeAnchor
+							onClick={(): void => featuredSongListsStore.setCategory(category)}
+						>
+							{t(`Resources:SongListFeaturedCategoryNames.${category}`)}
+						</SafeAnchor>
+					</li>
 				))}
-			</Layout>
-		);
-	},
-);
+			</ul>
+
+			{categories.map((category) => (
+				<React.Fragment key={category}>
+					{featuredSongListsStore.category === category ? (
+						<div>
+							<SongListsFilters
+								songListsBaseStore={featuredSongListsStore.categories[category]}
+							/>
+
+							<SongListsKnockout
+								songListsBaseStore={featuredSongListsStore.categories[category]}
+								groupByYear={true}
+							/>
+
+							{featuredSongListsStore.categories[category].hasMore && (
+								<h3>
+									<SafeAnchor
+										onClick={(): void => {
+											featuredSongListsStore.categories[category].loadMore();
+										}}
+									>
+										{t('ViewRes:Shared.ShowMore')}
+									</SafeAnchor>
+								</h3>
+							)}
+						</div>
+					) : (
+						<></>
+					)}
+				</React.Fragment>
+			))}
+		</Layout>
+	);
+});
 
 export default SongListFeatured;
