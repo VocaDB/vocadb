@@ -3,6 +3,9 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +21,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={inter.className}>
-				<ThemeProvider attribute="class">{children}</ThemeProvider>
+			<body className={cn(inter.className, "min-h-screen bg-background")}>
+				<ThemeProvider attribute="class">
+					<Header />
+					<div className="container md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
+						<Navbar />
+						{children}
+					</div>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
