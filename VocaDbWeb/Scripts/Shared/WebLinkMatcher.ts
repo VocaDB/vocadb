@@ -1144,6 +1144,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'zh.wikipedia.org/wiki/',
+			desc: 'Wikipedia (ZH)',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'wikipedia.org/wiki/',
 			desc: 'Wikipedia',
 			cat: WebLinkCategory.Reference,
