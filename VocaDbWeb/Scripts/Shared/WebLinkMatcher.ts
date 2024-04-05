@@ -134,6 +134,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'tieba.baidu.com/',
+			desc: 'Baidu Tieba',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'bandcamp.com',
 			desc: 'Bandcamp',
 			cat: WebLinkCategory.Commercial,
@@ -239,6 +244,21 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'uta.573.jp/item/',
+			desc: 'Chakushin★Uta♪ album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'uta.573.jp/artist/',
+			desc: 'Chakushin★Uta♪ artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'uta.573.jp/song/',
+			desc: 'Chakushin★Uta♪ song',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'coconala.com',
 			desc: 'Coconala',
 			cat: WebLinkCategory.Commercial,
@@ -256,6 +276,21 @@ export class WebLinkMatcher {
 		{
 			url: 'music.dmkt-sp.jp/',
 			desc: 'd music',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/album/',
+			desc: 'd music album', /* written as "d music" at https://www.docomo.ne.jp/english/service/ */
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/artist/',
+			desc: 'd music artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/song/',
+			desc: 'd music song',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -338,6 +373,21 @@ export class WebLinkMatcher {
 			desc: 'fasic',
 			cat: WebLinkCategory.Commercial,
 		} /* UtaiteDB */,
+		{
+			url: 'www.music-flo.com/detail/album/',
+			desc: 'FLO album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.music-flo.com/detail/artist/',
+			desc: 'FLO artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.music-flo.com/detail/track/',
+			desc: 'FLO song',
+			cat: WebLinkCategory.Commercial,
+		},
 		{
 			url: 'foriio.com',
 			desc: 'Foriio',
@@ -587,6 +637,16 @@ export class WebLinkMatcher {
 			url: 'mqube.net/user/',
 			desc: 'MQube',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sp-m.mu-mo.net/album/',
+			desc: 'mu-mo album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'sp-m.mu-mo.net/music/',
+			desc: 'mu-mo track',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'musescore.com/',
@@ -929,9 +989,19 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
-			url: 'tieba.baidu.com/',
-			desc: 'Baidu Tieba',
-			cat: WebLinkCategory.Reference,
+			url: 'tidal.com/browse/album/',
+			desc: 'TIDAL album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'tidal.com/browse/artist/',
+			desc: 'TIDAL artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'tidal.com/browse/track/',
+			desc: 'TIDAL track',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'tiktok.com',
