@@ -7,13 +7,6 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
-		'ami',
-		{
-			languages: ['Amis', 'Pangcah'],
-			nativeName: '\'Amis',
-		},
-	],
-	[
 		'arq',
 		{
 			languages: ['Algerian Arabic', 'Dziria', 'Darja', 'Derja'],
@@ -25,6 +18,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Amharic'],
 			nativeName: 'አማርኛ',
+		},
+	],
+	[
+		'ami',
+		{
+			languages: ['Amis', 'Pangcah'],
+			nativeName: '\'Amis',
 		},
 	],
 	[
@@ -484,6 +484,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'kk',
+		{
+			languages: ['Kazakh'],
+			nativeName: 'qazaqşa / қазақша',
+		},
+	],
+	[
 		'ko',
 		{
 			languages: ['Korean'],
@@ -649,6 +656,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Old Chinese', 'Archaic Chinese'],
 			nativeName: '上古漢語',
+		},
+	],
+	[
+		'ang',
+		{
+			languages: ['Old English'],
+			nativeName: 'Englisċ',
 		},
 	],
 	[
