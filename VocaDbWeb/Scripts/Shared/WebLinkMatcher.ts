@@ -164,6 +164,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'big-up.style/',
+			desc: 'BIG UP!',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'bilibili.com/',
 			desc: 'Bilibili',
 			cat: WebLinkCategory.Official,
@@ -534,6 +539,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'linkcloud.mu/',
+			desc: 'LINK CLOUD',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'linktr.ee/',
 			desc: 'Linktree',
 			cat: WebLinkCategory.Official,
@@ -694,6 +704,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'link-map.jp/links/',
+			desc: 'narasu',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/user/home',
 			desc: 'NCM User Homepage',
 			cat: WebLinkCategory.Official,
@@ -806,6 +821,11 @@ export class WebLinkMatcher {
 		{
 			url: 'ch.nicovideo.jp',
 			desc: 'NND Channel',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'nodee.net/',
+			desc: 'nodee',
 			cat: WebLinkCategory.Official,
 		},
 		{
