@@ -314,6 +314,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'genius.com/',
+			desc: 'Genius',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'goodsrepublic.com',
 			desc: 'Goods Republic',
 			cat: WebLinkCategory.Other,
@@ -531,6 +536,11 @@ export class WebLinkMatcher {
 		{
 			url: 'zh.moegirl.org',
 			desc: 'Moegirlpedia (zh-cn)',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'mojim.com/',
+			desc: 'Mojim',
 			cat: WebLinkCategory.Reference,
 		},
 		{
@@ -991,6 +1001,11 @@ export class WebLinkMatcher {
 		{
 			url: 'utaitedb.net/',
 			desc: 'UtaiteDB',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'www.uta-net.com/',
+			desc: 'Uta-Net',
 			cat: WebLinkCategory.Reference,
 		},
 		{
