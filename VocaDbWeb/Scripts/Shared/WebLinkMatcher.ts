@@ -89,11 +89,6 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'lofter.com/',
-			desc: 'Blog on Lofter',
-			cat: WebLinkCategory.Official,
-		},
-		{
 			url: 'www.amiami.com/',
 			desc: 'AmiAmi',
 			cat: WebLinkCategory.Commercial,
@@ -116,6 +111,16 @@ export class WebLinkMatcher {
 		{
 			url: 'artstation.com',
 			desc: 'ArtStation',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'audiostock.jp/artists/',
+			desc: 'Audiostock artist page',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'audiostock.jp/audio/',
+			desc: 'Audiostock audio',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -186,6 +191,11 @@ export class WebLinkMatcher {
 		{
 			url: 'bsky.app',
 			desc: 'Bluesky',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'lofter.com/',
+			desc: 'Blog on Lofter',
 			cat: WebLinkCategory.Official,
 		},
 		{
