@@ -589,7 +589,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'music.163.com/user/home',
+			desc: 'NCM User Homepage',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/artist',
+			desc: 'NCM Artist Entry',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'music.163.com/artist',
 			desc: 'NCM Artist Entry',
 			cat: WebLinkCategory.Official,
 		},
@@ -599,7 +609,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'music.163.com/album',
+			desc: 'NCM Album Release',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/song',
+			desc: 'NCM Song Release',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'music.163.com/song',
 			desc: 'NCM Song Release',
 			cat: WebLinkCategory.Official,
 		},
