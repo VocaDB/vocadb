@@ -164,6 +164,26 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'www.bilibili.com/opus/',
+			desc: 'Bilibili column', /* 专栏 */
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'www.bilibili.com/read/',
+			desc: 'Bilibili column', /* 专栏 */
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'www.bilibili.com/audio/',
+			desc: 'Bilibili Music',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 't.bilibili.com/',
+			desc: 'Bilibili post', /* 动态 */
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'bsky.app',
 			desc: 'Bluesky',
 			cat: WebLinkCategory.Official,
@@ -397,6 +417,11 @@ export class WebLinkMatcher {
 			url: 'itch.io',
 			desc: 'Itch.io',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'bbs.ivocaloid.com/',
+			desc: 'iVocaloid Forum',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'karent.jp/',
@@ -894,6 +919,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
+			url: 'tieba.baidu.com/',
+			desc: 'Baidu Tieba',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'tiktok.com',
 			desc: 'TikTok',
 			cat: WebLinkCategory.Official,
@@ -1109,6 +1139,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'vocaloidotaku.net/',
+			desc: 'VocaloidOtaku.net Forums',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'vocaloid.wikia.com/wiki/',
 			desc: 'Vocaloid Wiki',
 			cat: WebLinkCategory.Reference,
@@ -1146,6 +1181,11 @@ export class WebLinkMatcher {
 		{
 			url: 'www.vocallective.net/',
 			desc: 'Vocallective',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'vsqx.top/',
+			desc: 'vsqx.top',
 			cat: WebLinkCategory.Official,
 		},
 		{
