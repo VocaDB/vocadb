@@ -124,6 +124,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'baike.baidu.com/',
+			desc: 'Baidu Baike',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'bandcamp.com',
 			desc: 'Bandcamp',
 			cat: WebLinkCategory.Commercial,
@@ -986,6 +991,11 @@ export class WebLinkMatcher {
 		{
 			url: 'utaitedb.net/',
 			desc: 'UtaiteDB',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'utauchn.huijiwiki.com/',
+			desc: 'UTAU China Wiki',
 			cat: WebLinkCategory.Reference,
 		},
 		{
