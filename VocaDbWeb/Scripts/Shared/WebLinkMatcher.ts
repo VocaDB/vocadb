@@ -89,11 +89,6 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'lofter.com/',
-			desc: 'Blog on Lofter',
-			cat: WebLinkCategory.Official,
-		},
-		{
 			url: 'www.amiami.com/',
 			desc: 'AmiAmi',
 			cat: WebLinkCategory.Commercial,
@@ -119,9 +114,29 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'audiostock.jp/artists/',
+			desc: 'Audiostock artist page',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'audiostock.jp/audio/',
+			desc: 'Audiostock audio',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 's.awa.fm/',
 			desc: 'AWA',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'baike.baidu.com/',
+			desc: 'Baidu Baike',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'tieba.baidu.com/',
+			desc: 'Baidu Tieba',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'bandcamp.com',
@@ -149,6 +164,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'big-up.style/',
+			desc: 'BIG UP!',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'bilibili.com/',
 			desc: 'Bilibili',
 			cat: WebLinkCategory.Official,
@@ -159,8 +179,33 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'www.bilibili.com/opus/',
+			desc: 'Bilibili column', /* 专栏 */
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'www.bilibili.com/read/',
+			desc: 'Bilibili column', /* 专栏 */
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'www.bilibili.com/audio/',
+			desc: 'Bilibili Music',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 't.bilibili.com/',
+			desc: 'Bilibili post', /* 动态 */
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'bsky.app',
 			desc: 'Bluesky',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'lofter.com/',
+			desc: 'Blog on Lofter',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -204,6 +249,21 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'uta.573.jp/item/',
+			desc: 'Chakushin★Uta♪ album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'uta.573.jp/artist/',
+			desc: 'Chakushin★Uta♪ artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'uta.573.jp/song/',
+			desc: 'Chakushin★Uta♪ song',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'coconala.com',
 			desc: 'Coconala',
 			cat: WebLinkCategory.Commercial,
@@ -221,6 +281,21 @@ export class WebLinkMatcher {
 		{
 			url: 'music.dmkt-sp.jp/',
 			desc: 'd music',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/album/',
+			desc: 'd music album', /* written as "d music" at https://www.docomo.ne.jp/english/service/ */
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/artist/',
+			desc: 'd music artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'dmusic.docomo.ne.jp/song/',
+			desc: 'd music song',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -304,9 +379,29 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		} /* UtaiteDB */,
 		{
+			url: 'www.music-flo.com/detail/album/',
+			desc: 'FLO album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.music-flo.com/detail/artist/',
+			desc: 'FLO artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.music-flo.com/detail/track/',
+			desc: 'FLO song',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'foriio.com',
 			desc: 'Foriio',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'genius.com/',
+			desc: 'Genius',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'goodsrepublic.com',
@@ -389,6 +484,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'bbs.ivocaloid.com/',
+			desc: 'iVocaloid Forum',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'karent.jp/',
 			desc: 'KarenT',
 			cat: WebLinkCategory.Commercial,
@@ -437,6 +537,11 @@ export class WebLinkMatcher {
 			url: 'lin.ee/',
 			desc: 'LINE MUSIC',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'linkcloud.mu/',
+			desc: 'LINK CLOUD',
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'linktr.ee/',
@@ -529,6 +634,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'mojim.com/',
+			desc: 'Mojim',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'mora.jp/',
 			desc: 'mora',
 			cat: WebLinkCategory.Commercial,
@@ -537,6 +647,16 @@ export class WebLinkMatcher {
 			url: 'mqube.net/user/',
 			desc: 'MQube',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sp-m.mu-mo.net/album/',
+			desc: 'mu-mo album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'sp-m.mu-mo.net/music/',
+			desc: 'mu-mo track',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'musescore.com/',
@@ -584,7 +704,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'link-map.jp/links/',
+			desc: 'narasu',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/user/home',
+			desc: 'NCM User Homepage',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'music.163.com/user/home',
 			desc: 'NCM User Homepage',
 			cat: WebLinkCategory.Official,
 		},
@@ -594,12 +724,27 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'music.163.com/artist',
+			desc: 'NCM Artist Entry',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/album',
 			desc: 'NCM Album Release',
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'music.163.com/album',
+			desc: 'NCM Album Release',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.163.com/#/song',
+			desc: 'NCM Song Release',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'music.163.com/song',
 			desc: 'NCM Song Release',
 			cat: WebLinkCategory.Official,
 		},
@@ -676,6 +821,11 @@ export class WebLinkMatcher {
 		{
 			url: 'ch.nicovideo.jp',
 			desc: 'NND Channel',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'nodee.net/',
+			desc: 'nodee',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -859,6 +1009,21 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
+			url: 'tidal.com/browse/album/',
+			desc: 'TIDAL album',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'tidal.com/browse/artist/',
+			desc: 'TIDAL artist',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'tidal.com/browse/track/',
+			desc: 'TIDAL track',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'tiktok.com',
 			desc: 'TikTok',
 			cat: WebLinkCategory.Official,
@@ -969,6 +1134,16 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'www.uta-net.com/',
+			desc: 'Uta-Net',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'utauchn.huijiwiki.com/',
+			desc: 'UTAU China Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'utaulyrics.wikia.com/wiki/',
 			desc: 'UTAU Lyrics Wiki',
 			cat: WebLinkCategory.Reference,
@@ -1064,6 +1239,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'vocaloidotaku.net/',
+			desc: 'VocaloidOtaku.net Forums',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'vocaloid.wikia.com/wiki/',
 			desc: 'Vocaloid Wiki',
 			cat: WebLinkCategory.Reference,
@@ -1104,6 +1284,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'vsqx.top/',
+			desc: 'vsqx.top',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'weibo.com/',
 			desc: 'Weibo',
 			cat: WebLinkCategory.Official,
@@ -1121,6 +1306,11 @@ export class WebLinkMatcher {
 		{
 			url: 'ja.wikipedia.org/wiki/',
 			desc: 'Wikipedia (JP)',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'zh.wikipedia.org/wiki/',
+			desc: 'Wikipedia (ZH)',
 			cat: WebLinkCategory.Reference,
 		},
 		{
