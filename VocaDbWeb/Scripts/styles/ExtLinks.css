@@ -876,3 +876,7 @@ a.extLink[href*='neowing.co.jp'] {
 a.extLink[href*='rateyourmusic.com'] {
 	background-image: url('/Content/ExtIcons/rateyourmusic.png');
 }
+
+a.extLink[href*='osu.ppy.sh'] {
+	background-image: url('/Content/ExtIcons/osu.png');
+}

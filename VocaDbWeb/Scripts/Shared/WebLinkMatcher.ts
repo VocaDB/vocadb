@@ -694,6 +694,26 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'osu.ppy.sh/beatmaps/artists',
+			desc: 'osu! Featured Artist Listing',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'osu.ppy.sh/beatmapsets',
+			desc: 'osu! Beatmap',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'osu.ppy.sh/users',
+			desc: 'osu! Profile',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'osu.ppy.sh/wiki',
+			desc: 'osu! Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'otakurepublic.com',
 			desc: 'Otaku Republic',
 			cat: WebLinkCategory.Other,
