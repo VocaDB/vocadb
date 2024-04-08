@@ -10,6 +10,7 @@
     <!-- CA2300: Do not use insecure deserializer BinaryFormatter -->
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UseImageSharp>true</UseImageSharp>
   </PropertyGroup>
 
   <ItemGroup>
