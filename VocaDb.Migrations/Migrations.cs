@@ -4,6 +4,61 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2024_04_09_2224)]
+public class UpdateNicoThumbnails : Migration
+{
+	public override void Up()
+	{
+		Execute.Sql($@"
+			UPDATE PVsForSongs
+				SET ThumbUrl = REPLACE(ThumbUrl, 'http://', 'https://')
+				WHERE ThumbUrl LIKE '%smilevideo.jp%'
+        ");
+		
+		Execute.Sql($@"
+			UPDATE PVsForSongs
+				SET ThumbUrl = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(ThumbUrl, 'https://tn-skr4.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr3.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr2.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr1.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/')
+		");
+		
+		Execute.Sql($@"
+			UPDATE PVsForSongs
+				SET ThumbUrl = CONCAT(ThumbUrl, '/', SUBSTRING(ThumbUrl, CHARINDEX('/thumbnails/', ThumbUrl) + LEN('/thumbnails/'), LEN(ThumbUrl) - CHARINDEX('/thumbnails/', ThumbUrl) - LEN('/thumbnails/') + 1))
+				WHERE ThumbUrl LIKE '%new:https://nicovideo.cdn.nimg.jp%'
+		");
+		
+		Execute.Sql($@"
+			UPDATE PVsForSongs
+				SET ThumbUrl = REPLACE(ThumbUrl, 'new:https://nicovideo.cdn', 'https://nicovideo.cdn')
+		");
+		
+		Execute.Sql($@"
+			UPDATE Songs
+				SET ThumbUrl = REPLACE(ThumbUrl, 'http://', 'https://')
+				WHERE ThumbUrl LIKE '%smilevideo.jp%'
+        ");
+		
+		Execute.Sql($@"
+			UPDATE Songs
+				SET ThumbUrl = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(ThumbUrl, 'https://tn-skr4.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr3.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr2.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn-skr1.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/'), 'https://tn.smilevideo.jp/smile?i=', 'new:https://nicovideo.cdn.nimg.jp/thumbnails/')
+		");
+		
+		Execute.Sql($@"
+			UPDATE Songs
+				SET ThumbUrl = CONCAT(ThumbUrl, '/', SUBSTRING(ThumbUrl, CHARINDEX('/thumbnails/', ThumbUrl) + LEN('/thumbnails/'), LEN(ThumbUrl) - CHARINDEX('/thumbnails/', ThumbUrl) - LEN('/thumbnails/') + 1))
+				WHERE ThumbUrl LIKE '%new:https://nicovideo.cdn.nimg.jp%'
+		");
+		
+		Execute.Sql($@"
+			UPDATE Songs
+				SET ThumbUrl = REPLACE(ThumbUrl, 'new:https://nicovideo.cdn', 'https://nicovideo.cdn')
+		");
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2023_07_14_2127)]
 public class CrossfadesUnavailable : Migration
 {
