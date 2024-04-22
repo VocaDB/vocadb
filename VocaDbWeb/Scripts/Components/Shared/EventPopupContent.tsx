@@ -54,7 +54,7 @@ export const EventPopupContent = React.memo(
 
 				{event.date && (
 					<p>
-						{t('ViewRes.Event:Details:OccurrenceDate')}{' '}
+						{t('ViewRes.Event:Details.OccurrenceDate')}{' '}
 						{dayjs(event.date).format('ll')}
 						{event.endDate && ` - ${dayjs(event.endDate).format('ll')}`}
 					</p>
