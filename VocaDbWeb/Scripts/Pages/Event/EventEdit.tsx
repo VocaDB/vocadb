@@ -222,7 +222,7 @@ const BasicInfoTabContent = observer(
 						cols={60}
 						rows={4}
 						className="span4"
-						maxLength={1000}
+						maxLength={4000}
 					/>
 					Live preview{/* LOC */}
 					<Markdown>{releaseEventEditStore.description}</Markdown>
