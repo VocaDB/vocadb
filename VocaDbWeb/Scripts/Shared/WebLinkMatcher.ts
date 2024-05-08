@@ -209,6 +209,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'boomplay.com/',
+			desc: 'Boomplay',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'booth.pm/',
 			desc: 'Booth',
 			cat: WebLinkCategory.Commercial,
@@ -754,6 +759,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'namu.wiki/',
+			desc: 'Namu Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'neowing.co.jp',
 			desc: 'Neowing',
 			cat: WebLinkCategory.Commercial,
@@ -934,6 +944,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'qobuz.com/',
+			desc: 'Qobuz',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'y.qq.com',
 			desc: 'QQ Music',
 			cat: WebLinkCategory.Commercial,
@@ -1098,6 +1113,11 @@ export class WebLinkMatcher {
 			desc: 'TOWER RECORDS',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'w.atwiki.jp/toho/',
+			desc: 'Touhou Doujin CD Wiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
 		{
 			url: 'w.atwiki.jp/sagararyou/',
 			desc: 'Touhou Lyrics Wiki',
@@ -1354,16 +1374,6 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'youtu.be/',
-			desc: 'YouTube',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'youtube.com/watch',
-			desc: 'YouTube',
-			cat: WebLinkCategory.Official,
-		},
-		{
 			url: 'youtube.com/c/',
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
@@ -1381,6 +1391,21 @@ export class WebLinkMatcher {
 		{
 			url: 'youtube.com/user/',
 			desc: 'YouTube Channel',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtube.com/shorts/',
+			desc: 'YouTube Shorts',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtu.be/',
+			desc: 'YouTube',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtube.com/watch',
+			desc: 'YouTube',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -1425,6 +1450,11 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'geocities.jp',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: '.netlify.app',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
 		},
