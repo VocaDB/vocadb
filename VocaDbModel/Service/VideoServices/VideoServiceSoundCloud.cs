@@ -100,52 +100,10 @@ public class VideoServiceSoundCloud : VideoService
 
 		try
 		{
-			// TODO: Use dependenciy injection.
-			var accessToken = await ((ObjectCache)MemoryCache.Default)
-				.GetOrInsertAsync(
-					key: $"{nameof(VideoServiceSoundCloud)}.accessToken",
-					policy: CachePolicy.AbsoluteExpiration(hours: 1),
-					GetAccessToken
-				);
-
-			s_log.Info($"Loading SoundCloud URL {url}");
-
-			var authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-			// For security reasons, `Authorization` request headers are removed during redirects, so we need to handle redirects manually.
-			// TODO: Use IHttpClientFactory.
-			using var httpClient = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
-			{
-				Timeout = TimeSpan.FromSeconds(10),
-			};
-
-			httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
-
-			httpClient.DefaultRequestHeaders.Authorization = authorization;
-
-			var response = await httpClient.GetAsync($"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}");
-
-			if (response.StatusCode != HttpStatusCode.Redirect)
-			{
-				s_log.Warn($"Unexpected status code: expected {HttpStatusCode.Redirect}, actual {response.StatusCode}");
-				return ReturnError(innerException: null);
-			}
-
-			if (response.Headers.Location?.ToString() is not string location)
-			{
-				s_log.Warn("Location was null");
-				return ReturnError(innerException: null);
-			}
-
-			s_log.Info($"Redirecting to {location}");
 
 			result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(
-				location,
-				timeout: TimeSpan.FromSeconds(10),
-				headers: headers =>
-				{
-					headers.Authorization = authorization;
-				}
+				$"https://dream-traveler.fly.dev/soundcloud/api?url={url}",
+				timeout: TimeSpan.FromSeconds(10)
 			);
 		}
 		catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
