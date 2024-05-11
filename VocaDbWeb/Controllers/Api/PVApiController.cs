@@ -91,7 +91,6 @@ public class PVApiController : ApiController
 	private async Task<string?> GetOgImage(string pvUrl)
 	{
 
-		_client.DefaultRequestHeaders.Add("User-Agent", AppConfig.UserAgent);
 		var request = new HttpRequestMessage(HttpMethod.Get, pvUrl);
 		request.Headers.Add("User-Agent", AppConfig.UserAgent);
 		var response = await _client.SendAsync(request);
