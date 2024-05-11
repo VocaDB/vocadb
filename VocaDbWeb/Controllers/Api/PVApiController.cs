@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -90,8 +91,10 @@ public class PVApiController : ApiController
 	private async Task<string?> GetOgImage(string pvUrl)
 	{
 
-		_client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36");
-		var response = await _client.GetAsync(pvUrl);
+		_client.DefaultRequestHeaders.Add("User-Agent", AppConfig.UserAgent);
+		var request = new HttpRequestMessage(HttpMethod.Get, pvUrl);
+		request.Headers.Add("User-Agent", AppConfig.UserAgent);
+		var response = await _client.SendAsync(request);
 
 		if (response.IsSuccessStatusCode)
 		{

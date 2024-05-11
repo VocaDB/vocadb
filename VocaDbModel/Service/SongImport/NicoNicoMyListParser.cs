@@ -6,6 +6,7 @@ using Rss;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.SongImport;
 
@@ -43,8 +44,7 @@ public class NicoNicoMyListParser : ISongListImporter
 
 		HttpWebRequest request = HttpWebRequest.CreateHttp(url);
 		request.AllowAutoRedirect = true;
-		request.UserAgent =
-			"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+		request.UserAgent = AppConfig.UserAgent;
 
 		try
 		{
