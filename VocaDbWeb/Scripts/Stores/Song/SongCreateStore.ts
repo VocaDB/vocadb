@@ -78,6 +78,8 @@ export class SongCreateStore {
 	}
 
 	@computed get canHaveOriginalVersion(): boolean {
+		// Having a original/base version for an original song is uncommon.
+		// Hide the base version selector as that's more suited for this simplified interface.
 		return this.songType !== SongType.Original;
 	}
 
