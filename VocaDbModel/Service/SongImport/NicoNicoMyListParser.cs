@@ -6,6 +6,7 @@ using Rss;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.SongImport;
 
@@ -41,9 +42,13 @@ public class NicoNicoMyListParser : ISongListImporter
 
 		RssFeed feed;
 
+		HttpWebRequest request = HttpWebRequest.CreateHttp(url);
+		request.AllowAutoRedirect = true;
+		request.UserAgent = AppConfig.UserAgent;
+
 		try
 		{
-			feed = RssFeed.Read(url);
+			feed = RssFeed.Read(request);
 		}
 		catch (UriFormatException x)
 		{
