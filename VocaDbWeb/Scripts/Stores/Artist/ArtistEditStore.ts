@@ -166,6 +166,9 @@ export class ArtistEditStore {
 			ArtistType.VoiSona,
 			ArtistType.NewType,
 			ArtistType.Voiceroid,
+			ArtistType.VOICEVOX,
+			ArtistType.ACEVirtualSinger,
+			ArtistType.AIVOICE,
 		];
 		return vocaloidTypes.includes(this.artistType);
 	}

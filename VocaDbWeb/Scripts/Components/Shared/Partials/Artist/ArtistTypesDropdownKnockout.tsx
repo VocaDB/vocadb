@@ -38,6 +38,9 @@ const groupsForTypes: Record<ArtistType, ArtistTypeGroup> = {
 	[ArtistType.CoverArtist]: ArtistTypeGroup.Producer,
 	[ArtistType.Instrumentalist]: ArtistTypeGroup.Other,
 	[ArtistType.Designer]: ArtistTypeGroup.Producer,
+	[ArtistType.VOICEVOX]: ArtistTypeGroup.Vocalist,
+	[ArtistType.ACEVirtualSinger]: ArtistTypeGroup.Vocalist,
+	[ArtistType.AIVOICE]: ArtistTypeGroup.Vocalist,
 };
 
 interface ArtistTypesDropdownKnockoutProps

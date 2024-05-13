@@ -34,4 +34,7 @@ export enum ArtistType {
 	Voiceroid = 'Voiceroid',
 	Instrumentalist = 'Instrumentalist',
 	Designer = 'Designer',
+	VOICEVOX = 'VOICEVOX',
+	ACEVirtualSinger = 'ACEVirtualSinger',
+	AIVOICE = 'AIVOICE',
 }
