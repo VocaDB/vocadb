@@ -89,6 +89,24 @@ export const ArtistTypeLabel = React.memo(
 						VR
 					</span>
 				);
+			case ArtistType.VOICEVOX:
+				return (
+					<span className="label" title={title}>
+						VV
+					</span>
+				);
+			case ArtistType.ACEVirtualSinger:
+				return (
+					<span className="label" title={title}>
+						ACE
+					</span>
+				);
+			case ArtistType.AIVOICE:
+				return (
+					<span className="label" title={title}>
+						AI
+					</span>
+				);
 			default:
 				return <></>;
 		}

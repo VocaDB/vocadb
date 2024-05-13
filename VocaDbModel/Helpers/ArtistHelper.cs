@@ -65,6 +65,9 @@ public static class ArtistHelper
 		{ ArtistType.VoiSona, ArtistCategories.Vocalist },
 		{ ArtistType.NewType, ArtistCategories.Vocalist },
 		{ ArtistType.Voiceroid, ArtistCategories.Vocalist },
+		{ ArtistType.VOICEVOX, ArtistCategories.Vocalist },
+		{ ArtistType.ACEVirtualSinger, ArtistCategories.Vocalist },
+		{ ArtistType.AIVOICE, ArtistCategories.Vocalist },
 		{ ArtistType.CoverArtist, ArtistCategories.Producer },
 		{ ArtistType.Instrumentalist, ArtistCategories.Other },
 		{ ArtistType.Designer, ArtistCategories.Other }
@@ -106,14 +109,14 @@ public static class ArtistHelper
 		ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
 		ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character,
 		ArtistType.SynthesizerV, ArtistType.CoverArtist, ArtistType.NEUTRINO, ArtistType.VoiSona, ArtistType.NewType, ArtistType.Voiceroid,
-		ArtistType.Instrumentalist, ArtistType.Designer
+		ArtistType.Instrumentalist, ArtistType.Designer, ArtistType.VOICEVOX, ArtistType.ACEVirtualSinger, ArtistType.AIVOICE
 	};
 
 	public static readonly ArtistType[] VocalistTypes =
 	{
 		ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist,
 		ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite, ArtistType.Vocalist,
-		ArtistType.SynthesizerV, ArtistType.NEUTRINO, ArtistType.VoiSona, ArtistType.NewType, ArtistType.Voiceroid
+		ArtistType.SynthesizerV, ArtistType.NEUTRINO, ArtistType.VoiSona, ArtistType.NewType, ArtistType.Voiceroid, ArtistType.VOICEVOX, ArtistType.ACEVirtualSinger, ArtistType.AIVOICE
 	};
 
 	/// <summary>
@@ -122,7 +125,7 @@ public static class ArtistHelper
 	public static readonly ArtistType[] VoiceSynthesizerTypes =
 	{
 		ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer,
-		ArtistType.SynthesizerV, ArtistType.NEUTRINO, ArtistType.VoiSona, ArtistType.NewType, ArtistType.Voiceroid
+		ArtistType.SynthesizerV, ArtistType.NEUTRINO, ArtistType.VoiSona, ArtistType.NewType, ArtistType.Voiceroid, ArtistType.VOICEVOX, ArtistType.ACEVirtualSinger, ArtistType.AIVOICE
 	};
 
 	/// <summary>

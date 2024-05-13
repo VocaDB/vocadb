@@ -68,7 +68,13 @@ public enum ArtistType
 
 	Instrumentalist,
 
-	Designer
+	Designer,
+
+	VOICEVOX,
+
+	ACEVirtualSinger,
+
+	AIVOICE
 }
 
 /// <summary>
@@ -126,5 +132,11 @@ public enum ArtistTypes
 
 	Voiceroid = 1 << 22,
 
-	Instrumentalist = 1 << 23
+	Instrumentalist = 1 << 23,
+
+	VOICEVOX = 1 << 24,
+
+	ACEVirtualSinger = 1 << 25,
+
+	AIVOICE = 1 << 26,
 }

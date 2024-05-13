@@ -111,6 +111,24 @@ const albumFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Artist type: VOICEVOX' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.VOICEVOX}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: ACE Virtual Singer' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.ACEVirtualSinger}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: A.I.VOICE' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.AIVOICE}`,
+		negate: false,
+	},
+	{
 		description: 'Artist type: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -208,6 +226,24 @@ const artistFilters: AdvancedSearchFilter[] = [
 		negate: false,
 	},
 	{
+		description: 'Voice provider of: VOICEVOX' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.VOICEVOX}`,
+		negate: false,
+	},
+	{
+		description: 'Voice provider of: ACE Virtual Singer' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.ACEVirtualSinger}`,
+		negate: false,
+	},
+	{
+		description: 'Voice provider of: A.I.VOICE' /* LOC */,
+		filterType: AdvancedFilterType.VoiceProvider,
+		param: `${ArtistType.AIVOICE}`,
+		negate: false,
+	},
+	{
 		description: 'Voice provider of: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
@@ -296,6 +332,24 @@ const songFilters: AdvancedSearchFilter[] = [
 		description: 'Artist type: Voiceroid' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.Voiceroid}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: VOICEVOX' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.VOICEVOX}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: ACE Virtual Singer' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.ACEVirtualSinger}`,
+		negate: false,
+	},
+	{
+		description: 'Artist type: A.I.VOICE' /* LOC */,
+		filterType: AdvancedFilterType.ArtistType,
+		param: `${ArtistType.AIVOICE}`,
 		negate: false,
 	},
 	{
