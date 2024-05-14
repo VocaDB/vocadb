@@ -26,7 +26,7 @@ export default function RootLayout({
 					<Header />
 					<div className="container md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
 						<Navbar />
-						{children}
+						<div>{children}</div>
 					</div>
 				</ThemeProvider>
 			</body>
