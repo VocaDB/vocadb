@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Header = () => {
 	return (
-		<header className="sticky top-0 ml-3 w-full border-b">
+		<header className="sticky top-0 ml-3 border-b">
 			<div className="container h-12">
 				<Link href="/">
 					<Image
