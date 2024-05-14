@@ -104,7 +104,7 @@ export const ArtistTypeLabel = React.memo(
 			case ArtistType.AIVOICE:
 				return (
 					<span className="label" title={title}>
-						AI
+						AIV
 					</span>
 				);
 			default:

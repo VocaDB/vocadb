@@ -264,6 +264,18 @@ public static class Translate
 		{
 			return "Voiceroid";
 		}
+		else if (artistType == ArtistType.VOICEVOX)
+		{
+			return "VOICEVOX";
+		}
+		else if (artistType == ArtistType.AIVOICE)
+		{
+			return "A.I.VOICE";
+		}
+		else if (artistType == ArtistType.ACEVirtualSinger)
+		{
+			return "ACE Virtual Singer";
+		}
 		return Model.Resources.ArtistTypeNames.ResourceManager.GetString(artistType.ToString());
 	}
 
