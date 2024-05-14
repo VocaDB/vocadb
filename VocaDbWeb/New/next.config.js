@@ -3,7 +3,22 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "vocadb.net",
+				pathname: "/api/pvs/thumbnail",
+			},
+			{
+				protocol: "https",
+				hostname: "beta.vocadb.net",
+				pathname: "/api/pvs/thumbnail",
+			},
+		],
+	},
+};
 
 module.exports = withBundleAnalyzer(nextConfig);
 
