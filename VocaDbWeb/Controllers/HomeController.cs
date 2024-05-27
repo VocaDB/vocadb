@@ -44,6 +44,7 @@ public class HomeController : ControllerBase
 
 	public ActionResult Index()
 	{
+		PageProperties.Title = _brandableStringsManager.SiteName;
 		PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
 		PageProperties.AddMainScripts = false;
 		PageProperties.CanonicalUrl = UrlMapper.HostAddress;
