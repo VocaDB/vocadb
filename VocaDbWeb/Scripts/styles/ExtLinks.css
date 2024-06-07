@@ -333,6 +333,11 @@ a.extLink[href^="http://www.vocaloidotaku.net"]
 	background-image: url('/Content/ExtIcons/vo.png');
 }
 
+a.extLink[href^="https://www.vocaloid.com/"]
+{
+	background-image: url('/Content/ExtIcons/vocaloidshop.png');
+}
+
 a.extLink[href^="http://weibo.com/"],
 a.extLink[href^="http://www.weibo.com/"],
 a.extLink[href^="https://www.weibo.com/"],
@@ -347,9 +352,9 @@ a.extLink[href^="http://alterego.wikia.com/wiki/"]
 	background-image: url('/Content/ExtIcons/wikia.png');
 }
 
-a.extLink[href^="https://www.vocaloid.com/"]
+a.extLink[href^="https://x.com/"]
 {
-	background-image: url('/Content/ExtIcons/vocaloidshop.png');
+	background-image: url('/Content/ExtIcons/x.png');
 }
 
 a.extLink[href*="zh.moegirl.org"],
@@ -704,6 +709,7 @@ a.extLink[href*='blogspot'] {
 	background-image: url('/Content/ExtIcons/blogspot.png');
 }
 
+a.extLink[href*='wix.com'],
 a.extLink[href*='wixsite.com'] {
 	background-image: url('/Content/ExtIcons/wix.png');
 }
