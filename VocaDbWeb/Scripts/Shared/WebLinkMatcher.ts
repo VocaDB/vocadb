@@ -834,6 +834,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'www.nicolog.jp',
+			desc: 'Nicolog',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'nodee.net/',
 			desc: 'nodee',
 			cat: WebLinkCategory.Official,
@@ -1005,7 +1010,12 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'www.suruga-ya.jp/',
-			desc: 'Suruga-ya',
+			desc: 'Suruga-ya (JP)',
+			cat: WebLinkCategory.Other,
+		},
+		{
+			url: 'www.suruga-ya.com/',
+			desc: 'Suruga-ya (EN)',
 			cat: WebLinkCategory.Other,
 		},
 		{
