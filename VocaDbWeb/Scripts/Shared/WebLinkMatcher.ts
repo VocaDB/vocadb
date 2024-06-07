@@ -1019,6 +1019,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Other,
 		},
 		{
+			url: 'www.suruga-ya.com/en',
+			desc: 'Suruga-ya (EN)',
+			cat: WebLinkCategory.Other,
+		},
+		{
 			url: 'suzuri.jp',
 			desc: 'Suzuri',
 			cat: WebLinkCategory.Commercial,
@@ -1131,6 +1136,11 @@ export class WebLinkMatcher {
 		{
 			url: 'w.atwiki.jp/sagararyou/',
 			desc: 'Touhou Lyrics Wiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
+			url: 'w.atwiki.jp/tohomusicdb/',
+			desc: 'Touhou Music DB Wiki',
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
@@ -1369,6 +1379,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: '://x.com/',
+			desc: 'X (Twitter)',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'www.yesasia.com/',
 			desc: 'YesAsia',
 			cat: WebLinkCategory.Commercial,
@@ -1424,6 +1439,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: '.wix.com/',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'jimdofree.com',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
@@ -1440,6 +1460,16 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'sakura.ne.jp',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sites.google.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'hp.infoseek.co.jp',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
 		},
@@ -1464,7 +1494,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'geocities.co.jp',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: '.netlify.app',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'wordpress.com',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
 		},
@@ -1504,7 +1544,7 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'wordpress.com',
+			url: 'cocolog-nifty.com',
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
