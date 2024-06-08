@@ -834,6 +834,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'nicolog.jp',
+			desc: 'Nicolog',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'nodee.net/',
 			desc: 'nodee',
 			cat: WebLinkCategory.Official,
