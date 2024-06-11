@@ -104,7 +104,7 @@ public class VideoServiceBilibili : VideoService
 public class BiliMetadata
 {
 	[DataMember]
-	public int Aid { get; init; }
+	public long Aid { get; init; }
 	[DataMember]
 	public string Bvid { get; init; } = default!;
 	[DataMember]
@@ -113,13 +113,13 @@ public class BiliMetadata
 
 class BilibiliResponse
 {
-	public int Code { get; init; } = default!;
+	public long Code { get; init; } = default!;
 	public BilibiliResponseData? Data { get; init; } = default;
 }
 
 class BilibiliResponseData
 {
-	public int Aid { get; init; }
+	public long Aid { get; init; }
 	public string Bvid { get; init; } = default!;
 	public int Cid { get; init; }
 	[JsonConverter(typeof(UnixDateTimeConverter))]
