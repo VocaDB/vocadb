@@ -321,6 +321,7 @@ public class ReleaseEventApiController : ApiController
 
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[Authorize]
 	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _queries.GetEntryWithTagUsages(id);
 
 	[HttpPost("versions/{archivedVersionId:int}/update-visibility")]

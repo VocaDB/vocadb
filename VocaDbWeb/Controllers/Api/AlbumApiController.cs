@@ -298,6 +298,7 @@ public class AlbumApiController : ApiController
 
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[Authorize]
 	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _service.GetEntryWithTagUsages(id); /// <summary>
 
 																										/// Gets tracks for an album.

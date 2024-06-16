@@ -257,9 +257,9 @@ public class SongController : ControllerBase
 	{
 		var song = Service.GetEntryWithTagUsages(id);
 
-		// PageProperties.Title = "Manage tag usages - " + song.DefaultName;
+		PageProperties.Title = "Manage tag usages - " + song.DefaultName;
 
-		return View(song);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Merge()
