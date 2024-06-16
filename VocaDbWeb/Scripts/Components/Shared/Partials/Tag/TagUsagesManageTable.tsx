@@ -2,7 +2,6 @@ import Alert from '@/Bootstrap/Alert';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { TagUsageWithVotesForApiContract } from '@/DataContracts/Tag/TagUsageWithVotesForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { userRepo } from '@/Repositories/UserRepository';
 import { useVdb } from '@/VdbContext';
 import dayjs from '@/dayjs';
@@ -26,8 +25,6 @@ export const TagUsagesManageTable = React.memo(
 		canRemove,
 	}: TagUsagesManageTableProps): React.ReactElement => {
 		const vdb = useVdb();
-		const loginManager = new LoginManager(vdb.values);
-
 		const deleteTagUsage = (tagUsageId: number): void => {
 			userRepo
 				.deleteTag({
@@ -50,9 +47,7 @@ export const TagUsagesManageTable = React.memo(
 							<tr>
 								<th>Tag{/* LOCALIZE */}</th>
 								<th>Count{/* LOCALIZE */}</th>
-								{loginManager.canManageUserPermissions && (
-									<th>Votes{/* LOCALIZE */}</th>
-								)}
+								<th>Votes{/* LOCALIZE */}</th>
 								<th>Date{/* LOCALIZE */}</th>
 								<th></th>
 							</tr>
@@ -64,17 +59,15 @@ export const TagUsagesManageTable = React.memo(
 										<TagLink tag={tagUsage.tag} />
 									</td>
 									<td>{tagUsage.count}</td>
-									{loginManager.canManageUserPermissions && (
-										<td>
-											{tagUsage.votes.map((user, index) => (
-												// eslint-disable-next-line react/jsx-pascal-case
-												<UserIconLink_UserForApiContract
-													key={index}
-													user={user}
-												/>
-											))}
-										</td>
-									)}
+									<td>
+										{tagUsage.votes.map((user, index) => (
+											// eslint-disable-next-line react/jsx-pascal-case
+											<UserIconLink_UserForApiContract
+												key={index}
+												user={user}
+											/>
+										))}
+									</td>
 									<td>{dayjs(tagUsage.date).format('lll')}</td>
 									<td>
 										<SafeAnchor
