@@ -108,7 +108,7 @@ public class BiliMetadata
 	[DataMember]
 	public string Bvid { get; init; } = default!;
 	[DataMember]
-	public int Cid { get; init; }
+	public long Cid { get; init; }
 }
 
 class BilibiliResponse
@@ -121,7 +121,7 @@ class BilibiliResponseData
 {
 	public long Aid { get; init; }
 	public string Bvid { get; init; } = default!;
-	public int Cid { get; init; }
+	public long Cid { get; init; }
 	[JsonConverter(typeof(UnixDateTimeConverter))]
 	public DateTime? PubDate { get; init; }
 	public int Duration { get; init; }
