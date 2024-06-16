@@ -250,6 +250,8 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int eventId)
 	{
+		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+		
 		return HandleQuery(session =>
 		{
 			var releaseEvent = session.Load<ReleaseEvent>(eventId);

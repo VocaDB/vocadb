@@ -170,6 +170,8 @@ public class ArtistService : ServiceBase
 
 	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int artistId)
 	{
+		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+		
 		return HandleQuery(session =>
 		{
 			var artist = session.Load<Artist>(artistId);

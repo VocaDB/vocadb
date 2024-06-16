@@ -488,6 +488,7 @@ public class SongApiController : ApiController
 
 	[HttpGet("{id:int}/tagUsages")]
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[Authorize]
 	public EntryWithTagUsagesForApiContract GetTagUsages(int id) => _service.GetEntryWithTagUsages(id);
 
 	/// <summary>

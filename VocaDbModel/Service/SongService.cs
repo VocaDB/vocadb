@@ -218,6 +218,8 @@ public class SongService : ServiceBase
 
 	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int songId)
 	{
+		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+		
 		return HandleQuery(session =>
 		{
 			var song = session.Load<Song>(songId);

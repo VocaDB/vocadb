@@ -219,6 +219,8 @@ public class AlbumService : ServiceBase
 
 	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int albumId)
 	{
+		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+		
 		return HandleQuery(session =>
 		{
 			var album = session.Load<Album>(albumId);
