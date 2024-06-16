@@ -155,9 +155,9 @@ public class EventController : ControllerBase
 	{
 		var releaseEvent = _queries.GetEntryWithTagUsages(id);
 
-		// PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
+		PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
 
-		return View(releaseEvent);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Restore(int id)

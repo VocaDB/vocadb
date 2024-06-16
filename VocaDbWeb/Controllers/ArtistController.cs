@@ -185,9 +185,9 @@ public class ArtistController : ControllerBase
 	{
 		var artist = Service.GetEntryWithTagUsages(id);
 
-		// PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
+		PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
 
-		return View(artist);
+		return ReactIndex.File(PageProperties);
 	}
 
 	public ActionResult Merge()
