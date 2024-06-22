@@ -127,6 +127,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 		var tags = ctx
 			.Query<Tag>()
+			.Where(t => !t.Deleted)
 			.Where(t => t.CategoryName != TagCommonCategoryNames.Lyrics && t.CategoryName != TagCommonCategoryNames.Distribution)
 			.Select(t => new
 			{
