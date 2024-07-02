@@ -14,6 +14,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'ovs.akbh.jp/',
+			desc: 'Akiba Hobby (Overseas)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: '.akbh.jp/',
 			desc: 'Akiba Hobby',
 			cat: WebLinkCategory.Commercial,
@@ -55,7 +60,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'music.amazon.com/',
-			desc: 'Amazon Music Unlimited (EN)',
+			desc: 'Amazon Music Unlimited (US)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -65,7 +70,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'www.amazon.co.jp/',
-			desc: 'Amazon',
+			desc: 'Amazon (JP)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -75,7 +80,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'www.amazon.com/',
-			desc: 'Amazon',
+			desc: 'Amazon (US)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -85,7 +90,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'amazon.de/',
-			desc: 'Amazon',
+			desc: 'Amazon (DE)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -207,6 +212,11 @@ export class WebLinkMatcher {
 			url: 'lofter.com/',
 			desc: 'Blog on Lofter',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'bookmate-net.com/',
+			desc: 'Bookmate',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'boomplay.com/',
@@ -363,6 +373,11 @@ export class WebLinkMatcher {
 			desc: 'e-onkyo music',
 			cat: WebLinkCategory.Commercial,
 		} /* UtaiteDB */,
+		{
+			url: '.ebay.com/',
+			desc: 'EBay',
+			cat: WebLinkCategory.Other,
+		},
 		{
 			url: 'exittunes.com/',
 			desc: 'Exit Tunes',
@@ -534,6 +549,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'lenen.shoutwiki.com/',
+			desc: "Len'en Wiki",
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
 			url: 'line.me/',
 			desc: 'LINE MUSIC',
 			cat: WebLinkCategory.Commercial,
@@ -574,12 +594,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'shop.melonbooks.co.jp/',
+			url: 'mandarake.co.jp/',
+			desc: 'Mandarake',
+			cat: WebLinkCategory.Other,
+		},
+		{
+			url: 'melonbooks.co.jp/',
 			desc: 'Melonbooks',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'www.melonbooks.co.jp/',
+			url: 'melonbooks.com/',
 			desc: 'Melonbooks',
 			cat: WebLinkCategory.Commercial,
 		},
@@ -829,6 +854,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'ch.nicovideo.jp/.+/blomaga/',
+			desc: 'NND Blomaga',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'ch.nicovideo.jp',
 			desc: 'NND Channel',
 			cat: WebLinkCategory.Official,
@@ -837,6 +867,16 @@ export class WebLinkMatcher {
 			url: 'nicolog.jp',
 			desc: 'Nicolog',
 			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'store-jp.nintendo.com',
+			desc: 'Nintendo eShop (JP)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.nintendo.com/store/',
+			desc: 'Nintendo eShop (US)',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'nodee.net/',
@@ -969,6 +1009,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'rakuten.co.jp/',
+			desc: 'Rakuten',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'rateyourmusic.com',
 			desc: 'Rate Your Music',
 			cat: WebLinkCategory.Reference,
@@ -1002,6 +1047,16 @@ export class WebLinkMatcher {
 			url: 'soundcloud.com/',
 			desc: 'SoundCloud',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'spirit-of-metal.com',
+			desc: 'Spirit of Metal',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'store.steampowered.com',
+			desc: 'Steam',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'streamlink.to',
@@ -1084,17 +1139,12 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'toranoana.jp/mailorder/article/',
+			url: 'toranoana.jp',
 			desc: 'Toranoana',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'toranoana.shop/',
-			desc: 'Toranoana',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'ec.toranoana.jp',
 			desc: 'Toranoana',
 			cat: WebLinkCategory.Commercial,
 		},
@@ -1141,6 +1191,16 @@ export class WebLinkMatcher {
 		{
 			url: 'en.touhouwiki.net/',
 			desc: 'Touhou Wiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
+			url: 'touhou.wikia.com/',
+			desc: 'Touhou Wikia',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
+			url: 'touhou.fandom.com/',
+			desc: 'Touhou Wikia',
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
@@ -1349,6 +1409,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'weidian.com/',
+			desc: 'Weidian',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'de.wikipedia.org/wiki/',
 			desc: 'Wikipedia (DE)',
 			cat: WebLinkCategory.Reference,
@@ -1474,6 +1539,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: '.xxxxxxxx.jp/',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: '.web.fc2.com',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
@@ -1509,7 +1579,17 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: '.amebaownd.com/',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'seesaa.net',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: '.sblo.jp/',
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
