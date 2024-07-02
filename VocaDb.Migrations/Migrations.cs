@@ -16,25 +16,25 @@ public class MigrateTagTargets : Migration
 		
 		Execute.Sql($@"
 			insert into {TableNames.TagTargets} (TagId, TargetType)
-			select id, 'song:unspecified' from tags where (Targets & 2 != 0)
+			select id, 'song:unspecified' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:original' from tags where (Targets & 2 != 0)
+			select id, 'song:original' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:remaster' from tags where (Targets & 2 != 0)
+			select id, 'song:remaster' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:remix' from tags where (Targets & 2 != 0)
+			select id, 'song:remix' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:cover' from tags where (Targets & 2 != 0)
+			select id, 'song:cover' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:instrumental' from tags where (Targets & 2 != 0)
+			select id, 'song:instrumental' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:mashup' from tags where (Targets & 2 != 0)
+			select id, 'song:mashup' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:musicpv' from tags where (Targets & 2 != 0)
+			select id, 'song:musicpv' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:dramapv' from tags where (Targets & 2 != 0)
+			select id, 'song:dramapv' from tags where (Targets & 64 != 0)
 			union all
-			select id, 'song:other' from tags where (Targets & 2 != 0)
+			select id, 'song:other' from tags where (Targets & 64 != 0)
 		");
 	}
 
