@@ -35,6 +35,7 @@ public class TagMap : ClassMap<Tag>
 		HasMany(m => m.Mappings).Inverse().Cascade.AllDeleteOrphan().Cache.NonStrictReadWrite();
 		HasMany(m => m.RelatedTags).Inverse().KeyColumn("[OwnerTag]").Cascade.AllDeleteOrphan().Cache.ReadWrite();
 		HasMany(m => m.TagsForUsers).Cascade.AllDeleteOrphan().Inverse();
+		HasMany(m => m.NewTargets).Table("TagTargets").KeyColumn("TagId").Element("TargetType").Cascade.AllDeleteOrphan().Cache.ReadWrite();
 
 		Component(m => m.ArchivedVersionsManager,
 			c => c.HasMany(m => m.Versions).KeyColumn("[Tag]").Inverse().Cascade.All().OrderBy("Created DESC"));

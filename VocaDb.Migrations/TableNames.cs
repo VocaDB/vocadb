@@ -70,6 +70,7 @@ public static class TableNames
 	public const string TagMergeRecords = nameof(TagMergeRecords);
 	public const string TagMappings = nameof(TagMappings);
 	public const string TagNames = nameof(TagNames);
+	public const string TagTargets = nameof(TagTargets);
 	public const string TagWebLinks = nameof(TagWebLinks);
 	public const string TrashedEntries = nameof(TrashedEntries);
 	public const string UserComments = nameof(UserComments);
