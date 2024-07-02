@@ -44,6 +44,7 @@ public class TagForApiContract
 		UrlSlug = tag.UrlSlug;
 		UsageCount = tag.UsageCount;
 		Version = tag.Version;
+		NewTargets = tag.NewTargets.ToArray();
 
 		var includeAdditionalNames = optionalFields.HasFlag(TagOptionalFields.AdditionalNames);
 
@@ -146,6 +147,9 @@ public class TagForApiContract
 
 	[DataMember]
 	public int Targets { get; init; }
+	
+	[DataMember]
+	public string[] NewTargets { get; init; }
 
 	[DataMember(EmitDefaultValue = false)]
 	public EnglishTranslatedStringContract? TranslatedDescription { get; init; }

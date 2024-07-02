@@ -261,6 +261,8 @@ public class Tag :
 	public virtual IEnumerable<Tag> Siblings => Parent != null ? Parent.Children.Where(t => !t.Equals(this)) : Enumerable.Empty<Tag>();
 
 	public virtual TagTargetTypes Targets { get; set; }
+	
+	public virtual IEnumerable<string> NewTargets { get; set; }
 
 	/// <summary>
 	/// Entry thumbnail picture. Can be null.

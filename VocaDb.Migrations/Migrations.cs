@@ -4,6 +4,45 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration((2024_07_01_0000))]
+public class MigrateTagTargets : Migration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.TagTargets)
+			.WithColumn("Id").AsInt32().PrimaryKey().Identity()
+			.WithColumn("TagId").AsInt32().ForeignKey(TableNames.Tags, "Id").Indexed()
+			.WithColumn("TargetType").AsString(50).NotNullable();
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'song:unspecified' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:original' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:remaster' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:remix' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:cover' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:instrumental' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:mashup' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:musicpv' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:dramapv' from tags where (Targets & 2 != 0)
+			union all
+			select id, 'song:other' from tags where (Targets & 2 != 0)
+		");
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2024_04_09_2224)]
 public class UpdateNicoThumbnails : Migration
 {
