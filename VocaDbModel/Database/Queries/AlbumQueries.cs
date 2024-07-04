@@ -669,7 +669,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					&& !u.Tag.Deleted
 					&& !u.Tag.HideFromSuggestions
 					&& u.Entry.AllAlbums.Any(a => a.Album.Id == albumId))
-				.WhereTagHasTarget(TagTargetTypes.Album)
+				.WhereTagHasTarget(album.DiscType)
 				.GroupBy(t => t.Tag.Id)
 				.Select(t => new { TagId = t.Key, Count = t.Count() })
 				.Where(t => t.Count > 1)

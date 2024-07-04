@@ -229,4 +229,9 @@ public class ReleaseEventSeries :
 	{
 		return $"release event series '{TranslatedName.Default}' [{Id}]";
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return Category;
+	}
 }

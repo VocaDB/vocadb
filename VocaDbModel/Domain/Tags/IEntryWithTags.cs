@@ -7,5 +7,12 @@ public interface IEntryWithTags : IEntryBase
 	/// </summary>
 	bool AllowNotifications { get; }
 
+	public Object TagSubtype();
+
+	public string TagTarget()
+	{
+		return $"{EntryType.ToString().ToLower()}:{TagSubtype().ToString().ToLower()}";
+	}
+
 	ITagManager Tags { get; }
 }

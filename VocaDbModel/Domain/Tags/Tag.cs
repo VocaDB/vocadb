@@ -445,18 +445,9 @@ public class Tag :
 
 	public virtual IEnumerable<EventSeriesTagUsage> EventSeriesTagUsages => AllEventSeriesTagUsages.Where(a => !a.Entry.Deleted);
 
-	public virtual bool IsValidFor(EntryType entryType)
+	public virtual bool IsValidFor<T>(T entry) where T: IEntryWithTags
 	{
-		if (Targets == TagTargetTypes.All)
-			return true;
-
-		if (Targets == TagTargetTypes.Nothing)
-			return false;
-
-		if (entryType == EntryType.ReleaseEventSeries)
-			entryType = EntryType.ReleaseEvent;
-
-		return Targets.HasFlag((TagTargetTypes)entryType);
+		return NewTargets.Any(n => n == entry.TagTarget());
 	}
 
 	public virtual ISet<RelatedTag> RelatedTags

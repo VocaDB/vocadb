@@ -448,6 +448,11 @@ public class ReleaseEvent :
 	{
 		return $"Release event '{DefaultName}' [{Id}]";
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return Category;
+	}
 }
 
 public interface IReleaseEvent : IEntryWithIntId

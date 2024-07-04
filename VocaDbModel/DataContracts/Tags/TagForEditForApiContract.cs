@@ -52,6 +52,9 @@ public sealed record TagForEditForApiContract
 
 	[DataMember]
 	public int/* TODO: enum TagTargetTypes*/ Targets { get; init; }
+	
+	[DataMember]
+	public string[] NewTargets { get; init; }
 
 	[DataMember]
 	public string UpdateNotes { get; init; }
@@ -99,6 +102,7 @@ public sealed record TagForEditForApiContract
 			.ToArray();
 		Status = tag.Status;
 		Targets = (int)tag.Targets;
+		NewTargets = tag.NewTargets.ToArray();
 		UpdateNotes = string.Empty;
 		WebLinks = tag.WebLinks.Links
 			.Select(w => new WebLinkForApiContract(w))

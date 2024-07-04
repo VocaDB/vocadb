@@ -214,7 +214,7 @@ public class TagApiController : ApiController
 		bool preferAccurateMatches = false,
 		TagOptionalFields fields = TagOptionalFields.None,
 		ContentLanguagePreference lang = ContentLanguagePreference.Default,
-		TagTargetTypes target = TagTargetTypes.All,
+		string? target = null,
 		bool deleted = false
 	)
 	{

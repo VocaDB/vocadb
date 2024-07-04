@@ -576,4 +576,9 @@ public class Artist :
 	{
 		return $"artist '{DefaultName}' [{Id}]";
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return ArtistType;
+	}
 }

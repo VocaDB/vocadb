@@ -523,7 +523,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					&& !u.Tag.Deleted
 					&& !u.Tag.HideFromSuggestions
 					&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
-				.WhereTagHasTarget(TagTargetTypes.Artist)
+				.WhereTagHasTarget(artist.ArtistType)
 				.GroupBy(t => t.Tag.Id)
 				.Select(t => new { TagId = t.Key, Count = t.Count() })
 				.Where(t => t.Count > 1)
@@ -536,7 +536,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					&& !u.Tag.Deleted
 					&& !u.Tag.HideFromSuggestions
 					&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
-				.WhereTagHasTarget(TagTargetTypes.Artist)
+				.WhereTagHasTarget(artist.ArtistType)
 				.GroupBy(t => t.Tag.Id)
 				.Select(t => new { TagId = t.Key, Count = t.Count() })
 				.Where(t => t.Count > 1)

@@ -280,4 +280,9 @@ public class SongList :
 	{
 		return $"song list '{Name}' [{Id}]";
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return FeaturedCategory;
+	}
 }

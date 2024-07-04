@@ -100,12 +100,12 @@ public static class TagQueryableExtensions
 		return query.WhereHasNameGeneric<Tag, TagName>(queries);
 	}
 
-	public static IQueryable<Tag> WhereHasTarget(this IQueryable<Tag> query, TagTargetTypes target)
+	public static IQueryable<Tag> WhereHasTarget(this IQueryable<Tag> query, string? target)
 	{
-		if (target == TagTargetTypes.All)
+		if (target == null)
 			return query;
 
-		return query.Where(t => (t.Targets & target) == target);
+		return query.Where(t => t.NewTargets.Any(n => n == target));
 	}
 }
 

@@ -33,6 +33,7 @@ public class ArchivedTagContract
 		data.HideFromSuggestions = thisVersion.HideFromSuggestions;
 		data.Id = thisVersion.Id;
 		data.Targets = thisVersion.Targets;
+		data.NewTargets = thisVersion.NewTargets;
 		data.TranslatedName = thisVersion.TranslatedName;
 
 		DoIfExists(version, TagEditableFields.Description, xmlCache, v =>
@@ -68,6 +69,7 @@ public class ArchivedTagContract
 		Parent = ObjectRefContract.Create(tag.Parent);
 		RelatedTags = diff.IncludeRelatedTags ? tag.RelatedTags.Select(t => new ObjectRefContract(t.LinkedTag)).ToArray() : null;
 		Targets = tag.Targets;
+		NewTargets = tag.NewTargets.ToArray();
 		ThumbMime = tag.Thumb?.Mime;
 		TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 		WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
@@ -99,6 +101,9 @@ public class ArchivedTagContract
 
 	[DataMember]
 	public TagTargetTypes Targets { get; set; }
+	
+	[DataMember]
+	public string[] NewTargets { get; set; }
 
 	[DataMember]
 	public string? ThumbMime { get; init; }

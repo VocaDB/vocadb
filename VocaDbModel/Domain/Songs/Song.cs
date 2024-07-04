@@ -980,4 +980,9 @@ public class Song :
 	{
 		ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs);
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return SongType;
+	}
 }
