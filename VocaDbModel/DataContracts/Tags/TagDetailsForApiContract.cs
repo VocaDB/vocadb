@@ -211,6 +211,9 @@ public sealed record TagDetailsForApiContract
 
 	[DataMember]
 	public int Targets { get; init; }
+	
+	[DataMember]
+	public string[] NewTargets { get; init; }
 
 	[DataMember]
 	public string Translations { get; init; }
@@ -266,6 +269,7 @@ public sealed record TagDetailsForApiContract
 		Stats = stats;
 		Status = tag.Status;
 		Targets = (int)tag.Targets;
+		NewTargets = tag.NewTargets.ToArray();
 		Translations = tag.Names.GetTranslationsString(languagePreference);
 		UrlSlug = tag.UrlSlug;
 		WebLinks = tag.WebLinks.Links
