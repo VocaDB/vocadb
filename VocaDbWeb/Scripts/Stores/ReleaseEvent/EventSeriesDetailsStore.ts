@@ -1,6 +1,7 @@
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
-import { TagTargetType } from '@/Models/Tags/TagTargetType';
+import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
@@ -13,6 +14,7 @@ export class EventSeriesDetailsStore {
 		userRepo: UserRepository,
 		private readonly seriesId: number,
 		tagUsages: TagUsageForApiContract[],
+		category: EventCategory,
 	) {
 		this.tagsEditStore = new TagsEditStore(
 			{
@@ -26,7 +28,8 @@ export class EventSeriesDetailsStore {
 						})
 						.then(this.tagUsages.updateTagUsages),
 			},
-			TagTargetType.Event /* Event series use event tags for now */,
+			EntryType.ReleaseEvent,
+			category,
 		);
 
 		this.tagUsages = new TagListStore(tagUsages);

@@ -1,3 +1,6 @@
+using NHibernate.Criterion;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
@@ -12,11 +15,21 @@ public static class TagLinkQueryableExtensions
 		_ => query.OrderBy(e => e.Tag.Names.SortNames.Romaji),
 	};
 
-	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, TagTargetTypes target) where T : ITagLink
+	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, string? target) where T : ITagLink
 	{
-		if (target == TagTargetTypes.All)
-			return query;
-
-		return query.Where(t => (t.Tag.Targets & target) == target);
+		if (target == null) return query;
+		
+		var lowerTarget = target.Lower();
+		return query.Where(t => t.Tag.NewTargets.Any(n => n == lowerTarget));
+	}
+	
+	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, ArtistType a) where T : ITagLink
+	{
+		return query.WhereTagHasTarget($"artist:{a.ToString()}");
+	}
+	
+	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, DiscType d) where T : ITagLink
+	{
+		return query.WhereTagHasTarget($"album:{d.ToString()}");
 	}
 }

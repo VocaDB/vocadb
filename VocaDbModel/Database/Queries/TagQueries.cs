@@ -3,6 +3,7 @@
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
+using FluentNHibernate.MappingModel;
 using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -908,6 +909,9 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 				diff.HideFromSuggestions.Set();
 
+			if (!tag.NewTargets.SequenceEqual(contract.NewTargets)) 
+				diff.Targets.Set();
+			
 			if (tag.Targets != (TagTargetTypes)contract.Targets)
 				diff.Targets.Set();
 
@@ -951,6 +955,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			tag.CategoryName = contract.CategoryName;
 			tag.HideFromSuggestions = contract.HideFromSuggestions;
 			tag.Status = contract.Status;
+			tag.NewTargets = contract.NewTargets;
 			tag.Targets = (TagTargetTypes)contract.Targets;
 
 			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))

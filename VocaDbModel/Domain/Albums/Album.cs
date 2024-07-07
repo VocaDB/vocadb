@@ -943,4 +943,9 @@ public class Album :
 		RatingTotal = UserCollections.Sum(a => a.Rating);
 		RatingAverageInt = RatingCount > 0 ? (RatingTotal * 100 / RatingCount) : 0;
 	}
+
+	public virtual Object TagSubtype()
+	{
+		return DiscType;
+	}
 }

@@ -4,6 +4,49 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration((2024_07_01_0000))]
+public class MigrateTagTargets : Migration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.TagTargets)
+			.WithColumn("Id").AsInt32().PrimaryKey().Identity()
+			.WithColumn("TagId").AsInt32().ForeignKey(TableNames.Tags, "Id").Indexed()
+			.WithColumn("TargetType").AsString(50).NotNullable();
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'song'
+			from tags
+			where (Targets & 64) = 64 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'album'
+			from tags
+			where (Targets & 1) = 1 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'artist'
+			from tags
+			where (Targets & 2) = 2 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'releaseevent'
+			from tags
+			where (Targets & 16) = 16 and Targets != 1073741823;
+		");
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2024_04_09_2224)]
 public class UpdateNicoThumbnails : Migration
 {

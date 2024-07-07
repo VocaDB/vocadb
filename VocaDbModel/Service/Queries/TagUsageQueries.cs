@@ -85,7 +85,7 @@ public class TagUsageQueries
 			// Get the final list of tag names with translations
 			var appliedTags = tagsFromNames
 				.Concat(tagsFromIds)
-				.Where(t => _permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
+				.Where(t => _permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry))
 				.Concat(newTags)
 				.Distinct()
 				.ToArray();

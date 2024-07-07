@@ -18,6 +18,7 @@ export interface TagForEditContract {
 	mainPicture?: EntryThumbContract;
 	name: string;
 	names: LocalizedStringWithIdContract[];
+	newTargets: string[];
 	parent?: TagBaseContract;
 	relatedTags: TagBaseContract[];
 	status: EntryStatus;

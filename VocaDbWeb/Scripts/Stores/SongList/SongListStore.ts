@@ -7,7 +7,6 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
-import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import type { SongListGetSongsQueryParams } from '@/Repositories/SongListRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
@@ -47,6 +46,7 @@ import {
 } from 'mobx';
 
 import schema from './SongListRouteParams.schema.json';
+import { EntryType } from '@/Models/EntryType';
 
 interface SongListRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
@@ -118,6 +118,7 @@ export class SongListStore implements LocationStateStore<SongListRouteParams> {
 		private readonly listId: number,
 		tagUsages: TagUsageForApiContract[],
 		canDeleteAllComments: boolean,
+		featuredCategory: string
 	) {
 		makeObservable(this);
 
@@ -149,7 +150,8 @@ export class SongListStore implements LocationStateStore<SongListRouteParams> {
 					this.tagUsages.updateTagUsages(usages);
 				},
 			},
-			TagTargetType.SongList,
+			EntryType.SongList,
+			featuredCategory
 		);
 
 		this.tagFilters = new TagFilters(values, tagRepo);

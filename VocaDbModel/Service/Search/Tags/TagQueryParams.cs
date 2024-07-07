@@ -27,7 +27,7 @@ public sealed record TagQueryParams
 
 	public TagSortRule SortRule { get; init; } = TagSortRule.Name;
 
-	public TagTargetTypes Target { get; init; } = TagTargetTypes.All;
+	public string? Target { get; init; }
 
 	public bool Deleted { get; init; } = false;
 }

@@ -3,6 +3,8 @@ import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
 import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { LoginManager } from '@/Models/LoginManager';
 import { TagTargetType } from '@/Models/Tags/TagTargetType';
@@ -71,6 +73,7 @@ export class ArtistDetailsStore {
 		private readonly userRepo: UserRepository,
 		canDeleteAllComments: boolean,
 		latestComments: CommentContract[],
+		artistType: ArtistType
 	) {
 		makeObservable(this);
 
@@ -107,7 +110,8 @@ export class ArtistDetailsStore {
 						.updateArtistTags({ artistId: artistId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			TagTargetType.Artist,
+			EntryType.Artist,
+			artistType,
 			() => artistRepo.getTagSuggestions({ artistId: artistId }),
 		);
 

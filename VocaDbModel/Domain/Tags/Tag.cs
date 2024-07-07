@@ -261,6 +261,8 @@ public class Tag :
 	public virtual IEnumerable<Tag> Siblings => Parent != null ? Parent.Children.Where(t => !t.Equals(this)) : Enumerable.Empty<Tag>();
 
 	public virtual TagTargetTypes Targets { get; set; }
+	
+	public virtual IEnumerable<string> NewTargets { get; set; }
 
 	/// <summary>
 	/// Entry thumbnail picture. Can be null.
@@ -443,18 +445,10 @@ public class Tag :
 
 	public virtual IEnumerable<EventSeriesTagUsage> EventSeriesTagUsages => AllEventSeriesTagUsages.Where(a => !a.Entry.Deleted);
 
-	public virtual bool IsValidFor(EntryType entryType)
+	public virtual bool IsValidFor<T>(T entry) where T: IEntryWithTags
 	{
-		if (Targets == TagTargetTypes.All)
-			return true;
-
-		if (Targets == TagTargetTypes.Nothing)
-			return false;
-
-		if (entryType == EntryType.ReleaseEventSeries)
-			entryType = EntryType.ReleaseEvent;
-
-		return Targets.HasFlag((TagTargetTypes)entryType);
+		if (entry.EntryType == EntryType.SongList) return true;
+		return NewTargets.Any(n => n == entry.TagTarget() || entry.TagTarget().StartsWith(n + ':'));
 	}
 
 	public virtual ISet<RelatedTag> RelatedTags
