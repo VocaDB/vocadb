@@ -246,6 +246,7 @@ const EventSeriesDetails = (): React.ReactElement => {
 						userRepo,
 						series.id,
 						series.tags,
+						series.category,
 					),
 				});
 

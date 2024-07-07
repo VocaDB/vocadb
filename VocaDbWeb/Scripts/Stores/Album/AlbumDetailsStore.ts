@@ -9,6 +9,7 @@ import {
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import {
@@ -16,7 +17,6 @@ import {
 	AlbumRepository,
 } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongOptionalField } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -344,7 +344,8 @@ export class AlbumDetailsStore {
 						.updateAlbumTags({ albumId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			TagTargetType.Album,
+			EntryType.Album,
+			data.discType,
 			() => albumRepo.getTagSuggestions({ albumId: this.id }),
 		);
 

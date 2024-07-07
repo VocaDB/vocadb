@@ -3,8 +3,8 @@ import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
 import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { LoginManager } from '@/Models/LoginManager';
-import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { CommentRepository } from '@/Repositories/CommentRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -47,6 +47,7 @@ export class ReleaseEventDetailsStore {
 		usersAttending: UserBaseContract[],
 		tagUsages: TagUsageForApiContract[],
 		canDeleteAllComments: boolean,
+		eventCategory: EventCategory
 	) {
 		makeObservable(this);
 
@@ -88,7 +89,8 @@ export class ReleaseEventDetailsStore {
 						.updateEventTags({ eventId: this.eventId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
-			TagTargetType.Event,
+			EntryType.ReleaseEvent,
+			eventCategory
 		);
 
 		this.tagUsages = new TagListStore(tagUsages);

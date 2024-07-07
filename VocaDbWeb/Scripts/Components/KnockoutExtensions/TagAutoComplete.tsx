@@ -14,7 +14,7 @@ interface TagAutoCompleteProps
 	tagFilter?: (entry: TagApiContract) => boolean;
 	clearValue?: boolean;
 	allowAliases?: boolean;
-	tagTarget?: TagTargetType;
+	tagTarget?: string;
 }
 
 export const TagAutoComplete = React.forwardRef<

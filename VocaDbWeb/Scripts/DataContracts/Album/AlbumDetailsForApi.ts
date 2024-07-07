@@ -331,6 +331,7 @@ export class AlbumDetailsAjax {
 	readonly personalDescriptionText?: string;
 	readonly tagUsages: TagUsageForApiContract[];
 	readonly userHasAlbum: boolean;
+	readonly discType: AlbumType;
 
 	constructor(model: AlbumDetailsForApi) {
 		this.albumMediaType = model.albumMediaType;
@@ -342,5 +343,6 @@ export class AlbumDetailsAjax {
 		this.personalDescriptionText = model.personalDescriptionText;
 		this.tagUsages = model.tags;
 		this.userHasAlbum = model.userHasAlbum;
+		this.discType = model.discType;
 	}
 }

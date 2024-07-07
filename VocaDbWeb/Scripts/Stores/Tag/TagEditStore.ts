@@ -4,6 +4,7 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
@@ -33,6 +34,7 @@ export class TagEditStore {
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	@observable targets: TagTargetTypes;
+	@observable newTargets: string[]
 	readonly trashStore: DeleteEntryStore;
 	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
@@ -41,6 +43,7 @@ export class TagEditStore {
 		antiforgeryRepo: AntiforgeryRepository,
 		private readonly tagRepo: TagRepository,
 		readonly contract: TagForEditContract,
+		readonly values: GlobalValues
 	) {
 		makeObservable(this);
 
@@ -78,6 +81,7 @@ export class TagEditStore {
 		this.relatedTags = contract.relatedTags;
 		this.status = contract.status;
 		this.targets = contract.targets;
+		this.newTargets = contract.newTargets;
 		this.webLinks = new WebLinksEditStore(contract.webLinks);
 	}
 
@@ -135,6 +139,7 @@ export class TagEditStore {
 					targets: this.targets,
 					updateNotes: this.updateNotes,
 					webLinks: this.webLinks.items,
+					newTargets: this.newTargets
 				},
 				thumbPicUpload,
 			);
@@ -163,6 +168,50 @@ export class TagEditStore {
 	hasTargetType = (target: TagTargetTypes): boolean => {
 		return this.hasFlag(target);
 	};
+
+	hasTagTarget = (target: string): boolean => {
+		return this.newTargets.includes(target) || this.newTargets.includes(target.split(':')[0])
+	}
+
+	@action toggleTarget = (target: string): void => {
+		console.log(target)
+		const tagTargetTypes = {
+			'song': this.values.songTypes,
+			'artist': this.values.artistTypes,
+			'album': this.values.albumTypes,
+			'releaseevent': this.values.eventTypes
+		}
+		Object.keys(tagTargetTypes).forEach((key) => {
+			// @ts-ignore
+			tagTargetTypes[key] = tagTargetTypes[key].map(t => t.toLowerCase())
+		})
+
+		const [tagType, _] = target.split(':')
+		const index = this.newTargets.indexOf(target)
+		const tagTypeIndex = this.newTargets.indexOf(tagType)
+
+		if (index === -1 && tagTypeIndex === -1) {
+			this.newTargets.push(target)
+		} else {
+			if (index !== -1) {
+				this.newTargets.splice(index, 1)
+			}
+			if (tagTypeIndex !== -1) {
+				this.newTargets.splice(tagTypeIndex, 1)
+				this.newTargets.push(...tagTargetTypes[tagType as keyof typeof tagTargetTypes].map(t => [tagType, t].join(":")).filter(t => t !== target))
+			}
+		}
+
+		// Reduce tag targets
+		Object.entries(tagTargetTypes).forEach(([type, subTypes]) => {
+			const includesAllSubtypes = subTypes.filter(t => this.newTargets.includes(`${type}:${t}`)).length === subTypes.length
+			if (includesAllSubtypes) {
+				this.newTargets = this.newTargets.filter(t => !t.startsWith(type + ':'))
+				this.newTargets.push(type)
+			}
+		})
+		console.log(this.newTargets)
+	} 
 
 	setTargetType = (target: TagTargetTypes, flag: boolean): void => {
 		const hasFlag = (t: TagTargetTypes): boolean => (this.targets & t) === t;

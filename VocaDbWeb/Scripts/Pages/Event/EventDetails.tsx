@@ -647,6 +647,7 @@ const EventDetails = (): React.ReactElement => {
 						event.usersAttending,
 						event.tags,
 						loginManager.canDeleteComments,
+						event.inheritedCategory,
 					),
 				});
 

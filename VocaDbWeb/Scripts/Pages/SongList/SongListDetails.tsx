@@ -642,6 +642,7 @@ const SongListDetails = (): React.ReactElement => {
 						songList.id,
 						songList.tags ?? [],
 						loginManager.canDeleteComments,
+						songList.featuredCategory,
 					),
 				});
 

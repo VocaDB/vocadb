@@ -1,6 +1,7 @@
 import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { SongType } from '@/Models/Songs/SongType';
 
@@ -21,6 +22,7 @@ export interface GlobalValues {
 	hostAddress: string;
 	lockdownMessage?: string;
 	songTypes: SongType[];
+	eventTypes: EventCategory[];
 	siteName: string;
 	siteTitle: string;
 	staticContentHost: string;

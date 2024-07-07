@@ -1,6 +1,7 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
 import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { trim } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
@@ -28,12 +29,15 @@ export class TagsEditStore {
 	@observable selections: TagSelectionStore[] = [];
 	@observable suggestions: TagUsageForApiContract[] = [];
 	@observable suggestionsLoaded = false;
+	readonly target: string;
 
 	constructor(
 		private readonly repo: ITagSelectionsRepository,
-		readonly target?: TagTargetType,
+		readonly entryType?: EntryType,
+		readonly tagSubtype?: Object,
 		readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {
+		this.target = `${entryType?.toString()}:${tagSubtype?.toString()}`.toLowerCase()
 		makeObservable(this);
 	}
 

@@ -26,14 +26,19 @@ import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
+import { SongType } from '@/Models/Songs/SongType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagEditStore } from '@/Stores/Tag/TagEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -60,6 +65,10 @@ const TagEditLayout = observer(
 			'Resources',
 			'ViewRes',
 			'VocaDb.Web.Resources.Views.Tag',
+			'VocaDb.Model.Resources.Songs',
+			'VocaDb.Model.Resources.Albums',
+			'VocaDb.Model.Resources',
+			'VocaDb.Web.Resources.Domain.ReleaseEvents',
 		]);
 
 		const contract = tagEditStore.contract;
@@ -78,6 +87,35 @@ const TagEditLayout = observer(
 		const thumbPicUploadRef = React.useRef<HTMLInputElement>(undefined!);
 		// HACK
 		const categoryNameRef = React.useRef<HTMLInputElement>(undefined!);
+
+		const vdb = useVdb();
+
+		const allNewTagTargetTypes: [
+			EntryType,
+			SongType[] | AlbumType[] | ArtistType[] | EventCategory[],
+			string,
+		][] = [
+			[
+				EntryType.Song,
+				vdb.values.songTypes,
+				'VocaDb.Model.Resources.Songs:SongTypeNames.',
+			],
+			[
+				EntryType.Album,
+				vdb.values.albumTypes,
+				'VocaDb.Model.Resources.Albums:DiscTypeNames.',
+			],
+			[
+				EntryType.Artist,
+				vdb.values.artistTypes,
+				'VocaDb.Model.Resources:ArtistTypeNames.',
+			],
+			[
+				EntryType.ReleaseEvent,
+				vdb.values.eventTypes,
+				'VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.',
+			],
+		];
 
 		return (
 			<Layout
@@ -367,21 +405,47 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">Valid for</div>
 					<div className="editor-field">
-						{allTagTargetTypes.map((entryType) => (
-							<React.Fragment key={entryType}>
-								<input
-									type="checkbox"
-									checked={tagEditStore.hasTargetType(entryType)}
-									onChange={(e): void =>
-										runInAction(() => {
-											tagEditStore.setTargetType(entryType, e.target.checked);
-										})
-									}
-								/>{' '}
-								{TagTargetTypes[entryType] /* LOC */}
-								<br />
-							</React.Fragment>
-						))}
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								flexWrap: 'wrap',
+								width: '100%',
+								rowGap: 15,
+							}}
+						>
+							{allNewTagTargetTypes.map(([entryType, targetSubtypes, i18n]) => (
+								<div key={entryType}>
+									{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
+									<br />
+									<div
+										style={{
+											display: 'grid',
+											gridAutoFlow: 'column',
+											gridTemplateRows: 'repeat(10, auto)',
+										}}
+									>
+										{targetSubtypes.map((type) => (
+											<div style={{ marginRight: 5 }} key={type}>
+												<input
+													type="checkbox"
+													checked={tagEditStore.hasTagTarget(
+														`${entryType}:${type}`.toLowerCase(),
+													)}
+													onChange={(e): void => {
+														tagEditStore.toggleTarget(
+															`${entryType}:${type}`.toLowerCase(),
+														);
+													}}
+													style={{ marginRight: 5 }}
+												/>
+												{t(i18n.concat(type))}
+											</div>
+										))}
+									</div>
+								</div>
+							))}
+						</div>
 					</div>
 
 					<div className="editor-label">
@@ -460,6 +524,7 @@ const TagEditLayout = observer(
 
 const TagEdit = (): React.ReactElement => {
 	const { id } = useParams();
+	const vdb = useVdb();
 
 	const [model, setModel] = React.useState<{ tagEditStore: TagEditStore }>();
 
@@ -468,7 +533,12 @@ const TagEdit = (): React.ReactElement => {
 			.getForEdit({ id: Number(id) })
 			.then((model) =>
 				setModel({
-					tagEditStore: new TagEditStore(antiforgeryRepo, tagRepo, model),
+					tagEditStore: new TagEditStore(
+						antiforgeryRepo,
+						tagRepo,
+						model,
+						vdb.values,
+					),
 				}),
 			)
 			.catch((error) => {
