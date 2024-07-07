@@ -102,10 +102,12 @@ public static class TagQueryableExtensions
 
 	public static IQueryable<Tag> WhereHasTarget(this IQueryable<Tag> query, string? target)
 	{
-		if (target == null)
+		if (target == null || target.StartsWith("songlist:"))
 			return query;
+		if (target.Contains("releaseeventseries"))
+			target = target.Replace("releaseeventseries", "releaseevent");
 
-		return query.Where(t => t.NewTargets.Any(n => n == target || target.StartsWith(n)));
+		return query.Where(t => t.NewTargets.Any(n => n == target || target.StartsWith(n + ':')));
 	}
 }
 

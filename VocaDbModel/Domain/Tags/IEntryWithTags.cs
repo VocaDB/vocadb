@@ -11,7 +11,8 @@ public interface IEntryWithTags : IEntryBase
 
 	public string TagTarget()
 	{
-		return $"{EntryType.ToString().ToLower()}:{TagSubtype().ToString().ToLower()}";
+		var entryType = EntryType == EntryType.ReleaseEventSeries ? EntryType.ReleaseEvent : EntryType;
+		return $"{entryType.ToString().ToLower()}:{TagSubtype().ToString().ToLower()}";
 	}
 
 	ITagManager Tags { get; }

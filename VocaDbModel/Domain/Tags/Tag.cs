@@ -447,7 +447,8 @@ public class Tag :
 
 	public virtual bool IsValidFor<T>(T entry) where T: IEntryWithTags
 	{
-		return NewTargets.Any(n => n == entry.TagTarget() || entry.TagTarget().StartsWith(n));
+		if (entry.EntryType == EntryType.SongList) return true;
+		return NewTargets.Any(n => n == entry.TagTarget() || entry.TagTarget().StartsWith(n + ':'));
 	}
 
 	public virtual ISet<RelatedTag> RelatedTags
