@@ -105,7 +105,7 @@ public static class TagQueryableExtensions
 		if (target == null)
 			return query;
 
-		return query.Where(t => t.NewTargets.Any(n => n == target));
+		return query.Where(t => t.NewTargets.Any(n => n == target || target.StartsWith(n)));
 	}
 }
 

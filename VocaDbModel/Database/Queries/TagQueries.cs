@@ -909,7 +909,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 				diff.HideFromSuggestions.Set();
 
-			if (!tag.NewTargets.ContentEquals(contract.NewTargets)) 
+			if (!tag.NewTargets.SequenceEqual(contract.NewTargets)) 
 				diff.Targets.Set();
 			
 			if (tag.Targets != (TagTargetTypes)contract.Targets)

@@ -1,6 +1,7 @@
 #nullable disable
 
 using AspNetCore.CacheOutput;
+using IvanAkcheurov.Commons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,13 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -422,6 +427,27 @@ public class TagApiController : ApiController
 
 				if (contract.WebLinks is null)
 					throw new InvalidFormException("WebLinks list was null");
+				
+				string[] possibleTagTargetTypes = ["album", "artist", "releaseevent", "song"] ;
+				
+				// TODO: Filter by allowed types (server config)
+				var possibleTagTargetSubtypes = Enum.GetValues<SongType>()
+					.Select(val => val.ToString())
+					.Concat(Enum.GetValues<EventCategory>().Select(val => val.ToString()))
+					.Concat(Enum.GetValues<DiscType>().Select(val => val.ToString()))
+					.Concat(Enum.GetValues<ArtistType>().Select(val => val.ToString()))
+					.Select(val => val.ToLower());
+				contract.NewTargets.ForEach(target =>
+				{
+					var elements = target.Split(":");
+					if (elements.Length != 1 && elements.Length != 2)
+						throw new InvalidFormException("Invalid tag targets");
+					if (!possibleTagTargetTypes.Contains(elements[0]))
+						throw new InvalidFormException($"Invalid tag target main type {elements[0]}");
+					if (elements.Length != 2) return;
+					if (!possibleTagTargetSubtypes.Contains(elements[1]))
+						throw new InvalidFormException($"Invalid tag target sub type {elements[1]}");
+				});
 			}
 
 			CheckModel(contract);

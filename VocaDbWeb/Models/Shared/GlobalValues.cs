@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
@@ -43,6 +44,7 @@ public sealed record GlobalValues
 	public string? LockdownMessage { get; init; }
 	[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 	public SongType[] SongTypes { get; init; }
+	public EventCategory[] EventTypes { get; init; }
 	public string StaticContentHost { get; init; }
 
 	public string SiteName { get; init; }
@@ -93,6 +95,7 @@ public sealed record GlobalValues
 		ExternalHelpPath = AppConfig.ExternalHelpPath;
 		HostAddress = AppConfig.HostAddress;
 		LockdownMessage = AppConfig.LockdownMessage;
+		EventTypes = AppConfig.EventTypes;
 		SongTypes = AppConfig.SongTypes;
 		StaticContentHost = AppConfig.StaticContentHost;
 

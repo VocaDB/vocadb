@@ -3,6 +3,7 @@
 using System.Configuration;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
 
@@ -15,6 +16,7 @@ public static class AppConfig
 	private static ArtistType[]? s_artistTypes;
 	private static ArtistRoles[]? s_artistRoles;
 	private static SongType[]? s_songTypes;
+	private static EventCategory[]? s_eventTypes;
 
 	/// <summary>
 	/// List of roles that can be assigned to artist added to songs and albums.
@@ -64,6 +66,19 @@ public static class AppConfig
 		SongType.MusicPV,
 		SongType.DramaPV,
 		SongType.Other
+	};
+
+	private static readonly EventCategory[] DefaultEventCategories =
+	{
+		EventCategory.Unspecified,
+		EventCategory.AlbumRelease,
+		EventCategory.Anniversary,
+		EventCategory.Club,
+		EventCategory.Concert,
+		EventCategory.Contest,
+		EventCategory.Convention,
+		EventCategory.Other,
+		EventCategory.Festival
 	};
 
 	private static string? Val(string key)
@@ -224,6 +239,20 @@ public static class AppConfig
 			}
 
 			return s_songTypes;
+		}
+	}
+	
+	public static EventCategory[] EventTypes
+	{
+		get
+		{
+			if (s_eventTypes == null)
+			{
+				var val = Val("EventTypes");
+				s_eventTypes = !string.IsNullOrEmpty(val) ? EnumVal<EventCategory>.ParseMultiple(val) : DefaultEventCategories;
+			}
+
+			return s_eventTypes;
 		}
 	}
 #nullable disable

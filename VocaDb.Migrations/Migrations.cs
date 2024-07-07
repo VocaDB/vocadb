@@ -13,28 +13,32 @@ public class MigrateTagTargets : Migration
 			.WithColumn("Id").AsInt32().PrimaryKey().Identity()
 			.WithColumn("TagId").AsInt32().ForeignKey(TableNames.Tags, "Id").Indexed()
 			.WithColumn("TargetType").AsString(50).NotNullable();
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'song'
+			from tags
+			where (Targets & 64) = 64 and Targets != 1073741823;
+		");
 		
 		Execute.Sql($@"
 			insert into {TableNames.TagTargets} (TagId, TargetType)
-			select id, 'song:unspecified' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:original' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:remaster' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:remix' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:cover' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:instrumental' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:mashup' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:musicpv' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:dramapv' from tags where (Targets & 64 != 0)
-			union all
-			select id, 'song:other' from tags where (Targets & 64 != 0)
+			select id, 'album'
+			from tags
+			where (Targets & 1) = 1 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'artist'
+			from tags
+			where (Targets & 2) = 2 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'releaseevent'
+			from tags
+			where (Targets & 16) = 16 and Targets != 1073741823;
 		");
 	}
 
