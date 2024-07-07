@@ -204,6 +204,7 @@ export class TagEditStore {
 
 		// Reduce tag targets
 		Object.entries(tagTargetTypes).forEach(([type, subTypes]) => {
+			// @ts-ignore
 			const includesAllSubtypes = subTypes.filter(t => this.newTargets.includes(`${type}:${t}`)).length === subTypes.length
 			if (includesAllSubtypes) {
 				this.newTargets = this.newTargets.filter(t => !t.startsWith(type + ':'))
