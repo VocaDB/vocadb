@@ -65,6 +65,7 @@ public class Tag :
 		Description = new EnglishTranslatedString();
 		Status = EntryStatus.Draft;
 		Targets = TagTargetTypes.All;
+		NewTargets = new string[]{"song", "releaseevent", "artist", "album"};
 	}
 
 	public Tag(string englishName, string categoryName = "")
