@@ -720,6 +720,14 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			}
 
 			diff.Description.Set(target.Description.CopyIfEmpty(source.Description));
+			
+			// Targets
+			if (!target.NewTargets.SequenceEqual(source.NewTargets))
+			{
+				var parentTypeTargets = target.NewTargets.Concat(source.NewTargets).Where(t => !t.Contains(':'));
+				target.NewTargets = target.NewTargets.Concat(source.NewTargets).Where(t => !t.Contains(':') || !parentTypeTargets.Contains(t.Split(':')[1])).Distinct();
+				diff.Targets.Set();
+			}
 
 			// Parent tag
 			if (target.Parent == null && source.Parent != null && target.IsValidParent(source.Parent))
