@@ -103,7 +103,7 @@ public class ArchivedTagContract
 	public TagTargetTypes Targets { get; set; }
 	
 	[DataMember]
-	public string[] NewTargets { get; set; }
+	public string[]? NewTargets { get; set; }
 
 	[DataMember]
 	public string? ThumbMime { get; init; }
