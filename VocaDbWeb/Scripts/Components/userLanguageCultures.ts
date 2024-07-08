@@ -3,7 +3,7 @@ export const userLanguageCultures = Object.fromEntries(
 		de: { nativeName: 'Deutsch', englishName: 'German' },
 		en: { nativeName: 'English', englishName: 'English' },
 		es: { nativeName: 'espa\u00F1ol', englishName: 'Spanish' },
-		tg: { nativeName: 'Filipino', englishName: 'Filipino' },
+		tl: { nativeName: 'Filipino', englishName: 'Filipino' },
 		fr: { nativeName: 'fran\u00E7ais', englishName: 'French' },
 		id: { nativeName: 'Indonesia', englishName: 'Indonesian' },
 		it: { nativeName: 'italiano', englishName: 'Italian' },
