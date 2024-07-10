@@ -23,8 +23,8 @@
     "EntryValidationNoErrors": "此条目包含了所有必要信息。",
     "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为已完成（非草稿）。",
     "EntryValidationWarningDetails": "详细信息",
-    "GitHubMarkdown": "支持GitHub式Markdown语言",
-    "IsSupportedForFormatting": "支持格式化",
+    "GitHubMarkdown": "GitHub式Markdown",
+    "IsSupportedForFormatting": "受支持",
     "NameLangTitle": "语言",
     "NameNewRow": "新行",
     "NameValueTitle": "名称（必填）",
@@ -41,7 +41,7 @@
     "WebLinkCategoryTitle": "类别",
     "WebLinkDescriptionTitle": "描述",
     "WebLinkNewRow": "新行",
-    "WebLinkUrlTitle": "链接地址"
+    "WebLinkUrlTitle": "URL"
   },
   "SongHelpers": {
     "FromAlbum": "来自专辑"
