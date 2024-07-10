@@ -1,6 +1,6 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
+    "Dancer": "舞者",
     "Default": "Default",
     "DJ": "DJ",
     "Instrumentalist": "Instrumentalist",
@@ -24,20 +24,20 @@
     "Unspecified": "Unspecified"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
+    "AdditionDate": "添加日期",
+    "Date": "日期",
+    "Name": "名称",
     "SeriesName": "Series",
-    "VenueName": "Venue"
+    "VenueName": "会场"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
+    "Category": "类别",
+    "Description": "描述",
+    "Name": "名称",
+    "Names": "名称",
     "OriginalName": "Default name language",
-    "Picture": "Main picture",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Picture": "主图",
+    "Status": "状态",
+    "WebLinks": "外部链接"
   }
 }
