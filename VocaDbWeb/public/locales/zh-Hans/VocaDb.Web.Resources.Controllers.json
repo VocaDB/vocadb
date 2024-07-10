@@ -1,5 +1,5 @@
 {
   "TagController": {
-    "TagNameError": "Tag name may contain only word characters and cannot be empty."
+    "TagNameError": "标签名称只能包含英语字符，不能为空。"
   }
 }
