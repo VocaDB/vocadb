@@ -1,16 +1,16 @@
 {
   "Details": {
-    "Address": "Address",
-    "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Address": "地址",
+    "Aliases": "别名",
+    "Country": "国家/地区",
+    "Venue": "会场"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
-    "Latitude": "Latitude",
-    "Location": "Location",
-    "Longitude": "Longitude"
+    "Address": "地址",
+    "Coordinates": "坐标",
+    "Country": "国家/地区",
+    "Latitude": "纬度",
+    "Location": "地点",
+    "Longitude": "经度"
   }
 }
