@@ -1,13 +1,13 @@
 {
   "EnglishTranslatedString": {
-    "Original": "Original",
+    "Original": "原文",
     "ShowFullDescription": "查看完整描述",
-    "Translated": "Translated"
+    "Translated": "译文"
   },
   "PlayList": {
-    "Autoplay": "Autoplay",
-    "AutoplayNote": "Autoplay is supported only for YouTube and SoundCloud",
-    "NextSong": "Next song",
-    "Shuffle": "Shuffle"
+    "Autoplay": "自动播放",
+    "AutoplayNote": "自动播放仅支持YouTube和SoundCloud",
+    "NextSong": "下一首",
+    "Shuffle": "随机"
   }
 }
