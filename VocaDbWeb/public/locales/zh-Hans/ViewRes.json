@@ -51,7 +51,7 @@
     "ReportArchivedVersionExplanation": "Report a mistake in this edit. The user will be notified as well.",
     "ReportArchivedVersionMessage": "解释哪里错误",
     "ReportNotes": "备注",
-    "ReportNotesRequired": "（必需）",
+    "ReportNotesRequired": "（必填）",
     "ReportType": "报告类型",
     "Revisions": "修改历史",
     "Share": "分享链接",
@@ -132,7 +132,7 @@
     "UnreadMessages": "You have unread messages",
     "UpcomingEvents": "Upcoming events",
     "Welcome": "欢迎",
-    "Wiki": "Help/Wiki",
+    "Wiki": "Wiki",
     "Stats": "Stats"
   },
   "Misc": {
@@ -166,7 +166,7 @@
     "Name": "名字",
     "Period": "。",
     "PVs": "PVs",
-    "ReleaseEvents": "相关活动",
+    "ReleaseEvents": "活动",
     "Remove": "删除",
     "Save": "Save",
     "Search": "搜索",
