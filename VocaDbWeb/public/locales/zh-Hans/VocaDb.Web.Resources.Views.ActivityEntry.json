@@ -1,9 +1,9 @@
 {
   "Index": {
-    "AllActivity": "All activity",
-    "Comments": "Comments",
-    "FollowedArtists": "Only followed artists",
-    "RecentActivity": "Recent activity",
-    "ViewMore": "View more"
+    "AllActivity": "所有活动",
+    "Comments": "评论",
+    "FollowedArtists": "仅关注的艺术家",
+    "RecentActivity": "最近活动",
+    "ViewMore": "查看更多"
   }
 }
