@@ -5,9 +5,9 @@
     "ArtistsInfo": "艺术家 (至少输入一位)",
     "Draft": "此条目处于草稿状态",
     "DuplicatePV": "这个PV似乎已经被添加到数据库中。",
-    "Name": "名称 (至少输入一个)",
+    "Name": "名称（至少一个）",
     "NameHelp": "如果条目存在一个非英语（如日语）或未知语言名称，请将其输入非英语名称字段。如果已知，请同时输入罗马化名称。如果有已知的官方英语名称或英语翻译，请将其输入英语名称字段。",
-    "NeedArtist": "至少需要输入一位艺术家。",
+    "NeedArtist": "至少需要一位艺术家。",
     "NoArtistsToName": "不要在名称字段中输入艺术家名称，请使用艺术家列表。",
     "OriginalPV": "原始PV的链接（链接至视频页面)",
     "OriginalSuggestionsTitle": "其中是否有任何原始版本？",
@@ -145,6 +145,6 @@
     "VocalistAll": "全部歌手：",
     "VocalistOther": "其他歌手",
     "VocalistUTAU": "仅限UPAU",
-    "VocalistVocaloid": "仅限Vocaloid"
+    "VocalistVocaloid": "仅Vocaloid"
   }
 }
