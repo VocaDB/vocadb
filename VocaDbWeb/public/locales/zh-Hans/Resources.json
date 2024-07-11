@@ -122,7 +122,7 @@
     "Default": "原语言",
     "English": "英文",
     "Japanese": "非英文",
-    "Romaji": "罗马音",
+    "Romaji": "罗马文",
     "Unspecified": "未定义"
   },
   "DiscTypeDescriptions": {
@@ -159,7 +159,7 @@
     "DesignatedStaff": "指派工作人员",
     "DisableUsers": "停用用户",
     "EditAllSongLists": "编辑全部曲目列表",
-    "EditFeaturedLists": "管理特约曲目列表",
+    "EditFeaturedLists": "管理精选曲目列表",
     "EditNews": "管理新消息",
     "EditProfile": "编辑个人资料",
     "EditTags": "编辑标签",
