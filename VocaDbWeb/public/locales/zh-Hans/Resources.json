@@ -151,7 +151,7 @@
     "Admin": "数据库管理任务",
     "AddRawFileMedia": "添加原始媒介",
     "ApplyAnyTag": "向条目添加任何标签",
-    "ApproveEntries": "批准条目",
+    "ApproveEntries": "核准条目",
     "BulkDeletePVs": "批量删除PV",
     "CreateComments": "添加注释",
     "DeleteComments": "删除注释",
@@ -241,7 +241,7 @@
     "Status": "状态",
     "WebLinks": "外部链接",
     "ReleaseEvent": "发行活动",
-    "ReleaseEvents": "Release events",
+    "ReleaseEvents": "发行活动",
     "Bpm": "BPM",
     "CultureCodes": "语言"
   },
@@ -258,7 +258,7 @@
     "Concerts": "音乐会曲目列表",
     "Nothing": "无",
     "Other": "其他",
-    "Pools": "Pools",
+    "Pools": "资源",
     "VocaloidRanking": "Vocaloid排行"
   },
   "SongSortRuleNames": {
