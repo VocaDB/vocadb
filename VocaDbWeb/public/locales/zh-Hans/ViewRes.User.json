@@ -5,7 +5,7 @@
     "CollectionWishedOrOrdered": "想要/已预订",
     "MediaType": "形式",
     "Rating": "评分",
-    "ReleaseDate": "发售日期",
+    "ReleaseDate": "发行日期",
     "ReleaseEvent": "发售活动",
     "Status": "收藏状态"
   },
@@ -23,7 +23,7 @@
     "PasswordIsRequired": "密码不能为空",
     "Register": "注册",
     "RegistrationUnsuccessful": "注册失败。",
-    "TwitterNote": "或者，您可以使用Twitter账号登录。Twitter账号也可以随后链接。",
+    "TwitterNote": "或者你可以使用Twitter账号登录。Twitter账号也可以随后链接。",
     "Username": "用户名",
     "UsernameIsRequired": "用户名不能为空",
     "UsernameNote": "用户名必须至少3个字符，只能包含英文字母、数字和下划线。密码必须至少{{0}}个字符。",
@@ -89,7 +89,7 @@
   },
   "EntryEdits": {
     "EntryType": "Type",
-    "OnlyAdditions": "Only additions"
+    "OnlyAdditions": "仅添加"
   },
   "FavoriteSongs": {
     "GroupByRating": "Group by rating"
@@ -210,7 +210,7 @@
     "Login": "登陆",
     "MessageTitle": "其余信息：（选填）",
     "NoPrivateMessage": "下方所填地址即证明材料",
-    "NotLoggedInMessage": "您只有【<1>登陆</1>】或【<2>注册</2>】之后才能进行此操作。",
+    "NotLoggedInMessage": "抱歉，你只有在<1>登录</1>或<2>注册</2>后才能进行此操作。",
     "PageTitle": "申请账户认证",
     "PrivateMessage": "证明材料将通过私信提交至管理员",
     "Send": "提交申请",
