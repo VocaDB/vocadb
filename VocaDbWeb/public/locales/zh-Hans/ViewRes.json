@@ -14,7 +14,7 @@
   "EntryCreate": {
     "EnglishName": "英文名",
     "FoundCoverArtist": "A \"Cover artist\" was found in the entry. Please change the artist type to \"Producer\" if this is an original song.",
-    "FoundPossibleDuplicates": "Possible matching entries found in the database. Please verify that these are not duplicates.",
+    "FoundPossibleDuplicates": "在数据库中找到可能匹配的条目。请确认这些条目不是重复的。",
     "Name": "Name (need at least one)",
     "NameHelp": "If the original name is non-English (for example Japanese), or if the language of the name is unknown, input that into the Non-English name field. If known, input the romanized name as well. If the official name of the entry is in English, or there is a known English translation, input that into the English name field.",
     "NeedName": "至少需要一个名称。",
