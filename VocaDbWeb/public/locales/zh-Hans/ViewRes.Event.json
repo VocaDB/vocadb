@@ -1,7 +1,7 @@
 {
   "Details": {
     "Albums": "专辑",
-    "Attending": "Attending",
+    "Attending": "正在参加",
     "Category": "类别",
     "Event": "活动",
     "OccurrenceDate": "日期",
@@ -10,8 +10,8 @@
     "Series": "系列",
     "SongList": "曲目列表",
     "Songs": "曲目",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
+    "UserAttending": "我在参加",
+    "UserInterested": "我感兴趣",
     "Venue": "会场"
   },
   "EventsBySeries": {
@@ -27,7 +27,7 @@
     "CreateEvent": "创建新活动",
     "EventNotFound": "抱歉，找不到一个具有此名称的活动。它可能还没有被添加到数据库中。",
     "FindEvent": "搜索活动",
-    "Number": "number",
+    "Number": "数量",
     "Series": "系列",
     "UngroupedEventNamed": "未分组活动名称：",
     "YouMayAddTheEvent": "您可以将活动添加到数据库中。"
