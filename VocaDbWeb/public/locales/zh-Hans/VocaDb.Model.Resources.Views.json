@@ -1,16 +1,16 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "与此专辑关联的制作人和歌手。",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. <strong>The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not)</strong>. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumInfo": "请注意VocaDB并不是UtaiteDB。<strong>专辑需要至少有一首Vocaloid歌唱的曲目，才能上传到VocaDB（虽然允许UTAU和其他歌唱合成器声库，但人类演唱的翻唱是不允许的）。</strong>非官方的粉丝制作的合辑（盗版）也是不允许的。有关更多信息，请参阅帮助/指南。"
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB账户",
     "NewArtistExternalLink": "外部链接（艺术家网站、Hatsune Miku wiki、NND MyList等）"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
+    "SiteDescription": "VocaDB是一个收录艺术家、专辑和歌曲详细信息的Vocaloid音乐数据库。",
     "Welcome": "欢迎来到Vocaloid Database！",
-    "WelcomeSubtitle": "一个拥有大量Vocaloid艺人、专辑和PV等信息的合作性数据库。"
+    "WelcomeSubtitle": "一个拥有大量Vocaloid、UTAU和其他声音合成器声库和有关的艺人、专辑和PV等信息的合作性数据库。"
   },
   "LayoutRes": {
     "Keywords": "Vocaloid, VocaDB, Vocaloid database, 初音未来, UTAU",
@@ -19,10 +19,10 @@
     "SiteTitle": "Vocaloid Database"
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
+    "NewSongInfo": "请确保您要提交的歌曲以前未被添加。你至少需要输入名称和艺术家。强烈建议链接到原PV。\n\n请注意，只有在专辑中与Vocaloid歌曲一起发行，或者这首歌有多个Vocaloid翻唱时，才允许非Vocaloid的歌曲。虽然允许UTAU和其他歌唱合成器声库，但人类演唱的翻唱是不允许的。",
     "RankingsTitle": "VocaDB歌曲排行"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n不论您是P主，画师，PV师还是其他VOCALOID相关创作者或社团代表，您都可以通过本界面向VocaDb申请核实您的账号。核实无误后，您的账号名将会展示在“艺术家”总条目中。\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t您需要证明该条目是您本人，否则申请将不予通过。\n\t\t\t</strong>\n\t\t\t例如，在您的微博贴出VocaDb条目地址，即可证明您的身份。\n\t\t\t<strong>\n\t\t\t\t同时，您的账号条目内需要包含至少一至两首已完成的歌曲（VOCALOID或UTAU）条目，如您有满足条件的作品但本站无该条目，您可自行添加新条目。\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n账号核实后，您可以设置您账号条目的可编辑人员。目前仅有已核实的“艺术家”账号可进行该操作，“歌曲”与“专辑”总条目尚未开通该服务。\n\t\t</p>\n\t\t<p>\nVocaDb有权利不通过您的申请，以上提及的原因均有可能。如有以上未提及的问题，VocaDb的编辑将会联系您，修正申请中的错误。\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\t如果你是制作人、画师、动画师或任何其他与Vocaloid音乐、视频相关的创作者，\n\t\t\t或者团体代表，你都可以用这个表格，向网站员工请求验证账户。\n\t\t\t验证后，您的帐户名将显示在艺术家条目页面上，反之亦然。\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t您需要提供某种证明，证明你是该条目的合法所有者，否则你的请求可能会被拒绝。\n\t\t\t</strong>\n\t\t\t例如，在你的Twitter或博客上发帖并链接到你的VocaDB账户，证明你是此人。\n\t\t\t<strong>\n\t\t\t\t你还应该在网站上至少有一两首被接受并最终确定的歌曲（Vocaloid或UTAU）。\n\t\t\t\t如果别人还没有提交，你可以自己提交。\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\t验证后，你可以批准你的艺术家条目，限制谁可以编辑它。\n\t\t\t目前，只有艺术家条目本身可以通过这种方式得到“保护” - 歌曲和专辑不受影响。\n\t\t</p>\n\t\t<p>\n\t\t\t请理解我们保留拒绝你的请求的权利。原因可能包括上述任何一种。\n\t\t\t除非拒绝请求的原因太明显了，我们会尝试联系你，请你纠正错误，以便批准请求。\n\t\t</p>"
   }
 }
