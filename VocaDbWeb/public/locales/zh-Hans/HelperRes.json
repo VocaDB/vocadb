@@ -1,6 +1,6 @@
 {
   "ActivityFeedHelper": {
-    "At": "-",
+    "At": "于",
     "CreatedNew": "创建新{{0}}",
     "EntryAlbum": "专辑",
     "EntryArtist": "艺术家",
@@ -10,7 +10,7 @@
     "EntryTag": "标签",
     "EntryVenue": "会场",
     "Someone": "贡献者",
-    "Updated": "已更新 {{0}}"
+    "Updated": "更新于 {{0}}"
   },
   "AlbumHelpers": {
     "Released": "发行"
@@ -18,7 +18,7 @@
   "Helper": {
     "Added": "添加",
     "DraftIconTitle": "此条目是草稿。",
-    "DraftMessage": "此条目是草稿。你能通过编辑条目并添加缺失信息来提供帮助。",
+    "DraftMessage": "此条目是草稿。你可以通过编辑条目并添加缺失信息来提供帮助。",
     "EntryIsMissingInformation": "此条目缺少下列信息：",
     "EntryValidationNoErrors": "此条目包含了所有必要信息。",
     "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为已完成（非草稿）。",
