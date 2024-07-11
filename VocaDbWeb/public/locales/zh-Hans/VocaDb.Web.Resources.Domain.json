@@ -11,21 +11,21 @@
     "Spamming": "刷屏"
   },
   "EntryTypeNames": {
-    "Album": "Album",
-    "Artist": "Artist",
-    "DiscussionTopic": "Topic",
+    "Album": "专辑",
+    "Artist": "艺术家",
+    "DiscussionTopic": "主题",
     "PV": "PV",
-    "ReleaseEvent": "Event",
-    "ReleaseEventSeries": "Event series",
-    "Song": "Song",
-    "SongList": "Song list",
-    "Tag": "Tag",
-    "Undefined": "Anything",
-    "User": "User",
-    "Venue": "Venue"
+    "ReleaseEvent": "活动",
+    "ReleaseEventSeries": "活动系列",
+    "Song": "歌曲",
+    "SongList": "歌曲列表",
+    "Tag": "标签",
+    "Undefined": "任意",
+    "User": "用户",
+    "Venue": "会场"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "输入报告",
+    "User": "用户"
   }
 }
