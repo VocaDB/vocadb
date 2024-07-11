@@ -44,7 +44,7 @@
     "MostUsedLanguages": "最常用的语言：",
     "RatedAlbums": "{{0}} 个专辑评分",
     "RatedSongs": "{{0}} 个曲目评分",
-    "RatedSongsTotal": "{{0}} rated songs total",
+    "RatedSongsTotal": "共计{{0}}高分歌曲",
     "RecentAlbums": "近期专辑",
     "RecentEvents": "近期活动",
     "RecentSongs": "近期歌曲/PV",
