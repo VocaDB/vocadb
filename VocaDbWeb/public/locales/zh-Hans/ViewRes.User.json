@@ -77,13 +77,13 @@
     "TagVotes": "标签添加数",
     "Total": "总计{{0}}",
     "TotalEdits": "总编辑数",
-    "TwitterAccount": "Twitter account",
+    "TwitterAccount": "Twitter账户",
     "UserDetails": "User details",
     "UserGroup": "User group",
     "UserName": "Name",
-    "VerifiedAccount": "Verified artist",
+    "VerifiedAccount": "已验证艺人",
     "VerifiedEmail": "已验证邮箱",
-    "VerifiedOwner": "Verified owner",
+    "VerifiedOwner": "已验证所有者",
     "Veteran": "{{0}} veteran",
     "VisibleOnlyToMe": "Visible only to me and staff."
   },
@@ -95,20 +95,20 @@
     "GroupByRating": "Group by rating"
   },
   "ForgotPassword": {
-    "CaptchaIsInvalid": "CAPTCHA is invalid.",
-    "EmailIsRequired": "Email is required",
+    "CaptchaIsInvalid": "验证码无效。",
+    "EmailIsRequired": "电子邮箱地址为必填项",
     "MessageSent": "If the provided information matches our records, you should receive email shortly. If not, check that the username and email match, and that the account is not disabled. If the email still doesn't arrive, contact a moderator.",
     "RequestPasswordReset": "Request password reset",
     "SendRequest": "Send request",
-    "UnableToProcessRequest": "Unable to process request",
+    "UnableToProcessRequest": "无法处理请求",
     "UsernameDoesNotMatch": "Username or email doesn't match.",
-    "UsernameIsRequired": "Username is required"
+    "UsernameIsRequired": "用户名为必填项"
   },
   "Index": {
-    "Group": "Group",
+    "Group": "组",
     "KnowsLanguage": "Knows language",
-    "ShowDisabledUsers": "Show disabled accounts",
-    "VerifiedArtists": "Artist accounts"
+    "ShowDisabledUsers": "显示已停用账户",
+    "VerifiedArtists": "艺术家账户"
   },
   "Login": {
     "DoLogin": "登录",
