@@ -1,13 +1,13 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "Broken PV",
-    "Duplicate": "Duplicate entry",
-    "Inappropriate": "Inappropriate content",
-    "InvalidInfo": "Invalid or missing information",
-    "MaliciousIP": "Malicious IP",
-    "Other": "Other (specify in notes)",
-    "OwnershipClaim": "Ownership claim",
-    "RemovePermissions": "Restricted editing",
+    "BrokenPV": "损坏的PV",
+    "Duplicate": "重复条目",
+    "Inappropriate": "不适当的内容",
+    "InvalidInfo": "无效或缺少信息",
+    "MaliciousIP": "恶意IP",
+    "Other": "其他（在备注中具体说明）",
+    "OwnershipClaim": "所有权认领",
+    "RemovePermissions": "编辑受限",
     "Spamming": "刷屏"
   },
   "EntryTypeNames": {
@@ -25,7 +25,7 @@
     "Venue": "会场"
   },
   "WebhookEventNames": {
-    "EntryReport": "输入报告",
+    "EntryReport": "条目报告",
     "User": "用户"
   }
 }
