@@ -5,7 +5,7 @@
     "ArtistType": "艺术家类型",
     "Description": "请填写关于这位艺术家的简短描述（非强制，但推荐填写）",
     "Draft": "此条目是草稿。",
-    "ExternalLink": "外部链接 (艺术家网站, Hatsune Miku wiki, NND MyList 等)",
+    "ExternalLink": "外部链接（艺术家网站、Hatsune Miku wiki、NND MyList等）",
     "Name": "名称（至少需要一个）",
     "NameHelp": "如果条目存在一个非英语（如日语）或未知语言名称，请将其输入非英语名称字段。如果已知，请同时输入罗马化名称。如果有已知的官方英语名称或英语翻译，请将其输入英语名称字段。",
     "NeedWebLinkOrDescription": "您需要输入描述或外部链接。",
