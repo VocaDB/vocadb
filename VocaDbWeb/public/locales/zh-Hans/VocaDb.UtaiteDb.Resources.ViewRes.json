@@ -9,14 +9,14 @@
   },
   "HomeRes": {
     "SiteDescription": "UtaiteDB is an utaite music database with detailed information for artists, albums and songs.",
-    "Welcome": "欢迎来到Utaite数据库！",
+    "Welcome": "欢迎来到Utaite Database！",
     "WelcomeSubtitle": "The collaborative database with utaite artists, discography, PVs and more."
   },
   "LayoutRes": {
     "Keywords": "Utaite, UtaiteDB, Utaite数据库",
     "PaypalDonateTitle": "UtaiteDB是一个非盈利性的网站。所有捐款将用于网站建设、支付服务器费用以及获得程序许可证。",
     "SiteName": "UtaiteDB",
-    "SiteTitle": "Utaite数据库"
+    "SiteTitle": "Utaite Database"
   },
   "SongRes": {
     "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
