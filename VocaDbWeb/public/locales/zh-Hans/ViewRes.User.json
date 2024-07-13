@@ -13,7 +13,7 @@
     "Captcha": "验证码",
     "CaptchaInvalid": "验证码无效。",
     "DoRegister": "注册",
-    "DuplicateUserWarning": "请注意，禁止为了提升评分而创建多个账户，并将导致账户被封禁。 如果您忘记了您的密码，请重设或联系工作人员。",
+    "DuplicateUserWarning": "请注意，禁止为了提升评分而创建多个账户，并将导致账户被封禁。 如果你忘记了密码，请重设或联系工作人员。",
     "Email": "电子邮箱地址（必填）",
     "EmailIsRequired": "电子邮箱地址不能为空。",
     "EmailNote": "其他用户不会看到您的电子邮件地址。请确保您输入的地址是有效的。忘记密码时需要通过该邮件地址找回。要添加用户头像，您需要将您的电子邮件地址与Gravatar绑定。电子邮件地址可以在日后更换。",
@@ -84,7 +84,7 @@
     "VerifiedAccount": "已验证艺人",
     "VerifiedEmail": "已验证邮箱",
     "VerifiedOwner": "已验证所有者",
-    "Veteran": "{{0}}老玩家",
+    "Veteran": "{{0}}资深用户",
     "VisibleOnlyToMe": "仅对我和员工可见"
   },
   "EntryEdits": {
@@ -164,7 +164,7 @@
     "AnonymousActivity": "允许我的用户名显示在最近的活动列表中。",
     "Automatic": "（自动）",
     "ChangePassword": "更改密码",
-    "ChangePasswordNotice": "如果您想要更改您的密码，您只需要填写这些信息。",
+    "ChangePasswordNotice": "你如果想要更改密码，只需要填写这些信息。",
     "Connect": "连接",
     "Connectivity": "连接性",
     "CultureName": "日期和数字格式",
@@ -206,7 +206,7 @@
     "SongList": "歌曲列表"
   },
   "RequestVerification": {
-    "ArtistTitle": "您申请核实的条目名称：（必填）",
+    "ArtistTitle": "你申请核实的条目名称：（必填）",
     "Login": "登陆",
     "MessageTitle": "其余信息：（选填）",
     "NoPrivateMessage": "下方所填地址即证明材料",
