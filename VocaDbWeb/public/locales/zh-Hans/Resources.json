@@ -303,7 +303,7 @@
   },
   "VenueEditableFieldNames": {
     "Address": "地址",
-    "AddressCountryCode": "国家 / 地区",
+    "AddressCountryCode": "国家/地区",
     "Coordinates": "坐标",
     "Description": "描述",
     "Names": "名称",
