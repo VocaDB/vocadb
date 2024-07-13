@@ -10,7 +10,7 @@
     "EntryTag": "标签",
     "EntryVenue": "会场",
     "Someone": "贡献者",
-    "Updated": "更新于 {{0}}"
+    "Updated": "更新于{{0}}"
   },
   "AlbumHelpers": {
     "Released": "发行"
@@ -37,7 +37,7 @@
     "StatusDescriptionDraft": "此条目处于草稿状态，缺失部分必要信息。",
     "StatusDescriptionFinished": "已完成条目中包含了所有必要信息，但还未经过核准。",
     "StatusDescriptionLocked": "锁定的条目只能由工作人员编辑。",
-    "UploadPictureInfo": "Allowed types: {{0}}. 大小上限为 {{1}} MB请尊重版权，如果可行的话，请在注释/描述中提及图片来源。",
+    "UploadPictureInfo": "允许类型：{{0}}。大小上限：{{1}}MB。请尊重版权，如果可行的话，请在注释/描述中提及图片来源。",
     "WebLinkCategoryTitle": "类别",
     "WebLinkDescriptionTitle": "描述",
     "WebLinkNewRow": "新行",
