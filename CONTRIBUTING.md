@@ -17,7 +17,9 @@ VocaDB is open source, just fork and send a pull request.
 
 ## If you are a programmer
 
-Take a look at the code and [instructions for setting up the development environment](https://github.com/VocaDB/vocadb/wiki/VocaDB-development-environment).
+Take a look at the code and instructions for setting up the development environment:
+- https://wiki.vocadb.net/docs/development/vocadb-development-environment-linux
+- https://wiki.vocadb.net/docs/development/vocadb-development-environment-windows
 
 Any bugs and change requests are to be reported here, on the issues tab. 
 If you think you could help, take a look at the list of reported issues, 
