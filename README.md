@@ -9,7 +9,7 @@ The same software is used for [UtaiteDB](https://utaitedb.net/) and [TouhouDB](h
 
 ## How to contribute
 
-Take a look at the code and instructions for setting up the development environment ([Windows](https://wiki.vocadb.net/docs/development/vocadb-development-environment-windows) or [Linux](https://wiki.vocadb.net/docs/development/vocadb-development-environment-windows)).
+Take a look at the code and instructions for setting up the development environment ([Windows](https://wiki.vocadb.net/docs/development/vocadb-development-environment-windows) or [Linux](https://wiki.vocadb.net/docs/development/vocadb-development-environment-linux)).
 
 Any bugs and change requests are to be reported here, on the issues tab. 
 If you think you could help, take a look at the list of reported issues, 
