@@ -9,7 +9,7 @@ The same software is used for [UtaiteDB](https://utaitedb.net/) and [TouhouDB](h
 
 ## How to contribute
 
-Take a look at the code and instructions for setting up the development environment ([Windows](https://github.com/VocaDB/vocadb/wiki/VocaDB-development-environment-(Windows)) or [Linux](https://github.com/VocaDB/vocadb/wiki/VocaDB-development-environment-(Linux))).
+Take a look at the code and instructions for setting up the development environment ([Windows](https://wiki.vocadb.net/docs/development/vocadb-development-environment-windows) or [Linux](https://wiki.vocadb.net/docs/development/vocadb-development-environment-linux)).
 
 Any bugs and change requests are to be reported here, on the issues tab. 
 If you think you could help, take a look at the list of reported issues, 
@@ -17,7 +17,7 @@ create a fork and you can fix it there and create a pull request back to the mai
 
 ## Web API
 
-We have a [comprehensive web API](https://github.com/VocaDB/vocadb/wiki/Public-API) for programmatic access. The [full list of available endpoints](https://vocadb.net/swagger/index.html) is documented using OpenAPI. Please take a look if you're interested.
+We have a [comprehensive web API](https://wiki.vocadb.net/docs/development/public-api) for programmatic access. The [full list of available endpoints](https://vocadb.net/swagger/index.html) is documented using OpenAPI. Please take a look if you're interested.
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbMTU1OTQyODkxOV19
 -->
