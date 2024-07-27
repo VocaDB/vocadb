@@ -22,7 +22,8 @@
     "Tag": "Tunniste",
     "Undefined": "Mitä tahansa",
     "User": "Käyttäjä",
-    "Venue": "Venue"
+    "Venue": "Venue",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",
