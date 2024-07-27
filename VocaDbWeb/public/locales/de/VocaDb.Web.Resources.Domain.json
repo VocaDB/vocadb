@@ -22,7 +22,8 @@
     "Tag": "Schlagwort",
     "Undefined": "Alles",
     "User": "Benutzer",
-    "Venue": "Veranstaltungsort"
+    "Venue": "Veranstaltungsort",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "Eintrag-Fehlermeldung",
