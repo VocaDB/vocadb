@@ -1,3 +1,6 @@
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Helpers;
+
 namespace VocaDb.Model.Domain.Tags;
 
 public interface IEntryWithTags : IEntryBase
@@ -11,7 +14,12 @@ public interface IEntryWithTags : IEntryBase
 
 	public string TagTarget()
 	{
-		var entryType = EntryType == EntryType.ReleaseEventSeries ? EntryType.ReleaseEvent : EntryType;
+		var entryType = EntryType;
+		if (entryType == EntryType.ReleaseEventSeries) entryType = EntryType.ReleaseEvent;
+		if (entryType == EntryType.Artist && ArtistHelper.VoiceSynthesizerTypes.Contains((ArtistType) TagSubtype()))
+		{
+			return $"voicesynthesizer:{TagSubtype().ToString().ToLower()}";
+		}
 		return $"{entryType.ToString().ToLower()}:{TagSubtype().ToString().ToLower()}";
 	}
 

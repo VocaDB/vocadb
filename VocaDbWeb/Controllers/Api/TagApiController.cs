@@ -428,7 +428,7 @@ public class TagApiController : ApiController
 				if (contract.WebLinks is null)
 					throw new InvalidFormException("WebLinks list was null");
 				
-				string[] possibleTagTargetTypes = {"album", "artist", "releaseevent", "song"};
+				string[] possibleTagTargetTypes = {"album", "artist", "releaseevent", "song", "voicesynthesizer", "all"};
 				
 				// TODO: Filter by allowed types (server config)
 				var possibleTagTargetSubtypes = Enum.GetValues<SongType>()
@@ -437,6 +437,7 @@ public class TagApiController : ApiController
 					.Concat(Enum.GetValues<DiscType>().Select(val => val.ToString()))
 					.Concat(Enum.GetValues<ArtistType>().Select(val => val.ToString()))
 					.Select(val => val.ToLower());
+				
 				contract.NewTargets.ForEach(target =>
 				{
 					var elements = target.Split(":");

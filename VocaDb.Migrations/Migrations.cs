@@ -4,6 +4,31 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2024_07_18_0000)]
+public class MigrateTagTargetsVoiceSynthesizer : Migration
+{
+	public override void Up()
+	{
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'voicesynthesizer'
+			from tags
+			where (Targets & 2) = 2 and Targets != 1073741823;
+		");
+		
+		Execute.Sql($@"
+			insert into {TableNames.TagTargets} (TagId, TargetType)
+			select id, 'all'
+			from tags
+			where Targets = 1073741823;
+		");
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration((2024_07_01_0000))]
 public class MigrateTagTargets : Migration
 {

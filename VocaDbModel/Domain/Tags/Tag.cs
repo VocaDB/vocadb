@@ -449,6 +449,8 @@ public class Tag :
 	public virtual bool IsValidFor<T>(T entry) where T: IEntryWithTags
 	{
 		if (entry.EntryType == EntryType.SongList) return true;
+		if (NewTargets.Contains("all")) return true;
+		var x = entry.TagTarget();
 		return NewTargets.Any(n => n == entry.TagTarget() || entry.TagTarget().StartsWith(n + ':'));
 	}
 

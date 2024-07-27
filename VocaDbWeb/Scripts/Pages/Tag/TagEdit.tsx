@@ -23,6 +23,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
@@ -91,7 +92,7 @@ const TagEditLayout = observer(
 		const vdb = useVdb();
 
 		const allNewTagTargetTypes: [
-			EntryType,
+			string,
 			SongType[] | AlbumType[] | ArtistType[] | EventCategory[],
 			string,
 		][] = [
@@ -107,7 +108,14 @@ const TagEditLayout = observer(
 			],
 			[
 				EntryType.Artist,
-				vdb.values.artistTypes,
+				vdb.values.artistTypes.filter(
+					(a) => !ArtistHelper.isVoiceSynthesizerType(a),
+				),
+				'VocaDb.Model.Resources:ArtistTypeNames.',
+			],
+			[
+				'VoiceSynthesizer',
+				vdb.values.artistTypes.filter(ArtistHelper.isVoiceSynthesizerType),
 				'VocaDb.Model.Resources:ArtistTypeNames.',
 			],
 			[
@@ -416,8 +424,23 @@ const TagEditLayout = observer(
 						>
 							{allNewTagTargetTypes.map(([entryType, targetSubtypes, i18n]) => (
 								<div key={entryType}>
-									{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
-									<br />
+									<div style={{ marginBottom: 5 }}>
+										<input
+											type="checkbox"
+											checked={tagEditStore.hasTagTarget(
+												entryType.toLowerCase(),
+											)}
+											onChange={(e): void => {
+												tagEditStore.toggleTarget(entryType.toLowerCase());
+											}}
+											style={{ marginRight: 5 }}
+										/>
+										<b>
+											{t(
+												`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
+											)}
+										</b>
+									</div>
 									<div
 										style={{
 											display: 'grid',

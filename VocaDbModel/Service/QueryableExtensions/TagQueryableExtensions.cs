@@ -107,7 +107,7 @@ public static class TagQueryableExtensions
 		if (target.Contains("releaseeventseries"))
 			target = target.Replace("releaseeventseries", "releaseevent");
 
-		return query.Where(t => t.NewTargets.Any(n => n == target || target.StartsWith(n + ':')));
+		return query.Where(t => t.NewTargets.Any(n => n == "all" || n == target || target.StartsWith(n + ':')));
 	}
 }
 

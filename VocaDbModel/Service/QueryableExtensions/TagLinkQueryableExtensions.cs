@@ -3,6 +3,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.QueryableExtensions;
 
@@ -18,14 +19,14 @@ public static class TagLinkQueryableExtensions
 	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, string? target) where T : ITagLink
 	{
 		if (target == null) return query;
-		
-		var lowerTarget = target.Lower();
-		return query.Where(t => t.Tag.NewTargets.Any(n => n == lowerTarget));
+
+		return query.Where(t => t.Tag.NewTargets.Any(n => n == target.ToLower()));
 	}
 	
 	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, ArtistType a) where T : ITagLink
 	{
-		return query.WhereTagHasTarget($"artist:{a.ToString()}");
+		var entryType = ArtistHelper.IsVoiceSynthesizer(a) ? "voicesynthesizer" : "artist";
+		return query.WhereTagHasTarget($"{entryType}:{a.ToString()}");
 	}
 	
 	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, DiscType d) where T : ITagLink
