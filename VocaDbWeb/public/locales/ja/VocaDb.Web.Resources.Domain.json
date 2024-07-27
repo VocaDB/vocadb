@@ -22,7 +22,8 @@
     "Tag": "タグ",
     "Undefined": "すべて",
     "User": "ユーザー",
-    "Venue": "Venue"
+    "Venue": "Venue",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",
