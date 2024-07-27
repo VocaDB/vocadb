@@ -1,8 +1,12 @@
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
-import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
+import {
+	UserLink,
+	getUserLinkStyle,
+} from '@/Components/Shared/Partials/User/UserLink';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { ImageSize } from '@/Models/Images/ImageSize';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +17,7 @@ interface UserIconLink_UserForApiContractProps {
 	size?: number;
 	userInfo?: boolean;
 	tooltip?: boolean;
+	indicateUserGroup?: boolean;
 }
 
 export const UserIconLink_UserForApiContract = ({
@@ -20,8 +25,10 @@ export const UserIconLink_UserForApiContract = ({
 	size = 20,
 	userInfo = false,
 	tooltip = false,
+	indicateUserGroup = false,
 }: UserIconLink_UserForApiContractProps): React.ReactElement => {
 	const { t } = useTranslation(['Resources']);
+	const style = getUserLinkStyle(user, indicateUserGroup);
 
 	return tooltip ? (
 		<UserLink
@@ -34,6 +41,7 @@ export const UserIconLink_UserForApiContract = ({
 					  }` /* LOC */
 					: undefined
 			}
+			style={style}
 		>
 			<ProfileIcon
 				url={
@@ -55,6 +63,7 @@ export const UserIconLink_UserForApiContract = ({
 					  }` /* LOC */
 					: undefined
 			}
+			style={style}
 		>
 			<ProfileIcon
 				url={

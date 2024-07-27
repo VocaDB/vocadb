@@ -47,7 +47,7 @@ export const CommentBodyLarge = observer(
 						)}
 					</div>
 					<h3 className="media-heading comment-large-header">
-						<UserLink user={contract.author} />
+						<UserLink indicateUserGroup user={contract.author} />
 					</h3>
 					<FormatMarkdown text={contract.message} />
 				</div>
