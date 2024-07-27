@@ -1,17 +1,17 @@
 {
   "DiscTypeNames": {
-    "Album": "Original album",
-    "Artbook": "Artbook",
-    "Compilation": "Compilation",
-    "EP": "E.P.",
-    "Fanmade": "Album",
-    "Game": "Game",
-    "Instrumental": "Instrumental",
-    "Other": "Other",
-    "Single": "Single",
-    "SplitAlbum": "Split album",
-    "Unknown": "Not specified",
-    "Video": "Video",
-    "Drama": "Drama"
+    "Album": "原专辑",
+    "Artbook": "艺术集",
+    "Compilation": "合辑",
+    "EP": "迷你专辑",
+    "Fanmade": "专辑",
+    "Game": "游戏",
+    "Instrumental": "纯乐器",
+    "Other": "其他",
+    "Single": "单曲",
+    "SplitAlbum": "合发专辑",
+    "Unknown": "未指定",
+    "Video": "视频",
+    "Drama": "短剧"
   }
 }

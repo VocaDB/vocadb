@@ -1,6 +1,6 @@
 {
   "ActivityFeedHelper": {
-    "At": "-",
+    "At": "于",
     "CreatedNew": "创建新{{0}}",
     "EntryAlbum": "专辑",
     "EntryArtist": "艺术家",
@@ -10,7 +10,7 @@
     "EntryTag": "标签",
     "EntryVenue": "会场",
     "Someone": "贡献者",
-    "Updated": "已更新 {{0}}"
+    "Updated": "更新于{{0}}"
   },
   "AlbumHelpers": {
     "Released": "发行"
@@ -18,13 +18,13 @@
   "Helper": {
     "Added": "添加",
     "DraftIconTitle": "此条目是草稿。",
-    "DraftMessage": "此条目是草稿。你能通过编辑条目并添加缺失信息来提供帮助。",
+    "DraftMessage": "此条目是草稿。你可以通过编辑条目并添加缺失信息来提供帮助。",
     "EntryIsMissingInformation": "此条目缺少下列信息：",
     "EntryValidationNoErrors": "此条目包含了所有必要信息。",
     "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为已完成（非草稿）。",
     "EntryValidationWarningDetails": "详细信息",
-    "GitHubMarkdown": "支持GitHub式Markdown语言",
-    "IsSupportedForFormatting": "支持格式化",
+    "GitHubMarkdown": "GitHub式Markdown",
+    "IsSupportedForFormatting": "受支持",
     "NameLangTitle": "语言",
     "NameNewRow": "新行",
     "NameValueTitle": "名称（必填）",
@@ -37,11 +37,11 @@
     "StatusDescriptionDraft": "此条目处于草稿状态，缺失部分必要信息。",
     "StatusDescriptionFinished": "已完成条目中包含了所有必要信息，但还未经过核准。",
     "StatusDescriptionLocked": "锁定的条目只能由工作人员编辑。",
-    "UploadPictureInfo": "Allowed types: {{0}}. 大小上限为 {{1}} MB请尊重版权，如果可行的话，请在注释/描述中提及图片来源。",
+    "UploadPictureInfo": "允许类型：{{0}}。大小上限：{{1}}MB。请尊重版权，如果可行的话，请在注释/描述中提及图片来源。",
     "WebLinkCategoryTitle": "类别",
     "WebLinkDescriptionTitle": "描述",
     "WebLinkNewRow": "新行",
-    "WebLinkUrlTitle": "链接地址"
+    "WebLinkUrlTitle": "URL"
   },
   "SongHelpers": {
     "FromAlbum": "来自专辑"

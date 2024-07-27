@@ -22,7 +22,8 @@
     "Tag": "crwdns16753:0crwdne16753:0",
     "Undefined": "crwdns16755:0crwdne16755:0",
     "User": "crwdns16757:0crwdne16757:0",
-    "Venue": "crwdns16759:0crwdne16759:0"
+    "Venue": "crwdns16759:0crwdne16759:0",
+    "VoiceSynthesizer": "crwdns16932:0crwdne16932:0"
   },
   "WebhookEventNames": {
     "EntryReport": "crwdns16761:0crwdne16761:0",

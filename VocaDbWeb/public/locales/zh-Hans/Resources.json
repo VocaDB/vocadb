@@ -122,7 +122,7 @@
     "Default": "原语言",
     "English": "英文",
     "Japanese": "非英文",
-    "Romaji": "罗马音",
+    "Romaji": "罗马文",
     "Unspecified": "未定义"
   },
   "DiscTypeDescriptions": {
@@ -151,7 +151,7 @@
     "Admin": "数据库管理任务",
     "AddRawFileMedia": "添加原始媒介",
     "ApplyAnyTag": "向条目添加任何标签",
-    "ApproveEntries": "批准条目",
+    "ApproveEntries": "核准条目",
     "BulkDeletePVs": "批量删除PV",
     "CreateComments": "添加注释",
     "DeleteComments": "删除注释",
@@ -159,7 +159,7 @@
     "DesignatedStaff": "指派工作人员",
     "DisableUsers": "停用用户",
     "EditAllSongLists": "编辑全部曲目列表",
-    "EditFeaturedLists": "管理特约曲目列表",
+    "EditFeaturedLists": "管理精选曲目列表",
     "EditNews": "管理新消息",
     "EditProfile": "编辑个人资料",
     "EditTags": "编辑标签",
@@ -241,7 +241,7 @@
     "Status": "状态",
     "WebLinks": "外部链接",
     "ReleaseEvent": "发行活动",
-    "ReleaseEvents": "Release events",
+    "ReleaseEvents": "发行活动",
     "Bpm": "BPM",
     "CultureCodes": "语言"
   },
@@ -258,7 +258,7 @@
     "Concerts": "音乐会曲目列表",
     "Nothing": "无",
     "Other": "其他",
-    "Pools": "Pools",
+    "Pools": "资源",
     "VocaloidRanking": "Vocaloid排行"
   },
   "SongSortRuleNames": {
@@ -303,7 +303,7 @@
   },
   "VenueEditableFieldNames": {
     "Address": "地址",
-    "AddressCountryCode": "国家 / 地区",
+    "AddressCountryCode": "国家/地区",
     "Coordinates": "坐标",
     "Description": "描述",
     "Names": "名称",

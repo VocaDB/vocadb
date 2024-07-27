@@ -1,7 +1,7 @@
 {
   "PagedList": {
-    "First": "最前页",
-    "Last": "最后页",
+    "First": "第一页",
+    "Last": "最后一页",
     "Next": "下一页",
     "Previous": "上一页"
   }

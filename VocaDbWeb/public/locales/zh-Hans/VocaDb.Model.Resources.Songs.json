@@ -1,19 +1,19 @@
 {
   "SongTypeNames": {
-    "Arrangement": "Arrangement",
+    "Arrangement": "重编曲",
     "Cover": "翻唱曲",
     "DramaPV": "短剧PV",
-    "Illustration": "Illustration",
-    "Instrumental": "纯音乐",
-    "Live": "Live recording",
+    "Illustration": "插画",
+    "Instrumental": "纯乐器",
+    "Live": "现场录音",
     "Mashup": "混搭曲",
     "MusicPV": "音乐PV",
     "Original": "原创曲",
     "Other": "其他",
-    "Remaster": "重调版",
+    "Remaster": "Remaster",
     "Remix": "Remix",
-    "Unspecified": "未定义",
-    "Rearrangement": "Rearrangement",
-    "ShortVersion": "Short version"
+    "Unspecified": "未指定",
+    "Rearrangement": "二次重编曲",
+    "ShortVersion": "简短版本"
   }
 }

@@ -1,43 +1,43 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
-    "Default": "Default",
+    "Dancer": "舞者",
+    "Default": "默认",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Instrumentalist": "演奏者",
+    "Organizer": "组织者",
+    "Other": "其他",
+    "OtherPerformer": "其他表演者",
+    "Promoter": "促销者",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "Vocalist": "歌手",
+    "VoiceManipulator": "调教"
   },
   "EventCategoryNames": {
-    "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
-    "Club": "Club",
-    "Concert": "Concert",
-    "Contest": "Contest",
-    "Festival": "Festival",
-    "Convention": "Convention",
-    "Other": "Other",
-    "Unspecified": "Unspecified"
+    "AlbumRelease": "专辑发行版",
+    "Anniversary": "角色纪念日",
+    "Club": "聚会",
+    "Concert": "音乐会",
+    "Contest": "比赛",
+    "Festival": "节日",
+    "Convention": "集会",
+    "Other": "其他",
+    "Unspecified": "未指定"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "添加日期",
+    "Date": "日期",
+    "Name": "名称",
+    "SeriesName": "系列",
+    "VenueName": "会场"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Picture": "Main picture",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Category": "类别",
+    "Description": "描述",
+    "Name": "名称",
+    "Names": "名称",
+    "OriginalName": "默认名称语言",
+    "Picture": "主图",
+    "Status": "状态",
+    "WebLinks": "外部链接"
   }
 }

@@ -1,16 +1,16 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
-    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "与此专辑关联的艺术家。",
+    "NewAlbumInfo": "专辑需要至少有一首与Touhou相关的曲目，才能上传到TouhouDB。非官方的粉丝制作的合辑（盗版）也是不允许的。有关更多信息，请参阅帮助/指南。"
   },
   "ArtistRes": {
-    "AuthoredBy": "TouhouDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
+    "AuthoredBy": "Touhou账户",
+    "NewArtistExternalLink": "外部链接（艺术家网站、Touhou Wiki、NND MyList等）"
   },
   "HomeRes": {
-    "SiteDescription": "TouhouDB is a Touhou music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to Touhou music database!",
-    "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
+    "SiteDescription": "TouhouDB是一个收录艺术家、专辑和歌曲详细信息的东方音乐数据库。",
+    "Welcome": "欢迎来到东方音乐数据库！",
+    "WelcomeSubtitle": "一个拥有大量东方音乐和有关的艺术家、专辑和PV等信息的合作性数据库。"
   },
   "LayoutRes": {
     "Keywords": "Touhou",
@@ -19,10 +19,10 @@
     "SiteTitle": "Touhou Music Database"
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
-    "RankingsTitle": "TouhouDB song rankings"
+    "NewSongInfo": "请确保您要提交的歌曲以前未被添加。你至少需要输入名称和艺术家。强烈建议链接到原PV。",
+    "RankingsTitle": "TouhouDB歌曲排行"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Touhou music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your TouhouDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\t如果你是制作人、画师、动画师或任何其他与东方音乐、视频相关的创作者，\n\t\t\t或者团体代表，你都可以用这个表格，向网站员工请求验证账户。\n\t\t\t验证后，您的帐户名将显示在艺术家条目页面上，反之亦然。\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t您需要提供某种证明，证明你是该条目的合法所有者，否则你的请求可能会被拒绝。\n\t\t\t</strong>\n\t\t\t例如，在你的Twitter或博客上发帖并链接到你的TouhouDB账户，证明你是此人。\n\t\t\t<strong>\n\t\t\t\t你还应该在网站上至少有一两首被接受并最终确定的歌曲。\n\t\t\t\t如果别人还没有提交，你可以自己提交。\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\t验证后，你可以批准你的艺术家条目，限制谁可以编辑它。\n\t\t\t目前，只有艺术家条目本身可以通过这种方式得到“保护” - 歌曲和专辑不受影响。\n\t\t</p>\n\t\t<p>\n\t\t\t请理解我们保留拒绝你的请求的权利。原因可能包括上述任何一种。\n\t\t\t除非拒绝请求的原因太明显了，我们会尝试联系你，请你纠正错误，以便批准请求。\n\t\t</p>"
   }
 }

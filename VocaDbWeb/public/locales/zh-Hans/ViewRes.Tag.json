@@ -1,7 +1,7 @@
 {
   "Details": {
-    "AliasedTo": "Aliased to",
-    "Aliases": "Aliases",
+    "AliasedTo": "别名于",
+    "Aliases": "别名",
     "AllAlbums": "所有专辑",
     "AllArtists": "所有艺术家",
     "AllEntries": "所有条目",
@@ -17,15 +17,15 @@
     "MappedTags": "以下NicoNico标签已映射到此标签",
     "Overview": "总览",
     "RelatedTags": "相关标签",
-    "Siblings": "Siblings",
+    "Siblings": "关联",
     "Tag": "标签",
     "TagDetails": "标签详情",
     "TopAlbums": "专辑排行",
     "TopArtists": "艺术家排行",
     "TopEvents": "活动排行",
     "TopSongs": "歌曲排行",
-    "Translations": "翻译",
+    "Translations": "译文",
     "UnfollowTag": "取消关注",
-    "ValidFor": "Valid for"
+    "ValidFor": "适用于"
   }
 }

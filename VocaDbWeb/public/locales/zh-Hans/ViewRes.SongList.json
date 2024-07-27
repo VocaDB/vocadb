@@ -17,19 +17,19 @@
     "CreateTitle": "创建新歌单",
     "Description": "描述",
     "EditTitle": "编辑列表 - {{0}}",
-    "EventDate": "Event date",
-    "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
-    "FeaturedCategory": "Featured category",
-    "Name": "Name",
-    "RemoveFromList": "Remove from list",
-    "Status": "Entry status",
-    "TabProperties": "Properties",
-    "TabSongs": "Songs",
-    "Thumbnail": "Thumbnail",
-    "UnableToSave": "Unable to save list"
+    "EventDate": "活动日期",
+    "EventDateHelp": "如果这个列表与音乐会或评分等事件有关，则可以在此处输入日期。",
+    "FeaturedCategory": "精选类别",
+    "Name": "名称",
+    "RemoveFromList": "从列表中移除",
+    "Status": "条目状态",
+    "TabProperties": "描述",
+    "TabSongs": "歌曲",
+    "Thumbnail": "缩略图",
+    "UnableToSave": "无法保存列表"
   },
   "Featured": {
-    "Import": "Import from YouTube or NicoNico",
-    "SortBy": "Sort by"
+    "Import": "从YouTube或NicoNico导入",
+    "SortBy": "排序方式"
   }
 }

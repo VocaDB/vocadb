@@ -22,7 +22,8 @@
     "Tag": "태그",
     "Undefined": "아무거나",
     "User": "사용자",
-    "Venue": "장소"
+    "Venue": "장소",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",

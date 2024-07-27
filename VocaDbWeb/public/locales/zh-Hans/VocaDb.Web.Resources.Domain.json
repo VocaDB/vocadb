@@ -1,31 +1,32 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "Broken PV",
-    "Duplicate": "Duplicate entry",
-    "Inappropriate": "Inappropriate content",
-    "InvalidInfo": "Invalid or missing information",
-    "MaliciousIP": "Malicious IP",
-    "Other": "Other (specify in notes)",
-    "OwnershipClaim": "Ownership claim",
-    "RemovePermissions": "Restricted editing",
-    "Spamming": "Spamming"
+    "BrokenPV": "损坏的PV",
+    "Duplicate": "重复条目",
+    "Inappropriate": "不适当的内容",
+    "InvalidInfo": "无效或缺少信息",
+    "MaliciousIP": "恶意IP",
+    "Other": "其他（在备注中具体说明）",
+    "OwnershipClaim": "所有权认领",
+    "RemovePermissions": "编辑受限",
+    "Spamming": "刷屏"
   },
   "EntryTypeNames": {
-    "Album": "Album",
-    "Artist": "Artist",
-    "DiscussionTopic": "Topic",
+    "Album": "专辑",
+    "Artist": "艺术家",
+    "DiscussionTopic": "主题",
     "PV": "PV",
-    "ReleaseEvent": "Event",
-    "ReleaseEventSeries": "Event series",
-    "Song": "Song",
-    "SongList": "Song list",
-    "Tag": "Tag",
-    "Undefined": "Anything",
-    "User": "User",
-    "Venue": "Venue"
+    "ReleaseEvent": "活动",
+    "ReleaseEventSeries": "活动系列",
+    "Song": "歌曲",
+    "SongList": "歌曲列表",
+    "Tag": "标签",
+    "Undefined": "任意",
+    "User": "用户",
+    "Venue": "会场",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "条目报告",
+    "User": "用户"
   }
 }

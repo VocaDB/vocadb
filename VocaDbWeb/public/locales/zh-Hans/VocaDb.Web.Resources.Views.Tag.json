@@ -1,6 +1,6 @@
 {
   "Edit": {
-    "RelatedTags": "Related tags",
-    "ValidationNeedDescription": "Tag should have a description"
+    "RelatedTags": "相关标签",
+    "ValidationNeedDescription": "标签应包含描述"
   }
 }

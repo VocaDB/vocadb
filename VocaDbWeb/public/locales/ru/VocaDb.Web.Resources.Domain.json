@@ -22,7 +22,8 @@
     "Tag": "Tag",
     "Undefined": "Всё",
     "User": "Пользователь",
-    "Venue": "Venue"
+    "Venue": "Venue",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",
