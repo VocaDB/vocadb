@@ -35,7 +35,11 @@ export const PrintComment = observer(
 			<div className="comment">
 				<h3>
 					{/* eslint-disable-next-line react/jsx-pascal-case */}
-					<UserIconLink_UserForApiContract user={contract.author} size={25} />
+					<UserIconLink_UserForApiContract
+						indicateUserGroup
+						user={contract.author}
+						size={25}
+					/>
 
 					{(alwaysAllowDelete ||
 						(allowDelete && loginManager.canDeleteComment(contract))) && (

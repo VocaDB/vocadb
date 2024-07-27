@@ -12,6 +12,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { UserLink } from '../User/UserLink';
+
 interface CommentKnockoutStore {
 	author: UserApiContract;
 	canBeDeleted?: boolean;
@@ -105,13 +107,7 @@ export const CommentKnockout = observer(
 						)}
 					</div>
 					<h3 className="media-heading comment-large-header">
-						<Link
-							to={EntryUrlMapper.details_user_byName(
-								commentKnockoutStore.author.name,
-							)}
-						>
-							{commentKnockoutStore.author.name}
-						</Link>
+						<UserLink indicateUserGroup user={commentKnockoutStore.author} />
 					</h3>
 					{children ?? <CommentBodyKnockout message={message} />}
 				</div>
