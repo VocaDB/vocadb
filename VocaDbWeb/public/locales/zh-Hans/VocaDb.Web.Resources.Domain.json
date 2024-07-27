@@ -22,7 +22,8 @@
     "Tag": "标签",
     "Undefined": "任意",
     "User": "用户",
-    "Venue": "会场"
+    "Venue": "会场",
+    "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
     "EntryReport": "条目报告",
