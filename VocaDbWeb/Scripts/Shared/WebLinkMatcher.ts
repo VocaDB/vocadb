@@ -1229,6 +1229,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
+			url: 'thwbiki.cc/',
+			desc: 'THBWiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
 			url: 'theinterviews.jp/',
 			desc: 'The Interviews',
 			cat: WebLinkCategory.Official,
