@@ -27,9 +27,9 @@ export const USER_GROUP_COLOR = {
 	[UserGroup.Limited]: 'gray',
 	[UserGroup.Nothing]: undefined,
 	[UserGroup.Regular]: undefined,
-	[UserGroup.Trusted]: 'yellow',
-	[UserGroup.Moderator]: 'orange',
-	[UserGroup.Admin]: 'red',
+	[UserGroup.Trusted]: 'orange',
+	[UserGroup.Moderator]: 'red',
+	[UserGroup.Admin]: 'purple',
 };
 
 export const getUserLinkStyle = (
