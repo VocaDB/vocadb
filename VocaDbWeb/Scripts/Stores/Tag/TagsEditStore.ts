@@ -1,6 +1,8 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { TagTargetType } from '@/Models/Tags/TagTargetType';
 import { trim } from 'lodash-es';
@@ -37,7 +39,11 @@ export class TagsEditStore {
 		readonly tagSubtype?: Object,
 		readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {
-		this.target = `${entryType?.toString()}:${tagSubtype?.toString()}`.toLowerCase()
+		let targetEntryType = entryType?.toString();
+		if (entryType === EntryType.Artist && ArtistHelper.isVoiceSynthesizerType(tagSubtype?.toString() as ArtistType)) {
+			targetEntryType = "voicesynthesizer"
+		}
+		this.target = `${targetEntryType}:${tagSubtype?.toString()}`.toLowerCase()
 		makeObservable(this);
 	}
 
