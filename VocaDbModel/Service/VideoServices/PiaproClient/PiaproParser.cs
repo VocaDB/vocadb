@@ -67,26 +67,18 @@ public class PiaproParser
 		// Find both piapro.jp and www.piapro.jp
 		// Note: HtmlAgilityPack does not support regex (XPath 2.0) :(
 		var relatedMovieSpan = doc.DocumentNode.SelectSingleNode(
-			"//a[starts-with(@href, \"/content/relation\")]"
+			"//a[starts-with(@href, \"/content_list_recommend\")]"
 		);
 
 		var relatedMovieMatch = relatedMovieSpan != null
 			? Regex.Match(relatedMovieSpan.Attributes["href"].Value,
-				@"/content/relation/\?id=([\d\w]+)")
+				@"/content_list_recommend/\?id=([\d\w]+)")
 			: null;
 		var contentId = relatedMovieMatch != null && relatedMovieMatch.Success
 			? relatedMovieMatch.Groups[1].Value
 			: null;
 
-		if (!string.IsNullOrEmpty(contentId))
-			return contentId;
-
-		// No anchor element, attempt to find contentId from script element.
-		var scriptElem = doc.DocumentNode.SelectSingleNode("//script[@type = 'application/javascript']");
-		var contentIdMatch = scriptElem != null
-			? Regex.Match(scriptElem.InnerText, @"contentId\s*:\s*['\""]([a-z0-9]+)['\""]")
-			: null;
-		return contentIdMatch != null && contentIdMatch.Success ? contentIdMatch.Groups[1].Value : null;
+		return contentId;
 	}
 
 	private string GetUploadTimestamp(HtmlDocument doc)
