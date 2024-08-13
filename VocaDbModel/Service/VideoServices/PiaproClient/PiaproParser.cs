@@ -74,9 +74,18 @@ public class PiaproParser
 			? Regex.Match(relatedMovieSpan.Attributes["href"].Value,
 				@"/content_list_recommend/\?id=([\d\w]+)")
 			: null;
+
+		var contentTreeList = doc.DocumentNode.SelectSingleNode(
+			"//a[starts-with(@href, \"/content/tree_list\")]"
+		);
+		var contentTreeListMatch = contentTreeList != null
+			? Regex.Match(contentTreeList.Attributes["href"].Value,
+				@"/content/tree_list/([\d\w]+)")
+			: null;
+		
 		var contentId = relatedMovieMatch != null && relatedMovieMatch.Success
 			? relatedMovieMatch.Groups[1].Value
-			: null;
+			: contentTreeListMatch != null && contentTreeListMatch.Success ? contentTreeListMatch.Groups[1].Value : null;
 
 		return contentId;
 	}
