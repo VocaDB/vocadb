@@ -425,7 +425,7 @@ export class WebLinkMatcher {
 		} /* UtaiteDB */,
 		{
 			url: '.ebay.com/',
-			desc: 'EBay',
+			desc: 'eBay',
 			cat: WebLinkCategory.Other,
 		},
 		{
