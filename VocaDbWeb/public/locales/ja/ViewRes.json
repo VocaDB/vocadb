@@ -32,7 +32,7 @@
     "EditTags": "タグを編集する",
     "ExternalLinks": "外部リンク",
     "Hits": "{{0}}ヒット数",
-    "Languages": "Language(s)",
+    "Languages": "言語",
     "LatestComments": "最近のコメント",
     "Link": "リンク",
     "ManageTags": "マネージ",
@@ -58,7 +58,7 @@
     "ShowAllTags": "すべて表示",
     "Social": "ソーシャルメディア",
     "Stats": "統計",
-    "Subject": "Subject",
+    "Subject": "キャラクター",
     "ViewAllComments": "すべてのコメントを表示する",
     "ViewModifications": "更新履歴"
   },

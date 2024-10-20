@@ -1,31 +1,31 @@
 {
   "ActivityFeedHelper": {
-    "At": "a",
-    "CreatedNew": "ha añadido un(a) nuev@ {{0}}",
-    "EntryAlbum": "album",
+    "At": "en",
+    "CreatedNew": "Ha añadido un(a) nuevo/a {{0}}",
+    "EntryAlbum": "álbum",
     "EntryArtist": "artista",
     "EntryReleaseEvent": "evento",
     "EntrySong": "canción",
     "EntrySongList": "lista de canciones",
     "EntryTag": "etiqueta",
-    "EntryVenue": "venue",
-    "Someone": "contribuyente",
-    "Updated": "ha actualizado a un(a) {{0}}"
+    "EntryVenue": "sitio",
+    "Someone": "Un contribuyente",
+    "Updated": "ha actualizado {{0}}"
   },
   "AlbumHelpers": {
     "Released": "Lanzado"
   },
   "Helper": {
     "Added": "añadido",
-    "DraftIconTitle": "Esta entradaes un borrador.",
-    "DraftMessage": "Esta entrada es un borrador. Puedes ayudar editando la entrada y añadiendo la información faltante.",
+    "DraftIconTitle": "Esta entrada es un borrador.",
+    "DraftMessage": "Esta entrada es un borrador. Puedes ayudar si editas la entrada y añades la información que falta.",
     "EntryIsMissingInformation": "A esta entrada le falta la siguiente información:",
-    "EntryValidationNoErrors": "Esta entrada contiene toda la información básica requerida.",
-    "EntryValidationNoErrorsDraft": "Esta entrada contiene toda la información para considerarsele terminada (dejar de ser un borrador).",
+    "EntryValidationNoErrors": "Esta entrada contiene toda la información necesaria.",
+    "EntryValidationNoErrorsDraft": "Esta entrada contiene toda la información necesaria para marcarla como terminada (y no como borrador).",
     "EntryValidationWarningDetails": "Detalles",
     "GitHubMarkdown": "Puedes escribir la descripción en formato Markdown (Tipo GitHub),",
-    "IsSupportedForFormatting": "el cual es soportado por nuestra plataforma.",
-    "NameLangTitle": "idioma",
+    "IsSupportedForFormatting": "funciona en esta página.",
+    "NameLangTitle": "Idioma",
     "NameNewRow": "Nueva fila",
     "NameValueTitle": "Nombre (requerido)",
     "ReturnWithoutSaving": "Regresar sin guardar",
