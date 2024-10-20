@@ -422,52 +422,54 @@ const TagEditLayout = observer(
 								rowGap: 15,
 							}}
 						>
-							{allNewTagTargetTypes.map(([entryType, targetSubtypes, i18n]) => (
-								<div key={entryType}>
-									<div style={{ marginBottom: 5 }}>
-										<input
-											type="checkbox"
-											checked={tagEditStore.hasTagTarget(
-												entryType.toLowerCase(),
-											)}
-											onChange={(e): void => {
-												tagEditStore.toggleTarget(entryType.toLowerCase());
+							{allNewTagTargetTypes
+								.filter(([_0, targetSubtypes, _1]) => targetSubtypes.length > 0)
+								.map(([entryType, targetSubtypes, i18n]) => (
+									<div key={entryType}>
+										<div style={{ marginBottom: 5 }}>
+											<input
+												type="checkbox"
+												checked={tagEditStore.hasTagTarget(
+													entryType.toLowerCase(),
+												)}
+												onChange={(e): void => {
+													tagEditStore.toggleTarget(entryType.toLowerCase());
+												}}
+												style={{ marginRight: 5 }}
+											/>
+											<b>
+												{t(
+													`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
+												)}
+											</b>
+										</div>
+										<div
+											style={{
+												display: 'grid',
+												gridAutoFlow: 'column',
+												gridTemplateRows: 'repeat(10, auto)',
 											}}
-											style={{ marginRight: 5 }}
-										/>
-										<b>
-											{t(
-												`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
-											)}
-										</b>
-									</div>
-									<div
-										style={{
-											display: 'grid',
-											gridAutoFlow: 'column',
-											gridTemplateRows: 'repeat(10, auto)',
-										}}
-									>
-										{targetSubtypes.map((type) => (
-											<div style={{ marginRight: 5 }} key={type}>
-												<input
-													type="checkbox"
-													checked={tagEditStore.hasTagTarget(
-														`${entryType}:${type}`.toLowerCase(),
-													)}
-													onChange={(e): void => {
-														tagEditStore.toggleTarget(
+										>
+											{targetSubtypes.map((type) => (
+												<div style={{ marginRight: 5 }} key={type}>
+													<input
+														type="checkbox"
+														checked={tagEditStore.hasTagTarget(
 															`${entryType}:${type}`.toLowerCase(),
-														);
-													}}
-													style={{ marginRight: 5 }}
-												/>
-												{t(i18n.concat(type))}
-											</div>
-										))}
+														)}
+														onChange={(e): void => {
+															tagEditStore.toggleTarget(
+																`${entryType}:${type}`.toLowerCase(),
+															);
+														}}
+														style={{ marginRight: 5 }}
+													/>
+													{t(i18n.concat(type))}
+												</div>
+											))}
+										</div>
 									</div>
-								</div>
-							))}
+								))}
 						</div>
 					</div>
 
