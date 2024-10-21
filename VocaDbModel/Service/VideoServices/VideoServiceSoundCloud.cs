@@ -103,7 +103,7 @@ public class VideoServiceSoundCloud : VideoService
 
 			result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(
 				$"https://dream-traveler.fly.dev/soundcloud/api?url={url}",
-				timeout: TimeSpan.FromSeconds(10)
+				timeout: TimeSpan.FromSeconds(20)
 			);
 		}
 		catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
