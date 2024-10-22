@@ -7,7 +7,7 @@
     "Draft": "Esta entrada es un borrador.",
     "ExternalLink": "Enlace externo de referencia (al sitio web del artista, Hatsune Miku wiki, NND MyList, etc.)",
     "Name": "Nombre (al menos uno)",
-    "NameHelp": "Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés), o si el idioma es desconocido, escríbalo en la casilla de No-inglés. Si conoces el nombre en romaji (o alfabeto latino), escríbalo en su respectiva casilla. Si el nombre oficial de la entrada es en inglés, o tiene una traducción conocida al inglés, escríbala en la casilla de Inglés.",
+    "NameHelp": "Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés), o si el idioma es desconocido, escríbalo en la casilla de No-inglés. Si conoce el nombre en romaji (o alfabeto latino), escríbalo en su respectiva casilla. Si el nombre oficial de la entrada es en inglés, o tiene una traducción conocida al inglés, escríbalo en la casilla de Inglés.",
     "NeedWebLinkOrDescription": "Debe incluir una descripción o enlace externo.",
     "Optional": "(opcional)",
     "Picture": "Imagen",
@@ -51,19 +51,19 @@
     "ReleaseDate": "Fecha de lanzamiento",
     "Share": "Compartir",
     "SongsPerMonth": "Canciones por mes",
-    "SubscriptionEmail": "Si, notificarme dentro del sitio web de VocaDB y por correo electrónico.",
+    "SubscriptionEmail": "Notificarme tanto en VocaDB como por correo electrónico.",
     "SubscriptionNoNotification": "No recibir notificaciones.",
-    "SubscriptionOnSite": "Si, notificarme dentro del sitio web de VocaDB.",
-    "SubscriptionOptions": "¿Deseas recibir notificaciones cuando este autor, círculo, disquera, etc. lanze nuevas canciones o albumes?",
+    "SubscriptionOnSite": "Notificarme por VocaDB.",
+    "SubscriptionOptions": "Notificaciones de canciones y álbumes nuevos.",
     "TopAlbums": "Albumes populares",
     "TopSongs": "Canciones populares",
     "Unfollow": "Dejar de seguir",
     "ViewModeDetails": "Detalles",
     "ViewModePlayList": "Lista de reproducción",
-    "ViewModeTiles": "Titulos",
+    "ViewModeTiles": "Mosaico",
     "VoiceProvider": "Proveedor de voz",
     "VoiceProviderOf": "Proveedor de voz de",
-    "YouHaveRatedSongs": "Has calificado {{0}} cancion(es) de este artista."
+    "YouHaveRatedSongs": "Has valorado {{0}} canción(es) de este artista."
   },
   "Edit": {
     "BaArtistType": "Tipo de artista",
@@ -71,13 +71,13 @@
     "BaDescription": "Descripción",
     "BaGroups": "Grupos y círculos productores",
     "BaMainPicture": "Imagen principal",
-    "BaNames": "nombre principal (en uno o mas idiomas)",
-    "BaPictureInfo": "Tipos permitidos: {{0}}. El archivo no puede pesar mas de {{1}} MB para ser admitido en el sistema.",
+    "BaNames": "Nombre principal (en uno o más idiomas)",
+    "BaPictureInfo": "Formatos admitidos: {{0}}. Tamaño máximo de archivo:{{1}} MB.",
     "BaReleaseDate": "Fecha de lanzamiento del banco de voz",
     "EditTitle": "Editar artista - {{0}}",
     "PiAdd": "Añadir",
     "PiPictureDescription": "Descripción de imagen",
-    "PiPicturesNote": "Por favor solo sube imágenes concerientes al artista, nada fuera de lugar.",
-    "TabAdditionalPictures": "Imagenes adicionales"
+    "PiPicturesNote": "Únicamente suba imágenes que tengan que ver con el artista.",
+    "TabAdditionalPictures": "Imágenes adicionales"
   }
 }
