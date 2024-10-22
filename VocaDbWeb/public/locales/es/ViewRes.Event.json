@@ -1,35 +1,35 @@
 {
   "Details": {
-    "Albums": "Albums",
-    "Attending": "Attending",
-    "Category": "Category",
+    "Albums": "Álbumes",
+    "Attending": "¿Asistirá?",
+    "Category": "Categoría",
     "Event": "Evento",
-    "OccurrenceDate": "Fecha de realización",
-    "PVs": "PVs",
-    "RemoveAttendance": "Remove from my events",
+    "OccurrenceDate": "Fecha",
+    "PVs": "PV",
+    "RemoveAttendance": "Eliminar de mis eventos",
     "Series": "Serie",
-    "SongList": "Setlist",
-    "Songs": "Songs",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
-    "Venue": "Venue"
+    "SongList": "Repertorio",
+    "Songs": "Canciones",
+    "UserAttending": "Asistiré",
+    "UserInterested": "Me interesa",
+    "Venue": "Sede"
   },
   "EventsBySeries": {
     "CreateEvent": "Crear evento",
     "CreateSeries": "Crear serie",
-    "CreateVenue": "Create venue",
+    "CreateVenue": "Crear sede",
     "ViewByDate": "Por fecha",
-    "ViewBySeries": "Por serie de eventos",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Lista"
+    "ViewBySeries": "Por serie",
+    "ViewByVenue": "Cerca de la sede",
+    "ViewList": "Próximos eventos"
   },
   "Find": {
     "CreateEvent": "Crear evento",
-    "EventNotFound": "Parece que no hay ningún evento con ese nombre en nuestra base de datos, puedes revisar si has escrito incorrectamente el nombre, probar con denominaciones distitnas, nombres alternativos, etc. Si aún así no lo encuentras, lo mas probable es que aún no esté en nuestra base de datos.",
+    "EventNotFound": "No se ha encontrado ningún evento con ese nombre. Seguramente aún no se haya añadido a la base de datos.",
     "FindEvent": "Encontrar evento",
     "Number": "número",
-    "Series": "serie",
-    "UngroupedEventNamed": "evento sin agrupar llamado:",
-    "YouMayAddTheEvent": "Puedes añadir el evento a la base de datos."
+    "Series": "Serie",
+    "UngroupedEventNamed": "Evento sin agrupar llamado:",
+    "YouMayAddTheEvent": "Puede añadir el evento a la base de datos."
   }
 }
