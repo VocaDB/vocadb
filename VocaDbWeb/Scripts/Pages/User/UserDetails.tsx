@@ -23,6 +23,7 @@ import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import { useVdb } from '@/VdbContext';
+import '@/styles/Styles/songlist.less';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -30,8 +31,6 @@ import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-import '@/styles/Styles/songlist.less'
 
 interface UserDetailsLayoutProps {
 	user: UserDetailsContract;
@@ -218,7 +217,8 @@ const UserDetailsLayout = observer(
 							from editing the database.{/* LOC */}
 						</p>
 						<p>
-							If this is the case, please <a href="/Help">contact us</a> and
+							If this is the case, please{' '}
+							<a href="//wiki.vocadb.net/docs/footer/contact">contact us</a> and
 							we'll take care of it. Thank you.{/* LOC */}
 						</p>
 					</Alert>

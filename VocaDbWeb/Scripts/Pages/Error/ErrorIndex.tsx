@@ -41,8 +41,8 @@ const ErrorIndex = (): React.ReactElement => {
 				<li>
 					You have encountered a programming error (bug). If you suspect this is
 					the case, please inform us about it. Please see{' '}
-					<Link to="/help#Contact Us">Help/Contact us</Link> for contact
-					information.
+					<a href="//wiki.vocadb.net/docs/footer/contact">Help/Contact us</a>{' '}
+					for contact information.
 				</li>
 			</ul>
 		</>
