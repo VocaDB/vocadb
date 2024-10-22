@@ -185,9 +185,9 @@
     "CreateDatabaseDump": "Volcar base de datos"
   },
   "PVTypeDescriptions": {
-    "Original": "Original (oficial/subida autorizada)",
+    "Original": "Original (subida oficial/autorizada)",
     "Other": "Otro",
-    "Reprint": "Reprint (copiado de otra locación)"
+    "Reprint": "Copia (copiado de otro sitio)"
   },
   "PVTypeNames": {
     "Original": "Original",
@@ -195,7 +195,7 @@
     "Reprint": "Copia"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Fecha de rating"
+    "RatingDate": "Fecha de valoración"
   },
   "ReleaseEventEditableFieldNames": {
     "Artists": "Artistas",
@@ -216,14 +216,14 @@
     "WebLinks": "Enlaces externos"
   },
   "SongArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Importado automaticamente",
+    "AutoImportedFromMikuDb": "Importado automáticamente",
     "Created": "Creado",
     "Deleted": "Eliminado",
     "Merged": "Fusionado a partir de otra entrada",
     "PropertiesUpdated": "Propiedades actualizadas",
     "Restored": "Restaurada",
     "Reverted": "Revertida",
-    "Unknown": "Desconocida"
+    "Unknown": "Desconocido"
   },
   "SongEditableFieldNames": {
     "Artists": "Artistas",
@@ -259,7 +259,7 @@
     "Nothing": "Nada",
     "Other": "Otro",
     "Pools": "Depósitos",
-    "VocaloidRanking": "Rankings Vocaloid"
+    "VocaloidRanking": "Rankings de Vocaloid"
   },
   "SongSortRuleNames": {
     "AdditionDate": "Fecha de adición",
@@ -267,7 +267,7 @@
     "Name": "Nombre",
     "None": "Nada",
     "PublishDate": "Fecha de publicación",
-    "RatingScore": "Puntuación de rating",
+    "RatingScore": "Puntuación",
     "TagUsageCount": "Número de etiquetas usadas"
   },
   "SongVoteRatingNames": {
@@ -290,16 +290,16 @@
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Sin mensajes privados",
-    "PrivateMessagesFromAdmins": "Mensajes privados provenientes de administradores",
-    "PrivateMessagesFromAll": "Mensajes privados procedentes de cualquiera"
+    "PrivateMessagesFromAdmins": "Mensajes privados de administradores",
+    "PrivateMessagesFromAll": "Mensajes privados de cualquiera"
   },
   "UserGroupNames": {
     "Admin": "Administrador",
     "Limited": "Usuario limitado",
     "Moderator": "Moderador",
     "Nothing": "Nada",
-    "Regular": "Usuario regular",
-    "Trusted": "Usuario verificado como fuente confiable"
+    "Regular": "Usuario normal",
+    "Trusted": "Usuario de confianza"
   },
   "VenueEditableFieldNames": {
     "Address": "Dirección",
