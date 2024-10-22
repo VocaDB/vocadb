@@ -1,28 +1,28 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
-    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Artistas asociados con este álbum.",
+    "NewAlbumInfo": "El álbum debe tener al menos una pista relacionada con Touhou para que sea admitido en TouhouDB. Tampoco se permiten compilaciones no oficiales hechas por fans. Para más información, ver Ayuda e Indicaciones."
   },
   "ArtistRes": {
-    "AuthoredBy": "TouhouDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
+    "AuthoredBy": "Cuenta de TouhouDB",
+    "NewArtistExternalLink": "Enlace externo (al sitio web del artista, Touhou Wiki, NND MyList, etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "TouhouDB is a Touhou music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to Touhou music database!",
-    "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
+    "SiteDescription": "TouhouDB es una base de datos de música de Touhou con artistas, álbumes y canciones traducidas.",
+    "Welcome": "¡Bienvenidos a la Base de Datos Musical de Touhou!",
+    "WelcomeSubtitle": "La base de datos colaborativa para música de Touhou con artistas, sus discografías, PV y más."
   },
   "LayoutRes": {
     "Keywords": "Touhou",
     "PaypalDonateTitle": "",
     "SiteName": "TouhouDB",
-    "SiteTitle": "Touhou Music Database"
+    "SiteTitle": "Base de Datos Musical de Touhou"
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
-    "RankingsTitle": "TouhouDB song rankings"
+    "NewSongInfo": "Asegúrese de que la canción que está a punto de enviar no se haya agregado antes. Debe añadir al menos un nombre y un artista. Es ideal añadir el enlace al PV original.",
+    "RankingsTitle": "Ranking de canciones en TouhouDB"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Touhou music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your TouhouDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\tSi usted es un productor, ilustrador, animador o cualquier otro creador de contenido que trabaja con música o vídeos de Touhou,\n\t\t\to un representante de un círculo, puede utilizar este formulario para solicitar que el personal verifique su cuenta.\n\t\t\tDespués de la verificación, el nombre de su cuenta se mostrará en la(s) página(s) del artista y viceversa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tEs obligatorio proporcionar algún tipo de prueba de que es el propietario legítimo de esa entrada; de lo contrario, es muy probable que se rechace su solicitud.\n\t\t\t</strong>\n\t\t\tPor ejemplo, publicar en su Twitter o blog y vincularlos a su cuenta de TouhouDB es una forma aceptable de demostrar que usted es quien dice ser.\n\t\t\t<strong>\n\t\t\t\tTambién debe tener al menos una o dos entradas de canciones aceptadas y finalizadas en el sitio; puede enviarlas usted mismo si alguien no lo ha hecho ya.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tTras la verificación, será capaz de aprobar su entrada de artista, lo que limita quién puede editarla.\n\t\t\tPor el momento, solo la entrada del artista en sí puede \"protegerse\" de esta manera; esto no afecta a las canciones y los álbumes.\n\t\t</p>\n\t\t<p>\n\t\t\tPor favor, comprenda que nos reservamos el derecho a rechazar su solicitud. Las razones pueden incluir cualquiera de las mencionadas anteriormente.\n\t\t\tA menos que el motivo del rechazo de la solicitud sea obvio, intentaremos comunicarnos con usted para pedirle que corrija los errores para que la solicitud pueda ser aprobada.\n\t\t</p>"
   }
 }
