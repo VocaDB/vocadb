@@ -2,12 +2,12 @@
   "EnglishTranslatedString": {
     "Original": "Original",
     "ShowFullDescription": "Mostrar la descripción completa",
-    "Translated": "Translated"
+    "Translated": "Traducido"
   },
   "PlayList": {
-    "Autoplay": "Auto-reproducir",
-    "AutoplayNote": "La auto-reproducción solo está disponible para YouTube y SoundCloud",
+    "Autoplay": "Autorreproducir",
+    "AutoplayNote": "La autorreproducción solo está disponible para YouTube y SoundCloud",
     "NextSong": "Siguiente canción",
-    "Shuffle": "Aleatorizar"
+    "Shuffle": "Aleatorio"
   }
 }
