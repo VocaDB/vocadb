@@ -1,7 +1,7 @@
 {
   "ActivityFeedHelper": {
     "At": "en",
-    "CreatedNew": "Ha añadido un(a) nuevo/a {{0}}",
+    "CreatedNew": "ha añadido un(a) nuevo/a {{0}}",
     "EntryAlbum": "álbum",
     "EntryArtist": "artista",
     "EntryReleaseEvent": "evento",
