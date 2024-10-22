@@ -3,14 +3,14 @@
     "NewAlbums": "Álbumes recientes o próximos",
     "News": "Noticias",
     "RecentActivity": "Actividad reciente",
-    "RecentEvents": "Sucediendo ahora",
-    "RecentSongs": "PVs destacados",
-    "SearchSite": "Busque en todo el sitio utilizando la búsqueda personalizada de Google",
-    "TopAlbums": "Álbumes populares al azar",
+    "RecentEvents": "Lo que pasa ahora",
+    "RecentSongs": "PV destacados",
+    "SearchSite": "Busque en toda la página mediante la búsqueda personalizada de Google",
+    "TopAlbums": "Álbumes populares aleatorios",
     "ViewAll": "Ver todo",
     "ViewMore": "Ver más",
-    "ViewSongInfo": "Ver información sobre esta canción",
-    "Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
-    "WelcomeSubtitle": "La base de datos colaborativa para Vocaloid, UTAU y otros sintetizadores de canto, con artistas, discografías, PVs y más."
+    "ViewSongInfo": "Sobre esta canción",
+    "Welcome": "¡Bienvenido a la Base de Datos de Vocaloid!",
+    "WelcomeSubtitle": "La base de datos colaborativa con artistas de Vocaloid, sus discografías, PV y más."
   }
 }
