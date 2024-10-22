@@ -1,32 +1,32 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "Link del PV roto",
+    "BrokenPV": "Enlace al PV caído",
     "Duplicate": "Entrada duplicada",
     "Inappropriate": "Contenido inapropiado",
-    "InvalidInfo": "Información no válida o faltante",
+    "InvalidInfo": "Falta información o no es válida",
     "MaliciousIP": "IP maliciosa",
     "Other": "Otro (especifique en las notas)",
-    "OwnershipClaim": "Reclamo de propiedad",
+    "OwnershipClaim": "Reclamación de propiedad",
     "RemovePermissions": "Edición restringida",
     "Spamming": "Enviando spam"
   },
   "EntryTypeNames": {
     "Album": "Álbum",
     "Artist": "Artista",
-    "DiscussionTopic": "Topic",
+    "DiscussionTopic": "Tema",
     "PV": "PV",
     "ReleaseEvent": "Evento",
-    "ReleaseEventSeries": "Event series",
+    "ReleaseEventSeries": "Serie de eventos",
     "Song": "Canción",
     "SongList": "Lista de canciones",
     "Tag": "Etiqueta",
-    "Undefined": "Cualquier contenido",
+    "Undefined": "Todo",
     "User": "Usuario",
-    "Venue": "Venue",
-    "VoiceSynthesizer": "Voice Synthesizer"
+    "Venue": "Sede",
+    "VoiceSynthesizer": "Sintetizador de voz"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "Denuncia",
+    "User": "Usuario"
   }
 }

@@ -1,17 +1,17 @@
 {
   "DiscTypeNames": {
-    "Album": "Album original",
-    "Artbook": "Artbook",
+    "Album": "Álbum original",
+    "Artbook": "Libro de ilustraciones",
     "Compilation": "Compilación",
     "EP": "E.P.",
-    "Fanmade": "Album",
-    "Game": "Game",
+    "Fanmade": "Álbum",
+    "Game": "Juego",
     "Instrumental": "Instrumental",
     "Other": "Otro",
     "Single": "Sencillo",
-    "SplitAlbum": "Album compartido",
+    "SplitAlbum": "Álbum compartido",
     "Unknown": "Sin especificar",
-    "Video": "Video",
-    "Drama": "Drama"
+    "Video": "Vídeo",
+    "Drama": "Teatro"
   }
 }

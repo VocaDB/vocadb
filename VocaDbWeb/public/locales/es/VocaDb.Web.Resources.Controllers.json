@@ -1,5 +1,5 @@
 {
   "TagController": {
-    "TagNameError": "Las etiquetas deben contener únicamente carácteres alfabéticos y no pueden estar en blanco."
+    "TagNameError": "Las etiquetas deben contener únicamente caracteres alfabéticos y no pueden estar en blanco."
   }
 }

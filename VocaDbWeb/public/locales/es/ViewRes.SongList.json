@@ -3,33 +3,33 @@
     "Date": "Fecha: {{0}}.",
     "DefaultSortRule": "Por defecto",
     "Details": "Detalles",
-    "Events": "Events",
-    "Export": "Exportar en un archivo CSV",
+    "Events": "Eventos",
+    "Export": "Exportar CSV",
     "Playlist": "Lista de reproducción",
-    "Preview": "Previsualización",
+    "Preview": "Vista previa",
     "ShowTags": "Mostrar etiquetas",
     "SongList": "Lista de canciones",
-    "Songs": "cancion(es)"
+    "Songs": "canción(es)"
   },
   "Edit": {
-    "AddSong": "Add song",
-    "ConfirmDelete": "¿Estás seguro de que deseas borrar esta lista?",
+    "AddSong": "Añadir canción",
+    "ConfirmDelete": "¿Está seguro de que desea borrar esta lista?",
     "CreateTitle": "Crear una lista de canciones",
     "Description": "Descripción",
     "EditTitle": "Editar lista - {{0}}",
     "EventDate": "Fecha de evento",
-    "EventDateHelp": "Si esta lista esta relacionada a un evento tal como un concierto o ranking, la fecha del evento se puede especificar aqui.",
-    "FeaturedCategory": "Categoría añadida",
+    "EventDateHelp": "Si esta lista está relacionada con un evento como un concierto o un 'ranking', la fecha del evento se puede especificar aquí.",
+    "FeaturedCategory": "Categoría destacada",
     "Name": "Nombre",
-    "RemoveFromList": "Remove from list",
+    "RemoveFromList": "Quitar de la lista",
     "Status": "Estado de la entrada",
     "TabProperties": "Propiedades",
     "TabSongs": "Canciones",
     "Thumbnail": "Miniatura",
-    "UnableToSave": "Unable to save list"
+    "UnableToSave": "No se ha podido guardar la lista"
   },
   "Featured": {
-    "Import": "Importar de YouTube o NicoNicoDounga",
+    "Import": "Importar de YouTube o NicoNico",
     "SortBy": "Ordenar por"
   }
 }

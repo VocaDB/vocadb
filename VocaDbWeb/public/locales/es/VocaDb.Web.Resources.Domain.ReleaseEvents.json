@@ -1,43 +1,43 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
-    "Default": "Default",
+    "Dancer": "Bailarín",
+    "Default": "Predeterminado",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Instrumentalist": "Instrumental",
+    "Organizer": "Organizador",
+    "Other": "Otro",
+    "OtherPerformer": "Otro intérprete",
+    "Promoter": "Promotor",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "Vocalist": "Cantante",
+    "VoiceManipulator": "Manipulador de voz"
   },
   "EventCategoryNames": {
-    "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
-    "Club": "Club",
-    "Concert": "Concert",
-    "Contest": "Contest",
+    "AlbumRelease": "Feria de lanzamiento de álbumes",
+    "Anniversary": "Aniversario",
+    "Club": "Discoteca",
+    "Concert": "Concierto",
+    "Contest": "Concurso",
     "Festival": "Festival",
-    "Convention": "Convention",
-    "Other": "Other",
-    "Unspecified": "Unspecified"
+    "Convention": "Congreso",
+    "Other": "Otro",
+    "Unspecified": "Sin especificar"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "Fecha en que fue agregado",
+    "Date": "Fecha",
+    "Name": "Nombre",
+    "SeriesName": "Serie",
+    "VenueName": "Sede"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Picture": "Main picture",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Category": "Categoría",
+    "Description": "Descripción",
+    "Name": "Nombre",
+    "Names": "Nombres",
+    "OriginalName": "Idioma predeterminado de nombre",
+    "Picture": "Imagen principal",
+    "Status": "Estado",
+    "WebLinks": "Enlaces externos"
   }
 }

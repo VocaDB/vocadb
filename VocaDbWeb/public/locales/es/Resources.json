@@ -1,7 +1,7 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Más antiguo",
+    "CreateDateDescending": "Más reciente"
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Importado automaticamente",
@@ -21,7 +21,7 @@
   },
   "AlbumDiscMediaTypeNames": {
     "Audio": "Audio",
-    "Video": "Video"
+    "Video": "Vídeo"
   },
   "AlbumEditableFieldNames": {
     "Artists": "Artistas",
@@ -33,7 +33,7 @@
     "OriginalName": "Nombre original",
     "OriginalRelease": "Lanzamiento original",
     "Pictures": "Imágenes",
-    "PVs": "PVs",
+    "PVs": "PV",
     "Status": "Estado",
     "Tracks": "Pistas",
     "WebLinks": "Links externos",
@@ -50,8 +50,8 @@
     "AdditionDate": "Fecha de adición",
     "CollectionCount": "Conteo de colección",
     "Name": "Nombre",
-    "RatingAverage": "Rating promedio",
-    "RatingTotal": "Puntuación de rating total",
+    "RatingAverage": "Valoración media",
+    "RatingTotal": "Puntuación total",
     "ReleaseDate": "Fecha de lanzamiento"
   },
   "ArtistArchiveReasonNames": {
@@ -64,7 +64,7 @@
     "Unknown": "Desconocido"
   },
   "ArtistEditableFieldNames": {
-    "Albums": "Albumes",
+    "Albums": "Álbumes",
     "ArtistType": "Tipo de artista(s)",
     "BaseVoicebank": "Banco de voz base",
     "Description": "Descripción",
@@ -74,7 +74,7 @@
     "OriginalName": "Nombre original",
     "Picture": "Imagen principal",
     "Pictures": "Imágenes",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Fecha de lanzamiento del banco de voz",
     "Status": "Estado",
     "WebLinks": "Links externos"
   },
@@ -93,30 +93,30 @@
     "Mixer": "Mezclador",
     "Other": "Otro",
     "Publisher": "Publicador",
-    "VocalDataProvider": "Vocal data provider",
+    "VocalDataProvider": "Proveedor de datos vocales",
     "Vocalist": "Vocalista",
     "VoiceManipulator": "Manipulador de voz"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Fecha de adición (en orden descendente)",
     "AdditionDateAsc": "Fecha de adición (en orden ascendente)",
-    "FollowerCount": "Numero de seguidores",
+    "FollowerCount": "Número de seguidores",
     "Name": "Nombre",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Fecha de lanzamiento del banco de voz",
     "SongCount": "Número de canciones",
-    "SongRating": "Rating total"
+    "SongRating": "Valoración total"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Más antiguo",
+    "CreateDateDescending": "Más reciente"
   },
   "CommonMessages": {
-    "EntryDeleted": "Esta entrada ha sido eliminada, aunque se muestra como temporalmente accesible, no se muestra ningún listado.",
+    "EntryDeleted": "Esta entrada ha sido eliminada. Aunque se muestre como temporalmente accesible, no se muestra en ninguna lista.",
     "EntryMergedTo": "Esta entrada ha sido fusionada con",
-    "EntryStatusExplanation": "Borrador = A esta entrada le falta información indispensable. Este estado indica que estas solicitando información adicional para ser añadida o corregida.<br />\nTerminada = Esta entrada esta completada integramente con la información fundamental, pero aún no ha sido verificada por una fuente confiable.<br />\nAprobada = Esta entrada ha sido verificada y aprobada por una fuente confiable. Las entradas oficiales solo pueden ser editadas por fuentes oficiales.",
-    "Locked": "Esta entrada esta asegurada, solo moderadores pueden editarla.",
+    "EntryStatusExplanation": "Borrador = A esta entrada le falta información obligatoria. Este estado indica que estás solicitando que se añada información adicional o se corrija.<br />\nTerminada = Esta entrada contiene toda la información obligatoria pero aún no ha sido aprobada.<br />\nAprobada = Esta entrada ha sido verificada por usuarios de confianza. La edición de las entradas aprobadas está limitada.",
+    "Locked": "Esta entrada esta cerrada, así que solo los moderadores pueden editarla.",
     "NameLanguageHelp": "Escoge el idioma para este nombre. \"Original\" es el nombre en su idioma nativo (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original.",
-    "RevisionHidden": "This page revision has been hidden."
+    "RevisionHidden": "Escoge el idioma para este nombre. \"Idioma original\" es el nombre en su idioma nativo (excepto inglés). Por ejemplo, japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla de \"Idioma original\"."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Idioma original",
@@ -126,104 +126,104 @@
     "Unspecified": "Sin especificar"
   },
   "DiscTypeDescriptions": {
-    "Album": "Album que se compone mayoritariamente de canciones sin publicarse previamente (entiendase estas como originales).",
-    "Compilation": "Colección de canciones publicadas previamente, es un recopilado de un album o mas previamente publicado(s). (Ejemplo: colección \"lo mejor de\").",
-    "EP": "Un EP es una extensión de reproducción. Contiene de 3 a 4 pistas individuales. Las versiones alterntivas (instrumentales o remixes) comunmente no son consideradas.",
-    "Other": "Para albumes que no entran en ninguna de las categorías anteriores.",
-    "Single": "Contienen una o dos canciones individuales. Las versiones alternativas (instrumentales o remixes) comunmente no son consideradas.",
+    "Album": "Álbum que se compone en gran parte de canciones previamente sin publicar.",
+    "Compilation": "Colección de canciones publicadas previamente y recopiladas de álbumes anteriores. Por ejemplo: colecciones tipo \"lo mejor de\".",
+    "EP": "Reproducción extendida. Contiene 3 o 4 pistas individuales. Las versiones alternativas (instrumentales o remezclas) no se suelen contar.",
+    "Other": "Para álbumes que no entran en ninguna de las categorías anteriores.",
+    "Single": "Contiene una o dos canciones individuales. Las versiones alternativas (instrumentales o remezclas) no se suelen contar.",
     "SplitAlbum": "Colaboración entre dos o mas artistas, con contribuciones usualmente equivalentes en un solo album.",
-    "Video": "Disco que contiene principal o integramente videos musicales, comunmente en formato DVD o Blue-ray."
+    "Video": "Disco que contiene principal o íntegramente videos musicales, normalmente en DVD o Blu-ray."
   },
   "EntryEditEventNames": {
     "Created": "Creado",
     "Deleted": "Eliminado",
-    "Restored": "Restored",
+    "Restored": "Restaurado",
     "Updated": "Actualizado"
   },
   "EntryStatusNames": {
     "Approved": "Entrada aprobada",
-    "Draft": "Borrador (entrada sin completar)",
-    "Finished": "Entrada Terminada",
-    "Locked": "Entrada asegurada"
+    "Draft": "Borrador",
+    "Finished": "Terminada",
+    "Locked": "Cerrada"
   },
   "PermissionTokenNames": {
     "AccessManageMenu": "Acceso al menú de gestión",
-    "Admin": "Tareas de administración en base de datos",
-    "AddRawFileMedia": "Add raw media",
-    "ApplyAnyTag": "Add any tag to entry",
-    "ApproveEntries": "Aprobar entradas",
-    "BulkDeletePVs": "Abultar PVs eliminados",
+    "Admin": "Tareas de administradores",
+    "AddRawFileMedia": "Añadir archivos en bruto",
+    "ApplyAnyTag": "Añadir cualquier etiqueta a la entrada",
+    "ApproveEntries": "Verificar entradas",
+    "BulkDeletePVs": "Eliminar PV en masa",
     "CreateComments": "Crear comentarios",
     "DeleteComments": "Eliminar comentarios",
     "DeleteEntries": "Borrar entradas",
-    "DesignatedStaff": "Miembro de staff designado",
+    "DesignatedStaff": "Personal designado",
     "DisableUsers": "Deshabilitar usuarios",
-    "EditAllSongLists": "Edit all song lists",
-    "EditFeaturedLists": "Gestionar listas de canciones implementadas",
+    "EditAllSongLists": "Editar todas las listas de canciones",
+    "EditFeaturedLists": "Gestionar listas de canciones en portada",
     "EditNews": "Gestionar noticias",
     "EditProfile": "Editar perfil personal",
-    "EditTags": "Edit tags",
-    "LockEntries": "Asegurar entradas",
+    "EditTags": "Editar etiquetas",
+    "LockEntries": "Cerrar entradas",
     "ManageDatabase": "Gestionar base de datos",
-    "ManageEntryReports": "Gestionar entradas repost",
+    "ManageEntryReports": "Gestionar avisos",
     "ManageEventSeries": "Gestionar series de eventos",
     "ManageIPRules": "Gestionar reglas de IP",
     "ManageUserPermissions": "Gestionar permisos de usuario",
     "MergeEntries": "Fusionar entradas",
-    "MikuDbImport": "Importación de album vía MikuDB",
+    "MikuDbImport": "Importar álbum vía MikuDB",
     "MoveToTrash": "Mover a la basura",
     "Nothing": "Nada",
     "ReadRecentComments": "Leer comentarios recientes",
-    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveEditPermission": "Eliminar permisos de edición de la base de datos",
     "RemoveTagUsages": "Remover usos de etiqueta",
     "RestoreRevisions": "Restaurar revisiones",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Subir información de uno mismo",
     "ViewAuditLog": "Ver registro de eventos",
-    "ViewHiddenRatings": "View hidden ratings",
-    "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ViewHiddenRatings": "Ver valoraciones ocultas",
+    "ViewHiddenRevisions": "Ver revisiones ocultas",
+    "ManageWebhooks": "Gestionar los 'webhook'",
+    "CreateDatabaseDump": "Volcar base de datos"
   },
   "PVTypeDescriptions": {
-    "Original": "Original (oficial/subida autorizada)",
+    "Original": "Original (subida oficial/autorizada)",
     "Other": "Otro",
-    "Reprint": "Reprint (copiado de otra locación)"
+    "Reprint": "Copia (copiado de otro sitio)"
   },
   "PVTypeNames": {
     "Original": "Original",
     "Other": "Otro",
-    "Reprint": "Reprint"
+    "Reprint": "Copia"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Fecha de rating"
+    "RatingDate": "Fecha de valoración"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
-    "Category": "Category",
+    "Artists": "Artistas",
+    "Category": "Categoría",
     "Date": "Fecha",
     "Description": "Descripción",
-    "MainPicture": "Main picture",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "PVs": "PVs",
+    "MainPicture": "Imagen principal",
+    "Names": "Nombres",
+    "OriginalName": "Nombre en su idioma original",
+    "PVs": "PV",
     "Series": "Serie",
     "SeriesNumber": "Edición",
     "SeriesSuffix": "Sufijo de serie",
-    "SongList": "Setlist",
-    "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "SongList": "Repertorio",
+    "Status": "Estado",
+    "Venue": "Sede",
+    "VenueName": "Nombre de la sede",
+    "WebLinks": "Enlaces externos"
   },
   "SongArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Importado automaticamente",
+    "AutoImportedFromMikuDb": "Importado automáticamente",
     "Created": "Creado",
     "Deleted": "Eliminado",
     "Merged": "Fusionado a partir de otra entrada",
     "PropertiesUpdated": "Propiedades actualizadas",
     "Restored": "Restaurada",
     "Reverted": "Revertida",
-    "Unknown": "Desconocida"
+    "Unknown": "Desconocido"
   },
   "SongEditableFieldNames": {
     "Artists": "Artistas",
@@ -236,14 +236,14 @@
     "OriginalName": "Nombre original",
     "OriginalVersion": "Versión original",
     "PublishDate": "Fecha de publicación",
-    "PVs": "PVs",
+    "PVs": "PV",
     "SongType": "Tipo de canción",
     "Status": "Estado",
     "WebLinks": "Links externos",
-    "ReleaseEvent": "Release event",
-    "ReleaseEvents": "Release events",
-    "Bpm": "BPM",
-    "CultureCodes": "Languages"
+    "ReleaseEvent": "Evento de lanzamiento",
+    "ReleaseEvents": "Eventos de lanzamiento",
+    "Bpm": "PPM",
+    "CultureCodes": "Idiomas"
   },
   "SongListEditableFieldNames": {
     "Description": "Descripción",
@@ -259,7 +259,7 @@
     "Nothing": "Nada",
     "Other": "Otro",
     "Pools": "Depósitos",
-    "VocaloidRanking": "Rankings Vocaloid"
+    "VocaloidRanking": "Rankings de Vocaloid"
   },
   "SongSortRuleNames": {
     "AdditionDate": "Fecha de adición",
@@ -267,8 +267,8 @@
     "Name": "Nombre",
     "None": "Nada",
     "PublishDate": "Fecha de publicación",
-    "RatingScore": "Puntuación de rating",
-    "TagUsageCount": "Tag usage count"
+    "RatingScore": "Puntuación",
+    "TagUsageCount": "Número de etiquetas usadas"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorito",
@@ -285,31 +285,31 @@
     "Picture": "Imagen",
     "RelatedTags": "Etiquetas relacionadas",
     "Status": "Estado",
-    "Targets": "Targets",
+    "Targets": "Objetivos",
     "WebLinks": "Links externos"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Sin mensajes privados",
-    "PrivateMessagesFromAdmins": "Mensajes privados provenientes de administradores",
-    "PrivateMessagesFromAll": "Mensajes privados procedentes de cualquiera"
+    "PrivateMessagesFromAdmins": "Mensajes privados de administradores",
+    "PrivateMessagesFromAll": "Mensajes privados de cualquiera"
   },
   "UserGroupNames": {
     "Admin": "Administrador",
     "Limited": "Usuario limitado",
     "Moderator": "Moderador",
     "Nothing": "Nada",
-    "Regular": "Usuario regular",
-    "Trusted": "Usuario verificado como fuente confiable"
+    "Regular": "Usuario normal",
+    "Trusted": "Usuario de confianza"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Address": "Dirección",
+    "AddressCountryCode": "País/Región",
+    "Coordinates": "Coordenadas",
+    "Description": "Descripción",
+    "Names": "Nombres",
+    "OriginalName": "Nombre en su idioma original",
+    "Status": "Estado",
+    "WebLinks": "Enlaces externos"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Comercial",

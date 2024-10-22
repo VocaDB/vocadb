@@ -1,25 +1,25 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Utaites y otros artistas asociados con este album.",
-    "NewAlbumInfo": "Este album necesita tener al menos una pista con un utaite registrado en UtaiteDB. Compilaciones no oficiales/fan-made (bootlegs) no están permitidas. Para mas información, vease la página de Ayuda."
+    "NewAlbumArtistDesc": "Utaites y otros artistas asociados con este álbum.",
+    "NewAlbumInfo": "El álbum debe tener al menos una pista con un utaite para que sea admitido en UtaiteDB. Tampoco se permiten compilaciones no oficiales hechas por fans. Para más información, ver Ayuda e Indicaciones."
   },
   "ArtistRes": {
     "AuthoredBy": "Cuenta de UtaiteDB",
-    "NewArtistExternalLink": "Link externo (al sitio web del artista, Utaite wiki, NND MyList, etcétera)."
+    "NewArtistExternalLink": "Enlace externo (al sitio web del artista, Utaite wiki, NND MyList, etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "UtaiteDB es una base de datos con información detallada sobre artistas, albumes y canciones.",
-    "Welcome": "¡Bienvenido a la base de datos utaite!",
-    "WelcomeSubtitle": "\\r\\nLa base de datos colaborativa sobre artistas de la escena utaite, discografías, PVs y mas."
+    "SiteDescription": "UtaiteDB es una base de datos con información detallada sobre artistas, álbumes y canciones.",
+    "Welcome": "¡Bienvenido a la Base de Datos de Utaite!",
+    "WelcomeSubtitle": "La base de datos colaborativa sobre artistas de la escena utaite, discografías, PV y más."
   },
   "LayoutRes": {
     "Keywords": "Utaite, UtaiteDB, Base de datos Utaite",
-    "PaypalDonateTitle": "UtaiteDB es un proyecto sin ánimos de lucro. Todo el dinero recaudado mediante donaciones es invertido en el desarrollo a futuro de la plataforma, renta de hosteo web y licencias de software de terceros utilizado en el desarrollo y manejo de la misma.",
+    "PaypalDonateTitle": "VocaDB es un proyecto sin ánimo de lucro. Todo el dinero se utilizará para el desarrollo de la página, las cuotas de alojamiento y las licencias de software.",
     "SiteName": "UtaiteDB",
-    "SiteTitle": "Base de datos Utaite"
+    "SiteTitle": "Base de Datos Utaite"
   },
   "SongRes": {
-    "NewSongInfo": "Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Procura incluir un link al PV original.",
+    "NewSongInfo": "Asegúrese de que la canción que está a punto de enviar no se haya agregado antes. Debe añadir al menos un nombre y un artista. Es ideal añadir el enlace al PV original.",
     "RankingsTitle": "Ranking de canciones en UtaiteDB"
   }
 }

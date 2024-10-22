@@ -15,9 +15,9 @@
   },
   "Shared": {
     "AddExtraArtist": "Añadir como artista personalizado a '{0}'",
-    "ReportSent": "Aviso enviado. ¡Gracias por tu colaboración!",
+    "ReportSent": "Aviso enviado. ¡Gracias por su colaboración!",
     "Save": "Guardar",
-    "ThanksForRating": "¡Gracias por tu calificación!",
+    "ThanksForRating": "¡Gracias por su valoración!",
     "UnableToSendReport": "Aviso no enviado."
   },
   "Song": {
@@ -26,6 +26,6 @@
     "OnlyWithPVsFilter": "Solo PV",
     "SinceFilter": "Más reciente que {{0}}",
     "SongTypeFilter": "Tipo de canción: {{0}}",
-    "ThanksForRating": "¡Gracias por tu calificación!"
+    "ThanksForRating": "¡Gracias por su valoración!"
   }
 }

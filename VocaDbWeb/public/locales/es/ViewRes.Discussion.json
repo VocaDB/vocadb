@@ -3,16 +3,16 @@
     "Author": "Autor",
     "Comments": "Comentarios",
     "Created": "Creado",
-    "Discussions": "Discusiones",
+    "Discussions": "Foro",
     "DoPost": "Publicar",
-    "Folder": "Sección de tópicos",
+    "Folder": "Directorio",
     "LastComment": "Último comentario",
     "LastTopic": "Última discusión",
     "PostContent": "Contenido",
     "Preview": "Previsualización",
-    "RecentTopics": "Tópicos recientes",
-    "Topic": "Tópico",
-    "Topics": "Tópicos",
+    "RecentTopics": "Temas recientes",
+    "Topic": "Tema",
+    "Topics": "Temas",
     "WriteNewPost": "Escribir una nueva publicación"
   }
 }
