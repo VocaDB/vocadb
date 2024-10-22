@@ -18,9 +18,7 @@ export const DraftMessage = React.memo(
 				<span>{t('HelperRes:Helper.DraftMessage')}</span>
 				<span>
 					{t('HelperRes:Helper.SeeGuidePre')}{' '}
-					<Link to={`/Help/guidelines#${section}`}>
-						{t('HelperRes:Helper.SeeGuide')}
-					</Link>{' '}
+					<a href="//wiki.vocadb.net">{t('HelperRes:Helper.SeeGuide')} </a>
 					{t('HelperRes:Helper.SeeGuidePost')}
 				</span>
 			</Alert>
