@@ -164,10 +164,11 @@ export class StatsStore {
 	}
 
 	private updateReport = (): void => {
+		const parsedTimespan = this.timespan ? Number.parseInt(this.timespan) : undefined;
 		const cutoff =
-			this.showTimespanFilter && Number.isSafeInteger(this.timespan)
+			this.showTimespanFilter && Number.isSafeInteger(parsedTimespan) 
 				? dayjs()
-						.subtract(Number.parseInt(this.timespan ?? '0'), 'hours')
+						.subtract(parsedTimespan ?? 0, 'hours')
 						.toISOString()
 				: undefined;
 
