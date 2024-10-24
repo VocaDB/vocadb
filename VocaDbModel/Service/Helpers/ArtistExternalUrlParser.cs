@@ -12,7 +12,8 @@ public class ArtistExternalUrlParser
 	private static readonly RegexLinkMatcher[] linkMatchers = {
 		new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
 		// `twitter.com/name` or `t/name`.
-		new RegexLinkMatcher("https://twitter.com/{0}", @"^(?:http(?:s)?://twitter\.com|t)/(\w+)")
+		new RegexLinkMatcher("https://twitter.com/{0}", @"^(?:http(?:s)?://twitter\.com|t)/(\w+)"),
+		new RegexLinkMatcher("https://twitter.com/{0}", @"^(?:http(?:s)?://x\.com)/(\w+)")
 	};
 
 	private static readonly string[] whitelistedUrls = {
