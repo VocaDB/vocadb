@@ -1,7 +1,7 @@
 {
   "ActivityFeedHelper": {
     "At": "-",
-    "CreatedNew": "さんが新しい{{0}}を登録しました",
+    "CreatedNew": "さんが新しい {{0}} を登録しました",
     "EntryAlbum": "アルバム",
     "EntryArtist": "アーティスト",
     "EntryReleaseEvent": "イベント",
@@ -27,7 +27,7 @@
     "IsSupportedForFormatting": "フォーマット使用",
     "NameLangTitle": "言語",
     "NameNewRow": "New row",
-    "NameValueTitle": "Name (required)",
+    "NameValueTitle": "名前(必須)",
     "ReturnWithoutSaving": "保存せず戻る",
     "SaveChanges": "変更を保存",
     "SeeGuide": "ガイドライン",

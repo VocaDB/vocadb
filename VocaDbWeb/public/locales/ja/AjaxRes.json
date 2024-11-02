@@ -18,7 +18,7 @@
     "ReportSent": "レポートが送信されました。ありがとうございます！",
     "Save": "セーブ",
     "ThanksForRating": "評価ありがとうございます！",
-    "UnableToSendReport": "Unable to send report."
+    "UnableToSendReport": "報告を送信できませんでした。"
   },
   "Song": {
     "AddedToList": "リストに追加しました",
