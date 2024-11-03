@@ -1,7 +1,7 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "古い順",
+    "CreateDateDescending": "新しい順"
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自動インポート",
@@ -20,8 +20,8 @@
     "Wishlisted": "ウィッシュリストに入れた"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
-    "Video": "Video"
+    "Audio": "音声",
+    "Video": "動画"
   },
   "AlbumEditableFieldNames": {
     "Artists": "アーティスト",
@@ -39,7 +39,7 @@
     "WebLinks": "外部リンク",
     "Barcode": "バーコード",
     "Identifiers": "識別子",
-    "Discs": "Discs"
+    "Discs": "ディスク"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "デジタルダウンロード",
