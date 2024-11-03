@@ -8,7 +8,7 @@
     "EntrySong": "曲",
     "EntrySongList": "曲リスト",
     "EntryTag": "タグ",
-    "EntryVenue": "venue",
+    "EntryVenue": "会場",
     "Someone": "投稿者",
     "Updated": "さんが{{0}}を更新しました"
   },
@@ -16,7 +16,7 @@
     "Released": "発売日"
   },
   "Helper": {
-    "Added": "added",
+    "Added": "追加された",
     "DraftIconTitle": "この項目は書きかけです。",
     "DraftMessage": "これは書きかけの項目です。不足する情報を書き足して記事を完成させることが出来ます。",
     "EntryIsMissingInformation": "この項目は下記の情報が不足しています。",
@@ -26,7 +26,7 @@
     "GitHubMarkdown": "Github マークダウン",
     "IsSupportedForFormatting": "フォーマット使用",
     "NameLangTitle": "言語",
-    "NameNewRow": "New row",
+    "NameNewRow": "新規行",
     "NameValueTitle": "名前(必須)",
     "ReturnWithoutSaving": "保存せず戻る",
     "SaveChanges": "変更を保存",
@@ -37,7 +37,7 @@
     "StatusDescriptionDraft": "下書きの項目は必要な情報が不足しています。",
     "StatusDescriptionFinished": "完成項目は必要情報が全て含まれていますが、信用されたユーザーに承認されていません。",
     "StatusDescriptionLocked": "ロックされた項目はスタッフ以外編集できません。",
-    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
+    "UploadPictureInfo": "許可されているタイプ：{{0}}。最大サイズ：{{1}} MB。著作権を尊重し、可能な限りノート/説明に画像ソースを記載してください.",
     "WebLinkCategoryTitle": "カテゴリー",
     "WebLinkDescriptionTitle": "記述",
     "WebLinkNewRow": "もう一つの行",
