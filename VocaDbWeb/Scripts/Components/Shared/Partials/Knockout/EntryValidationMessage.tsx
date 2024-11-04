@@ -63,9 +63,8 @@ export const EntryValidationMessage = React.memo(
 								</ul>
 								{helpSection && (
 									<span>
-										See the{' '}
-										<Link to={`/Help/guidelines#${helpSection}`}>guide</Link>{' '}
-										for more information.
+										See the <a href="//wiki.vocadb.net">guide</a> for more
+										information.
 										{/* LOC */}
 									</span>
 								)}
