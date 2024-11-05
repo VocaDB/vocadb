@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.RateLimiting;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using NLog.Web;
@@ -17,6 +18,17 @@ try
 
 	startup.ConfigureServices(builder.Services);
 
+	builder.Services.AddRateLimiter(options =>
+	{
+		options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+		options
+			.AddSlidingWindowLimiter(policyName: "details", options =>
+			{
+				options.Window = TimeSpan.FromMinutes(1);
+				options.PermitLimit = 40;
+				options.SegmentsPerWindow = 1;
+			});
+	});
 	builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 	builder.Host.ConfigureContainer<ContainerBuilder>(startup.ConfigureContainer);
 

@@ -4,6 +4,7 @@ using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -555,6 +556,7 @@ public class SongApiController : ApiController
 #nullable enable
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[EnableRateLimiting("details")]
 	public SongDetailsForApiContract GetDetails(int id, int albumId = 0)
 	{
 		WebHelper.VerifyUserAgent(Request);
