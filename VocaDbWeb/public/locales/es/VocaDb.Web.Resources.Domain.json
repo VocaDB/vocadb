@@ -26,7 +26,7 @@
     "VoiceSynthesizer": "Sintetizador de voz"
   },
   "WebhookEventNames": {
-    "EntryReport": "Reporte de Entrada",
+    "EntryReport": "Denuncia",
     "User": "Usuario"
   }
 }
