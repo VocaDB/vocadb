@@ -2,15 +2,15 @@
   "Details": {
     "Address": "アドレス",
     "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Country": "国/地域",
+    "Venue": "会場"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
-    "Latitude": "Latitude",
-    "Location": "Location",
-    "Longitude": "Longitude"
+    "Address": "住所",
+    "Coordinates": "座標",
+    "Country": "国/地域",
+    "Latitude": "緯度",
+    "Location": "位置情報",
+    "Longitude": "経度"
   }
 }

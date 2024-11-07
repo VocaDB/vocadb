@@ -1,7 +1,7 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "古い順",
+    "CreateDateDescending": "新しい順"
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自動インポート",
@@ -20,8 +20,8 @@
     "Wishlisted": "ウィッシュリストに入れた"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
-    "Video": "Video"
+    "Audio": "音声",
+    "Video": "動画"
   },
   "AlbumEditableFieldNames": {
     "Artists": "アーティスト",
@@ -39,7 +39,7 @@
     "WebLinks": "外部リンク",
     "Barcode": "バーコード",
     "Identifiers": "識別子",
-    "Discs": "Discs"
+    "Discs": "ディスク"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "デジタルダウンロード",
@@ -71,10 +71,10 @@
     "Groups": "グループ",
     "Names": "名前",
     "Nothing": "なし",
-    "OriginalName": "Original name",
+    "OriginalName": "オリジナル名",
     "Picture": "主な画像",
     "Pictures": "画像",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "ボイスバンクのリリース日",
     "Status": "ステータス",
     "WebLinks": "外部リンク"
   },
@@ -83,7 +83,7 @@
     "Arranger": "編曲",
     "Chorus": "コーラス",
     "Composer": "作曲",
-    "Default": "Default",
+    "Default": "既定",
     "Distributor": "配給",
     "Encoder": "エンコード",
     "Illustrator": "イラスト",
@@ -93,7 +93,7 @@
     "Mixer": "ミキシング",
     "Other": "その他",
     "Publisher": "出版",
-    "VocalDataProvider": "Vocal data provider",
+    "VocalDataProvider": "ボーカルデータ提供者",
     "Vocalist": "ボーカル",
     "VoiceManipulator": "調声"
   },
@@ -102,28 +102,28 @@
     "AdditionDateAsc": "追加された日時（昇順）",
     "FollowerCount": "フォロワー数",
     "Name": "アーティスト名",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "ボイスバンクのリリース日",
     "SongCount": "曲数",
     "SongRating": "総評価数"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "古い順",
+    "CreateDateDescending": "新しい順"
   },
   "CommonMessages": {
     "EntryDeleted": "この項目は削除されました。一時的アクセスは可能ですが、検索などには表示されません。",
     "EntryMergedTo": "この項目はマージされました：",
     "EntryStatusExplanation": "下書き：項目は必須情報が抜けています。<br/>\n完成した：項目は全て必須情報がありますが、信用されたユーザーに見直しされていません。<br/>\n承認された：項目は信用されたユーザーに見直され、承認されています。承認された項目は信用されたユーザーしか編集できません。",
     "Locked": "この項目はロックされています。モデレーターしか編集できません。",
-    "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
-    "RevisionHidden": "This page revision has been hidden."
+    "NameLanguageHelp": "この名前の言語を選択してください。「原言語」は、英語ではない元の言語、例えば日本語での名前です。元の言語が英語の場合、「原言語」には入力しないでください。",
+    "RevisionHidden": "このページの項目改訂は非表示になっています。"
   },
   "ContentLanguageSelectionNames": {
     "Default": "原言語",
     "English": "英語",
     "Japanese": "非英語",
     "Romaji": "ローマ字",
-    "Unspecified": "Unspecified"
+    "Unspecified": "指定なし"
   },
   "DiscTypeDescriptions": {
     "Album": "未発売曲がほとんどのアルバム",
@@ -136,8 +136,8 @@
   },
   "EntryEditEventNames": {
     "Created": "作成",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
+    "Deleted": "削除",
+    "Restored": "復元",
     "Updated": "更新"
   },
   "EntryStatusNames": {
@@ -147,18 +147,18 @@
     "Locked": "ロック"
   },
   "PermissionTokenNames": {
-    "AccessManageMenu": "Access manage menu",
-    "Admin": "Database admin tasks",
+    "AccessManageMenu": "管理メニューへのアクセス",
+    "Admin": "データベース管理タスク",
     "AddRawFileMedia": "Add raw media",
-    "ApplyAnyTag": "Add any tag to entry",
-    "ApproveEntries": "Approve entries",
-    "BulkDeletePVs": "Bulk delete PVs",
-    "CreateComments": "Create comments",
-    "DeleteComments": "Delete comments",
-    "DeleteEntries": "Delete entries",
+    "ApplyAnyTag": "エントリにタグを追加",
+    "ApproveEntries": "エントリを承認",
+    "BulkDeletePVs": "PV の一括削除",
+    "CreateComments": "コメントの作成",
+    "DeleteComments": "コメントの削除",
+    "DeleteEntries": "エントリーの削除",
     "DesignatedStaff": "Designated staff member",
-    "DisableUsers": "Disable users",
-    "EditAllSongLists": "Edit all song lists",
+    "DisableUsers": "ユーザーの無効化",
+    "EditAllSongLists": "すべての楽曲リストの編集",
     "EditFeaturedLists": "Manage featured songlists",
     "EditNews": "Manage news",
     "EditProfile": "Edit personal profile",
@@ -181,7 +181,7 @@
     "ViewAuditLog": "イベントログを観察",
     "ViewHiddenRatings": "View hidden ratings",
     "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
+    "ManageWebhooks": "Webhookの管理",
     "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
@@ -202,7 +202,7 @@
     "Category": "カテゴリ",
     "Date": "日時",
     "Description": "概要",
-    "MainPicture": "Main picture",
+    "MainPicture": "メイン画像",
     "Names": "Names",
     "OriginalName": "Default name language",
     "PVs": "PVs",
