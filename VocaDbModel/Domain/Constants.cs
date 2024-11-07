@@ -20,4 +20,6 @@ public static class Constants
 	public const int AbsoluteMaxBpm = 1015;
 
 	public const decimal BpmStep = 0.01M;
+	
+	public const string RateLimitingDetailsPolicy = "details";
 }

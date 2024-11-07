@@ -275,7 +275,7 @@ public class ArtistApiController : ApiController
 #nullable enable
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[EnableRateLimiting("details")]
+	[EnableRateLimiting(Constants.RateLimitingDetailsPolicy)]
 	public ArtistDetailsForApiContract GetDetails(int id)
 	{
 		WebHelper.VerifyUserAgent(Request);
