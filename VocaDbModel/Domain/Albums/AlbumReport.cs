@@ -9,6 +9,7 @@ public enum AlbumReportType
 	Duplicate = 2,
 	Inappropriate = 3,
 	Other = 4,
+	InvalidTag = 5,
 }
 
 public class AlbumReport : GenericEntryReport<Album, AlbumReportType>
@@ -17,6 +18,7 @@ public class AlbumReport : GenericEntryReport<Album, AlbumReportType>
 	{
 		AlbumReportType.InvalidInfo,
 		AlbumReportType.Other,
+		AlbumReportType.InvalidTag,
 	};
 
 	public AlbumReport() { }

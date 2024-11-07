@@ -10,6 +10,7 @@ public enum SongReportType
 	Duplicate = 3,
 	Inappropriate = 4,
 	Other = 5,
+	InvalidTag = 6,
 }
 
 public class SongReport : GenericEntryReport<Song, SongReportType>
@@ -19,6 +20,7 @@ public class SongReport : GenericEntryReport<Song, SongReportType>
 		SongReportType.BrokenPV,
 		SongReportType.InvalidInfo,
 		SongReportType.Other,
+		SongReportType.InvalidTag,
 	};
 
 	public SongReport() { }
