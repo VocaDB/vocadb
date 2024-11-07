@@ -4,6 +4,7 @@ using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -28,6 +29,7 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
+using Constants = VocaDb.Model.Domain.Constants;
 
 namespace VocaDb.Web.Controllers.Api;
 
@@ -378,6 +380,7 @@ public class AlbumApiController : ApiController
 #nullable enable
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[EnableRateLimiting(Constants.RateLimitingDetailsPolicy)]
 	public AlbumDetailsForApiContract GetDetails(int id)
 	{
 		WebHelper.VerifyUserAgent(Request);

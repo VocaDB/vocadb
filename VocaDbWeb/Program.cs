@@ -1,6 +1,9 @@
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.RateLimiting;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using NLog.Web;
+using VocaDb.Model.Domain;
 using VocaDb.Web;
 
 // Code from: https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-6#3-update-programcs.
@@ -16,7 +19,21 @@ try
 	var startup = new Startup(builder.Configuration);
 
 	startup.ConfigureServices(builder.Services);
-
+	
+	builder.Services.AddRateLimiter(options =>
+	{
+		options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+		options.AddPolicy(policyName: Constants.RateLimitingDetailsPolicy, partitioner: httpContext =>
+		{
+			string? ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
+			return RateLimitPartition.GetSlidingWindowLimiter(ipAddress, (_) => new SlidingWindowRateLimiterOptions
+			{
+				Window = TimeSpan.FromMinutes(1),
+				PermitLimit = 40,
+				SegmentsPerWindow = 1,
+			});
+		});
+	});
 	builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 	builder.Host.ConfigureContainer<ContainerBuilder>(startup.ConfigureContainer);
 

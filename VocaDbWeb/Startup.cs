@@ -295,6 +295,8 @@ public class Startup
 		app.UseForwardedHeaders();
 
 		app.UseRouting();
+		
+		app.UseRateLimiter();
 
 		app.UseRequestLocalization(options =>
 		{
