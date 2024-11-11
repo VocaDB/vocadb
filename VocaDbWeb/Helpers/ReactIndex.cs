@@ -13,14 +13,20 @@ public class ReactIndex
 	private readonly BrandableStringsManager _brandableStrings;
 	private readonly VdbConfigManager _config;
 	private readonly IUserPermissionContext _permissionContext;
+    private readonly string _indexHtmlContent;
 
-	public ReactIndex(IWebHostEnvironment env, BrandableStringsManager brandableStrings, VdbConfigManager config, IUserPermissionContext permissionContext)
-	{
-		_env = env;
-		_brandableStrings = brandableStrings;
-		_config = config;
-		_permissionContext = permissionContext;
-	}
+    public ReactIndex(IWebHostEnvironment env, BrandableStringsManager brandableStrings, VdbConfigManager config, IUserPermissionContext permissionContext)
+    {
+        _env = env;
+        _brandableStrings = brandableStrings;
+        _config = config;
+        _permissionContext = permissionContext;
+
+        // Read the content of index.html file once on startup
+        string wwwRootPath = _env.WebRootPath;
+        string filePath = Path.Combine(wwwRootPath, "index.html");
+        _indexHtmlContent = System.IO.File.ReadAllText(filePath);
+    }
 
 	public ContentResult File(PagePropertiesData properties)
 	{
@@ -63,12 +69,7 @@ public class ReactIndex
 
 	private string ToHtml(PagePropertiesData properties)
 	{
-		// Get the path of the index.html file in the wwwroot folder
-		string wwwRootPath = _env.WebRootPath;
-		string filePath = Path.Combine(wwwRootPath, "index.html");
-
-		// Read the content of index.html file
-		var content = System.IO.File.ReadAllText(filePath)
+		var content = _indexHtmlContent
 			.Replace("{{title}}",
 				(!string.IsNullOrEmpty(properties.PageTitle) ? properties.PageTitle + " - " : "") +
 				_brandableStrings.SiteTitle)
