@@ -75,7 +75,7 @@
     "BaDiscType": "レコードタイプ",
     "BaMainCoverPicture": "ジャケット（表）",
     "BaNames": "主なタイトル",
-    "BaPictureInfo": "有効なファイルタイプ: {{0}}. 最大ファイルサイズ: {{1}} MB.",
+    "BaPictureInfo": "対応形式：{{0}}。最大 {{1}} MB まで。",
     "BaReleaseDate": "公開日",
     "BaReleaseDay": "日",
     "BaReleaseEvent": "Release events",
