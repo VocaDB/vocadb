@@ -4,8 +4,8 @@
     "Support": "サポート"
   },
   "Create": {
-    "AlbumInfo2": "Please make sure the entry you're about to submit hasn't been added before. You need to enter at least one name and artist.",
-    "ArtistsInfo": "アーティスト（少なくとも１名は必要）",
+    "AlbumInfo2": "登録しようとしているエントリーがすでに登録されているか確認してください。少なくとも１種類の名前と１名のアーティストを入力する必要があります。",
+    "ArtistsInfo": "アーティスト（最低１名必要）",
     "DiscType": "ディスクタイプ",
     "NeedArtist": "少なくとも１名のアーティストが必要です。",
     "SubmitAlbum": "アルバムの登録",
@@ -41,7 +41,7 @@
     "OwnedByTitle": "所得ユーザー",
     "WishlistedByTitle": "ウィッシュリストしたユーザー",
     "RelatedAlbums": "関連アルバム",
-    "CustomFormatStringLabel": "ダウンロード形式",
+    "CustomFormatStringLabel": "書式設定の文字列（デフォルトは空白）",
     "Customize": "カスタマイズ",
     "Reset": "リセット",
     "MatchingArtists": "同じアーティスト",
@@ -52,7 +52,7 @@
     "ReleaseDateIsInTheFarFuture": "(未公開)",
     "ReleaseDateIsInTheNearFuture": "(近日公開予定)",
     "ReleaseDateIsInThePast": "(公開日)",
-    "TotalLength": "トラック数:{{0}}",
+    "TotalLength": "再生時間：{{0}}",
     "HiddenCollections": "+ {{0}} hidden",
     "Illustrators": "Illustrators",
     "ReviewAlreadySubmitted": "You have already submitted a review in this language. Multiple reviews in the same language are not allowed.",
