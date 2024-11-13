@@ -23,7 +23,7 @@
     "Undefined": "すべて",
     "User": "ユーザー",
     "Venue": "Venue",
-    "VoiceSynthesizer": "Voice Synthesizer"
+    "VoiceSynthesizer": "音声合成"
   },
   "WebhookEventNames": {
     "EntryReport": "Entry report",
