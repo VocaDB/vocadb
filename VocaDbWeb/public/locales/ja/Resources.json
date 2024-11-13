@@ -190,7 +190,7 @@
     "Reprint": "転載"
   },
   "PVTypeNames": {
-    "Original": "オリジン",
+    "Original": "オリジナル",
     "Other": "その他",
     "Reprint": "増刷"
   },
@@ -211,9 +211,9 @@
     "SeriesSuffix": "接尾辞",
     "SongList": "Setlist",
     "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "Venue": "会場",
+    "VenueName": "会場名",
+    "WebLinks": "外部リンク"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自動インポート",
@@ -279,14 +279,14 @@
     "CategoryName": "カテゴリー",
     "Description": "説明",
     "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
+    "Names": "名前",
     "OriginalName": "Default name language",
     "Parent": "親",
     "Picture": "画像",
-    "RelatedTags": "Related tags",
+    "RelatedTags": "関連タグ",
     "Status": "ステータス",
     "Targets": "Targets",
-    "WebLinks": "External links"
+    "WebLinks": "外部リンク"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "プライベートメッセージの通知なし",
@@ -302,14 +302,14 @@
     "Trusted": "信頼されたユーザー"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
+    "Address": "住所",
+    "AddressCountryCode": "国/地域",
+    "Coordinates": "座標",
     "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
+    "Names": "名前",
+    "OriginalName": "デフォルト名前の言語",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "外部リンク"
   },
   "WebLinkCategoryNames": {
     "Commercial": "商業",
