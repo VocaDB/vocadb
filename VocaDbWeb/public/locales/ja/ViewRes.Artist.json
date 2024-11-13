@@ -67,17 +67,17 @@
   },
   "Edit": {
     "BaArtistType": "アーティストタイプ",
-    "BaBaseVoicebank": "Base voicebank",
+    "BaBaseVoicebank": "元のボイスバンク",
     "BaDescription": "概要",
     "BaGroups": "サークルとグループs",
-    "BaMainPicture": "主な絵",
-    "BaNames": "Primary name (in one or more languages)",
-    "BaPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB.",
+    "BaMainPicture": "メイン画像",
+    "BaNames": "代表的な名前表記（１つ以上の言語で）",
+    "BaPictureInfo": "対応形式：{{0}}。最大 {{1}} MB まで。",
     "BaReleaseDate": "ボイスバンクのリリース日",
     "EditTitle": "アーティスト編集 - {{0}}",
     "PiAdd": "追加",
-    "PiPictureDescription": "Picture description",
+    "PiPictureDescription": "画像の説明",
     "PiPicturesNote": "このアーティストに関連する絵だけアップロードしてください。",
-    "TabAdditionalPictures": "その他の絵"
+    "TabAdditionalPictures": "その他の画像"
   }
 }
