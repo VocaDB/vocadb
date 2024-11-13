@@ -121,7 +121,7 @@
   "ContentLanguageSelectionNames": {
     "Default": "原言語",
     "English": "英語",
-    "Japanese": "非英語",
+    "Japanese": "英語以外の名前",
     "Romaji": "ローマ字",
     "Unspecified": "指定なし"
   },
@@ -295,7 +295,7 @@
   },
   "UserGroupNames": {
     "Admin": "管理者",
-    "Limited": "限られたユーザー",
+    "Limited": "制限されたユーザー",
     "Moderator": "モデレータ",
     "Nothing": "なし",
     "Regular": "通常のユーザー",
