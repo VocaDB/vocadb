@@ -57,7 +57,7 @@
     "LastLogin": "最後のログイン",
     "Level": "レベル",
     "Location": "現在地",
-    "MemberSince": "メンバー期間",
+    "MemberSince": "メンバー登録日",
     "Messages": "メッセージ",
     "MySettings": "アカウント設定",
     "OldNameUntil": "(until {{0}})",
@@ -105,8 +105,8 @@
     "UsernameIsRequired": "ユーザー名が必要です。"
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "カテゴリー",
+    "KnowsLanguage": "話せる言語",
     "ShowDisabledUsers": "無効にされたアカウントの表示",
     "VerifiedArtists": "アーティストのみ"
   },
