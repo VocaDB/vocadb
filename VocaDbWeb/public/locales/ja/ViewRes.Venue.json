@@ -1,7 +1,7 @@
 {
   "Details": {
-    "Address": "アドレス",
-    "Aliases": "Aliases",
+    "Address": "住所",
+    "Aliases": "別名",
     "Country": "国/地域",
     "Venue": "会場"
   },

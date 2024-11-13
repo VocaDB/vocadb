@@ -24,11 +24,11 @@
     "Unspecified": "カテゴリー無し"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "追加日時",
+    "Date": "日付",
+    "Name": "名前",
+    "SeriesName": "シリーズ",
+    "VenueName": "会場"
   },
   "ReleaseEventSeriesEditableFieldNames": {
     "Category": "Category",

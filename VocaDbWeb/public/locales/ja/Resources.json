@@ -121,7 +121,7 @@
   "ContentLanguageSelectionNames": {
     "Default": "原言語",
     "English": "英語",
-    "Japanese": "非英語",
+    "Japanese": "英語以外の名前",
     "Romaji": "ローマ字",
     "Unspecified": "指定なし"
   },
@@ -190,7 +190,7 @@
     "Reprint": "転載"
   },
   "PVTypeNames": {
-    "Original": "オリジン",
+    "Original": "オリジナル",
     "Other": "その他",
     "Reprint": "増刷"
   },
@@ -211,9 +211,9 @@
     "SeriesSuffix": "接尾辞",
     "SongList": "Setlist",
     "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "Venue": "会場",
+    "VenueName": "会場名",
+    "WebLinks": "外部リンク"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自動インポート",
@@ -268,7 +268,7 @@
     "None": "なし",
     "PublishDate": "公開日",
     "RatingScore": "評価点数",
-    "TagUsageCount": "Tag usage count"
+    "TagUsageCount": "タグの使用回数"
   },
   "SongVoteRatingNames": {
     "Favorite": "お気に入りに追加",
@@ -279,14 +279,14 @@
     "CategoryName": "カテゴリー",
     "Description": "説明",
     "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
+    "Names": "名前",
     "OriginalName": "Default name language",
     "Parent": "親",
     "Picture": "画像",
-    "RelatedTags": "Related tags",
+    "RelatedTags": "関連タグ",
     "Status": "ステータス",
     "Targets": "Targets",
-    "WebLinks": "External links"
+    "WebLinks": "外部リンク"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "プライベートメッセージの通知なし",
@@ -295,21 +295,21 @@
   },
   "UserGroupNames": {
     "Admin": "管理者",
-    "Limited": "限られたユーザー",
+    "Limited": "制限されたユーザー",
     "Moderator": "モデレータ",
     "Nothing": "なし",
     "Regular": "通常のユーザー",
     "Trusted": "信頼されたユーザー"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
+    "Address": "住所",
+    "AddressCountryCode": "国/地域",
+    "Coordinates": "座標",
     "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
+    "Names": "名前",
+    "OriginalName": "デフォルト名前の言語",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "外部リンク"
   },
   "WebLinkCategoryNames": {
     "Commercial": "商業",

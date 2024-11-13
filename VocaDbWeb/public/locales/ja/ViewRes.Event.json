@@ -17,11 +17,11 @@
   "EventsBySeries": {
     "CreateEvent": "イベントを登録",
     "CreateSeries": "シリーズを登録",
-    "CreateVenue": "Create venue",
-    "ViewByDate": "All by date",
-    "ViewBySeries": "All by series",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Upcoming"
+    "CreateVenue": "会場を登録",
+    "ViewByDate": "日付順",
+    "ViewBySeries": "シリーズ別",
+    "ViewByVenue": "会場別",
+    "ViewList": "近日開催"
   },
   "Find": {
     "CreateEvent": "イベントを登録",

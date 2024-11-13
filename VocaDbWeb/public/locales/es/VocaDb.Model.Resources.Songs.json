@@ -1,7 +1,7 @@
 {
   "SongTypeNames": {
-    "Arrangement": "Arreglos",
-    "Cover": "Versión",
+    "Arrangement": "Arreglo",
+    "Cover": "Cover",
     "DramaPV": "PV dramático",
     "Illustration": "Ilustración",
     "Instrumental": "Instrumental",
@@ -11,7 +11,7 @@
     "Original": "Canción original",
     "Other": "Otro",
     "Remaster": "Remasterización",
-    "Remix": "Remezcla",
+    "Remix": "Remix",
     "Unspecified": "Sin especificar",
     "Rearrangement": "Rearreglo",
     "ShortVersion": "Versión corta"

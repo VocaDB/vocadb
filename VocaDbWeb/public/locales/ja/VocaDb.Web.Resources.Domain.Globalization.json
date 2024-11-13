@@ -1,9 +1,9 @@
 {
   "InterfaceLanguage": {
-    "Other": "Other/Unknown"
+    "Other": "その他/不明"
   },
   "TranslationTypeNames": {
-    "Original": "Original",
+    "Original": "原文",
     "Romanized": "Romanized",
     "Translation": "Translation"
   }

@@ -1,7 +1,7 @@
 {
   "EntryReport": {
     "EntryVersionReportBody": "La entrada '{{0}}', que usted editó, fue denunciada con el siguiente mensaje: '{{1}}'. No se preocupe, seguramente no sea nada grave. Revise la entrada y si hay algo que modificar tan solo realice los cambios pertinentes, a menos que alguien más ya lo haya hecho.",
-    "EntryVersionReportTitle": "Denuncia de la entrada {{0}}"
+    "EntryVersionReportTitle": "Reporte de la entrada {{0}}"
   },
   "UserAccount": {
     "AccountCreatedSubject": "Bienvenido a {{0}}, verifique su correo electrónico.",

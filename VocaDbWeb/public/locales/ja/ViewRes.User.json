@@ -30,12 +30,12 @@
     "UsernameTaken": "ユーザー名が既に存在しています。"
   },
   "Details": {
-    "AboutMe": "自分について",
+    "AboutMe": "自己紹介",
     "AccountDisabled": "無効にされたアカウント",
     "Active": "アクティブ",
     "AdditionalPermissions": "追加のアクセス許可",
     "ArtistVerificationPage": "アーティスト証明ページ",
-    "Attending": "Attending",
+    "Attending": "参加した",
     "CollectionTab": "コレクション",
     "Comments": "コメント",
     "CommentsMade": "コメント",
@@ -50,14 +50,14 @@
     "FavoriteSongsTab": "好きな曲",
     "FavoriteTags": "好きなタグ",
     "FollowedArtistsTab": "フォローしているアーティスト",
-    "ImportSongList": "ニコニコ動画やYouTubeから輸入",
-    "Interested": "Interested",
+    "ImportSongList": "ニコニコ動画やYouTubeから読み込む",
+    "Interested": "興味あり",
     "KnownLanguagesMessage": "<a>アカウント設定 、プロフィール</a>の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。",
     "LanguagesIKnow": "話せる言語",
     "LastLogin": "最後のログイン",
     "Level": "レベル",
     "Location": "現在地",
-    "MemberSince": "メンバー期間",
+    "MemberSince": "メンバー登録日",
     "Messages": "メッセージ",
     "MySettings": "アカウント設定",
     "OldNameUntil": "(until {{0}})",
@@ -65,7 +65,7 @@
     "Overview": "概要",
     "PossibleProducerMessage": "ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、<a>アーティスト証明ページ</a>をご覧下さい。",
     "Power": "パワー",
-    "ReportSpamming": "Report user for spamming",
+    "ReportSpamming": "スパムユーザーを報告",
     "SetAvatar": "アバターは gravatar.com で設定しましょう",
     "SomeAlbumsILike": "好きなアルバム",
     "SomeArtistsIFollow": "フォローしているアーティスト",
@@ -81,10 +81,10 @@
     "UserDetails": "ユーザー詳細",
     "UserGroup": "ユーザーグループ",
     "UserName": "名前",
-    "VerifiedAccount": "証明されたアーティスト",
-    "VerifiedEmail": "確認済みEメール",
-    "VerifiedOwner": "証明されたオーナー",
-    "Veteran": "{{0}} veteran",
+    "VerifiedAccount": "認証されたアーティスト",
+    "VerifiedEmail": "メール確認済み",
+    "VerifiedOwner": "認証された所有エントリー",
+    "Veteran": "{{0}} ベテラン",
     "VisibleOnlyToMe": "自分とスタッフだけが見える"
   },
   "EntryEdits": {
@@ -105,8 +105,8 @@
     "UsernameIsRequired": "ユーザー名が必要です。"
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "カテゴリー",
+    "KnowsLanguage": "話せる言語",
     "ShowDisabledUsers": "無効にされたアカウントの表示",
     "VerifiedArtists": "アーティストのみ"
   },
@@ -156,11 +156,11 @@
     "DeleteSelected": "Delete selected"
   },
   "MySettings": {
-    "AboutMe": "私について",
+    "AboutMe": "自己紹介",
     "AccessKey": "アクセスキー",
     "AccessKeyDescription": "アクセスキーはVocaDBのアカウントでさまざまなサービスにパスワードを使わずログインできます。\nアクセスキーはいつでも再発行することができます。その際は古いキーは無効となります。\nキーは大事に守ってください。キーが漏れた恐れがあった場合、すぐに再発行してください。",
     "AccountSettings": "アカウント設定",
-    "AddKnownLanguage": "もう一つの行",
+    "AddKnownLanguage": "追加",
     "AnonymousActivity": "「最近の活動」にユーザー名の表示を許可する",
     "Automatic": "（自動）",
     "ChangePassword": "パスワードを変更する",
@@ -195,7 +195,7 @@
     "SettingsUpdated": "設定が更新されました",
     "Theme": "テーマ",
     "UnableToSave": "設定保存ができませんでした。エラーを修正し再実行してください。",
-    "UnreadNotificationsToKeep": "Maximum number of unread notifications",
+    "UnreadNotificationsToKeep": "通知の最大未読数",
     "Username": "ユーザー名"
   },
   "RatedSongs": {
