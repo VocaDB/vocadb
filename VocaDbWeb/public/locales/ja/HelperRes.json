@@ -37,9 +37,9 @@
     "StatusDescriptionDraft": "下書きの項目は必要な情報が不足しています。",
     "StatusDescriptionFinished": "完成項目は必要情報が全て含まれていますが、信用されたユーザーに承認されていません。",
     "StatusDescriptionLocked": "ロックされた項目はスタッフ以外編集できません。",
-    "UploadPictureInfo": "許可されているタイプ：{{0}}。最大サイズ：{{1}} MB。著作権を尊重し、可能な限りノート/説明に画像ソースを記載してください.",
+    "UploadPictureInfo": "対応形式：{{0}}。最大 {{1}} MB まで。著作権を尊重し、可能な限りノート/説明に画像ソースを記載してください.",
     "WebLinkCategoryTitle": "カテゴリー",
-    "WebLinkDescriptionTitle": "記述",
+    "WebLinkDescriptionTitle": "説明",
     "WebLinkNewRow": "追加",
     "WebLinkUrlTitle": "URL"
   },
