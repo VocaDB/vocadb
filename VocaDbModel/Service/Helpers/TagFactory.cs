@@ -22,7 +22,7 @@ public class TagFactoryRepository : ITagFactory
 
 	public async Task<Tag> CreateTagAsync(string englishName)
 	{
-		var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
+		var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.Unspecified));
 		await _ctx.SaveAsync(tag);
 
 		var archived = ArchivedTagVersion.Create(tag, new TagDiff(), _loginData, EntryEditEvent.Created, string.Empty);
