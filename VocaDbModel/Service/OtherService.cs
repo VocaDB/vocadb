@@ -157,7 +157,7 @@ public class OtherService : ServiceBase
 
 			var recentEvents = session.Query<ReleaseEvent>()
 				.WhereNotDeleted()
-				.WhereDateIsBetween(minDate, maxDate)
+				.FromDateOnwards(minDate)
 				.OrderByDate(SortDirection.Ascending)
 				.Take(count)
 				.ToArray();

@@ -79,6 +79,14 @@ public static class ReleaseEventQueryableExtensions
 		return query;
 	}
 
+	// Returns release events which are happening at date or after date. Mainly used for the "Happening now" section on the frontpage.
+	public static IQueryable<ReleaseEvent> FromDateOnwards(this IQueryable<ReleaseEvent> query, DateTime? date)
+	{
+		if (!date.HasValue) return query;
+		
+		return query.Where(e => (e.EndDate.DateTime != null && e.EndDate.DateTime > date) || (e.Date.DateTime != null && e.Date.DateTime >= date));
+	}
+
 	public static IQueryable<ReleaseEvent> WhereHasArtists(this IQueryable<ReleaseEvent> query, EntryIdsCollection artistIds, bool childVoicebanks, bool includeMembers)
 	{
 		if (!artistIds.HasAny)
