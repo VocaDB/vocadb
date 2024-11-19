@@ -177,7 +177,7 @@
     "RemoveEditPermission": "Eliminar permisos de edición de la base de datos",
     "RemoveTagUsages": "Remover usos de etiqueta",
     "RestoreRevisions": "Restaurar revisiones",
-    "UploadMedia": "Subir información de uno mismo",
+    "UploadMedia": "Subir tu propia información",
     "ViewAuditLog": "Ver registro de eventos",
     "ViewHiddenRatings": "Ver valoraciones ocultas",
     "ViewHiddenRevisions": "Ver revisiones ocultas",
@@ -242,7 +242,7 @@
     "WebLinks": "Links externos",
     "ReleaseEvent": "Evento de lanzamiento",
     "ReleaseEvents": "Eventos de lanzamiento",
-    "Bpm": "PPM",
+    "Bpm": "BPM",
     "CultureCodes": "Idiomas"
   },
   "SongListEditableFieldNames": {
