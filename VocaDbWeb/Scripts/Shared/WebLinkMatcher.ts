@@ -974,7 +974,12 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'note.com/',
+			url: '.note.com/',
+			desc: 'Note',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: '/note.com/',
 			desc: 'Note',
 			cat: WebLinkCategory.Official,
 		},
