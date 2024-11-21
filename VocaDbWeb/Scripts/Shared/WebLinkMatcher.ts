@@ -494,6 +494,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'gensokyoradio.net/',
+			desc: 'Gensokyo Radio',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
 			url: 'goodsrepublic.com',
 			desc: 'Goods Republic',
 			cat: WebLinkCategory.Other,
