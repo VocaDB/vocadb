@@ -8,7 +8,7 @@
     "ArtistsInfo": "Artistas (1 mínimo, obligatorio)",
     "DiscType": "Tipo de disco",
     "NeedArtist": "Al menos un artista es obligatorio.",
-    "SubmitAlbum": "Suba un álbum nuevo",
+    "SubmitAlbum": "Subir un nuevo álbum",
     "UnableToCreateAlbum": "No se puede crear el álbum. Corrija los errores e inténtelo de nuevo."
   },
   "Details": {
