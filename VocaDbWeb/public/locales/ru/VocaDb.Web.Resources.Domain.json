@@ -4,6 +4,7 @@
     "Duplicate": "Дубликат",
     "Inappropriate": "Недопустимый материал",
     "InvalidInfo": "Неверная или неполная информация",
+    "InvalidTag": "Invalid tag usage",
     "MaliciousIP": "Malicious IP",
     "Other": "Прочее (опишите в сноске)",
     "OwnershipClaim": "Ownership claim",
