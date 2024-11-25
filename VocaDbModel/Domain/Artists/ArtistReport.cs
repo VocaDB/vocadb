@@ -10,6 +10,7 @@ public enum ArtistReportType
 	Inappropriate = 3,
 	OwnershipClaim = 4,
 	Other = 5,
+	InvalidTag = 6,
 }
 
 public class ArtistReport : GenericEntryReport<Artist, ArtistReportType>
@@ -18,6 +19,7 @@ public class ArtistReport : GenericEntryReport<Artist, ArtistReportType>
 	{
 		ArtistReportType.InvalidInfo,
 		ArtistReportType.Other,
+		ArtistReportType.InvalidTag,
 	};
 
 	public ArtistReport() { }

@@ -9,6 +9,7 @@ public enum EventReportType
 	Duplicate = 2,
 	Inappropriate = 3,
 	Other = 4,
+	InvalidTag = 5,
 }
 
 public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType>
@@ -17,6 +18,7 @@ public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType>
 	{
 		EventReportType.InvalidInfo,
 		EventReportType.Other,
+		EventReportType.InvalidTag,
 	};
 
 	public EventReport() { }

@@ -3,9 +3,11 @@ export enum EventReportType {
 	Duplicate = 'Duplicate',
 	Inappropriate = 'Inappropriate',
 	Other = 'Other',
+	InvalidTag = 'InvalidTag',
 }
 
 export const eventReportTypesWithRequiredNotes = [
 	EventReportType.InvalidInfo,
 	EventReportType.Other,
+	EventReportType.InvalidTag,
 ];
