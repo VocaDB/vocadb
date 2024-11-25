@@ -4,6 +4,7 @@
     "Duplicate": "Duplicate entry",
     "Inappropriate": "Inappropriate content",
     "InvalidInfo": "Invalid or missing information",
+    "InvalidTag": "Invalid tag usage",
     "MaliciousIP": "Malicious IP",
     "Other": "Other (specify in notes)",
     "OwnershipClaim": "Ownership claim",
