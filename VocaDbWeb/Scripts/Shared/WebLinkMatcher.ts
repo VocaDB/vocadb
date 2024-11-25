@@ -199,6 +199,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'bmssearch.net',
+			desc: 'BMS Search',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'chii.in',
 			desc: 'Bangumi',
 			cat: WebLinkCategory.Reference,
