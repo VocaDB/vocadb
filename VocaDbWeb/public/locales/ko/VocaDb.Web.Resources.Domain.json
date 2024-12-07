@@ -4,6 +4,7 @@
     "Duplicate": "중복 입력",
     "Inappropriate": "부적절한 내용",
     "InvalidInfo": "유효하지 않거나 유실된 정보",
+    "InvalidTag": "Invalid tag usage",
     "MaliciousIP": "악의적 IP",
     "Other": "기타 (노트에서 특정)",
     "OwnershipClaim": "소유권 주장",
