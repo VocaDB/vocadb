@@ -557,7 +557,6 @@ public class SongApiController : ApiController
 #nullable enable
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[EnableRateLimiting(Constants.RateLimitingDetailsPolicy)]
 	public SongDetailsForApiContract GetDetails(int id, int albumId = 0)
 	{
 		WebHelper.VerifyUserAgent(Request);

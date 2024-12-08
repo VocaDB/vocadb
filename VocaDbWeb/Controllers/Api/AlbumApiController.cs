@@ -380,7 +380,6 @@ public class AlbumApiController : ApiController
 #nullable enable
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[EnableRateLimiting(Constants.RateLimitingDetailsPolicy)]
 	public AlbumDetailsForApiContract GetDetails(int id)
 	{
 		WebHelper.VerifyUserAgent(Request);
