@@ -41,16 +41,7 @@ public static class WebHelper
 	}
 
 #nullable enable
-	public static string GetRealHost(HttpRequest request)
-	{
-		string? header = request.HttpContext.Request.Headers["CF-Connecting-IP"].FirstOrDefault() ?? request.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
-		if (header != null && IPAddress.TryParse(header, out IPAddress? ip))
-		{
-			return ip.ToString();
-		}
-		return request.HttpContext.Connection.RemoteIpAddress.ToString();
-	}
-#nullable disable
+	public static string GetRealHost(HttpRequest request) => request.HttpContext.Connection.RemoteIpAddress.ToString();
 
 	public static bool IsLocalhost(string hostname)
 	{
