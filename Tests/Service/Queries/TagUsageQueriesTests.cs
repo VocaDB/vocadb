@@ -266,7 +266,7 @@ public class TagUsageQueriesTests
 	[TestMethod]
 	public async Task SkipInvalidTarget()
 	{
-		_existingTag.Targets = TagTargetTypes.Album;
+		_existingTag.NewTargets = new[] { "album" };
 		var tag = _repository.Save(CreateEntry.Tag("vocarock", 39));
 
 		await AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id));
