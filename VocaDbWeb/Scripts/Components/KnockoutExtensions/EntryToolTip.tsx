@@ -45,7 +45,7 @@ export const AlbumToolTip = React.memo(
 		const [album, setAlbum] = React.useState<AlbumContract>();
 
 		React.useEffect(() => {
-			if (album) return;
+			if (album && album.id === id) return;
 
 			if (!show) return;
 
@@ -102,7 +102,7 @@ export const ArtistToolTip = React.memo(
 		const [artist, setArtist] = React.useState<ArtistContract>();
 
 		React.useEffect(() => {
-			if (artist) return;
+			if (artist && artist.id === id) return;
 
 			if (!show) return;
 
@@ -153,7 +153,7 @@ export const EventToolTip = React.memo(
 		const [event, setEvent] = React.useState<ReleaseEventContract>();
 
 		React.useEffect(() => {
-			if (event) return;
+			if (event && event.id === id) return;
 
 			if (!show) return;
 
@@ -216,7 +216,7 @@ export const SongToolTip = React.memo(
 		const [song, setSong] = React.useState<SongWithPVAndVoteContract>();
 
 		React.useEffect(() => {
-			if (song) return;
+			if (song && song.id === id) return;
 
 			if (!show) return;
 
@@ -287,7 +287,7 @@ export const TagToolTip = React.memo(
 		const [tag, setTag] = React.useState<TagApiContract>();
 
 		React.useEffect(() => {
-			if (tag) return;
+			if (tag && tag.id === id) return;
 
 			if (!show) return;
 
@@ -339,7 +339,7 @@ export const UserToolTip = React.memo(
 		const [user, setUser] = React.useState<UserApiContract>();
 
 		React.useEffect(() => {
-			if (user) return;
+			if (user && user.id === id) return;
 
 			if (!show) return;
 
