@@ -1,6 +1,6 @@
 {
   "Import": {
-    "Accept": "Accept",
+    "Accept": "Hyväksy",
     "InvalidUrlError": "Check that the URL is valid and points to a NicoNico MyList, RSS feed or YouTube playlist.",
     "ItemsLoaded": "loaded",
     "ListDescription": "Description",
