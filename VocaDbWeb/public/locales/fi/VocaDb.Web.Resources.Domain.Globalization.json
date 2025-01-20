@@ -1,10 +1,10 @@
 {
   "InterfaceLanguage": {
-    "Other": "Other/Unknown"
+    "Other": "Muu/Tuntematon"
   },
   "TranslationTypeNames": {
-    "Original": "Original",
-    "Romanized": "Romanized",
-    "Translation": "Translation"
+    "Original": "Alkuperäinen",
+    "Romanized": "Romanisoitu",
+    "Translation": "Käännös"
   }
 }
