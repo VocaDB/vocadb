@@ -1,9 +1,9 @@
 {
   "Index": {
-    "AllActivity": "All activity",
-    "Comments": "Comments",
-    "FollowedArtists": "Only followed artists",
-    "RecentActivity": "Recent activity",
-    "ViewMore": "View more"
+    "AllActivity": "Kaikki toiminta",
+    "Comments": "Kommentit",
+    "FollowedArtists": "Vain seuratut artistit",
+    "RecentActivity": "Viimeaikainen toiminta",
+    "ViewMore": "Näytä enemmän"
   }
 }
