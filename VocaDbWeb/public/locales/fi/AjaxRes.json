@@ -7,7 +7,7 @@
     "Download": "Lataa"
   },
   "EntryIndex": {
-    "DraftsOnlyFilter": "luonnostila",
+    "DraftsOnlyFilter": "vain luonnokset",
     "ExactTitleFilter": "tarkalla nimellä '{{0}}'",
     "FilterPre": "Suodatetaan",
     "StartsWithTitleFilter": "alkaa nimellä '{{0}}'",
