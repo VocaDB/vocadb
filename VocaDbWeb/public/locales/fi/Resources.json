@@ -1,17 +1,17 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Vanhin",
+    "CreateDateDescending": "Uusin"
   },
   "AlbumArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-imported",
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "AutoImportedFromMikuDb": "Automaattisesti tuotu",
+    "Created": "Luotu",
+    "Deleted": "Poistettu",
+    "Merged": "Yhdistetty toisesta merkinnästä",
+    "PropertiesUpdated": "Ominaisuuksia päivitetty",
+    "Restored": "Entisöity",
+    "Reverted": "Palautettu",
+    "Unknown": "Tuntematon"
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "Ei mitään",
@@ -20,26 +20,26 @@
     "Wishlisted": "Toivottu"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
+    "Audio": "Ääni",
     "Video": "Video"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "Artists",
+    "Artists": "Artistit",
     "Cover": "Cover",
-    "Description": "Description",
-    "DiscType": "Album type",
-    "Names": "Names",
-    "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "OriginalRelease": "Original release",
-    "Pictures": "Pictures",
-    "PVs": "PVs",
-    "Status": "Status",
-    "Tracks": "Tracks",
-    "WebLinks": "External links",
-    "Barcode": "Barcode",
-    "Identifiers": "Identifiers",
-    "Discs": "Discs"
+    "Description": "Kuvaus",
+    "DiscType": "Albumin tyyppi",
+    "Names": "Nimet",
+    "Nothing": "Ei mitään",
+    "OriginalName": "Alkuperäinen nimi",
+    "OriginalRelease": "Alkuperäinen julkaisu",
+    "Pictures": "Kuvat",
+    "PVs": "Videot",
+    "Status": "Tila",
+    "Tracks": "Kappaleet",
+    "WebLinks": "Ulkoiset linkit",
+    "Barcode": "Viivakoodi",
+    "Identifiers": "Tunnisteet",
+    "Discs": "Levyt"
   },
   "AlbumMediaTypeNames": {
     "DigitalDownload": "Digitaalinen lataus",
@@ -55,28 +55,28 @@
     "ReleaseDate": "Julkaisupäivän mukaan"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted to an earlier revision",
-    "Unknown": "Unknown"
+    "Created": "Luotu",
+    "Deleted": "Poistettu",
+    "Merged": "Yhdistetty toisesta merkinnästä",
+    "PropertiesUpdated": "Ominaisuuksia päivitetty",
+    "Restored": "Entisöity",
+    "Reverted": "Palautettu aiempaan tarkistukseen",
+    "Unknown": "Tuntematon"
   },
   "ArtistEditableFieldNames": {
-    "Albums": "Albums",
-    "ArtistType": "Artist type",
-    "BaseVoicebank": "Base voicebank",
-    "Description": "Description",
-    "Groups": "Groups",
-    "Names": "Names",
-    "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "Picture": "Main picture",
-    "Pictures": "Pictures",
-    "ReleaseDate": "Voicebank release date",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Albums": "Albumit",
+    "ArtistType": "Artistin tyyppi",
+    "BaseVoicebank": "Äänipankki",
+    "Description": "Kuvaus",
+    "Groups": "Ryhmät",
+    "Names": "Nimet",
+    "Nothing": "Ei mitään",
+    "OriginalName": "Alkuperäinen nimi",
+    "Picture": "Tärkein kuva",
+    "Pictures": "Kuvat",
+    "ReleaseDate": "Äänipankin julkaisupäivä",
+    "Status": "Tila",
+    "WebLinks": "Ulkoiset linkit"
   },
   "ArtistRoleNames": {
     "Animator": "Animoija",
@@ -85,7 +85,7 @@
     "Composer": "Säveltäjä",
     "Default": "Oletus",
     "Distributor": "Jakelija",
-    "Encoder": "Encoder",
+    "Encoder": "Kooderi",
     "Illustrator": "Kuvittaja",
     "Instrumentalist": "Instrumentalisti",
     "Lyricist": "Sanoittaja",
@@ -93,22 +93,22 @@
     "Mixer": "Miksaaja",
     "Other": "Muu",
     "Publisher": "Julkaisija",
-    "VocalDataProvider": "Vocal data provider",
+    "VocalDataProvider": "Äänidatan tuottaja",
     "Vocalist": "Laulaja",
     "VoiceManipulator": "Äänen manipuloija"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Lisäyspäivän mukaan (laskeva)",
     "AdditionDateAsc": "Lisäyspäivän mukaan (nouseva)",
-    "FollowerCount": "Number of followers",
+    "FollowerCount": "Seuraajien lukumäärän mukaan",
     "Name": "Nimen mukaan",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Äänipankin julkaisupäivän mukaan",
     "SongCount": "Kappaleiden lukumäärän mukaan",
     "SongRating": "Kappaleiden yhteenlasketun pistemäärän mukaan"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Vanhin",
+    "CreateDateDescending": "Uusin"
   },
   "CommonMessages": {
     "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
@@ -212,47 +212,47 @@
     "SongList": "Setlist",
     "Status": "Status",
     "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "VenueName": "Tapahtumapaikan nimi",
+    "WebLinks": "Ulkoiset linkit"
   },
   "SongArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-imported",
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "AutoImportedFromMikuDb": "Automaattisesti tuotu",
+    "Created": "Luotu",
+    "Deleted": "Poistettu",
+    "Merged": "Yhdistetty toisesta merkinnästä",
+    "PropertiesUpdated": "Ominaisuudet päivitetty",
+    "Restored": "Entisöity",
+    "Reverted": "Palautettu",
+    "Unknown": "Tuntematon"
   },
   "SongEditableFieldNames": {
-    "Artists": "Artists",
-    "Groups": "Groups",
-    "Length": "Duration",
-    "Lyrics": "Lyrics",
-    "Names": "Names",
-    "Notes": "Description",
-    "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "OriginalVersion": "Original version",
-    "PublishDate": "Publish date",
-    "PVs": "PVs",
-    "SongType": "Song type",
-    "Status": "Status",
-    "WebLinks": "External links",
-    "ReleaseEvent": "Release event",
-    "ReleaseEvents": "Release events",
+    "Artists": "Artistit",
+    "Groups": "Ryhmät",
+    "Length": "Kesto",
+    "Lyrics": "Sanoitukset",
+    "Names": "Nimet",
+    "Notes": "Kuvaus",
+    "Nothing": "Ei mitään",
+    "OriginalName": "Alkuperäinen nimi",
+    "OriginalVersion": "Alkuperäinen versio",
+    "PublishDate": "Julkaisupäivämäärä",
+    "PVs": "Videot",
+    "SongType": "Kappaleen tyyppi",
+    "Status": "Tila",
+    "WebLinks": "Ulkoiset linkit",
+    "ReleaseEvent": "Julkaisutapahtuma",
+    "ReleaseEvents": "Julkaisutapahtumat",
     "Bpm": "BPM",
-    "CultureCodes": "Languages"
+    "CultureCodes": "Kielet"
   },
   "SongListEditableFieldNames": {
-    "Description": "Description",
-    "EventDate": "Event date",
-    "FeaturedCategory": "Featured category",
-    "Name": "Name",
-    "Songs": "Songs",
-    "Status": "Status",
-    "Thumbnail": "Thumbnail"
+    "Description": "Kuvaus",
+    "EventDate": "Tapahtuman päivämäärä",
+    "FeaturedCategory": "Kategoria",
+    "Name": "Nimi",
+    "Songs": "Kappaleet",
+    "Status": "Tila",
+    "Thumbnail": "Pikkukuva"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Konserttien settilistat",
@@ -265,10 +265,10 @@
     "AdditionDate": "Lisäyspäivän mukaan",
     "FavoritedTimes": "Suosikeiden mukaan",
     "Name": "Nimen mukaan",
-    "None": "Nothing",
-    "PublishDate": "Publish date",
+    "None": "Ei mitään",
+    "PublishDate": "Julkaisupäivän mukaan",
     "RatingScore": "Arvosteluiden mukaan",
-    "TagUsageCount": "Tag usage count"
+    "TagUsageCount": "Tunnisteiden määrän mukaan"
   },
   "SongVoteRatingNames": {
     "Favorite": "Suosikki",
