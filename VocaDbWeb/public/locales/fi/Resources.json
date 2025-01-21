@@ -111,12 +111,12 @@
     "CreateDateDescending": "Uusin"
   },
   "CommonMessages": {
-    "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
-    "EntryMergedTo": "This entry was merged to",
-    "EntryStatusExplanation": "Draft = entry is missing crucial information. This status indicates that you're requesting additional information to be added or corrected.<br />\nFinished = The entry has all the necessary information, but it hasn't been inspected by a trusted user yet.<br />\nApproved = The entry has been inspected and approved by a trusted user. Approved entries can only be edited by trusted users.",
-    "Locked": "This entry is locked, meaning that only moderators are allowed to edit it.",
-    "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
-    "RevisionHidden": "This page revision has been hidden."
+    "EntryDeleted": "Tämä merkintä on poistettu. Se on yhä tilapäisesti käytettävissä, mutta sitä ei voi nähdä luetteloissa.",
+    "EntryMergedTo": "Tämä merkintä yhdistettiin",
+    "EntryStatusExplanation": "Luonnos = Merkinnästä puuttuu olennaista tietoa. Tämä tila antaa ymmärtää sinun pyytävän tietoa lisättäväksi tai korjattavaksi.<br />\nValmis = Merkintä sisältää kaiken vaadittavan tiedon, mutta luotettava käyttäjä ei ole vielä tarkistanut sitä.<br />\nHyväksytty = Luotettu käyttäjä on tarkistanut ja hyväksynyt merkinnän. Hyväksyttyjä merkintöjä voivat muokata vain luotetut käyttäjät.",
+    "Locked": "Tämä merkintä on lukittu. Vain moderaattoreiden on mahdollista muokata sitä.",
+    "NameLanguageHelp": "Valitse kieli tälle nimelle. Alkuperäiskielinen nimi on nimi alkuperäisellä kielellä, joka ei ole englanti. Jos alkuperäinen nimi on englanninkielinen, jätä alkuperäiskielisen nimen kohta tyhjäksi.",
+    "RevisionHidden": "Tämän sivun tarkistus on piilotettu."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Alkuperäinen",
@@ -162,7 +162,7 @@
     "EditFeaturedLists": "Julkisten kappalelistojen hallinta",
     "EditNews": "Uutisten hallinta",
     "EditProfile": "Oman profiilin hallinta",
-    "EditTags": "Edit tags",
+    "EditTags": "Tunnisteiden muokkaus",
     "LockEntries": "Merkintöjen lukitseminen",
     "ManageDatabase": "Tietokannan muokkaus",
     "ManageEntryReports": "Raporttien hallinta",
