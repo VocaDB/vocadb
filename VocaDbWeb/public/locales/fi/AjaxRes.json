@@ -2,12 +2,12 @@
   "Album": {
     "AddedToCollection": "Lisätty kokoelmaan.",
     "AddToTracks": "Lisää kappaleisiin",
-    "RemoveFromTracks": "Poista kappaleilta",
+    "RemoveFromTracks": "Poista kappaleista",
     "AddNewSong": "Lisää uusi kappale nimeltä '{{0}}'",
     "Download": "Lataa"
   },
   "EntryIndex": {
-    "DraftsOnlyFilter": "vain vedokset",
+    "DraftsOnlyFilter": "vain luonnokset",
     "ExactTitleFilter": "tarkalla nimellä '{{0}}'",
     "FilterPre": "Suodatetaan",
     "StartsWithTitleFilter": "alkaa nimellä '{{0}}'",
@@ -18,7 +18,7 @@
     "ReportSent": "Raportti lähetetty. Kiitos!",
     "Save": "Tallenna",
     "ThanksForRating": "Kiitos arvostelusta!",
-    "UnableToSendReport": "Unable to send report."
+    "UnableToSendReport": "Raporttia ei voida lähettää."
   },
   "Song": {
     "AddedToList": "Lisätty listaan",
