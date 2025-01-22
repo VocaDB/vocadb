@@ -12,12 +12,23 @@ a.extLink[href^="https://about.me/"]
 	background-image: url('/Content/ExtIcons/aboutme.png');
 }
 
-a.extLink[href^="http://ec.akbh.jp/products/detail.php"],
-a.extLink[href^="https://ec.akbh.jp/products/detail.php"],
+a.extLink[href^="http://ec.akbh.jp/"],
+a.extLink[href^="https://ec.akbh.jp/"],
 a.extLink[href^="http://shop.akbh.jp/"],
 a.extLink[href^="https://shop.akbh.jp/"]
 {
 	background-image: url('/Content/ExtIcons/akibahobby.png');
+}
+
+a.extLink[href^="http://www.akibaoo.com/"]
+{
+	background-image: url('/Content/ExtIcons/akibaoo.png');
+}
+
+a.extLink[href^="http://alice-books.com/"],
+a.extLink[href^="https://alice-books.com/"]
+{
+	background-image: url('/Content/ExtIcons/alicebooks.png');
 }
 
 a.extLink[href^="http://www.amazon.co.jp/"],
@@ -36,6 +47,18 @@ a.extLink[href^="http://music.amazon.co.jp"],
 a.extLink[href^="https://music.amazon.co.jp"]
 {
 	background-image: url('/Content/ExtIcons/amazonmp3.png');
+}
+
+a.extLink[href^="http://ameblo.jp/"],
+a.extLink[href^="https://ameblo.jp/"]
+{
+	background: url('/Content/ExtIcons/ameblo.png') no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.amiami.com/"],
+a.extLink[href^="https://www.amiami.com/"]
+{
+	background: url('/Content/ExtIcons/amiami.png') no-repeat left 50%;
 }
 
 a.extLink[href^="http://www.animate-onlineshop.jp/"],
@@ -101,6 +124,11 @@ a.extLink[href^="https://www.dlsite.com/"]
 a.extLink[href^="http://shop.fasic.jp/"]
 {
 	background-image: url('/Content/ExtIcons/fasic.png');
+}
+
+a.extLink[href^="https://gensokyoradio.net/"]
+{
+	background-image: url('/Content/ExtIcons/gensokyoradio.png');
 }
 
 a.extLink[href^="https://play.google.com/"]
@@ -239,6 +267,12 @@ a.extLink[href^="https://www.tanocstore.net/"],
 a.extLink[href^="http://www.tanocstore.net/"]
 {
 	background-image: url('/Content/ExtIcons/tanocstore.png');
+}
+
+a.extLink[href^="https://thwiki.cc/"],
+a.extLink[href^="https://thbwiki.cc/"]
+{
+	background-image: url('/Content/ExtIcons/thbwiki.png');
 }
 
 a.extLink[href^="http://www.toranoana.jp/"],
@@ -380,11 +414,6 @@ a.extLink[href*='.lofter.com/'] {
 	background-image: url('/Content/ExtIcons/lofter.png');
 }
 
-a.extLink[href^="http://www.akibaoo.com/"]
-{
-	background-image: url('/Content/ExtIcons/akibaoo.png');
-}
-
 a.extLink[href^="http://diverse.direct/"],
 a.extLink[href^="https://diverse.direct/"]
 {
@@ -399,23 +428,6 @@ a.extLink[href^="https://skeb.jp/"]
 
 a.extLink[href^='mailto:'] {
 	background-image: url('/Content/Icons/email.png');
-}
-
-a.extLink[href^="http://alice-books.com/"]
-{
-	background-image: url('/Content/ExtIcons/alicebooks.png');
-}
-
-a.extLink[href^="http://ameblo.jp/"],
-a.extLink[href^="https://ameblo.jp/"]
-{
-	background: url('/Content/ExtIcons/ameblo.png') no-repeat left 50%;
-}
-
-a.extLink[href^="http://www.amiami.com/"],
-a.extLink[href^="https://www.amiami.com/"]
-{
-	background: url('/Content/ExtIcons/amiami.png') no-repeat left 50%;
 }
 
 a.extLink[href*='bandcamp.com'] {
