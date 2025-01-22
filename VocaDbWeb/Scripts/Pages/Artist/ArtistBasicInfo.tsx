@@ -355,6 +355,7 @@ const ArtistBasicInfo = observer(
 											artist={artist.baseVoicebank}
 											releaseYear={true}
 											tooltip={true}
+											typeLabel={true}
 										/>
 									</td>
 								</tr>
@@ -373,6 +374,7 @@ const ArtistBasicInfo = observer(
 													artist={artist}
 													releaseYear={true}
 													tooltip={true}
+													typeLabel={true}
 												/>
 											</React.Fragment>
 										))}
