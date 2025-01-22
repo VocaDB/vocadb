@@ -12,7 +12,7 @@
     "Category": "Kategoria",
     "Children": "Tytärtunnisteet",
     "EventSeries": "Event series",
-    "FollowCount": "Followed by {{0}} user(s)",
+    "FollowCount": "{{0}} käyttäjä(ä) seuraa",
     "FollowTag": "Seuraa tunnistetta",
     "MappedTags": "Seuraavat NicoNico-tunnisteet ovat yhdistetty tähän tunnisteeseen",
     "Overview": "Yleiskuva",
@@ -25,7 +25,7 @@
     "TopEvents": "Suosituimmat tapahtumat",
     "TopSongs": "Suosituimmat kappaleet",
     "Translations": "Käännökset",
-    "UnfollowTag": "Lopeta seuraamasta tunnistetta",
+    "UnfollowTag": "Lopeta tunnisteen seuraaminen",
     "ValidFor": "Valid for"
   }
 }
