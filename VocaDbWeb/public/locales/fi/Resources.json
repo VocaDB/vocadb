@@ -47,12 +47,12 @@
     "PhysicalDisc": "Fyysinen media"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan",
+    "AdditionDate": "Lisäyspäivämäärän mukaan",
     "CollectionCount": "Kokoelmien lukumäärä",
     "Name": "Nimen mukaan",
     "RatingAverage": "Arvostelun mukaan",
     "RatingTotal": "Kokonaispisteiden mukaan",
-    "ReleaseDate": "Julkaisupäivän mukaan"
+    "ReleaseDate": "Julkaisupäivämäärän mukaan"
   },
   "ArtistArchiveReasonNames": {
     "Created": "Loi",
@@ -66,14 +66,14 @@
   "ArtistEditableFieldNames": {
     "Albums": "Albumit",
     "ArtistType": "Artistin tyyppi",
-    "BaseVoicebank": "Äänipankki",
+    "BaseVoicebank": "Perustuu",
     "Description": "Kuvaus",
     "Groups": "Ryhmät",
     "Names": "Nimet",
     "Nothing": "Ei mitään",
     "OriginalName": "Alkuperäinen nimi",
     "Picture": "Tärkein kuva",
-    "Pictures": "Kuvat",
+    "Pictures": "Muut kuvat",
     "ReleaseDate": "Äänipankin julkaisupäivämäärä",
     "Status": "Tila",
     "WebLinks": "Ulkoiset linkit"
@@ -98,11 +98,11 @@
     "VoiceManipulator": "Äänen manipuloija"
   },
   "ArtistSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan (laskeva)",
-    "AdditionDateAsc": "Lisäyspäivän mukaan (nouseva)",
+    "AdditionDate": "Lisäyspäivämäärän mukaan (laskeva)",
+    "AdditionDateAsc": "Lisäyspäivämäärän mukaan (nouseva)",
     "FollowerCount": "Seuraajien lukumäärän mukaan",
     "Name": "Nimen mukaan",
-    "ReleaseDate": "Äänipankin julkaisupäivän mukaan",
+    "ReleaseDate": "Äänipankin julkaisupäivämäärän mukaan",
     "SongCount": "Kappaleiden lukumäärän mukaan",
     "SongRating": "Kappaleiden yhteenlasketun pistemäärän mukaan"
   },
@@ -217,12 +217,12 @@
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automaattisesti tuotu",
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuudet päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemmat tiedot",
     "Unknown": "Tuntematon"
   },
   "SongEditableFieldNames": {
