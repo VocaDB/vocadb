@@ -7,7 +7,7 @@
     "EntryReleaseEvent": "tapahtuman",
     "EntrySong": "kappaleen",
     "EntrySongList": "kappalelistan",
-    "EntryTag": "tunnisteen",
+    "EntryTag": "tägin",
     "EntryVenue": "tapahtumapaikan",
     "Someone": "Käyttäjä",
     "Updated": "päivitti {{0}}"
@@ -41,7 +41,7 @@
     "WebLinkCategoryTitle": "Kategoria",
     "WebLinkDescriptionTitle": "Kuvaus",
     "WebLinkNewRow": "Uusi rivi",
-    "WebLinkUrlTitle": "Osoite (vaadittu)"
+    "WebLinkUrlTitle": "URL-osoite (vaadittu)"
   },
   "SongHelpers": {
     "FromAlbum": "Albumista"
