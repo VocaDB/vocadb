@@ -265,6 +265,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'evn',
+		{
+			languages: ['Evenki'],
+			nativeName: 'эвэды̄ турэ̄н',
+		},
+	],
+	[
 		'qfl',
 		{
 			languages: [
