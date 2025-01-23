@@ -5,12 +5,12 @@
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automaattisesti tuotu",
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuuksia päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemmat tiedot",
     "Unknown": "Tuntematon"
   },
   "AlbumCollectionStatusNames": {
@@ -55,12 +55,12 @@
     "ReleaseDate": "Julkaisupäivän mukaan"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuuksia päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu aiempaan tarkistukseen",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemmat tiedot",
     "Unknown": "Tuntematon"
   },
   "ArtistEditableFieldNames": {
@@ -74,7 +74,7 @@
     "OriginalName": "Alkuperäinen nimi",
     "Picture": "Tärkein kuva",
     "Pictures": "Kuvat",
-    "ReleaseDate": "Äänipankin julkaisupäivä",
+    "ReleaseDate": "Äänipankin julkaisupäivämäärä",
     "Status": "Tila",
     "WebLinks": "Ulkoiset linkit"
   },
@@ -162,7 +162,7 @@
     "EditFeaturedLists": "Julkisten kappalelistojen hallinta",
     "EditNews": "Uutisten hallinta",
     "EditProfile": "Oman profiilin hallinta",
-    "EditTags": "Tunnisteiden muokkaus",
+    "EditTags": "Tägien muokkaus",
     "LockEntries": "Merkintöjen lukitseminen",
     "ManageDatabase": "Tietokannan muokkaus",
     "ManageEntryReports": "Raporttien hallinta",
