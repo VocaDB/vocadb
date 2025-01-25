@@ -1,16 +1,16 @@
 {
   "Details": {
-    "Address": "Address",
-    "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Address": "Osoite",
+    "Aliases": "Aliakset",
+    "Country": "Valtio/Alue",
+    "Venue": "Tapahtumapaikka"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
-    "Latitude": "Latitude",
-    "Location": "Location",
-    "Longitude": "Longitude"
+    "Address": "Osoite",
+    "Coordinates": "Koordinaatit",
+    "Country": "Valtio/Alue",
+    "Latitude": "Leveysaste",
+    "Location": "Sijainti",
+    "Longitude": "Pituusaste"
   }
 }
