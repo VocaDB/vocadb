@@ -2265,7 +2265,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	{
 		return HandleQuery(ctx =>
 		{
-			var year = 2023;
+			var year = 2024;
 
 			var dayWithMostSongHits = ctx.OfType<SongHit>().Query()
 				.Where(h => h.Date.Year == year && h.Agent == id)

@@ -1,43 +1,43 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
-    "Default": "Default",
+    "Dancer": "Tanssija",
+    "Default": "Oletus",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Instrumentalist": "Instrumentalisti",
+    "Organizer": "Organisoija",
+    "Other": "Muu",
+    "OtherPerformer": "Muu esiintyjä",
+    "Promoter": "Promoottori",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "Vocalist": "Vokalisti",
+    "VoiceManipulator": "Äänenkäsittelijä"
   },
   "EventCategoryNames": {
-    "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
-    "Club": "Club",
-    "Concert": "Concert",
-    "Contest": "Contest",
-    "Festival": "Festival",
-    "Convention": "Convention",
-    "Other": "Other",
-    "Unspecified": "Unspecified"
+    "AlbumRelease": "Albumin julkaisutapahtuma",
+    "Anniversary": "Hahmon vuosipäivä",
+    "Club": "Klubi",
+    "Concert": "Konsertti",
+    "Contest": "Kilpailu",
+    "Festival": "Festivaali",
+    "Convention": "Tapaaminen",
+    "Other": "Muu",
+    "Unspecified": "Täsmentämätön"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "Lisäyspäivämäärä",
+    "Date": "Päivämäärä",
+    "Name": "Nimi",
+    "SeriesName": "Sarja",
+    "VenueName": "Tapahtumapaikka"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Picture": "Main picture",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Category": "Kategoria",
+    "Description": "Kuvaus",
+    "Name": "Nimi",
+    "Names": "Nimet",
+    "OriginalName": "Oletusnimen kieli",
+    "Picture": "Tärkein kuva",
+    "Status": "Tila",
+    "WebLinks": "Ulkoiset linkit"
   }
 }
