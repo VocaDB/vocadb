@@ -131,6 +131,30 @@ const PVPlayer = observer(
 							)}
 						</div>
 					</div>
+					<div
+						className="banner-button"
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
+						{/* eslint-disable-next-line react/jsx-no-target-blank */}
+						<a
+							className="a-unstyled button"
+							style={{ marginBottom: '20px' }}
+							href="https://blog.vocadb.net/blog/new-year-2025"
+							target="_blank"
+						>
+							<span>2024: Year in Review 🗗</span>
+						</a>
+						<button
+							onClick={(): void => navigate('/rewind')}
+							className="button"
+						>
+							<span>{vdb.values.siteName} Rewind 2024 →</span>
+						</button>
+					</div>
 				</div>
 			</>
 		);

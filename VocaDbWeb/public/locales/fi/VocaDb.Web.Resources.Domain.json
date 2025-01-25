@@ -2,31 +2,32 @@
   "EntryReportTypeNames": {
     "BrokenPV": "Rikkinäinen video",
     "Duplicate": "Duplikaatti merkintä",
-    "Inappropriate": "Asiaankuulumatonta sisältöä",
+    "Inappropriate": "Epäasiallista sisältöä",
     "InvalidInfo": "Virheellistä tai puuttuvaa tietoa",
+    "InvalidTag": "Väärä tunnisteiden käyttö",
     "MaliciousIP": "Haitallinen IP",
     "Other": "Muu (määrittele lisätiedoissa)",
     "OwnershipClaim": "Omistusvaatimus",
-    "RemovePermissions": "Restricted editing",
-    "Spamming": "Spamming"
+    "RemovePermissions": "Rajoitettu muokkaaminen",
+    "Spamming": "Roskapostitus"
   },
   "EntryTypeNames": {
     "Album": "Albumi",
     "Artist": "Artisti",
-    "DiscussionTopic": "Topic",
-    "PV": "PV",
+    "DiscussionTopic": "Aihe",
+    "PV": "Video",
     "ReleaseEvent": "Tapahtuma",
-    "ReleaseEventSeries": "Event series",
+    "ReleaseEventSeries": "Tapahtumasarja",
     "Song": "Kappale",
     "SongList": "Kappalelista",
     "Tag": "Tunniste",
     "Undefined": "Mitä tahansa",
     "User": "Käyttäjä",
-    "Venue": "Venue",
-    "VoiceSynthesizer": "Voice Synthesizer"
+    "Venue": "Tapahtumapaikka",
+    "VoiceSynthesizer": "Äänisyntetisaattori"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "Merkintäraportti",
+    "User": "Käyttäjä"
   }
 }

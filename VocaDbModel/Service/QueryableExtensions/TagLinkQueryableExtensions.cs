@@ -20,7 +20,7 @@ public static class TagLinkQueryableExtensions
 	{
 		if (target == null) return query;
 
-		return query.Where(t => t.Tag.NewTargets.Any(n => n == target.ToLower()));
+		return query.Where(t => t.Tag.NewTargets.Any(n => n == "all" || n == target || target.StartsWith(n + ':')));
 	}
 	
 	public static IQueryable<T> WhereTagHasTarget<T>(this IQueryable<T> query, ArtistType a) where T : ITagLink

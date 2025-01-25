@@ -1,12 +1,12 @@
 {
   "EnglishTranslatedString": {
-    "Original": "Original",
-    "ShowFullDescription": "Show full description",
-    "Translated": "Translated"
+    "Original": "Alkuperäinen",
+    "ShowFullDescription": "Näytä koko kuvaus",
+    "Translated": "Käännetty"
   },
   "PlayList": {
     "Autoplay": "Automaattinen toisto",
-    "AutoplayNote": "Automaattista toistoa tuetaan vain Youtuben ja SoundCloudin kanssa",
+    "AutoplayNote": "Automaattista toistoa tuetaan vain YouTuben ja SoundCloudin kanssa",
     "NextSong": "Seuraava kappale",
     "Shuffle": "Sekoita"
   }
