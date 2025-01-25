@@ -95,7 +95,7 @@
     "Publisher": "Julkaisija",
     "VocalDataProvider": "Äänidatan tuottaja",
     "Vocalist": "Laulaja",
-    "VoiceManipulator": "Äänen manipuloija"
+    "VoiceManipulator": "Äänenkäsittelijä"
   },
   "ArtistSortRuleNames": {
     "AdditionDate": "Lisäyspäivämäärän mukaan (laskeva)",
@@ -127,12 +127,12 @@
   },
   "DiscTypeDescriptions": {
     "Album": "Albumi, joka koostuu suurimmaksi osin aiemmin julkaisemattomista kappaleista.",
-    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
-    "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
-    "Other": "For albums that don't fit into anything above.",
-    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
-    "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
-    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+    "Compilation": "Kokoelma aiemmin julkaistuja kappaleita, jotka esiintyvät yhdellä tai useammalla aiemmin julkaistulla albumilla.",
+    "EP": "Lyhenne sanoista extended play. Sisältää 3-4 kappaletta. Instrumentaaleja ja remiksejä ei tyypillisesti lasketa mukaan.",
+    "Other": "Albumeille, jotka eivät sovi mihinkään yllä olevista kategorioista.",
+    "Single": "Sisältää yksi tai kaksi kappaletta. Instrumentaaleja ja remixejä ei tyypillisesti lasketa mukaan.",
+    "SplitAlbum": "Kahden tai useamman artistin yhteistuotanto, joka sisältää kaikilta artisteilta suunnilleen yhtä monta kappaletta.",
+    "Video": "Levy, joka sisältää enimmäkseen musiikkivideoita. Yleensä DVD tai Blu-ray."
   },
   "EntryEditEventNames": {
     "Created": "Created",
@@ -302,14 +302,14 @@
     "Trusted": "Luotettu käyttäjä"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Address": "Osoite",
+    "AddressCountryCode": "Valtio/Alue",
+    "Coordinates": "Koordinaatit",
+    "Description": "Kuvaus",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "Status": "Tila",
+    "WebLinks": "Ulkoiset linkit"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Kaupallinen",
