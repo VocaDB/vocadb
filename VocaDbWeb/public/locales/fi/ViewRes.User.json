@@ -2,11 +2,11 @@
   "AlbumCollection": {
     "Album": "Albumi",
     "CollectionStatusAnything": "Anything",
-    "CollectionWishedOrOrdered": "Wished or ordered",
+    "CollectionWishedOrOrdered": "Toivottu tai tilattu",
     "MediaType": "Media",
     "Rating": "Arvostelu",
-    "ReleaseDate": "Release date",
-    "ReleaseEvent": "Release event",
+    "ReleaseDate": "Julkaisupäivämäärä",
+    "ReleaseEvent": "Julkaisutapahtuma",
     "Status": "Tilanne"
   },
   "Create": {
@@ -48,7 +48,7 @@
     "Email": "Sähköposti",
     "Events": "Events",
     "FavoriteSongsTab": "Tykätyt kappaleet",
-    "FavoriteTags": "Suosikkitägini",
+    "FavoriteTags": "Suosikkitunnisteeni",
     "FollowedArtistsTab": "Seuratut artistit",
     "ImportSongList": "Import from YouTube or NicoNico",
     "Interested": "Interested",
@@ -73,8 +73,8 @@
     "Staff": "Ylläpitäjä",
     "StatsTab": "Tilastot",
     "Submissions": "Luotuja merkintöjä",
-    "SupporterTitle": "Thanks for supporting {{0}}!",
-    "TagVotes": "Tägien ääniä",
+    "SupporterTitle": "Kiitos tuesta {{0}}!",
+    "TagVotes": "Tunnisteiden ääniä",
     "Total": "{{0}} yhteensä",
     "TotalEdits": "Muokkauksia yhteensä",
     "TwitterAccount": "Twitter-tili",
@@ -82,9 +82,9 @@
     "UserGroup": "Käyttäjäryhmä",
     "UserName": "Tunnus",
     "VerifiedAccount": "Vahvistettu artisti",
-    "VerifiedEmail": "Verified email",
+    "VerifiedEmail": "Vahvistettu sähköpostiosoite",
     "VerifiedOwner": "Vahvistettu omistaja",
-    "Veteran": "{{0}} veteran",
+    "Veteran": "{{0}} veteraani",
     "VisibleOnlyToMe": "Näkyy vain minulle ja ylläpitäjille."
   },
   "EntryEdits": {
@@ -153,14 +153,14 @@
     "Subject": "Otsikko",
     "To": "Vastaanottaja",
     "Notifications": "Ilmoitukset",
-    "DeleteSelected": "Delete selected"
+    "DeleteSelected": "Poista valitut"
   },
   "MySettings": {
     "AboutMe": "Tietoja minusta",
     "AccessKey": "Pääsytunnus",
     "AccessKeyDescription": "Access key can be used to log in to your account from various other services without revealing your actual password.\n\t\t\t\tYou can regenerate your access key at any time - this will invalidate the previous access key.\n\t\t\t\tKeep your access key secret! If you suspect your access key has been discovered by someone else, please reset it immediately.",
     "AccountSettings": "Tunnuksen asetukset",
-    "AddKnownLanguage": "Add row",
+    "AddKnownLanguage": "Lisää rivi",
     "AnonymousActivity": "Salli käyttäjätunnukseni näytettävän viimeaikaisten muutosten listassa.",
     "Automatic": "(Automaattinen)",
     "ChangePassword": "Vaihda salasana",
