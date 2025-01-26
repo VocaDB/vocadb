@@ -47,10 +47,10 @@
     "PhysicalDisc": "Fyysinen media"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Lisäyspäivämäärien mukaan",
-    "CollectionCount": "Kokoelmien lukumäärien mukaan",
-    "Name": "Nimien mukaan",
-    "RatingAverage": "Arvosteluiden mukaan",
+    "AdditionDate": "Lisäyspäivämäärän mukaan",
+    "CollectionCount": "Kokoelmien lukumäärän mukaan",
+    "Name": "Nimen mukaan",
+    "RatingAverage": "Arvostelun mukaan",
     "RatingTotal": "Kokonaispistemäärän mukaan",
     "ReleaseDate": "Julkaisupäivämäärän mukaan"
   },
@@ -60,13 +60,13 @@
     "Merged": "Yhdisti tiedot toisesta merkinnästä",
     "PropertiesUpdated": "Päivitti tiedot",
     "Restored": "Palautti olemassaolon",
-    "Reverted": "Palautti aiemmat tiedot",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "ArtistEditableFieldNames": {
     "Albums": "Albumit",
     "ArtistType": "Artistin tyyppi",
-    "BaseVoicebank": "Perustuu",
+    "BaseVoicebank": "Kantaäänipankki",
     "Description": "Kuvaus",
     "Groups": "Ryhmät",
     "Names": "Nimet",
@@ -135,10 +135,10 @@
     "Video": "Levy, joka sisältää enimmäkseen musiikkivideoita. Yleensä DVD tai Blu-ray."
   },
   "EntryEditEventNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
-    "Updated": "Updated"
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Restored": "Palautti olemassaolon",
+    "Updated": "Päivitti tiedot"
   },
   "EntryStatusNames": {
     "Approved": "Hyväksytty",
@@ -195,23 +195,23 @@
     "Reprint": "Kopio"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Rating date"
+    "RatingDate": "Arvostelun päivämäärä"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
-    "Category": "Category",
-    "Date": "Date",
-    "Description": "Description",
-    "MainPicture": "Main picture",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "PVs": "PVs",
-    "Series": "Series",
-    "SeriesNumber": "Series number",
-    "SeriesSuffix": "Series suffix",
-    "SongList": "Setlist",
-    "Status": "Status",
-    "Venue": "Venue",
+    "Artists": "Artistit",
+    "Category": "Kategoria",
+    "Date": "Päivämäärä",
+    "Description": "Kuvaus",
+    "MainPicture": "Tärkein kuva",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "PVs": "Videot",
+    "Series": "Sarja",
+    "SeriesNumber": "Sarjanumero",
+    "SeriesSuffix": "Sarjan pääte",
+    "SongList": "Settilista",
+    "Status": "Tila",
+    "Venue": "Tapahtumapaikka",
     "VenueName": "Tapahtumapaikan nimi",
     "WebLinks": "Ulkoiset linkit"
   },
@@ -222,7 +222,7 @@
     "Merged": "Yhdisti tiedot toisesta merkinnästä",
     "PropertiesUpdated": "Päivitti tiedot",
     "Restored": "Palautti olemassaolon",
-    "Reverted": "Palautti aiemmat tiedot",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "SongEditableFieldNames": {
@@ -262,11 +262,11 @@
     "VocaloidRanking": "Vocaloid ranking -listat"
   },
   "SongSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan",
+    "AdditionDate": "Lisäyspäivämäärän mukaan",
     "FavoritedTimes": "Suosikeiden mukaan",
     "Name": "Nimen mukaan",
     "None": "Ei mitään",
-    "PublishDate": "Julkaisupäivän mukaan",
+    "PublishDate": "Julkaisupäivämäärän mukaan",
     "RatingScore": "Arvosteluiden mukaan",
     "TagUsageCount": "Tunnisteiden määrän mukaan"
   },
@@ -275,23 +275,23 @@
     "Like": "Tykkää"
   },
   "TagEditableFieldNames": {
-    "AliasedTo": "Aliased to",
-    "CategoryName": "Category",
-    "Description": "Description",
-    "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Parent": "Parent",
-    "Picture": "Picture",
-    "RelatedTags": "Related tags",
-    "Status": "Status",
-    "Targets": "Targets",
-    "WebLinks": "External links"
+    "AliasedTo": "Aliakset",
+    "CategoryName": "Kategoria",
+    "Description": "Kuvaus",
+    "HideFromSuggestions": "Piilota ehdotuksista",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "Parent": "Emotunniste",
+    "Picture": "Kuva",
+    "RelatedTags": "Liittyvät tunnisteet",
+    "Status": "Tila",
+    "Targets": "Kohteet",
+    "WebLinks": "Ulkoiset linkit"
   },
   "UserEmailOptionsNames": {
-    "NoEmail": "No private messages",
-    "PrivateMessagesFromAdmins": "Private messages from admins",
-    "PrivateMessagesFromAll": "Private messages from everybody"
+    "NoEmail": "Ei yksityisviestejä",
+    "PrivateMessagesFromAdmins": "Yksityisviestit ylläpidolta",
+    "PrivateMessagesFromAll": "Yksityisviestit kaikilta"
   },
   "UserGroupNames": {
     "Admin": "Pääkäyttäjä",
