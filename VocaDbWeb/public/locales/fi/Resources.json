@@ -10,7 +10,7 @@
     "Merged": "Yhdisti tiedot toisesta merkinnästä",
     "PropertiesUpdated": "Päivitti tiedot",
     "Restored": "Palautti olemassaolon",
-    "Reverted": "Palautti aiemmat tiedot",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "AlbumCollectionStatusNames": {
@@ -47,11 +47,11 @@
     "PhysicalDisc": "Fyysinen media"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Lisäyspäivämäärän mukaan",
-    "CollectionCount": "Kokoelmien lukumäärä",
-    "Name": "Nimen mukaan",
-    "RatingAverage": "Arvostelun mukaan",
-    "RatingTotal": "Kokonaispisteiden mukaan",
+    "AdditionDate": "Lisäyspäivämäärien mukaan",
+    "CollectionCount": "Kokoelmien lukumäärien mukaan",
+    "Name": "Nimien mukaan",
+    "RatingAverage": "Arvosteluiden mukaan",
+    "RatingTotal": "Kokonaispistemäärän mukaan",
     "ReleaseDate": "Julkaisupäivämäärän mukaan"
   },
   "ArtistArchiveReasonNames": {
