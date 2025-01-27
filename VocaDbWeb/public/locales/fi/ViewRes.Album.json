@@ -9,7 +9,7 @@
     "DiscType": "Levyn tyyppi",
     "NeedArtist": "Tarvitaan ainakin yksi artisti.",
     "SubmitAlbum": "Lisää albumi",
-    "UnableToCreateAlbum": "Albumin lisäys ei onnistu. Tarkista virheet ja yritä uudelleen."
+    "UnableToCreateAlbum": "Albumin lisäys ei onnistunut. Tarkista virheet ja yritä uudelleen."
   },
   "Details": {
     "AddToCollection": "Lisää kokoelmaani",
@@ -70,7 +70,7 @@
   "Edit": {
     "AddNew": "Lisää kappale",
     "ArtistsTab": "Artistit",
-    "BaCatNum": "Luettelonumero",
+    "BaCatNum": "Tuotenumero",
     "BaDescription": "Albumin kuvaus",
     "BaDiscType": "Äänitteen tyyppi",
     "BaMainCoverPicture": "Tärkein kansikuva",
