@@ -1,31 +1,31 @@
 {
   "Details": {
-    "Albums": "Albums",
-    "Attending": "Attending",
-    "Category": "Category",
+    "Albums": "Albumit",
+    "Attending": "Osallistuvat",
+    "Category": "Kategoria",
     "Event": "Tapahtuma",
     "OccurrenceDate": "Päivämäärä",
-    "PVs": "PVs",
-    "RemoveAttendance": "Remove from my events",
+    "PVs": "Videot",
+    "RemoveAttendance": "Poista tapahtumistani",
     "Series": "Sarja",
-    "SongList": "Setlist",
-    "Songs": "Songs",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
-    "Venue": "Venue"
+    "SongList": "Settilista",
+    "Songs": "Kappaleet",
+    "UserAttending": "Osallistun",
+    "UserInterested": "Olen kiinnostunut",
+    "Venue": "Tapahtumapaikka"
   },
   "EventsBySeries": {
     "CreateEvent": "Luo tapahtuma",
     "CreateSeries": "Luo sarja",
-    "CreateVenue": "Create venue",
-    "ViewByDate": "All by date",
-    "ViewBySeries": "All by series",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Upcoming"
+    "CreateVenue": "Luo tapahtumapaikka",
+    "ViewByDate": "Päivämäärän mukaan",
+    "ViewBySeries": "Sarjan mukaan",
+    "ViewByVenue": "Tapahtumapaikan mukaan",
+    "ViewList": "Tulevat"
   },
   "Find": {
     "CreateEvent": "Luo tapahtuma",
-    "EventNotFound": "Valitettavasti tällä nimellä ei löytynyt tapahtumaa tietokannasta. Sitä ei ehkä vielä ole lisätty.",
+    "EventNotFound": "Valitettavasti tämän nimistä tapahtumaa ei löytynyt tietokannasta. Sitä ei ehkä ole vielä lisätty.",
     "FindEvent": "Etsi tapahtuma",
     "Number": "numero",
     "Series": "Sarja",
