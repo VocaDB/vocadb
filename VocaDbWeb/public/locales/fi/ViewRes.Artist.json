@@ -22,7 +22,7 @@
     "ArtistDetails": "Artisti",
     "ArtistPicture": "Artistin kuva",
     "AverageAlbumRating": "(albumeiden arvosteluiden keskiarvo on {{0}}).",
-    "BaseVoicebank": "Kantaäänipankki",
+    "BaseVoicebank": "Perustuu äänipankkiin",
     "CharacterDesigner": "Hahmon suunnittelija",
     "CharacterDesignerOf": "Suunnitellut",
     "ChildVoicebanks": "Perustuvat tähän",
@@ -62,12 +62,12 @@
     "ViewModePlayList": "Soittolista",
     "ViewModeTiles": "Kuvaelementit",
     "VoiceProvider": "Äänen tuottaja",
-    "VoiceProviderOf": "Äänen tuottaja",
+    "VoiceProviderOf": "Antanut äänensä",
     "YouHaveRatedSongs": "Olet arvostellut {{0}} kappale(tta) tältä artistilta."
   },
   "Edit": {
     "BaArtistType": "Artistin tyyppi",
-    "BaBaseVoicebank": "Kantaäänipankki",
+    "BaBaseVoicebank": "Perustuu äänipankkiin",
     "BaDescription": "Kuvaus",
     "BaGroups": "Ryhmät ja piirit",
     "BaMainPicture": "Tärkein kuva",
