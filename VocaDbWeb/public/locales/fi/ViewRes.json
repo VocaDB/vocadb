@@ -77,7 +77,7 @@
     "LyExtendLanguages": "Lisää kielivaihtoehtoja",
     "Merge": "Yhdistä",
     "MoveToTrash": "Siirrä roskakoriin",
-    "NameHelp": "Mikäli nimen alkuperäinen kieli ei ole englanti, tai sen kieli on tutematon, kirjoita tämä muun kuin englanninkielisen nimen kenttään. Mikäli tunnettu, kirjoita myös romanisoitu nimi. Mikäli nimen alkuperäinen kieli on englanti, tai nimelle on tunnettu englanninkielinen käännös, kirjoita tämä englanninkielisen nimen kenttään.<br />\n<br />\nHuomaa, että sinun ei tarvitse kopioida puuttuvia nimiä toisista kentistä. Järjestelmä tarvittaessa täyttää nämä nimet. Jos merkinnältä puuttuu esimerkiksi romanisoitu nimi, järjestelmä käyttää automaattisesti alempaa englanninkielistä nimeä.<br />\n<br />\nLisää nimiä merkinnälle voi lisätä aliaksina. Katso lisätietoja ohjeista.",
+    "NameHelp": "Jos alkuperäinen nimi on kirjoitettu jollain muulla kielellä kuin englanniksi, tai jos kieli on tuntematon, kirjoita se alkuperäiskielisen nimen kenttään. Jos tunnettu, kirjoita myös romanisoitu nimi. Jos alkuperäinen nimi on kirjoitettu englanniksi, tai jos nimelle on tiedossa englanninkielinen käännös, kirjoita tämä nimi englanninkielisen nimen kenttään.<br />\n<br />\nHuomaa, että sinun ei tarvitse kopioida puuttuvia nimiä toisista kentistä. Järjestelmä tarvittaessa täyttää nämä nimet. Jos merkinnältä puuttuu esimerkiksi romanisoitu nimi, järjestelmä käyttää automaattisesti alempaa englanninkielistä nimeä.<br />\n<br />\nLisää nimiä merkinnälle voi lisätä aliaksina. Katso lisätietoja ohjeista.",
     "PVUnavailable": "Ei saatavilla",
     "Restore": "Palauta olemassaolevaksi",
     "SaveWarning": "Tällä merkinnällä on hyväksyntään liittyviä varoituksia. Haluatko varmasti tallentaa sen valmis-tilassa?",
