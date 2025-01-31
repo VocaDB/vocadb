@@ -25,11 +25,11 @@
     "Status": "Merkinnän tila",
     "TabProperties": "Tiedot",
     "TabSongs": "Kappaleet",
-    "Thumbnail": "Thumbnail",
-    "UnableToSave": "Unable to save list"
+    "Thumbnail": "Pikkukuva",
+    "UnableToSave": "Listan tallentaminen ei onnistunut"
   },
   "Featured": {
-    "Import": "Import from YouTube or NicoNico",
-    "SortBy": "Sort by"
+    "Import": "Tuo YouTubesta tai NicoNicosta",
+    "SortBy": "Järjestä"
   }
 }
