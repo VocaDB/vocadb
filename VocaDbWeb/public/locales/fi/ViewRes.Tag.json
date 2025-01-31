@@ -1,6 +1,6 @@
 {
   "Details": {
-    "AliasedTo": "Aliased to",
+    "AliasedTo": "Aliasoituu",
     "Aliases": "Aliakset",
     "AllAlbums": "Kaikki albumit",
     "AllArtists": "Kaikki artistit",
@@ -8,10 +8,10 @@
     "AllEvents": "Kaikki tapahtumat",
     "AllSongLists": "Kaikki kappalelistat",
     "AllSongs": "Kaikki kappaleet",
-    "AssociatedEntryType": "Associated entry type",
+    "AssociatedEntryType": "Liittyy tällaisiin merkintöihin",
     "Category": "Kategoria",
     "Children": "Tytärtunnisteet",
-    "EventSeries": "Event series",
+    "EventSeries": "Sarja",
     "FollowCount": "{{0}} käyttäjä(ä) seuraa",
     "FollowTag": "Seuraa tunnistetta",
     "MappedTags": "Seuraavat NicoNico-tunnisteet ovat yhdistetty tähän tunnisteeseen",
@@ -26,6 +26,6 @@
     "TopSongs": "Suosituimmat kappaleet",
     "Translations": "Käännökset",
     "UnfollowTag": "Lopeta tunnisteen seuraaminen",
-    "ValidFor": "Valid for"
+    "ValidFor": "Voidaan laittaa seuraaville"
   }
 }
