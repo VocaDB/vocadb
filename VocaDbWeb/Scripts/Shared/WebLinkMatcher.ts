@@ -454,6 +454,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'fandub.wiki/',
+			desc: 'FanDub.Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'shop.fasic.jp/',
 			desc: 'fasic',
 			cat: WebLinkCategory.Commercial,
