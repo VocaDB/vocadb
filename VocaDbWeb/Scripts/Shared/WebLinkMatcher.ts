@@ -274,6 +274,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'boosty.to/',
+			desc: 'Boosty',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'booth.pm/',
 			desc: 'Booth',
 			cat: WebLinkCategory.Commercial,
