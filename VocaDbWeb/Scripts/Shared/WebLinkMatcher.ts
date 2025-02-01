@@ -684,6 +684,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'lyricstranslate.com/',
+			desc: 'LyricsTranslate.com',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'mailto:',
 			desc: 'e-mail',
 			cat: WebLinkCategory.Official,
@@ -1234,6 +1239,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 't.me/',
+			desc: 'Telegram',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'www.lagoa.jp/',
 			desc: 'THREE!',
 			cat: WebLinkCategory.Commercial,
@@ -1596,6 +1606,11 @@ export class WebLinkMatcher {
 		{
 			url: 'ja.wikipedia.org/wiki/',
 			desc: 'Wikipedia (JP)',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'ko.wikipedia.org/wiki/',
+			desc: 'Wikipedia (KR)',
 			cat: WebLinkCategory.Reference,
 		},
 		{
