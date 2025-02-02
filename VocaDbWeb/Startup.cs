@@ -41,6 +41,8 @@ using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
 using OpenTelemetry.Metrics;
 using System.Diagnostics;
+using System.Net;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace VocaDb.Web;
 
@@ -153,6 +155,13 @@ public class Startup
 		});
 
 		services.AddSingleton<EditRateLimitService>();
+
+		services.Configure<ForwardedHeadersOptions>(options =>
+		{
+			options.ForwardedForHeaderName = "CF-Connecting-IP";
+			options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
+			options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
+		});
 	}
 
 	private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
