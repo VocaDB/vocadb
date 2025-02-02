@@ -24,7 +24,7 @@
     "RomajiName": "Romanisoitu nimi"
   },
   "EntryDetails": {
-    "AdditionDate": "Lisäyspäivämäärä",
+    "AdditionDate": "Lisätty",
     "AllPictures": "Kaikki kuvat",
     "BasicInfoTab": "Perustiedot",
     "ConfirmDeleteComment": "Haluatko varmasti poistaa tämän kommentin?",
@@ -151,7 +151,7 @@
     "ArtistName": "Nimi",
     "Artists": "Artistit",
     "Cancel": "Peru",
-    "Clear": "Puhdista",
+    "Clear": "Poista",
     "Delete": "Poista",
     "Description": "Kuvaus",
     "Drafts": "Luonnokset",
