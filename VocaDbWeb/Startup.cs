@@ -159,6 +159,7 @@ public class Startup
 		services.Configure<ForwardedHeadersOptions>(options =>
 		{
 			options.ForwardedForHeaderName = "CF-Connecting-IP";
+			options.ForwardedHeaders = ForwardedHeaders.All;
 			options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
 			options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
 		});
