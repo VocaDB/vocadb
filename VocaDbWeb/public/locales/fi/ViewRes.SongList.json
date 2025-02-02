@@ -1,35 +1,35 @@
 {
   "Details": {
-    "Date": "Date: {{0}}.",
-    "DefaultSortRule": "Default",
-    "Details": "Details",
-    "Events": "Events",
-    "Export": "Export",
-    "Playlist": "Playlist",
-    "Preview": "Preview",
-    "ShowTags": "Show tags",
+    "Date": "Päivämäärä: {{0}}.",
+    "DefaultSortRule": "Oletus",
+    "Details": "Lisätiedot",
+    "Events": "Tapahtumat",
+    "Export": "Lataa",
+    "Playlist": "Soittolista",
+    "Preview": "Esikatsele",
+    "ShowTags": "Näytä tunnisteet",
     "SongList": "Kappalelista",
     "Songs": "kappale(tta)"
   },
   "Edit": {
-    "AddSong": "Add song",
-    "ConfirmDelete": "Are you sure you want to delete this list?",
-    "CreateTitle": "Create a songlist",
-    "Description": "Description",
-    "EditTitle": "Edit list - {{0}}",
-    "EventDate": "Event date",
-    "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
-    "FeaturedCategory": "Featured category",
-    "Name": "Name",
-    "RemoveFromList": "Remove from list",
-    "Status": "Entry status",
-    "TabProperties": "Properties",
-    "TabSongs": "Songs",
-    "Thumbnail": "Thumbnail",
-    "UnableToSave": "Unable to save list"
+    "AddSong": "Lisää kappale",
+    "ConfirmDelete": "Oletko varma, että haluat poistaa tämän listan?",
+    "CreateTitle": "Luo kappalelista",
+    "Description": "Kuvaus",
+    "EditTitle": "Muokkaa listaa - {{0}}",
+    "EventDate": "Tapahtuman päivämäärä",
+    "EventDateHelp": "Jos tämä lista liittyy tapahtumaan, kuten konserttiin tai rankingiin, kyseisen tapahtuman päivämäärän voi kirjoittaa tähän.",
+    "FeaturedCategory": "Kategoria",
+    "Name": "Nimi",
+    "RemoveFromList": "Poista listalta",
+    "Status": "Merkinnän tila",
+    "TabProperties": "Tiedot",
+    "TabSongs": "Kappaleet",
+    "Thumbnail": "Pikkukuva",
+    "UnableToSave": "Listan tallentaminen ei onnistunut"
   },
   "Featured": {
-    "Import": "Import from YouTube or NicoNico",
-    "SortBy": "Sort by"
+    "Import": "Tuo YouTubesta tai NicoNicosta",
+    "SortBy": "Järjestä"
   }
 }

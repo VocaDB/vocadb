@@ -1,9 +1,9 @@
 {
   "SongTypeNames": {
-    "Arrangement": "Arrangement",
+    "Arrangement": "Sovitus",
     "Cover": "Cover",
     "DramaPV": "Draama",
-    "Illustration": "Illustration",
+    "Illustration": "Kuvitus",
     "Instrumental": "Instrumentaali",
     "Live": "Live-tallenne",
     "Mashup": "Mashup",
@@ -13,7 +13,7 @@
     "Remaster": "Uudelleenmasterointi",
     "Remix": "Remiksi",
     "Unspecified": "Ei määritelty",
-    "Rearrangement": "Rearrangement",
-    "ShortVersion": "Short version"
+    "Rearrangement": "Uudelleensovitus",
+    "ShortVersion": "Lyhyt versio"
   }
 }

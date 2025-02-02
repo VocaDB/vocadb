@@ -5,12 +5,12 @@
   },
   "AlbumArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automaattisesti tuotu",
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuuksia päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "AlbumCollectionStatusNames": {
@@ -47,34 +47,34 @@
     "PhysicalDisc": "Fyysinen media"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan",
-    "CollectionCount": "Kokoelmien lukumäärä",
+    "AdditionDate": "Lisäyspäivämäärän mukaan",
+    "CollectionCount": "Kokoelmien lukumäärän mukaan",
     "Name": "Nimen mukaan",
     "RatingAverage": "Arvostelun mukaan",
-    "RatingTotal": "Kokonaispisteiden mukaan",
-    "ReleaseDate": "Julkaisupäivän mukaan"
+    "RatingTotal": "Kokonaispistemäärän mukaan",
+    "ReleaseDate": "Julkaisupäivämäärän mukaan"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuuksia päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu aiempaan tarkistukseen",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "ArtistEditableFieldNames": {
     "Albums": "Albumit",
     "ArtistType": "Artistin tyyppi",
-    "BaseVoicebank": "Äänipankki",
+    "BaseVoicebank": "Kantaäänipankki",
     "Description": "Kuvaus",
     "Groups": "Ryhmät",
     "Names": "Nimet",
     "Nothing": "Ei mitään",
     "OriginalName": "Alkuperäinen nimi",
     "Picture": "Tärkein kuva",
-    "Pictures": "Kuvat",
-    "ReleaseDate": "Äänipankin julkaisupäivä",
+    "Pictures": "Muut kuvat",
+    "ReleaseDate": "Äänipankin julkaisupäivämäärä",
     "Status": "Tila",
     "WebLinks": "Ulkoiset linkit"
   },
@@ -95,14 +95,14 @@
     "Publisher": "Julkaisija",
     "VocalDataProvider": "Äänidatan tuottaja",
     "Vocalist": "Laulaja",
-    "VoiceManipulator": "Äänen manipuloija"
+    "VoiceManipulator": "Äänenkäsittelijä"
   },
   "ArtistSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan (laskeva)",
-    "AdditionDateAsc": "Lisäyspäivän mukaan (nouseva)",
+    "AdditionDate": "Lisäyspäivämäärän mukaan (laskeva)",
+    "AdditionDateAsc": "Lisäyspäivämäärän mukaan (nouseva)",
     "FollowerCount": "Seuraajien lukumäärän mukaan",
     "Name": "Nimen mukaan",
-    "ReleaseDate": "Äänipankin julkaisupäivän mukaan",
+    "ReleaseDate": "Äänipankin julkaisupäivämäärän mukaan",
     "SongCount": "Kappaleiden lukumäärän mukaan",
     "SongRating": "Kappaleiden yhteenlasketun pistemäärän mukaan"
   },
@@ -115,7 +115,7 @@
     "EntryMergedTo": "Tämä merkintä yhdistettiin",
     "EntryStatusExplanation": "Luonnos = Merkinnästä puuttuu olennaista tietoa. Tämä tila antaa ymmärtää sinun pyytävän tietoa lisättäväksi tai korjattavaksi.<br />\nValmis = Merkintä sisältää kaiken vaadittavan tiedon, mutta luotettava käyttäjä ei ole vielä tarkistanut sitä.<br />\nHyväksytty = Luotettu käyttäjä on tarkistanut ja hyväksynyt merkinnän. Hyväksyttyjä merkintöjä voivat muokata vain luotetut käyttäjät.",
     "Locked": "Tämä merkintä on lukittu. Vain moderaattoreiden on mahdollista muokata sitä.",
-    "NameLanguageHelp": "Valitse kieli tälle nimelle. Alkuperäiskielinen nimi on nimi alkuperäisellä kielellä, joka ei ole englanti. Jos alkuperäinen nimi on englanninkielinen, jätä alkuperäiskielisen nimen kohta tyhjäksi.",
+    "NameLanguageHelp": "Valitse kieli tälle nimelle. Alkuperäiskielinen nimi viittaa nimeen alkuperäisellä kielellä, joka ei ole englanti. Jos alkuperäinen nimi on englanninkielinen, jätä alkuperäiskielisen nimen kohta tyhjäksi.",
     "RevisionHidden": "Tämän sivun tarkistus on piilotettu."
   },
   "ContentLanguageSelectionNames": {
@@ -126,19 +126,19 @@
     "Unspecified": "Ei määritelty"
   },
   "DiscTypeDescriptions": {
-    "Album": "Album that consists mostly of previously unpublished songs.",
-    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
-    "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
-    "Other": "For albums that don't fit into anything above.",
-    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
-    "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
-    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+    "Album": "Albumi, joka koostuu suurimmaksi osin aiemmin julkaisemattomista kappaleista.",
+    "Compilation": "Kokoelma aiemmin julkaistuja kappaleita, jotka esiintyvät yhdellä tai useammalla aiemmin julkaistulla albumilla.",
+    "EP": "Lyhenne sanoista extended play. Sisältää 3-4 kappaletta. Instrumentaaleja ja remiksejä ei tyypillisesti lasketa mukaan.",
+    "Other": "Albumeille, jotka eivät sovi mihinkään yllä olevista kategorioista.",
+    "Single": "Sisältää yksi tai kaksi kappaletta. Instrumentaaleja ja remixejä ei tyypillisesti lasketa mukaan.",
+    "SplitAlbum": "Kahden tai useamman artistin yhteistuotanto, joka sisältää kaikilta artisteilta suunnilleen yhtä monta kappaletta.",
+    "Video": "Levy, joka sisältää enimmäkseen musiikkivideoita. Yleensä DVD tai Blu-ray."
   },
   "EntryEditEventNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
-    "Updated": "Updated"
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Restored": "Palautti olemassaolon",
+    "Updated": "Päivitti tiedot"
   },
   "EntryStatusNames": {
     "Approved": "Hyväksytty",
@@ -149,8 +149,8 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Hallintavalikon käyttö",
     "Admin": "Tietokannan ylläpitotoiminnot",
-    "AddRawFileMedia": "Add raw media",
-    "ApplyAnyTag": "Add any tag to entry",
+    "AddRawFileMedia": "Median lisäys",
+    "ApplyAnyTag": "Tunnisteiden lisäys",
     "ApproveEntries": "Merkintöjen hyväksyntä",
     "BulkDeletePVs": "Videoiden massapoisto",
     "CreateComments": "Kommenttien luonti",
@@ -158,7 +158,7 @@
     "DeleteEntries": "Merkintöjen poisto",
     "DesignatedStaff": "Ylläpitokäyttäjä",
     "DisableUsers": "Tunnusten poistaminen",
-    "EditAllSongLists": "Edit all song lists",
+    "EditAllSongLists": "Kappalelistojen muokkaus",
     "EditFeaturedLists": "Julkisten kappalelistojen hallinta",
     "EditNews": "Uutisten hallinta",
     "EditProfile": "Oman profiilin hallinta",
@@ -174,20 +174,20 @@
     "MoveToTrash": "Merkintöjen siirtäminen roskakoriin",
     "Nothing": "Ei mitään",
     "ReadRecentComments": "Uusien kommenttien tarkastelu",
-    "RemoveEditPermission": "Remove database editing permissions",
-    "RemoveTagUsages": "Remove tag usages",
+    "RemoveEditPermission": "Tietokannan muokkausoikeuksien poisto",
+    "RemoveTagUsages": "Tunnisteiden poisto",
     "RestoreRevisions": "Merkintöjen palauttaminen",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Oman median lataus",
     "ViewAuditLog": "Käyttölokin tarkastelu",
-    "ViewHiddenRatings": "View hidden ratings",
-    "ViewHiddenRevisions": "View hidden revisions",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ViewHiddenRatings": "Piilotettujen arvosteluiden tarkastelu",
+    "ViewHiddenRevisions": "Piilotettujen tarkistusten tarkastelu",
+    "ManageWebhooks": "Webhookien hallinta",
+    "CreateDatabaseDump": "Tietokantadumpin luominen"
   },
   "PVTypeDescriptions": {
-    "Original": "Original (official/authorized upload)",
-    "Other": "Other",
-    "Reprint": "Reprint (copied from elsewhere)"
+    "Original": "Alkuperäinen (virallinen/valtuutettu lataus)",
+    "Other": "Muu",
+    "Reprint": "Uusintajulkaisu (kopioitu muualta)"
   },
   "PVTypeNames": {
     "Original": "Alkuperäinen",
@@ -195,34 +195,34 @@
     "Reprint": "Kopio"
   },
   "RatedSongForUserSortRuleNames": {
-    "RatingDate": "Rating date"
+    "RatingDate": "Arvostelun päivämäärä"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
-    "Category": "Category",
-    "Date": "Date",
-    "Description": "Description",
-    "MainPicture": "Main picture",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "PVs": "PVs",
-    "Series": "Series",
-    "SeriesNumber": "Series number",
-    "SeriesSuffix": "Series suffix",
-    "SongList": "Setlist",
-    "Status": "Status",
-    "Venue": "Venue",
+    "Artists": "Artistit",
+    "Category": "Kategoria",
+    "Date": "Päivämäärä",
+    "Description": "Kuvaus",
+    "MainPicture": "Tärkein kuva",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "PVs": "Videot",
+    "Series": "Sarja",
+    "SeriesNumber": "Sarjanumero",
+    "SeriesSuffix": "Sarjan pääte",
+    "SongList": "Settilista",
+    "Status": "Tila",
+    "Venue": "Tapahtumapaikka",
     "VenueName": "Tapahtumapaikan nimi",
     "WebLinks": "Ulkoiset linkit"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Automaattisesti tuotu",
-    "Created": "Luotu",
-    "Deleted": "Poistettu",
-    "Merged": "Yhdistetty toisesta merkinnästä",
-    "PropertiesUpdated": "Ominaisuudet päivitetty",
-    "Restored": "Entisöity",
-    "Reverted": "Palautettu",
+    "Created": "Loi",
+    "Deleted": "Poisti",
+    "Merged": "Yhdisti tiedot toisesta merkinnästä",
+    "PropertiesUpdated": "Päivitti tiedot",
+    "Restored": "Palautti olemassaolon",
+    "Reverted": "Palautti aiemman version tiedot",
     "Unknown": "Tuntematon"
   },
   "SongEditableFieldNames": {
@@ -262,11 +262,11 @@
     "VocaloidRanking": "Vocaloid ranking -listat"
   },
   "SongSortRuleNames": {
-    "AdditionDate": "Lisäyspäivän mukaan",
+    "AdditionDate": "Lisäyspäivämäärän mukaan",
     "FavoritedTimes": "Suosikeiden mukaan",
     "Name": "Nimen mukaan",
     "None": "Ei mitään",
-    "PublishDate": "Julkaisupäivän mukaan",
+    "PublishDate": "Julkaisupäivämäärän mukaan",
     "RatingScore": "Arvosteluiden mukaan",
     "TagUsageCount": "Tunnisteiden määrän mukaan"
   },
@@ -275,23 +275,23 @@
     "Like": "Tykkää"
   },
   "TagEditableFieldNames": {
-    "AliasedTo": "Aliased to",
-    "CategoryName": "Category",
-    "Description": "Description",
-    "HideFromSuggestions": "Hide from suggestions",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Parent": "Parent",
-    "Picture": "Picture",
-    "RelatedTags": "Related tags",
-    "Status": "Status",
-    "Targets": "Targets",
-    "WebLinks": "External links"
+    "AliasedTo": "Aliakset",
+    "CategoryName": "Kategoria",
+    "Description": "Kuvaus",
+    "HideFromSuggestions": "Piilota ehdotuksista",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "Parent": "Emotunniste",
+    "Picture": "Kuva",
+    "RelatedTags": "Liittyvät tunnisteet",
+    "Status": "Tila",
+    "Targets": "Kohteet",
+    "WebLinks": "Ulkoiset linkit"
   },
   "UserEmailOptionsNames": {
-    "NoEmail": "No private messages",
-    "PrivateMessagesFromAdmins": "Private messages from admins",
-    "PrivateMessagesFromAll": "Private messages from everybody"
+    "NoEmail": "Ei yksityisviestejä",
+    "PrivateMessagesFromAdmins": "Yksityisviestit ylläpidolta",
+    "PrivateMessagesFromAll": "Yksityisviestit kaikilta"
   },
   "UserGroupNames": {
     "Admin": "Pääkäyttäjä",
@@ -302,14 +302,14 @@
     "Trusted": "Luotettu käyttäjä"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Address": "Osoite",
+    "AddressCountryCode": "Valtio/Alue",
+    "Coordinates": "Koordinaatit",
+    "Description": "Kuvaus",
+    "Names": "Nimet",
+    "OriginalName": "Alkuperäisen nimen kieli",
+    "Status": "Tila",
+    "WebLinks": "Ulkoiset linkit"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Kaupallinen",

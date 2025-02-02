@@ -34,14 +34,14 @@
     "SeeGuidePost": ".",
     "SeeGuidePre": "Katso lisätietoja",
     "StatusDescriptionApproved": "Hyväksytyt merkinnät ovat luotetun käyttäjän tarkastamia. Hyväksyttyjen merkintöjen muokkaaminen on mahdollista vain rajoitetusti.",
-    "StatusDescriptionDraft": "Luonnos-tilassa olevista merkinnöistä puuttuu jotain tietoja.",
+    "StatusDescriptionDraft": "Luonnos-tilassa olevien merkintöjen sisältämät tiedot ovat puutteellisia.",
     "StatusDescriptionFinished": "Valmis-tilassa olevat merkinnät sisältävät kaikki vaaditut tiedot, mutta niitä ei vielä ole hyväksytty.",
     "StatusDescriptionLocked": "Lukitut merkinnät ovat vain ylläpidon muokattavissa.",
     "UploadPictureInfo": "Sallitut tiedostomuodot: {{0}}. Tiedoston suurin mahdollinen koko on {{1}} MB. Kunnioitathan tekijänoikeuksia ja mainitset kuvan lähteen muokkauksen huomautuksissa/merkinnän kuvauksessa, jos mahdollista.",
     "WebLinkCategoryTitle": "Kategoria",
     "WebLinkDescriptionTitle": "Kuvaus",
     "WebLinkNewRow": "Uusi rivi",
-    "WebLinkUrlTitle": "Osoite (vaadittu)"
+    "WebLinkUrlTitle": "URL-osoite (vaadittu)"
   },
   "SongHelpers": {
     "FromAlbum": "Albumista"
