@@ -455,7 +455,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'fandub.wiki/',
-			desc: 'FanDub.Wiki',
+			desc: 'FanDub.wiki',
 			cat: WebLinkCategory.Reference,
 		},
 		{
