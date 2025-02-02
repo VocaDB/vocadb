@@ -944,7 +944,10 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
-			url: 'nicovideo.jp/mylist/',
+			// matching both
+			// https://www.nicovideo.jp/mylist/000 (old URL style) and
+   			// https://www.nicovideo.jp/user/000/mylist/000 (new URL style)
+			url: '/mylist/',
 			desc: 'NND MyList',
 			cat: WebLinkCategory.Official,
 		},
