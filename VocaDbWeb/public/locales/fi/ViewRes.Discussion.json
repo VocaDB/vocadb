@@ -7,12 +7,12 @@
     "DoPost": "Lähetä",
     "Folder": "Kansio",
     "LastComment": "Uusin vastaus",
-    "LastTopic": "Uusin aihe",
+    "LastTopic": "Uusin viesti",
     "PostContent": "Sisältö",
     "Preview": "Esikatselu",
-    "RecentTopics": "Uusimmat postaukset",
-    "Topic": "Aihe (otsikko)",
-    "Topics": "Postauksia",
-    "WriteNewPost": "Kirjoita uusi postaus"
+    "RecentTopics": "Uusimmat viestit",
+    "Topic": "Otsikko",
+    "Topics": "Viestejä",
+    "WriteNewPost": "Kirjoita uusi viesti"
   }
 }
