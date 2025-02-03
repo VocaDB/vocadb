@@ -5,7 +5,7 @@
     "CollectionWishedOrOrdered": "Toivottu tai tilattu",
     "MediaType": "Media",
     "Rating": "Arvostelu",
-    "ReleaseDate": "Julkaistu",
+    "ReleaseDate": "Julkaisupäivämäärä",
     "ReleaseEvent": "Julkaisutapahtuma",
     "Status": "Tilanne"
   },
@@ -13,11 +13,11 @@
     "Captcha": "CAPTCHA",
     "CaptchaInvalid": "CAPTCHA on virheellinen.",
     "DoRegister": "Luo tunnus",
-    "DuplicateUserWarning": "Huomaa, että useiden käyttäjätilien tekeminen arvosteluiden parantamiseksi on kiellettyä ja johtaa tilien poistamiseen. Jos unohdat salasanasi, resetoi se tai ota yhteyttä sivuston ylläpidosta vastaavaan käyttäjään (pääkäyttäjä).",
+    "DuplicateUserWarning": "Huomaa, että useiden käyttäjätilien tekeminen arvosteluiden parantamiseksi on kiellettyä ja johtaa tilien poistamiseen. Jos unohdat salasanasi, resetoi se tai ota yhteyttä sivuston ylläpidosta vastaavaan käyttäjään.",
     "Email": "Sähköpostiosoite (pakollinen)",
     "EmailIsRequired": "Sähköpostiosoite on pakollinen.",
-    "EmailNote": "Sähköpostiosoitetta ei näytetä muille käyttäjille. Varmista että syötät toimivan osoitteen. Tarvitset sitä jos koskaan unohdat salasanasi. Profiilikuvaa varten tarvitset Gravatariin liitetyn sähköpostiosoitteen. Osoitetta voi muuttaa myös jälkikäteen.",
-    "EmailTaken": "Tämä sähköpostiosoite on jo käytössä. Mikäli se on sinun osoitteesi, käytä salasanan resetointitoimintoa, tai mikäli tämä ei onnistu, ota yhteyttä tukeen.",
+    "EmailNote": "Sähköpostiosoitetta ei näytetä muille käyttäjille. Varmista, että syötät toimivan osoitteen. Tulet tarvitsemaan sitä, jos satut koskaan unohtamaan salasanasi. Profiilikuvaa varten tarvitset Gravatariin liitetyn sähköpostiosoitteen. Osoitetta voi muuttaa myös jälkikäteen.",
+    "EmailTaken": "Tämä sähköpostiosoite on jo käytössä. Mikäli se on sinun sähköpostiosoitteesi, käytä salasanan resetointitoimintoa. Jos tämä ei onnistu, ota yhteyttä tukeen.",
     "LoginWithTwitter": "Kirjaudu Twitter-tunnuksilla",
     "Password": "Salasana",
     "PasswordIsRequired": "Salasana on pakollinen.",
@@ -26,7 +26,7 @@
     "TwitterNote": "Vaihtoehtoisesti voit kirjautua sisään Twitter-tunnuksellasi. Twitter-tunnuksen voi liittää myös jälkikäteen.",
     "Username": "Käyttäjätunnus",
     "UsernameIsRequired": "Käyttäjätunnus on pakollinen.",
-    "UsernameNote": "Käyttäjätunnuksen on oltava vähintään 3 merkkiä pitkä ja se saa sisältää vain aakkosia A-Z, numeroita ja alaviivoja. Salasanan on oltava vähintään {{0}} merkkiä.",
+    "UsernameNote": "Käyttäjätunnuksen on oltava vähintään 3 merkkiä pitkä, ja se saa sisältää vain aakkosia A-Z, numeroita ja alaviivoja. Salasanan on oltava vähintään {{0}} merkkiä pitkä.",
     "UsernameTaken": "Käyttäjätunnus on jo varattu."
   },
   "Details": {
@@ -52,7 +52,7 @@
     "FollowedArtistsTab": "Seuratut artistit",
     "ImportSongList": "Tuo YouTubesta tai NicoNicosta",
     "Interested": "Kiinnostunut",
-    "KnownLanguagesMessage": "Kerrothan muille, mitä kieliä osaat. Voit syöttää tiedot omista kielitaidoistasi kohtaan <a>\"Omat asetukset\", \"Profiili\"</a>, \"Osaamani kielet\". Voimme hyödyntää tätä tietoa, jos meidän tarvitsee olla teihin yhteydessä.",
+    "KnownLanguagesMessage": "Kerrothan muille, mitä kieliä osaat. Voit syöttää tiedot omista kielitaidoistasi kohtaan <a>\"Omat asetukset\", \"Profiili\"</a>, \"Osaamani kielet\". Voimme hyödyntää tätä tietoa, jos meidän tarvitsee olla sinuun yhteydessä.",
     "LanguagesIKnow": "Osaamani kielet",
     "LastLogin": "Viimeinen kirjautuminen",
     "Level": "Taso",
@@ -60,20 +60,20 @@
     "MemberSince": "Liittymispäivä",
     "Messages": "Viestit",
     "MySettings": "Omat asetukset",
-    "OldNameUntil": "(until {{0}})",
-    "OldUsernames": "Old usernames",
-    "Overview": "Overview",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
+    "OldNameUntil": "({{0}} asti)",
+    "OldUsernames": "Vanhat käyttäjätunnukset",
+    "Overview": "Kuvaus",
+    "PossibleProducerMessage": "Oletko mahdollisesti Vocaloid/UTAU -sisältöä tuottava artisti (kuten tuottaja, animoija tai kuvittaja)?\nJos olet, ole hyvä ja katso <a>artistin vahvistussivu</a>.",
     "Power": "Voima",
-    "ReportSpamming": "Report user for spamming",
+    "ReportSpamming": "Ilmoita käyttäjän roskapostauksesta",
     "SetAvatar": "Aseta kuvasi gravatar.comissa",
-    "SomeAlbumsILike": "Joitain albumeita joista tykkään",
-    "SomeArtistsIFollow": "Joitain artisteja joita seuraan",
-    "SomeSongsILike": "Joitain kappaleita joista tykkään",
+    "SomeAlbumsILike": "Albumeita, joista tykkään",
+    "SomeArtistsIFollow": "Artisteja, joita seuraan",
+    "SomeSongsILike": "Kappaleita, joista tykkään",
     "Staff": "Ylläpitäjä",
     "StatsTab": "Tilastot",
     "Submissions": "Luotuja merkintöjä",
-    "SupporterTitle": "Kiitos {{0}}n tukemisesta!",
+    "SupporterTitle": "Kiitos {{0}}:n tukemisesta!",
     "TagVotes": "Tunnisteiden ääniä",
     "Total": "{{0}} yhteensä",
     "TotalEdits": "Muokkauksia yhteensä",
@@ -88,11 +88,11 @@
     "VisibleOnlyToMe": "Näkyy vain minulle ja ylläpitäjille."
   },
   "EntryEdits": {
-    "EntryType": "Type",
-    "OnlyAdditions": "Only additions"
+    "EntryType": "Tyyppi",
+    "OnlyAdditions": "Vain lisäykset"
   },
   "FavoriteSongs": {
-    "GroupByRating": "Group by rating"
+    "GroupByRating": "Suosikit/Tykkäykset"
   },
   "ForgotPassword": {
     "CaptchaIsInvalid": "CAPTCHA oli väärin.",
@@ -105,8 +105,8 @@
     "UsernameIsRequired": "Käyttäjätunnus on pakollinen."
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "Käyttäjätyyppi",
+    "KnowsLanguage": "Osaa kieltä",
     "ShowDisabledUsers": "Näytä käytöstä poistetut tunnukset",
     "VerifiedArtists": "Artistien käyttäjätunnukset"
   },
@@ -117,7 +117,7 @@
     "Login": "Sisäänkirjautuminen",
     "LoginUsingSSL": "Kirjaudu käyttäen SSL-suojausta",
     "LoginWithoutSSL": "Kirjaudu ilman SSL-suojausta (vähemmän turvallinen)",
-    "LoginWithTwitter": "Sign in with Twitter",
+    "LoginWithTwitter": "Kirjaudu Twitter-tunnuksilla",
     "NoAccount": "Ei tunnusta?",
     "Password": "Salasana",
     "PasswordIsRequired": "Salasana on pakollinen.",
@@ -127,7 +127,7 @@
     "Username": "Käyttäjätunnus",
     "UsernameIsRequired": "Käyttäjätunnus on pakollinen.",
     "Welcome": "Tervetuloa takaisin, {{0}}!",
-    "WrongPassword": "Username or password doesn't match"
+    "WrongPassword": "Käyttäjätunnus tai salasana ei täsmää"
   },
   "LoginUsingAuth": {
     "AlmostDone": "Melkein valmista! Sinun pitää vielä valita käyttäjätunnus VocaDB:tä varten.",
