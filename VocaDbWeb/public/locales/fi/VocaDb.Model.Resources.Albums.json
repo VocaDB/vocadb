@@ -4,14 +4,14 @@
     "Artbook": "Artbook",
     "Compilation": "Kokoelma",
     "EP": "Pitkäsoitto",
-    "Fanmade": "Album",
-    "Game": "Game",
-    "Instrumental": "Instrumental",
+    "Fanmade": "Albumi",
+    "Game": "Peli",
+    "Instrumental": "Instrumentaali",
     "Other": "Muu",
     "Single": "Single",
     "SplitAlbum": "Split-albumi",
     "Unknown": "Ei määritelty",
     "Video": "Video",
-    "Drama": "Drama"
+    "Drama": "Draama"
   }
 }
