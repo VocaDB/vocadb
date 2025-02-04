@@ -4,6 +4,25 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+
+[Migration(2025_02_03_0000)]
+public class IncreaseIpLengthTo45 : Migration
+{
+	public override void Up()
+	{
+		Delete.DefaultConstraint().OnTable(TableNames.UserOptions).OnColumn("LastLoginAddress");
+		Alter.Column("LastLoginAddress")
+			.OnTable(TableNames.UserOptions)
+			.AsString(45)
+			.NotNullable()
+			.WithDefaultValue(String.Empty);
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2025_02_02_0000)]
 public class IncreaseIpLength : Migration
 {
