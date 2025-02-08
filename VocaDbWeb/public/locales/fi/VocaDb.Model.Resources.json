@@ -1,8 +1,8 @@
 {
 	"AlbumValidationErrors": {
-		"DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
-		"NeedArtist": "Album needs at least one artist.",
-		"NeedCover": "Album needs a cover.",
+		"DuplicateArtist": "Samaa artistia ei voi lisätä kahdesti. Poista duplikaatti ja muokkaa roolit vastaamaan muutosta.",
+		"NeedArtist": "Albumilla tulee olla vähintään yksi artisti.",
+		"NeedCover": "Albumilla tulee olla kansikuva.",
 		"NeedReferences": "Album needs a description or links for reference.",
 		"NeedReleaseYear": "Release year needs to be specified.",
 		"NeedTracks": "Album needs a tracklist.",
