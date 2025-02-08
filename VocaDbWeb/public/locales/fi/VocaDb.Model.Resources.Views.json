@@ -1,7 +1,7 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "Albumista vastuussa olevat tuottajat ja laulajat.",
-    "NewAlbumInfo": "Huomaa että VocaDB ei ole UtaiteDB. Albumilla täytyy olla vähintään yksi kappale joka sisältää Vocaloideja (muut äänisyntensaattorit kuten UTAU ovat myös hyväksyttyjä, ihmislaulajat sen sijaan eivät). Epäviralliset fanien tekemät kokoelmat eivät myöskään ole sallittuja. Katso lisätietoja ohjeesta."
+    "NewAlbumInfo": "Huomaa, että VocaDB ei ole UtaiteDB. <strong>Jokaisella albumilla tulee olla vähintään yksi kappale, jonka laulajana toimii Vocaloidi (muut äänisyntetisaattorit kuten UTAUt ovat myös sallittuja, ihmislaulajat sen sijaan eivät)</strong>. Epäviralliset fanien tekemät kokoelmat (bootlegit) eivät ole myöskään sallittuja. Katso lisätietoja ohjeesta."
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB-käyttäjä",
@@ -16,7 +16,7 @@
     "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
     "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
     "SiteName": "VocaDB",
-    "SiteTitle": "Vocaloid Database"
+    "SiteTitle": "Vocaloid-tietokanta"
   },
   "SongRes": {
     "NewSongInfo": "Varmista ettei kappaletta ole jo lisätty tietokantaan. Sinun täytyy antaa vähintään yksi nimi ja artisti. Alkuperäisen videon linkittäminen on suotavaa, mikäli mahdollista.",
