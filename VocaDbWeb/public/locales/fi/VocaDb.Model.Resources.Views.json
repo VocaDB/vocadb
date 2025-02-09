@@ -8,13 +8,13 @@
     "NewArtistExternalLink": "Ulkoinen linkki (artistin kotisivulle, wikiin tai NND:n MyListiin)"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
+    "SiteDescription": "VocaDB on Vocaloid-musiikkitietokanta, josta löytyy käännöksiä artisteista, albumeista ja kappaleista.",
     "Welcome": "Tervetuloa Vocaloid-tietokantaan!",
-    "WelcomeSubtitle": "Yhteistyöhön perustuva tietokanta joka käsittelee Vocaloid-artisteja, diskografiaa, videoita ja muuta."
+    "WelcomeSubtitle": "Yhteistyöhön perustuva tietokanta, joka käsittelee Vocaloid-artisteja, diskografiaa, videoita ja muuta."
   },
   "LayoutRes": {
-    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "Keywords": "Vocaloid, VocaDB, Vocaloid-tietokanta, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB on voittoa tavoittelematon projekti. Kaikki saadut rahat käytetään sivuston kehittämiseen, sivuston ylläpidon kustannuksiin ja ohjelmistolisensseihin.",
     "SiteName": "VocaDB",
     "SiteTitle": "Vocaloid-tietokanta"
   },
