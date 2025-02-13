@@ -1,10 +1,10 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
-    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Tähän albumiin liittyvät artistit.",
+    "NewAlbumInfo": "Albumilla tulee olla vähintään yksi Touhouhin liittyvä kappale. Muussa tapauksessa albumia ei tule lisätä tietokantaan. Epäviralliset koosteet (bootlegit) eivät myöskään ole sallittuja. Katso lisätiedot ohjeesta."
   },
   "ArtistRes": {
-    "AuthoredBy": "TouhouDB account",
+    "AuthoredBy": "TouhouDB-tunnus",
     "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
   },
   "HomeRes": {
@@ -16,7 +16,7 @@
     "Keywords": "Touhou",
     "PaypalDonateTitle": "",
     "SiteName": "TouhouDB",
-    "SiteTitle": "Touhou Music Database"
+    "SiteTitle": "Touhou-musiikkitietokanta"
   },
   "SongRes": {
     "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
