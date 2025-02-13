@@ -1,7 +1,7 @@
 {
   "Import": {
     "Accept": "Hyväksy",
-    "InvalidUrlError": "Tarkistathan URL-osoitteen olevan validi ja viittaavan NicoNico MyListiin, RSS-syötteeseen tai YouTuben soittolistaan.",
+    "InvalidUrlError": "Tarkista osoitteen olevan validi ja viittaavan NND:n MyListiin, RSS-syötteeseen tai YouTuben soittolistaan.",
     "ItemsLoaded": "ladattu",
     "ListDescription": "Kuvaus",
     "ListName": "Nimi",
@@ -10,17 +10,17 @@
     "NicoPV": "Tuotu video",
     "OnlyRanked": "Sisällytä vain sijoitetut kappaleet (NicoNico rankingeista)",
     "Order": "Järjestys",
-    "ParseAll": "Näytä kaikki kappaleet listalla (ei vain paremmuusjärjestykseen järjestetyt)",
+    "ParseAll": "Sisällytä kaikki kappaleet listaan (ei vain rankattuja)",
     "Process": "Prosessoi",
     "SongMissing": "PUUTTUU",
-    "SongsInList": "Kappaleet listassa",
+    "SongsInList": "Kappaleet listalla",
     "SongsMissingError": "Osa kappaleista puuttuu VocaDB:stä. Sinun tulee lisätä kaikki kappaleet tietokantaan ennen niiden sisällyttämistä listaan.",
     "Submit": "Lähetä",
     "Title": "Muodosta kappalelista NicoNico MyLististä tai YouTuben soittolistasta",
     "TotalSongs": "Kappaleita yhteensä",
     "UnableToParse": "Listan jäsentäminen ei mahdollista",
-    "UrlDescription": "Voi olla mikä tahansa NicoNico MyList, esimerkiksi http://www.nicovideo.jp/mylist/1234567, tai YouTuben soittolista, esimerkiksi https://www.youtube.com/playlist?list=MIKUMIKU3939",
-    "UrlLabel": "Soittolistan/MyListin URL-osoite",
+    "UrlDescription": "Voi olla mikä tahansa NND:n MyList, esimerkiksi http://www.nicovideo.jp/mylist/1234567, tai YouTuben soittolista, esimerkiksi https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "UrlLabel": "Soittolistan/MyListin osoite",
     "VocaDbEntry": "VocaDB-kappalemerkintä"
   },
   "SongListSortRuleNames": {
