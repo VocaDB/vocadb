@@ -65,7 +65,7 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-    <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
+    <PackageReference Include="System.IO.Packaging" Version="6.0.1" />
     <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
     <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.4" />
