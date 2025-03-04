@@ -35,7 +35,7 @@
     "SongDetails": "Песня",
     "Vocalists": "Вокалисты",
     "ViewExternal": "Посмотреть на другом сайте",
-    "Favorites": "раз(а) в \"любимом\"",
+    "Favorites": "{{0}} раз(а) в \"любимом\"",
     "SearchYoutube": "Поиск на YouTube",
     "OriginalMedia": "Оригинальное медиа",
     "OtherMedia": "Прочее медиа",
