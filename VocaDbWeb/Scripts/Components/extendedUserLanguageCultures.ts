@@ -20,6 +20,13 @@ const rawLangs: RawLangs = [
 			nativeName: 'አማርኛ',
 		},
 	],
+  [
+    'amd',
+    {
+      languages: ['Amdo Tibetan'],
+      nativeName: 'ཨ་མདོའི་སྐད',
+    },
+  ],
 	[
 		'ami',
 		{
