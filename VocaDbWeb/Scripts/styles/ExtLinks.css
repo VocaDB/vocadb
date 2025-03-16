@@ -898,3 +898,31 @@ a.extLink[href*='rateyourmusic.com'] {
 a.extLink[href*='osu.ppy.sh'] {
 	background-image: url('/Content/ExtIcons/osu.png');
 }
+
+a.extLink[href*='nicolog.jp'] {
+	background-image: url('/Content/ExtIcons/nicolog.png');
+}
+
+a.extLink[href*='newgrounds.com'] {
+	background-image: url('/Content/ExtIcons/newgrounds.png');
+}
+
+a.extLink[href*='distrokid.com'] {
+	background-image: url('/Content/ExtIcons/distrokid.png');
+}
+
+a.extLink[href*='misskey.io'] {
+	background-image: url('/Content/ExtIcons/misskey.png');
+}
+
+a.extLink[href*='uta.573.jp'] {
+	background-image: url('/Content/ExtIcons/uta573.png');
+}
+
+a.extLink[href*='joox.com'] {
+	background-image: url('/Content/ExtIcons/joox.png');
+}
+
+a.extLink[href*='audiostock.jp'] {
+	background-image: url('/Content/ExtIcons/audiostock.png');
+}
