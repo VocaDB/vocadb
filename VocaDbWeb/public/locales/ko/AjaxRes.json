@@ -8,7 +8,7 @@
   },
   "EntryIndex": {
     "DraftsOnlyFilter": "초안 상태",
-    "ExactTitleFilter": "exact title '{{0}}'",
+    "ExactTitleFilter": "정확히 일치하는 제목 '{{0}}'",
     "FilterPre": "필터링 기준",
     "StartsWithTitleFilter": "'{{0}}' 로 시작하는 제목",
     "TitleFilter": "제목 '{{0}}'"
