@@ -32,6 +32,14 @@ export const MainNavigationItems = React.memo((): React.ReactElement => {
 							</Nav.Link>
 						</li>
 					)}
+					{loginManager.canManageDatabase &&
+						!loginManager.loggedUser?.verifiedArtist && (
+							<li>
+								<Nav.Link as={Link} to="/User/RequestVerification">
+									{t('ViewRes:Layout.ArtistVerification')}
+								</Nav.Link>
+							</li>
+						)}
 				</ul>
 			</Nav.Item>
 			<Nav.Item>
