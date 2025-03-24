@@ -141,7 +141,7 @@ export const MainNavigationItems = React.memo((): React.ReactElement => {
 			{vdb.values.isLoggedIn && (
 				<Nav.Item>
 					<Nav.Link as={Link} to="/rewind">
-						Rewind 2024
+						Rewind 2023
 					</Nav.Link>
 				</Nav.Item>
 			)}

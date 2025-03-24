@@ -5,6 +5,22 @@ using FluentMigrator;
 namespace VocaDb.Migrations;
 
 
+[Migration(2025_03_24_0000)]
+public class IncreaseEntryReportLength : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("Notes")
+			.OnTable(TableNames.EntryReports)
+			.AsString(4000)
+			.NotNullable();
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2025_02_03_0000)]
 public class IncreaseIpLengthTo45 : Migration
 {
