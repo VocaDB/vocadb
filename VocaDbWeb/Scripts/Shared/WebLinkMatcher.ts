@@ -235,12 +235,12 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'bilibili.com/opus/',
-			desc: 'Bilibili column', /* 专栏 */
+			desc: 'Bilibili column' /* 专栏 */,
 			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'bilibili.com/read/',
-			desc: 'Bilibili column', /* 专栏 */
+			desc: 'Bilibili column' /* 专栏 */,
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -250,7 +250,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 't.bilibili.com/',
-			desc: 'Bilibili post', /* 动态 */
+			desc: 'Bilibili post' /* 动态 */,
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -355,7 +355,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'dmusic.docomo.ne.jp/album/',
-			desc: 'd music album', /* written as "d music" at https://www.docomo.ne.jp/english/service/ */
+			desc: 'd music album' /* written as "d music" at https://www.docomo.ne.jp/english/service/ */,
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -1867,7 +1867,7 @@ export class WebLinkMatcher {
 			url: '.livedoor.jp',
 			desc: 'Website',
 			cat: WebLinkCategory.Official,
-		}, /*blog.livedoor.jp takes precedence*/
+		} /*blog.livedoor.jp takes precedence*/,
 		{
 			url: 'hatenadiary.org',
 			desc: 'Blog',
@@ -1903,127 +1903,127 @@ export class WebLinkMatcher {
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
-		
+
 		{
 			url: 'cocolog-nifty.com',
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
 		{
-			"url": "sp-m.mu-mo.net",
-			"desc": "mu-mo",
-			"cat": WebLinkCategory.Commercial
+			url: 'sp-m.mu-mo.net',
+			desc: 'mu-mo',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "au.utapass.auone.jp",
-			"desc": "au utapass / au Smart Pass Premium Music",
-			"cat": WebLinkCategory.Commercial
+			url: 'au.utapass.auone.jp',
+			desc: 'au utapass / au Smart Pass Premium Music',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "jcom.co.jp",
-			"desc": "J:COM",
-			"cat": WebLinkCategory.Commercial
+			url: 'jcom.co.jp',
+			desc: 'J:COM',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "smart.usen.com",
-			"desc": "SMART USEN",
-			"cat": WebLinkCategory.Commercial
+			url: 'smart.usen.com',
+			desc: 'SMART USEN',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "otoraku.jp",
-			"desc": "OTORAKU",
-			"cat": WebLinkCategory.Commercial
+			url: 'otoraku.jp',
+			desc: 'OTORAKU',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "y.qq.com",
-			"desc": "QQ Music",
-			"cat": WebLinkCategory.Commercial
+			url: 'y.qq.com',
+			desc: 'QQ Music',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "kugou.com",
-			"desc": "KuGou",
-			"cat": WebLinkCategory.Commercial
+			url: 'kugou.com',
+			desc: 'KuGou',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "kuwo.cn",
-			"desc": "KUWO MUSIC",
-			"cat": WebLinkCategory.Commercial
+			url: 'kuwo.cn',
+			desc: 'KUWO MUSIC',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "joox.com",
-			"desc": "JOOX",
-			"cat": WebLinkCategory.Commercial
+			url: 'joox.com',
+			desc: 'JOOX',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "listen.tidal.com",
-			"desc": "TIDAL",
-			"cat": WebLinkCategory.Commercial
+			url: 'listen.tidal.com',
+			desc: 'TIDAL',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "music-flo.com",
-			"desc": "FLO",
-			"cat": WebLinkCategory.Commercial
+			url: 'music-flo.com',
+			desc: 'FLO',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "vibe.naver.com",
-			"desc": "VIBE",
-			"cat": WebLinkCategory.Commercial
+			url: 'vibe.naver.com',
+			desc: 'VIBE',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "melon.com",
-			"desc": "Melon",
-			"cat": WebLinkCategory.Commercial
+			url: 'melon.com',
+			desc: 'Melon',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "music.tiktok.com",
-			"desc": "TikTok Music",
-			"cat": WebLinkCategory.Commercial
+			url: 'music.tiktok.com',
+			desc: 'TikTok Music',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "sd.club-zion.jp",
-			"desc": "Club ZION",
-			"cat": WebLinkCategory.Commercial
+			url: 'sd.club-zion.jp',
+			desc: 'Club ZION',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "sd.reggaezion.jp",
-			"desc": "Reggae ZION",
-			"cat": WebLinkCategory.Commercial
+			url: 'sd.reggaezion.jp',
+			desc: 'Reggae ZION',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "sd.deluxe-sound.jp",
-			"desc": "DE-LUXE",
-			"cat": WebLinkCategory.Commercial
+			url: 'sd.deluxe-sound.jp',
+			desc: 'DE-LUXE',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "dhits.docomo.ne.jp",
-			"desc": "dhits.docomo",
-			"cat": WebLinkCategory.Commercial
+			url: 'dhits.docomo.ne.jp',
+			desc: 'dhits.docomo',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "dmusic.docomo.ne.jp",
-			"desc": "dmusic.docomo",
-			"cat": WebLinkCategory.Commercial
+			url: 'dmusic.docomo.ne.jp',
+			desc: 'dmusic.docomo',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "music.163.com",
-			"desc": "music.163",
-			"cat": WebLinkCategory.Commercial
+			url: 'music.163.com',
+			desc: 'music.163',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": "uta.573.jp",
-			"desc": "uta.573",
-			"cat": WebLinkCategory.Commercial
+			url: 'uta.573.jp',
+			desc: 'uta.573',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
-			"url": ".bugs.co.kr",
-			"desc": "Bugs!",
-			"cat": WebLinkCategory.Commercial
-		},	
+			url: '.bugs.co.kr',
+			desc: 'Bugs!',
+			cat: WebLinkCategory.Commercial,
+		},
 		{
-			"url": "animelyrics.com",
-			"desc": "Anime Lyrics",
-			"cat": WebLinkCategory.Reference
-		},	
+			url: 'animelyrics.com',
+			desc: 'Anime Lyrics',
+			cat: WebLinkCategory.Reference,
+		},
 		{
 			url: '.fc2.com',
 			desc: 'Blog',
