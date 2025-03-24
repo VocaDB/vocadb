@@ -575,7 +575,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'music.apple.com/us/',
-			desc: 'iTunes (US)',
+			desc: 'Apple Music (US)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -585,7 +585,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'music.apple.com/jp/',
-			desc: 'iTunes (JP)',
+			desc: 'Apple Music (JP)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -595,7 +595,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'music.apple.com/',
-			desc: 'iTunes',
+			desc: 'Apple Music',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -610,7 +610,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'karent.jp/',
-			desc: 'KarenT',
+			desc: 'KARENT',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -925,7 +925,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'nicovideo.jp/watch',
-			desc: 'NicoNicoDouga',
+			desc: 'Niconico',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -1655,12 +1655,12 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'youtube.com/c/',
-			desc: 'YouTube Channel',
+			desc: 'YouTube Channel (Custom - c)',
 			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'youtube.com/@',
-			desc: 'YouTube Channel',
+			desc: 'YouTube Channel (Custom - @)',
 			cat: WebLinkCategory.Official,
 		},
 		{
@@ -1670,7 +1670,7 @@ export class WebLinkMatcher {
 		},
 		{
 			url: 'youtube.com/user/',
-			desc: 'YouTube Channel',
+			desc: 'YouTube Channel (Custom - user)',
 			cat: WebLinkCategory.Official,
 		},
 		{
