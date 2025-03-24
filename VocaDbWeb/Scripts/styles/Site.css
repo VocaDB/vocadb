@@ -709,39 +709,3 @@ div.item {
 		align-items: baseline;
 	}
 }
-
-.banner-button {
-	text-align: center;
-	max-width: fit-content;
-	margin-right: 20px;
-	min-width: min(400px, 95vw);
-}
-
-.banner-button > .button {
-	display: flex;
-	padding: 20px 40px;
-	font-size: 20px;
-	font-weight: bold;
-	background-color: #ffffff;
-	border: none;
-	text-align: center;
-	border-radius: 10px;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	background-color: #359bb9;
-	color: white;
-}
-
-.banner-button > .button:hover,
-.banner-button > .button:visited {
-	color: white;
-	text-decoration: none;
-}
-
-.banner-button > .button > span {
-	margin-top: 4px;
-}
-
-.banner-button > .button:hover {
-	background-color: #257289;
-}
