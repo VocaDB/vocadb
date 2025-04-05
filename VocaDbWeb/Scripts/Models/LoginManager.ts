@@ -116,6 +116,10 @@ export class LoginManager {
 		return this.hasPermission(PermissionToken.CreateComments);
 	}
 
+	get canCreateDatabaseDump(): boolean {
+		return this.hasPermission(PermissionToken.CreateDatabaseDump);
+	}
+	
 	get canDeleteComments(): boolean {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
