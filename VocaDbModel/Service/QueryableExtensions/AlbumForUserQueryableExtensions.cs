@@ -163,7 +163,7 @@ public static class AlbumForUserQueryableExtensions
 		if (releaseEventId == 0)
 			return query;
 
-		return query.Where(s => s.Album.OriginalRelease.ReleaseEvent.Id == releaseEventId);
+		return query.Where(s => s.Album.OriginalRelease.ReleaseEvents.Any(e => e.Id == releaseEventId));
 	}
 
 	public static IQueryable<AlbumForUser> WhereHasMediaType(this IQueryable<AlbumForUser> query, MediaType? mediaType)
