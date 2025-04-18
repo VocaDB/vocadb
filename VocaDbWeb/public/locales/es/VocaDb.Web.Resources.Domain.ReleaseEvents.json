@@ -3,7 +3,7 @@
     "Dancer": "Bailarín",
     "Default": "Predeterminado",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentista",
+    "Instrumentalist": "Instrumentalista",
     "Organizer": "Organizador",
     "Other": "Otro",
     "OtherPerformer": "Otro intérprete",
@@ -15,7 +15,7 @@
   "EventCategoryNames": {
     "AlbumRelease": "Feria de lanzamiento de álbumes",
     "Anniversary": "Aniversario",
-    "Club": "Discoteca",
+    "Club": "Club",
     "Concert": "Concierto",
     "Contest": "Concurso",
     "Festival": "Festival",
