@@ -54,10 +54,8 @@ a.extLink[href^='http(s?)://aivoice.jp/']
 	background-image: url('/Content/ExtIcons/ai-voice.png');
 }
 
-a.extLink[href^='http://ec.akbh.jp'],
-a.extLink[href^='https://ec.akbh.jp'],
-a.extLink[href^='http://shop.akbh.jp'],
-a.extLink[href^='https://shop.akbh.jp']
+a.extLink[href^='http(s?)://ec.akbh.jp'],
+a.extLink[href^='http(s?)://shop.akbh.jp']
 {
 	background-image: url('/Content/ExtIcons/akibahobby.png');
 }
@@ -474,8 +472,7 @@ a.extLink[href^='http(s?)://www.metal-archives.com/']
 	background-image: url('/Content/ExtIcons/ma.png');
 }
 
-a.extLink[href^='http://marshmallow-qa.com'],
-a.extLink[href^='https://marshmallow-qa.com']
+a.extLink[href^='http(s?))://marshmallow-qa.com']
 {
 	background-image: url('/Content/ExtIcons/marshmallow-qa.png');
 }
