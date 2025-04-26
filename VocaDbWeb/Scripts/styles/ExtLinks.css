@@ -597,7 +597,11 @@ a.extLink[href^='http(s?)://nex-tone.link/']
 	background-image: url('/Content/ExtIcons/nextone.png');
 }
 
-a.extLink[href^='http(s?)://pc.dwango.jp/'],
+a.extLink[href^='http(s?)://pc.dwango.jp/']
+{
+	background-image: url('/Content/ExtIcons/dwango.png');
+}
+
 a.extLink[href^='http(s?)://pc.animelo.jp/']
 {
 	background-image: url('/Content/ExtIcons/animelo.png');
