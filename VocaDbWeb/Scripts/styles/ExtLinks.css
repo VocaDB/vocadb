@@ -1,4 +1,5 @@
-a.extLink {
+a.extLink
+{
 	padding: 2px 0 2px 20px;
 	background-image: url('/Content/Icons/world.png');
 	background-repeat: no-repeat;
@@ -355,7 +356,7 @@ a.extLink[href*='hatenadiary.org/']
 	background-image: url('/Content/ExtIcons/hatena_diary.png');
 }
 
-a.extLink[href^='http(s?)://www.hmv.co.jp/']
+a.extLink[href*='hmv.co.jp/']
 {
 	background-image: url('/Content/ExtIcons/hmv.png');
 }
@@ -774,7 +775,8 @@ a.extLink[href^='http(s?)://en.touhouwiki.net/wiki/']
 }
 
 a.extLink[href^='http(s?)://tower.com/'],
-a.extLink[href^='http(s?)://tower.jp/']
+a.extLink[href^='http(s?)://tower.jp/'],
+a.extLink[href^='http(s?)://www.tower.jp/']
 {
 	background-image: url('/Content/ExtIcons/towerrecords.png');
 }
