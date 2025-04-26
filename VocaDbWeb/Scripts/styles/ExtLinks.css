@@ -6,6 +6,34 @@ a.extLink {
 	background-position-y: 50%;
 }
 
+a.extLink[href^='mailto:/']
+{
+	background-image: url('/Content/Icons/email.png');
+}
+
+/* image outside of ExtIcons folder because it is also used elsewhere*/
+a.extLink[href^='http(s?)://soundcloud.com/'],
+a.extLink[href^='http(s?)://www.soundcloud.com/']
+{
+	background-image: url('/Content/Icons/soundcloud.png');
+}
+
+/* image outside of ExtIcons folder because it is also used elsewhere*/
+a.extLink[href^='http(s?)://com.nicovideo.jp/community/'],
+a.extLink[href^='http(s?)://www.nicovideo.jp/'],
+a.extLink[href*='ch.nicovideo.jp/']
+{
+	background-image: url('/Content/nico.png');
+}
+
+/* image outside of ExtIcons folder because it is also used elsewhere*/
+a.extLink[href^='http(s?)://www.youtube.com/'],
+a.extLink[href^='http(s?)://youtube.com/'],
+a.extLink[href^='http(s?)://youtu.be/']
+{
+	background-image: url('/Content/youtube.png');
+}
+
 a.extLink[href^='http(s?)://about.me/']
 {
 	background-image: url('/Content/ExtIcons/aboutme.png');
@@ -382,11 +410,6 @@ a.extLink[href^='http(s?)://skeb.jp/']
 	background-image: url('/Content/ExtIcons/skeb.png');
 }
 
-a.extLink[href^='mailto:/']
-{
-	background-image: url('/Content/Icons/email.png');
-}
-
 a.extLink[href*='bandcamp.com/']
 {
 	background-image: url('/Content/ExtIcons/bandcamp.png');
@@ -465,13 +488,6 @@ a.extLink[href^='http(s?)://dic.nicovideo.jp/']
 	background-image: url('/Content/ExtIcons/nicopedia.png');
 }
 
-a.extLink[href^='http(s?)://com.nicovideo.jp/community/'],
-a.extLink[href^='http(s?)://www.nicovideo.jp/'],
-a.extLink[href*='ch.nicovideo.jp/']
-{
-	background-image: url('/Content/nico.png');
-}
-
 a.extLink[href^='http(s?)://chokuhan.nicovideo.jp/']
 {
 	background-image: url('/Content/ExtIcons/nicochokuhan.png');
@@ -487,12 +503,6 @@ a.extLink[href^='http(s?)://books.rakuten.co.jp/'],
 a.extLink[href^='http(s?)://music.rakuten.co.jp/']
 {
 	background-image: url('/Content/ExtIcons/rakuten.png');
-}
-
-a.extLink[href^='http(s?)://soundcloud.com/'],
-a.extLink[href^='http(s?)://www.soundcloud.com/']
-{
-	background-image: url('/Content/Icons/soundcloud.png');
 }
 
 a.extLink[href*='tumblr.com/']
@@ -528,13 +538,6 @@ a.extLink[href^='http(s?)://www.yesasia.com/']
 a.extLink[href^='http(s?)://music.youtube.com/']
 {
 	background-image: url('/Content/ExtIcons/youtubemusic.png');
-}
-
-a.extLink[href^='http(s?)://www.youtube.com/'],
-a.extLink[href^='http(s?)://youtube.com/'],
-a.extLink[href^='http(s?)://youtu.be/']
-{
-	background-image: url('/Content/youtube.png');
 }
 
 a.extLink[href^='http(s?)://vocaloid.fandom.com/wiki/']
