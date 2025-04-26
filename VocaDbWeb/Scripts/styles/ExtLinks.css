@@ -802,7 +802,6 @@ a.extLink[href*='twitch.tv/']
 	background-image: url('/Content/ExtIcons/twitch.png');
 }
 
-/*  bangumi*/
 a.extLink[href*='ko-fi.com/']
 {
 	background-image: url('/Content/ExtIcons/kofi.png');
