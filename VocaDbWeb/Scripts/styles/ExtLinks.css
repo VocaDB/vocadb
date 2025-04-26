@@ -276,7 +276,7 @@ a.extLink[href*='fantia.jp/']
 
 a.extLink[href^='http(s?)://shop.fasic.jp/']
 {
-	background-image: url('/Content/ExtIcons/fasic.png');
+	background-image: url('/Content/ExtIcons/Fasic.png');
 }
 
 a.extLink[href^='http(s?)://gensokyoradio.net/']
@@ -670,7 +670,7 @@ a.extLink[href^='http(s?)://www.tanocstore.net/']
 a.extLink[href^='http(s?)://thwiki.cc/'],
 a.extLink[href^='http(s?)://thbwiki.cc/']
 {
-	background-image: url('/Content/ExtIcons/thbwiki.png');
+	background-image: url('/Content/ExtIcons/THBWiki.png');
 }
 
 a.extLink[href^='http(s?)://www.lagoa.jp/']
