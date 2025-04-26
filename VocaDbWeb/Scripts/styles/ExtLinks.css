@@ -473,7 +473,7 @@ a.extLink[href*='://www.metal-archives.com/']
 	background-image: url('/Content/ExtIcons/ma.png');
 }
 
-a.extLink[href^='http(s?))://marshmallow-qa.com/']
+a.extLink[href*='://marshmallow-qa.com/']
 {
 	background-image: url('/Content/ExtIcons/marshmallow-qa.png');
 }
@@ -530,7 +530,7 @@ a.extLink[href*='://musicbrainz.org/']
 	background-image: url('/Content/ExtIcons/musicbrainz.png');
 }
 
-a.extLink[href^='http(s?))://www.musixmatch.com/']
+a.extLink[href*='://www.musixmatch.com/']
 {
 	background-image: url('/Content/ExtIcons/musixmatch.png');
 }
