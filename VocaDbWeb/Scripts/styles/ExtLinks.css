@@ -156,6 +156,11 @@ a.extLink[href*='blogspot/']
 	background-image: url('/Content/ExtIcons/blogspot.png');
 }
 
+a.extLink[href*='bsky.app']
+{
+	background-image: url('/Content/ExtIcons/bluesky.png');
+}
+
 a.extLink[href*='booth.pm/']
 {
 	background-image: url('/Content/ExtIcons/booth.png');
@@ -232,6 +237,11 @@ a.extLink[href^='http(s?)://www.dlsite.com/']
 a.extLink[href^='http(s?)://music.dmkt-sp.jp/']
 {
 	background-image: url('/Content/ExtIcons/dmusic.png');
+}
+
+a.extLink[href^='http(s?)://www.dojin-music.info']
+{
+	background-image: url('/Content/ExtIcons/dojin-music.png');
 }
 
 a.extLink[href*='music.douban.com/']
