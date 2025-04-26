@@ -116,11 +116,6 @@ a.extLink[href*='://pc.animelo.jp/']
 	background-image: url('/Content/ExtIcons/animelo.png');
 }
 
-a.extLink[href*='://web.archive.org/']
-{
-	background-image: url('/Content/ExtIcons//archive.png');
-}
-
 a.extLink[href*='artstation.com/']
 {
 	background-image: url('/Content/ExtIcons/artstation.png');
@@ -937,4 +932,10 @@ a.extLink[href*='://www.yesasia.com/']
 a.extLink[href*='://music.youtube.com/']
 {
 	background-image: url('/Content/ExtIcons/youtubemusic.png');
+}
+
+/* leave this one last so it takes precedence over any other matches when a link is archived */
+a.extLink[href*='://web.archive.org/']
+{
+	background-image: url('/Content/ExtIcons//archive.png');
 }
