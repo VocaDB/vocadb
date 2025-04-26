@@ -63,7 +63,9 @@ a.extLink[href^='http(s?)://web.archive.org/']
 
 a.extLink[href^='http(s?)://www5.atwiki.jp/hmiku/'],
 a.extLink[href^='http(s?)://w.atwiki.jp/hmiku/'],
-a.extLink[href*='atwiki.jp/cevio_synthv/']
+a.extLink[href*='atwiki.jp/cevio_synthv/'],
+a.extLink[href^='http(s?)://www24.atwiki.jp/utauuuta/pages/'],
+a.extLink[href^='http(s?)://w.atwiki.jp/utauuuta/pages/']
 {
 	background-image: url('/Content/ExtIcons/atwiki.png');
 }
@@ -254,11 +256,7 @@ a.extLink[href^='http(s?)://thbwiki.cc/']
 }
 
 a.extLink[href^='http(s?)://www.toranoana.jp/'],
-a.extLink[href*='ec.toranoana.jp/']
-{
-	background-image: url('/Content/ExtIcons/tora.png');
-}
-
+a.extLink[href*='ec.toranoana.jp/'],
 a.extLink[href*='ec.toranoana.shop/']
 {
 	background-image: url('/Content/ExtIcons/tora.png');
@@ -266,11 +264,6 @@ a.extLink[href*='ec.toranoana.shop/']
 
 a.extLink[href^='http(s?)://tower.com/'],
 a.extLink[href^='http(s?)://tower.jp/']
-{
-	background-image: url('/Content/ExtIcons/towerrecords.png');
-}
-
-a.extLink[href^='http(s?)://www.tower.jp/']
 {
 	background-image: url('/Content/ExtIcons/towerrecords.png');
 }
@@ -473,12 +466,8 @@ a.extLink[href^='http(s?)://dic.nicovideo.jp/']
 }
 
 a.extLink[href^='http(s?)://com.nicovideo.jp/community/'],
+a.extLink[href^='http(s?)://www.nicovideo.jp/'],
 a.extLink[href*='ch.nicovideo.jp/']
-{
-	background-image: url('/Content/nico.png');
-}
-
-a.extLink[href^='http(s?)://www.nicovideo.jp/']
 {
 	background-image: url('/Content/nico.png');
 }
@@ -514,12 +503,6 @@ a.extLink[href*='tumblr.com/']
 a.extLink[href*='twitter.com/']
 {
 	background-image: url('/Content/ExtIcons/twitter.png');
-}
-
-a.extLink[href^='http(s?)://www24.atwiki.jp/utauuuta/pages/'],
-a.extLink[href^='http(s?)://w.atwiki.jp/utauuuta/pages/']
-{
-	background-image: url('/Content/ExtIcons/atwiki.png');
 }
 
 a.extLink[href^='http(s?)://vimeo.com/']
@@ -614,12 +597,8 @@ a.extLink[href^='http(s?)://nex-tone.link/']
 	background-image: url('/Content/ExtIcons/nextone.png');
 }
 
+a.extLink[href^='http(s?)://pc.dwango.jp/'],
 a.extLink[href^='http(s?)://pc.animelo.jp/']
-{
-	background-image: url('/Content/ExtIcons/animelo.png');
-}
-
-a.extLink[href^='http(s?)://pc.dwango.jp/']
 {
 	background-image: url('/Content/ExtIcons/animelo.png');
 }
@@ -858,11 +837,6 @@ a.extLink[href*='music.douban.com/']
 a.extLink[href*='vocaloid.blog120.fc2.com/']
 {
 	background-image: url('/Content/ExtIcons/mikumiku.png');
-}
-
-a.extLink[href*='hmv.co.jp/']
-{
-	background-image: url('/Content/ExtIcons/hmv.png');
 }
 
 a.extLink[href*='neowing.co.jp/']
