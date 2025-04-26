@@ -44,7 +44,7 @@ a.extLink[href^='http(s?)://about.me/']
 	background-image: url('/Content/ExtIcons/aboutme.png');
 }
 
-a.extLink[href^='http(s?)://www.ah-soft.com']
+a.extLink[href^='http(s?)://www.ah-soft.com/']
 {
 	background-image: url('/Content/ExtIcons/ah-soft.png');
 }
@@ -54,8 +54,8 @@ a.extLink[href^='http(s?)://aivoice.jp/']
 	background-image: url('/Content/ExtIcons/ai-voice.png');
 }
 
-a.extLink[href^='http(s?)://ec.akbh.jp'],
-a.extLink[href^='http(s?)://shop.akbh.jp']
+a.extLink[href^='http(s?)://ec.akbh.jp/'],
+a.extLink[href^='http(s?)://shop.akbh.jp/']
 {
 	background-image: url('/Content/ExtIcons/akibahobby.png');
 }
@@ -149,7 +149,7 @@ a.extLink[href*='bandcamp.com/']
 	background-image: url('/Content/ExtIcons/bandcamp.png');
 }
 
-a.extLink[href*='bandlab.com']
+a.extLink[href*='bandlab.com/']
 {
 	background-image: url('/Content/ExtIcons/bandlab.png');
 }
@@ -177,7 +177,7 @@ a.extLink[href*='blogspot/']
 	background-image: url('/Content/ExtIcons/blogspot.png');
 }
 
-a.extLink[href*='bsky.app']
+a.extLink[href*='bsky.app/']
 {
 	background-image: url('/Content/ExtIcons/bluesky.png');
 }
@@ -260,7 +260,7 @@ a.extLink[href^='http(s?)://music.dmkt-sp.jp/']
 	background-image: url('/Content/ExtIcons/dmusic.png');
 }
 
-a.extLink[href^='http(s?)://www.dojin-music.info']
+a.extLink[href^='http(s?)://www.dojin-music.info/']
 {
 	background-image: url('/Content/ExtIcons/dojin-music.png');
 }
@@ -270,7 +270,7 @@ a.extLink[href*='music.douban.com/']
 	background-image: url('/Content/ExtIcons/douban.png');
 }
 
-a.extLink[href^='http(s?)://store.dreamtonics.com']
+a.extLink[href^='http(s?)://store.dreamtonics.com/']
 {
 	background-image: url('/Content/ExtIcons/dreamtonics.png');
 }
@@ -315,7 +315,7 @@ a.extLink[href^='http(s?)://shop.fasic.jp/']
 	background-image: url('/Content/ExtIcons/Fasic.png');
 }
 
-a.extLink[href^='http(s?)://genius.com']
+a.extLink[href^='http(s?)://genius.com/']
 {
 	background-image: url('/Content/ExtIcons/genius.png');
 }
@@ -325,7 +325,7 @@ a.extLink[href^='http(s?)://gensokyoradio.net/']
 	background-image: url('/Content/ExtIcons/gensokyoradio.png');
 }
 
-a.extLink[href*='github.com']
+a.extLink[href*='github.com/']
 {
 	background-image: url('/Content/ExtIcons/github.png');
 }
@@ -472,7 +472,7 @@ a.extLink[href^='http(s?)://www.metal-archives.com/']
 	background-image: url('/Content/ExtIcons/ma.png');
 }
 
-a.extLink[href^='http(s?))://marshmallow-qa.com']
+a.extLink[href^='http(s?))://marshmallow-qa.com/']
 {
 	background-image: url('/Content/ExtIcons/marshmallow-qa.png');
 }
@@ -529,7 +529,7 @@ a.extLink[href^='http(s?)://musicbrainz.org/']
 	background-image: url('/Content/ExtIcons/musicbrainz.png');
 }
 
-a.extLink[href^='http(s?))://www.musixmatch.com']
+a.extLink[href^='http(s?))://www.musixmatch.com/']
 {
 	background-image: url('/Content/ExtIcons/musixmatch.png');
 }
@@ -651,7 +651,7 @@ a.extLink[href^='http(s?)://potune.jp/']
 	background-image: url('/Content/ExtIcons/potune.png');
 }
 
-a.extLink[href^='http(s?)://projectsekai.fandom.com/wiki/Project_SEKAI_Wiki']
+a.extLink[href^='http(s?)://projectsekai.fandom.com/wiki/Project_SEKAI_Wiki/']
 {
 	background-image: url('/Content/ExtIcons/project-sekai.png');
 }
@@ -677,8 +677,8 @@ a.extLink[href^='http(s?)://recochoku.jp/']
 	background-image: url('/Content/ExtIcons/recochoku.png');
 }
 
-a.extLink[href^='http(s?)://old.reddit.com'],
-a.extLink[href^='http(s?)://www.reddit.com']
+a.extLink[href^='http(s?)://old.reddit.com/'],
+a.extLink[href^='http(s?)://www.reddit.com/']
 {
 	background-image: url('/Content/ExtIcons/reddit.png');
 }
@@ -884,12 +884,12 @@ a.extLink[href^='http(s?)://vocaloid.fandom.com/wiki/']
 	background-image: url('/Content/ExtIcons/vocawiki.png');
 }
 
-a.extLink[href^='http(s?)://voicevox.hiroshiba.jp']
+a.extLink[href^='http(s?)://voicevox.hiroshiba.jp/']
 {
 	background-image: url('/Content/ExtIcons/voicevox.png');
 }
 
-a.extLink[href^='http(s?)://voisona.com']
+a.extLink[href^='http(s?)://voisona.com/']
 {
 	background-image: url('/Content/ExtIcons/voisona.png');
 }
