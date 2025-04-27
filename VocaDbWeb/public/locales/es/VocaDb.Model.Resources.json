@@ -47,8 +47,8 @@
 		"VOICEVOX": "VOICEVOX",
 		"ACEVirtualSinger": "Cantante Virtual ACE ",
 		"AIVOICE": "A.I.VOICE",
-		"CoverArtist": "Artista de versiones",
-		"Instrumentalist": "Instrumental",
+		"CoverArtist": "Artista de covers",
+		"Instrumentalist": "Instrumentalista",
 		"Designer": "Diseñador"
 	},
 	"ArtistValidationErrors": {
