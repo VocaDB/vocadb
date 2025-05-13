@@ -1005,6 +1005,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'sah',
+		{
+			languages: ['Yakuh', 'Sakha'],
+			nativeName: 'саха тыла',
+		},
+	],
+	[
 		'yi',
 		{
 			languages: ['Yiddish'],
