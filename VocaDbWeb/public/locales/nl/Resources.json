@@ -68,10 +68,10 @@
     "ArtistType": "Soort artiest",
     "BaseVoicebank": "Basisvoicebank",
     "Description": "Beschrijving",
-    "Groups": "Groups",
-    "Names": "Names",
+    "Groups": "Groepen",
+    "Names": "Namen",
     "Nothing": "Geen",
-    "OriginalName": "Original name",
+    "OriginalName": "Oorspronkelijke naam",
     "Picture": "Hoofdafbeelding",
     "Pictures": "Afbeeldingen",
     "ReleaseDate": "Voicebank publicatiedatum",
@@ -84,35 +84,35 @@
     "Chorus": "Chorus",
     "Composer": "Componist",
     "Default": "Default",
-    "Distributor": "Distributor",
+    "Distributor": "Distributeur",
     "Encoder": "Encoder",
     "Illustrator": "Illustrator",
     "Instrumentalist": "Instrumentalist",
-    "Lyricist": "Lyricist",
+    "Lyricist": "Tekstschrijver",
     "Mastering": "Mastering",
     "Mixer": "Mixer",
-    "Other": "Other",
-    "Publisher": "Publisher",
-    "VocalDataProvider": "Vocal data provider",
+    "Other": "Overig",
+    "Publisher": "Publicist",
+    "VocalDataProvider": "Stemdataprovider",
     "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "VoiceManipulator": "Stemmanipulator"
   },
   "ArtistSortRuleNames": {
-    "AdditionDate": "Addition date (descending)",
-    "AdditionDateAsc": "Addition date (ascending)",
-    "FollowerCount": "Number of followers",
-    "Name": "Name",
+    "AdditionDate": "Toevoegingsdatum (aflopend)",
+    "AdditionDateAsc": "Toevoegingsdatum (oplopend)",
+    "FollowerCount": "Aantal volgers",
+    "Name": "Naam",
     "ReleaseDate": "Voicebank publicatiedatum",
-    "SongCount": "Number of songs",
-    "SongRating": "Total song rating"
+    "SongCount": "Aantal nummers",
+    "SongRating": "Totale beoordeling van het nummer"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Oudste",
+    "CreateDateDescending": "Nieuwste"
   },
   "CommonMessages": {
-    "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
-    "EntryMergedTo": "This entry was merged to",
+    "EntryDeleted": "Deze bijdrage is verwijderd. Het is nog tijdelijk toegankelijk, maar het zal in geen enkele lijst zichtbaar zijn.",
+    "EntryMergedTo": "Deze bijdrage is samengevoegd met",
     "EntryStatusExplanation": "Draft = entry is missing crucial information. This status indicates that you're requesting additional information to be added or corrected.<br />\nFinished = The entry has all the necessary information, but it hasn't been inspected by a trusted user yet.<br />\nApproved = The entry has been inspected and approved by a trusted user. Approved entries can only be edited by trusted users.",
     "Locked": "This entry is locked, meaning that only moderators are allowed to edit it.",
     "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
@@ -142,8 +142,8 @@
   },
   "EntryStatusNames": {
     "Approved": "Approved",
-    "Draft": "Draft",
-    "Finished": "Finished",
+    "Draft": "Concept",
+    "Finished": "Afgerond",
     "Locked": "Locked"
   },
   "PermissionTokenNames": {
@@ -227,7 +227,7 @@
   },
   "SongEditableFieldNames": {
     "Artists": "Artists",
-    "Groups": "Groups",
+    "Groups": "Groepen",
     "Length": "Duration",
     "Lyrics": "Lyrics",
     "Names": "Names",
@@ -249,30 +249,30 @@
     "Description": "Beschrijving",
     "EventDate": "Event date",
     "FeaturedCategory": "Featured category",
-    "Name": "Name",
+    "Name": "Naam",
     "Songs": "Songs",
     "Status": "Status",
     "Thumbnail": "Thumbnail"
   },
   "SongListFeaturedCategoryNames": {
-    "Concerts": "Concert setlists",
+    "Concerts": "Concert setlijsten",
     "Nothing": "Geen",
-    "Other": "Other",
+    "Other": "Overig",
     "Pools": "Pools",
-    "VocaloidRanking": "Vocaloid rankings"
+    "VocaloidRanking": "Vocaloid ranglijsten"
   },
   "SongSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "FavoritedTimes": "Times favorited",
-    "Name": "Name",
+    "AdditionDate": "Toevoegingsdatum",
+    "FavoritedTimes": "Aantal keer gefavoriet",
+    "Name": "Naam",
     "None": "Geen",
-    "PublishDate": "Publish date",
-    "RatingScore": "Rating score",
-    "TagUsageCount": "Tag usage count"
+    "PublishDate": "Publicatiedatum",
+    "RatingScore": "Beoordelingsscore",
+    "TagUsageCount": "Aantal tags"
   },
   "SongVoteRatingNames": {
-    "Favorite": "Favorite",
-    "Like": "Like"
+    "Favorite": "Favoriet",
+    "Like": "Vind ik leuk"
   },
   "TagEditableFieldNames": {
     "AliasedTo": "Alias leidt naar",
@@ -298,7 +298,7 @@
     "Limited": "Limited user",
     "Moderator": "Moderator",
     "Nothing": "Geen",
-    "Regular": "Regular user",
+    "Regular": "Reguliere gebruiker",
     "Trusted": "Trusted user"
   },
   "VenueEditableFieldNames": {
@@ -312,9 +312,9 @@
     "WebLinks": "External links"
   },
   "WebLinkCategoryNames": {
-    "Commercial": "Commercial",
-    "Official": "Official",
-    "Other": "Other",
-    "Reference": "Reference"
+    "Commercial": "Commercieel",
+    "Official": "Officieel",
+    "Other": "Overig",
+    "Reference": "Referentie"
   }
 }
