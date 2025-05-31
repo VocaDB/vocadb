@@ -13,7 +13,7 @@
   },
   "EntryTypeNames": {
     "Album": "Album",
-    "Artist": "Artist",
+    "Artist": "Artiest",
     "DiscussionTopic": "Topic",
     "PV": "PV",
     "ReleaseEvent": "Event",
@@ -23,7 +23,7 @@
     "Tag": "Tag",
     "Undefined": "Anything",
     "User": "User",
-    "Venue": "Venue",
+    "Venue": "Locatie",
     "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
