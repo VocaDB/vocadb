@@ -1,7 +1,7 @@
 {
   "ActivityFeedHelper": {
     "At": "at",
-    "CreatedNew": "heeft een nieuwe {{0}} toegevoegd",
+    "CreatedNew": "heeft een nieuw {{0}} toegevoegd",
     "EntryAlbum": "album",
     "EntryArtist": "artiest",
     "EntryReleaseEvent": "evenement",
@@ -10,7 +10,7 @@
     "EntryTag": "tag",
     "EntryVenue": "locatie",
     "Someone": "Een bijdrager",
-    "Updated": "heeft {{0}} bijgewerkt"
+    "Updated": "heeft een {{0}} bijgewerkt"
   },
   "AlbumHelpers": {
     "Released": "Uitgebracht"
