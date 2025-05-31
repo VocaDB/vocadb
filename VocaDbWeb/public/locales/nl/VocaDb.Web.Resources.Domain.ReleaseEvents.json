@@ -21,22 +21,22 @@
     "Festival": "Festival",
     "Convention": "Convention",
     "Other": "Other",
-    "Unspecified": "Unspecified"
+    "Unspecified": "Ongespecificeerd"
   },
   "EventSortRuleNames": {
     "AdditionDate": "Addition date",
     "Date": "Date",
     "Name": "Name",
     "SeriesName": "Series",
-    "VenueName": "Venue"
+    "VenueName": "Locatie"
   },
   "ReleaseEventSeriesEditableFieldNames": {
     "Category": "Category",
-    "Description": "Description",
+    "Description": "Beschrijving",
     "Name": "Name",
     "Names": "Names",
     "OriginalName": "Default name language",
-    "Picture": "Main picture",
+    "Picture": "Hoofdafbeelding",
     "Status": "Status",
     "WebLinks": "External links"
   }
