@@ -13,27 +13,27 @@
     "VoiceManipulator": "Voice manipulator"
   },
   "EventCategoryNames": {
-    "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
+    "AlbumRelease": "Albumpublicatie-evenement",
+    "Anniversary": "Karakterverjaardag",
     "Club": "Club",
     "Concert": "Concert",
-    "Contest": "Contest",
+    "Contest": "Wedstrijd",
     "Festival": "Festival",
-    "Convention": "Convention",
+    "Convention": "Conventie",
     "Other": "Other",
     "Unspecified": "Ongespecificeerd"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
+    "AdditionDate": "Toevoegingsdatum",
+    "Date": "Datum",
+    "Name": "Naam",
+    "SeriesName": "Reeks",
     "VenueName": "Locatie"
   },
   "ReleaseEventSeriesEditableFieldNames": {
     "Category": "Category",
     "Description": "Beschrijving",
-    "Name": "Name",
+    "Name": "Naam",
     "Names": "Names",
     "OriginalName": "Default name language",
     "Picture": "Hoofdafbeelding",
