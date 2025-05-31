@@ -1,13 +1,13 @@
 {
   "AlbumCollection": {
     "Album": "Album",
-    "CollectionStatusAnything": "Anything",
-    "CollectionWishedOrOrdered": "Wished or ordered",
-    "MediaType": "Media type",
-    "Rating": "Rating",
-    "ReleaseDate": "Release date",
+    "CollectionStatusAnything": "Alles",
+    "CollectionWishedOrOrdered": "Op wensenlijst of besteld",
+    "MediaType": "Type media",
+    "Rating": "Beoordeling",
+    "ReleaseDate": "Publicatiedatum",
     "ReleaseEvent": "Release event",
-    "Status": "Collection status"
+    "Status": "Status van verzameling"
   },
   "Create": {
     "Captcha": "CAPTCHA",
@@ -16,7 +16,7 @@
     "DuplicateUserWarning": "Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.",
     "Email": "Email address (required)",
     "EmailIsRequired": "Email address is required.",
-    "EmailNote": "Your email address will not be shown to other users. Make sure you enter a valid address. You'll need it if you ever forget your password. For a profile picture you'll need an email address associated with Gravatar. Email address can be changed later.",
+    "EmailNote": "Je e-mailadres zal niet aan andere gebruikers getoond worden. Zorg dat je een geldig e-mailadres invult. Je zult het nodig hebben als je ooit je wachtwoord vergeet. Voor een profielfoto heb je een e-mailadres nodig dat met Gravatar gekoppeld is. Je kan e-mailadres later nog wijzigen.",
     "EmailTaken": "This email address is already in use. If it's your address, please use the reset password function instead, or if that doesn't work, contact support.",
     "LoginWithTwitter": "Sign in with Twitter",
     "Password": "Password",
@@ -36,7 +36,7 @@
     "AdditionalPermissions": "Additional permissions",
     "ArtistVerificationPage": "artist verification page",
     "Attending": "Attending",
-    "CollectionTab": "Collection",
+    "CollectionTab": "Verzameling",
     "Comments": "Comments",
     "CommentsMade": "Comments",
     "ComposeMessage": "Compose a message",
@@ -63,7 +63,7 @@
     "OldNameUntil": "(until {{0}})",
     "OldUsernames": "Old usernames",
     "Overview": "Overview",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
+    "PossibleProducerMessage": "Bent u een artiest (zoals een producer, animator of illustrator) die met Vocaloid/UTAU werkt? Zo ja, zie de <a>artiestverificatiepagina</a>.",
     "Power": "Power",
     "ReportSpamming": "Report user for spamming",
     "SetAvatar": "Set your avatar at gravatar.com",
@@ -107,7 +107,7 @@
   "Index": {
     "Group": "Group",
     "KnowsLanguage": "Knows language",
-    "ShowDisabledUsers": "Show disabled accounts",
+    "ShowDisabledUsers": "Toon uitgeschakelde accounts",
     "VerifiedArtists": "Artist accounts"
   },
   "Login": {
@@ -200,9 +200,9 @@
   },
   "RatedSongs": {
     "GroupByRating": "Group by rating",
-    "NoSongListSelection": "Nothing",
+    "NoSongListSelection": "Geen",
     "RatingAnything": "Anything",
-    "ShowTags": "Show tags",
+    "ShowTags": "Toon tags",
     "SongList": "Song list"
   },
   "RequestVerification": {
