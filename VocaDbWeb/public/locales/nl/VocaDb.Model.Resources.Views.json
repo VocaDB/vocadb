@@ -8,9 +8,9 @@
     "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to the Vocaloid Database!",
-    "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
+    "SiteDescription": "VocaDB is een Vocaloid muziekdatabase met vertaalde artiesten, albums en nummers.",
+    "Welcome": "Welkom bij de Vocaloid Database!",
+    "WelcomeSubtitle": "De database voor Vocaloid, UTAU en andere zangsynthese, met artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
   },
   "LayoutRes": {
     "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
