@@ -1,8 +1,8 @@
 {
   "ArtistLinkTypeNames": {
-    "CharacterDesigner": "Character designer",
+    "CharacterDesigner": "Karakterontwerper",
     "Illustrator": "Illustrator",
-    "Manager": "Manager",
+    "Manager": "Beheerder",
     "VoiceProvider": "Voice provider"
   }
 }
