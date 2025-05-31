@@ -1,6 +1,6 @@
 {
   "EntryReport": {
-    "EntryVersionReportBody": "Entry '{{0}}', which you have edited, was reported with the following message: '{{1}}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.",
+    "EntryVersionReportBody": "Bijdrage '{{0}}', die jij hebt bewerkt, was met het bericht '{{1}}' door iemand gemeld. Maak je geen zorgen, het is waarschijnlijk niet ernstig. Gelieve de bijdrage te controleren. Als er iets te corrigeren is, maak dan de nodige aanpassingen, tenzij iemand anders dit al heeft gedaan.",
     "EntryVersionReportTitle": "Entry report for {{0}}"
   },
   "UserAccount": {
