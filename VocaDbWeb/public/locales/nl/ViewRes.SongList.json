@@ -1,7 +1,7 @@
 {
   "Details": {
     "Date": "Date: {{0}}.",
-    "DefaultSortRule": "Default",
+    "DefaultSortRule": "Standaard",
     "Details": "Details",
     "Events": "Events",
     "Export": "Export",
@@ -19,7 +19,7 @@
     "EditTitle": "Edit list - {{0}}",
     "EventDate": "Event date",
     "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
-    "FeaturedCategory": "Featured category",
+    "FeaturedCategory": "Uitgelichte categorie",
     "Name": "Naam",
     "RemoveFromList": "Remove from list",
     "Status": "Entry status",
@@ -29,7 +29,7 @@
     "UnableToSave": "Unable to save list"
   },
   "Featured": {
-    "Import": "Import from YouTube or NicoNico",
+    "Import": "Importeer vanuit YouTube of NicoNico",
     "SortBy": "Sort by"
   }
 }
