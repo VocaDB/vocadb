@@ -1,26 +1,26 @@
 {
   "ActivityFeedHelper": {
     "At": "at",
-    "CreatedNew": "created a new {{0}}",
+    "CreatedNew": "heeft een nieuwe {{0}} toegevoegd",
     "EntryAlbum": "album",
-    "EntryArtist": "artist",
-    "EntryReleaseEvent": "event",
-    "EntrySong": "song",
-    "EntrySongList": "song list",
+    "EntryArtist": "artiest",
+    "EntryReleaseEvent": "evenement",
+    "EntrySong": "nummer",
+    "EntrySongList": "lijst met nummers",
     "EntryTag": "tag",
-    "EntryVenue": "venue",
-    "Someone": "A contributor",
-    "Updated": "updated {{0}}"
+    "EntryVenue": "locatie",
+    "Someone": "Een bijdrager",
+    "Updated": "heeft {{0}} bijgewerkt"
   },
   "AlbumHelpers": {
-    "Released": "Released"
+    "Released": "Uitgebracht"
   },
   "Helper": {
-    "Added": "added",
-    "DraftIconTitle": "This entry is a draft.",
-    "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
-    "EntryIsMissingInformation": "This entry is missing the following information:",
-    "EntryValidationNoErrors": "This entry contains all the required information.",
+    "Added": "toegevoegd",
+    "DraftIconTitle": "Deze bijdrage is een concept.",
+    "DraftMessage": "Deze bijdrage is een concept. Je kunt helpen door de bijdrage te bewerken en de ontbrekende informatie toe te voegen.",
+    "EntryIsMissingInformation": "Deze bijdrage mist de volgende informatie:",
+    "EntryValidationNoErrors": "Deze bijdrage bevat alle vereiste informatie.",
     "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
     "EntryValidationWarningDetails": "Details",
     "GitHubMarkdown": "GitHub-flavored Markdown",
