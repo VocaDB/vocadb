@@ -36,7 +36,7 @@
     "Vocalists": "Vocalisten",
     "ViewExternal": "Op externe site bekijken",
     "Favorites": "{{0}} favoriet(en)",
-    "SearchYoutube": "Search YouTube",
+    "SearchYoutube": "Zoek op YouTube",
     "OriginalMedia": "Originele media",
     "OtherMedia": "Other media",
     "Like": "Vind ik leuk",
@@ -56,7 +56,7 @@
     "Share": "Delen",
     "RelatedSongs": "Gereleateerde nummers",
     "NicoMimiDownload": "Check NicoMimi for download",
-    "MatchingArtists": "Matching artists",
+    "MatchingArtists": "Overeenkomende artiesten",
     "MatchingLikes": "Matching likes",
     "MatchingTags": "Matching tags",
     "Band": "Band/unit",
@@ -75,7 +75,7 @@
     "LyricsPlusOthers": "+ {{0}} other(s)",
     "ReleaseEvent": "Release event",
     "PVUnavailable": "(PV is unavailable)",
-    "ViewInfo": "View info",
+    "ViewInfo": "Bekijk info",
     "Bpm": "BPM"
   },
   "Edit": {
