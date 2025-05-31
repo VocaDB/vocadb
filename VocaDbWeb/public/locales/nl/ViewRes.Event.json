@@ -12,7 +12,7 @@
     "Songs": "Songs",
     "UserAttending": "I'm attending",
     "UserInterested": "I'm interested",
-    "Venue": "Venue"
+    "Venue": "Locatie"
   },
   "EventsBySeries": {
     "CreateEvent": "Create event",
