@@ -1,9 +1,9 @@
 {
   "Details": {
     "Address": "Address",
-    "Aliases": "Aliases",
+    "Aliases": "Aliassen",
     "Country": "Country/Region",
-    "Venue": "Venue"
+    "Venue": "Locatie"
   },
   "Edit": {
     "Address": "Address",
