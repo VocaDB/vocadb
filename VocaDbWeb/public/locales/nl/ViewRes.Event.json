@@ -3,11 +3,11 @@
     "Albums": "Albums",
     "Attending": "Attending",
     "Category": "Category",
-    "Event": "Event",
-    "OccurrenceDate": "Date",
+    "Event": "Evenement",
+    "OccurrenceDate": "Datum",
     "PVs": "PVs",
     "RemoveAttendance": "Remove from my events",
-    "Series": "Series",
+    "Series": "Reeks",
     "SongList": "Setlist",
     "Songs": "Songs",
     "UserAttending": "I'm attending",
@@ -15,13 +15,13 @@
     "Venue": "Locatie"
   },
   "EventsBySeries": {
-    "CreateEvent": "Create event",
-    "CreateSeries": "Create series",
-    "CreateVenue": "Create venue",
-    "ViewByDate": "All by date",
-    "ViewBySeries": "All by series",
-    "ViewByVenue": "All by venue",
-    "ViewList": "Upcoming"
+    "CreateEvent": "Maak een evenement aan",
+    "CreateSeries": "Maak een reeks aan",
+    "CreateVenue": "Maak een locatie aan",
+    "ViewByDate": "Alles, per datum",
+    "ViewBySeries": "Alles, per reeks",
+    "ViewByVenue": "Alles, per locatie",
+    "ViewList": "Gepland"
   },
   "Find": {
     "CreateEvent": "Create event",
