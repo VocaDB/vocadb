@@ -79,7 +79,7 @@
     "TotalEdits": "Totaal aantal bewerkingen",
     "TwitterAccount": "Twitter account",
     "UserDetails": "User details",
-    "UserGroup": "User group",
+    "UserGroup": "Gebruikersgroep",
     "UserName": "Naam",
     "VerifiedAccount": "Verified artist",
     "VerifiedEmail": "Geferifiëerd e-mailadres",
@@ -105,10 +105,10 @@
     "UsernameIsRequired": "Username is required"
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "Groep",
+    "KnowsLanguage": "Kent taal",
     "ShowDisabledUsers": "Toon uitgeschakelde accounts",
-    "VerifiedArtists": "Artist accounts"
+    "VerifiedArtists": "Artiestenaccounts"
   },
   "Login": {
     "DoLogin": "Log in",
@@ -136,24 +136,24 @@
     "SignInCancelled": "Sign-in cancelled."
   },
   "Messages": {
-    "Body": "Body",
+    "Body": "Berichttekst",
     "ClickSubjectToView": "Click subject to view the message.",
-    "Compose": "Compose",
+    "Compose": "Opstellen",
     "Date": "Date",
-    "From": "From",
+    "From": "Van",
     "FromLC": "from",
-    "HighPriority": "High priority",
-    "Messages": "Messages",
+    "HighPriority": "Hoge prioriteit",
+    "Messages": "Berichten",
     "MessageSendError": "Error while sending message.",
     "MessageSent": "The message has been sent.",
-    "Received": "Received",
+    "Received": "Ontvangen",
     "Reply": "Reply",
-    "Send": "Send",
-    "Sent": "Sent",
-    "Subject": "Subject",
-    "To": "To",
-    "Notifications": "Notifications",
-    "DeleteSelected": "Delete selected"
+    "Send": "Verzenden",
+    "Sent": "Verzonden",
+    "Subject": "Onderwerp",
+    "To": "Naar",
+    "Notifications": "Meldingen",
+    "DeleteSelected": "Verwijder geselecteerde items"
   },
   "MySettings": {
     "AboutMe": "About me",
