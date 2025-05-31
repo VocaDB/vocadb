@@ -24,10 +24,10 @@
     "Undefined": "Alles",
     "User": "Gebruiker",
     "Venue": "Locatie",
-    "VoiceSynthesizer": "Voice Synthesizer"
+    "VoiceSynthesizer": "Stemsynthese"
   },
   "WebhookEventNames": {
-    "EntryReport": "Entry report",
-    "User": "User"
+    "EntryReport": "Bijdragemelding",
+    "User": "Gebruiker"
   }
 }
