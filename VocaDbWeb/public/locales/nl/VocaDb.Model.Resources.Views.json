@@ -1,0 +1,28 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Producers en vocalisten geassocieerd met dit album.",
+    "NewAlbumInfo": "Let op: VocaDB is geen UtaiteDB. <strong>Het album moet ten minste één track met Vocaloid zang hebben om toegestaan te zijn op VocaDB (andere spraaksynthesizers zoals UTAU zijn ook toegestaan, maar covers door mensen gezongen niet.)</strong>. Onofficiële fan-made compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "VocaDB account",
+    "NewArtistExternalLink": "Externe link (naar de website van de artiest, Hatsune Miku wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "VocaDB is een Vocaloid muziekdatabase met vertaalde artiesten, albums en nummers.",
+    "Welcome": "Welkom bij de Vocaloid Database!",
+    "WelcomeSubtitle": "De database voor Vocaloid, UTAU en andere zangsynthese, met artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB is een non-profit project. Al het geld zal worden gebruikt voor verdere ontwikkeling van de website, hostingkosten en softwarelicenties.",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Zorg ervoor dat het nummer dat je gaat indienen nog niet eerder is toegevoegd. Je moet ten minste één naam en artiest invoeren. Link naar de originele video is zeer wenselijk.\n\nHoud er rekening mee dat een liedje zonder Vocaloid alleen is toegestaan als het op een album samen met Vocaloid nummers uitgebracht is, of als er meerdere Vocaloid covers van dat nummer zijn. UTAU en andere stemsynthesizers zijn ook toegestaan, maar door een mens gezongen covers niet.",
+    "RankingsTitle": "VocaDB nummerranglijsten"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "<p>\n\t\t\tAls je een producer, illustrator, animator of andere content creator bent die met Vocaloid muziek of video's werkt,\n\t\t\tof als je de vertegenwoordiger van een cirkel bent, kan je dit formulier gebruiken om je account te laten verifiëren door het websiteteam.\n\t\t\tNa de verificatie zal je accountnaam op de artiestenpagina(s) worden weergegeven, en andersom.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tJe zult moeten bewijzen dat je de rechtmatige eigenaar van de artiestenpagina bent, anders zal je aanvraag waarschijnlijk niet goedgekeurd worden.\n\t\t\t</strong>\n\t\t\tBijvoorbeeld, op je Twitter of blog je VocaDB account linken in een post is een acceptabele manier om te bewijzen dat je bent wie je zegt dat je bent.\n\t\t\t<strong>\n\t\t\t\tJe moet ook op zijn minst één of twee geaccepteerde en afgeronde (Vocaloid of UTAU) nummerbijdrages op de site hebben - je kan deze zelf aanmaken als anderen dat nog niet hebben gedaan.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tNadat je geverifiëerd bent kan je je eigen artiestenpagina goedkeuren, waarmee je beperkt wie deze kan bewerken.\n\t\t\tOp dit moment kan alleen de artiestenpagina zelf op deze manier \"beschermd\" worden - dit heeft geen effect nummers en albums.\n\t\t</p>\n\t\t<p>\n\t\t\tGelieve te begrijpen dat we het recht hebben om je aanvraag fout te keuren. De redenen hiervoor kunnen alles wat hierboven staat zijn.\n\t\t\tTenzij de reden voor het foutkeuren van je aanvraag overduidelijk is, zullen we proberen contact met je op te nemen, om je te vragen om je fouten te corrigeren zodat de aanvraag goedgekeurd kan worden.\n\t\t</p>"
+  }
+}

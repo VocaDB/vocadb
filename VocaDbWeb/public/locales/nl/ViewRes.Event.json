@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Albums": "Albums",
+    "Attending": "Ga ik heen",
+    "Category": "Categorie",
+    "Event": "Evenement",
+    "OccurrenceDate": "Datum",
+    "PVs": "Promotievideo's",
+    "RemoveAttendance": "Verwijder uit mijn evenementen",
+    "Series": "Reeks",
+    "SongList": "Setlist",
+    "Songs": "Nummers",
+    "UserAttending": "Ik ga erheen",
+    "UserInterested": "Ik heb interesse",
+    "Venue": "Locatie"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "Maak een evenement aan",
+    "CreateSeries": "Maak een reeks aan",
+    "CreateVenue": "Maak een locatie aan",
+    "ViewByDate": "Alles, per datum",
+    "ViewBySeries": "Alles, per reeks",
+    "ViewByVenue": "Alles, per locatie",
+    "ViewList": "Gepland"
+  },
+  "Find": {
+    "CreateEvent": "Maak een evenement aan",
+    "EventNotFound": "Sorry, er kon geen evenement met deze naam gevonden worden. Het is waarschijnlijk nog niet aan de database toegevoegd.",
+    "FindEvent": "Vind evenement",
+    "Number": "nummer",
+    "Series": "Reeks",
+    "UngroupedEventNamed": "Niet-gegroepeerd evenement genaamd:",
+    "YouMayAddTheEvent": "U kunt het evenement toevoegen aan de database."
+  }
+}

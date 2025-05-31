@@ -1,0 +1,31 @@
+{
+  "Album": {
+    "AddedToCollection": "Aan verzameling toegevoegd.",
+    "AddToTracks": "Aan tracks toevoegen",
+    "RemoveFromTracks": "Uit tracks verwijderen",
+    "AddNewSong": "Nieuw nummer genaamd '{{0}}' toegevoegd",
+    "Download": "Download"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "conceptstatus",
+    "ExactTitleFilter": "exacte titel '{{0}}'",
+    "FilterPre": "Filteren op",
+    "StartsWithTitleFilter": "begint met titel '{{0}}'",
+    "TitleFilter": "titel '{{0}}'"
+  },
+  "Shared": {
+    "AddExtraArtist": "Een aangepaste artiest genaamd '{0}' toevoegen",
+    "ReportSent": "Melding ingediend. Bedankt!",
+    "Save": "Opslaan",
+    "ThanksForRating": "Bedankt voor het beoordelen!",
+    "UnableToSendReport": "Melding kan niet verzonden worden."
+  },
+  "Song": {
+    "AddedToList": "Aan lijst toegevoegd",
+    "ArtistFilter": "artiest '{{0}}'",
+    "OnlyWithPVsFilter": "Alleen promotievideo's",
+    "SinceFilter": "recenter dan '{{0}}'",
+    "SongTypeFilter": "nummertype '{{0}}'",
+    "ThanksForRating": "Bedankt voor het beoordelen!"
+  }
+}

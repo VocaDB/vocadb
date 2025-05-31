@@ -1,0 +1,5 @@
+{
+  "TagController": {
+    "TagNameError": "Tagnaam kan alleen woordtekens bevatten en kan niet leeg zijn."
+  }
+}

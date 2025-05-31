@@ -1,0 +1,49 @@
+{
+  "ActivityFeedHelper": {
+    "At": "om",
+    "CreatedNew": "heeft een nieuw {{0}} toegevoegd",
+    "EntryAlbum": "album",
+    "EntryArtist": "artiest",
+    "EntryReleaseEvent": "evenement",
+    "EntrySong": "nummer",
+    "EntrySongList": "lijst met nummers",
+    "EntryTag": "tag",
+    "EntryVenue": "locatie",
+    "Someone": "Een bijdrager",
+    "Updated": "heeft een {{0}} bijgewerkt"
+  },
+  "AlbumHelpers": {
+    "Released": "Uitgebracht"
+  },
+  "Helper": {
+    "Added": "toegevoegd",
+    "DraftIconTitle": "Deze bijdrage is een concept.",
+    "DraftMessage": "Deze bijdrage is een concept. Je kunt helpen door de bijdrage te bewerken en de ontbrekende informatie toe te voegen.",
+    "EntryIsMissingInformation": "Deze bijdrage mist de volgende informatie:",
+    "EntryValidationNoErrors": "Deze bijdrage bevat alle vereiste informatie.",
+    "EntryValidationNoErrorsDraft": "Deze bijdrage bevat alle informatie die nodig is om hem als afgerond te markeren (geen concept).",
+    "EntryValidationWarningDetails": "Details",
+    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "IsSupportedForFormatting": "wordt voor de opmaak ondersteund",
+    "NameLangTitle": "Taal",
+    "NameNewRow": "Nieuwe rij",
+    "NameValueTitle": "Naam (verplicht)",
+    "ReturnWithoutSaving": "Teruggaan zonder op te slaan",
+    "SaveChanges": "Wijzigingen opslaan",
+    "SeeGuide": "handleiding",
+    "SeeGuidePost": "voor meer informatie.",
+    "SeeGuidePre": "Bekijk de",
+    "StatusDescriptionApproved": "Goedgekeurde bijdrages zijn geïnspecteerd door een vertrouwde gebruiker. Het bewerken van deze bijdrages wordt beperkt.",
+    "StatusDescriptionDraft": "Conceptbijdrage mist een aantal verplichte informatie.",
+    "StatusDescriptionFinished": "Afgeronde bijdrages bevatten alle verplichte informatie, maar zijn nog niet goedgekeurd.",
+    "StatusDescriptionLocked": "Vergrendelde bijdrages kunnen alleen door teamleden bewerkt worden.",
+    "UploadPictureInfo": "Toegestane types: {{0}}. Maximale grootte is {{1}} MB. Respecteer auteursrechten en vermeld de bron van de afbeelding in de notities/beschrijving indien mogelijk.",
+    "WebLinkCategoryTitle": "Categorie",
+    "WebLinkDescriptionTitle": "Beschrijving",
+    "WebLinkNewRow": "Nieuwe rij",
+    "WebLinkUrlTitle": "URL"
+  },
+  "SongHelpers": {
+    "FromAlbum": "Uit het album"
+  }
+}

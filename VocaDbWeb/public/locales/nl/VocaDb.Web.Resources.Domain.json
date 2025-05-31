@@ -1,0 +1,33 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Kapotte promotievideo",
+    "Duplicate": "Dubbele bijdrage",
+    "Inappropriate": "Ongepaste inhoud",
+    "InvalidInfo": "Ongeldige of ontbrekende informatie",
+    "InvalidTag": "Ongeldig taggebruik",
+    "MaliciousIP": "Kwaadaardig IP",
+    "Other": "Anders (leg uit in notities)",
+    "OwnershipClaim": "Eigendomclaim",
+    "RemovePermissions": "Bewerken beperkt",
+    "Spamming": "Spammen"
+  },
+  "EntryTypeNames": {
+    "Album": "Album",
+    "Artist": "Artiest",
+    "DiscussionTopic": "Onderwerp",
+    "PV": "Promotievideo",
+    "ReleaseEvent": "Evenement",
+    "ReleaseEventSeries": "Evenementreeks",
+    "Song": "Nummer",
+    "SongList": "Nummerlijst",
+    "Tag": "Tag",
+    "Undefined": "Alles",
+    "User": "Gebruiker",
+    "Venue": "Locatie",
+    "VoiceSynthesizer": "Stemsynthese"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Bijdragemelding",
+    "User": "Gebruiker"
+  }
+}
