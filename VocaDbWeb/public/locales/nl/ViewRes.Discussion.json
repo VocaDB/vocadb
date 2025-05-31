@@ -1,18 +1,18 @@
 {
   "Index": {
-    "Author": "Author",
-    "Comments": "Comments",
-    "Created": "Created",
-    "Discussions": "Discussions",
-    "DoPost": "Post",
-    "Folder": "Folder",
-    "LastComment": "Last comment",
-    "LastTopic": "Last topic",
-    "PostContent": "Content",
-    "Preview": "Preview",
-    "RecentTopics": "Recent topics",
-    "Topic": "Topic",
-    "Topics": "Topics",
-    "WriteNewPost": "Write a new post"
+    "Author": "Auteur",
+    "Comments": "Opmerkingen",
+    "Created": "Aangemaakt",
+    "Discussions": "Discussies",
+    "DoPost": "Plaatsen",
+    "Folder": "Map",
+    "LastComment": "Laatste opmerking",
+    "LastTopic": "Laatste onderwerp",
+    "PostContent": "Inhoud",
+    "Preview": "Voorbeeld",
+    "RecentTopics": "Recente onderwerpen",
+    "Topic": "Onderwerp",
+    "Topics": "Onderwerpen",
+    "WriteNewPost": "Schrijf een nieuwe post"
   }
 }
