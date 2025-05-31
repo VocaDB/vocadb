@@ -1,15 +1,15 @@
 {
   "Import": {
-    "Accept": "Accept",
-    "InvalidUrlError": "Check that the URL is valid and points to a NicoNico MyList, RSS feed or YouTube playlist.",
-    "ItemsLoaded": "loaded",
+    "Accept": "Accepteer",
+    "InvalidUrlError": "Zorg dat de URL geldig is en naar een NicoNico MyList, RSS-feed of een YouTube playlist verwijst.",
+    "ItemsLoaded": "ingeladen",
     "ListDescription": "Beschrijving",
-    "ListName": "Name",
+    "ListName": "Naam",
     "LoadMoreHelp": "(Klik op \"Meer tonen\" om meer nummers in de lijst te laden.)",
-    "MylistDescription": "List properties",
-    "NicoPV": "Imported PV",
-    "OnlyRanked": "Include only ranked songs (from NicoNico rankings)",
-    "Order": "Order",
+    "MylistDescription": "Lijsteigenschappen",
+    "NicoPV": "Geïmporteerde promotievideo",
+    "OnlyRanked": "Alleen gerangschikte nummers weergeven (uit de NicoNico ranglijsten)",
+    "Order": "Volgorde",
     "ParseAll": "Include all songs in the list (not just ranked)",
     "Process": "Process",
     "SongMissing": "MISSING",
@@ -24,8 +24,8 @@
     "VocaDbEntry": "VocaDB song entry"
   },
   "SongListSortRuleNames": {
-    "CreateDate": "Creation date",
-    "Date": "Event date",
-    "Name": "Name"
+    "CreateDate": "Aanmaakdatum",
+    "Date": "Evenementsdatum",
+    "Name": "Naam"
   }
 }
