@@ -7,7 +7,7 @@
     "Export": "Export",
     "Playlist": "Playlist",
     "Preview": "Preview",
-    "ShowTags": "Show tags",
+    "ShowTags": "Toon tags",
     "SongList": "Song list",
     "Songs": "song(s)"
   },
@@ -15,7 +15,7 @@
     "AddSong": "Add song",
     "ConfirmDelete": "Are you sure you want to delete this list?",
     "CreateTitle": "Create a songlist",
-    "Description": "Description",
+    "Description": "Beschrijving",
     "EditTitle": "Edit list - {{0}}",
     "EventDate": "Event date",
     "EventDateHelp": "If this list is related to an event such as a concert or rankings, the date of that event can be entered here.",
@@ -23,7 +23,7 @@
     "Name": "Name",
     "RemoveFromList": "Remove from list",
     "Status": "Entry status",
-    "TabProperties": "Properties",
+    "TabProperties": "Eigenschappen",
     "TabSongs": "Songs",
     "Thumbnail": "Thumbnail",
     "UnableToSave": "Unable to save list"
