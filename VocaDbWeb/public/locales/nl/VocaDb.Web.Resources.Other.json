@@ -1,8 +1,8 @@
 {
   "PagedList": {
-    "First": "First",
-    "Last": "Last",
-    "Next": "Next",
-    "Previous": "Previous"
+    "First": "Eerste",
+    "Last": "Laatste",
+    "Next": "Volgende",
+    "Previous": "Vorige"
   }
 }
