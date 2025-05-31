@@ -1,88 +1,88 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Oudste",
+    "CreateDateDescending": "Nieuwste"
   },
   "AlbumArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-imported",
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "AutoImportedFromMikuDb": "Automatisch toegevoegd",
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Merged": "Vanaf een andere bijdrage samengevoegd",
+    "PropertiesUpdated": "Eigenschappen bijgewerkt",
+    "Restored": "Hersteld",
+    "Reverted": "Ongedaan gemaakt",
+    "Unknown": "Onbekend"
   },
   "AlbumCollectionStatusNames": {
-    "Nothing": "Nothing",
-    "Ordered": "Ordered",
-    "Owned": "Owned",
-    "Wishlisted": "Wishlisted"
+    "Nothing": "Geen",
+    "Ordered": "Besteld",
+    "Owned": "In bezit",
+    "Wishlisted": "Op wensenlijst"
   },
   "AlbumDiscMediaTypeNames": {
     "Audio": "Audio",
     "Video": "Video"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "Artists",
+    "Artists": "Artiesten",
     "Cover": "Cover",
-    "Description": "Description",
-    "DiscType": "Album type",
-    "Names": "Names",
-    "Nothing": "Nothing",
-    "OriginalName": "Original name",
-    "OriginalRelease": "Original release",
-    "Pictures": "Pictures",
-    "PVs": "PVs",
+    "Description": "Beschrijving",
+    "DiscType": "Albumtype",
+    "Names": "Namen",
+    "Nothing": "Geen",
+    "OriginalName": "Oorspronkelijke naam",
+    "OriginalRelease": "Oorspronkelijke versie",
+    "Pictures": "Afbeeldingen",
+    "PVs": "Promotievideo's",
     "Status": "Status",
     "Tracks": "Tracks",
-    "WebLinks": "External links",
-    "Barcode": "Barcode",
-    "Identifiers": "Identifiers",
-    "Discs": "Discs"
+    "WebLinks": "Externe links",
+    "Barcode": "Streepjescode",
+    "Identifiers": "Identificeerders",
+    "Discs": "CD's"
   },
   "AlbumMediaTypeNames": {
-    "DigitalDownload": "Digital download",
-    "Other": "Unspecified",
-    "PhysicalDisc": "Physical disc"
+    "DigitalDownload": "Digitale download",
+    "Other": "Ongespecificeerd",
+    "PhysicalDisc": "Fysieke CD"
   },
   "AlbumSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "CollectionCount": "Collection count",
-    "Name": "Name",
-    "RatingAverage": "Rating average",
-    "RatingTotal": "Total score",
-    "ReleaseDate": "Release date"
+    "AdditionDate": "Toevoegingsdatum",
+    "CollectionCount": "Aantal keer aan verzameling toegevoegd",
+    "Name": "Naam",
+    "RatingAverage": "Gemiddelde beoordeling",
+    "RatingTotal": "Totale score",
+    "ReleaseDate": "Publicatiedatum"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "Created",
-    "Deleted": "Deleted",
-    "Merged": "Merged from another entry",
-    "PropertiesUpdated": "Updated properties",
-    "Restored": "Restored",
-    "Reverted": "Reverted to an earlier revision",
-    "Unknown": "Unknown"
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Merged": "Vanaf een andere bijdrage samengevoegd",
+    "PropertiesUpdated": "Eigenschappen bijgewerkt",
+    "Restored": "Hersteld",
+    "Reverted": "Naar een eerdere versie teruggezet",
+    "Unknown": "Onbekend"
   },
   "ArtistEditableFieldNames": {
     "Albums": "Albums",
-    "ArtistType": "Artist type",
-    "BaseVoicebank": "Base voicebank",
-    "Description": "Description",
+    "ArtistType": "Soort artiest",
+    "BaseVoicebank": "Basisvoicebank",
+    "Description": "Beschrijving",
     "Groups": "Groups",
     "Names": "Names",
-    "Nothing": "Nothing",
+    "Nothing": "Geen",
     "OriginalName": "Original name",
-    "Picture": "Main picture",
-    "Pictures": "Pictures",
-    "ReleaseDate": "Voicebank release date",
+    "Picture": "Hoofdafbeelding",
+    "Pictures": "Afbeeldingen",
+    "ReleaseDate": "Voicebank publicatiedatum",
     "Status": "Status",
     "WebLinks": "External links"
   },
   "ArtistRoleNames": {
     "Animator": "Animator",
-    "Arranger": "Arranger",
+    "Arranger": "Arrangeur",
     "Chorus": "Chorus",
-    "Composer": "Composer",
+    "Composer": "Componist",
     "Default": "Default",
     "Distributor": "Distributor",
     "Encoder": "Encoder",
@@ -102,7 +102,7 @@
     "AdditionDateAsc": "Addition date (ascending)",
     "FollowerCount": "Number of followers",
     "Name": "Name",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Voicebank publicatiedatum",
     "SongCount": "Number of songs",
     "SongRating": "Total song rating"
   },
@@ -119,15 +119,15 @@
     "RevisionHidden": "This page revision has been hidden."
   },
   "ContentLanguageSelectionNames": {
-    "Default": "Original",
-    "English": "English",
-    "Japanese": "Non-English",
-    "Romaji": "Romanized",
-    "Unspecified": "Unspecified"
+    "Default": "Oorspronkelijk",
+    "English": "Engels",
+    "Japanese": "Niet-Engels",
+    "Romaji": "Geromaniseerd",
+    "Unspecified": "Ongespecificeerd"
   },
   "DiscTypeDescriptions": {
     "Album": "Album that consists mostly of previously unpublished songs.",
-    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
+    "Compilation": "Verzameling van eerder uitgebrachte nummers, verzameld van één of meer eerdere albums. Bijvoorbeeld \"best of\" verzamelingen.",
     "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
     "Other": "For albums that don't fit into anything above.",
     "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
@@ -172,7 +172,7 @@
     "MergeEntries": "Merge entries",
     "MikuDbImport": "Album import",
     "MoveToTrash": "Move to trash",
-    "Nothing": "Nothing",
+    "Nothing": "Geen",
     "ReadRecentComments": "Read recent comments",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Remove tag usages",
@@ -201,8 +201,8 @@
     "Artists": "Artists",
     "Category": "Category",
     "Date": "Date",
-    "Description": "Description",
-    "MainPicture": "Main picture",
+    "Description": "Beschrijving",
+    "MainPicture": "Hoofdafbeelding",
     "Names": "Names",
     "OriginalName": "Default name language",
     "PVs": "PVs",
@@ -211,7 +211,7 @@
     "SeriesSuffix": "Series suffix",
     "SongList": "Setlist",
     "Status": "Status",
-    "Venue": "Venue",
+    "Venue": "Locatie",
     "VenueName": "Venue name",
     "WebLinks": "External links"
   },
@@ -223,7 +223,7 @@
     "PropertiesUpdated": "Updated properties",
     "Restored": "Restored",
     "Reverted": "Reverted",
-    "Unknown": "Unknown"
+    "Unknown": "Onbekend"
   },
   "SongEditableFieldNames": {
     "Artists": "Artists",
@@ -231,8 +231,8 @@
     "Length": "Duration",
     "Lyrics": "Lyrics",
     "Names": "Names",
-    "Notes": "Description",
-    "Nothing": "Nothing",
+    "Notes": "Beschrijving",
+    "Nothing": "Geen",
     "OriginalName": "Original name",
     "OriginalVersion": "Original version",
     "PublishDate": "Publish date",
@@ -246,7 +246,7 @@
     "CultureCodes": "Languages"
   },
   "SongListEditableFieldNames": {
-    "Description": "Description",
+    "Description": "Beschrijving",
     "EventDate": "Event date",
     "FeaturedCategory": "Featured category",
     "Name": "Name",
@@ -256,7 +256,7 @@
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Concert setlists",
-    "Nothing": "Nothing",
+    "Nothing": "Geen",
     "Other": "Other",
     "Pools": "Pools",
     "VocaloidRanking": "Vocaloid rankings"
@@ -265,7 +265,7 @@
     "AdditionDate": "Addition date",
     "FavoritedTimes": "Times favorited",
     "Name": "Name",
-    "None": "Nothing",
+    "None": "Geen",
     "PublishDate": "Publish date",
     "RatingScore": "Rating score",
     "TagUsageCount": "Tag usage count"
@@ -275,14 +275,14 @@
     "Like": "Like"
   },
   "TagEditableFieldNames": {
-    "AliasedTo": "Aliased to",
+    "AliasedTo": "Alias leidt naar",
     "CategoryName": "Category",
-    "Description": "Description",
+    "Description": "Beschrijving",
     "HideFromSuggestions": "Hide from suggestions",
     "Names": "Names",
     "OriginalName": "Default name language",
     "Parent": "Parent",
-    "Picture": "Picture",
+    "Picture": "Afbeelding",
     "RelatedTags": "Related tags",
     "Status": "Status",
     "Targets": "Targets",
@@ -297,7 +297,7 @@
     "Admin": "Administrator",
     "Limited": "Limited user",
     "Moderator": "Moderator",
-    "Nothing": "Nothing",
+    "Nothing": "Geen",
     "Regular": "Regular user",
     "Trusted": "Trusted user"
   },
@@ -305,7 +305,7 @@
     "Address": "Address",
     "AddressCountryCode": "Country/Region",
     "Coordinates": "Coordinates",
-    "Description": "Description",
+    "Description": "Beschrijving",
     "Names": "Names",
     "OriginalName": "Default name language",
     "Status": "Status",
