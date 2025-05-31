@@ -1,9 +1,9 @@
 {
   "Index": {
-    "AllActivity": "All activity",
-    "Comments": "Comments",
-    "FollowedArtists": "Only followed artists",
-    "RecentActivity": "Recent activity",
-    "ViewMore": "View more"
+    "AllActivity": "Alle activiteit",
+    "Comments": "Opmerkingen",
+    "FollowedArtists": "Alleen door mij gevolgde artiesten",
+    "RecentActivity": "Recente activiteit",
+    "ViewMore": "Meer weergeven"
   }
 }
