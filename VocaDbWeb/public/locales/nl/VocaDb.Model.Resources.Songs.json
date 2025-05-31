@@ -3,9 +3,9 @@
     "Arrangement": "Arrangement",
     "Cover": "Cover",
     "DramaPV": "Drama",
-    "Illustration": "Illustration",
+    "Illustration": "Illustratie",
     "Instrumental": "Instrumentaal",
-    "Live": "Live recording",
+    "Live": "Live opname",
     "Mashup": "Mashup",
     "MusicPV": "Muziekvideo",
     "Original": "Origineel nummer",
@@ -13,7 +13,7 @@
     "Remaster": "Remaster",
     "Remix": "Remix",
     "Unspecified": "Ongespecificeerd",
-    "Rearrangement": "Rearrangement",
-    "ShortVersion": "Short version"
+    "Rearrangement": "Herarrangement",
+    "ShortVersion": "Korte versie"
   }
 }
