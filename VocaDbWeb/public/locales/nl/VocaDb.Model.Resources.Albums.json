@@ -1,16 +1,16 @@
 {
   "DiscTypeNames": {
-    "Album": "Original album",
+    "Album": "Origineel album",
     "Artbook": "Artbook",
-    "Compilation": "Compilation",
+    "Compilation": "Compilatie",
     "EP": "E.P.",
     "Fanmade": "Album",
     "Game": "Game",
     "Instrumental": "Instrumental",
-    "Other": "Other",
+    "Other": "Overig",
     "Single": "Single",
-    "SplitAlbum": "Split album",
-    "Unknown": "Not specified",
+    "SplitAlbum": "Gesplitst album",
+    "Unknown": "Niet gespecificeerd",
     "Video": "Video",
     "Drama": "Drama"
   }
