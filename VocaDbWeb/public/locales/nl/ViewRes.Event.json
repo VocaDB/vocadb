@@ -1,17 +1,17 @@
 {
   "Details": {
     "Albums": "Albums",
-    "Attending": "Attending",
-    "Category": "Category",
+    "Attending": "Ga ik heen",
+    "Category": "Categorie",
     "Event": "Evenement",
     "OccurrenceDate": "Datum",
-    "PVs": "PVs",
-    "RemoveAttendance": "Remove from my events",
+    "PVs": "Promotievideo's",
+    "RemoveAttendance": "Verwijder uit mijn evenementen",
     "Series": "Reeks",
     "SongList": "Setlist",
-    "Songs": "Songs",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
+    "Songs": "Nummers",
+    "UserAttending": "Ik ga erheen",
+    "UserInterested": "Ik heb interesse",
     "Venue": "Locatie"
   },
   "EventsBySeries": {
@@ -24,12 +24,12 @@
     "ViewList": "Gepland"
   },
   "Find": {
-    "CreateEvent": "Create event",
-    "EventNotFound": "Sorry, an event with this name could not be found. It probably hasn't been added to the database yet.",
-    "FindEvent": "Find event",
-    "Number": "number",
-    "Series": "Series",
-    "UngroupedEventNamed": "Ungrouped event named:",
-    "YouMayAddTheEvent": "You may add the event to the database."
+    "CreateEvent": "Maak een evenement aan",
+    "EventNotFound": "Sorry, er kon geen evenement met deze naam gevonden worden. Het is waarschijnlijk nog niet aan de database toegevoegd.",
+    "FindEvent": "Vind evenement",
+    "Number": "nummer",
+    "Series": "Reeks",
+    "UngroupedEventNamed": "Niet-gegroepeerd evenement genaamd:",
+    "YouMayAddTheEvent": "U kunt het evenement toevoegen aan de database."
   }
 }
