@@ -72,7 +72,7 @@
     "ConfirmMoveToTrash": "Bevestig dat je deze bijdrage permanent wilt verwijderen. Dit kan niet ongedaan worden gemaakt. Je kunt hieronder een aanvullende uitleg geven (optioneel).",
     "DefaultLanguageHelp": "De taal van de officiële standaardnaam voor deze bijdrage. Meestal is dit degene die het meest wordt gebruikt in officiële bronnen.",
     "DefaultLanguageSelection": "Oorspronkelijke taal",
-    "ExternalLinksQuickHelp": "External links relevant to this entry. Keep in mind no illegal/direct download links will be allowed!<br />\n<br />\nFill in the URL first, and description and category will be guessed automatically if the domain is known.<br />\n<br />\nOfficial: artist's official site (usually blogs, websites, Facebook etc.).<br />\nCommercial: authorized sales such as Amazon and CDJapan.<br />\nReference: fansites with useful information such as wikis.<br />\nOther: for those that don't fit into anything above.<br />",
+    "ExternalLinksQuickHelp": "Externe links relevant voor deze bijdrage. Illegale of directe download links zijn niet toegestaan!<br />\n<br />\nVul eerst de URL in, en de beschrijving en categorie zullen automatisch worden aangevuld als het domein bekend is.<br />\n<br />\nOfficieel: de officiële site van de artiest (zoals blogs, websites, Facebook etc.).<br />\nCommercieel: geautoriseerde verkoop zoals Amazon en CDJapan.<br />\nReferentie: fansites met nuttige informatie zoals wikis.<br />\nOverig: voor dat wat niet in het hier bovenstaande past.<br />",
     "LivePreview": "Live preview",
     "LyExtendLanguages": "Meer taalopties",
     "Merge": "Merge",
