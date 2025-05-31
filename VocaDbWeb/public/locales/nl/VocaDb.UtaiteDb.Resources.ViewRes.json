@@ -1,6 +1,6 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Utaites and other artists associated with this album.",
+    "NewAlbumArtistDesc": "Utaites en andere artiesten geassocieerd met dit album.",
     "NewAlbumInfo": "The album needs to have at least one track with an utaite to be allowed on UtaiteDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
   },
   "ArtistRes": {
@@ -8,9 +8,9 @@
     "NewArtistExternalLink": "External link (to artist's website, Utaite wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "UtaiteDB is an utaite music database with detailed information for artists, albums and songs.",
-    "Welcome": "Welcome to the Utaite Database!",
-    "WelcomeSubtitle": "The collaborative database with utaite artists, discography, PVs and more."
+    "SiteDescription": "VocaDB is een Vocaloid muziekdatabase met gedetailleerde informatie voor artiesten, albums en nummers.",
+    "Welcome": "Welkom bij de Utaite Database!",
+    "WelcomeSubtitle": "De database met utaite artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
   },
   "LayoutRes": {
     "Keywords": "Utaite, UtaiteDB, Utaite database",
