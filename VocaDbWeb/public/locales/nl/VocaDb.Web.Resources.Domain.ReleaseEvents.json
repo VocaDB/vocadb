@@ -1,7 +1,7 @@
 {
   "ArtistEventRoleNames": {
     "Dancer": "Dancer",
-    "Default": "Default",
+    "Default": "Standaard",
     "DJ": "DJ",
     "Instrumentalist": "Instrumentalist",
     "Organizer": "Organizer",
@@ -20,7 +20,7 @@
     "Contest": "Wedstrijd",
     "Festival": "Festival",
     "Convention": "Conventie",
-    "Other": "Other",
+    "Other": "Overig",
     "Unspecified": "Ongespecificeerd"
   },
   "EventSortRuleNames": {
@@ -31,11 +31,11 @@
     "VenueName": "Locatie"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
+    "Category": "Categorie",
     "Description": "Beschrijving",
     "Name": "Naam",
     "Names": "Names",
-    "OriginalName": "Default name language",
+    "OriginalName": "Standaard naamtaal",
     "Picture": "Hoofdafbeelding",
     "Status": "Status",
     "WebLinks": "External links"
