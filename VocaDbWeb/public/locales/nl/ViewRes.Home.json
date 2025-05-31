@@ -1,16 +1,16 @@
 {
   "Index": {
-    "NewAlbums": "Recent or upcoming albums",
-    "News": "News",
-    "RecentActivity": "Recent activity",
-    "RecentEvents": "Happening now",
-    "RecentSongs": "Highlighted PVs",
-    "SearchSite": "Search the whole site using Google custom search",
-    "TopAlbums": "Random popular albums",
-    "ViewAll": "view all",
-    "ViewMore": "view more",
-    "ViewSongInfo": "Song info",
-    "Welcome": "Welcome to the Vocaloid Database!",
-    "WelcomeSubtitle": "The collaborative database with Vocaloid artists, discography, PVs and more."
+    "NewAlbums": "Recente of aankomende albums",
+    "News": "Nieuws",
+    "RecentActivity": "Recente activiteit",
+    "RecentEvents": "Nu gaande",
+    "RecentSongs": "Uitgelichte promotievideo's",
+    "SearchSite": "De hele site doorzoeken met Google custom search",
+    "TopAlbums": "Willekeurige populaire albums",
+    "ViewAll": "alles weergeven",
+    "ViewMore": "meer weergeven",
+    "ViewSongInfo": "Nummer info",
+    "Welcome": "Welkom bij de Vocaloid Database!",
+    "WelcomeSubtitle": "De database met Vocaloid artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
   }
 }
