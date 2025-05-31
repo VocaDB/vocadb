@@ -1,16 +1,16 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
+    "Dancer": "Danser",
     "Default": "Standaard",
     "DJ": "DJ",
     "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Organizer": "Organisator",
+    "Other": "Overig",
+    "OtherPerformer": "Andere performer",
+    "Promoter": "Promotor",
     "VJ": "VJ",
     "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "VoiceManipulator": "Stemmanipulator"
   },
   "EventCategoryNames": {
     "AlbumRelease": "Albumpublicatie-evenement",
@@ -34,10 +34,10 @@
     "Category": "Categorie",
     "Description": "Beschrijving",
     "Name": "Naam",
-    "Names": "Names",
+    "Names": "Namen",
     "OriginalName": "Standaard naamtaal",
     "Picture": "Hoofdafbeelding",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "Externe links"
   }
 }
