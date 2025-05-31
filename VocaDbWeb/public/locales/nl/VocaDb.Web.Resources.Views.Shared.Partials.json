@@ -5,9 +5,9 @@
     "Translated": "Vertaald"
   },
   "PlayList": {
-    "Autoplay": "Autoplay",
-    "AutoplayNote": "Autoplay is supported only for YouTube and SoundCloud",
-    "NextSong": "Next song",
-    "Shuffle": "Shuffle"
+    "Autoplay": "Automatisch afspelen",
+    "AutoplayNote": "Automatisch afspelen is alleen ondersteund voor YouTube en SoundCloud",
+    "NextSong": "Volgend nummer",
+    "Shuffle": "Willekeurige volgorde"
   }
 }
