@@ -1,7 +1,7 @@
 body {
 	font-size: 80%;
 	font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
-	background: url(//static.vocadb.net/img/miku3.jpg) top left no-repeat fixed
+	background: url(/miku-pride-v3.webp) top left no-repeat fixed
 		#001155;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -197,7 +197,7 @@ table.properties tr,
 	/*background-color: #E8FAFF;
 	opacity: 0.95;*/
 	background-color: rgb(232, 250, 255);
-	background-color: rgba(232, 250, 255, 0.9);
+	background-color: rgba(232, 250, 255, 0.85);
 	border: solid #b1dde1 2px;
 	margin-bottom: 0px;
 	margin-right: 0px;
@@ -269,7 +269,7 @@ body .rightFrame a.btn-danger:hover {
 	vertical-align: top;
 	border: solid #8ad7d8 2px;
 	background-color: rgb(215, 236, 244);
-	background-color: rgba(215, 236, 244, 0.9);
+	background-color: rgba(215, 236, 244, 0.85);
 }
 
 ul {

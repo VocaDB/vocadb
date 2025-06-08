@@ -108,7 +108,7 @@ export const LeftMenu = observer(
 							title={vdb.values.siteName}
 						/>
 					</Link>
-					<p className="slogan">{vdb.values.slogan}</p>
+					<p className="slogan">Happy Pride Month!</p>
 				</div>
 
 				<div className="well sidebar-nav">

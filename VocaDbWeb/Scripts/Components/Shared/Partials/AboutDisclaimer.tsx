@@ -7,8 +7,8 @@ export const AboutDisclaimer = React.memo(
 
 		return (
 			<span className="about-disclaimer">
-				<a href="https://piapro.jp/t/nire">
-					{t('ViewRes:Layout.BackgroundCredit', { 0: 'みゆ' })}
+				<a href="https://twitter.com/seeuchiyo">
+					{t('ViewRes:Layout.BackgroundCredit', { 0: 'chiyo' })}
 				</a>
 				{' | '}
 				<a href="https://github.com/VocaDB/vocadb/">

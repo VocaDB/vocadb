@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
 		server: {
 			proxy: {
 				'/api': {
-					target: 'https://localhost:5001',
+					target: 'https://vocadb.net',
 					changeOrigin: true,
 					// https://stackoverflow.com/questions/74033733/vite-self-signed-certificate-error-when-calling-local-api/74033815#74033815
 					secure: false,
