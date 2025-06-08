@@ -1,12 +1,19 @@
 body {
 	font-size: 80%;
 	font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
-	background: url(/miku-pride-v3.webp) top left no-repeat fixed
+	background: url(/miku-pride-v3.jpg) top left no-repeat fixed
 		#001155;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	-webkit-background-size: cover;
 	background-size: cover;
+}
+
+@supports (-webkit-touch-callout: none) {
+	body {
+		background: url(/miku-pride-v3.jpg) top left no-repeat fixed #001155;
+		background-size: auto 100vh;
+	}
 }
 
 header,
