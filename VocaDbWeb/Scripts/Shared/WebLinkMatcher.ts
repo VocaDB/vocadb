@@ -1539,6 +1539,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'vocaloidlyrics.miraheze.org/wiki/',
+			desc: 'Vocaloid Lyrics Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
 			url: 'vocaloidia.com/',
 			desc: 'VocaloidIA',
 			cat: WebLinkCategory.Reference,
