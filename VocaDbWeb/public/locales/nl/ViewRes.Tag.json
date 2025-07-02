@@ -1,0 +1,31 @@
+{
+  "Details": {
+    "AliasedTo": "Alias leidt naar",
+    "Aliases": "Aliassen",
+    "AllAlbums": "Alle albums",
+    "AllArtists": "Alle artiesten",
+    "AllEntries": "Alle bijdrages",
+    "AllEvents": "Alle evenementen",
+    "AllSongLists": "Alle nummerlijsten",
+    "AllSongs": "Alle nummers",
+    "AssociatedEntryType": "Gekoppeld bijdragetype",
+    "Category": "Categorie",
+    "Children": "Onderliggende items",
+    "EventSeries": "Evenementreeksen",
+    "FollowCount": "Door {{0}} gebruiker(s) gevolgd",
+    "FollowTag": "Volg tag",
+    "MappedTags": "De volgende NicoNico tags zijn aan deze tag gekoppeld",
+    "Overview": "Overzicht",
+    "RelatedTags": "Gerelateerde tags",
+    "Siblings": "Gelijkwaardige elementen",
+    "Tag": "Tag",
+    "TagDetails": "Tagdetails",
+    "TopAlbums": "Topalbums",
+    "TopArtists": "Topartiesten",
+    "TopEvents": "Topevenementen",
+    "TopSongs": "Topnummers",
+    "Translations": "Vertalingen",
+    "UnfollowTag": "Ontvolg tag",
+    "ValidFor": "Geldig voor"
+  }
+}

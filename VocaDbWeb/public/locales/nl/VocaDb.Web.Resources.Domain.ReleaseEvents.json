@@ -1,0 +1,43 @@
+{
+  "ArtistEventRoleNames": {
+    "Dancer": "Danser",
+    "Default": "Standaard",
+    "DJ": "DJ",
+    "Instrumentalist": "Instrumentalist",
+    "Organizer": "Organisator",
+    "Other": "Overig",
+    "OtherPerformer": "Andere performer",
+    "Promoter": "Promotor",
+    "VJ": "VJ",
+    "Vocalist": "Vocalist",
+    "VoiceManipulator": "Stemmanipulator"
+  },
+  "EventCategoryNames": {
+    "AlbumRelease": "Albumpublicatie-evenement",
+    "Anniversary": "Karakterverjaardag",
+    "Club": "Club",
+    "Concert": "Concert",
+    "Contest": "Wedstrijd",
+    "Festival": "Festival",
+    "Convention": "Conventie",
+    "Other": "Overig",
+    "Unspecified": "Ongespecificeerd"
+  },
+  "EventSortRuleNames": {
+    "AdditionDate": "Toevoegingsdatum",
+    "Date": "Datum",
+    "Name": "Naam",
+    "SeriesName": "Reeks",
+    "VenueName": "Locatie"
+  },
+  "ReleaseEventSeriesEditableFieldNames": {
+    "Category": "Categorie",
+    "Description": "Beschrijving",
+    "Name": "Naam",
+    "Names": "Namen",
+    "OriginalName": "Standaard naamtaal",
+    "Picture": "Hoofdafbeelding",
+    "Status": "Status",
+    "WebLinks": "Externe links"
+  }
+}

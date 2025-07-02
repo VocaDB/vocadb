@@ -1,0 +1,13 @@
+{
+  "EnglishTranslatedString": {
+    "Original": "Origineel",
+    "ShowFullDescription": "Toon volledige beschrijving",
+    "Translated": "Vertaald"
+  },
+  "PlayList": {
+    "Autoplay": "Automatisch afspelen",
+    "AutoplayNote": "Automatisch afspelen is alleen ondersteund voor YouTube en SoundCloud",
+    "NextSong": "Volgend nummer",
+    "Shuffle": "Willekeurige volgorde"
+  }
+}

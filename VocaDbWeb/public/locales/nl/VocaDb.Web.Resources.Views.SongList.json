@@ -1,0 +1,31 @@
+{
+  "Import": {
+    "Accept": "Accepteer",
+    "InvalidUrlError": "Zorg dat de URL geldig is en naar een NicoNico MyList, RSS-feed of een YouTube playlist verwijst.",
+    "ItemsLoaded": "ingeladen",
+    "ListDescription": "Beschrijving",
+    "ListName": "Naam",
+    "LoadMoreHelp": "(Klik op \"Meer tonen\" om meer nummers in de lijst te laden.)",
+    "MylistDescription": "Lijsteigenschappen",
+    "NicoPV": "Geïmporteerde promotievideo",
+    "OnlyRanked": "Alleen gerangschikte nummers weergeven (uit de NicoNico ranglijsten)",
+    "Order": "Volgorde",
+    "ParseAll": "Alle nummers in de lijst opnemen (niet alleen de gerangschikte)",
+    "Process": "Verwerk",
+    "SongMissing": "ONTBREEKT",
+    "SongsInList": "Nummers in de lijst",
+    "SongsMissingError": "Sommige van deze nummers ontbreken in VocaDB. Je moet alle nummers aan de database toevoegen voordat je ze in de lijst kunt zetten.",
+    "Submit": "Indienen",
+    "Title": "Nummerlijst maken van een NicoNico MyList of YouTube playlist",
+    "TotalSongs": "Totaal aantal nummers",
+    "UnableToParse": "Kan lijst niet verwerken",
+    "UrlDescription": "Kan een NicoNico MyList zijn, bijvoorbeeld http://www.nicovideo.jp/mylist/1234567, of een YouTube playlist, bijvoorbeeld https://www.youtube.com/playlist?list=MIKUMIKU3939 zijn",
+    "UrlLabel": "Playlist/MyList URL",
+    "VocaDbEntry": "VocaDB nummerbijdrage"
+  },
+  "SongListSortRuleNames": {
+    "CreateDate": "Aanmaakdatum",
+    "Date": "Evenementsdatum",
+    "Name": "Naam"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "Details": {
+    "Address": "Adres",
+    "Aliases": "Aliassen",
+    "Country": "Land/Regio",
+    "Venue": "Locatie"
+  },
+  "Edit": {
+    "Address": "Adres",
+    "Coordinates": "Coördinaten",
+    "Country": "Land/Regio",
+    "Latitude": "Breedtegraad",
+    "Location": "Locatie",
+    "Longitude": "Lengtegraad"
+  }
+}

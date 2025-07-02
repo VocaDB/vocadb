@@ -1,0 +1,35 @@
+{
+  "Details": {
+    "Date": "Datum: {{0}}.",
+    "DefaultSortRule": "Standaard",
+    "Details": "Details",
+    "Events": "Evenementen",
+    "Export": "Exporteer",
+    "Playlist": "Afspeellijst",
+    "Preview": "Voorbeeld",
+    "ShowTags": "Toon tags",
+    "SongList": "Nummerlijst",
+    "Songs": "nummer(s)"
+  },
+  "Edit": {
+    "AddSong": "Voeg nummer toe",
+    "ConfirmDelete": "Weet je zeker dat je deze lijst wilt verwijderen?",
+    "CreateTitle": "Maak een nummerlijst",
+    "Description": "Beschrijving",
+    "EditTitle": "Bewerk lijst - {{0}}",
+    "EventDate": "Evenementsdatum",
+    "EventDateHelp": "Als deze lijst gerelateerd is aan een evenement zoals een concert of ranglijst kan de datum van dit evenement hier ingevuld worden.",
+    "FeaturedCategory": "Uitgelichte categorie",
+    "Name": "Naam",
+    "RemoveFromList": "Verwijderen uit lijst",
+    "Status": "Status van melding",
+    "TabProperties": "Eigenschappen",
+    "TabSongs": "Nummers",
+    "Thumbnail": "Thumbnail",
+    "UnableToSave": "Kan lijst niet opslaan"
+  },
+  "Featured": {
+    "Import": "Importeer vanuit YouTube of NicoNico",
+    "SortBy": "Sorteren op"
+  }
+}

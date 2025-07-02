@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Utaites en andere artiesten geassocieerd met dit album.",
+    "NewAlbumInfo": "Het album moet minstens één nummer met een utaite hebben om toegestaan te zijn op UtaiteDB. Onofficiële fan-gemaakte compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "UtaiteDB account",
+    "NewArtistExternalLink": "Externe link (naar de website van de artiest, Utaite wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "VocaDB is een Vocaloid muziekdatabase met gedetailleerde informatie voor artiesten, albums en nummers.",
+    "Welcome": "Welkom bij de Utaite Database!",
+    "WelcomeSubtitle": "De database met utaite artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
+  },
+  "LayoutRes": {
+    "Keywords": "Utaite, UtaiteDB, Utaite database",
+    "PaypalDonateTitle": "UtaiteDB is een non-profit project. Al het geld zal worden gebruikt voor verdere ontwikkeling van de website, hostingkosten en softwarelicenties.",
+    "SiteName": "UtaiteDB",
+    "SiteTitle": "Utaite Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Zorg ervoor dat het nummer dat je toevoegt nog niet eerder toegevoegd is. Je moet op zijn minst één naam en artiest toevoegen. Een link naar de originele video is zeer wenselijk.",
+    "RankingsTitle": "UtaiteDB nummerranglijsten"
+  }
+}

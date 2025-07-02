@@ -1,0 +1,320 @@
+{
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oudste",
+    "CreateDateDescending": "Nieuwste"
+  },
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Automatisch toegevoegd",
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Merged": "Vanaf een andere bijdrage samengevoegd",
+    "PropertiesUpdated": "Eigenschappen bijgewerkt",
+    "Restored": "Hersteld",
+    "Reverted": "Ongedaan gemaakt",
+    "Unknown": "Onbekend"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Geen",
+    "Ordered": "Besteld",
+    "Owned": "In bezit",
+    "Wishlisted": "Op wensenlijst"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Artiesten",
+    "Cover": "Cover",
+    "Description": "Beschrijving",
+    "DiscType": "Albumtype",
+    "Names": "Namen",
+    "Nothing": "Geen",
+    "OriginalName": "Oorspronkelijke naam",
+    "OriginalRelease": "Oorspronkelijke versie",
+    "Pictures": "Afbeeldingen",
+    "PVs": "Promotievideo's",
+    "Status": "Status",
+    "Tracks": "Tracks",
+    "WebLinks": "Externe links",
+    "Barcode": "Streepjescode",
+    "Identifiers": "Identificeerders",
+    "Discs": "CD's"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Digitale download",
+    "Other": "Ongespecificeerd",
+    "PhysicalDisc": "Fysieke CD"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Toevoegingsdatum",
+    "CollectionCount": "Aantal keer aan verzameling toegevoegd",
+    "Name": "Naam",
+    "RatingAverage": "Gemiddelde beoordeling",
+    "RatingTotal": "Totale score",
+    "ReleaseDate": "Publicatiedatum"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Merged": "Vanaf een andere bijdrage samengevoegd",
+    "PropertiesUpdated": "Eigenschappen bijgewerkt",
+    "Restored": "Hersteld",
+    "Reverted": "Naar een eerdere versie teruggezet",
+    "Unknown": "Onbekend"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Albums",
+    "ArtistType": "Soort artiest",
+    "BaseVoicebank": "Basisvoicebank",
+    "Description": "Beschrijving",
+    "Groups": "Groepen",
+    "Names": "Namen",
+    "Nothing": "Geen",
+    "OriginalName": "Oorspronkelijke naam",
+    "Picture": "Hoofdafbeelding",
+    "Pictures": "Afbeeldingen",
+    "ReleaseDate": "Voicebank publicatiedatum",
+    "Status": "Status",
+    "WebLinks": "Externe links"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Animator",
+    "Arranger": "Arrangeur",
+    "Chorus": "Koor",
+    "Composer": "Componist",
+    "Default": "Standaard",
+    "Distributor": "Distributeur",
+    "Encoder": "Encoder",
+    "Illustrator": "Illustrator",
+    "Instrumentalist": "Instrumentalist",
+    "Lyricist": "Tekstschrijver",
+    "Mastering": "Mastering",
+    "Mixer": "Mixer",
+    "Other": "Overig",
+    "Publisher": "Publicist",
+    "VocalDataProvider": "Stemdataprovider",
+    "Vocalist": "Vocalist",
+    "VoiceManipulator": "Stemmanipulator"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Toevoegingsdatum (aflopend)",
+    "AdditionDateAsc": "Toevoegingsdatum (oplopend)",
+    "FollowerCount": "Aantal volgers",
+    "Name": "Naam",
+    "ReleaseDate": "Voicebank publicatiedatum",
+    "SongCount": "Aantal nummers",
+    "SongRating": "Totale beoordeling van het nummer"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oudste",
+    "CreateDateDescending": "Nieuwste"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "Deze bijdrage is verwijderd. Het is nog tijdelijk toegankelijk, maar het zal in geen enkele lijst zichtbaar zijn.",
+    "EntryMergedTo": "Deze bijdrage is samengevoegd met",
+    "EntryStatusExplanation": "Concept = bijdrage die cruciale informatie mist. Deze status geeft aan dat je om aanvullende informatie vraagt.<br />\nAfgerond = De bijdrage heeft alle verplichte informatie, maar is nog niet bekeken door een vertrouwde gebruiker.<br />\nGoedgekeurd = De bijdrage is geïnspecteerd en goedgekeurd door een vertrouwde gebruiker. Goedgekeurde bijdragen kunnen alleen door vertrouwde gebruikers bewerkt worden.",
+    "Locked": "Deze bijdrage is vergrendeld, wat betekent dat alleen moderators deze bijdrage kunnen bewerken.",
+    "NameLanguageHelp": "Kies de taal voor deze naam. \"Oorspronkelijk\" is de naam in de oorspronkelijke taal die niet Engels is, bijvoorbeeld Japans. Als de originele taal Engels is, vul dan geen naam in bij \"Oorspronkelijk\".",
+    "RevisionHidden": "Deze paginaherziening is verborgen."
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Oorspronkelijk",
+    "English": "Engels",
+    "Japanese": "Niet-Engels",
+    "Romaji": "Geromaniseerd",
+    "Unspecified": "Ongespecificeerd"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "Album dat voornamelijk bestaat uit eerder niet gepubliceerde nummers.",
+    "Compilation": "Verzameling van eerder uitgebrachte nummers, verzameld van één of meer eerdere albums. Bijvoorbeeld \"best of\" verzamelingen.",
+    "EP": "Betekent extended play. Heeft 3-4 individuele tracks. Alternatieve versies (instrumentale versies en remixes) worden meestal niet meegeteld.",
+    "Other": "Voor albums die niet in de bovenstaande categorieën passen.",
+    "Single": "Heeft één of twee individuele tracks. Alternatieve versies (instrumentale versies en remixes) worden meestal niet meegeteld.",
+    "SplitAlbum": "Samenwerking tussen twee of meer (maar meestal twee) gelijkwaardige artiesten, waarin alle artiesten ongeveer hetzelfde aantal nummers hebben.",
+    "Video": "Disc met voornamelijk muziekvideo's, meestal een DVD of blu-ray."
+  },
+  "EntryEditEventNames": {
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Restored": "Hersteld",
+    "Updated": "Bijgewerkt"
+  },
+  "EntryStatusNames": {
+    "Approved": "Goedgekeurd",
+    "Draft": "Concept",
+    "Finished": "Afgerond",
+    "Locked": "Vergrendeld"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Ga naar beheermenu",
+    "Admin": "Database admintaken",
+    "AddRawFileMedia": "Voeg onbewerkte media toe",
+    "ApplyAnyTag": "Voeg een tag toe aan bijdrage",
+    "ApproveEntries": "Keur bijdragen goed",
+    "BulkDeletePVs": "Verwijder promotievideo's in bulk",
+    "CreateComments": "Stel opmerkingen op",
+    "DeleteComments": "Verwijder opmerkingen",
+    "DeleteEntries": "Verwijder bijdragen",
+    "DesignatedStaff": "Toegewezen teamlid",
+    "DisableUsers": "Schakel gebruikers uit",
+    "EditAllSongLists": "Alle nummerlijsten bewerken",
+    "EditFeaturedLists": "Beheer uitgelichte nummerlijsten",
+    "EditNews": "Beheer nieuws",
+    "EditProfile": "Bewerk persoonlijk profiel",
+    "EditTags": "Bewerk tags",
+    "LockEntries": "Vergrendel bijdragen",
+    "ManageDatabase": "Beheer database",
+    "ManageEntryReports": "Beheer bijdragemeldingen",
+    "ManageEventSeries": "Beheer evenementsreeks",
+    "ManageIPRules": "Beheer IP regels",
+    "ManageUserPermissions": "Beheer gebruikersrechten",
+    "MergeEntries": "Voeg bijdragen samen",
+    "MikuDbImport": "Importeer album",
+    "MoveToTrash": "Naar prullenbak verplaatsen",
+    "Nothing": "Geen",
+    "ReadRecentComments": "Lees recente opmerkingen",
+    "RemoveEditPermission": "Verwijder rechten voor het bewerken van de database",
+    "RemoveTagUsages": "Verwijder taggebruik",
+    "RestoreRevisions": "Herstel herziening",
+    "UploadMedia": "Upload eigen media",
+    "ViewAuditLog": "Bekijk evenementenlogboek",
+    "ViewHiddenRatings": "Bekijk verborgen beoordelingen",
+    "ViewHiddenRevisions": "Bekijk verborgen herzieningen",
+    "ManageWebhooks": "Beheer webhooks",
+    "CreateDatabaseDump": "Maak database dump aan"
+  },
+  "PVTypeDescriptions": {
+    "Original": "Origineel (officiële/geautoriseerde upload)",
+    "Other": "Overig",
+    "Reprint": "Herdruk (van elders gekopiëerd)"
+  },
+  "PVTypeNames": {
+    "Original": "Origineel",
+    "Other": "Overig",
+    "Reprint": "Herdruk"
+  },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Beoordelingsdatum"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Artists": "Artiesten",
+    "Category": "Categorie",
+    "Date": "Datum",
+    "Description": "Beschrijving",
+    "MainPicture": "Hoofdafbeelding",
+    "Names": "Namen",
+    "OriginalName": "Standaard naamtaal",
+    "PVs": "Promotievideo's",
+    "Series": "Reeks",
+    "SeriesNumber": "Reeksnummer",
+    "SeriesSuffix": "Reeksachtervoegsel",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Locatie",
+    "VenueName": "Locatienaam",
+    "WebLinks": "Externe links"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Automatisch toegevoegd",
+    "Created": "Aangemaakt",
+    "Deleted": "Verwijderd",
+    "Merged": "Vanaf een andere bijdrage samengevoegd",
+    "PropertiesUpdated": "Eigenschappen bijgewerkt",
+    "Restored": "Hersteld",
+    "Reverted": "Ongedaan gemaakt",
+    "Unknown": "Onbekend"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Artiesten",
+    "Groups": "Groepen",
+    "Length": "Tijdsduur",
+    "Lyrics": "Tekst",
+    "Names": "Namen",
+    "Notes": "Beschrijving",
+    "Nothing": "Geen",
+    "OriginalName": "Oorspronkelijke naam",
+    "OriginalVersion": "Originele versie",
+    "PublishDate": "Publicatiedatum",
+    "PVs": "Promotievideo's",
+    "SongType": "Nummertype",
+    "Status": "Status",
+    "WebLinks": "Externe links",
+    "ReleaseEvent": "Publicatiegebeurtenis",
+    "ReleaseEvents": "Publicatiegebeurtenissen",
+    "Bpm": "BPM",
+    "CultureCodes": "Talen"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Beschrijving",
+    "EventDate": "Evenementsdatum",
+    "FeaturedCategory": "Uitgelichte categorie",
+    "Name": "Naam",
+    "Songs": "Nummers",
+    "Status": "Status",
+    "Thumbnail": "Thumbnail"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Concert setlijsten",
+    "Nothing": "Geen",
+    "Other": "Overig",
+    "Pools": "Pools",
+    "VocaloidRanking": "Vocaloid ranglijsten"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Toevoegingsdatum",
+    "FavoritedTimes": "Aantal keer gefavoriet",
+    "Name": "Naam",
+    "None": "Geen",
+    "PublishDate": "Publicatiedatum",
+    "RatingScore": "Beoordelingsscore",
+    "TagUsageCount": "Aantal tags"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Favoriet",
+    "Like": "Vind ik leuk"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "Alias leidt naar",
+    "CategoryName": "Categorie",
+    "Description": "Beschrijving",
+    "HideFromSuggestions": "Verbergen in suggesties",
+    "Names": "Namen",
+    "OriginalName": "Standaard naamtaal",
+    "Parent": "Bovenliggend",
+    "Picture": "Afbeelding",
+    "RelatedTags": "Gerelateerde tags",
+    "Status": "Status",
+    "Targets": "Doelen",
+    "WebLinks": "Externe links"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "Geen privéberichten",
+    "PrivateMessagesFromAdmins": "Privéberichten van beheerders",
+    "PrivateMessagesFromAll": "Privéberichten van iedereen"
+  },
+  "UserGroupNames": {
+    "Admin": "Beheerder",
+    "Limited": "Gebruiker met beperkte rechten",
+    "Moderator": "Moderator",
+    "Nothing": "Geen",
+    "Regular": "Reguliere gebruiker",
+    "Trusted": "Vertrouwde gebruiker"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Adres",
+    "AddressCountryCode": "Land/Regio",
+    "Coordinates": "Coördinaten",
+    "Description": "Beschrijving",
+    "Names": "Namen",
+    "OriginalName": "Standaard naamtaal",
+    "Status": "Status",
+    "WebLinks": "Externe links"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Commercieel",
+    "Official": "Officieel",
+    "Other": "Overig",
+    "Reference": "Referentie"
+  }
+}
