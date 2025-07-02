@@ -76,6 +76,12 @@ const AdminIndex = (): React.ReactElement => {
 				</p>
 			)}
 
+			{loginManager.canCreateDatabaseDump && (
+				<p>
+					<a href="/Admin/CreateJsonDump">Create JSON dump{/* LOC */}</a>
+				</p>
+			)}
+
 			<br />
 
 			{loginManager.canAdmin && (
@@ -84,9 +90,6 @@ const AdminIndex = (): React.ReactElement => {
 					<p>
 						<Link to="/Admin/ActiveEdits">View active editors</Link>
 						{/* LOC */}
-					</p>
-					<p>
-						<a href="/Admin/CreateJsonDump">Create JSON dump{/* LOC */}</a>
 					</p>
 					<p>
 						<a href="/Admin/RefreshDbCache">

@@ -638,17 +638,17 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			{
 				ArtistMatches =
 					albums.ArtistMatches
-					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, _imageUrlFactory, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				LikeMatches =
 					albums.LikeMatches
-					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, _imageUrlFactory, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray(),
 				TagMatches =
 					albums.TagMatches
-					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, null, fields, SongOptionalFields.None))
+					.Select(a => new AlbumForApiContract(a, null, language, PermissionContext, _imageUrlFactory, fields, SongOptionalFields.None))
 					.OrderBy(a => a.Name)
 					.ToArray()
 			};
