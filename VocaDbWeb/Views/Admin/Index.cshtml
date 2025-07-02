@@ -43,6 +43,13 @@
 @if (UserContext.HasPermission(PermissionToken.ManageWebhooks)) {
 <p><a asp-action="ManageWebhooks">Manage webhooks</a></p>
 }
+
+@if (UserContext.HasPermission(PermissionToken.CreateDatabaseDump)) {
+<p>
+	<a asp-action="CreateJsonDump">@("Create JSON dump")</a>
+</p>
+}
+
 <br />
 
 @if (UserContext.HasPermission(PermissionToken.Admin)) {
@@ -50,9 +57,6 @@
 <p>
 	<a asp-action="ActiveEdits">@("View active editors")</a>	
 </p>
-<p>
-	<a asp-action="CreateJsonDump">@("Create JSON dump")</a>
-</p>	
 <p>
 	<a asp-action="RefreshDbCache">@("Refresh NHibernate 2nd level cache")</a>
 </p>
