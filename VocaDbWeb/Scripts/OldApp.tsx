@@ -56,7 +56,7 @@ const AppContainer = (): React.ReactElement => {
 							.startsWith('tetodb') && <TetoDB />}
 						{vdb.values.loggedUser?.stylesheet
 							.toLowerCase()
-							.startsWith('tetodb') && <Pride />}
+							.startsWith('Pride') && <Pride />}
 					</>
 				)}
 				{/* TODO: Make this properly configurable */}
