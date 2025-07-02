@@ -20,6 +20,7 @@ import './performance-tracing';
 const TouhouDB = React.lazy(() => import('./styles/touhoudb'));
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
+const Pride = React.lazy(() => import('./styles/pride'));
 const DarkAngel = React.lazy(() => import('./styles/darkAngel'));
 
 const AppContainer = (): React.ReactElement => {
@@ -53,6 +54,9 @@ const AppContainer = (): React.ReactElement => {
 						{vdb.values.loggedUser?.stylesheet
 							.toLowerCase()
 							.startsWith('tetodb') && <TetoDB />}
+						{vdb.values.loggedUser?.stylesheet
+							.toLowerCase()
+							.startsWith('tetodb') && <Pride />}
 					</>
 				)}
 				{/* TODO: Make this properly configurable */}
