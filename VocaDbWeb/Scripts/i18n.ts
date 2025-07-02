@@ -9,7 +9,7 @@ i18n
 	.use(initReactI18next)
 	.init({
 		load: 'all',
-		fallbackLng: 'nl',
+		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,
 		},
@@ -23,15 +23,15 @@ i18n
 				{
 					expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
 					versions: {
-						de: 'v1.18',
-						es: 'v1.14',
-						fi: 'v1.15',
-						ja: 'v1.17',
-						en: 'v1.21',
-						ru: 'v1.15',
-						ko: 'v1.12',
-						nl: 'v1.1',
-						quc: 'v1.10',
+						de: 'v1.19',
+						es: 'v1.15',
+						fi: 'v1.16',
+						ja: 'v1.18',
+						en: 'v1.22',
+						ru: 'v1.16',
+						ko: 'v1.13',
+						nl: 'v1.2',
+						quc: 'v1.11',
 					},
 				},
 			],
