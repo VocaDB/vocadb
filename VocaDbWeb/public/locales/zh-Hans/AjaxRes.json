@@ -14,7 +14,7 @@
     "TitleFilter": "标题：'{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "添加名为'{0}'的艺术家",
+    "AddExtraArtist": "添加名为'{0}'的艺人",
     "ReportSent": "报告已发送。谢谢你！",
     "Save": "保存",
     "ThanksForRating": "感谢你的评分！",
@@ -22,8 +22,8 @@
   },
   "Song": {
     "AddedToList": "添加到列表",
-    "ArtistFilter": "艺术家：'{{0}}'",
-    "OnlyWithPVsFilter": "仅PV",
+    "ArtistFilter": "艺人'{{0}}'",
+    "OnlyWithPVsFilter": "仅 PV",
     "SinceFilter": "新于{{0}}",
     "SongTypeFilter": "曲目类型：'{{0}}'",
     "ThanksForRating": "感谢评分！"
