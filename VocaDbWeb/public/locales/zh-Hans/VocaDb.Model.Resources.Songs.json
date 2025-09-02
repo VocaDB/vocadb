@@ -1,12 +1,12 @@
 {
   "SongTypeNames": {
-    "Arrangement": "重编曲",
-    "Cover": "翻唱曲",
+    "Arrangement": "编曲",
+    "Cover": "翻唱",
     "DramaPV": "短剧PV",
     "Illustration": "插画",
     "Instrumental": "器乐",
     "Live": "现场录音",
-    "Mashup": "混搭曲",
+    "Mashup": "混搭",
     "MusicPV": "音乐 PV",
     "Original": "原创曲",
     "Other": "其他",
