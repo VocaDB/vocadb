@@ -4,16 +4,16 @@
     "Cover": "翻唱曲",
     "DramaPV": "短剧PV",
     "Illustration": "插画",
-    "Instrumental": "纯乐器",
+    "Instrumental": "器乐",
     "Live": "现场录音",
     "Mashup": "混搭曲",
-    "MusicPV": "音乐PV",
+    "MusicPV": "音乐 PV",
     "Original": "原创曲",
     "Other": "其他",
-    "Remaster": "Remaster",
-    "Remix": "Remix",
+    "Remaster": "重制作",
+    "Remix": "重混音",
     "Unspecified": "未指定",
-    "Rearrangement": "二次重编曲",
+    "Rearrangement": "重编曲",
     "ShortVersion": "简短版本"
   }
 }
