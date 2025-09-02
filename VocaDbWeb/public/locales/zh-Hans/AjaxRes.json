@@ -3,7 +3,7 @@
     "AddedToCollection": "已添加到收藏。",
     "AddToTracks": "添加到曲目列表",
     "RemoveFromTracks": "从曲目列表中移除",
-    "AddNewSong": "添加名为'{{0}}'的新曲目",
+    "AddNewSong": "添加名为'{{0}}'的新歌曲",
     "Download": "下载"
   },
   "EntryIndex": {
@@ -23,9 +23,9 @@
   "Song": {
     "AddedToList": "添加到列表",
     "ArtistFilter": "艺人'{{0}}'",
-    "OnlyWithPVsFilter": "仅 PV",
+    "OnlyWithPVsFilter": "仅 PVs",
     "SinceFilter": "新于{{0}}",
-    "SongTypeFilter": "曲目类型：'{{0}}'",
+    "SongTypeFilter": "歌曲类型'{{0}}'",
     "ThanksForRating": "感谢评分！"
   }
 }
