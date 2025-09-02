@@ -68,7 +68,7 @@
     "ReportSpamming": "举报用户刷屏",
     "SetAvatar": "于gravatar.com设置你的头像",
     "SomeAlbumsILike": "我喜欢的专辑",
-    "SomeArtistsIFollow": "我关注的艺术家",
+    "SomeArtistsIFollow": "我关注的一些艺术家",
     "SomeSongsILike": "我喜欢的歌曲",
     "Staff": "员工",
     "StatsTab": "统计数据",
@@ -108,7 +108,7 @@
     "Group": "组",
     "KnowsLanguage": "已知的语言",
     "ShowDisabledUsers": "显示已停用账户",
-    "VerifiedArtists": "艺术家账户"
+    "VerifiedArtists": "艺人账号"
   },
   "Login": {
     "DoLogin": "登录",
