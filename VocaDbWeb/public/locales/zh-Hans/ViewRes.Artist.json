@@ -1,17 +1,17 @@
 {
   "Create": {
-    "AddArtist": "添加艺术家",
+    "AddArtist": "添加艺人",
     "ArtistInfo": "请确保您要提交的条目以前未被添加。你至少需要输入一个名称。你还需要输入描述或外部链接以供参考。",
-    "ArtistType": "艺术家类型",
-    "Description": "请填写关于这位艺术家的简短描述（非强制，但推荐填写）",
+    "ArtistType": "艺人类型",
+    "Description": "请填写关于这位艺人的简短描述（可选，但推荐填写）",
     "Draft": "此条目是草稿。",
-    "ExternalLink": "外部链接（艺术家网站、Hatsune Miku wiki、NND MyList等）",
+    "ExternalLink": "外部链接（艺人网站、Hatsune Miku wiki、NND MyList 等）",
     "Name": "名称（至少需要一个）",
     "NameHelp": "如果条目有一个非英语（例如日语）名称，或如果名称的语言不详，请输入非英文名称字段。如果已知，请同时输入罗马文的名称。 如果该条目的正式名称是英文，或有已知的英文译文，则输入英文字段。",
     "NeedWebLinkOrDescription": "你需要输入描述或外部链接。",
     "Optional": "（选填）",
     "Picture": "图片",
-    "UnableToCreateArtist": "无法创建艺术家。请更正错误并重试。",
+    "UnableToCreateArtist": "无法创建艺人。更正错误并重试。",
     "WebLinkCategory": "类别",
     "WebLinkDescription": "描述",
     "WebLinkURL": "网址"
@@ -19,8 +19,8 @@
   "Details": {
     "AllAlbums": "全部专辑",
     "AllSongs": "全部歌曲",
-    "ArtistDetails": "艺术家",
-    "ArtistPicture": "艺术家图片",
+    "ArtistDetails": "艺人",
+    "ArtistPicture": "艺人图片",
     "AverageAlbumRating": "（专辑平均得分为{{0}}。）",
     "BaseVoicebank": "基础声库",
     "CharacterDesigner": "角色设计师",
@@ -63,10 +63,10 @@
     "ViewModeTiles": "缩略图",
     "VoiceProvider": "声源提供者",
     "VoiceProviderOf": "声源提供者：",
-    "YouHaveRatedSongs": "您已经评分了{{0}}首这位艺术家的歌曲。"
+    "YouHaveRatedSongs": "您已经评分了{{0}}首这位艺人的歌曲。"
   },
   "Edit": {
-    "BaArtistType": "艺术家类型",
+    "BaArtistType": "艺人类型",
     "BaBaseVoicebank": "基础声库",
     "BaDescription": "描述",
     "BaGroups": "所属团体/圈子",
@@ -74,10 +74,10 @@
     "BaNames": "主要名称（至少用一种语言填写）",
     "BaPictureInfo": "允许的类型：{{0}}。大小上限：{{1}}MB。",
     "BaReleaseDate": "声库发行日期",
-    "EditTitle": "编辑艺术家 - {{0}}",
+    "EditTitle": "编辑艺人 - {{0}}",
     "PiAdd": "添加",
     "PiPictureDescription": "图片描述",
-    "PiPicturesNote": "请只上传这位艺术家的相关图片，不要上传不相干的图片。",
+    "PiPicturesNote": "请只上传这位艺人的相关图片，不要上传别的。",
     "TabAdditionalPictures": "其他图片"
   }
 }
