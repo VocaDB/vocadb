@@ -24,7 +24,7 @@
     "Video": "视频"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "艺术家",
+    "Artists": "艺人",
     "Cover": "封面",
     "Description": "描述",
     "DiscType": "专辑类型",
@@ -65,7 +65,7 @@
   },
   "ArtistEditableFieldNames": {
     "Albums": "专辑",
-    "ArtistType": "艺术家",
+    "ArtistType": "艺人类型",
     "BaseVoicebank": "基础声库",
     "Description": "描述",
     "Groups": "分组",
@@ -131,7 +131,7 @@
     "EP": "迷你专辑。包含三至四首单曲。不包括另类版本（器乐版和Remix）。",
     "Other": "不符合上述任何内容的专辑。",
     "Single": "包含一至两首单曲。不计入另类版本（器乐版和重混版）。",
-    "SplitAlbum": "两位或两位以上（但通常只是两位）平等艺术家之间的合作，所有艺术家的曲目数量大致相同。",
+    "SplitAlbum": "两位或两位以上（但通常只是两位）能力相当的艺人之间的合作，所有艺人的曲目数量大致相同。",
     "Video": "主要含有音乐视频的光盘，通常是DVD或者蓝光碟。"
   },
   "EntryEditEventNames": {
@@ -198,7 +198,7 @@
     "RatingDate": "评分日期"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "艺术家",
+    "Artists": "艺人",
     "Category": "类别",
     "Date": "日期",
     "Description": "描述",
@@ -226,7 +226,7 @@
     "Unknown": "未知"
   },
   "SongEditableFieldNames": {
-    "Artists": "艺术家",
+    "Artists": "艺人",
     "Groups": "分组",
     "Length": "时长",
     "Lyrics": "歌词",
