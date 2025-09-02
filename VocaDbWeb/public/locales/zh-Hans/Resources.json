@@ -103,8 +103,8 @@
     "FollowerCount": "粉丝数量",
     "Name": "名称",
     "ReleaseDate": "声库发行日期",
-    "SongCount": "曲目数量",
-    "SongRating": "曲目总评分"
+    "SongCount": "歌曲数量",
+    "SongRating": "歌曲总评分"
   },
   "CommentSortRuleNames": {
     "CreateDate": "最旧的",
