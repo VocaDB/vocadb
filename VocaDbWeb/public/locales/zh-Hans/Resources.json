@@ -15,7 +15,7 @@
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "无",
-    "Ordered": "排序的",
+    "Ordered": "已订购",
     "Owned": "已拥有",
     "Wishlisted": "愿望单"
   },
@@ -30,7 +30,7 @@
     "DiscType": "专辑类型",
     "Names": "名称",
     "Nothing": "无",
-    "OriginalName": "原名",
+    "OriginalName": "原名称",
     "OriginalRelease": "原发行",
     "Pictures": "图片",
     "PVs": "PV",
@@ -55,12 +55,12 @@
     "ReleaseDate": "发行日期"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "创建",
-    "Deleted": "删除",
-    "Merged": "与另一条目合并",
-    "PropertiesUpdated": "更新属性",
-    "Restored": "还原",
-    "Reverted": "恢复到较早的版本",
+    "Created": "已创建",
+    "Deleted": "已删除",
+    "Merged": "从另一条目合并",
+    "PropertiesUpdated": "已更新属性",
+    "Restored": "已复原",
+    "Reverted": "已回退到较早版本",
     "Unknown": "未知"
   },
   "ArtistEditableFieldNames": {
