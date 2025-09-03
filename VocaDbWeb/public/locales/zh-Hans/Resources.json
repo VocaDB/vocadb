@@ -127,11 +127,11 @@
   },
   "DiscTypeDescriptions": {
     "Album": "主要收录以前未发布歌曲的专辑。",
-    "Compilation": "发行歌曲的合辑，收集于一张或多张早期专辑。例如，“best of\"之类的合辑。",
+    "Compilation": "已发布歌曲的合集，选自一张或多张早期专辑。例如，“best of”合集。",
     "EP": "迷你专辑。包含三至四首单曲。不包括另类版本（器乐版和Remix）。",
     "Other": "不符合上述任何内容的专辑。",
     "Single": "包含一至两首单曲。不计入另类版本（器乐版和重混版）。",
-    "SplitAlbum": "两位或两位以上（但通常只是两位）能力相当的艺人之间的合作，所有艺人的曲目数量大致相同。",
+    "SplitAlbum": "两位或多位（但通常只有两位）同等水平的艺人之间的合作，其中所有艺人的歌曲数量大致相同。",
     "Video": "主要含有音乐视频的光盘，通常是DVD或者蓝光碟。"
   },
   "EntryEditEventNames": {
@@ -158,8 +158,8 @@
     "DeleteEntries": "删除条目",
     "DesignatedStaff": "指派工作人员",
     "DisableUsers": "停用用户",
-    "EditAllSongLists": "编辑全部曲目列表",
-    "EditFeaturedLists": "管理精选曲目列表",
+    "EditAllSongLists": "编辑所有歌单",
+    "EditFeaturedLists": "管理精选歌单",
     "EditNews": "管理新消息",
     "EditProfile": "编辑个人资料",
     "EditTags": "编辑标签",
@@ -217,11 +217,11 @@
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自动导入",
-    "Created": "创建",
-    "Deleted": "删除",
-    "Merged": "与另一条目合并",
+    "Created": "已创建",
+    "Deleted": "已删除",
+    "Merged": "从另一条目合并",
     "PropertiesUpdated": "更新属性",
-    "Restored": "已还原",
+    "Restored": "已恢复",
     "Reverted": "已恢复",
     "Unknown": "未知"
   },
@@ -250,7 +250,7 @@
     "EventDate": "活动日期",
     "FeaturedCategory": "精选类别",
     "Name": "名称",
-    "Songs": "曲目",
+    "Songs": "歌曲",
     "Status": "状态",
     "Thumbnail": "缩略图"
   },
