@@ -21,10 +21,10 @@
     "UnableToSendReport": "无法发送报告。"
   },
   "Song": {
-    "AddedToList": "添加到列表",
+    "AddedToList": "已添加到歌单",
     "ArtistFilter": "艺人'{{0}}'",
     "OnlyWithPVsFilter": "仅 PVs",
-    "SinceFilter": "新于{{0}}",
+    "SinceFilter": "比{{0}}更新",
     "SongTypeFilter": "歌曲类型'{{0}}'",
     "ThanksForRating": "感谢评分！"
   }
