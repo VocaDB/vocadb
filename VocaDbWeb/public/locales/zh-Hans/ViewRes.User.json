@@ -1,12 +1,12 @@
 {
   "AlbumCollection": {
     "Album": "专辑",
-    "CollectionStatusAnything": "任意状态",
-    "CollectionWishedOrOrdered": "想要/已预订",
-    "MediaType": "形式",
+    "CollectionStatusAnything": "任意",
+    "CollectionWishedOrOrdered": "已想要或已订购",
+    "MediaType": "媒体类型",
     "Rating": "评分",
     "ReleaseDate": "发行日期",
-    "ReleaseEvent": "发售活动",
+    "ReleaseEvent": "发行活动",
     "Status": "收藏状态"
   },
   "Create": {
@@ -36,7 +36,7 @@
     "AdditionalPermissions": "其他权限",
     "ArtistVerificationPage": "艺人认证页面",
     "Attending": "正在参加",
-    "CollectionTab": "收藏夹",
+    "CollectionTab": "收藏",
     "Comments": "评论",
     "CommentsMade": "总评论数",
     "ComposeMessage": "写私信",
