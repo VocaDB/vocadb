@@ -79,6 +79,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'ba',
+		{
+			languages: ['Bashkir'],
+			nativeName: 'башҡортса',
+		},
+	],
+	[
 		'eu',
 		{
 			languages: ['Basque'],
@@ -906,6 +913,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	['txg', { languages: ['Tangut'], nativeName: '𗼇𗟲' }],
+	[
+		'tt',
+		{
+			languages: ['Tatar', 'Volga Tatar'],
+			nativeName: 'татарча',
+		},
+	],
 	[
 		'te',
 		{
