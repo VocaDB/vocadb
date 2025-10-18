@@ -1,12 +1,12 @@
 {
   "AlbumCollection": {
     "Album": "专辑",
-    "CollectionStatusAnything": "任意",
-    "CollectionWishedOrOrdered": "已想要或已订购",
-    "MediaType": "媒体类型",
+    "CollectionStatusAnything": "任意状态",
+    "CollectionWishedOrOrdered": "想要/已预订",
+    "MediaType": "形式",
     "Rating": "评分",
     "ReleaseDate": "发行日期",
-    "ReleaseEvent": "发行活动",
+    "ReleaseEvent": "发售活动",
     "Status": "收藏状态"
   },
   "Create": {
@@ -34,9 +34,9 @@
     "AccountDisabled": "此账户已被封禁",
     "Active": "可用",
     "AdditionalPermissions": "其他权限",
-    "ArtistVerificationPage": "艺人认证页面",
+    "ArtistVerificationPage": "艺术家验证页面",
     "Attending": "正在参加",
-    "CollectionTab": "收藏",
+    "CollectionTab": "收藏夹",
     "Comments": "评论",
     "CommentsMade": "总评论数",
     "ComposeMessage": "写私信",
@@ -49,7 +49,7 @@
     "Events": "活动",
     "FavoriteSongsTab": "喜欢的歌曲",
     "FavoriteTags": "我喜欢的标签",
-    "FollowedArtistsTab": "关注的艺人",
+    "FollowedArtistsTab": "关注的艺术家",
     "ImportSongList": "从Youtube或NicoNico导入",
     "Interested": "感兴趣",
     "KnownLanguagesMessage": "请让我们知道你熟悉的语言。你可以在<a>“我的设置”，“个人资料”</a>，“我知道的语言”中输入此信息。大家可以根据此信息来确定在需要时如何联系你。",
@@ -63,12 +63,12 @@
     "OldNameUntil": "（直到 {{0}}）",
     "OldUsernames": "原用户名",
     "Overview": "概览",
-    "PossibleProducerMessage": "您是否是从事 Vocaloid/UTAU 相关创作的艺人（如制作人、动画师或插画师）？\n若是，请参阅<a>艺人认证页面</a>。",
+    "PossibleProducerMessage": "你是否可能是一位为Voaloid/UTAU工作的艺术家（例如制作者、动画师或画师）？\n如果是，请查看<a>艺人验证页面</a>。",
     "Power": "经验值",
     "ReportSpamming": "举报用户刷屏",
     "SetAvatar": "于gravatar.com设置你的头像",
     "SomeAlbumsILike": "我喜欢的专辑",
-    "SomeArtistsIFollow": "我关注的一些艺术家",
+    "SomeArtistsIFollow": "我关注的艺术家",
     "SomeSongsILike": "我喜欢的歌曲",
     "Staff": "员工",
     "StatsTab": "统计数据",
@@ -108,7 +108,7 @@
     "Group": "组",
     "KnowsLanguage": "已知的语言",
     "ShowDisabledUsers": "显示已停用账户",
-    "VerifiedArtists": "艺人账号"
+    "VerifiedArtists": "艺术家账户"
   },
   "Login": {
     "DoLogin": "登录",
@@ -207,14 +207,14 @@
   },
   "RequestVerification": {
     "ArtistTitle": "你申请核实的条目名称：（必填）",
-    "Login": "登录",
-    "MessageTitle": "附加信息（可选）",
-    "NoPrivateMessage": "证明材料见以下 URL",
+    "Login": "登陆",
+    "MessageTitle": "其余信息：（选填）",
+    "NoPrivateMessage": "下方所填地址即证明材料",
     "NotLoggedInMessage": "抱歉，你只有在<1>登录</1>或<2>注册</2>后才能进行此操作。",
     "PageTitle": "申请账户认证",
-    "PrivateMessage": "我将通过私信提交证明材料",
+    "PrivateMessage": "证明材料将通过私信提交至管理员",
     "Send": "提交申请",
     "Signup": "注册",
-    "URL": "证明材料链接，例如一条推文（必填）"
+    "URL": "证明材料地址，如一条说明“VocaDb某目是我本人”的微博：（必填）"
   }
 }
