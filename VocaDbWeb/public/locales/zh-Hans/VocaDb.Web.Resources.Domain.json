@@ -1,12 +1,12 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "损坏的 PV",
+    "BrokenPV": "损坏的PV",
     "Duplicate": "重复条目",
     "Inappropriate": "不适当的内容",
     "InvalidInfo": "无效或缺少信息",
-    "InvalidTag": "无效的标签使用",
-    "MaliciousIP": "恶意 IP",
-    "Other": "其他（在备注中说明）",
+    "InvalidTag": "Invalid tag usage",
+    "MaliciousIP": "恶意IP",
+    "Other": "其他（在备注中具体说明）",
     "OwnershipClaim": "所有权认领",
     "RemovePermissions": "编辑受限",
     "Spamming": "刷屏"
