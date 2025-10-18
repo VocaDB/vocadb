@@ -15,7 +15,7 @@
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "无",
-    "Ordered": "已订购",
+    "Ordered": "排序的",
     "Owned": "已拥有",
     "Wishlisted": "愿望单"
   },
@@ -24,13 +24,13 @@
     "Video": "视频"
   },
   "AlbumEditableFieldNames": {
-    "Artists": "艺人",
+    "Artists": "艺术家",
     "Cover": "封面",
     "Description": "描述",
     "DiscType": "专辑类型",
     "Names": "名称",
     "Nothing": "无",
-    "OriginalName": "原名称",
+    "OriginalName": "原名",
     "OriginalRelease": "原发行",
     "Pictures": "图片",
     "PVs": "PV",
@@ -55,17 +55,17 @@
     "ReleaseDate": "发行日期"
   },
   "ArtistArchiveReasonNames": {
-    "Created": "已创建",
-    "Deleted": "已删除",
-    "Merged": "从另一条目合并",
-    "PropertiesUpdated": "已更新属性",
-    "Restored": "已复原",
-    "Reverted": "已回退到较早版本",
+    "Created": "创建",
+    "Deleted": "删除",
+    "Merged": "与另一条目合并",
+    "PropertiesUpdated": "更新属性",
+    "Restored": "还原",
+    "Reverted": "恢复到较早的版本",
     "Unknown": "未知"
   },
   "ArtistEditableFieldNames": {
     "Albums": "专辑",
-    "ArtistType": "艺人类型",
+    "ArtistType": "艺术家",
     "BaseVoicebank": "基础声库",
     "Description": "描述",
     "Groups": "分组",
@@ -103,8 +103,8 @@
     "FollowerCount": "粉丝数量",
     "Name": "名称",
     "ReleaseDate": "声库发行日期",
-    "SongCount": "歌曲数量",
-    "SongRating": "歌曲总评分"
+    "SongCount": "曲目数量",
+    "SongRating": "曲目总评分"
   },
   "CommentSortRuleNames": {
     "CreateDate": "最旧的",
@@ -126,12 +126,12 @@
     "Unspecified": "未定义"
   },
   "DiscTypeDescriptions": {
-    "Album": "主要收录以前未发布歌曲的专辑。",
-    "Compilation": "已发布歌曲的合集，选自一张或多张早期专辑。例如，“best of”合集。",
+    "Album": "由以前未发表的歌曲组成的专辑。",
+    "Compilation": "发行歌曲的合辑，收集于一张或多张早期专辑。例如，“best of\"之类的合辑。",
     "EP": "迷你专辑。包含三至四首单曲。不包括另类版本（器乐版和Remix）。",
     "Other": "不符合上述任何内容的专辑。",
     "Single": "包含一至两首单曲。不计入另类版本（器乐版和重混版）。",
-    "SplitAlbum": "两位或多位（但通常只有两位）同等水平的艺人之间的合作，其中所有艺人的歌曲数量大致相同。",
+    "SplitAlbum": "两位或两位以上（但通常只是两位）平等艺术家之间的合作，所有艺术家的曲目数量大致相同。",
     "Video": "主要含有音乐视频的光盘，通常是DVD或者蓝光碟。"
   },
   "EntryEditEventNames": {
@@ -158,8 +158,8 @@
     "DeleteEntries": "删除条目",
     "DesignatedStaff": "指派工作人员",
     "DisableUsers": "停用用户",
-    "EditAllSongLists": "编辑所有歌单",
-    "EditFeaturedLists": "管理精选歌单",
+    "EditAllSongLists": "编辑全部曲目列表",
+    "EditFeaturedLists": "管理精选曲目列表",
     "EditNews": "管理新消息",
     "EditProfile": "编辑个人资料",
     "EditTags": "编辑标签",
@@ -198,7 +198,7 @@
     "RatingDate": "评分日期"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "艺人",
+    "Artists": "艺术家",
     "Category": "类别",
     "Date": "日期",
     "Description": "描述",
@@ -217,16 +217,16 @@
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "自动导入",
-    "Created": "已创建",
-    "Deleted": "已删除",
-    "Merged": "从另一条目合并",
-    "PropertiesUpdated": "已更新属性",
-    "Restored": "已恢复",
+    "Created": "创建",
+    "Deleted": "删除",
+    "Merged": "与另一条目合并",
+    "PropertiesUpdated": "更新属性",
+    "Restored": "已还原",
     "Reverted": "已恢复",
     "Unknown": "未知"
   },
   "SongEditableFieldNames": {
-    "Artists": "艺人",
+    "Artists": "艺术家",
     "Groups": "分组",
     "Length": "时长",
     "Lyrics": "歌词",
@@ -235,9 +235,9 @@
     "Nothing": "无",
     "OriginalName": "原名",
     "OriginalVersion": "原版",
-    "PublishDate": "发布日期",
-    "PVs": "PVs",
-    "SongType": "歌曲类型",
+    "PublishDate": "发行日期",
+    "PVs": "PV",
+    "SongType": "曲目类型",
     "Status": "状态",
     "WebLinks": "外部链接",
     "ReleaseEvent": "发行活动",
@@ -250,7 +250,7 @@
     "EventDate": "活动日期",
     "FeaturedCategory": "精选类别",
     "Name": "名称",
-    "Songs": "歌曲",
+    "Songs": "曲目",
     "Status": "状态",
     "Thumbnail": "缩略图"
   },
