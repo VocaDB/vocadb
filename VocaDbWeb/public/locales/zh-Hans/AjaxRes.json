@@ -3,7 +3,7 @@
     "AddedToCollection": "已添加到收藏。",
     "AddToTracks": "添加到曲目列表",
     "RemoveFromTracks": "从曲目列表中移除",
-    "AddNewSong": "添加名为'{{0}}'的新歌曲",
+    "AddNewSong": "添加名为'{{0}}'的新曲目",
     "Download": "下载"
   },
   "EntryIndex": {
@@ -14,18 +14,18 @@
     "TitleFilter": "标题：'{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "添加名为'{0}'的自定义艺人",
+    "AddExtraArtist": "添加名为'{0}'的艺术家",
     "ReportSent": "报告已发送。谢谢你！",
     "Save": "保存",
     "ThanksForRating": "感谢你的评分！",
     "UnableToSendReport": "无法发送报告。"
   },
   "Song": {
-    "AddedToList": "已添加到歌单",
-    "ArtistFilter": "艺人'{{0}}'",
-    "OnlyWithPVsFilter": "仅 PVs",
-    "SinceFilter": "比{{0}}更新",
-    "SongTypeFilter": "歌曲类型'{{0}}'",
+    "AddedToList": "添加到列表",
+    "ArtistFilter": "艺术家：'{{0}}'",
+    "OnlyWithPVsFilter": "仅PV",
+    "SinceFilter": "新于{{0}}",
+    "SongTypeFilter": "曲目类型：'{{0}}'",
     "ThanksForRating": "感谢评分！"
   }
 }
