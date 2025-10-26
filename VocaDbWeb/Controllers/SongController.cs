@@ -193,17 +193,17 @@ public class SongController : ControllerBase
 
 		PermissionContext.VerifyPermission(PermissionToken.UploadMedia);
 
-		if (!LocalFileManager.MimeTypes.Contains(file.ContentType))
+		if (!S3FileManager.MimeTypes.Contains(file.ContentType))
 		{
 			return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Unsupported file type");
 		}
 
-		if (file.Length > LocalFileManager.MaxMediaSizeBytes)
+		if (file.Length > S3FileManager.MaxMediaSizeBytes)
 		{
 			return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File too large");
 		}
 
-		var pv = new LocalFileManager().CreatePVContract(new AspNetCoreHttpPostedFile(file), User.Identity, PermissionContext.LoggedUser);
+		var pv = new S3FileManager().CreatePVContract(new AspNetCoreHttpPostedFile(file), User.Identity, PermissionContext.LoggedUser);
 
 		return LowercaseJson(pv);
 	}

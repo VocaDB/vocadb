@@ -17,7 +17,7 @@ public class VideoServiceLocalFile : VideoService
 
 	public override string GetThumbUrlById(string id)
 	{
-		if (LocalFileManager.IsImage(id))
+		if (S3FileManager.IsImage(id))
 			return VocaUriBuilder.StaticResource("/media-thumb/" + id);
 		return string.Empty;
 	}

@@ -915,7 +915,7 @@ public class Song :
 			UpdatePublishDateFromPVs();
 		}
 
-		new LocalFileManager().SyncLocalFilePVs(result, Id);
+		new S3FileManager().SyncLocalFilePVs(result, Id);
 
 		return result;
 	}
