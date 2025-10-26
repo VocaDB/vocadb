@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Images
 
         private string GetKey(IEntryImageInformation picture, ImageSize size)
         {
-            return $"{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+            return $"{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
         }
 
         public S3EntryImagePersister()
@@ -48,8 +48,8 @@ namespace VocaDb.Model.Domain.Images
             {
                 ServiceURL = string.IsNullOrEmpty(_awsEndpoint) ? null : _awsEndpoint,
                 ForcePathStyle = true,
-                UseHttp = false, // Force HTTPS
-                DisableHostPrefixInjection = true // Disable host prefix injection
+                UseHttp = false,
+                DisableHostPrefixInjection = true
             };
 
             if (!string.IsNullOrEmpty(_awsAccessKey) && !string.IsNullOrEmpty(_awsSecretKey))
@@ -71,7 +71,6 @@ namespace VocaDb.Model.Domain.Images
                     Key = key
                 };
                 var response = _s3Client.GetObjectAsync(request).Result;
-                // Return a copy of the response stream so callers can dispose it safely.
                 var ms = new MemoryStream();
                 response.ResponseStream.CopyTo(ms);
                 ms.Position = 0;
@@ -97,7 +96,6 @@ namespace VocaDb.Model.Domain.Images
 
             var key = GetKey(picture, size);
 
-            // Copy stream data to a byte array to avoid any stream-related encoding issues
             stream.Position = 0;
             var buffer = new byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
@@ -110,14 +108,13 @@ namespace VocaDb.Model.Domain.Images
                 Key = key,
                 InputStream = memoryStream,
                 ContentType = picture.Mime ?? "application/octet-stream",
-                UseChunkEncoding = false, // Disable chunked encoding which can cause header issues
+                UseChunkEncoding = false,
                 ServerSideEncryptionMethod = ServerSideEncryptionMethod.None,
-                DisableDefaultChecksumValidation = true // Disable checksum validation that might cause header issues
+                DisableDefaultChecksumValidation = true
             };
 
             try
             {
-                // Use async method with proper synchronous wait
                 var response = _s3Client.PutObjectAsync(request).GetAwaiter().GetResult();
             }
             catch (AmazonS3Exception ex)
@@ -135,10 +132,8 @@ namespace VocaDb.Model.Domain.Images
 
             try
             {
-                // Save the image to the stream with explicit encoder to avoid encoding issues
                 image.Save(stream, format);
 
-                // Ensure the stream has data and reset position
                 if (stream.Length == 0)
                 {
                     throw new InvalidOperationException("Image stream is empty after encoding");
@@ -146,7 +141,6 @@ namespace VocaDb.Model.Domain.Images
 
                 stream.Position = 0;
 
-                // Create a new picture info with the correct MIME type based on the actual format used
                 var actualMime = GetMimeTypeFromFormat(format);
                 var pictureWithCorrectMime = new ImageInformationWrapper(picture, actualMime);
 
@@ -168,7 +162,7 @@ namespace VocaDb.Model.Domain.Images
                 "gif" => "image/gif",
                 "webp" => "image/webp",
                 "bmp" => "image/bmp",
-                _ => "image/png" // Default fallback
+                _ => "image/png"
             };
         }
 
@@ -192,12 +186,10 @@ namespace VocaDb.Model.Domain.Images
 
         public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
         {
-            // If an endpoint is configured, return an absolute S3 URL using virtual hosted style; otherwise return a relative S3 proxy path.
             var key = GetKey(picture, size);
 
             if (!string.IsNullOrEmpty(_awsEndpoint) && !string.IsNullOrEmpty(_awsBucketName))
             {
-                // Remove protocol and trailing slash from endpoint
                 var endpoint = _awsEndpoint.TrimEnd('/');
                 var uri = new Uri(endpoint);
                 var host = $"{_awsBucketName}.{uri.Host}";
