@@ -46,10 +46,10 @@ public class S3FileManager
 
 	public S3FileManager()
 	{
-        _awsAccessKey = ConfigurationManager.AppSettings["S3AccessKey"] ?? string.Empty;
-        _awsSecretKey = ConfigurationManager.AppSettings["S3SecretKey"] ?? string.Empty;
-        _awsBucketName = ConfigurationManager.AppSettings["S3BucketName"] ?? string.Empty;
-        _awsEndpoint = ConfigurationManager.AppSettings["S3Endpoint"] ?? string.Empty;
+		_awsAccessKey = ConfigurationManager.AppSettings["S3AccessKey"] ?? string.Empty;
+		_awsSecretKey = ConfigurationManager.AppSettings["S3SecretKey"] ?? string.Empty;
+		_awsBucketName = ConfigurationManager.AppSettings["S3BucketName"] ?? string.Empty;
+		_awsEndpoint = ConfigurationManager.AppSettings["S3Endpoint"] ?? string.Empty;
 
 		if (string.IsNullOrEmpty(_awsBucketName))
 			return;
@@ -109,7 +109,7 @@ public class S3FileManager
 		try
 		{
 			using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-			
+
 			var request = new PutObjectRequest
 			{
 				BucketName = _awsBucketName,
@@ -149,8 +149,8 @@ public class S3FileManager
 			};
 
 			var response = await _s3Client.DeleteObjectAsync(request);
-			return response.HttpStatusCode == System.Net.HttpStatusCode.NoContent || 
-			       response.HttpStatusCode == System.Net.HttpStatusCode.OK;
+			return response.HttpStatusCode == System.Net.HttpStatusCode.NoContent ||
+				   response.HttpStatusCode == System.Net.HttpStatusCode.OK;
 		}
 		catch (AmazonS3Exception ex)
 		{
@@ -174,7 +174,7 @@ public class S3FileManager
 			using var stream = new FileStream(tempFilePath, FileMode.Open);
 			using var original = ImageHelper.OpenImage(stream);
 			var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
-			
+
 			// Save thumbnail to temp file first
 			var tempThumbPath = Path.ChangeExtension(Path.GetTempFileName(), Path.GetExtension(tempFilePath));
 			thumb.Save(tempThumbPath);
@@ -182,7 +182,7 @@ public class S3FileManager
 			// Upload thumbnail to S3
 			var thumbKey = GetS3ThumbKey(pvId);
 			var contentType = GetContentTypeFromExtension(Path.GetExtension(tempFilePath));
-			
+
 			if (await UploadFileToS3Async(tempThumbPath, thumbKey, contentType))
 			{
 				pv.ThumbUrl = GetS3Url(thumbKey);
@@ -224,8 +224,8 @@ public class S3FileManager
 			var endpoint = _awsEndpoint.TrimEnd('/');
 			return string.IsNullOrEmpty(_awsBucketName) ? $"{endpoint}/{s3Key}" : $"{endpoint}/{_awsBucketName}/{s3Key}";
 		}
-		
-		return $"/s3/{s3Key}";
+
+		return $"/{s3Key}";
 	}
 
 	public async Task SyncS3FilePVsAsync(CollectionDiff<PVForSong, PVForSong> diff, int songId)
@@ -253,7 +253,7 @@ public class S3FileManager
 				{
 					// Create thumbnail if it's an image
 					await CreateThumbnailAsync(oldFull, newId, pv);
-					
+
 					// Delete temp file after successful upload
 					try
 					{
@@ -280,13 +280,13 @@ public class S3FileManager
 		{
 			var s3Key = GetS3Key(pv.PVId);
 			var thumbKey = GetS3ThumbKey(pv.PVId);
-			
+
 			// Delete main file
 			if (!await DeleteFileFromS3Async(s3Key))
 			{
 				s_log.Warn("Failed to delete media file from S3: " + s3Key);
 			}
-			
+
 			// Delete thumbnail if it exists
 			if (!await DeleteFileFromS3Async(thumbKey))
 			{

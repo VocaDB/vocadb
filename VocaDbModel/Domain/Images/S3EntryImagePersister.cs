@@ -192,7 +192,7 @@ namespace VocaDb.Model.Domain.Images
 
         public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
         {
-            // If an endpoint is configured, return an absolute S3 URL using virtual hosted style; otherwise return a relative /s3 proxy path.
+            // If an endpoint is configured, return an absolute S3 URL using virtual hosted style; otherwise return a relative S3 proxy path.
             var key = GetKey(picture, size);
 
             if (!string.IsNullOrEmpty(_awsEndpoint) && !string.IsNullOrEmpty(_awsBucketName))
@@ -210,7 +210,7 @@ namespace VocaDb.Model.Domain.Images
                 return new VocaDbUrl(url, UrlDomain.Static, UriKind.Absolute);
             }
 
-            var relativeUrl = $"/s3/img/{key}";
+            var relativeUrl = $"/img/{key}";
             if (picture.Version > 0)
                 relativeUrl += $"?v={picture.Version}";
 
