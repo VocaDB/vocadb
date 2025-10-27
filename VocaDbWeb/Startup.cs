@@ -122,7 +122,7 @@ public class Startup
 			{
 				options.LoginPath = new PathString("/User/Login");
 				options.Cookie.Domain = Configuration["CookieDomain"];
-				options.Cookie.SameSite = SameSiteMode.None;
+				options.Cookie.SameSite = SameSiteMode.Lax;
 			});
 
 		services.AddLaravelMix();
@@ -190,8 +190,8 @@ public class Startup
 		builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();
 		builder.RegisterType<PVParser>().As<IPVParser>();
 		builder.RegisterType<DynamicImageUrlFactory>().As<IDynamicImageUrlFactory>();
-		builder.RegisterType<S3EntryImagePersister>().As<IEntryThumbPersister>().As<IEntryPictureFilePersister>().SingleInstance();
-		builder.RegisterType<S3EntryImagePersister>().As<IEntryThumbPersister>().SingleInstance();
+		builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().As<IEntryPictureFilePersister>().SingleInstance();
+		builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().SingleInstance();
 		builder.RegisterType<ServerEntryImageFactoryAggregator>().As<IAggregatedEntryImageUrlFactory>();
 		builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 		builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
@@ -305,7 +305,7 @@ public class Startup
 		app.UseForwardedHeaders();
 
 		app.UseRouting();
-		
+
 		app.UseRateLimiter();
 
 		app.UseRequestLocalization(options =>
