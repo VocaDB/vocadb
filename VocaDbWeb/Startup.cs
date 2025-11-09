@@ -190,8 +190,8 @@ public class Startup
 		builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();
 		builder.RegisterType<PVParser>().As<IPVParser>();
 		builder.RegisterType<DynamicImageUrlFactory>().As<IDynamicImageUrlFactory>();
-		builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().As<IEntryPictureFilePersister>().SingleInstance();
-		builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().SingleInstance();
+		builder.RegisterType<S3EntryImagePersister>().As<IEntryThumbPersister>().As<IEntryPictureFilePersister>().SingleInstance();
+		builder.RegisterType<S3EntryImagePersister>().As<IEntryThumbPersister>().SingleInstance();
 		builder.RegisterType<ServerEntryImageFactoryAggregator>().As<IAggregatedEntryImageUrlFactory>();
 		builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 		builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
