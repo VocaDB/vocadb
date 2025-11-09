@@ -211,33 +211,7 @@ namespace VocaDb.Model.Domain.Images
 
         public bool HasImage(IEntryImageInformation picture, ImageSize size)
         {
-            if (_s3Client == null) return false;
-
-            var key = GetKey(picture, size);
-
-            try
-            {
-                var request = new GetObjectMetadataRequest
-                {
-                    BucketName = _awsBucketName,
-                    Key = key
-                };
-
-                var response = _s3Client.GetObjectMetadataAsync(request).Result;
-                return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
-            }
-            catch (AggregateException ae) when (ae.InnerException is AmazonS3Exception s3ex && s3ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return false;
-            }
-            catch (AmazonS3Exception)
-            {
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return IsSupported(picture, size) && picture.ShouldExist();
         }
 
         public bool IsSupported(IEntryImageInformation picture, ImageSize size) =>
