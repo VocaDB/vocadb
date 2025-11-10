@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Images
 
         private string GetKey(IEntryImageInformation picture, ImageSize size)
         {
-            return $"{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+            return $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
         }
 
         public S3EntryImagePersister()
@@ -202,7 +202,7 @@ namespace VocaDb.Model.Domain.Images
                 return new VocaDbUrl(url, UrlDomain.Static, UriKind.Absolute);
             }
 
-            var relativeUrl = $"/img/{key}";
+            var relativeUrl = key;
             if (picture.Version > 0)
                 relativeUrl += $"?v={picture.Version}";
 
