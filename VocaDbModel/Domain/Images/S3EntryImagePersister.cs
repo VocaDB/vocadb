@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Images
 
         private string GetKey(IEntryImageInformation picture, ImageSize size)
         {
-            return $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+            return $"img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
         }
 
         public S3EntryImagePersister()
