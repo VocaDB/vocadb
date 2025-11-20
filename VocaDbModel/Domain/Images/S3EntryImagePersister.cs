@@ -188,25 +188,7 @@ namespace VocaDb.Model.Domain.Images
         {
             var key = GetKey(picture, size);
 
-            if (!string.IsNullOrEmpty(_awsEndpoint) && !string.IsNullOrEmpty(_awsBucketName))
-            {
-                var endpoint = _awsEndpoint.TrimEnd('/');
-                var uri = new Uri(endpoint);
-                var host = $"{_awsBucketName}.{uri.Host}";
-                var scheme = uri.Scheme;
-                var port = uri.IsDefaultPort ? "" : $":{uri.Port}";
-                var url = $"{scheme}://{host}{port}/{key}";
-                if (picture.Version > 0)
-                    url += $"?v={picture.Version}";
-
-                return new VocaDbUrl(url, UrlDomain.Static, UriKind.Absolute);
-            }
-
-            var relativeUrl = key;
-            if (picture.Version > 0)
-                relativeUrl += $"?v={picture.Version}";
-
-            return new VocaDbUrl(relativeUrl, UrlDomain.Static, UriKind.Relative);
+            return new VocaDbUrl(key, UrlDomain.Static, UriKind.Relative);
         }
 
         public bool HasImage(IEntryImageInformation picture, ImageSize size)
