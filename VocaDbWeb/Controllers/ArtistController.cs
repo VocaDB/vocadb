@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -142,7 +143,7 @@ public class ArtistController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
-		var artist = Service.GetArtistPicture(id);
+		var artist = _queries.GetPictureThumb(id, ImageSize.Original);
 
 		return Picture(artist);
 	}

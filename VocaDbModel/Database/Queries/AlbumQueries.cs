@@ -585,10 +585,8 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 		return HandleQuery(ctx => Comments(ctx).GetAll(albumId));
 	}
 
-	public EntryForPictureDisplayContract GetCoverPictureThumb(int albumId)
+	public EntryForPictureDisplayContract GetCoverPictureThumb(int albumId, ImageSize size = ImageSize.Thumb)
 	{
-		var size = ImageSize.Thumb;
-
 		// TODO: this all should be moved to DynamicImageUrlFactory
 		return _repository.HandleQuery(ctx =>
 		{
@@ -883,7 +881,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 						using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
 						var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
 					}
 				}
 				else
@@ -1072,7 +1070,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					pictureData.Id = album.Id;
 					pictureData.EntryType = EntryType.Album;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.AllThumbs);
+					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
 					diff.Cover.Set();
 				}

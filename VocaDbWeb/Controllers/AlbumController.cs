@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -208,7 +209,7 @@ public class AlbumController : ControllerBase
 		if (id == InvalidId)
 			return NotFound();
 
-		var album = Service.GetCoverPicture(id);
+		var album = _queries.GetCoverPictureThumb(id, ImageSize.Original);
 
 		return Picture(album);
 	}

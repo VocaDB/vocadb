@@ -255,7 +255,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
 					diff.Picture.Set();
 				}
@@ -488,10 +488,8 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 		});
 	}
 
-	public EntryForPictureDisplayContract GetPictureThumb(int artistId)
+	public EntryForPictureDisplayContract GetPictureThumb(int artistId, ImageSize size = ImageSize.Thumb)
 	{
-		var size = ImageSize.Thumb;
-
 		return _repository.HandleQuery(ctx =>
 		{
 			var artist = ctx.Load(artistId);
@@ -609,7 +607,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
 						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
 					}
 				}
 				else
@@ -702,7 +700,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
 					diff.Picture.Set();
 				}

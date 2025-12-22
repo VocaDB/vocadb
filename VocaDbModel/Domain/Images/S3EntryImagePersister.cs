@@ -203,8 +203,7 @@ namespace VocaDb.Model.Domain.Images
             picture.EntryType == EntryType.Tag ||
             (
                 (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) &&
-                picture.PurposeMainOrUnspecified() &&
-                size != ImageSize.Original
+                picture.PurposeMainOrUnspecified()
             ) ||
             (
                 (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) &&
