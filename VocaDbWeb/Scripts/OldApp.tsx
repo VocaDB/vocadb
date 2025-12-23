@@ -33,7 +33,7 @@ const AppContainer = (): React.ReactElement => {
 				flex: '1 1 100%',
 				paddingBottom: miniPlayerHeight,
 				minWidth: 0,
-				overflow: 'hidden',
+				overflow: 'scroll',
 			}}
 		>
 			<div className="row-fluid">
