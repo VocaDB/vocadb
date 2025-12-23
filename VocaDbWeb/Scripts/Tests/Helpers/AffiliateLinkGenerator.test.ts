@@ -1,9 +1,8 @@
 import { AffiliateLinkGenerator } from '@/Helpers/UrlHelper';
 
 const generator = new AffiliateLinkGenerator({
-	amazonJpAffiliateId: 'vocadb',
 	playAsiaAffiliateId: '852809',
-} as ConstructorParameters<typeof AffiliateLinkGenerator>[0]);
+});
 
 test('PlayAsia', () => {
 	const input =
@@ -25,22 +24,4 @@ test('PlayAsia_ReplaceAffId', () => {
 	const result = generator.generateAffiliateLink(input);
 
 	expect(result, 'Play-asia affiliate link matches').toBe(expected);
-});
-
-test('Amazon', () => {
-	const input = 'http://www.amazon.co.jp/dp/B00K1IV8FM';
-	const expected = 'http://www.amazon.co.jp/dp/B00K1IV8FM?tag=vocadb';
-
-	const result = generator.generateAffiliateLink(input);
-
-	expect(result, 'Amazon affiliate link matches').toBe(expected);
-});
-
-test('Amazon_ReplaceAffId', () => {
-	const input = 'http://www.amazon.co.jp/dp/B00K1IV8FM?tag=another';
-	const expected = 'http://www.amazon.co.jp/dp/B00K1IV8FM?tag=vocadb';
-
-	const result = generator.generateAffiliateLink(input);
-
-	expect(result, 'Amazon affiliate link matches').toBe(expected);
 });

@@ -8,8 +8,6 @@ import { vdbConfig } from '@/vdbConfig';
 /// Generates affiliate (paid) links to partner sites.
 /// </summary>
 export class AffiliateLinkGenerator {
-	private readonly amazonComAffId: string;
-	private readonly amazonJpAffId: string;
 	private readonly paAffId: string;
 
 	private addOrReplaceParam = (
@@ -32,18 +30,6 @@ export class AffiliateLinkGenerator {
 		}
 	};
 
-	private replaceAmazonComLink = (url: string): string => {
-		if (!this.amazonComAffId || !url.includes('www.amazon.com/')) return url;
-
-		return this.addOrReplaceParam(url, '(\\w+)', 'tag', this.amazonComAffId);
-	};
-
-	private replaceAmazonJpLink = (url: string): string => {
-		if (!this.amazonJpAffId || !url.includes('www.amazon.co.jp/')) return url;
-
-		return this.addOrReplaceParam(url, '(\\w+)', 'tag', this.amazonJpAffId);
-	};
-
 	private replacePlayAsiaLink = (url: string): string => {
 		if (!this.paAffId || !url.includes('www.play-asia.com/')) return url;
 
@@ -51,24 +37,16 @@ export class AffiliateLinkGenerator {
 	};
 
 	constructor({
-		amazonComAffiliateId,
-		amazonJpAffiliateId,
 		playAsiaAffiliateId,
 	}: {
-		amazonComAffiliateId: string;
-		amazonJpAffiliateId: string;
 		playAsiaAffiliateId: string;
 	}) {
-		this.amazonComAffId = amazonComAffiliateId;
-		this.amazonJpAffId = amazonJpAffiliateId;
 		this.paAffId = playAsiaAffiliateId;
 	}
 
 	generateAffiliateLink = (url?: string): string | undefined => {
 		if (!url) return url;
 
-		url = this.replaceAmazonComLink(url);
-		url = this.replaceAmazonJpLink(url);
 		url = this.replacePlayAsiaLink(url);
 
 		return url;
@@ -111,8 +89,6 @@ export class UrlHelper {
 		const link = UrlHelper.makeLink(partialLink);
 
 		return new AffiliateLinkGenerator({
-			amazonComAffiliateId: vdbConfig.amazonComAffiliateId,
-			amazonJpAffiliateId: vdbConfig.amazonJpAffiliateId,
 			playAsiaAffiliateId: vdbConfig.playAsiaAffiliateId,
 		}).generateAffiliateLink(link);
 	};
