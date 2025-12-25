@@ -299,8 +299,6 @@ public class Startup
 
 		app.UseRouting();
 
-		app.UseRateLimiter();
-
 		app.UseRequestLocalization(options =>
 		{
 			var supportedCultures = InterfaceLanguage.TwoLetterLanguageCodes.ToArray();
