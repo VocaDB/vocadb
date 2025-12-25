@@ -39,7 +39,6 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
-using OpenTelemetry.Metrics;
 using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -126,12 +125,6 @@ public class Startup
 			});
 
 		services.AddLaravelMix();
-
-		services.AddOpenTelemetry()
-			.WithMetrics(b => b.AddAspNetCoreInstrumentation()
-				.AddRuntimeInstrumentation()
-				.AddProcessInstrumentation()
-				.AddPrometheusExporter());
 
 		services.AddCors(options =>
 		{
@@ -397,7 +390,5 @@ public class Startup
 			);
 
 		});
-
-		app.UseOpenTelemetryPrometheusScrapingEndpoint();
 	}
 }
