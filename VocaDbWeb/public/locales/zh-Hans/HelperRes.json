@@ -21,7 +21,7 @@
     "DraftMessage": "此条目是草稿。你可以通过编辑条目并添加缺失信息来提供帮助。",
     "EntryIsMissingInformation": "此条目缺少下列信息：",
     "EntryValidationNoErrors": "此条目包含了所有必要信息。",
-    "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为已完成（非草稿）。",
+    "EntryValidationNoErrorsDraft": "此条目包含所有必要信息，可标记为定稿（非草稿）。",
     "EntryValidationWarningDetails": "详细信息",
     "GitHubMarkdown": "GitHub式Markdown",
     "IsSupportedForFormatting": "受支持",
