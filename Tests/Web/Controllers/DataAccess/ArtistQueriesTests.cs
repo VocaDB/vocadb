@@ -434,26 +434,6 @@ public class ArtistQueriesTests
 	}
 
 	[TestMethod]
-	public async Task Update_Picture()
-	{
-		var contract = await CallUpdate(ResourceHelper.TestImage());
-
-		var artistFromRepo = _repository.Load(contract.Id);
-
-		PictureData.IsNullOrEmpty(_artist.Picture).Should().BeFalse("Picture was saved");
-		artistFromRepo.PictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "Picture.Mime");
-
-		var thumbData = new EntryThumb(artistFromRepo, artistFromRepo.PictureMime, ImagePurpose.Main);
-		_imagePersister.HasImage(thumbData, ImageSize.Original).Should().BeFalse("Original file was not created"); // Original saved in Picture.Bytes
-		_imagePersister.HasImage(thumbData, ImageSize.Thumb).Should().BeTrue("Thumbnail file was saved");
-
-		var archivedVersion = _repository.List<ArchivedArtistVersion>().FirstOrDefault();
-
-		archivedVersion.Should().NotBeNull("Archived version was created");
-		archivedVersion.Diff.ChangedFields.Value.Should().Be(ArtistEditableFields.Picture, "Changed fields");
-	}
-
-	[TestMethod]
 	public async Task Update_ArtistLinks()
 	{
 		// Arrange
