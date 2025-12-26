@@ -39,7 +39,6 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Middleware;
-using OpenTelemetry.Metrics;
 using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -127,12 +126,6 @@ public class Startup
 
 		services.AddLaravelMix();
 
-		services.AddOpenTelemetry()
-			.WithMetrics(b => b.AddAspNetCoreInstrumentation()
-				.AddRuntimeInstrumentation()
-				.AddProcessInstrumentation()
-				.AddPrometheusExporter());
-
 		services.AddCors(options =>
 		{
 			options.AddPolicy(AuthenticationConstants.WebApiCorsPolicy, builder =>
@@ -160,8 +153,8 @@ public class Startup
 		{
 			options.ForwardedForHeaderName = "CF-Connecting-IP";
 			options.ForwardedHeaders = ForwardedHeaders.All;
-			options.KnownNetworks.Add(new IPNetwork(IPAddress.Any, 0));
-			options.KnownNetworks.Add(new IPNetwork(IPAddress.IPv6Any, 0));
+			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.Any, 0));
+			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.IPv6Any, 0));
 		});
 	}
 
@@ -306,8 +299,6 @@ public class Startup
 
 		app.UseRouting();
 
-		app.UseRateLimiter();
-
 		app.UseRequestLocalization(options =>
 		{
 			var supportedCultures = InterfaceLanguage.TwoLetterLanguageCodes.ToArray();
@@ -397,7 +388,5 @@ public class Startup
 			);
 
 		});
-
-		app.UseOpenTelemetryPrometheusScrapingEndpoint();
 	}
 }

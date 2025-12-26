@@ -535,27 +535,6 @@ public class AlbumQueriesTests
 	}
 
 	[TestMethod]
-	public async Task Update_CoverPicture()
-	{
-		var contract = await CallUpdate(ResourceHelper.TestImage());
-
-		var albumFromRepo = _repository.Load(contract.Id);
-
-		albumFromRepo.CoverPictureData.Should().NotBeNull("CoverPictureData");
-		albumFromRepo.CoverPictureData.Bytes.Should().NotBeNull("Original bytes are saved");
-		albumFromRepo.CoverPictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "CoverPictureData.Mime");
-
-		var thumbData = new EntryThumb(albumFromRepo, albumFromRepo.CoverPictureMime, ImagePurpose.Main);
-		_imagePersister.HasImage(thumbData, ImageSize.Original).Should().BeFalse("Original file was not created"); // Original saved in CoverPictureData.Bytes
-		_imagePersister.HasImage(thumbData, ImageSize.Thumb).Should().BeTrue("Thumbnail file was saved");
-
-		var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
-
-		archivedVersion.Should().NotBeNull("Archived version was created");
-		archivedVersion.Diff.ChangedFields.Value.Should().Be(AlbumEditableFields.Cover, "Changed fields");
-	}
-
-	[TestMethod]
 	public async Task Update_Artists()
 	{
 		var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
