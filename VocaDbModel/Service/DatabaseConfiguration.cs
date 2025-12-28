@@ -29,6 +29,8 @@ public static class DatabaseConfiguration
 				MsSqlConfiguration.MsSql2012
 					.ConnectionString(c => c.Is(GetConnectionString(connectionStringName ?? ConnectionStringName)))
 					.MaxFetchDepth(1)
+					// .ShowSql()
+					// .FormatSql()
 #if !DEBUG
 				.UseReflectionOptimizer()
 #endif
@@ -37,6 +39,10 @@ public static class DatabaseConfiguration
 				.FluentMappings.AddFromAssemblyOf<SongMap>()
 				.Conventions.AddFromAssemblyOf<ClassConventions>()
 			)
+			.ExposeConfiguration(cfg =>
+			{
+				cfg.SetProperty(NHibernate.Cfg.Environment.DefaultBatchFetchSize, "20");
+			})
 			/*.Diagnostics(d => d
 				.Enable()
 				.OutputToFile("C:\\Temp\\Fluent.txt")
