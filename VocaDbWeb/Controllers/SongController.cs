@@ -125,22 +125,25 @@ public class SongController : ControllerBase
 
 		WebHelper.VerifyUserAgent(Request);
 
-		var contract = _queries.GetSongDetails(
-			id,
-			albumId,
-			GetHostnameForValidHit(),
-			null,
-			WebHelper.GetUserLanguageCodes(Request)
-		);
-		var model = new SongDetails(contract, PermissionContext, _pvHelper);
+		// Use minimal data fetch for server-side rendering - only loads data needed for meta tags
+		var model = _queries.GetForMetaTags(id);
 
-		var hasDescription = !model.Notes.IsEmpty;
+		var hasDescription = !string.IsNullOrEmpty(model.Notes.EnglishOrOriginal);
 		var prop = PageProperties;
 		prop.GlobalSearchType = EntryType.Song;
 		prop.Title = model.Name;
+
+		// Create a minimal SongContract for the description generator
+		var songForDescription = new SongContract
+		{
+			SongType = model.SongType,
+			ArtistString = model.ArtistString,
+			PublishDate = model.PublishDate
+		};
+
 		prop.Description = hasDescription ?
 			_markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
-			new SongDescriptionGenerator().GenerateDescription(contract.Song, Translate.SongTypeNames);
+			new SongDescriptionGenerator().GenerateDescription(songForDescription, Translate.SongTypeNames);
 		prop.OpenGraph.ShowTwitterCard = true;
 
 		string titleAndArtist;
