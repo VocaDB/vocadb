@@ -477,6 +477,21 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			return contract;
 		});
 	}
+
+	public ArtistForMetaTagsContract GetForMetaTags(int id)
+	{
+		return HandleQuery(session =>
+		{
+			var artist = session.Load(id);
+
+			return new ArtistForMetaTagsContract(
+				artist: artist,
+				languagePreference: LanguagePreference,
+				imageStore: _imageUrlFactory,
+				userContext: PermissionContext
+			);
+		});
+	}
 #nullable disable
 
 	public T GetWithMergeRecord<T>(int id, Func<Artist, ArtistMergeRecord, IDatabaseContext<Artist>, T> fac)

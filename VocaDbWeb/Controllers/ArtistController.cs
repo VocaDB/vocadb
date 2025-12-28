@@ -113,7 +113,8 @@ public class ArtistController : ControllerBase
 
 		WebHelper.VerifyUserAgent(Request);
 
-		var model = _queries.GetDetailsForApi(id, GetHostnameForValidHit());
+		// Use minimal data fetch for server-side rendering - only loads data needed for meta tags
+		var model = _queries.GetForMetaTags(id);
 
 		var prop = PageProperties;
 		prop.GlobalSearchType = EntryType.Artist;

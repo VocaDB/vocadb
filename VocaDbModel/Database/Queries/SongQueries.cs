@@ -685,6 +685,19 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 		});
 	}
 
+	public SongForMetaTagsContract GetForMetaTags(int songId)
+	{
+		return HandleQuery(session =>
+		{
+			var song = session.Load<Song>(songId);
+
+			return new SongForMetaTagsContract(
+				song: song,
+				languagePreference: PermissionContext.LanguagePreference
+			);
+		});
+	}
+
 	public SongWithPVAndVoteForApiContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
 	{
 		return HandleQuery(session =>
