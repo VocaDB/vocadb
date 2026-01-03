@@ -69,6 +69,7 @@ export class ArtistEditStore {
 	readonly voiceProvider: BasicEntryLinkStore<ArtistContract>;
 	readonly webLinks: WebLinksEditStore;
 	readonly cultureCodes: CultureCodesEditStore;
+	@observable selectedCoverFile?: File;
 
 	constructor(
 		private readonly values: GlobalValues,
@@ -222,6 +223,10 @@ export class ArtistEditStore {
 		);
 
 		this.newAssociatedArtist.clear();
+	};
+
+	@action setSelectedCoverFile = (file: File | undefined): void => {
+		this.selectedCoverFile = file;
 	};
 
 	addGroup = async (artistId?: number): Promise<void> => {

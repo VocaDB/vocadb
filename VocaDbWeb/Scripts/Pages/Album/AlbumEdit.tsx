@@ -84,6 +84,18 @@ const BasicInfoTabContent = observer(
 			'VocaDb.Model.Resources.Albums',
 		]);
 
+		const [coverImagePreview, setCoverImagePreview] = React.useState<
+			string | undefined
+		>(undefined);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (coverImagePreview) {
+					URL.revokeObjectURL(coverImagePreview);
+				}
+			};
+		}, [coverImagePreview]);
+
 		const discTypeDescriptions = React.useMemo(
 			() =>
 				`${t(
@@ -152,7 +164,10 @@ const BasicInfoTabContent = observer(
 									<tr>
 										<td>
 											<img
-												src={`/Album/CoverPictureThumb/${albumEditStore.contract.id}`}
+												src={
+													coverImagePreview ||
+													`/Album/CoverPictureThumb/${albumEditStore.contract.id}`
+												}
 												alt={t('ViewRes.Album:Edit.ImagePreview')}
 												className="coverPic"
 											/>
@@ -169,6 +184,54 @@ const BasicInfoTabContent = observer(
 												id="coverPicUpload"
 												name="coverPicUpload"
 												ref={coverPicUploadRef}
+												onChange={(e): void => {
+													const file = e.target.files?.[0];
+
+													if (coverImagePreview) {
+														URL.revokeObjectURL(coverImagePreview);
+													}
+
+													if (file) {
+														const fileExtension =
+															'.' + file.name.split('.').pop()?.toLowerCase();
+														if (
+															!ImageHelper.allowedExtensions.includes(
+																fileExtension,
+															)
+														) {
+															showErrorMessage(
+																`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+																	', ',
+																)}`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														const maxSizeBytes =
+															ImageHelper.maxImageSizeMB * 1024 * 1024;
+														if (file.size > maxSizeBytes) {
+															showErrorMessage(
+																`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														// Create preview and update store
+														const previewUrl = URL.createObjectURL(file);
+														setCoverImagePreview(previewUrl);
+														runInAction(() => {
+															albumEditStore.setSelectedCoverFile(file);
+														});
+													} else {
+														// File cleared
+														setCoverImagePreview(undefined);
+														runInAction(() => {
+															albumEditStore.setSelectedCoverFile(undefined);
+														});
+													}
+												}}
 											/>
 										</td>
 									</tr>
