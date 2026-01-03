@@ -71,6 +71,18 @@ const BasicInfoTabContent = observer(
 
 		const contract = artistEditStore.contract;
 
+		const [coverImagePreview, setCoverImagePreview] = React.useState<
+			string | undefined
+		>(undefined);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (coverImagePreview) {
+					URL.revokeObjectURL(coverImagePreview);
+				}
+			};
+		}, [coverImagePreview]);
+
 		return (
 			<div>
 				<div className="editor-label">
@@ -124,7 +136,10 @@ const BasicInfoTabContent = observer(
 										<td>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
-												src={`/Artist/PictureThumb/${contract.id}`}
+												src={
+													coverImagePreview ||
+													`/Artist/PictureThumb/${contract.id}`
+												}
 												alt="Artist picture" /* LOC */
 												className="coverPic"
 											/>
@@ -141,6 +156,52 @@ const BasicInfoTabContent = observer(
 												id="coverPicUpload"
 												name="coverPicUpload"
 												ref={coverPicUploadRef}
+												onChange={(e): void => {
+													const file = e.target.files?.[0];
+
+													if (coverImagePreview) {
+														URL.revokeObjectURL(coverImagePreview);
+													}
+
+													if (file) {
+														const fileExtension =
+															'.' + file.name.split('.').pop()?.toLowerCase();
+														if (
+															!ImageHelper.allowedExtensions.includes(
+																fileExtension,
+															)
+														) {
+															showErrorMessage(
+																`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+																	', ',
+																)}`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														const maxSizeBytes =
+															ImageHelper.maxImageSizeMB * 1024 * 1024;
+														if (file.size > maxSizeBytes) {
+															showErrorMessage(
+																`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														const previewUrl = URL.createObjectURL(file);
+														setCoverImagePreview(previewUrl);
+														runInAction(() => {
+															artistEditStore.setSelectedCoverFile(file);
+														});
+													} else {
+														setCoverImagePreview(undefined);
+														runInAction(() => {
+															artistEditStore.setSelectedCoverFile(undefined);
+														});
+													}
+												}}
 											/>
 										</td>
 									</tr>
