@@ -26,6 +26,7 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
+import { ImageHelper } from '@/Helpers/ImageHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
@@ -74,6 +75,18 @@ const BasicInfoTabContent = observer(
 		const loginManager = useLoginManager();
 
 		const { t } = useTranslation(['Resources', 'ViewRes']);
+
+		const [picturePreview, setPicturePreview] = React.useState<
+			string | undefined
+		>(undefined);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (picturePreview) {
+					URL.revokeObjectURL(picturePreview);
+				}
+			};
+		}, [picturePreview]);
 
 		return (
 			<>
@@ -349,10 +362,13 @@ const BasicInfoTabContent = observer(
 										<td>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
-												src={UrlHelper.imageThumb(
-													releaseEventEditStore.contract.mainPicture,
-													ImageSize.SmallThumb,
-												)}
+												src={
+													picturePreview ||
+													UrlHelper.imageThumb(
+														releaseEventEditStore.contract.mainPicture,
+														ImageSize.SmallThumb,
+													)
+												}
 												alt="Picture" /* LOC */
 												className="coverPic"
 											/>
@@ -364,6 +380,49 @@ const BasicInfoTabContent = observer(
 												id="pictureUpload"
 												name="pictureUpload"
 												ref={pictureUploadRef}
+												onChange={(e): void => {
+													const file = e.target.files?.[0];
+
+													if (picturePreview) {
+														URL.revokeObjectURL(picturePreview);
+													}
+
+													if (file) {
+														const fileExtension =
+															'.' + file.name.split('.').pop()?.toLowerCase();
+														if (
+															!ImageHelper.allowedExtensions.includes(
+																fileExtension,
+															)
+														) {
+															showErrorMessage(
+																`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+																	', ',
+																)}`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														// Validate file size
+														const maxSizeBytes =
+															ImageHelper.maxImageSizeMB * 1024 * 1024;
+														if (file.size > maxSizeBytes) {
+															showErrorMessage(
+																`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+															);
+															e.target.value = '';
+															return;
+														}
+
+														// Create preview
+														const previewUrl = URL.createObjectURL(file);
+														setPicturePreview(previewUrl);
+													} else {
+														// File cleared
+														setPicturePreview(undefined);
+													}
+												}}
 											/>
 										</td>
 									</tr>

@@ -20,6 +20,7 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { ImageHelper } from '@/Helpers/ImageHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
@@ -67,6 +68,18 @@ const PropertiesTabContent = observer(
 			ImageSize.SmallThumb,
 			false,
 		);
+
+		const [thumbImagePreview, setThumbImagePreview] = React.useState<
+			string | undefined
+		>(undefined);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (thumbImagePreview) {
+					URL.revokeObjectURL(thumbImagePreview);
+				}
+			};
+		}, [thumbImagePreview]);
 
 		return (
 			<>
@@ -158,10 +171,10 @@ const PropertiesTabContent = observer(
 						</div>
 						<div className="editor-field">
 							<div className="media">
-								{thumbUrl && (
+								{(thumbImagePreview || thumbUrl) && (
 									<img
 										className="pull-left media-object"
-										src={thumbUrl}
+										src={thumbImagePreview || thumbUrl}
 										alt="Thumb" /* LOC */
 									/>
 								)}
@@ -172,6 +185,49 @@ const PropertiesTabContent = observer(
 										id="thumbPicUpload"
 										name="thumbPicUpload"
 										ref={thumbPicUploadRef}
+										onChange={(e): void => {
+											const file = e.target.files?.[0];
+
+											// Clean up previous preview
+											if (thumbImagePreview) {
+												URL.revokeObjectURL(thumbImagePreview);
+											}
+
+											if (file) {
+												// Validate file extension
+												const fileExtension =
+													'.' + file.name.split('.').pop()?.toLowerCase();
+												if (
+													!ImageHelper.allowedExtensions.includes(fileExtension)
+												) {
+													showErrorMessage(
+														`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+															', ',
+														)}`,
+													);
+													e.target.value = '';
+													return;
+												}
+
+												// Validate file size
+												const maxSizeBytes =
+													ImageHelper.maxImageSizeMB * 1024 * 1024;
+												if (file.size > maxSizeBytes) {
+													showErrorMessage(
+														`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+													);
+													e.target.value = '';
+													return;
+												}
+
+												// Create preview
+												const previewUrl = URL.createObjectURL(file);
+												setThumbImagePreview(previewUrl);
+											} else {
+												// File cleared
+												setThumbImagePreview(undefined);
+											}
+										}}
 									/>
 								</div>
 							</div>
