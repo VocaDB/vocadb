@@ -3,7 +3,9 @@
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -51,6 +53,20 @@ public class PVContract : IPVWithThumbnail
 		Disabled = pv.Disabled;
 		Length = pv.Length;
 		ThumbUrl = pv.ThumbUrl;
+	}
+
+	public PVContract(PVForAlbum pv)
+		: this((PV)pv)
+	{
+		Disabled = pv.Disabled;
+		Length = pv.Length;
+	}
+
+	public PVContract(PVForEvent pv)
+		: this((PV)pv)
+	{
+		Length = pv.Length;
+		PublishDate = pv.PublishDate;
 	}
 
 	public PVContract(VideoUrlParseResult parseResult, PVType type)
