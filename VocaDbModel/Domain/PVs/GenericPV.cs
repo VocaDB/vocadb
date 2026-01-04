@@ -38,6 +38,14 @@ public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
 	/// </summary>
 	public virtual int Length { get; set; }
 
+	public override void CopyMetaFrom(PVContract contract)
+	{
+		base.CopyMetaFrom(contract);
+
+		Length = contract.Length;
+		PublishDate = contract.PublishDate;
+	}
+
 	public virtual bool Equals(GenericPV<TEntry>? another)
 	{
 		if (another == null)

@@ -72,6 +72,7 @@ public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId
 	{
 		base.CopyMetaFrom(contract);
 
+		Length = contract.Length;
 		Disabled = contract.Disabled;
 		ThumbUrl = contract.ThumbUrl;
 	}
