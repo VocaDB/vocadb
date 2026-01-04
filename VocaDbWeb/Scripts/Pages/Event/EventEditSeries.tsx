@@ -20,6 +20,7 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { ImageHelper } from '@/Helpers/ImageHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
@@ -69,6 +70,18 @@ const EventEditSeriesLayout = observer(
 		);
 
 		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
+
+		const [picturePreview, setPicturePreview] = React.useState<
+			string | undefined
+		>(undefined);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (picturePreview) {
+					URL.revokeObjectURL(picturePreview);
+				}
+			};
+		}, [picturePreview]);
 
 		React.useEffect(() => {
 			if (releaseEventSeriesEditStore.contract.id) return;
@@ -313,10 +326,13 @@ const EventEditSeriesLayout = observer(
 											<td>
 												{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 												<img
-													src={UrlHelper.imageThumb(
-														contract.mainPicture,
-														ImageSize.SmallThumb,
-													)}
+													src={
+														picturePreview ||
+														UrlHelper.imageThumb(
+															contract.mainPicture,
+															ImageSize.SmallThumb,
+														)
+													}
 													alt="Picture" /* LOC */
 													className="coverPic"
 												/>
@@ -328,6 +344,51 @@ const EventEditSeriesLayout = observer(
 													id="pictureUpload"
 													name="pictureUpload"
 													ref={pictureUploadRef}
+													onChange={(e): void => {
+														const file = e.target.files?.[0];
+
+														// Clean up previous preview
+														if (picturePreview) {
+															URL.revokeObjectURL(picturePreview);
+														}
+
+														if (file) {
+															// Validate file extension
+															const fileExtension =
+																'.' + file.name.split('.').pop()?.toLowerCase();
+															if (
+																!ImageHelper.allowedExtensions.includes(
+																	fileExtension,
+																)
+															) {
+																showErrorMessage(
+																	`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+																		', ',
+																	)}`,
+																);
+																e.target.value = '';
+																return;
+															}
+
+															// Validate file size
+															const maxSizeBytes =
+																ImageHelper.maxImageSizeMB * 1024 * 1024;
+															if (file.size > maxSizeBytes) {
+																showErrorMessage(
+																	`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+																);
+																e.target.value = '';
+																return;
+															}
+
+															// Create preview
+															const previewUrl = URL.createObjectURL(file);
+															setPicturePreview(previewUrl);
+														} else {
+															// File cleared
+															setPicturePreview(undefined);
+														}
+													}}
 												/>
 											</td>
 										</tr>

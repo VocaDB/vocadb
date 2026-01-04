@@ -1,4 +1,6 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { showErrorMessage } from '@/Components/ui';
+import { ImageHelper } from '@/Helpers/ImageHelper';
 import { EntryPictureFileEditStore } from '@/Stores/EntryPictureFileEditStore';
 import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
 import { runInAction } from 'mobx';
@@ -18,18 +20,73 @@ export const EntryPictureFileEdit = observer(
 	}: EntryPictureFileEditProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Artist']);
 
+		const [imagePreview, setImagePreview] = React.useState<string | undefined>(
+			undefined,
+		);
+
+		const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+		React.useEffect(() => {
+			return (): void => {
+				if (imagePreview) {
+					URL.revokeObjectURL(imagePreview);
+				}
+			};
+		}, [imagePreview]);
+
+		const displayUrl =
+			imagePreview || entryPictureFileEditStore.thumbUrl || undefined;
+
 		return (
 			<tr>
 				<td>
-					{entryPictureFileEditStore.thumbUrl ? (
+					{displayUrl ? (
 						<img
-							src={entryPictureFileEditStore.thumbUrl}
+							src={displayUrl}
 							alt="Preview" /* LOC */
 							className="coverPicThumb"
 						/>
-					) : (
-						<input type="file" name="pictureUpload" />
-					)}
+					) : null}
+					<input
+						type="file"
+						name="pictureUpload"
+						ref={fileInputRef}
+						onChange={(e): void => {
+							const file = e.target.files?.[0];
+
+							if (imagePreview) {
+								URL.revokeObjectURL(imagePreview);
+							}
+
+							if (file) {
+								const fileExtension =
+									'.' + file.name.split('.').pop()?.toLowerCase();
+								if (!ImageHelper.allowedExtensions.includes(fileExtension)) {
+									showErrorMessage(
+										`Invalid format. Allowed: ${ImageHelper.allowedExtensions.join(
+											', ',
+										)}`,
+									);
+									e.target.value = '';
+									return;
+								}
+
+								const maxSizeBytes = ImageHelper.maxImageSizeMB * 1024 * 1024;
+								if (file.size > maxSizeBytes) {
+									showErrorMessage(
+										`Image too large. Maximum size: ${ImageHelper.maxImageSizeMB}MB`,
+									);
+									e.target.value = '';
+									return;
+								}
+
+								const previewUrl = URL.createObjectURL(file);
+								setImagePreview(previewUrl);
+							} else {
+								setImagePreview(undefined);
+							}
+						}}
+					/>
 				</td>
 				<td>
 					<input

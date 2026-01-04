@@ -119,6 +119,7 @@ export class AlbumEditStore {
 	@observable errors?: Record<string, string[]>;
 	readonly hasCover: boolean;
 	@observable identifiers: string[];
+	@observable selectedCoverFile?: File;
 	readonly names: NamesEditStore;
 	@observable newIdentifier = '';
 	readonly pictures: EntryPictureFileListEditStore;
@@ -261,7 +262,7 @@ export class AlbumEditStore {
 	}
 
 	@computed get validationError_needCover(): boolean {
-		return !this.hasCover;
+		return !this.hasCover && !this.selectedCoverFile;
 	}
 
 	@computed get validationError_needReferences(): boolean {
@@ -487,6 +488,10 @@ export class AlbumEditStore {
 
 	@action removeIdentifier = (identifier: string): void => {
 		pull(this.identifiers, identifier);
+	};
+
+	@action setSelectedCoverFile = (file: File | undefined): void => {
+		this.selectedCoverFile = file;
 	};
 
 	// Removes a track from this album.
