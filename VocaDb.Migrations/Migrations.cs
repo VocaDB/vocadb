@@ -5,6 +5,34 @@ using FluentMigrator;
 namespace VocaDb.Migrations;
 
 
+[Migration(2026_01_04_0000)]
+public class AddLengthToPVsForAlbumsAndEvents : Migration
+{
+	public override void Up()
+	{
+		Create.Column("Length")
+			.OnTable(TableNames.PVsForAlbums)
+			.AsInt32()
+			.NotNullable()
+			.WithDefaultValue(0);
+
+		Create.Column("Length")
+			.OnTable(TableNames.PVsForEvents)
+			.AsInt32()
+			.NotNullable()
+			.WithDefaultValue(0);
+	}
+
+	public override void Down()
+	{
+		Delete.Column("Length")
+			.FromTable(TableNames.PVsForAlbums);
+
+		Delete.Column("Length")
+			.FromTable(TableNames.PVsForEvents);
+	}
+}
+
 [Migration(2025_03_24_0000)]
 public class IncreaseEntryReportLength : Migration
 {

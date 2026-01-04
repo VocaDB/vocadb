@@ -16,10 +16,16 @@ public class PVForAlbum : PV, IEntryWithIntId
 		: base(contract)
 	{
 		Album = album;
+		Length = contract.Length;
 		Disabled = contract.Disabled;
 	}
 
 	public override bool Disabled { get; set; }
+
+	/// <summary>
+	/// Length in seconds.
+	/// </summary>
+	public virtual int Length { get; set; }
 
 	public virtual Album Album
 	{
@@ -54,6 +60,14 @@ public class PVForAlbum : PV, IEntryWithIntId
 	public override int GetHashCode()
 	{
 		return base.GetHashCode();
+	}
+
+	public override void CopyMetaFrom(PVContract contract)
+	{
+		base.CopyMetaFrom(contract);
+
+		Length = contract.Length;
+		Disabled = contract.Disabled;
 	}
 
 	public override void OnDelete()
