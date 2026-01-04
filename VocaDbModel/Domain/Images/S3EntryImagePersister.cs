@@ -187,8 +187,11 @@ namespace VocaDb.Model.Domain.Images
         public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
         {
             var key = GetKey(picture, size);
+            var url = (picture.Version > 0)
+                ? $"{key}?v={picture.Version}"
+                : key;
 
-            return new VocaDbUrl(key, UrlDomain.Static, UriKind.Relative);
+            return new VocaDbUrl(url, UrlDomain.Static, UriKind.Relative);
         }
 
         public bool HasImage(IEntryImageInformation picture, ImageSize size)
