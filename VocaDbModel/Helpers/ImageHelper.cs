@@ -14,7 +14,7 @@ namespace VocaDb.Model.Helpers;
 public static class ImageHelper
 {
 #nullable enable
-	private static readonly string[] s_allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
+	private static readonly string[] s_allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png", ".webp" };
 	public const int DefaultSmallThumbSize = 150;
 	public const int DefaultThumbSize = 250;
 	public const int DefaultTinyThumbSize = 70;
@@ -58,10 +58,11 @@ public static class ImageHelper
 	{
 		MediaTypeNames.Image.Jpeg => ".jpg",
 		"image/pjpeg" => ".jpg",
-		"image/png" => ".png",
+		MediaTypeNames.Image.Png => ".png",
 		MediaTypeNames.Image.Gif => ".gif",
-		"image/bmp" => ".bmp",
+		MediaTypeNames.Image.Bmp => ".bmp",
 		"image/x-ms-bmp" => ".bmp",
+		MediaTypeNames.Image.Webp => ".webp",
 		"audio/mp3" or "audio/mpeg" => ".mp3",
 		_ => string.Empty,
 	};
