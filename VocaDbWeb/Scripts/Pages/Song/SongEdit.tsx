@@ -885,6 +885,11 @@ const SongEditLayout = observer(
 						songEditStore.validationError_redundantEvent
 							? t('VocaDb.Model.Resources:SongValidationErrors.RedundantEvent')
 							: [],
+						songEditStore.validationError_needToSpecifyNames
+							? t(
+									'VocaDb.Model.Resources:SongValidationErrors.NeedToSpecifyNames',
+							  )
+							: [],
 					)}
 					helpSection="glsongs"
 				/>

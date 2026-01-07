@@ -285,6 +285,17 @@ export class SongEditStore {
 		return !this.names.hasPrimaryName;
 	}
 
+	@computed get validationError_needToSpecifyNames(): boolean {
+		const primaryNames = [
+			this.names.originalName.value.trim(),
+			this.names.romajiName.value.trim(),
+			this.names.englishName.value.trim(),
+		].filter(name => name !== '');
+
+		const uniqueNames = new Set(primaryNames);
+		return primaryNames.length > uniqueNames.size;
+	}
+
 	@computed get hasValidationErrors(): boolean {
 		return (
 			this.validationError_duplicateArtist ||
@@ -295,7 +306,8 @@ export class SongEditStore {
 			this.validationError_needType ||
 			this.validationError_nonInstrumentalSongNeedsVocalists ||
 			this.validationError_redundantEvent ||
-			this.validationError_unspecifiedNames
+			this.validationError_unspecifiedNames ||
+			this.validationError_needToSpecifyNames
 		);
 	}
 
