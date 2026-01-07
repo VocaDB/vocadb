@@ -69,6 +69,7 @@
 		"NeedReferences": "Song needs notes, PVs or links for reference.",
 		"NeedType": "Нужно указать тип песни.",
 		"NonInstrumentalSongNeedsVocalists": "This song has no vocalists. Original instrumental songs need to be tagged with the 'instrumental' tag. Instrumental (karaoke) versions of existing songs should use the 'Instrumental' song type. Otherwise, add vocalists.",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "The same release event does not need to be specified for both the song and album.",
 		"RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
 		"UnspecifiedNames": "Песне нужно хотя бы одно название на определённом языке."
