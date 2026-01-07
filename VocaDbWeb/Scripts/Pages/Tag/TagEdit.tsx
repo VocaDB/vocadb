@@ -86,8 +86,6 @@ const TagEditLayout = observer(
 		const conflictingEditor = useConflictingEditor(EntryType.Tag);
 
 		const thumbPicUploadRef = React.useRef<HTMLInputElement>(undefined!);
-		// HACK
-		const categoryNameRef = React.useRef<HTMLInputElement>(undefined!);
 
 		const vdb = useVdb();
 
@@ -216,6 +214,9 @@ const TagEditLayout = observer(
 									'VocaDb.Web.Resources.Views.Tag:Edit.ValidationNeedDescription',
 							  )
 							: [],
+						tagEditStore.validationError_needCategory
+							? t('VocaDb.Web.Resources.Views.Tag:Edit.ValidationNeedCategory')
+							: [],
 					)}
 				/>
 
@@ -233,7 +234,6 @@ const TagEditLayout = observer(
 
 							const id = await tagEditStore.submit(
 								requestToken,
-								categoryNameRef.current.value,
 								thumbPicUpload,
 							);
 
@@ -289,12 +289,19 @@ const TagEditLayout = observer(
 						<TagCategoryAutoComplete
 							type="text"
 							maxLength={30}
-							onAcceptSelection={(): void => {}}
+							onAcceptSelection={(categoryName): void =>
+								runInAction(() => {
+									tagEditStore.categoryName = categoryName;
+								})
+							}
 							clearValue={false}
-							ref={categoryNameRef}
-							defaultValue={contract.categoryName}
+							value={tagEditStore.categoryName}
+							onChange={(e): void =>
+								runInAction(() => {
+									tagEditStore.categoryName = e.target.value;
+								})
+							}
 						/>
-						{/* TODO */}
 					</div>
 
 					<div className="editor-label">

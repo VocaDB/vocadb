@@ -24,6 +24,7 @@ export class TagEditStore {
 	// Bitmask for all possible entry types (all bits 1)
 	static readonly allEntryTypes = 1073741823;
 
+	@observable categoryName: string;
 	@observable defaultNameLanguage: string;
 	readonly deleteStore: DeleteEntryStore;
 	readonly description: EnglishTranslatedStringEditStore;
@@ -72,6 +73,7 @@ export class TagEditStore {
 			tagRepo.getById({ id: entryId }),
 		);
 
+		this.categoryName = contract.categoryName;
 		this.defaultNameLanguage = contract.defaultNameLanguage;
 		this.description = new EnglishTranslatedStringEditStore(
 			contract.description,
@@ -94,8 +96,12 @@ export class TagEditStore {
 		return !this.description.original && isEmpty(this.webLinks.items);
 	}
 
+	@computed get validationError_needCategory(): boolean {
+		return !this.categoryName || this.categoryName.trim() === '';
+	}
+
 	@computed get hasValidationErrors(): boolean {
-		return this.validationError_needDescription;
+		return this.validationError_needDescription || this.validationError_needCategory;
 	}
 
 	@action addRelatedTag = (tag: TagBaseContract): number => {
@@ -116,7 +122,6 @@ export class TagEditStore {
 
 	@action submit = async (
 		requestToken: string,
-		categoryName: string /* HACK */,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
@@ -126,7 +131,7 @@ export class TagEditStore {
 				requestToken,
 				{
 					canDelete: false,
-					categoryName: categoryName,
+					categoryName: this.categoryName,
 					defaultNameLanguage: this.defaultNameLanguage,
 					deleted: false,
 					description: this.description.toContract(),
