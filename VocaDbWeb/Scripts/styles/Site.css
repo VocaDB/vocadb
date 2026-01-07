@@ -709,3 +709,17 @@ div.item {
 		align-items: baseline;
 	}
 }
+
+/* Icon animations */
+@keyframes icon-spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.icon-spin {
+	animation: icon-spin 1s infinite linear;
+}

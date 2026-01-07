@@ -8,6 +8,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
 import { AlbumTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
+import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { AlbumType } from '@/Models/Albums/AlbumType';
@@ -238,13 +239,9 @@ const AlbumCreateLayout = observer(
 							</div>
 
 							<br />
-							<Button
-								type="submit"
-								disabled={albumCreateStore.submitting}
-								variant="primary"
-							>
+							<SaveBtn submitting={albumCreateStore.submitting}>
 								{t('ViewRes:Shared.Save')}
-							</Button>
+							</SaveBtn>
 						</div>
 
 						<div className="span4">

@@ -4,17 +4,23 @@ import { useTranslation } from 'react-i18next';
 
 interface SaveBtnProps {
 	submitting: boolean;
+	children?: React.ReactNode;
 }
 
 export const SaveBtn = React.memo(
-	({ submitting }: SaveBtnProps): React.ReactElement => {
+	({ submitting, children }: SaveBtnProps): React.ReactElement => {
 		const { t } = useTranslation('HelperRes');
 
 		return (
 			<p>
 				<Button type="submit" variant="primary" disabled={submitting}>
-					<i className="icon-ok icon-white"></i> &nbsp;
-					{t('HelperRes:Helper.SaveChanges')}
+					<i
+						className={`${
+							submitting ? 'icon-refresh icon-spin' : 'icon-ok'
+						} icon-white`}
+					></i>{' '}
+					&nbsp;
+					{children ?? t('HelperRes:Helper.SaveChanges')}
 				</Button>
 			</p>
 		);
