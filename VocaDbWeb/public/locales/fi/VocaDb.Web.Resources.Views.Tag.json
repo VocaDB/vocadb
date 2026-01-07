@@ -2,6 +2,6 @@
   "Edit": {
     "RelatedTags": "Liittyvät tunnisteet",
     "ValidationNeedDescription": "Tunnisteella tulee olla kuvaus",
-    "ValidationNeedCategory": "Tag category is required"
+    "ValidationNeedCategory": "Tunnisteella tulee olla kategoria"
   }
 }
