@@ -1,6 +1,7 @@
 {
   "Edit": {
     "RelatedTags": "関連タグ",
-    "ValidationNeedDescription": "Tag should have a description"
+    "ValidationNeedDescription": "Tag should have a description",
+    "ValidationNeedCategory": "Tag category is required"
   }
 }

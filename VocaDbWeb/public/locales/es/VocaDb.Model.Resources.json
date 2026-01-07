@@ -69,6 +69,7 @@
 		"NeedReferences": "Es obligatorio incluir notas, enlaces o PV como referencia.",
 		"NeedType": "Es obligatorio especificar el tipo de canción.",
 		"NonInstrumentalSongNeedsVocalists": "Esta canción no tiene vocalistas. Los instrumentales originales se deben etiquetar como 'instrumental'. Las versiones de karaoke (de canciones que ya existen) deben usar el tipo de canción 'Instrumental'. Si no, añada vocalistas.",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "No hace falta especificar el mismo evento de lanzamiento para la canción y el álbum.",
 		"RedundantRoles": "No hace falta especificar los roles del productor cuando ese productor es el único que hay.",
 		"UnspecifiedNames": "El nombre principal es obligatorio."

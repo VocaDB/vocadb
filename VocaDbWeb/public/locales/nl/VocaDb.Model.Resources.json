@@ -69,6 +69,7 @@
 		"NeedReferences": "Nummer heeft notities, promotievideo's of links nodig voor referentie.",
 		"NeedType": "Nummertype moet worden gespecificeerd.",
 		"NonInstrumentalSongNeedsVocalists": "Dit nummer heeft geen vocalisten. Originele instrumentale nummers moeten met de 'instrumental' tag getagd worden. Instrumentale (karaoke) versies van bestaande nummers moeten het 'Instrumentaal' nummertype gebruiken. Voeg anders vocalisten toe.",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "Dezelfde publicatiegebeurtenis hoeft niet worden opgegeven voor zowel het nummer als het album.",
 		"RedundantRoles": "De rol van producent hoeft niet te worden gespecificeerd wanneer die producent de enige is.",
 		"UnspecifiedNames": "Nummer heeft een hoofdnaam nodig."

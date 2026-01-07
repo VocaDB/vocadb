@@ -1,6 +1,7 @@
 {
   "Edit": {
     "RelatedTags": "Verwandte Schlagwörter",
-    "ValidationNeedDescription": "Schlagwort muss eine Beschreibung enthalten"
+    "ValidationNeedDescription": "Schlagwort muss eine Beschreibung enthalten",
+    "ValidationNeedCategory": "Tag category is required"
   }
 }

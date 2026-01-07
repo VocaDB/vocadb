@@ -69,6 +69,7 @@
 		"NeedReferences": "Der Song benötigt eine Beschreibung, PVs oder Links zur Referenz.",
 		"NeedType": "Die Art des Song muss angegeben werden.",
 		"NonInstrumentalSongNeedsVocalists": "Dieser Song hat keine Sänger. Originale Instrumentalstücke müssen mit dem Schlagwort 'instrumental' gekennzeichnet sein. Instrumentale (Karaoke) Versionen von existierenden Songs sollten den Songtyp 'Instrumental' verwenden. Andernfalls, füge Sänger hinzu.",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "Das gleiche Release-Ereignis muss nicht sowohl für den Song als auch für das Album angegeben werden.",
 		"RedundantRoles": "Die Rolle des Produzenten muss nicht angegeben werden, wenn dieser der einzige Produzent ist.",
 		"UnspecifiedNames": "Der Song benötigt einen primären Namen."

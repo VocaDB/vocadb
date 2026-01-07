@@ -1,6 +1,7 @@
 {
   "Edit": {
     "RelatedTags": "相关标签",
-    "ValidationNeedDescription": "标签应包含描述"
+    "ValidationNeedDescription": "标签应包含描述",
+    "ValidationNeedCategory": "Tag category is required"
   }
 }

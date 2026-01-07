@@ -69,6 +69,7 @@
 		"NeedReferences": "A música precisa de notas, PVs ou links de referência.",
 		"NeedType": "O tipo de música precisa de ser especificado.",
 		"NonInstrumentalSongNeedsVocalists": "Esta música não tem vocalistas. ",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "The same release event does not need to be specified for both the song and album.",
 		"RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
 		"UnspecifiedNames": "A música precisa de um nome primário."

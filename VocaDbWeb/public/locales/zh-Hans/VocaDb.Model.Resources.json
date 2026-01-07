@@ -69,6 +69,7 @@
 		"NeedReferences": "Songs needs notes, PVs or links for reference.",
 		"NeedType": "需要指定歌曲类型。",
 		"NonInstrumentalSongNeedsVocalists": "缺少歌手信息。如果这首歌曲是原创的纯音乐曲目，请在标签区里添加“Instrumental”标签。如果是伴奏，请将其归为“纯音乐”一类并注明原版。非纯音乐的歌曲必须有至少一名歌手。",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "不需要为歌曲和专辑指定相同的发布活动。",
 		"RedundantRoles": "当是唯一的制作人时，不需要指定制作人的身份。",
 		"UnspecifiedNames": "歌曲需要一个主名称。"
