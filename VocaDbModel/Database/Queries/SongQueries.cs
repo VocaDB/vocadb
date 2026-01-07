@@ -1215,6 +1215,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 			song.MinMilliBpm = fullProperties.MinMilliBpm;
 			song.MaxMilliBpm = fullProperties.MaxMilliBpm;
+			song.CultureCodes = fullProperties.CultureCodes?.Select(c => new OptionalCultureCode(c)).ToArray() ?? Array.Empty<OptionalCultureCode>();
 
 			// Artists
 			var artistDiff = DatabaseContextHelper.RestoreObjectRefs(
