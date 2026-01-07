@@ -69,6 +69,7 @@
 		"NeedReferences": "crwdns16561:0crwdne16561:0",
 		"NeedType": "crwdns16563:0crwdne16563:0",
 		"NonInstrumentalSongNeedsVocalists": "crwdns16565:0crwdne16565:0",
+		"NeedToSpecifyNames": "crwdns16936:0crwdne16936:0",
 		"RedundantEvent": "crwdns16567:0crwdne16567:0",
 		"RedundantRoles": "crwdns16569:0crwdne16569:0",
 		"UnspecifiedNames": "crwdns16571:0crwdne16571:0"
