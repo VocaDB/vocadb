@@ -1,6 +1,7 @@
 {
   "Edit": {
     "RelatedTags": "Gerelateerde tags",
-    "ValidationNeedDescription": "Tag moet een beschrijving hebben"
+    "ValidationNeedDescription": "Tag moet een beschrijving hebben",
+    "ValidationNeedCategory": "Tag category is required"
   }
 }
