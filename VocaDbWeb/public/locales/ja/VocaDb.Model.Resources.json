@@ -69,6 +69,7 @@
 		"NeedReferences": "Song needs notes, PVs or links for reference.",
 		"NeedType": "曲のタイプが必要です。",
 		"NonInstrumentalSongNeedsVocalists": "この曲にはボーカリストがいません。曲がオリジナルインストゥルメンタルの場合は\"instrumental\"のタグを適用してください。既に存在する曲のインスト（カラオケ・オフヴォーカル）バージョンの場合は「インストゥルメンタル」の曲タイプを選択してください。それ以外の場合はボーカリストを加えて下さい。",
+		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
 		"RedundantEvent": "The same release event does not need to be specified for both the song and album.",
 		"RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
 		"UnspecifiedNames": "曲は主なタイトルが必要です。"
