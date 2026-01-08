@@ -75,6 +75,7 @@ public class ArchivedSongContract
 		data.TranslatedName = thisVersion.TranslatedName;
 		data.MinMilliBpm = thisVersion.MinMilliBpm;
 		data.MaxMilliBpm = thisVersion.MaxMilliBpm;
+		data.CultureCodes = thisVersion.CultureCodes ?? Array.Empty<string>();
 
 		DoIfExists(version, SongEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
 		DoIfExists(version, SongEditableFields.Artists, xmlCache, (v, doc) => SetArtists(data, v, doc));
@@ -114,6 +115,7 @@ public class ArchivedSongContract
 		WebLinks = diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		MinMilliBpm = song.MinMilliBpm;
 		MaxMilliBpm = song.MaxMilliBpm;
+		CultureCodes = song.CultureCodes.Select(c => c.CultureCode).ToArray();
 	}
 
 	[DataMember]
@@ -175,4 +177,7 @@ public class ArchivedSongContract
 
 	[DataMember]
 	public ArchivedWebLinkContract[]? WebLinks { get; set; }
+
+	[DataMember]
+	public string[] CultureCodes { get; set; }
 }

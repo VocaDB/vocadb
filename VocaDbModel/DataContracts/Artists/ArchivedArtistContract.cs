@@ -39,6 +39,7 @@ public class ArchivedArtistContract
 		data.Members = thisVersion.Members;
 		data.ReleaseDate = thisVersion.ReleaseDate;
 		data.TranslatedName = thisVersion.TranslatedName;
+		data.CultureCodes = thisVersion.CultureCodes ?? Array.Empty<string>();
 
 		DoIfExists(version, ArtistEditableFields.Description, xmlCache, v =>
 		{
@@ -73,6 +74,7 @@ public class ArchivedArtistContract
 		ReleaseDate = artist.ReleaseDate;
 		TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 		WebLinks = diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
+		CultureCodes = artist.CultureCodes.Select(c => c.CultureCode).ToArray();
 	}
 
 	[DataMember]
@@ -114,4 +116,7 @@ public class ArchivedArtistContract
 
 	[DataMember]
 	public ArchivedWebLinkContract[]? WebLinks { get; set; }
+
+	[DataMember]
+	public string[] CultureCodes { get; set; }
 }

@@ -606,6 +606,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				warnings: warnings,
 				objRef: fullProperties.BaseVoicebank
 			);
+			artist.CultureCodes = fullProperties.CultureCodes?.Select(c => new OptionalCultureCode(c)).ToArray() ?? Array.Empty<OptionalCultureCode>();
 
 			if (PermissionContext.HasPermission(PermissionToken.ViewCoverArtImages))
 			{

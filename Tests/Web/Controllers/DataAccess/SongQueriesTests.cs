@@ -1068,4 +1068,52 @@ public class SongQueriesTests
 
 		_repository.Count<UserMessage>().Should().Be(0, "No notification was sent");
 	}
+
+	[TestMethod]
+	public async Task Update_CultureCodes()
+	{
+		var contract = EditContract();
+		contract.CultureCodes = new[] { "ja", "en" };
+
+		await _queries.UpdateBasicProperties(contract);
+
+		_song.CultureCodes.Count.Should().Be(2, "CultureCodes count");
+		_song.CultureCodes.Select(c => c.CultureCode).Should().Contain("ja", "Has Japanese culture code");
+		_song.CultureCodes.Select(c => c.CultureCode).Should().Contain("en", "Has English culture code");
+
+		var archivedVersion = _repository.List<ArchivedSongVersion>().FirstOrDefault();
+
+		archivedVersion.Should().NotBeNull("Archived version was created");
+		archivedVersion.Diff.ChangedFields.Value.Should().Be(SongEditableFields.CultureCodes, "Changed fields");
+	}
+
+	[TestMethod]
+	public async Task Revert_CultureCodes()
+	{
+		_user.GroupId = UserGroupId.Moderator;
+		_permissionContext.RefreshLoggedUser(_repository);
+
+		// Set initial culture codes
+		var contract = EditContract();
+		contract.CultureCodes = new[] { "ja", "en" };
+		await _queries.UpdateBasicProperties(contract);
+
+		var versionWithCultureCodes = _song.ArchivedVersionsManager.GetLatestVersion();
+		versionWithCultureCodes.Should().NotBeNull("Version with culture codes");
+
+		// Change culture codes
+		contract = EditContract();
+		contract.CultureCodes = new[] { "es" };
+		await _queries.UpdateBasicProperties(contract);
+
+		_song.CultureCodes.Count.Should().Be(1, "CultureCodes count before revert");
+		_song.CultureCodes.Select(c => c.CultureCode).Should().Contain("es", "Has Spanish culture code before revert");
+
+		// Revert to version with original culture codes
+		_queries.RevertToVersion(versionWithCultureCodes.Id);
+
+		_song.CultureCodes.Count.Should().Be(2, "CultureCodes were restored");
+		_song.CultureCodes.Select(c => c.CultureCode).Should().Contain("ja", "Has Japanese culture code after revert");
+		_song.CultureCodes.Select(c => c.CultureCode).Should().Contain("en", "Has English culture code after revert");
+	}
 }
