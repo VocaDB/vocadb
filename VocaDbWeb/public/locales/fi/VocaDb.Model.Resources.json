@@ -69,7 +69,7 @@
 		"NeedReferences": "Kappale tarvitsee kuvauksen, videoita tai linkkejä viitteeksi.",
 		"NeedType": "Kappaleen tyypin tulee olla määritelty.",
 		"NonInstrumentalSongNeedsVocalists": "Tällä kappaleella ei ole laulajia. Alkuperäiset instrumentaalikappaleet tulee merkitä \"instrumental\"-tunnisteella. Instrumentaaliversiot (karaoket) olemassa olevista kappaleista tulee merkata kappaletyypiltään instrumentaaleiksi. Muussa tapauksessa lisää kappaleelle laulajia.",
-		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
+		"NeedToSpecifyNames": "Samaa nimeä ei tule lisätä useampaan kuin yhteen nimille tarkoitetuista kentistä. Nimi tulee lisätä vain sen kieltä vastaavaan kenttään.",
 		"RedundantEvent": "Samaa julkaisutapahtumaa ei tarvitse määritellä erikseen sekä kappaleelle että albumille.",
 		"RedundantRoles": "Tuottajien rooleja ei tarvitse täsmentää, jos tuottajia on vain yksi.",
 		"UnspecifiedNames": "Kappaleella tulee olla ensisijainen nimi."
