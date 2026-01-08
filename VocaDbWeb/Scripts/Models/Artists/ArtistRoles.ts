@@ -60,4 +60,6 @@ export enum ArtistRoles {
 	Encoder = 1 << 14,
 
 	VocalDataProvider = 1 << 15,
+
+	RecordingEngineer = 1 << 16,
 }
