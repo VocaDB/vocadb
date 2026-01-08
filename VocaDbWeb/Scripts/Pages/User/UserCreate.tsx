@@ -1,6 +1,7 @@
 import Alert from '@/Bootstrap/Alert';
 import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
+import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage } from '@/Components/ui';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { UserCreateStore } from '@/Stores/User/UserCreateStore';
@@ -173,15 +174,9 @@ const UserCreateLayout = observer(
 
 								<br />
 								<br />
-								<p>
-									<Button
-										type="submit"
-										variant="primary"
-										disabled={userCreateStore.submitting}
-									>
-										{t('ViewRes.User:Create.DoRegister')}
-									</Button>
-								</p>
+								<SaveBtn submitting={userCreateStore.submitting}>
+									{t('ViewRes.User:Create.DoRegister')}
+								</SaveBtn>
 
 								<br />
 								<br />

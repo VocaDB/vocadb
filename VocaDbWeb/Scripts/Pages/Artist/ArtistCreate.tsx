@@ -6,6 +6,7 @@ import { DuplicateEntriesMessage } from '@/Components/Shared/KnockoutPartials/Du
 import { Layout } from '@/Components/Shared/Layout';
 import { ArtistTypesDropdownKnockout } from '@/Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
+import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { ImageHelper } from '@/Helpers/ImageHelper';
@@ -351,15 +352,9 @@ const ArtistCreateLayout = observer(
 							</p>
 
 							<br />
-							<Button
-								type="submit"
-								variant="primary"
-								className={classNames(
-									artistCreateStore.submitting && 'disabled',
-								)}
-							>
+							<SaveBtn submitting={artistCreateStore.submitting}>
 								{t('ViewRes:Shared.Save')}
-							</Button>
+							</SaveBtn>
 						</div>
 						<div className="span4">
 							<Alert variant="info">

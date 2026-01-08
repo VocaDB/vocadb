@@ -13,6 +13,7 @@ import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/S
 import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
+import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { SongHelper } from '@/Helpers/SongHelper';
@@ -414,13 +415,9 @@ const SongCreateLayout = observer(
 							</p>
 
 							<br />
-							<Button
-								type="submit"
-								disabled={songCreateStore.submitting}
-								variant="primary"
-							>
+							<SaveBtn submitting={songCreateStore.submitting}>
 								{t('ViewRes:Shared.Save')}
-							</Button>
+							</SaveBtn>
 						</div>
 
 						<div className="span4">

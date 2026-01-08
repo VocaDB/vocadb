@@ -15,7 +15,12 @@ export const SaveAndBackBtn = React.memo(
 		return (
 			<p>
 				<Button type="submit" variant="primary" disabled={submitting}>
-					<i className="icon-ok icon-white"></i> &nbsp;
+					<i
+						className={`${
+							submitting ? 'icon-refresh icon-spin' : 'icon-ok'
+						} icon-white`}
+					></i>{' '}
+					&nbsp;
 					{t('HelperRes:Helper.SaveChanges')}
 				</Button>{' '}
 				<Button className="btn-nomargin" as={Link} to={backAction}>
