@@ -5,6 +5,8 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { adminRepo } from '@/Repositories/AdminRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import { ManageFrontpageStore } from '@/Stores/Admin/ManageFrontpageStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -18,6 +20,7 @@ const manageFrontpageStore = new ManageFrontpageStore(adminRepo);
 const AdminManageFrontpage = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+		const vdb = useVdb();
 
 		const title = 'Manage Frontpage'; /* LOC */
 
@@ -151,7 +154,7 @@ const AdminManageFrontpage = observer(
 								{banner.imageUrl && (
 									<div style={{ marginTop: '10px' }}>
 										<img
-											src={`/Content/banners/${banner.imageUrl}`}
+											src={functions.mergeUrls(vdb.values.staticContentHost, banner.imageUrl)}
 											alt="Banner preview"
 											style={{ maxWidth: '400px', maxHeight: '200px' }}
 										/>
@@ -214,7 +217,7 @@ const AdminManageFrontpage = observer(
 												}}
 											>
 												<img
-													src={`/Content/banners/${banner.imageUrl}`}
+													src={functions.mergeUrls(vdb.values.staticContentHost, banner.imageUrl)}
 													alt={banner.title}
 													style={{
 														width: '100%',

@@ -78,26 +78,25 @@ public sealed class FrontpageConfigService
 		if (original == null)
 			throw new ArgumentException("Invalid image file");
 
-		// Generate unique filename
+		// Generate unique filename and path
 		var fileName = $"banner_{Guid.NewGuid()}{ext}";
+		var relativePath = $"banners/{fileName}";
 
 		// Upload to S3 if configured, otherwise save locally
 		if (_s3Client != null && !string.IsNullOrEmpty(_s3BucketName))
 		{
-			UploadToS3(stream, fileName, contentType);
+			UploadToS3(stream, relativePath, contentType);
 		}
 		else
 		{
-			UploadLocally(stream, fileName);
+			UploadLocally(stream, relativePath);
 		}
 
-		return fileName;
+		return relativePath;
 	}
 
-	private void UploadToS3(Stream stream, string fileName, string contentType)
+	private void UploadToS3(Stream stream, string s3Key, string contentType)
 	{
-		var s3Key = $"banners/{fileName}";
-
 		stream.Position = 0;
 		using var memoryStream = new MemoryStream();
 		stream.CopyTo(memoryStream);
@@ -124,17 +123,16 @@ public sealed class FrontpageConfigService
 		}
 	}
 
-	private void UploadLocally(Stream stream, string fileName)
+	private void UploadLocally(Stream stream, string relativePath)
 	{
-		var targetDir = Path.Combine(
+		// Save to wwwroot so files are served from staticContentHost
+		var targetPath = Path.Combine(
 			AppDomain.CurrentDomain.BaseDirectory,
-			"Content",
-			"banners"
+			"wwwroot",
+			relativePath.Replace('/', Path.DirectorySeparatorChar)
 		);
 
-		Directory.CreateDirectory(targetDir);
-
-		var targetPath = Path.Combine(targetDir, fileName);
+		Directory.CreateDirectory(Path.GetDirectoryName(targetPath)!);
 
 		stream.Position = 0;
 		using var fileStream = new FileStream(targetPath, FileMode.Create);

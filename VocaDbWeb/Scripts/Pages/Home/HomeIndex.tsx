@@ -8,6 +8,7 @@ import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/C
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
+import { functions } from '@/Shared/GlobalFunctions';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
@@ -183,7 +184,10 @@ const HomeIndexLayout = ({
 									}}
 								>
 									<img
-										src={`/Content/banners/${banner.imageUrl}`}
+										src={functions.mergeUrls(
+											vdb.values.staticContentHost,
+											banner.imageUrl,
+										)}
 										alt={banner.title}
 										style={{
 											width: '100%',
