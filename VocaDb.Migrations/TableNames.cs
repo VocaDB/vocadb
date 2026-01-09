@@ -44,6 +44,7 @@ public static class TableNames
 	public const string EventNames = nameof(EventNames);
 	public const string EventSeriesNames = nameof(EventSeriesNames);
 	public const string FavoriteSongsForUsers = nameof(FavoriteSongsForUsers);
+	public const string Configs = nameof(Configs);
 	public const string GroupsForArtists = nameof(GroupsForArtists);
 	public const string IPRules = nameof(IPRules);
 	public const string LyricsForSongs = nameof(LyricsForSongs);

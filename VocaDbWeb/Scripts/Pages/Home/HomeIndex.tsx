@@ -1,3 +1,4 @@
+import Alert from '@/Bootstrap/Alert';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVContent } from '@/Components/Shared/PVs/PVContent';
@@ -153,6 +154,60 @@ const HomeIndexLayout = ({
 	return (
 		<Layout pageTitle={undefined} ready={true}>
 			{/* TODO: <link rel="alternate" type="application/rss+xml" title="RSS" href='@Url.Action("LatestVideos", "Song")'> */}
+			{vdb.values.frontpageBanners &&
+				vdb.values.frontpageBanners.length > 0 &&
+				vdb.values.frontpageBanners.map((banner, index) => {
+					const BannerContent = (): React.ReactElement => (
+						<Alert
+							variant="info"
+							style={{
+								display: 'flex',
+								padding: 0,
+								overflow: 'hidden',
+								maxHeight: '200px',
+								cursor: banner.linkUrl ? 'pointer' : 'default'
+							}}
+							onClick={banner.linkUrl ? (): void => {
+								window.location.href = banner.linkUrl;
+							} : undefined}
+						>
+							{banner.imageUrl && (
+								<div
+									style={{
+										flexShrink: 0,
+										width: '200px',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+										backgroundColor: 'rgba(0,0,0,0.05)'
+									}}
+								>
+									<img
+										src={`/Content/banners/${banner.imageUrl}`}
+										alt={banner.title}
+										style={{
+											width: '100%',
+											height: '100%',
+											objectFit: 'cover'
+										}}
+									/>
+								</div>
+							)}
+							<div style={{
+								flex: 1,
+								padding: '15px',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center'
+							}}>
+								<h4 style={{ margin: '0 0 10px 0' }}>{banner.title}</h4>
+								{banner.description && <p style={{ margin: 0 }}>{banner.description}</p>}
+							</div>
+						</Alert>
+					);
+
+					return <div key={index}><BannerContent /></div>;
+				})}
 			<h1 className="page-title home-title">
 				{vdb.resources.home.welcome}
 				<small>{vdb.resources.home.welcomeSubtitle}</small>

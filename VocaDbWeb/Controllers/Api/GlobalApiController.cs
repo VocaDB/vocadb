@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code.Security;
@@ -17,16 +18,19 @@ public class GlobalApiController : ApiController
 	private readonly BrandableStringsManager _brandableStrings;
 	private readonly VdbConfigManager _config;
 	private readonly IUserPermissionContext _userContext;
+	private readonly FrontpageConfigService _frontpageConfigService;
 
 	public GlobalApiController(
 		BrandableStringsManager brandableStrings,
 		VdbConfigManager config,
-		IUserPermissionContext userContext
+		IUserPermissionContext userContext,
+		FrontpageConfigService frontpageConfigService
 	)
 	{
 		_brandableStrings = brandableStrings;
 		_config = config;
 		_userContext = userContext;
+		_frontpageConfigService = frontpageConfigService;
 	}
 
 	[HttpGet("resources")]
@@ -42,6 +46,6 @@ public class GlobalApiController : ApiController
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public GlobalValues GetValues()
 	{
-		return new GlobalValues(_brandableStrings, _config, _userContext);
+		return new GlobalValues(_brandableStrings, _config, _userContext, _frontpageConfigService);
 	}
 }

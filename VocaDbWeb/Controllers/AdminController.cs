@@ -152,6 +152,16 @@ public class AdminController : ControllerBase
 	}
 
 	[Authorize]
+	public ActionResult ManageFrontpage()
+	{
+		PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+		PageProperties.Title = "Manage Frontpage";
+
+		return ReactIndex.File(PageProperties);
+	}
+
+	[Authorize]
 	public ActionResult ManageTagMappings()
 	{
 		PageProperties.Title = "Manage NicoNicoDouga tag mappings";

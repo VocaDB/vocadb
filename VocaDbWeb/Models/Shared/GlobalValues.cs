@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -8,6 +9,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
@@ -55,6 +57,7 @@ public sealed record GlobalValues
 	public string? PatreonLink { get; init; }
 	public string? SitewideAnnouncement { get; init; }
 	public string[] Stylesheets { get; init; }
+	public FrontpageBannerContract[] FrontpageBanners { get; init; }
 
 	public string AmazonComAffiliateId { get; init; }
 	public string AmazonJpAffiliateId { get; init; }
@@ -84,7 +87,8 @@ public sealed record GlobalValues
 	public GlobalValues(
 		BrandableStringsManager brandableStrings,
 		VdbConfigManager config,
-		IUserPermissionContext userContext
+		IUserPermissionContext userContext,
+		FrontpageConfigService frontpageConfigService
 	)
 	{
 		AllowCustomArtistName = AppConfig.AllowCustomArtistName;
@@ -122,6 +126,10 @@ public sealed record GlobalValues
 		UICulture = Thread.CurrentThread.CurrentUICulture.Name;
 
 		Slogan = SloganGenerator.Generate();
+
+		// Load frontpage config from database
+		var frontpageConfig = frontpageConfigService.GetConfig();
+		FrontpageBanners = frontpageConfig.Banners.Where(b => b.Enabled).ToArray();
 
 		AppLinks = MenuPage.AppLinks.Select(l => new MenuPageLink(l)).ToArray();
 		BigBanners = MenuPage.BigBanners.Select(l => new MenuPageLink(l)).ToArray();

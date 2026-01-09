@@ -1,3 +1,4 @@
+import { FrontpageBannerContract } from '@/DataContracts/FrontpageConfigContracts';
 import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
@@ -31,6 +32,7 @@ export interface GlobalValues {
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
 	stylesheets: string[];
+	frontpageBanners: FrontpageBannerContract[];
 	freeTagId: number;
 	instrumentalTagId: number;
 	languagePreference: ContentLanguagePreference;
