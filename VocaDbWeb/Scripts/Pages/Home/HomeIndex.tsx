@@ -165,7 +165,7 @@ const HomeIndexLayout = ({
 								display: 'flex',
 								padding: 0,
 								overflow: 'hidden',
-								maxHeight: '100px',
+								maxHeight: '200px',
 								cursor: banner.linkUrl ? 'pointer' : 'default',
 							}}
 							onClick={
