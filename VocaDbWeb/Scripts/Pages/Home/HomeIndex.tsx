@@ -8,8 +8,8 @@ import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/C
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
-import { functions } from '@/Shared/GlobalFunctions';
 import { userRepo } from '@/Repositories/UserRepository';
+import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import {
@@ -165,12 +165,16 @@ const HomeIndexLayout = ({
 								display: 'flex',
 								padding: 0,
 								overflow: 'hidden',
-								maxHeight: '200px',
-								cursor: banner.linkUrl ? 'pointer' : 'default'
+								maxHeight: '100px',
+								cursor: banner.linkUrl ? 'pointer' : 'default',
 							}}
-							onClick={banner.linkUrl ? (): void => {
-								window.location.href = banner.linkUrl;
-							} : undefined}
+							onClick={
+								banner.linkUrl
+									? (): void => {
+											window.location.href = banner.linkUrl;
+									  }
+									: undefined
+							}
 						>
 							{banner.imageUrl && (
 								<div
@@ -180,7 +184,7 @@ const HomeIndexLayout = ({
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'center',
-										backgroundColor: 'rgba(0,0,0,0.05)'
+										backgroundColor: 'rgba(0,0,0,0.05)',
 									}}
 								>
 									<img
@@ -192,25 +196,33 @@ const HomeIndexLayout = ({
 										style={{
 											width: '100%',
 											height: '100%',
-											objectFit: 'cover'
+											objectFit: 'cover',
 										}}
 									/>
 								</div>
 							)}
-							<div style={{
-								flex: 1,
-								padding: '15px',
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center'
-							}}>
-								<h4 style={{ margin: '0 0 10px 0' }}>{banner.title}</h4>
-								{banner.description && <p style={{ margin: 0 }}>{banner.description}</p>}
+							<div
+								style={{
+									flex: 1,
+									padding: '15px',
+									display: 'flex',
+									flexDirection: 'column',
+									justifyContent: 'center',
+								}}
+							>
+								<h3 style={{ margin: '0 0 10px 0' }}>{banner.title}</h3>
+								{banner.description && (
+									<p style={{ margin: 0 }}>{banner.description}</p>
+								)}
 							</div>
 						</Alert>
 					);
 
-					return <div key={index}><BannerContent /></div>;
+					return (
+						<div key={index}>
+							<BannerContent />
+						</div>
+					);
 				})}
 			<h1 className="page-title home-title">
 				{vdb.resources.home.welcome}
