@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
@@ -25,16 +26,19 @@ public class AdminApiController : ApiController
 	private readonly IPRuleManager _ipRuleManager;
 	private readonly IUserPermissionContext _userContext;
 	private readonly AdminService _adminService;
+	private readonly FrontpageConfigService _frontpageConfigService;
 
 	public AdminApiController(
 		IUserPermissionContext userContext,
 		IPRuleManager ipRuleManager,
-		AdminService adminService
+		AdminService adminService,
+		FrontpageConfigService frontpageConfigService
 	)
 	{
 		_userContext = userContext;
 		_ipRuleManager = ipRuleManager;
 		_adminService = adminService;
+		_frontpageConfigService = frontpageConfigService;
 	}
 
 	[HttpGet("tempBannedIPs")]
@@ -104,5 +108,39 @@ public class AdminApiController : ApiController
 		var count = _adminService.DeletePVsByAuthor(author, PVService.Youtube);
 
 		return NoContent();
+	}
+
+	[HttpGet("frontpage-config")]
+	public FrontpageConfigContract GetFrontpageConfig()
+	{
+		_userContext.VerifyPermission(PermissionToken.Admin);
+
+		return _frontpageConfigService.GetConfig();
+	}
+
+	[HttpPut("frontpage-config")]
+	[OriginHeaderCheck]
+	public ActionResult UpdateFrontpageConfig([FromBody] FrontpageConfigContract config)
+	{
+		_userContext.VerifyPermission(PermissionToken.Admin);
+
+		_frontpageConfigService.UpdateConfig(config);
+
+		return NoContent();
+	}
+
+	[HttpPost("frontpage-config/upload-image")]
+	[OriginHeaderCheck]
+	public ActionResult<string> UploadBannerImage(IFormFile file)
+	{
+		_userContext.VerifyPermission(PermissionToken.Admin);
+
+		if (file == null || file.Length == 0)
+			return BadRequest("No file provided");
+
+		using var stream = file.OpenReadStream();
+		var fileName = _frontpageConfigService.UploadBannerImage(stream, file.FileName, file.ContentType);
+
+		return Ok(fileName);
 	}
 }

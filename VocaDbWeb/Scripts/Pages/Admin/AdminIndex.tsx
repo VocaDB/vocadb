@@ -64,6 +64,12 @@ const AdminIndex = (): React.ReactElement => {
 				</p>
 			)}
 
+			{loginManager.canAdmin && (
+				<p>
+					<Link to="/Admin/ManageFrontpage">Manage frontpage{/* LOC */}</Link>
+				</p>
+			)}
+
 			{loginManager.canManageIPRules && (
 				<p>
 					<Link to="/Admin/ManageIPRules">Manage IP rules{/* LOC */}</Link>

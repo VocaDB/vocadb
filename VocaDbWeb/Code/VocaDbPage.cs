@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
@@ -64,6 +65,8 @@ public abstract class VocaDbPage<TModel> : RazorPage<TModel>
 
 	public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
 
+	public FrontpageConfigService FrontpageConfigService => Context.RequestServices.GetRequiredService<FrontpageConfigService>();
+
 	// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
 	public string Culture => Thread.CurrentThread.CurrentCulture.Name;
 
@@ -107,6 +110,8 @@ public abstract class VocaDbPage : RazorPage
 	public VocaUrlMapper UrlMapper => new();
 
 	public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+	public FrontpageConfigService FrontpageConfigService => Context.RequestServices.GetRequiredService<FrontpageConfigService>();
 
 	// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
 	public string Culture => Thread.CurrentThread.CurrentCulture.Name;

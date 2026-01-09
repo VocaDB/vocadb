@@ -3,6 +3,7 @@ import {
 	EntryReportContract,
 	ReportStatus,
 } from '@/DataContracts/EntryReportContract';
+import { FrontpageConfigContract } from '@/DataContracts/FrontpageConfigContracts';
 import { PVForSongContract } from '@/DataContracts/PVForSongContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
@@ -134,6 +135,31 @@ export class AdminRepository {
 	deletePVsByAuthor = (author: string): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(`/api/admin/pvsByAuthor/${author}`),
+		);
+	};
+
+	getFrontpageConfig = (): Promise<FrontpageConfigContract> => {
+		return this.httpClient.get<FrontpageConfigContract>(
+			this.urlMapper.mapRelative('/api/admin/frontpage-config'),
+		);
+	};
+
+	saveFrontpageConfig = (
+		config: FrontpageConfigContract,
+	): Promise<void> => {
+		return this.httpClient.put<void>(
+			this.urlMapper.mapRelative('/api/admin/frontpage-config'),
+			config,
+		);
+	};
+
+	uploadBannerImage = (file: File): Promise<string> => {
+		const formData = new FormData();
+		formData.append('file', file);
+
+		return this.httpClient.post<string>(
+			this.urlMapper.mapRelative('/api/admin/frontpage-config/upload-image'),
+			formData,
 		);
 	};
 }

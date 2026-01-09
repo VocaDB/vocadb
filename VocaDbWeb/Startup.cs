@@ -205,6 +205,7 @@ public class Startup
 		builder.RegisterType<AdminService>().AsSelf();
 		builder.RegisterType<AlbumService>().AsSelf();
 		builder.RegisterType<ArtistService>().AsSelf();
+		builder.RegisterType<FrontpageConfigService>().AsSelf();
 		builder.RegisterType<MikuDbAlbumService>().AsSelf();
 		builder.RegisterType<OtherService>().AsSelf();
 		builder.RegisterType<ReleaseEventService>().AsSelf();
@@ -227,6 +228,7 @@ public class Startup
 		builder.RegisterType<ActivityEntryQueries>().AsSelf();
 		builder.RegisterType<AlbumQueries>().AsSelf();
 		builder.RegisterType<ArtistQueries>().AsSelf();
+		builder.RegisterType<FrontpageConfigQueries>().AsSelf();
 		builder.RegisterType<CommentQueries>().AsSelf();
 		builder.RegisterType<DiscussionQueries>().AsSelf();
 		builder.RegisterType<EntryQueries>().AsSelf();

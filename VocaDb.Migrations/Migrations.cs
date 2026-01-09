@@ -4,6 +4,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_01_08_0000)]
+public class AddConfigTable : Migration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.Configs)
+			.WithColumn("Id").AsInt32().PrimaryKey($"PK_{TableNames.Configs}").Identity().NotNullable()
+			.WithColumn("Type").AsString(50).NotNullable().Unique()
+			.WithColumn("Value").AsString(int.MaxValue).Nullable()
+			.WithColumn("Updated").AsDateTime().NotNullable();
+	}
+
+	public override void Down()
+	{
+		Delete.Table(TableNames.Configs);
+	}
+}
 
 [Migration(2026_01_04_0000)]
 public class AddLengthToPVsForAlbumsAndEvents : Migration
