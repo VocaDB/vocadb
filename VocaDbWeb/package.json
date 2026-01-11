@@ -1,6 +1,7 @@
 {
 	"private": true,
 	"scripts": {
+		"dev:beta": "cross-env --mode=beta vite",
 		"dev": "npm run development",
 		"development": "vite",
 		"prod": "npm run production",
@@ -28,7 +29,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.40.1",
 		"@typescript-eslint/parser": "^5.40.1",
 		"@vitejs/plugin-react": "^4.3.4",
-		"cross-env": "^5.1",
+		"cross-env": "^5.2.1",
 		"eslint": "^8.42.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-config-react-app": "^7.0.1",
