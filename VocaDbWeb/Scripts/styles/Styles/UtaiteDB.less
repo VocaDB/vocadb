@@ -1,40 +1,64 @@
-﻿@topbar-bgcolor:			#221018;
-@topbar-bggradientbegin:	#793954;
-@topbar-bggradientend:		#221018;
-@topbar-brandlinkcolor:		#AD51A4;
+﻿@topbar-bgcolor: #221018;
+@topbar-bggradientbegin: #793954;
+@topbar-bggradientend: #221018;
+@topbar-brandlinkcolor: #ad51a4;
 
-@linkcolor:					#46202D;@linkcolor-hover:			#7A384F;
+@linkcolor: #46202d;
+@linkcolor-hover: #7a384f;
 
-@btn-bgcolor:				#AD51A4;
-@btn-bgcolordown:			#823D7C;
-@btn-bggradientbegin:		#9C4893;
-@btn-bggradientend:			#B662AD;
+@btn-bgcolor: #ad51a4;
+@btn-bgcolordown: #823d7c;
+@btn-bggradientbegin: #9c4893;
+@btn-bggradientend: #b662ad;
 
-@body-bgcolor:				#DBCFE9;
-@body-bordercolor:			#D7AABF;
+@body-bgcolor: #dbcfe9;
+@body-bordercolor: #d7aabf;
 
-.navbar .navbar-inner, .navbar-inverse .navbar-inner {
+.navbar .navbar-inner,
+.navbar-inverse .navbar-inner {
 	background-color: @topbar-bgcolor;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@topbar-bggradientbegin), to(@topbar-bggradientend));	
-	background-image: -webkit-linear-gradient(top, @topbar-bggradientbegin, @topbar-bggradientend);
-	background-image: -o-linear-gradient(top, @topbar-bggradientbegin, @topbar-bggradientend);
-	background-image: -moz-linear-gradient(center top , @topbar-bggradientbegin, @topbar-bggradientend);
-	background-image: linear-gradient(top, @topbar-bggradientbegin, @topbar-bggradientend);
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(@topbar-bggradientbegin),
+		to(@topbar-bggradientend)
+	);
+	background-image: -webkit-linear-gradient(
+		top,
+		@topbar-bggradientbegin,
+		@topbar-bggradientend
+	);
+	background-image: -o-linear-gradient(
+		top,
+		@topbar-bggradientbegin,
+		@topbar-bggradientend
+	);
+	background-image: -moz-linear-gradient(
+		center top,
+		@topbar-bggradientbegin,
+		@topbar-bggradientend
+	);
+	background-image: linear-gradient(
+		top,
+		@topbar-bggradientbegin,
+		@topbar-bggradientend
+	);
 
-	div.brand a:visited {	
+	div.brand a:visited {
 		color: @topbar-brandlinkcolor;
 	}
 
 	.navbar-search .search-query {
-		background-color: #823D7C;
-		color: -webkit-input-placeholder(#D7AABF);
+		background-color: #823d7c;
+		color: -webkit-input-placeholder(#d7aabf);
 		border-radius: 3px;
 		&:focus {
 			background-color: @body-bgcolor;
 		}
 	}
 	.navbar-search .search-query::-webkit-input-placeholder {
-		color: #D7AABF;
+		color: #d7aabf;
 	}
 }
 
@@ -47,29 +71,54 @@
 }
 
 .rightFrame a:hover {
-	color: @linkcolor-hover;	
+	color: @linkcolor-hover;
 }
 
 .rightFrame .btn-inverse {
-	&, &:visited {
+	&,
+	&:visited {
 		color: white;
-	}	
+	}
 }
 
-.btn-info, .rightFrame .btn-info, .rightFrame .btn-primary {
-  color: white;
-  background-color: @btn-bgcolor;
-  *background-color: @btn-bgcolor;
-  background-image: -moz-linear-gradient(top, @btn-bggradientbegin, @btn-bggradientend);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@btn-bggradientbegin), to(@btn-bggradientend));
-  background-image: -webkit-linear-gradient(top, @btn-bggradientbegin, @btn-bggradientend);
-  background-image: -o-linear-gradient(top, @btn-bggradientbegin, @btn-bggradientend);
-  background-image: linear-gradient(to bottom, @btn-bggradientbegin, @btn-bggradientend);
-  background-repeat: repeat-x;
-  border-color: #B662AD #B662AD #B662AD;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@btn-bggradientbegin', endColorstr='@btn-bggradientend', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+.btn-info,
+.rightFrame .btn-info,
+.rightFrame .btn-primary {
+	color: white;
+	background-color: @btn-bgcolor;
+	*background-color: @btn-bgcolor;
+	background-image: -moz-linear-gradient(
+		top,
+		@btn-bggradientbegin,
+		@btn-bggradientend
+	);
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(@btn-bggradientbegin),
+		to(@btn-bggradientend)
+	);
+	background-image: -webkit-linear-gradient(
+		top,
+		@btn-bggradientbegin,
+		@btn-bggradientend
+	);
+	background-image: -o-linear-gradient(
+		top,
+		@btn-bggradientbegin,
+		@btn-bggradientend
+	);
+	background-image: linear-gradient(
+		to bottom,
+		@btn-bggradientbegin,
+		@btn-bggradientend
+	);
+	background-repeat: repeat-x;
+	border-color: #b662ad #b662ad #b662ad;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@btn-bggradientbegin', endColorstr='@btn-bggradientend', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 
 	&:visited,
 	&:hover,
@@ -78,19 +127,22 @@
 	&.active,
 	&.disabled,
 	&[disabled] {
-	  color: #ffffff;
-	  background-color: @btn-bggradientend;
-	  *background-color: @btn-bggradientend;
+		color: #ffffff;
+		background-color: @btn-bggradientend;
+		*background-color: @btn-bggradientend;
 	}
 }
 
 .btn-group.open .btn-info.dropdown-toggle {
-  background-color: @btn-bggradientend;
+	background-color: @btn-bggradientend;
 }
 
 .pvViewer-songName a {
 	color: @topbar-brandlinkcolor;
-	&:hover, &:visited { color: @topbar-brandlinkcolor; }			   
+	&:hover,
+	&:visited {
+		color: @topbar-brandlinkcolor;
+	}
 }
 
 .rightFrame {
@@ -101,22 +153,30 @@
 
 /* Menu */
 .menu {
-
 	& > .well {
-		vertical-align: top;	
+		vertical-align: top;
 		border: solid @body-bordercolor 2px;
 		background-color: @body-bgcolor;
 		background-color: fade(@body-bgcolor, 90);
 	}
 
-	a, a:visited {
+	a,
+	a:visited {
 		text-decoration: none;
 		color: @linkcolor;
 	}
 
-	a:hover, a:hover:visited {
+	a:hover,
+	a:hover:visited {
 		color: @linkcolor-hover;
 		text-decoration: underline;
 	}
+}
 
+body {
+	background: url(/UtaiteDB.webp) top left no-repeat fixed #001155;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
 }
