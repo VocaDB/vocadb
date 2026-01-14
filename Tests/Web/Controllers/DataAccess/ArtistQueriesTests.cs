@@ -513,4 +513,55 @@ public class ArtistQueriesTests
 		_artist.AllGroups.Count.Should().Be(1, "Number of linked artists");
 		_artist.HasGroup(circle).Should().BeFalse("Character designer was not added");
 	}
+
+	[TestMethod]
+	public async Task Update_CultureCodes()
+	{
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
+		{
+			CultureCodes = new[] { "ja", "en" }
+		};
+
+		await CallUpdate(contract);
+
+		_artist.CultureCodes.Count.Should().Be(2, "CultureCodes count");
+		_artist.CultureCodes.Select(c => c.CultureCode).Should().Contain("ja", "Has Japanese culture code");
+		_artist.CultureCodes.Select(c => c.CultureCode).Should().Contain("en", "Has English culture code");
+
+		var archivedVersion = _repository.List<ArchivedArtistVersion>().FirstOrDefault();
+
+		archivedVersion.Should().NotBeNull("Archived version was created");
+		archivedVersion.Diff.ChangedFields.Value.Should().Be(ArtistEditableFields.CultureCodes, "Changed fields");
+	}
+
+	[TestMethod]
+	public async Task Revert_CultureCodes()
+	{
+		// Set initial culture codes
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
+		{
+			CultureCodes = new[] { "ja", "en" }
+		};
+		await CallUpdate(contract);
+
+		var versionWithCultureCodes = _artist.ArchivedVersionsManager.GetLatestVersion();
+		versionWithCultureCodes.Should().NotBeNull("Version with culture codes");
+
+		// Change culture codes
+		contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
+		{
+			CultureCodes = new[] { "es" }
+		};
+		await CallUpdate(contract);
+
+		_artist.CultureCodes.Count.Should().Be(1, "CultureCodes count before revert");
+		_artist.CultureCodes.Select(c => c.CultureCode).Should().Contain("es", "Has Spanish culture code before revert");
+
+		// Revert to version with original culture codes
+		await _queries.RevertToVersion(versionWithCultureCodes.Id);
+
+		_artist.CultureCodes.Count.Should().Be(2, "CultureCodes were restored");
+		_artist.CultureCodes.Select(c => c.CultureCode).Should().Contain("ja", "Has Japanese culture code after revert");
+		_artist.CultureCodes.Select(c => c.CultureCode).Should().Contain("en", "Has English culture code after revert");
+	}
 }
