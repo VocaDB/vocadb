@@ -7,12 +7,12 @@ export interface BackgroundCredit {
 
 const themeCredits: Record<string, BackgroundCredit> = {
 	darkangel: {
-		artistName: 'みゆ',
-		artistUrl: 'https://piapro.jp/t/nire',
+		artistName: 'るみあ',
+		artistUrl: 'https://www.pixiv.net/en/users/1291606',
 	},
 	tetodb: {
-		artistName: 'みゆ',
-		artistUrl: 'https://piapro.jp/t/nire',
+		artistName: 'はひふへ',
+		artistUrl: 'https://www.pixiv.net/en/users/46764',
 	},
 	pride: {
 		artistName: 'chiyo',
@@ -23,8 +23,8 @@ const themeCredits: Record<string, BackgroundCredit> = {
 		artistUrl: 'https://sorappane.carrd.co/',
 	},
 	touhou: {
-		artistName: 'みゆ',
-		artistUrl: 'https://piapro.jp/t/nire',
+		artistName: 'Namie',
+		artistUrl: 'https://www.pixiv.net/en/users/3829860',
 	},
 };
 
@@ -52,3 +52,4 @@ export function getBackgroundCredit(values: GlobalValues): BackgroundCredit {
 
 	return defaultCredit;
 }
+
