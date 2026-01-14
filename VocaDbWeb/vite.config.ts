@@ -7,6 +7,8 @@ import { defineConfig, loadEnv } from 'vite';
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
 	const VITE_FARO_API_KEY = `${env.VITE_FARO_API_KEY ?? ''}`;
+	const betaMode = process.env.mode === 'beta';
+	console.log('Using https://beta.vocadb.net/ :', betaMode);
 
 	return {
 		build: {
@@ -37,13 +39,15 @@ export default defineConfig(({ mode }) => {
 		server: {
 			proxy: {
 				'/api': {
-					target: 'https://vocadb.net',
+					target: betaMode ? 'https://beta.vocadb.net' : 'https://vocadb.net',
 					changeOrigin: true,
 					// https://stackoverflow.com/questions/74033733/vite-self-signed-certificate-error-when-calling-local-api/74033815#74033815
 					secure: false,
 				},
 				'^/stats/.*': {
-					target: 'https://localhost:5001',
+					target: betaMode
+						? 'https://beta.vocadb.net'
+						: 'https://localhost:5001',
 					changeOrigin: true,
 					// https://stackoverflow.com/questions/74033733/vite-self-signed-certificate-error-when-calling-local-api/74033815#74033815
 					secure: false,
