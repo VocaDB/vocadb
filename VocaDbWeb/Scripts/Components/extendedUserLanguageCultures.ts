@@ -673,6 +673,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'qot',
+		{
+			languages: ['Other'],
+			nativeName: 'Other',
+		},
+	],
+	[
 		'och',
 		{
 			languages: ['Old Chinese', 'Archaic Chinese'],
@@ -988,6 +995,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Uyghur', 'Uighur', ' Eastern Turki'],
 			nativeName: 'ئۇيغۇرچە',
+		},
+	],
+	[
+		'und',
+		{
+			languages: ['Unknown'],
+			nativeName: 'Unknown',
 		},
 	],
 	[

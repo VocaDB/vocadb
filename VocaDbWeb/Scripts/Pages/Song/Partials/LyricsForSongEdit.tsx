@@ -2,6 +2,7 @@ import Accordion from '@/Bootstrap/Accordion';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
+import { CULTURE_CODE_UNKNOWN } from '@/Components/userLanguageCultures';
 import { useCultureCodes } from '@/CultureCodesContext';
 import { useLoginManager } from '@/LoginManagerContext';
 import {
@@ -92,10 +93,7 @@ const LyricsForSongEdit = observer(
 													<td>
 														<UserLanguageCultureDropdownList
 															key={index}
-															placeholder={t(
-																'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
-															)}
-															value={cultureCode}
+															value={cultureCode || CULTURE_CODE_UNKNOWN}
 															extended={languageOptionsExtended}
 															onChange={(e): void =>
 																runInAction(() => {
