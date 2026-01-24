@@ -10,14 +10,17 @@ type JQueryUIAutocompleteProps = {
 const JQueryUIAutocomplete = React.forwardRef<
 	HTMLInputElement,
 	React.PropsWithChildren<JQueryUIAutocompleteProps>
->(({ select, source, renderItem, ...props }, ref) => {
+>(({ select, source, renderItem, minLength, ...props }, ref) => {
 	const el = React.useRef<HTMLInputElement>(undefined!);
 	useImperativeHandle<HTMLInputElement, HTMLInputElement>(
 		ref,
 		() => el.current,
 	);
 
-	const options = React.useMemo(() => ({ select, source }), [select, source]);
+	const options = React.useMemo(
+		() => ({ select, source, minLength }),
+		[select, source, minLength],
+	);
 
 	React.useLayoutEffect(() => {
 		const $el = $(el.current);
