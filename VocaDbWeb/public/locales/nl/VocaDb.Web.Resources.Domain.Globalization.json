@@ -1,6 +1,7 @@
 {
   "InterfaceLanguage": {
-    "Other": "Anders/Onbekend"
+    "Other": "Other",
+    "Unknown": "Unknown"
   },
   "TranslationTypeNames": {
     "Original": "Oorspronkelijk",
