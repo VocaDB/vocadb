@@ -1,6 +1,7 @@
 {
   "InterfaceLanguage": {
-    "Other": "Muu/Tuntematon"
+    "Other": "Other",
+    "Unknown": "Unknown"
   },
   "TranslationTypeNames": {
     "Original": "Alkuperäinen",
