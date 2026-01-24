@@ -4,6 +4,22 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_01_21_0000)]
+public class MigrateEmptyCultureCodesToUnknown : Migration
+{
+	public override void Up()
+	{
+		Execute.Sql($"UPDATE {TableNames.CultureCodesForLyrics} SET CultureCode = 'und' WHERE CultureCode = ''");
+		Execute.Sql($"UPDATE {TableNames.CultureCodesForSongs} SET CultureCode = 'und' WHERE CultureCode = ''");
+		Execute.Sql($"UPDATE {TableNames.CultureCodesForArtists} SET CultureCode = 'und' WHERE CultureCode = ''");
+		Execute.Sql($"UPDATE UserKnownLanguages SET CultureCode = 'und' WHERE CultureCode = ''");
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2026_01_08_0000)]
 public class AddConfigTable : Migration
 {

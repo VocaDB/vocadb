@@ -5,6 +5,7 @@ import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { NamesEditor } from '@/Components/Shared/KnockoutPartials/NamesEditor';
+import { CULTURE_CODE_UNKNOWN } from '@/Components/userLanguageCultures';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVEdit } from '@/Components/Shared/PVs/PVEdit';
 import { ArtistRolesEditViewModel } from '@/Components/Shared/Partials/ArtistRolesEditViewModel';
@@ -410,10 +411,7 @@ const BasicInfoTabContent = observer(
 								{songEditStore.cultureCodes.items.map((c, index) => (
 									<tr key={index}>
 										<UserLanguageCultureDropdownList
-											value={c.toString()}
-											placeholder={t(
-												'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
-											)}
+											value={c.toString() || CULTURE_CODE_UNKNOWN}
 											extended={songEditStore.cultureCodes.extended}
 											onChange={(val): void => {
 												songEditStore.cultureCodes.items[index] =

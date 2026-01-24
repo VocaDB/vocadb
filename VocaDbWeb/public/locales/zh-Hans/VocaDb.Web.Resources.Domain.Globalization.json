@@ -1,6 +1,7 @@
 {
   "InterfaceLanguage": {
-    "Other": "其他/未知"
+    "Other": "其他",
+    "Unknown": "未知"
   },
   "TranslationTypeNames": {
     "Original": "原文",
