@@ -359,6 +359,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'gl',
+		{
+			languages: ['Galician'],
+			nativeName: 'galego',
+		},
+	],
+	[
 		'gu',
 		{
 			languages: ['Gujarati'],
@@ -460,6 +467,13 @@ const rawLangs: RawLangs = [
 				'Persian',
 			],
 			nativeName: 'فارسی',
+		},
+	],
+	[
+		'ga',
+		{
+			languages: ['Irish'],
+			nativeName: 'Gaeilge na hÉireann',
 		},
 	],
 	[
@@ -715,6 +729,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'phn',
+		{
+			languages: ['Phoenician'],
+			nativeName: '𐤔𐤐𐤕𐤟𐤊𐤍𐤏𐤍',
+		},
+	],
+	[
 		'pl',
 		{
 			languages: ['Polish'],
@@ -754,6 +775,20 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Qiang', 'Rma', 'Rme'],
 			nativeName: '尔玛',
+		},
+	],
+	[
+		'rap',
+		{
+			languages: ['Rapa Nui'],
+			nativeName: 'Vānaŋa Rapa Nui',
+		},
+	],
+	[
+		'rhg',
+		{
+			languages: ['Rohingya'],
+			nativeName: '𐴌𐴗𐴥𐴝𐴙𐴚𐴒𐴙𐴝',
 		},
 	],
 	[
