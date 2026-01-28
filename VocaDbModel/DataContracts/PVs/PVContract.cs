@@ -22,6 +22,7 @@ public class PVContract : IPVWithThumbnail
 		ParamIs.NotNull(() => pv);
 
 		Author = pv.Author;
+		Description = pv.Description;
 		ExtendedMetadata = pv.ExtendedMetadata;
 		Id = pv.Id;
 		Disabled = pv.Disabled;
@@ -38,6 +39,7 @@ public class PVContract : IPVWithThumbnail
 		ParamIs.NotNull(() => contract);
 
 		Author = contract.Author;
+		Description = contract.Description;
 		Length = contract.Length;
 		Name = contract.Name;
 		PVId = contract.PVId;
@@ -74,6 +76,7 @@ public class PVContract : IPVWithThumbnail
 		ParamIs.NotNull(() => parseResult);
 
 		Author = parseResult.Author;
+		Description = parseResult.Description;
 		ExtendedMetadata = parseResult.ExtendedMetadata;
 		Length = parseResult.LengthSeconds ?? 0;
 		Name = parseResult.Title;
@@ -91,6 +94,12 @@ public class PVContract : IPVWithThumbnail
 
 	[DataMember]
 	public int? CreatedBy { get; set; }
+
+	/// <summary>
+	/// Video description from the source service.
+	/// Not serialized in API responses.
+	/// </summary>
+	public string? Description { get; set; }
 
 	[DataMember]
 	public bool Disabled { get; init; }

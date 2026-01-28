@@ -22,6 +22,7 @@ public class ArchivedPVContract
 		ParamIs.NotNull(() => pv);
 
 		Author = pv.Author;
+		Description = pv.Description;
 		ExtendedMetadata = pv.ExtendedMetadata;
 		Name = pv.Name;
 		PVId = pv.PVId;
@@ -40,6 +41,9 @@ public class ArchivedPVContract
 
 	[DataMember]
 	public string Author { get; init; }
+
+	[DataMember]
+	public string? Description { get; init; }
 
 	[DataMember]
 	public bool Disabled { get; init; }

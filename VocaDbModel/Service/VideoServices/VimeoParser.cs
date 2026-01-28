@@ -59,13 +59,16 @@ public class VimeoParser : IVideoServiceParser
 		var thumbUrl = result.Pictures.Sizes.Any() ? result.Pictures.Sizes.OrderBy(p => p.Width).First().Link : "";
 		var length = result.Duration;
 		var date = result.CreatedTime; // Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
+		var description = result.Description;
 
-		return VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, uploadDate: date);
+		return VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, uploadDate: date, description: description);
 	}
 }
 
 public class VimeoResult
 {
+	public string Description { get; set; }
+
 	public int Duration { get; set; }
 
 	public string Name { get; set; }

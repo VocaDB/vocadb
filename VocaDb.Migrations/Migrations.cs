@@ -4,6 +4,40 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_01_29_0000)]
+public class AddDescriptionToPVs : Migration
+{
+	public override void Up()
+	{
+		Create.Column("Description")
+			.OnTable(TableNames.PVsForSongs)
+			.AsString(int.MaxValue)
+			.Nullable();
+
+		Create.Column("Description")
+			.OnTable(TableNames.PVsForAlbums)
+			.AsString(int.MaxValue)
+			.Nullable();
+
+		Create.Column("Description")
+			.OnTable(TableNames.PVsForEvents)
+			.AsString(int.MaxValue)
+			.Nullable();
+	}
+
+	public override void Down()
+	{
+		Delete.Column("Description")
+			.FromTable(TableNames.PVsForSongs);
+
+		Delete.Column("Description")
+			.FromTable(TableNames.PVsForAlbums);
+
+		Delete.Column("Description")
+			.FromTable(TableNames.PVsForEvents);
+	}
+}
+
 [Migration(2026_01_21_0000)]
 public class MigrateEmptyCultureCodesToUnknown : Migration
 {
