@@ -1,6 +1,7 @@
 {
   "InterfaceLanguage": {
-    "Other": "Other/Unknown"
+    "Other": "Other",
+    "Unknown": "Unknown"
   },
   "TranslationTypeNames": {
     "Original": "Original",
