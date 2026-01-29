@@ -13,8 +13,9 @@ public class PVForEventMap : ClassMap<PVForEvent>
 		Id(m => m.Id);
 
 		Map(m => m.Author).Length(100).Not.Nullable();
-		Map(m => m.Name).Length(200).Not.Nullable();
+		Map(m => m.Description).Nullable();
 		Map(m => m.Length).Not.Nullable();
+		Map(m => m.Name).Length(200).Not.Nullable();
 		Map(m => m.PublishDate).Nullable();
 		Map(m => m.PVId).Length(255).Not.Nullable();
 		Map(m => m.PVType).Not.Nullable();

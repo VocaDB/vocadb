@@ -15,6 +15,7 @@ public class PV : IEquatable<PV>, IEditablePV
 	}
 
 	private string _author;
+	private string? _description;
 	private PVExtendedMetadata? _extendedMetadata;
 	private string _name;
 	private string _pvId;
@@ -39,6 +40,7 @@ public class PV : IEquatable<PV>, IEditablePV
 		Name = contract.Name ?? string.Empty;
 		PublishDate = contract.PublishDate;
 		Author = contract.Author ?? string.Empty;
+		Description = contract.Description;
 		ExtendedMetadata = contract.ExtendedMetadata;
 	}
 
@@ -51,6 +53,12 @@ public class PV : IEquatable<PV>, IEditablePV
 			ParamIs.NotNull(() => value);
 			_author = value;
 		}
+	}
+
+	public virtual string? Description
+	{
+		get => _description;
+		set => _description = value;
 	}
 
 	public virtual bool Disabled

@@ -76,6 +76,7 @@ public class VideoServiceBilibili : VideoService
 		var author = response.Data.Owner.Name ?? string.Empty;
 		var created = response.Data.PubDate;
 		var length = response.Data.Duration;
+		var description = response.Data.Desc;
 
 		var metadata = new PVExtendedMetadata(new BiliMetadata
 		{
@@ -85,7 +86,7 @@ public class VideoServiceBilibili : VideoService
 		});
 
 		return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(),
-			VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata));
+			VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata, description: description));
 	}
 
 	public override IEnumerable<string> GetUserProfileUrls(string authorId)
@@ -122,6 +123,7 @@ class BilibiliResponseData
 	public long Aid { get; init; }
 	public string Bvid { get; init; } = default!;
 	public long Cid { get; init; }
+	public string Desc { get; init; } = default!;
 	[JsonConverter(typeof(UnixDateTimeConverter))]
 	public DateTime? PubDate { get; init; }
 	public int Duration { get; init; }

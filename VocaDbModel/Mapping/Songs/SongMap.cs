@@ -179,6 +179,7 @@ public class PVForSongMap : ClassMap<PVForSong>
 
 		Map(m => m.Author).Length(100).Not.Nullable();
 		Map(m => m.CreatedBy).Nullable();
+		Map(m => m.Description).Nullable();
 		Map(m => m.Disabled).Not.Nullable();
 		Map(m => m.Length).Not.Nullable();
 		Map(m => m.Name).Length(200).Not.Nullable();

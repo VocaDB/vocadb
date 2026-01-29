@@ -33,6 +33,7 @@ public class VideoUrlParseResult
 		Title = meta.Title ?? string.Empty;
 		Author = meta.Author ?? string.Empty;
 		AuthorId = meta.AuthorId ?? string.Empty;
+		Description = meta.Description;
 		ExtendedMetadata = meta.ExtendedMetadata;
 		ThumbUrl = meta.ThumbUrl ?? string.Empty;
 		LengthSeconds = meta.LengthSeconds;
@@ -64,6 +65,11 @@ public class VideoUrlParseResult
 	public string AuthorId { get; set; }
 
 #nullable enable
+	/// <summary>
+	/// Video description from the source service.
+	/// </summary>
+	public string? Description { get; set; }
+
 	/// <summary>
 	/// Exception. Cannot be null if result type is anything but Ok.
 	/// </summary>

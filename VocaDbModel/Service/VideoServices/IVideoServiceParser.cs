@@ -38,7 +38,8 @@ public class VideoTitleParseResult
 		int? length = null,
 		string[]? tags = null,
 		DateTime? uploadDate = null,
-		PVExtendedMetadata? extendedMetadata = null
+		PVExtendedMetadata? extendedMetadata = null,
+		string? description = null
 	)
 	{
 		return new VideoTitleParseResult(
@@ -51,7 +52,8 @@ public class VideoTitleParseResult
 			length,
 			tags,
 			uploadDate,
-			extendedMetadata
+			extendedMetadata,
+			description
 		);
 	}
 
@@ -65,7 +67,8 @@ public class VideoTitleParseResult
 		int? length = null,
 		string[]? tags = null,
 		DateTime? uploadDate = null,
-		PVExtendedMetadata? extendedMetadata = null
+		PVExtendedMetadata? extendedMetadata = null,
+		string? description = null
 	)
 	{
 		Error = error;
@@ -78,6 +81,7 @@ public class VideoTitleParseResult
 		UploadDate = uploadDate;
 		ExtendedMetadata = extendedMetadata;
 		Tags = tags ?? Array.Empty<string>();
+		Description = description;
 	}
 
 	/// <summary>
@@ -86,6 +90,12 @@ public class VideoTitleParseResult
 	/// Optional field.
 	/// </summary>
 	public string Author { get; set; }
+
+	/// <summary>
+	/// Video description from the source service.
+	/// Optional field. Can be null if not provided by the service.
+	/// </summary>
+	public string? Description { get; set; }
 
 	/// <summary>
 	/// Identifier of the user who uploaded the video/song.
