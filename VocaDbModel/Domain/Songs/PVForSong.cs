@@ -118,6 +118,7 @@ public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId
 	{
 		var result = await pvParser.ParseByUrlAsync(Url, true, permissionContext);
 		Author = result.Author;
+		Description = result.Description;
 		ExtendedMetadata = result.ExtendedMetadata;
 		ThumbUrl = result.ThumbUrl;
 		Length = result.LengthSeconds ?? Length;

@@ -194,6 +194,25 @@ const PVList = observer(
 							pv={pv}
 							showPVType={showPVType}
 						/>
+						{pv.description && (
+							<>
+								{' '}
+								<a
+									href="#"
+									onClick={(e): void => {
+										e.preventDefault();
+										songDetailsStore.showPvDescription(pv);
+									}}
+									title={t('ViewRes.Song:Details.ViewDescription')}
+								>
+									<img
+										src="/Content/draft.png"
+										alt={t('ViewRes.Song:Details.ViewDescription')}
+										style={{ verticalAlign: 'middle' }}
+									/>
+								</a>
+							</>
+						)}
 						{pv.service !== PVService.File &&
 							pv.service !== PVService.LocalFile && (
 								<>
@@ -228,6 +247,16 @@ const PVList = observer(
 						<br />
 					</React.Fragment>
 				))}
+				{songDetailsStore.descriptionPv && (
+					<JQueryUIDialog
+						autoOpen={true}
+						title={songDetailsStore.descriptionPv.name || songDetailsStore.descriptionPv.service}
+						width={400}
+						close={(): void => songDetailsStore.showPvDescription(null)}
+					>
+						<p style={{ whiteSpace: 'pre-wrap' }}>{songDetailsStore.descriptionPv.description}</p>
+					</JQueryUIDialog>
+				)}
 			</>
 		);
 	},

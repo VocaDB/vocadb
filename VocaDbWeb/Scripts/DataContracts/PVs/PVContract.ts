@@ -4,6 +4,7 @@ import { PVType } from '@/Models/PVs/PVType';
 export interface PVContractBase {
 	author?: string;
 	createdBy?: number;
+	description?: string;
 	disabled?: boolean;
 	id: number;
 	length?: number;
