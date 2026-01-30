@@ -7,7 +7,7 @@ import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { Layout } from '@/Components/Shared/Layout';
 import { AlbumGrid } from '@/Components/Shared/Partials/Album/AlbumGrid';
 import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
-import { LatestCommentsKnockout } from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
+import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { DeletedBanner } from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
 import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
@@ -139,6 +139,10 @@ const EventDetailsLayout = observer(
 	}: EventDetailsLayoutProps): React.ReactElement => {
 		const vdb = useVdb();
 		const loginManager = useLoginManager();
+
+		React.useEffect(() => {
+			releaseEventDetailsStore.comments.initComments();
+		}, [releaseEventDetailsStore]);
 
 		const { t, ready } = useTranslation([
 			'ViewRes',
@@ -593,8 +597,14 @@ const EventDetailsLayout = observer(
 					</div>
 				)}
 
-				<LatestCommentsKnockout
+				<h3 className="withMargin">
+					{t('ViewRes:EntryDetails.LatestComments')}
+				</h3>
+				<EditableComments
 					editableCommentsStore={releaseEventDetailsStore.comments}
+					allowCreateComment={loginManager.canCreateComments}
+					well={false}
+					comments={releaseEventDetailsStore.comments.pageOfComments}
 				/>
 
 				<TagsEdit tagsEditStore={releaseEventDetailsStore.tagsEditStore} />
