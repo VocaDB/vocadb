@@ -97,8 +97,8 @@ public class PVContract : IPVWithThumbnail
 
 	/// <summary>
 	/// Video description from the source service.
-	/// Not serialized in API responses.
 	/// </summary>
+	[DataMember]
 	public string? Description { get; set; }
 
 	[DataMember]
