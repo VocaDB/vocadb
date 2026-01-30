@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NicoApiClient</name>
+    </assembly>
+    <members>
+        <member name="T:VocaDb.NicoApi.NicoApiClient">
+            <summary>
+            Various methods for the NicoNicoDouga video API.
+            </summary>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoApiClient.#ctor(System.Func{System.String,System.String},System.Net.Http.HttpClient)">
+            <summary>
+            Initializes Nico API client.
+            </summary>
+            <param name="httpClient">HTTP client. Can be null, in which case new client is constructed. Note that HttpClient should be reused to optimize resources.</param>
+            <param name="deEntitize">Function for removing HTML entities. You can use HtmlAgilityPack for this. Optional - can be left null.</param>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoApiClient.ParseLength(System.String)">
+            <summary>
+            Parse length into seconds.
+            </summary>
+            <param name="lengthStr">Length from Nico response, for example 2:58.</param>
+            <returns>Length in seconds. Can be null if <paramref name="lengthStr"/> could not be parsed.</returns>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoApiClient.ParseByUrlAsync(System.String)">
+            <summary>
+            Parses a video post by URL.
+            </summary>
+            <param name="url">NicoNicoDouga video URL, for example https://www.nicovideo.jp/watch/sm1234567 </param>
+            <returns>Result of the parse operation if successful. Cannot be null.</returns>
+            <exception cref="T:VocaDb.NicoApi.NicoApiException">If video data could not be loaded.</exception>
+        </member>
+        <member name="T:VocaDb.NicoApi.NicoApiException">
+            <summary>
+            Exception thrown if an API request failed.
+            </summary>
+        </member>
+        <member name="T:VocaDb.NicoApi.NicoUrlHelper">
+            <summary>
+            Helper methods for parsing NicoNicoDouga URLs.
+            </summary>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoUrlHelper.GetIdByUrl(System.String)">
+            <summary>
+            Gets NND video ID by URL.
+            </summary>
+            <param name="url">NND video URL, for example http://www.nicovideo.jp/watch/sm1234567 </param>
+            <returns>Full URL to that video, for example sm1234567. Null if URL is not recognized.</returns>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoUrlHelper.GetUrlById(System.String)">
+            <summary>
+            Gets NND URL by video ID.
+            </summary>
+            <param name="id">NND video ID, for example sm1234567.</param>
+            <returns>Full URL to that video, for example http://www.nicovideo.jp/watch/sm1234567 </returns>
+        </member>
+        <member name="M:VocaDb.NicoApi.NicoUrlHelper.IsValidFor(System.String)">
+            <summary>
+            Whether the URL is a valid NicoNicoDouga video URL.
+            </summary>
+            <param name="url">URL to be tested.</param>
+            <returns>True if the URl is recognized, otherwise false.</returns>
+        </member>
+        <member name="T:VocaDb.NicoApi.VideoDataResult">
+            <summary>
+            Result of NicoNicoDouga video data query request.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.Author">
+            <summary>
+            Name of the user who uploaded the video.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.AuthorId">
+            <summary>
+            User Id of the user who uploaded the video.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.Description">
+            <summary>
+            Video description.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.LengthSeconds">
+            <summary>
+            Video length in seconds.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.ThumbUrl">
+            <summary>
+            Thumbnail URL.
+            Cannot be null. Can be empty.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.Title">
+            <summary>
+            Video title.
+            Cannot be null or empty.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.UploadDate">
+            <summary>
+            Date when this video was uploaded.
+            </summary>
+        </member>
+        <member name="P:VocaDb.NicoApi.VideoDataResult.Views">
+            <summary>
+            Number of views.
+            </summary>
+        </member>
+        <member name="M:VocaDb.NicoApi.XmlRequest.GetXmlObjectAsync``1(System.String,System.Net.Http.HttpClient)">
+            <summary>
+            Performers a HTTP request that returns XML and deserializes that XML result into object.
+            </summary>
+            <typeparam name="T">Object type.</typeparam>
+            <param name="url">URL to be requested.</param>
+            <param name="httpClient">HTTP client. Cannot be null.</param>
+            <returns>Deserialized object. Cannot be null.</returns>
+            <exception cref="T:System.Net.Http.HttpRequestException">If the request failed.</exception>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,9 @@
+NicoApiClient.Tests/bin/
+NicoApiClient.Tests/obj/
+NicoApiClient/bin/
+NicoApiClient/obj/
+NicoApiClient/packages/
+*.suo
+/.vs
+/NicoApiClient/.vs/
+*.user

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VocaDb.BandcampMetadataExtractor</name>
+    </assembly>
+    <members>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Description">
+            <summary>
+            Track/video description.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Duration">
+            <summary>
+            Length of the video in seconds, as an integer or float.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Id">
+            <summary>
+            Video identifier.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Thumbnail">
+            <summary>
+            Full URL to a video thumbnail image.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Title">
+            <summary>
+            Video title, unescaped.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.UploadDate">
+            <summary>
+            Video upload date (YYYYMMDD).
+            If not explicitly set, calculated from timestamp.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.Uploader">
+            <summary>
+            Full name of the video uploader.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.UploaderId">
+            <summary>
+            Nickname or id of the video uploader.
+            </summary>
+        </member>
+        <member name="P:VocaDb.BandcampMetadataExtractor.BandcampInfo.WebpageUrl">
+            <summary>
+            The URL to the video webpage, if given to youtube-dlc it
+            should allow to get the same result again. (It will be set
+            by YoutubeDL if it's missing)
+            </summary>
+        </member>
+        <member name="M:VocaDb.BandcampMetadataExtractor.SslHelper.ForceStrongTLS">
+            <summary>
+            Force to use TLS 1.2 / TLS 1.3.
+            </summary>
+        </member>
+    </members>
+</doc>

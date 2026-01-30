@@ -1,0 +1,6 @@
+﻿<nicovideo_thumb_response status="fail">
+	<error>
+		<code>NOT_FOUND</code>
+		<description>not found or invalid</description>
+	</error>
+</nicovideo_thumb_response>

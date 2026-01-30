@@ -31,7 +31,7 @@ public class VideoServiceBandcamp : VideoService
 			Url = info.WebpageUrl
 		});
 
-		var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
+		var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata, description: info.Description);
 		return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 	}
 
