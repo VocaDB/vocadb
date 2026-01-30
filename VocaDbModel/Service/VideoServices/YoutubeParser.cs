@@ -52,8 +52,9 @@ public class YoutubeParser : IVideoServiceParser
 		var author = video.Snippet.ChannelTitle;
 		var authorId = video.Snippet.ChannelId;
 		var publishDate = GetPublishDate(video);
+		var description = video.Snippet.Description;
 
-		return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, authorId, thumbUrl, length, uploadDate: publishDate);
+		return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, authorId, thumbUrl, length, uploadDate: publishDate, description: description);
 	}
 
 	public async Task<VideoTitleParseResult> GetTitleAsync(string id)
