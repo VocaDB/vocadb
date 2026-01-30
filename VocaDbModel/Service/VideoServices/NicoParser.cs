@@ -96,7 +96,7 @@ public static class NicoHelper
 		if (string.IsNullOrEmpty(author))
 			author = GetUserName(userId);
 
-		var result = VideoTitleParseResult.CreateSuccess(nicoResponse.Title, author, userId, nicoResponse.ThumbUrl, nicoResponse.LengthSeconds, uploadDate: nicoResponse.UploadDate?.Date);
+		var result = VideoTitleParseResult.CreateSuccess(nicoResponse.Title, author, userId, nicoResponse.ThumbUrl, nicoResponse.LengthSeconds, uploadDate: nicoResponse.UploadDate?.Date, description: nicoResponse.Description);
 		result.Tags = nicoResponse.Tags.Select(tag => tag.Name).ToArray();
 
 		return result;

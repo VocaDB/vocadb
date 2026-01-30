@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>NicoApiClient</AssemblyName>
+    <RootNamespace>VocaDb.NicoApi</RootNamespace>
+    <PackageProjectUrl>https://github.com/VocaDB/nicovideo-apiclient-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VocaDB/nicovideo-apiclient-dotnet</RepositoryUrl>
+    <Authors>riipah</Authors>
+    <Company>VocaDB</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Provides basic functionality for querying the Nico Nico Douga XML API</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>2.0.1</Version>
+    <PackageId>VocaDb.NicoApiClient</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>NicoApiClient.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>NicoApiClient.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
