@@ -69,8 +69,8 @@
     <PackageReference Include="System.IO.Packaging" Version="6.0.1" />
     <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
-    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.4" />
-    <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.1" />
+    <ProjectReference Include="..\Libs\BandcampMetadataExtractor\VocaDb.BandcampMetadataExtractor\VocaDb.BandcampMetadataExtractor.csproj" />
+    <ProjectReference Include="..\Libs\nicovideo-apiclient-dotnet\NicoApiClient\NicoApiClient.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\vocadb-loc\VocaDbModel.Resources\VocaDb.Model.Resources.csproj" />
