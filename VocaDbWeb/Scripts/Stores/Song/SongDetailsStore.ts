@@ -1,4 +1,5 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { RelatedSongs } from '@/DataContracts/Song/RelatedSongs';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongDetailsAjax } from '@/DataContracts/Song/SongDetailsForApi';
@@ -197,6 +198,7 @@ export class SongListsStore {
 export class SongDetailsStore {
 	@observable allVersionsVisible = false;
 	readonly comments: EditableCommentsStore;
+	@observable descriptionPv: PVContract | null = null;
 	readonly id: number;
 	@observable maintenanceDialogVisible = false;
 	@observable originalVersion: SongLinkWithUrl;
@@ -378,6 +380,10 @@ export class SongDetailsStore {
 
 	@action showAllVersions = (): void => {
 		this.allVersionsVisible = true;
+	};
+
+	@action showPvDescription = (pv: PVContract | null): void => {
+		this.descriptionPv = pv;
 	};
 
 	getRelated = (): Promise<RelatedSongs> => {
