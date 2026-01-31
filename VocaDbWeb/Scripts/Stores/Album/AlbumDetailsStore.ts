@@ -272,6 +272,7 @@ export class AlbumDetailsStore {
 	@observable userHasAlbum;
 	@observable usersContent?: string;
 	@observable userCollectionsPopupVisible = false;
+	@observable maintenanceDialogVisible = false;
 
 	constructor(
 		private readonly values: GlobalValues,

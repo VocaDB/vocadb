@@ -283,6 +283,16 @@ public class AlbumController : ControllerBase
 		return RedirectToAction("Deleted");
 	}
 
+	[Authorize]
+	public ActionResult RegenerateImages(int id)
+	{
+		_queries.RegenerateImages(id);
+
+		TempData.SetSuccessMessage("Image variants regenerated");
+
+		return RedirectToAction("Details", new { id });
+	}
+
 	public ActionResult UsersWithAlbumInCollection(int albumId = InvalidId)
 	{
 		if (albumId == InvalidId)

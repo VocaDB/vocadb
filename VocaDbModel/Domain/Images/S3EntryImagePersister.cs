@@ -14,6 +14,8 @@ namespace VocaDb.Model.Domain.Images
     /// </summary>
     public class S3EntryImagePersister : IEntryThumbPersister, IEntryPictureFilePersister
     {
+        private const int MaxRetries = 2;
+
         private readonly string _awsAccessKey;
         private readonly string _awsSecretKey;
         private readonly string _awsBucketName;
@@ -100,26 +102,31 @@ namespace VocaDb.Model.Domain.Images
             var buffer = new byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
 
-            using var memoryStream = new MemoryStream(buffer);
+            for (int attempt = 0; attempt <= MaxRetries; attempt++)
+            {
+                try
+                {
+                    using var memoryStream = new MemoryStream(buffer);
 
-            var request = new PutObjectRequest
-            {
-                BucketName = _awsBucketName,
-                Key = key,
-                InputStream = memoryStream,
-                ContentType = picture.Mime ?? "application/octet-stream",
-                UseChunkEncoding = false,
-                ServerSideEncryptionMethod = ServerSideEncryptionMethod.None,
-                DisableDefaultChecksumValidation = true
-            };
+                    var request = new PutObjectRequest
+                    {
+                        BucketName = _awsBucketName,
+                        Key = key,
+                        InputStream = memoryStream,
+                        ContentType = picture.Mime ?? "application/octet-stream",
+                        UseChunkEncoding = false,
+                        ServerSideEncryptionMethod = ServerSideEncryptionMethod.None,
+                        DisableDefaultChecksumValidation = true
+                    };
 
-            try
-            {
-                var response = _s3Client.PutObjectAsync(request).GetAwaiter().GetResult();
-            }
-            catch (AmazonS3Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to upload image to S3: {ex.Message}", ex);
+                    _s3Client.PutObjectAsync(request).GetAwaiter().GetResult();
+                    return;
+                }
+                catch (AmazonS3Exception ex)
+                {
+                    if (attempt == MaxRetries)
+                        throw new InvalidOperationException($"Failed to upload image to S3 after {MaxRetries + 1} attempts: {ex.Message}", ex);
+                }
             }
         }
 
