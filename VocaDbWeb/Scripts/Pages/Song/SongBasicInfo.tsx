@@ -251,7 +251,7 @@ const PVList = observer(
 					<JQueryUIDialog
 						autoOpen={true}
 						title={songDetailsStore.descriptionPv.name || songDetailsStore.descriptionPv.service}
-						width={400}
+						width={800}
 						close={(): void => songDetailsStore.showPvDescription(null)}
 					>
 						<p style={{ whiteSpace: 'pre-wrap' }}>{songDetailsStore.descriptionPv.description}</p>
@@ -843,3 +843,4 @@ const SongBasicInfo = observer(
 );
 
 export default SongBasicInfo;
+
