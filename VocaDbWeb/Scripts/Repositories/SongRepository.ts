@@ -71,6 +71,7 @@ export interface SongGetListQueryParams {
 	includeMembers?: boolean;
 	eventId?: number;
 	onlyWithPvs?: boolean;
+	pvServices?: PVService[];
 	since?: number;
 	minScore?: number;
 	userCollectionId?: number;
@@ -384,6 +385,7 @@ export class SongRepository
 			includeMembers,
 			eventId,
 			onlyWithPvs,
+			pvServices: queryPvServices,
 			since,
 			minScore,
 			userCollectionId,
@@ -420,7 +422,7 @@ export class SongRepository
 			includeMembers: includeMembers || undefined,
 			releaseEventId: eventId,
 			onlyWithPvs: onlyWithPvs,
-			pvServices: pvServices?.join(','),
+			pvServices: (pvServices ?? queryPvServices)?.join(','),
 			since: since,
 			minScore: minScore,
 			userCollectionId: userCollectionId,

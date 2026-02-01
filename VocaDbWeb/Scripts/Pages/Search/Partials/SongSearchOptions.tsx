@@ -6,6 +6,7 @@ import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/S
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { useCultureCodes } from '@/CultureCodesContext';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
@@ -284,6 +285,38 @@ const SongSearchOptions = observer(
 								{t('ViewRes:EntryEdit.LyExtendLanguages')}
 							</SafeAnchor>
 						)}
+					</div>
+				</div>
+
+				<div className="control-group">
+					<div className="control-label">
+						{t('ViewRes.Search:Index.PVService')}
+					</div>
+					<div className="controls">
+						<select
+							value={
+								songSearchStore.pvServices
+									? songSearchStore.pvServices
+									: undefined
+							}
+							onChange={(e): void =>
+								runInAction(() => {
+									songSearchStore.pvServices = Array.from(
+										e.target.selectedOptions,
+										(option) => option.value as PVService,
+									);
+								})
+							}
+						>
+							<option value="">
+								{'(Show all)'} {/* TODO: LOC */}
+							</option>
+							{Object.values(PVService).map((service) => (
+								<option key={service} value={service}>
+									{service}
+								</option>
+							))}
+						</select>
 					</div>
 				</div>
 
