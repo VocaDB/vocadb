@@ -10,6 +10,7 @@ import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { PVHelper } from '@/Helpers/PVHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { useLoginManager } from '@/LoginManagerContext';
 import {
 	AlbumReportType,
@@ -165,6 +166,22 @@ const AlbumDetailsLayout = observer(
 						>
 							{t('ViewRes:EntryDetails.ReportAnError')}
 						</JQueryUIButton>{' '}
+						{loginManager.canAccessManageMenu && (
+							<>
+								<JQueryUIButton
+									as={SafeAnchor}
+									href="#"
+									onClick={(): void =>
+										runInAction(() => {
+											albumDetailsStore.maintenanceDialogVisible = true;
+										})
+									}
+									icons={{ primary: 'ui-icon-wrench' }}
+								>
+									Maintenance actions{/* LOC */}
+								</JQueryUIButton>
+							</>
+						)}{' '}
 						<EntryStatusMessage status={model.status} />
 					</>
 				}
@@ -200,6 +217,28 @@ const AlbumDetailsLayout = observer(
 						notesRequired: albumReportTypesWithRequiredNotes.includes(r),
 					}))}
 				/>
+
+				<JQueryUIDialog
+					title="Maintenance actions" /* LOC */
+					autoOpen={albumDetailsStore.maintenanceDialogVisible}
+					width={400}
+					close={(): void =>
+						runInAction(() => {
+							albumDetailsStore.maintenanceDialogVisible = false;
+						})
+					}
+				>
+					<div>
+						<p>
+							<JQueryUIButton
+								as="a"
+								href={`/Album/RegenerateImages/${model.id}`}
+							>
+								Regenerate image variants{/* LOC */}
+							</JQueryUIButton>
+						</p>
+					</div>
+				</JQueryUIDialog>
 			</Layout>
 		);
 	},

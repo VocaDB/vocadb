@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Data;
-using System.Data.SqlClient;
 using System.Runtime.Caching;
 using System.Web;
 using NHibernate;
@@ -61,6 +60,11 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 	private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 	private IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
+
+	private void AddAlbumHit(IDatabaseContext<Album> session, Album album, string hostname)
+	{
+		new CreateEntryHitQuery().CreateHit(session, album, hostname, PermissionContext, (a, agent) => new AlbumHit(a, agent));
+	}
 
 	private async Task<ArchivedSongVersion> ArchiveSongAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "")
 	{
@@ -436,28 +440,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference, PermissionContext) : null);
 			}
 
-			if (user != null || !string.IsNullOrEmpty(hostname))
-			{
-				var agentNum = (user != null ? user.Id : hostname.GetHashCode());
-
-				using var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-				var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
-
-				if (!isHit)
-				{
-					var hit = new AlbumHit(album, agentNum);
-					session.Save(hit);
-
-					try
-					{
-						tx.Commit();
-					}
-					catch (SqlException x)
-					{
-						session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
-					}
-				}
-			}
+			AddAlbumHit(session, album, hostname);
 
 			return contract;
 		});
@@ -543,28 +526,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					: null;
 			}
 
-			if (user is not null || !string.IsNullOrEmpty(hostname))
-			{
-				var agentNum = user is not null ? user.Id : hostname.GetHashCode();
-
-				using var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-				var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
-
-				if (!isHit)
-				{
-					var hit = new AlbumHit(album, agentNum);
-					session.Save(hit);
-
-					try
-					{
-						tx.Commit();
-					}
-					catch (SqlException x)
-					{
-						session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
-					}
-				}
-			}
+			AddAlbumHit(session, album, hostname);
 
 			return contract;
 		});
@@ -1274,6 +1236,42 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			}
 
 			return contract;
+		});
+	}
+
+	public void RegenerateImages(int id)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+		HandleTransaction(ctx =>
+		{
+			var album = ctx.Load(id);
+
+			if (string.IsNullOrEmpty(album.CoverPictureMime))
+			{
+				ctx.AuditLogger.SysLog($"No cover image found for album {album}");
+				return;
+			}
+
+			var thumb = album.Thumb;
+			if (thumb == null)
+			{
+				ctx.AuditLogger.SysLog($"Could not create thumb info for album {album}");
+				return;
+			}
+
+			using var originalStream = _imagePersister.GetReadStream(thumb, ImageSize.Original);
+
+			if (originalStream == null || originalStream.Length == 0)
+			{
+				ctx.AuditLogger.SysLog($"Original image not found in S3 for album {album}");
+				return;
+			}
+
+			var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+			thumbGenerator.GenerateThumbsAndMoveImage(originalStream, thumb, ImageSizes.AllThumbs);
+
+			ctx.AuditLogger.SysLog($"Regenerated image variants for album {album}");
 		});
 	}
 #nullable disable
