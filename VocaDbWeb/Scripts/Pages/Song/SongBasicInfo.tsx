@@ -247,16 +247,6 @@ const PVList = observer(
 						<br />
 					</React.Fragment>
 				))}
-				{songDetailsStore.descriptionPv && (
-					<JQueryUIDialog
-						autoOpen={true}
-						title={songDetailsStore.descriptionPv.name || songDetailsStore.descriptionPv.service}
-						width={800}
-						close={(): void => songDetailsStore.showPvDescription(null)}
-					>
-						<p style={{ whiteSpace: 'pre-wrap' }}>{songDetailsStore.descriptionPv.description}</p>
-					</JQueryUIDialog>
-				)}
 			</>
 		);
 	},
@@ -859,4 +849,3 @@ const SongBasicInfo = observer(
 );
 
 export default SongBasicInfo;
-
