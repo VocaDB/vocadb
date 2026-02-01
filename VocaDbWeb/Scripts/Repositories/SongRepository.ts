@@ -71,6 +71,7 @@ export interface SongGetListQueryParams {
 	includeMembers?: boolean;
 	eventId?: number;
 	onlyWithPvs?: boolean;
+	pvServices?: PVService[];
 	since?: number;
 	minScore?: number;
 	userCollectionId?: number;
@@ -360,13 +361,11 @@ export class SongRepository
 		fields,
 		lang,
 		paging,
-		pvServices,
 		queryParams,
 	}: {
 		fields?: SongOptionalField[];
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
-		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongApiContract>> => {
 		const {
@@ -384,6 +383,7 @@ export class SongRepository
 			includeMembers,
 			eventId,
 			onlyWithPvs,
+			pvServices,
 			since,
 			minScore,
 			userCollectionId,

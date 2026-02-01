@@ -3,6 +3,7 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { PVService } from '@/Models/PVs/PVService';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
@@ -79,6 +80,7 @@ export interface SongSearchRouteParams {
 	page?: number;
 	pageSize?: number;
 	parentVersionId?: number;
+	pvServices?: PVService[];
 	searchType?: SearchType.Song;
 	shuffle?: boolean;
 	since?: number;
@@ -112,6 +114,7 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 	'onlyRatedSongs',
 	'parentVersionId',
 	'onlyWithPVs',
+	'pvServices',
 	'since',
 	'songType',
 	'sort',
@@ -136,6 +139,7 @@ export class SongSearchStore
 	@observable onlyRatedSongs = false;
 	readonly parentVersion: BasicEntryLinkStore<SongContract>;
 	@observable pvsOnly = false;
+	@observable pvServices: PVService[] = [];
 	private readonly pvServiceIcons: PVServiceIcons;
 	@observable since?: number;
 	@observable songType = SongType.Unspecified;
@@ -243,6 +247,7 @@ export class SongSearchStore
 			includeMembers: this.artistFilters.includeMembers,
 			eventId: this.releaseEvent.id,
 			onlyWithPvs: this.pvsOnly,
+			pvServices: this.pvServices?.length >= 1 ? this.pvServices : undefined,
 			since: this.since,
 			minScore: this.minScore,
 			userCollectionId: this.onlyRatedSongs
@@ -274,7 +279,6 @@ export class SongSearchStore
 				fields: this.fields,
 				lang: this.values.languagePreference,
 				paging: pagingProperties,
-				pvServices: undefined,
 				queryParams: this.queryParams,
 			});
 
@@ -331,6 +335,7 @@ export class SongSearchStore
 			onlyRatedSongs: this.onlyRatedSongs,
 			onlyWithPVs: this.pvsOnly,
 			page: this.paging.page,
+			pvServices: this.pvServices.length > 0 ? this.pvServices : undefined,
 			pageSize: this.paging.pageSize,
 			parentVersionId: this.parentVersion.id,
 			// TODO: shuffle
@@ -369,6 +374,7 @@ export class SongSearchStore
 		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
 		this.pvsOnly = value.onlyWithPVs ?? false;
 		this.paging.page = value.page ?? 1;
+		this.pvServices = ([] as PVService[]).concat(value.pvServices ?? []);
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.parentVersion.id = value.parentVersionId;
 		// TODO: shuffle
