@@ -247,7 +247,7 @@ export class SongSearchStore
 			includeMembers: this.artistFilters.includeMembers,
 			eventId: this.releaseEvent.id,
 			onlyWithPvs: this.pvsOnly,
-			pvServices: this.pvServices?.length > 1 ? this.pvServices : undefined,
+			pvServices: this.pvServices?.length >= 1 ? this.pvServices : undefined,
 			since: this.since,
 			minScore: this.minScore,
 			userCollectionId: this.onlyRatedSongs
@@ -279,7 +279,6 @@ export class SongSearchStore
 				fields: this.fields,
 				lang: this.values.languagePreference,
 				paging: pagingProperties,
-				pvServices: this.pvServices.length > 0 ? this.pvServices : undefined,
 				queryParams: this.queryParams,
 			});
 
