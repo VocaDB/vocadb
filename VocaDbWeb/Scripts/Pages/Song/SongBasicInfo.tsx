@@ -837,6 +837,22 @@ const SongBasicInfo = observer(
 				<SongInListsDialog
 					songInListsStore={songDetailsStore.songInListsDialog}
 				/>
+
+				{songDetailsStore.descriptionPv && (
+					<JQueryUIDialog
+						autoOpen={true}
+						title={
+							songDetailsStore.descriptionPv.name ||
+							songDetailsStore.descriptionPv.service
+						}
+						width={400}
+						close={(): void => songDetailsStore.showPvDescription(null)}
+					>
+						<p style={{ whiteSpace: 'pre-wrap' }}>
+							{songDetailsStore.descriptionPv.description}
+						</p>
+					</JQueryUIDialog>
+				)}
 			</SongDetailsTabs>
 		);
 	},

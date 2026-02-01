@@ -1,4 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import dayjs from '@/dayjs';
@@ -17,6 +18,8 @@ export const PVEdit = observer(
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		const { contract } = pvEditStore;
+
+		const [showDescription, setShowDescription] = React.useState(false);
 
 		return (
 			<tr>
@@ -79,6 +82,37 @@ export const PVEdit = observer(
 						)}
 					</td>
 				)}
+				<td>
+					{contract.description && (
+						<>
+							<a
+								href="#"
+								onClick={(e): void => {
+									e.preventDefault();
+									setShowDescription(true);
+								}}
+								style={{ verticalAlign: 'super' }}
+							>
+								<img
+									src="/Content/draft.png"
+									style={{ verticalAlign: 'middle' }}
+								/>
+							</a>
+							{showDescription && (
+								<JQueryUIDialog
+									autoOpen={true}
+									title={contract.name || contract.service}
+									width={400}
+									close={(): void => setShowDescription(false)}
+								>
+									<p style={{ whiteSpace: 'pre-wrap' }}>
+										{contract.description}
+									</p>
+								</JQueryUIDialog>
+							)}
+						</>
+					)}
+				</td>
 				<td>
 					<SafeAnchor
 						onClick={(): void => pvListEditStore.remove(pvEditStore)}
