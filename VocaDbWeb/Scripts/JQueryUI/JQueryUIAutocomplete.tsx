@@ -27,7 +27,7 @@ const JQueryUIAutocomplete = React.forwardRef<
 		const autocomplete = $el.autocomplete(options).data('ui-autocomplete');
 		if (renderItem) autocomplete._renderItem = renderItem;
 		return (): void => $el.autocomplete('destroy');
-	}, [renderItem, options]);
+	}, []);
 
 	return <input ref={el} {...props} />;
 });
