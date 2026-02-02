@@ -38,6 +38,7 @@
     "ParentVersion": "親バージョン",
     "Bpm": "BPM",
     "Duration": "再生時間",
-    "Language": "言語"
+    "Language": "言語",
+    "PVService": "PV service"
   }
 }
