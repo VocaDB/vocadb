@@ -38,6 +38,7 @@
     "ParentVersion": "Übergeordnete Version",
     "Bpm": "BPM",
     "Duration": "Dauer",
-    "Language": "Sprache"
+    "Language": "Sprache",
+    "PVService": "PV service"
   }
 }
