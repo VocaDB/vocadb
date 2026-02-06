@@ -177,11 +177,17 @@
     "ReadRecentComments": "crwdns14451:0crwdne14451:0",
     "RemoveEditPermission": "crwdns14453:0crwdne14453:0",
     "RemoveTagUsages": "crwdns14455:0crwdne14455:0",
+    "ReportUser": "crwdns16950:0crwdne16950:0",
     "RestoreRevisions": "crwdns14457:0crwdne14457:0",
     "UploadMedia": "crwdns14459:0crwdne14459:0",
     "ViewAuditLog": "crwdns14461:0crwdne14461:0",
+    "ViewCoverArtImages": "crwdns16952:0crwdne16952:0",
+    "ViewDisabledUsers": "crwdns16954:0crwdne16954:0",
     "ViewHiddenRatings": "crwdns14463:0crwdne14463:0",
     "ViewHiddenRevisions": "crwdns14465:0crwdne14465:0",
+    "ViewLyrics": "crwdns16956:0crwdne16956:0",
+    "ViewOtherPVs": "crwdns16958:0crwdne16958:0",
+    "ViewOldUsernames": "crwdns16960:0crwdne16960:0",
     "ManageWebhooks": "crwdns14467:0crwdne14467:0",
     "CreateDatabaseDump": "crwdns14469:0crwdne14469:0"
   },
@@ -269,6 +275,7 @@
     "None": "crwdns14595:0crwdne14595:0",
     "PublishDate": "crwdns14597:0crwdne14597:0",
     "RatingScore": "crwdns14599:0crwdne14599:0",
+    "SongType": "crwdns16962:0crwdne16962:0",
     "TagUsageCount": "crwdns14601:0crwdne14601:0"
   },
   "SongVoteRatingNames": {

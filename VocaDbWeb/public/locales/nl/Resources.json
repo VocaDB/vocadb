@@ -177,11 +177,17 @@
     "ReadRecentComments": "Lees recente opmerkingen",
     "RemoveEditPermission": "Verwijder rechten voor het bewerken van de database",
     "RemoveTagUsages": "Verwijder taggebruik",
+    "ReportUser": "Report users",
     "RestoreRevisions": "Herstel herziening",
     "UploadMedia": "Upload eigen media",
     "ViewAuditLog": "Bekijk evenementenlogboek",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "Bekijk verborgen beoordelingen",
     "ViewHiddenRevisions": "Bekijk verborgen herzieningen",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "Beheer webhooks",
     "CreateDatabaseDump": "Maak database dump aan"
   },
@@ -269,6 +275,7 @@
     "None": "Geen",
     "PublishDate": "Publicatiedatum",
     "RatingScore": "Beoordelingsscore",
+    "SongType": "Song type",
     "TagUsageCount": "Aantal tags"
   },
   "SongVoteRatingNames": {

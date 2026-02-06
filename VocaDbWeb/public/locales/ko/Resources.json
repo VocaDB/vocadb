@@ -177,11 +177,17 @@
     "ReadRecentComments": "Read recent comments",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Remove tag usages",
+    "ReportUser": "Report users",
     "RestoreRevisions": "수정사항 복구하기",
     "UploadMedia": "미디어 파일 업로드",
     "ViewAuditLog": "이벤트 기록 보기",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "숨겨진 평가 보기",
     "ViewHiddenRevisions": "숨겨진 변경사항 보기",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "웹훅 관리",
     "CreateDatabaseDump": "데이터베이스 덤프 생성"
   },
@@ -269,6 +275,7 @@
     "None": "Nothing",
     "PublishDate": "게시일",
     "RatingScore": "평가 점수",
+    "SongType": "Song type",
     "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {

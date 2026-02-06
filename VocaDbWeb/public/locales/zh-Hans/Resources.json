@@ -177,11 +177,17 @@
     "ReadRecentComments": "阅读最新评论",
     "RemoveEditPermission": "移除数据库编辑权限",
     "RemoveTagUsages": "移除标签使用",
+    "ReportUser": "Report users",
     "RestoreRevisions": "还原修改",
     "UploadMedia": "上传媒体文件",
     "ViewAuditLog": "查看活动日志",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "查看隐藏的评分",
     "ViewHiddenRevisions": "查看隐藏的修改",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "管理 Webhooks",
     "CreateDatabaseDump": "创建数据库"
   },
@@ -269,6 +275,7 @@
     "None": "无",
     "PublishDate": "发行日期",
     "RatingScore": "评分",
+    "SongType": "Song type",
     "TagUsageCount": "标签使用次数"
   },
   "SongVoteRatingNames": {
