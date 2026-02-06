@@ -334,7 +334,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 		return HandleQuery(session =>
 		{
 			var tags = session.Query()
-				.Where(t => t.CategoryName != null && t.CategoryName != "")
+				.Where(t => !t.Deleted && t.CategoryName != null && t.CategoryName != "")
 				.WhereHasCategoryName(textQuery)
 				.Select(t => t.CategoryName)
 				.Distinct()
