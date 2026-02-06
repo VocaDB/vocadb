@@ -27,6 +27,7 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import { CULTURE_CODE_UNKNOWN } from '@/Components/userLanguageCultures';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
@@ -591,7 +592,11 @@ const BasicInfoTabContent = observer(
 								<SafeAnchor
 									href="#"
 									className="textLink addLink"
-									onClick={(): void => artistEditStore.cultureCodes.add()}
+									onClick={(): any =>
+										artistEditStore.cultureCodes.items.push(
+											CULTURE_CODE_UNKNOWN,
+										)
+									}
 								>
 									{t('ViewRes:Shared.Add')}
 								</SafeAnchor>

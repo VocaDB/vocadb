@@ -129,7 +129,9 @@ const LyricsForSongEdit = observer(
 											loginManager.canApproveEntries) && (
 											<SafeAnchor
 												onClick={(): void =>
-													lyricsForSongEditStore.addCultureCode('')
+													lyricsForSongEditStore.addCultureCode(
+														CULTURE_CODE_UNKNOWN,
+													)
 												}
 												href="#"
 												className="textLink addLink"
