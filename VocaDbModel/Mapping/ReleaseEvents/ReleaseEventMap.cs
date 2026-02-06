@@ -93,6 +93,7 @@ public class ArchivedReleaseEventVersionMap : ClassMap<ArchivedReleaseEventVersi
 		Map(m => m.Data); // Some old events have null data
 		Map(m => m.Hidden).Not.Nullable();
 		Map(m => m.Notes).Length(200).Not.Nullable();
+		Map(m => m.Status).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		References(m => m.Author).Not.Nullable();

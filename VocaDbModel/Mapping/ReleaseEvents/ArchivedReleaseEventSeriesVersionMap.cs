@@ -17,6 +17,7 @@ public class ArchivedReleaseEventSeriesVersionMap : ClassMap<ArchivedReleaseEven
 		Map(m => m.Data).Not.Nullable();
 		Map(m => m.Hidden).Not.Nullable();
 		Map(m => m.Notes).Length(200).Not.Nullable();
+		Map(m => m.Status).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		References(m => m.Author).Not.Nullable();
