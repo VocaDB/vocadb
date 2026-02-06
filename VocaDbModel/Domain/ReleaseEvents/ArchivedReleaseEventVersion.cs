@@ -22,10 +22,7 @@ public class ArchivedReleaseEventVersion : ArchivedObjectVersion, IArchivedObjec
 	private ReleaseEvent _releaseEvent;
 
 #nullable disable
-	public ArchivedReleaseEventVersion()
-	{
-		Status = EntryStatus.Finished;
-	}
+	public ArchivedReleaseEventVersion() { }
 #nullable enable
 
 	public ArchivedReleaseEventVersion(

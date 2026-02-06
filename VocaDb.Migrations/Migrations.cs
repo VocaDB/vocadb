@@ -4,6 +4,16 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_02_06_0000)]
+public class AddStatusToArchivedEventVersions : AutoReversingMigration
+{
+	public override void Up()
+	{
+		Create.Column("[Status]").OnTable(TableNames.ArchivedEventVersions).AsString(10).NotNullable().WithDefaultValue("Finished");
+		Create.Column("[Status]").OnTable(TableNames.ArchivedEventSeriesVersions).AsString(10).NotNullable().WithDefaultValue("Finished");
+	}
+}
+
 [Migration(2026_01_29_0000)]
 public class AddDescriptionToPVs : Migration
 {
