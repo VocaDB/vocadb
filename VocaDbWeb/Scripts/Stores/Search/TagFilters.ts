@@ -70,11 +70,8 @@ export class TagFilters {
 		}
 	};
 
-	@action toggleTagExcluded(tagId: number): void {
-		let tag = this.tags.filter(t => t.id === tagId);
-		if (tag.length > 0 ) {
-			tag[0].excluded = !tag[0].excluded;
-		}
+	@action toggleTagExcluded(tag: TagFilter): void {
+		tag.excluded = !tag.excluded;
 	}
 
 	@action removeTag = (tag: TagFilter): void => {

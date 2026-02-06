@@ -14,8 +14,8 @@ export const TagFiltersBase = observer(
 	({ tagFilters }: TagFiltersBaseProps): React.ReactElement => {
 		return (
 			<>
-				{tagFilters.tags.map((tag, index) => (
-					<div className="control-group" key={index}>
+				{tagFilters.tags.map((tag) => (
+					<div className="control-group" key={tag.id}>
 						<div className="input-append input-prepend">
 							<Button
 								as={Link}
@@ -32,7 +32,7 @@ export const TagFiltersBase = observer(
 									value={tag.name ?? ''}
 								/>
 								<Button
-									onClick={(): any => tagFilters.toggleTagExcluded(tag.id)}
+									onClick={(): any => tagFilters.toggleTagExcluded(tag)}
 								>
 									{tag.excluded ? 'Exclude' : 'Include'}
 								</Button>
