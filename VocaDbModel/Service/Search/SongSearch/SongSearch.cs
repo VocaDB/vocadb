@@ -73,7 +73,7 @@ public class SongSearch
 			.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength)
 			.WhereHasLanguage(queryParams.Language)
 			.WhereHasLanguages(queryParams.Languages)
-			.WhereNotHasTags(queryParams.ExcludedTagIds);
+			.WhereNotHasTags(queryParams.ExcludedTagIds, queryParams.ChildTags);
 
 		return query;
 	}
