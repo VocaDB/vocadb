@@ -98,6 +98,7 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 	'filter',
 	'tagId',
 	'childTags',
+	'excludedTags',
 	'draftsOnly',
 	'searchType',
 

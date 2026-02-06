@@ -75,9 +75,9 @@ public static class EntryWithTagsQueryableExtensions
 			return query;
 
 		if (childTags)
-			return query.Where(s => s.Tags.Usages.All(a => a.Tag.Id != tagId && a.Tag.Parent.Id != tagId || a.Tag.Parent.Parent.Id != tagId || a.Tag.Parent.Parent.Parent.Id != tagId));
+			return query.Where(s => !s.Tags.Usages.Any(a => a.Tag.Id == tagId || a.Tag.Parent.Id == tagId || a.Tag.Parent.Parent.Id == tagId || a.Tag.Parent.Parent.Parent.Id == tagId));
 		else
-			return query.Where(s => s.Tags.Usages.All(a => a.Tag.Id != tagId));
+			return query.Where(s => !s.Tags.Usages.Any(a => a.Tag.Id == tagId));
 	}
 
 	/// <summary>
