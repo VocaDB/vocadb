@@ -177,11 +177,17 @@
     "ReadRecentComments": "Ler comentários recentes",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Apagar tags",
+    "ReportUser": "Report users",
     "RestoreRevisions": "Restaurar revisões",
     "UploadMedia": "Upload own media",
     "ViewAuditLog": "Ver registo de eventos",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "View hidden ratings",
     "ViewHiddenRevisions": "View hidden revisions",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "Manage webhooks",
     "CreateDatabaseDump": "Create database dump"
   },
@@ -269,6 +275,7 @@
     "None": "Nada",
     "PublishDate": "Data de publicação",
     "RatingScore": "Pontuação de classificação",
+    "SongType": "Song type",
     "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
