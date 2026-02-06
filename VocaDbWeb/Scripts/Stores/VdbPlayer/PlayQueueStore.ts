@@ -768,6 +768,11 @@ export class PlayQueueStore
 
 		await this.updateResultsWithTotalCount();
 
+		if (autoplayContext.shuffle && this.paging.totalItems > 0) {
+			this.items = [];
+			await this.updateResultsWithoutTotalCount();
+		}
+
 		this.setCurrentItem(this.items[0]);
 
 		if (this.shouldSkipCurrentItem) {
