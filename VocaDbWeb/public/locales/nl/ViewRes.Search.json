@@ -38,6 +38,7 @@
     "ParentVersion": "Bovenliggende versie",
     "Bpm": "BPM",
     "Duration": "Tijdsduur",
-    "Language": "Taal"
+    "Language": "Taal",
+    "PVService": "PV service"
   }
 }

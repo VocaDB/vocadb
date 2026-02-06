@@ -38,6 +38,7 @@
     "ParentVersion": "Emoversio",
     "Bpm": "BPM",
     "Duration": "Kesto",
-    "Language": "Kieli"
+    "Language": "Kieli",
+    "PVService": "Videopalvelu"
   }
 }
