@@ -177,11 +177,17 @@
     "ReadRecentComments": "最近のコメントを読む",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "タグ使用を削除",
+    "ReportUser": "Report users",
     "RestoreRevisions": "Restore revisions",
     "UploadMedia": "Upload own media",
     "ViewAuditLog": "イベントログを観察",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "View hidden ratings",
     "ViewHiddenRevisions": "View hidden revisions",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "Webhookの管理",
     "CreateDatabaseDump": "Create database dump"
   },
@@ -269,6 +275,7 @@
     "None": "なし",
     "PublishDate": "公開日",
     "RatingScore": "評価点数",
+    "SongType": "Song type",
     "TagUsageCount": "タグの使用回数"
   },
   "SongVoteRatingNames": {
