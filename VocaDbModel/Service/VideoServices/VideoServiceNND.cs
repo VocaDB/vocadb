@@ -5,7 +5,7 @@ namespace VocaDb.Model.Service.VideoServices;
 
 public class VideoServiceNND : VideoService
 {
-	private static readonly Regex s_numIdRegex = new(@"(\d{6,12})");
+	private static readonly Regex s_numIdRegex = new(@"(\d{2,12})");
 
 	public VideoServiceNND(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 		: base(service, parser, linkMatchers) { }
