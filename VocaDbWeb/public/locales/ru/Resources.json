@@ -177,11 +177,17 @@
     "ReadRecentComments": "Просмотр последних комментариев",
     "RemoveEditPermission": "Remove database editing permissions",
     "RemoveTagUsages": "Remove tag usages",
+    "ReportUser": "Report users",
     "RestoreRevisions": "Откат к предыдущим версиям",
     "UploadMedia": "Upload own media",
     "ViewAuditLog": "Просмотр журнала событий",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "View hidden ratings",
     "ViewHiddenRevisions": "View hidden revisions",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "Manage webhooks",
     "CreateDatabaseDump": "Create database dump"
   },
@@ -269,6 +275,7 @@
     "None": "Nothing",
     "PublishDate": "Publish date",
     "RatingScore": "Rating score",
+    "SongType": "Song type",
     "TagUsageCount": "Tag usage count"
   },
   "SongVoteRatingNames": {
