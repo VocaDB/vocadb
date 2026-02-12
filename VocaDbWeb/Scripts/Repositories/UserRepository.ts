@@ -712,6 +712,7 @@ export class UserRepository implements ICommentRepository {
 				`/api/comments/User-comments/${entryId}/locked`,
 			),
 			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
 		);
 	};
 

@@ -2,7 +2,7 @@ import { CommentContract } from '@/DataContracts/CommentContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { EntryType } from '@/Models/EntryType';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
-import { HttpClient } from '@/Shared/HttpClient';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class EntryCommentRepository implements ICommentRepository {
@@ -78,6 +78,8 @@ export class EntryCommentRepository implements ICommentRepository {
 				'locked',
 			),
 		);
-		return this.httpClient.post<void>(url, locked);
+		return this.httpClient.post<void>(url, locked, {
+			headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
+		});
 	};
 }

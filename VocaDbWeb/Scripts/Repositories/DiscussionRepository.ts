@@ -4,7 +4,7 @@ import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTo
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
-import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { HeaderNames, httpClient, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class DiscussionRepository implements ICommentRepository {
@@ -148,6 +148,7 @@ export class DiscussionRepository implements ICommentRepository {
 				`/api/comments/DiscussionTopic-comments/${entryId}/locked`,
 			),
 			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
 		);
 	};
 }

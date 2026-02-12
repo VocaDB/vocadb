@@ -56,8 +56,8 @@ export const CreateComment = observer(
 					{loginManager.canLockComments && onToggleLock && (
 						<JQueryUIButton
 							as="button"
+							type="button"
 							onClick={onToggleLock}
-							style={{ marginBottom: 10 }}
 							icons={{
 								primary: commentsLocked ? 'ui-icon-locked' : 'ui-icon-unlocked',
 							}}

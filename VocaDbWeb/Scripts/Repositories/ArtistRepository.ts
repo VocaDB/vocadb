@@ -276,6 +276,7 @@ export class ArtistRepository
 				`/api/comments/Artist-comments/${entryId}/locked`,
 			),
 			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
 		);
 	};
 

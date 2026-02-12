@@ -356,6 +356,7 @@ export class AlbumRepository
 				`/api/comments/Album-comments/${entryId}/locked`,
 			),
 			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
 		);
 	};
 

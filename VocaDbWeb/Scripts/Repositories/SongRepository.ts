@@ -567,6 +567,7 @@ export class SongRepository
 				`/api/comments/Song-comments/${entryId}/locked`,
 			),
 			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
 		);
 	};
 
