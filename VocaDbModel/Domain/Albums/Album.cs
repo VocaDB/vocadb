@@ -172,6 +172,8 @@ public class Album :
 
 	public virtual IEnumerable<AlbumComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 	/// <summary>
