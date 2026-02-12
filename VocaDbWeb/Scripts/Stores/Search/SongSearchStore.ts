@@ -280,6 +280,7 @@ export class SongSearchStore
 				fields: this.fields,
 				lang: this.values.languagePreference,
 				paging: pagingProperties,
+				pvServices: undefined,
 				queryParams: this.queryParams,
 			});
 

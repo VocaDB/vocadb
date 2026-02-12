@@ -361,11 +361,13 @@ export class SongRepository
 		fields,
 		lang,
 		paging,
+		pvServices,
 		queryParams,
 	}: {
 		fields?: SongOptionalField[];
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
+		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongApiContract>> => {
 		const {
@@ -383,7 +385,7 @@ export class SongRepository
 			includeMembers,
 			eventId,
 			onlyWithPvs,
-			pvServices,
+			pvServices: queryPVServices,
 			since,
 			minScore,
 			userCollectionId,
@@ -420,7 +422,7 @@ export class SongRepository
 			includeMembers: includeMembers || undefined,
 			releaseEventId: eventId,
 			onlyWithPvs: onlyWithPvs,
-			pvServices: pvServices?.join(','),
+			pvServices: queryPVServices?.join(','),
 			since: since,
 			minScore: minScore,
 			userCollectionId: userCollectionId,
