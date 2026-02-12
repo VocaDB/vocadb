@@ -45,6 +45,9 @@ public sealed record AlbumDetailsForApiContract
 	public DateTime CreateDate { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool Deleted { get; init; }
 
 	[DataMember]
@@ -141,6 +144,7 @@ public sealed record AlbumDetailsForApiContract
 		CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, album);
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, album);
 		CreateDate = album.CreateDate;
+		CommentsLocked = album.CommentsLocked;
 		Deleted = album.Deleted;
 		Description = new EnglishTranslatedStringContract(album.Description);
 

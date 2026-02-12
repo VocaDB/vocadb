@@ -35,6 +35,7 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 		ParamIs.NotNull(() => releaseEvent);
 
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
+		CommentsLocked = releaseEvent.CommentsLocked;
 		DefaultNameLanguage = releaseEvent.TranslatedName.DefaultLanguage;
 		PVs = (userContext.HasPermission(PermissionToken.ViewOtherPVs) ? releaseEvent.PVs : releaseEvent.OriginalPVs)
 			.Select(p => new PVContract(p))
@@ -83,6 +84,8 @@ public class ReleaseEventDetailsContract : ReleaseEventContract
 	public bool CanRemoveTagUsages { get; init; }
 
 	public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+	public bool CommentsLocked { get; init; }
 
 	public UserEventRelationshipType? EventAssociationType { get; init; }
 

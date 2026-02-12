@@ -57,6 +57,9 @@ public sealed record ArtistDetailsForApiContract
 	public DateTime CreateDate { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool Deleted { get; init; }
 
 	[DataMember]
@@ -197,6 +200,7 @@ public sealed record ArtistDetailsForApiContract
 
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
 		CreateDate = artist.CreateDate;
+		CommentsLocked = artist.CommentsLocked;
 		Deleted = artist.Deleted;
 		Description = new EnglishTranslatedStringContract(artist.Description);
 		Draft = artist.Status == EntryStatus.Draft;
