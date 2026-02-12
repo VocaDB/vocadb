@@ -1,4 +1,6 @@
 import Button from '@/Bootstrap/Button';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -10,6 +12,8 @@ interface CreateCommentProps {
 	editableCommentsStore: EditableCommentsStore;
 	className: string;
 	newCommentRows: number;
+	commentsLocked: boolean;
+	onToggleLock?: () => void;
 }
 
 export const CreateComment = observer(
@@ -17,7 +21,10 @@ export const CreateComment = observer(
 		editableCommentsStore,
 		className,
 		newCommentRows,
+		commentsLocked = false,
+		onToggleLock,
 	}: CreateCommentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
@@ -45,6 +52,21 @@ export const CreateComment = observer(
 					<Button type="submit" variant="primary">
 						{t('ViewRes:DiscussionContent.AddComment')}
 					</Button>
+
+					{loginManager.canLockComments && onToggleLock && (
+						<JQueryUIButton
+							as="button"
+							onClick={onToggleLock}
+							style={{ marginBottom: 10 }}
+							icons={{
+								primary: commentsLocked ? 'ui-icon-locked' : 'ui-icon-unlocked',
+							}}
+						>
+							{commentsLocked
+								? t('ViewRes:DiscussionContent.UnlockComments')
+								: t('ViewRes:DiscussionContent.LockComments')}
+						</JQueryUIButton>
+					)}
 				</form>
 			</div>
 		);

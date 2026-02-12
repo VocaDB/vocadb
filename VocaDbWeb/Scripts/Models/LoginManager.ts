@@ -25,6 +25,7 @@ export enum PermissionToken {
 	EditAllSongLists = 'b4873d98-b21f-40ee-b1d4-94102ae6e528',
 	EditFeaturedLists = 'a639e4a3-86fe-429a-81ea-d0aa05161e40',
 	EditProfile = '4f79b01a-7154-4a7f-bc87-a8a9259a9905',
+	LockComments = '1f644e97-5a4e-43f9-85be-396d95bae7d6',
 	LockEntries = 'eb02e92e-207f-4330-a763-6bafd2cedde1',
 	ManageDatabase = 'd762d720-79ef-4e60-8397-1d638c26d82b',
 	EditTags = '2ab6da19-bc5a-4a28-86d4-8ddce399ca0b',
@@ -119,7 +120,11 @@ export class LoginManager {
 	get canCreateDatabaseDump(): boolean {
 		return this.hasPermission(PermissionToken.CreateDatabaseDump);
 	}
-	
+
+	get canLockComments(): boolean {
+		return this.hasPermission(PermissionToken.LockComments);
+	}
+
 	get canDeleteComments(): boolean {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}

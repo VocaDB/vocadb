@@ -1,12 +1,16 @@
+import Alert from '@/Bootstrap/Alert';
 import { CommentBodyEditableKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyEditableKnockout';
 import { CommentKnockout } from '@/Components/Shared/Partials/Comment/CommentKnockout';
 import { CreateComment } from '@/Components/Shared/Partials/Comment/CreateComment';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { CommentStore } from '@/Stores/CommentStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface EditableCommentsProps {
 	editableCommentsStore: EditableCommentsStore;
@@ -16,6 +20,8 @@ interface EditableCommentsProps {
 	newCommentRows?: number;
 	commentBoxEnd?: boolean;
 	pagination?: boolean;
+	commentsLocked?: boolean;
+	onToggleLock?: () => void;
 }
 
 export const EditableComments = observer(
@@ -27,16 +33,26 @@ export const EditableComments = observer(
 		newCommentRows = 6,
 		commentBoxEnd = false,
 		pagination = true,
+		commentsLocked = false,
+		onToggleLock,
 	}: EditableCommentsProps): React.ReactElement => {
+		const loginManager = useLoginManager();
 		const className = well ? 'well well-transparent' : 'standalone';
+		const { t } = useTranslation(['ViewRes']);
 
 		return (
 			<>
+				{commentsLocked && !commentBoxEnd && !loginManager.canLockComments && (
+					<Alert>{t('ViewRes:DiscussionContent.LockedBanner')}</Alert>
+				)}
+
 				{allowCreateComment && !commentBoxEnd && (
 					<CreateComment
 						editableCommentsStore={editableCommentsStore}
 						className={className}
 						newCommentRows={newCommentRows}
+						commentsLocked={commentsLocked}
+						onToggleLock={onToggleLock}
 					/>
 				)}
 
@@ -76,11 +92,17 @@ export const EditableComments = observer(
 					<ServerSidePaging pagingStore={editableCommentsStore.paging} />
 				)}
 
+				{commentsLocked && commentBoxEnd && !loginManager.canLockComments && (
+					<Alert>{t('ViewRes:DiscussionContent.LockedBanner')}</Alert>
+				)}
+
 				{allowCreateComment && commentBoxEnd && (
 					<CreateComment
 						editableCommentsStore={editableCommentsStore}
 						className={className}
 						newCommentRows={newCommentRows}
+						commentsLocked={commentsLocked}
+						onToggleLock={onToggleLock}
 					/>
 				)}
 			</>
