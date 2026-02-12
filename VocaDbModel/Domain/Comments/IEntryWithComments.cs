@@ -6,6 +6,8 @@ namespace VocaDb.Model.Domain.Comments;
 
 public interface IEntryWithComments : IEntryWithNames
 {
+	bool CommentsLocked { get; set; }
+
 	IEnumerable<Comment> Comments { get; }
 
 	Comment CreateComment(string message, AgentLoginData loginData);

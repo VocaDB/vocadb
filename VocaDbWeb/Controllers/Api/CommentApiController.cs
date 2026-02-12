@@ -74,6 +74,13 @@ public class CommentApiController : ApiController
 	[Authorize]
 	public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => _queries.PostNewComment(entryType, contract);
 
+	[HttpGet("{entryType}-comments/{entryId:int}/locked")]
+	public bool GetCommentsLocked(EntryType entryType, int entryId) => _queries.GetCommentsLocked(entryType, entryId);
+
+	[HttpPost("{entryType}-comments/{entryId:int}/locked")]
+	[Authorize]
+	public void SetCommentsLocked(EntryType entryType, int entryId, [FromBody] bool locked) => _queries.SetCommentsLocked(entryType, entryId, locked);
+
 	[HttpGet("")]
 	public PartialFindResult<CommentForApiContract> GetList(
 		DateTime? before = null,
