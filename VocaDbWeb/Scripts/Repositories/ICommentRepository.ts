@@ -21,4 +21,12 @@ export interface ICommentRepository {
 		commentId: number;
 		contract: CommentContract;
 	}): Promise<void>;
+
+	setCommentsLocked({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void>;
 }

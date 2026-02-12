@@ -1,5 +1,6 @@
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -11,6 +12,7 @@ export class EntryCommentRepository implements ICommentRepository {
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		resourcePath: string,
+		private readonly entryType?: EntryType,
 	) {
 		this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
 	}
@@ -60,5 +62,22 @@ export class EntryCommentRepository implements ICommentRepository {
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.post<void>(url, contract);
+	};
+
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		var url = this.urlMapper.mapRelative(
+			UrlMapper.buildUrl(
+				`/api/comments/${this.entryType}-comments`,
+				entryId.toString(),
+				'locked',
+			),
+		);
+		return this.httpClient.post<void>(url, locked);
 	};
 }

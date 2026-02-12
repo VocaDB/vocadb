@@ -344,6 +344,21 @@ export class AlbumRepository
 		);
 	};
 
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/comments/Album-comments/${entryId}/locked`,
+			),
+			locked,
+		);
+	};
+
 	updatePersonalDescription = ({
 		albumId,
 		text,

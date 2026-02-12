@@ -700,6 +700,21 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/comments/User-comments/${entryId}/locked`,
+			),
+			locked,
+		);
+	};
+
 	updateEventForUser = ({
 		eventId,
 		associationType,

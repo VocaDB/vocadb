@@ -264,6 +264,21 @@ export class ArtistRepository
 		);
 	};
 
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/comments/Artist-comments/${entryId}/locked`,
+			),
+			locked,
+		);
+	};
+
 	getDetails = ({ id }: { id: number }): Promise<ArtistDetailsContract> => {
 		return this.httpClient.get<ArtistDetailsContract>(
 			this.urlMapper.mapRelative(`/api/artists/${id}/details`),

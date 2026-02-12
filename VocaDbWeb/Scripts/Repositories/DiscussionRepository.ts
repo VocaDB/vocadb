@@ -135,6 +135,21 @@ export class DiscussionRepository implements ICommentRepository {
 			contract,
 		);
 	};
+
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/comments/DiscussionTopic-comments/${entryId}/locked`,
+			),
+			locked,
+		);
+	};
 }
 
 export const discussionRepo = new DiscussionRepository(httpClient, urlMapper);
