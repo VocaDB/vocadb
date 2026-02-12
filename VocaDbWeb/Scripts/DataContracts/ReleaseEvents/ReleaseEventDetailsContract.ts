@@ -29,6 +29,7 @@ export interface ReleaseEventDetailsContract {
 	id: number;
 	inheritedCategory: EventCategory;
 	inheritedCategoryTag?: TagBaseContract;
+	commentsLocked: boolean;
 	latestComments: CommentContract[];
 	mainPicture?: EntryThumbContract;
 	name: string;

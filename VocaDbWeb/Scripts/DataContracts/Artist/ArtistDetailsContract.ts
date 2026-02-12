@@ -48,6 +48,7 @@ export interface ArtistDetailsContract {
 	characterDesignerOf: ArtistApiContract[];
 	childVoicebanks: ArtistApiContract[];
 	commentCount: number;
+	commentsLocked: boolean;
 	createDate: string;
 	cultureCodes: string[];
 	deleted: boolean;

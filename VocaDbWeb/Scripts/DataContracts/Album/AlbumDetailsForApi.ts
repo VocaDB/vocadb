@@ -76,6 +76,7 @@ export class AlbumDetailsForApi {
 	readonly catNum?: string;
 	readonly circles: ArtistForAlbumContract[];
 	readonly commentCount: number;
+	readonly commentsLocked: boolean;
 	readonly contentFocus: ContentFocus;
 	readonly createDate: string;
 	readonly cultureCodes: string[];
@@ -129,6 +130,7 @@ export class AlbumDetailsForApi {
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
 		this.canRemoveTagUsages = contract.canRemoveTagUsages;
 		this.commentCount = contract.commentCount;
+		this.commentsLocked = contract.commentsLocked;
 		this.createDate = contract.createDate;
 		this.cultureCodes = contract.songs.flatMap(
 			(s) => s.computedCultureCodes ?? [],
@@ -325,6 +327,7 @@ export class AlbumDetailsAjax {
 	readonly albumMediaType: MediaType;
 	readonly albumPurchaseStatus: PurchaseStatus;
 	readonly collectionRating: number;
+	readonly commentsLocked: boolean;
 	readonly id: number;
 	readonly latestComments: CommentContract[];
 	readonly personalDescriptionAuthor?: ArtistApiContract;
@@ -337,6 +340,7 @@ export class AlbumDetailsAjax {
 		this.albumMediaType = model.albumMediaType;
 		this.albumPurchaseStatus = model.albumPurchaseStatus;
 		this.collectionRating = model.collectionRating;
+		this.commentsLocked = model.commentsLocked;
 		this.id = model.id;
 		this.latestComments = model.latestComments;
 		this.personalDescriptionAuthor = model.personalDescriptionAuthor;

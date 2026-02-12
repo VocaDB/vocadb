@@ -33,6 +33,7 @@ export interface TagDetailsContract {
 	categoryName?: string;
 	children: TagBaseContract[];
 	commentCount: number;
+	commentsLocked: boolean;
 	createDate: string;
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
