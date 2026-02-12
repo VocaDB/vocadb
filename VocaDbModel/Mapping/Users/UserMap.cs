@@ -29,6 +29,7 @@ public class UserMap : ClassMap<User>
 		Map(m => m.PictureMime).Length(32).Nullable();
 		Map(m => m.PreferredVideoService).Not.Nullable();
 		Map(m => m.Salt).Length(100).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.VerifiedArtist).Not.Nullable();
 
 		Component(m => m.AdditionalPermissions, c =>

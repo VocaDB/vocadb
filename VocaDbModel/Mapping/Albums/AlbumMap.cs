@@ -23,6 +23,7 @@ public class AlbumMap : ClassMap<Album>
 		Map(m => m.RatingCount).Not.Nullable();
 		Map(m => m.RatingTotal).Not.Nullable();
 		Map(m => m.Status).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		Component(m => m.ArchivedVersionsManager,

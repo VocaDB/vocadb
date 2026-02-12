@@ -18,6 +18,7 @@ public class SongListMap : ClassMap<SongList>
 		Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
 		Map(m => m.Name).Length(200).Not.Nullable();
 		Map(m => m.Status).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		Component(m => m.ArchivedVersionsManager,
