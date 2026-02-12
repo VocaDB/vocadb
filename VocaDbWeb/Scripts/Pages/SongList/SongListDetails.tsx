@@ -640,6 +640,7 @@ const SongListDetails = (): React.ReactElement => {
 						artistRepo,
 						songList.latestComments ?? [],
 						songList.id,
+						songList.commentsLocked ?? false,
 						songList.tags ?? [],
 						loginManager.canDeleteComments,
 						songList.featuredCategory,

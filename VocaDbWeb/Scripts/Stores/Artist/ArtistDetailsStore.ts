@@ -73,6 +73,7 @@ export class ArtistDetailsStore {
 		private readonly userRepo: UserRepository,
 		canDeleteAllComments: boolean,
 		latestComments: CommentContract[],
+		commentsLocked: boolean,
 		artistType: ArtistType
 	) {
 		makeObservable(this);
@@ -99,6 +100,7 @@ export class ArtistDetailsStore {
 			false,
 			latestComments,
 			true,
+			commentsLocked,
 		);
 
 		this.tagsEditStore = new TagsEditStore(

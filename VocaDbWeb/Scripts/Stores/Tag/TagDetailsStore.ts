@@ -19,6 +19,7 @@ export class TagDetailsStore {
 		private readonly userRepo: UserRepository,
 		latestComments: CommentContract[],
 		private readonly tagId: number,
+		commentsLocked: boolean,
 		canDeleteAllComments: boolean,
 		showTranslatedDescription: boolean,
 		isFollowed: boolean,
@@ -34,6 +35,7 @@ export class TagDetailsStore {
 			false,
 			latestComments,
 			true,
+			commentsLocked,
 		);
 
 		this.reportStore = new ReportEntryStore((reportType, notes) => {

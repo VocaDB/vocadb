@@ -143,6 +143,7 @@ export class UserDetailsStore {
 		readonly albumCollectionStore: AlbumCollectionStore,
 		readonly ratedSongsStore: RatedSongsSearchStore,
 		latestComments: CommentContract[],
+		commentsLocked: boolean,
 	) {
 		makeObservable(this);
 
@@ -171,6 +172,7 @@ export class UserDetailsStore {
 			false,
 			latestComments,
 			true,
+			commentsLocked,
 		);
 		this.songLists = new UserSongListsStore(values, userId, userRepo, tagRepo);
 		this.sfsCheckDialog = new SfsCheckStore(lastLoginAddress, this.adminRepo);

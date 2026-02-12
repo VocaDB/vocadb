@@ -27,10 +27,12 @@ const UserComments = observer(
 					<EditableComments
 						editableCommentsStore={userDetailsStore.comments}
 						allowCreateComment={
-							!user.standalone && loginManager.canCreateComments
+							!user.standalone && loginManager.canCreateComments && (!userDetailsStore.comments.commentsLocked || loginManager.canLockComments)
 						}
 						well={false}
 						comments={userDetailsStore.comments.pageOfComments}
+						commentsLocked={userDetailsStore.comments.commentsLocked}
+						onToggleLock={userDetailsStore.comments.toggleCommentsLocked}
 					/>
 				</div>
 			</>
