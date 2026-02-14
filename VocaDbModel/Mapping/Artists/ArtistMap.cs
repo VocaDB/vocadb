@@ -17,6 +17,7 @@ public class ArtistMap : ClassMap<Artist>
 		Map(m => m.Deleted).Not.Nullable();
 		Map(m => m.PictureMime).Length(32).Nullable();
 		Map(m => m.Status).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		References(m => m.BaseVoicebank).Nullable();

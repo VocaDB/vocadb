@@ -17,6 +17,7 @@ export class EditableCommentsStore {
 	@observable comments: CommentStore[] = [];
 	// Whether all comments have been loaded
 	@observable commentsLoaded = false;
+	@observable commentsLocked = false;
 	@observable editCommentStore?: CommentStore = undefined;
 	@observable newComment = '';
 	readonly paging = new ServerSidePagingStore();
@@ -30,9 +31,11 @@ export class EditableCommentsStore {
 		private readonly ascending: boolean,
 		commentContracts?: CommentContract[],
 		hasMoreComments: boolean = false,
+		commentsLocked: boolean = false,
 	) {
 		makeObservable(this);
 
+		this.commentsLocked = commentsLocked;
 		this.commentsLoaded = !!commentContracts && !hasMoreComments;
 
 		if (commentContracts) {
@@ -154,6 +157,17 @@ export class EditableCommentsStore {
 			});
 
 		this.commentsLoaded = true;
+	};
+
+	@action toggleCommentsLocked = async (): Promise<void> => {
+		const newLocked = !this.commentsLocked;
+		await this.commentRepo.setCommentsLocked({
+			entryId: this.entryId,
+			locked: newLocked,
+		});
+		runInAction(() => {
+			this.commentsLocked = newLocked;
+		});
 	};
 
 	@action saveEditedComment = (): void => {

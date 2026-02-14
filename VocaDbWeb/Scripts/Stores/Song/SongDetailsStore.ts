@@ -243,6 +243,7 @@ export class SongDetailsStore {
 			false,
 			data.latestComments,
 			true,
+			data.commentsLocked,
 		);
 
 		this.originalVersion = { entry: data.originalVersion };

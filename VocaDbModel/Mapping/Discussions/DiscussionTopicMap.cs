@@ -19,6 +19,7 @@ public class DiscussionTopicMap : ClassMap<DiscussionTopic>
 		Map(m => m.Deleted).Not.Nullable();
 		Map(m => m.Locked).Not.Nullable();
 		Map(m => m.Pinned).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Name).Not.Nullable().Length(200);
 
 		References(m => m.Folder).Not.Nullable();

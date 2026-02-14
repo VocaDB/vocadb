@@ -181,6 +181,8 @@ public class Tag :
 
 	public virtual IEnumerable<TagComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	/// <summary>
 	/// Date when this entry was created.
 	/// </summary>

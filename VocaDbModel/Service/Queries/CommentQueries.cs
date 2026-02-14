@@ -64,6 +64,10 @@ public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericCommen
 		}
 
 		var entry = Load(entryId);
+
+		if (entry.CommentsLocked && !_permissionContext.HasPermission(PermissionToken.LockComments))
+			throw new NotAllowedException("Comments are locked for this entry.");
+
 		var agent = _ctx.OfType<User>().CreateAgentLoginData(_permissionContext, _ctx.OfType<User>().Load(contract.Author.Id));
 
 		var comment = entry.CreateComment(contract.Message, agent);

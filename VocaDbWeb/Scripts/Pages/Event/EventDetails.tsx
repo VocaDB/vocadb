@@ -139,7 +139,6 @@ const EventDetailsLayout = observer(
 	}: EventDetailsLayoutProps): React.ReactElement => {
 		const vdb = useVdb();
 		const loginManager = useLoginManager();
-
 		React.useEffect(() => {
 			releaseEventDetailsStore.comments.initComments();
 		}, [releaseEventDetailsStore]);
@@ -602,9 +601,11 @@ const EventDetailsLayout = observer(
 				</h3>
 				<EditableComments
 					editableCommentsStore={releaseEventDetailsStore.comments}
-					allowCreateComment={loginManager.canCreateComments}
+					allowCreateComment={loginManager.canCreateComments && (!releaseEventDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
 					well={false}
 					comments={releaseEventDetailsStore.comments.pageOfComments}
+					commentsLocked={releaseEventDetailsStore.comments.commentsLocked}
+					onToggleLock={releaseEventDetailsStore.comments.toggleCommentsLocked}
 				/>
 
 				<TagsEdit tagsEditStore={releaseEventDetailsStore.tagsEditStore} />
@@ -651,6 +652,7 @@ const EventDetails = (): React.ReactElement => {
 						userRepo,
 						event.latestComments,
 						event.id,
+						event.commentsLocked,
 						UserEventRelationshipType[
 							event.eventAssociationType as keyof typeof UserEventRelationshipType
 						],

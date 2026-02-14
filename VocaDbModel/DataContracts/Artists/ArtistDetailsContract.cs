@@ -37,6 +37,7 @@ public class ArtistDetailsContract : ArtistContract
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
 		CreateDate = artist.CreateDate;
 		Description = artist.Description;
+		CommentsLocked = artist.CommentsLocked;
 		Draft = artist.Status == EntryStatus.Draft;
 		TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 		LatestAlbums = Array.Empty<AlbumForApiContract>();
@@ -134,6 +135,9 @@ public class ArtistDetailsContract : ArtistContract
 
 	[DataMember]
 	public EnglishTranslatedString Description { get; init; }
+
+	[DataMember]
+	public bool CommentsLocked { get; init; }
 
 	[DataMember]
 	public bool Draft { get; init; }

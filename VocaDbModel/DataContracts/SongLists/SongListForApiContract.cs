@@ -33,6 +33,7 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 		ParamIs.NotNull(() => list);
 
 		Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
+		CommentsLocked = list.CommentsLocked;
 		Deleted = list.Deleted;
 		EventDate = list.EventDate;
 		Status = list.Status;
@@ -72,6 +73,9 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 
 	[DataMember]
 	public UserForApiContract Author { get; init; }
+
+	[DataMember]
+	public bool CommentsLocked { get; init; }
 
 	[DataMember(EmitDefaultValue = false)]
 	public bool Deleted { get; init; }

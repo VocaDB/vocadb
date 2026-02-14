@@ -168,6 +168,9 @@ public sealed record TagDetailsForApiContract
 	public DateTime CreateDate { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool Deleted { get; init; }
 
 	[DataMember]
@@ -245,6 +248,7 @@ public sealed record TagDetailsForApiContract
 			.ToArray();
 		CommentCount = commentCount;
 		CreateDate = tag.CreateDate;
+		CommentsLocked = tag.CommentsLocked;
 		Deleted = tag.Deleted;
 		Description = new EnglishTranslatedStringContract(tag.Description);
 		Id = tag.Id;

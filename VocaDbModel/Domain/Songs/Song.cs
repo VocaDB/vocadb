@@ -191,6 +191,8 @@ public class Song :
 
 	public virtual IEnumerable<SongComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	/// <summary>
 	/// Date when this entry was created.
 	/// </summary>

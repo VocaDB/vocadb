@@ -106,6 +106,7 @@ export class TagRepository extends BaseRepository {
 			this.httpClient,
 			new UrlMapper(this.baseUrl),
 			'/tags/',
+			EntryType.Tag,
 		);
 
 	getEntryTypeTag = ({

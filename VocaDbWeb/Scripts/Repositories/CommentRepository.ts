@@ -3,7 +3,7 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { EntryType } from '@/Models/EntryType';
 import { BaseRepository } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
-import { HttpClient } from '@/Shared/HttpClient';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class CommentRepository
@@ -74,5 +74,24 @@ export class CommentRepository
 			),
 		);
 		return this.httpClient.post<void>(url, contract);
+	};
+
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		var url = this.urlMapper.mapRelative(
+			UrlMapper.buildUrl(
+				`api/comments/${this.entryType}-comments`,
+				entryId.toString(),
+				'locked',
+			),
+		);
+		return this.httpClient.post<void>(url, locked, {
+			headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
+		});
 	};
 }

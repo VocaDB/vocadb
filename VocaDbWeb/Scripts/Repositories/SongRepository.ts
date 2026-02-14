@@ -555,6 +555,22 @@ export class SongRepository
 		);
 	};
 
+	setCommentsLocked = ({
+		entryId,
+		locked,
+	}: {
+		entryId: number;
+		locked: boolean;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/comments/Song-comments/${entryId}/locked`,
+			),
+			locked,
+			{ headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON } },
+		);
+	};
+
 	updatePersonalDescription = ({
 		songId,
 		text,

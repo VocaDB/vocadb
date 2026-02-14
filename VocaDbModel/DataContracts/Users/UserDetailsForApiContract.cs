@@ -41,6 +41,9 @@ public abstract record UserDetailsForApiContractBase
 	public string CustomTitle { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool DesignatedStaff { get; init; }
 
 	[DataMember]
@@ -147,6 +150,7 @@ public abstract record UserDetailsForApiContractBase
 		AnonymousActivity = user.AnonymousActivity;
 		CreateDate = user.CreateDate;
 		CustomTitle = user.Options.CustomTitle;
+		CommentsLocked = user.CommentsLocked;
 		DesignatedStaff = user.EffectivePermissions.Contains(PermissionToken.DesignatedStaff);
 		EmailVerified = user.Options.EmailVerified;
 		GroupId = user.GroupId;

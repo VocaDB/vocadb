@@ -166,6 +166,8 @@ public class ReleaseEvent :
 
 	public virtual IEnumerable<ReleaseEventComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	public virtual DateTime CreateDate { get; set; }
 
 	public virtual bool CustomName { get; set; }

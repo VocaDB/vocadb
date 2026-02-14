@@ -27,9 +27,11 @@ const SongDiscussion = observer(
 			>
 				<EditableComments
 					editableCommentsStore={songDetailsStore.comments}
-					allowCreateComment={loginManager.canCreateComments}
+					allowCreateComment={loginManager.canCreateComments && (!songDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
 					well={false}
 					comments={songDetailsStore.comments.pageOfComments}
+					commentsLocked={songDetailsStore.comments.commentsLocked}
+					onToggleLock={songDetailsStore.comments.toggleCommentsLocked}
 				/>
 			</SongDetailsTabs>
 		);

@@ -25,11 +25,13 @@ export const LatestCommentsKnockout = observer(
 				<div>
 					<EditableComments
 						editableCommentsStore={editableCommentsStore}
-						allowCreateComment={loginManager.canCreateComments}
+						allowCreateComment={loginManager.canCreateComments && (!editableCommentsStore.commentsLocked || loginManager.canLockComments)}
 						well={false}
 						comments={editableCommentsStore.topComments}
 						newCommentRows={3}
 						pagination={false}
+						commentsLocked={editableCommentsStore.commentsLocked}
+						onToggleLock={editableCommentsStore.toggleCommentsLocked}
 					/>
 					{editableCommentsStore.comments.length === 0 && (
 						<p>{t('ViewRes:EntryDetails.NoComments')}</p>

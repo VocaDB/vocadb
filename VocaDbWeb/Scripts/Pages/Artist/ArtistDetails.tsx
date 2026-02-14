@@ -289,6 +289,7 @@ const ArtistDetails = (): React.ReactElement => {
 						userRepo,
 						loginManager.canDeleteComments,
 						artist.latestComments,
+						artist.commentsLocked,
 						artist.artistType,
 					),
 				});

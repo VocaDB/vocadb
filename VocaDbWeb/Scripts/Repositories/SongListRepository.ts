@@ -5,6 +5,7 @@ import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
@@ -66,7 +67,7 @@ export class SongListRepository {
 
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
-		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
+		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/', EntryType.SongList);
 
 	getFeatured = ({
 		query,

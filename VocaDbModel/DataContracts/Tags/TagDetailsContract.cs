@@ -25,6 +25,7 @@ public class TagDetailsContract : TagContract, IEntryWithStatus
 		: base(tag, languagePreference)
 	{
 		AdditionalNames = tag.Names.AdditionalNamesString;
+		CommentsLocked = tag.CommentsLocked;
 		Translations = tag.Names.GetTranslationsString(languagePreference);
 
 		Description = tag.Description;
@@ -60,6 +61,8 @@ public class TagDetailsContract : TagContract, IEntryWithStatus
 	public new EnglishTranslatedString Description { get; init; }
 
 	public int FollowerCount => Stats.FollowerCount;
+
+	public bool CommentsLocked { get; init; }
 
 	public bool IsFollowing { get; init; }
 

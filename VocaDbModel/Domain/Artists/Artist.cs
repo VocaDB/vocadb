@@ -202,6 +202,8 @@ public class Artist :
 
 	public virtual IEnumerable<ArtistComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	public virtual DateTime CreateDate { get; set; }
 
 	public virtual bool Deleted { get; set; }
