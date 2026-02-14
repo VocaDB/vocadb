@@ -1,20 +1,15 @@
 import Button from '@/Bootstrap/Button';
-import { apiEndpointsForEntryType } from '@/Components/Shared/GlobalSearchBox';
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import { EntryType } from '@/Models/EntryType';
-import { NameMatchMode } from '@/Models/NameMatchMode';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { TopBarStore } from '@/Stores/TopBarStore';
-import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const random = (max: number): number => Math.floor(Math.random() * max);
-
 interface ShowRandomPageButtonProps {
-	entryType: typeof TopBarStore.entryTypes[number];
+	entryType: (typeof TopBarStore.entryTypes)[number];
 	// HACK: Replace this with a normal property after removing jQuery UI's Autocomplete.
 	globalSearchTermRef: React.MutableRefObject<HTMLInputElement>;
 }
@@ -32,45 +27,17 @@ export const ShowRandomPageButton = React.memo(
 			try {
 				setClicked(true);
 
-				const apiEndpoint = apiEndpointsForEntryType[entryType];
-				const params = {
-					maxResults: 1,
-					nameMatchMode: NameMatchMode[NameMatchMode.Auto],
-					query: globalSearchTermRef.current.value,
-				};
-
-				const entry = await httpClient
-					.get<{ totalCount: number }>(
-						urlMapper.mapRelative(
-							`${apiEndpoint}?${qs.stringify({
-								...params,
-								getTotalCount: true,
-							})}`,
-						),
-					)
-					.then(async (result) => {
-						const index = random(result.totalCount);
-
-						return httpClient.get<
-							PartialFindResultContract<{ id: number; entryType: EntryType }>
-						>(
-							urlMapper.mapRelative(
-								`${apiEndpoint}?${qs.stringify({ ...params, start: index })}`,
-							),
-						);
-					})
-					.then((result) => result.items[0]);
-
-				navigate(
-					EntryUrlMapper.details(
-						entryType === EntryType.Undefined ? entry.entryType : entryType,
-						entry.id,
+				const entry = await httpClient.get<EntryRefContract>(
+					urlMapper.mapRelative(
+						`/api/entries/random?entryType=${EntryType[entryType]}`,
 					),
 				);
+
+				navigate(EntryUrlMapper.details(entry.entryType, entry.id));
 			} finally {
 				setClicked(false);
 			}
-		}, [entryType, globalSearchTermRef, navigate]);
+		}, [entryType, navigate]);
 
 		return (
 			<Button
