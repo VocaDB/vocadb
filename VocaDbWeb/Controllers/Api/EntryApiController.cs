@@ -1,8 +1,10 @@
 #nullable disable
 
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -99,6 +101,14 @@ public class EntryApiController : ApiController
 	/// <param name="nameMatchMode">Name match mode.</param>
 	/// <param name="maxResults">Maximum number of results.</param>
 	/// <returns>List of entry names.</returns>
+	/// <summary>
+	/// Gets a random entry ID.
+	/// </summary>
+	/// <param name="entryType">Entry type filter (optional, defaults to Undefined which picks from all types).</param>
+	/// <returns>Entry reference with ID and type.</returns>
+	[HttpGet("random")]
+	public EntryRefContract GetRandomEntry([DeniedValues(EntryType.User, EntryType.PV, EntryType.DiscussionTopic)] EntryType entryType = EntryType.Undefined) => _queries.GetRandomEntryId(entryType);
+
 	[HttpGet("names")]
 	public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => _otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 }

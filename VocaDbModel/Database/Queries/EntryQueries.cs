@@ -1,14 +1,18 @@
+using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
@@ -18,12 +22,14 @@ namespace VocaDb.Model.Database.Queries;
 
 public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 {
+	private readonly ObjectCache _cache;
 	private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 
-	public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister)
+	public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
 		: base(repository, permissionContext)
 	{
 		_entryThumbPersister = entryThumbPersister;
+		_cache = cache;
 	}
 
 	public PartialFindResult<EntryForApiContract> GetList(
@@ -197,5 +203,81 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 
 			return new PartialFindResult<EntryForApiContract>(entries.ToArray(), count);
 		});
+	}
+
+	public EntryRefContract GetRandomEntryId(EntryType entryType)
+	{
+		return _repository.HandleQuery(ctx =>
+		{
+			if (entryType == EntryType.Undefined)
+			{
+				var types = new[]
+				{
+					(EntryType.Album, CachedCountNonDeleted<Album>(ctx)),
+					(EntryType.Artist, CachedCountNonDeleted<Artist>(ctx)),
+					(EntryType.ReleaseEvent, CachedCountNonDeleted<ReleaseEvent>(ctx)),
+					(EntryType.ReleaseEventSeries, CachedCountNonDeleted<ReleaseEventSeries>(ctx)),
+					(EntryType.Song, CachedCountNonDeleted<Song>(ctx)),
+					(EntryType.SongList, CachedCountNonDeleted<SongList>(ctx)),
+					(EntryType.Tag, CachedCountNonDeleted<Tag>(ctx)),
+					(EntryType.Venue, CachedCountNonDeleted<Venue>(ctx))
+				};
+
+				var totalCount = types.Sum(t => t.Item2);
+				if (totalCount == 0)
+					throw new InvalidOperationException("No entries found.");
+
+				var pick = Random.Shared.Next(totalCount);
+				var cumulative = 0;
+				foreach (var (type, count) in types)
+				{
+					cumulative += count;
+					if (pick < cumulative)
+					{
+						entryType = type;
+						break;
+					}
+				}
+			}
+
+			return entryType switch
+			{
+				EntryType.Album => PickRandom<Album>(ctx, EntryType.Album),
+				EntryType.Artist => PickRandom<Artist>(ctx, EntryType.Artist),
+				EntryType.Song => PickRandom<Song>(ctx, EntryType.Song),
+				EntryType.ReleaseEvent => PickRandom<ReleaseEvent>(ctx, EntryType.ReleaseEvent),
+				EntryType.ReleaseEventSeries => PickRandom<ReleaseEventSeries>(ctx, EntryType.ReleaseEventSeries),
+				EntryType.Tag => PickRandom<Tag>(ctx, EntryType.Tag),
+				EntryType.SongList => PickRandom<SongList>(ctx, EntryType.SongList),
+				EntryType.Venue => PickRandom<Venue>(ctx, EntryType.Venue),
+				_ => throw new ArgumentException($"Unsupported entry type: {entryType}", nameof(entryType)),
+			};
+		});
+	}
+
+	private int CachedCountNonDeleted<T>(IDatabaseContext ctx) where T : class, IDeletableEntry
+	{
+		var cacheKey = $"EntryQueries.CountNonDeleted.{typeof(T).Name}";
+		return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(12)), () =>
+			ctx.OfType<T>().Query().Count(e => !e.Deleted)
+		);
+	}
+
+	private EntryRefContract PickRandom<T>(IDatabaseContext ctx, EntryType entryType) where T : class, IDeletableEntry
+	{
+		var count = CachedCountNonDeleted<T>(ctx);
+		if (count == 0)
+			throw new InvalidOperationException($"No entries found for type {entryType}.");
+
+		var offset = Random.Shared.Next(count);
+		var id = ctx.OfType<T>().Query()
+			.Where(e => !e.Deleted)
+			.OrderBy(e => e.Id)
+			.Select(e => e.Id)
+			.Skip(offset)
+			.Take(1)
+			.Single();
+
+		return new EntryRefContract { EntryType = entryType, Id = id };
 	}
 }
