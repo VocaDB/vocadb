@@ -9,7 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "Lisää kommentti",
-    "NewComment": "Olethan asiallinen, vältä roskapostausta ja low effort -kommentteja. Tarkemman ohjeistuksen löydät VocaDB Wikistä."
+    "LockComments": "Lock comments",
+    "NewComment": "Olethan asiallinen, vältä roskapostausta ja low effort -kommentteja. Tarkemman ohjeistuksen löydät VocaDB Wikistä.",
+    "UnlockComments": "Unlock comments",
+    "LockedBanner": "This comment section has been locked. Please discuss questions in the VocaDB forum or on Discord."
   },
   "EntryCreate": {
     "EnglishName": "Nimi englanniksi",
