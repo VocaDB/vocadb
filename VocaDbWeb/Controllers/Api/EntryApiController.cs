@@ -95,13 +95,6 @@ public class EntryApiController : ApiController
 	}
 
 	/// <summary>
-	/// Gets a list of entry names. Ideal for autocomplete boxes.
-	/// </summary>
-	/// <param name="query">Text query.</param>
-	/// <param name="nameMatchMode">Name match mode.</param>
-	/// <param name="maxResults">Maximum number of results.</param>
-	/// <returns>List of entry names.</returns>
-	/// <summary>
 	/// Gets a random entry ID.
 	/// </summary>
 	/// <param name="entryType">Entry type filter (optional, defaults to Undefined which picks from all types).</param>
@@ -109,6 +102,13 @@ public class EntryApiController : ApiController
 	[HttpGet("random")]
 	public EntryRefContract GetRandomEntry([DeniedValues(EntryType.User, EntryType.PV, EntryType.DiscussionTopic)] EntryType entryType = EntryType.Undefined) => _queries.GetRandomEntryId(entryType);
 
+	/// <summary>
+	/// Gets a list of entry names. Ideal for autocomplete boxes.
+	/// </summary>
+	/// <param name="query">Text query.</param>
+	/// <param name="nameMatchMode">Name match mode.</param>
+	/// <param name="maxResults">Maximum number of results.</param>
+	/// <returns>List of entry names.</returns>
 	[HttpGet("names")]
 	public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => _otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 }
