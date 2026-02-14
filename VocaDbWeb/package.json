@@ -74,7 +74,7 @@
 		"i18next-http-backend": "^2.2.1",
 		"i18next-localstorage-backend": "^4.1.1",
 		"jquery": "^2.2.1",
-		"jquery-ui": "^1.10.4",
+		"jquery-ui": "^1.13.2",
 		"jqwidgets-scripts": "^13.2.0",
 		"lodash-es": "^4.17.23",
 		"mobx": "^6.9.0",
