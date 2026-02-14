@@ -9,7 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "Añadir comentario",
-    "NewComment": "Sea civil y evite comentarios de baja calidad. Lea la guía para las discusiones en la wiki de VocaDB."
+    "LockComments": "Lock comments",
+    "NewComment": "Sea civil y evite comentarios de baja calidad. Lea la guía para las discusiones en la wiki de VocaDB.",
+    "UnlockComments": "Unlock comments",
+    "LockedBanner": "This comment section has been locked. Please discuss questions in the VocaDB forum or on Discord."
   },
   "EntryCreate": {
     "EnglishName": "Nombre en inglés",

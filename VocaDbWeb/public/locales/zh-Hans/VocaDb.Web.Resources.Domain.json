@@ -27,6 +27,7 @@
     "VoiceSynthesizer": "声音合成软件"
   },
   "WebhookEventNames": {
+    "DuplicateAccount": "Duplicate account alert",
     "EntryReport": "条目报告",
     "User": "用户"
   }

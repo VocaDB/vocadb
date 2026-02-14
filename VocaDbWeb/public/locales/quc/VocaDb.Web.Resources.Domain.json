@@ -27,6 +27,7 @@
     "VoiceSynthesizer": "crwdns16932:0crwdne16932:0"
   },
   "WebhookEventNames": {
+    "DuplicateAccount": "crwdns16972:0crwdne16972:0",
     "EntryReport": "crwdns16761:0crwdne16761:0",
     "User": "crwdns16763:0crwdne16763:0"
   }

@@ -27,6 +27,7 @@
     "VoiceSynthesizer": "Voice Synthesizer"
   },
   "WebhookEventNames": {
+    "DuplicateAccount": "Duplicate account alert",
     "EntryReport": "Entry report",
     "User": "사용자"
   }
