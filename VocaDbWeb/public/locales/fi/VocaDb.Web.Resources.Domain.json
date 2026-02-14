@@ -27,6 +27,7 @@
     "VoiceSynthesizer": "Äänisyntetisaattori"
   },
   "WebhookEventNames": {
+    "DuplicateAccount": "Duplicate account alert",
     "EntryReport": "Merkintäraportti",
     "User": "Käyttäjä"
   }
