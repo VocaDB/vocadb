@@ -18,6 +18,11 @@ public enum WebhookEvents
 	/// Entry report created.
 	/// </summary>
 	EntryReport = 1 << 1,
+
+	/// <summary>
+	/// Duplicate account alert.
+	/// </summary>
+	DuplicateAccount = 1 << 2,
 }
 
 public class Webhook : IEntryWithIntId

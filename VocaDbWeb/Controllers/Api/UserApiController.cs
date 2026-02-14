@@ -1172,7 +1172,7 @@ public class UserApiController : ApiController
 		{
 			var host = WebHelper.GetRealHost(Request);
 			var culture = WebHelper.GetInterfaceCultureName(Request);
-			var result = _queries.CheckAuthentication(model.UserName, model.Password, host, culture, delayFailedLogin: true);
+			var result = await _queries.CheckAuthentication(model.UserName, model.Password, host, culture, delayFailedLogin: true);
 
 			if (!result.IsOk)
 			{

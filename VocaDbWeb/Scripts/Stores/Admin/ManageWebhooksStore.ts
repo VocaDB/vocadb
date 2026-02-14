@@ -12,6 +12,7 @@ import {
 enum WebhookEvent {
 	User = 'User',
 	EntryReport = 'EntryReport',
+	DuplicateAccount = 'DuplicateAccount',
 }
 
 class WebhookEventSelection {

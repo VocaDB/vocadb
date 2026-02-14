@@ -588,7 +588,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 	/// <param name="culture">User culture name. Can be empty.</param>
 	/// <param name="delayFailedLogin">Whether failed login should cause artificial delay.</param>
 	/// <returns>Login attempt result. Cannot be null.</returns>
-	public LoginResult CheckAuthentication(string name, string pass, string hostname, string culture, bool delayFailedLogin)
+	public async Task<LoginResult> CheckAuthentication(string name, string pass, string hostname, string culture, bool delayFailedLogin)
 	{
 		static string MakeFailedLoginMessage(string hostname, string? message)
 		{
@@ -601,7 +601,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 		var lc = name.ToLowerInvariant();
 
-		return _repository.HandleTransaction(ctx =>
+		return await _repository.HandleTransactionAsync(async ctx =>
 		{
 			if (IsPoisoned(ctx, lc))
 			{
@@ -639,7 +639,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 
 			var algorithm = PasswordHashAlgorithms.Get(user.PasswordHashAlgorithm);
 
-			// Attempt to verify password.				
+			// Attempt to verify password.
 			var hashed = algorithm.HashPassword(pass, user.Salt, user.NameLC);
 
 			if (user.Password != hashed)
@@ -657,6 +657,27 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			user.UpdatePassword(pass, PasswordHashAlgorithms.Default);
 			user.UpdateLastLogin(hostname, culture);
 			ctx.Update(user);
+
+			// Check for potential duplicate accounts
+			var cutoff = DateTime.Now.AddDays(-30);
+			var duplicateUsers = await ctx.Query<User>()
+				.Where(u => u.Active && u.Id != user.Id
+					&& u.Options.LastLoginAddress == hostname
+					&& u.LastLogin >= cutoff)
+				.VdbToListAsync();
+
+			if (duplicateUsers.Any())
+			{
+				var names = string.Join(", ", duplicateUsers.Select(u => u.Name));
+				await _discordWebhookNotifier.SendMessageAsync(
+					WebhookEvents.DuplicateAccount,
+					user,
+					title: $"Duplicate IP address: {user.Name}",
+					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id),
+					description: $"Same IP as: {names}",
+					color: new Discord.Color(255, 0, 0)
+				);
+			}
 
 			return LoginResult.CreateSuccess(new ServerOnlyUserContract(user));
 		});
