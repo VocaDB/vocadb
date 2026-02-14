@@ -126,57 +126,57 @@ public class UserQueriesTests
 	}
 
 	[TestMethod]
-	public void CheckAuthentication()
+	public async Task CheckAuthentication()
 	{
-		var result = _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(true, "IsOk");
 		AssertEqual(_userWithEmail, result.User);
 	}
 
 	[TestMethod]
-	public void CheckAuthentication_DifferentCase()
+	public async Task CheckAuthentication_DifferentCase()
 	{
 		_userWithEmail.Name = "Already_Exists";
-		var result = _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(true, "IsOk");
 		AssertEqual(_userWithEmail, result.User);
 	}
 
 	[TestMethod]
-	public void CheckAuthentication_WrongPassword()
+	public async Task CheckAuthentication_WrongPassword()
 	{
-		var result = _data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(false, "IsOk");
 		result.Error.Should().Be(LoginError.InvalidPassword, "Error");
 	}
 
 	[TestMethod]
-	public void CheckAuthentication_NotFound()
+	public async Task CheckAuthentication_NotFound()
 	{
-		var result = _data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(false, "IsOk");
 		result.Error.Should().Be(LoginError.NotFound, "Error");
 	}
 
 	[TestMethod]
-	public void CheckAuthentication_Poisoned()
+	public async Task CheckAuthentication_Poisoned()
 	{
 		_userWithEmail.Options.Poisoned = true;
-		var result = _data.CheckAuthentication(_userWithEmail.Name, _userWithEmail.Password, "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication(_userWithEmail.Name, _userWithEmail.Password, "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(false, "IsOk");
 		result.Error.Should().Be(LoginError.AccountPoisoned, "Error");
 	}
 
 	[TestMethod]
-	public void CheckAuthentication_LoginWithEmail()
+	public async Task CheckAuthentication_LoginWithEmail()
 	{
 		_userWithEmail.Options.EmailVerified = true; // For now, logging in with email is allowed only if the email is verified
-		var result = _data.CheckAuthentication(_userWithEmail.Email, "123", "miku@crypton.jp", DefaultCulture, false);
+		var result = await _data.CheckAuthentication(_userWithEmail.Email, "123", "miku@crypton.jp", DefaultCulture, false);
 
 		result.IsOk.Should().Be(true, "IsOk");
 		AssertEqual(_userWithEmail, result.User);
