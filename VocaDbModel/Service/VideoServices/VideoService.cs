@@ -57,6 +57,9 @@ public class VideoService : IVideoService
 			{
 				new RegexLinkMatcher("youtu.be/{0}", @"youtu.be/(\S{11})"),
 				new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/watch?\S*v=(\S{11})"),
+				new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/shorts/(\S{11})"),
+				new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/watch/(\S{11})"),
+				new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/video/(\S{11})"),
 			}
 		);
 
@@ -165,3 +168,4 @@ public class VideoService : IVideoService
 		return VideoUrlParseResult.CreateOk(url, Service, id, meta);
 	}
 }
+
