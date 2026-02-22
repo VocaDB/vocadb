@@ -27,7 +27,7 @@
     "VoiceSynthesizer": "Stemsynthese"
   },
   "WebhookEventNames": {
-    "DuplicateAccount": "Duplicate account alert",
+    "DuplicateAccount": "Waarschuwing voor dubbel account",
     "EntryReport": "Bijdragemelding",
     "User": "Gebruiker"
   }
