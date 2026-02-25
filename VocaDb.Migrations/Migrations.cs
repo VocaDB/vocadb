@@ -4,6 +4,32 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_02_23_0000)]
+public class ExpandAdditionalNamesString : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Artists).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Albums).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Songs).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Tags).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEvents).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEventSeries).AsString(4096).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Venues).AsString(4096).NotNullable();
+	}
+
+	public override void Down()
+	{
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Artists).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Albums).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Songs).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Tags).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEvents).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEventSeries).AsString(1024).NotNullable();
+		Alter.Column("AdditionalNamesString").OnTable(TableNames.Venues).AsString(1024).NotNullable();
+	}
+}
+
 [Migration(2026_02_06_0000)]
 public class AddStatusToArchivedEventVersions : AutoReversingMigration
 {
