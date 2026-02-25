@@ -11,6 +11,7 @@ import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -33,6 +34,7 @@ const AlbumCreateLayout = observer(
 		const vdb = useVdb();
 
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Album']);
+		const { t: tBrand } = useBrandableTranslation();
 
 		const title = t('ViewRes.Album:Create.SubmitAlbum');
 
@@ -195,7 +197,7 @@ const AlbumCreateLayout = observer(
 								<RequiredField />
 								<br />
 								<span className="extraInfo">
-									{vdb.resources.album.newAlbumArtistDesc}
+									{tBrand('AlbumRes.NewAlbumArtistDesc')}
 								</span>
 							</div>
 							<div className="editor-field">
@@ -248,7 +250,7 @@ const AlbumCreateLayout = observer(
 							<Alert>
 								<span
 									dangerouslySetInnerHTML={{
-										__html: vdb.resources.album.newAlbumInfo ?? '',
+										__html: tBrand('AlbumRes.NewAlbumInfo'),
 									}}
 								/>
 							</Alert>

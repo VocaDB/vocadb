@@ -17,6 +17,7 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { SongHelper } from '@/Helpers/SongHelper';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { useLoginManager } from '@/LoginManagerContext';
 import { SongType } from '@/Models/Songs/SongType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -39,10 +40,10 @@ interface SongCreateLayoutProps {
 
 const SongCreateLayout = observer(
 	({ songCreateStore }: SongCreateLayoutProps): React.ReactElement => {
-		const vdb = useVdb();
 		const loginManager = useLoginManager();
 
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Song']);
+		const { t: tBrand } = useBrandableTranslation();
 
 		const title = t('ViewRes.Song:Create.SubmitSong');
 
@@ -424,7 +425,7 @@ const SongCreateLayout = observer(
 							<Alert variant="info" className="pre-line">
 								<span
 									dangerouslySetInnerHTML={{
-										__html: vdb.resources.song.newSongInfo ?? '',
+										__html: tBrand('SongRes.NewSongInfo'),
 									}}
 								/>
 							</Alert>

@@ -5,6 +5,7 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { songRepo } from '@/Repositories/SongRepository';
 import { userRepo } from '@/Repositories/UserRepository';
@@ -217,14 +218,15 @@ const SongRankings = observer((): React.ReactElement => {
 	);
 
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
+	const { t: tBrand } = useBrandableTranslation();
 
 	useLocationStateStore(rankingsStore);
 
 	return (
 		<Layout
-			pageTitle={vdb.resources.song.rankingsTitle}
+			pageTitle={tBrand('SongRes.RankingsTitle')}
 			ready={true}
-			title={vdb.resources.song.rankingsTitle}
+			title={tBrand('SongRes.RankingsTitle')}
 			parents={
 				<>
 					<Breadcrumb.Item
