@@ -16,5 +16,6 @@ export interface ReleaseEventSeriesForEditContract {
 	name: string;
 	names: LocalizedStringWithIdContract[];
 	status: EntryStatus;
+	updateNotes: string;
 	webLinks: WebLinkContract[];
 }

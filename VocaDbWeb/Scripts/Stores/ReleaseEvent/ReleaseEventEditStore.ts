@@ -64,6 +64,7 @@ export class ReleaseEventEditStore {
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	readonly trashStore: DeleteEntryStore;
+	@observable updateNotes = '';
 	readonly venue: BasicEntryLinkStore<VenueForApiContract>;
 	@observable venueName: string;
 	readonly webLinks: WebLinksEditStore;
@@ -234,6 +235,7 @@ export class ReleaseEventEditStore {
 					seriesSuffix: this.seriesSuffix,
 					songList: this.songList.entry,
 					status: this.status,
+					updateNotes: this.updateNotes,
 					venue: this.venue.entry,
 					venueName: this.venueName,
 					webLinks: this.webLinks.items,

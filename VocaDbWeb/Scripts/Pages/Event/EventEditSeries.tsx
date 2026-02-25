@@ -433,6 +433,19 @@ const EventEditSeriesLayout = observer(
 						/>
 					</div>
 
+					<p>{t('ViewRes:EntryEdit.UpdateNotes')}</p>
+					<textarea
+						value={releaseEventSeriesEditStore.updateNotes}
+						onChange={(e): void =>
+							runInAction(() => {
+								releaseEventSeriesEditStore.updateNotes = e.target.value;
+							})
+						}
+						className="input-xxlarge"
+						rows={4}
+						maxLength={200}
+					/>
+
 					<br />
 					<SaveAndBackBtn
 						backAction={backAction}
@@ -468,6 +481,7 @@ const defaultModel: ReleaseEventSeriesForEditContract = {
 	name: '',
 	names: [],
 	status: EntryStatus.Draft,
+	updateNotes: '',
 	webLinks: [],
 };
 

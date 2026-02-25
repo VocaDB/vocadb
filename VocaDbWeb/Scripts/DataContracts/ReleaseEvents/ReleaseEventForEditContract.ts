@@ -31,5 +31,6 @@ export interface ReleaseEventForEditContract {
 	status: EntryStatus;
 	venue?: IEntryWithIdAndName;
 	venueName?: string;
+	updateNotes: string;
 	webLinks: WebLinkContract[];
 }
