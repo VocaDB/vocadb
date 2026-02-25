@@ -1,8 +1,10 @@
 #nullable disable
 
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -91,6 +93,14 @@ public class EntryApiController : ApiController
 		return _queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
 			start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true, searchTags: true);
 	}
+
+	/// <summary>
+	/// Gets a random entry ID.
+	/// </summary>
+	/// <param name="entryType">Entry type filter (optional, defaults to Undefined which picks from all types).</param>
+	/// <returns>Entry reference with ID and type.</returns>
+	[HttpGet("random")]
+	public EntryRefContract GetRandomEntry([DeniedValues(EntryType.User, EntryType.PV, EntryType.DiscussionTopic)] EntryType entryType = EntryType.Undefined) => _queries.GetRandomEntryId(entryType);
 
 	/// <summary>
 	/// Gets a list of entry names. Ideal for autocomplete boxes.

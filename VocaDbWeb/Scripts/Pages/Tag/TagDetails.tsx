@@ -830,11 +830,13 @@ const TagDetailsLayout = observer(
 						{tagDetailsStore.comments.comments.length > 0 ? (
 							<EditableComments
 								editableCommentsStore={tagDetailsStore.comments}
-								allowCreateComment={loginManager.canCreateComments}
+								allowCreateComment={loginManager.canCreateComments && (!tagDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
 								well={false}
 								comments={tagDetailsStore.comments.topComments}
 								newCommentRows={3}
 								pagination={false}
+								commentsLocked={tagDetailsStore.comments.commentsLocked}
+								onToggleLock={tagDetailsStore.comments.toggleCommentsLocked}
 							/>
 						) : (
 							<p>{t('ViewRes:EntryDetails.NoComments')}</p>
@@ -854,9 +856,11 @@ const TagDetailsLayout = observer(
 					>
 						<EditableComments
 							editableCommentsStore={tagDetailsStore.comments}
-							allowCreateComment={loginManager.canCreateComments}
+							allowCreateComment={loginManager.canCreateComments && (!tagDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
 							well={false}
 							comments={tagDetailsStore.comments.pageOfComments}
+							commentsLocked={tagDetailsStore.comments.commentsLocked}
+							onToggleLock={tagDetailsStore.comments.toggleCommentsLocked}
 						/>
 					</JQueryUITab>
 				</JQueryUITabs>
@@ -898,6 +902,7 @@ const TagDetails = (): React.ReactElement => {
 						userRepo,
 						tag.latestComments,
 						tag.id,
+						tag.commentsLocked,
 						loginManager.canDeleteComments,
 						(vdb.values.languagePreference ===
 							ContentLanguagePreference.English ||

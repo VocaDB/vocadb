@@ -40,6 +40,9 @@ public sealed record ReleaseEventDetailsForApiContract
 	public DateTime? Date { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool Deleted { get; init; }
 
 	[DataMember]
@@ -142,6 +145,7 @@ public sealed record ReleaseEventDetailsForApiContract
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
 		Category = releaseEvent.Category;
 		Date = releaseEvent.Date;
+		CommentsLocked = releaseEvent.CommentsLocked;
 		Deleted = releaseEvent.Deleted;
 		Description = releaseEvent.Description;
 		EndDate = releaseEvent.EndDate;

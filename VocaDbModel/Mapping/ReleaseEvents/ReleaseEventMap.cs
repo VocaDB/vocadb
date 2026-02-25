@@ -23,6 +23,7 @@ public class ReleaseEventMap : ClassMap<ReleaseEvent>
 		Map(m => m.SeriesSuffix).Length(50).Not.Nullable();
 		Map(m => m.Status).Not.Nullable();
 		Map(m => m.VenueName).Column("VenueName").Length(1000).Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		HasManyToMany(m => m.AllAlbums).Table("ReleaseEventsForEntries").ParentKeyColumn("ReleaseEvent").ChildKeyColumn("Album").Inverse().Cache.ReadWrite();

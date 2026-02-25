@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
@@ -54,6 +55,31 @@ public class CommentQueries
 		EntryType.User => new CommentQueries<UserComment, User>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
 		_ => throw new ArgumentException($"Unsupported entry type: {entryType}", nameof(entryType)),
 	};
+
+	private IEntryWithComments LoadEntryWithComments(IDatabaseContext ctx, EntryType entryType, int entryId) => entryType switch
+	{
+		EntryType.Song => ctx.Load<Song>(entryId),
+		EntryType.Album => ctx.Load<Album>(entryId),
+		EntryType.Artist => ctx.Load<Artist>(entryId),
+		EntryType.ReleaseEvent => ctx.Load<ReleaseEvent>(entryId),
+		EntryType.Tag => ctx.Load<Tag>(entryId),
+		EntryType.SongList => ctx.Load<SongList>(entryId),
+		EntryType.User => ctx.Load<User>(entryId),
+		EntryType.DiscussionTopic => ctx.Load<DiscussionTopic>(entryId),
+		_ => throw new ArgumentException($"Unsupported entry type: {entryType}", nameof(entryType)),
+	};
+
+	public bool GetCommentsLocked(EntryType entryType, int entryId) =>
+		_repository.HandleQuery(ctx => LoadEntryWithComments(ctx, entryType, entryId).CommentsLocked);
+
+	public void SetCommentsLocked(EntryType entryType, int entryId, bool locked) =>
+		_repository.HandleTransaction(ctx =>
+		{
+			_userContext.VerifyPermission(PermissionToken.LockComments);
+			var entry = LoadEntryWithComments(ctx, entryType, entryId);
+			entry.CommentsLocked = locked;
+			ctx.AuditLogger.SysLog($"{(locked ? "locked" : "unlocked")} comments for {entryType} {entryId}");
+		});
 
 	public void DeleteComment(EntryType entryType, int commentId) => _repository.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
 

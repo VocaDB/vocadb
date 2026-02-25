@@ -56,6 +56,7 @@ public class UserGroup
 		PermissionToken.DesignatedStaff,
 		PermissionToken.DisableUsers,
 		PermissionToken.EditAllSongLists,
+		PermissionToken.LockComments,
 		PermissionToken.LockEntries,
 		PermissionToken.ManageIPRules,
 		PermissionToken.ManageTagMappings,

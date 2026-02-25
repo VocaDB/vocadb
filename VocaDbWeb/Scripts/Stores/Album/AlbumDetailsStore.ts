@@ -308,6 +308,7 @@ export class AlbumDetailsStore {
 			false,
 			data.latestComments,
 			true,
+			data.commentsLocked,
 		);
 
 		this.personalDescription = new SelfDescriptionStore(

@@ -27,6 +27,7 @@ public class SongMap : ClassMap<Song>
 		Map(m => m.SongType).Not.Nullable();
 		Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
 		Map(m => m.ThumbUrl).Length(255).Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		References(m => m.OriginalVersion).Nullable();

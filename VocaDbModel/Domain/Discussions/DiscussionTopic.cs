@@ -93,6 +93,8 @@ public class DiscussionTopic : IEntryWithNames, IEntryWithComments
 
 	public virtual bool Locked { get; set; }
 
+	public virtual bool CommentsLocked { get; set; }
+
 	public virtual string Name
 	{
 		get => _title;

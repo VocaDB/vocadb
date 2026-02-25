@@ -103,6 +103,8 @@ public class SongList :
 
 	public virtual IEnumerable<SongListComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	public virtual Comment CreateComment(string message, AgentLoginData loginData)
 	{
 		ParamIs.NotNullOrEmpty(() => message);

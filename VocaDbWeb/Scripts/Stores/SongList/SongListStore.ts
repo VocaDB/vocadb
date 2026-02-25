@@ -116,6 +116,7 @@ export class SongListStore implements LocationStateStore<SongListRouteParams> {
 		artistRepo: ArtistRepository,
 		latestComments: CommentContract[],
 		private readonly listId: number,
+		commentsLocked: boolean,
 		tagUsages: TagUsageForApiContract[],
 		canDeleteAllComments: boolean,
 		featuredCategory: string
@@ -132,6 +133,7 @@ export class SongListStore implements LocationStateStore<SongListRouteParams> {
 			false,
 			latestComments,
 			true,
+			commentsLocked,
 		);
 
 		// TODO

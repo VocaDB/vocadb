@@ -43,6 +43,7 @@ export class ReleaseEventDetailsStore {
 		private readonly userRepo: UserRepository,
 		latestComments: CommentContract[],
 		private readonly eventId: number,
+		commentsLocked: boolean,
 		eventAssociationType: UserEventRelationshipType,
 		usersAttending: UserBaseContract[],
 		tagUsages: TagUsageForApiContract[],
@@ -65,6 +66,7 @@ export class ReleaseEventDetailsStore {
 			false,
 			latestComments,
 			true,
+			commentsLocked,
 		);
 		this.eventAssociationType = eventAssociationType;
 		this.usersAttending = usersAttending;

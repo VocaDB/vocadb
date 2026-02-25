@@ -22,6 +22,7 @@ interface UserDetailsContractBase {
 	anonymousActivity: boolean;
 	artistCount: number;
 	commentCount: number;
+	commentsLocked: boolean;
 	createDate: string;
 	customTitle: string;
 	designatedStaff: boolean;

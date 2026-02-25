@@ -367,6 +367,7 @@ const UserDetails = (): React.ReactElement => {
 						albumCollectionStore,
 						ratedSongsStore,
 						user.latestComments,
+						user.commentsLocked,
 					),
 				});
 

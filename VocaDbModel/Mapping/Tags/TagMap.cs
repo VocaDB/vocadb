@@ -20,6 +20,7 @@ public class TagMap : ClassMap<Tag>
 		Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
 		Map(m => m.Targets).CustomType(typeof(TagTargetTypes)).Not.Nullable();
 		Map(m => m.UsageCount).Not.Nullable();
+		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
 
 		References(m => m.Parent).Nullable();

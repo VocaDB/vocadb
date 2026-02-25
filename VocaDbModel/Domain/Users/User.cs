@@ -215,6 +215,8 @@ public class User :
 	/// </summary>
 	public virtual IEnumerable<UserComment> Comments => AllComments.Where(c => !c.Deleted);
 
+	public virtual bool CommentsLocked { get; set; }
+
 	/// <summary>
 	/// Date when user account was created (signed up).
 	/// </summary>

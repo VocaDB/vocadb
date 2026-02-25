@@ -30,6 +30,22 @@ public class ExpandAdditionalNamesString : Migration
 	}
 }
 
+[Migration(2026_02_11_0000)]
+public class AddCommentsLocked : AutoReversingMigration
+{
+	public override void Up()
+	{
+		Create.Column("CommentsLocked").OnTable(TableNames.Songs).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.Albums).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.Artists).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.AlbumReleaseEvents).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.Tags).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.SongLists).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.Users).AsBoolean().NotNullable().WithDefaultValue(false);
+		Create.Column("CommentsLocked").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsBoolean().NotNullable().WithDefaultValue(false);
+	}
+}
+
 [Migration(2026_02_06_0000)]
 public class AddStatusToArchivedEventVersions : AutoReversingMigration
 {

@@ -32,6 +32,7 @@ export class SongDetailsForApi {
 	readonly canEditPersonalDescription: boolean;
 	readonly canRemoveTagUsages: boolean;
 	readonly commentCount: number;
+	readonly commentsLocked: boolean;
 	readonly createDate: string;
 	readonly cultureCodes: string[];
 	readonly deleted: boolean;
@@ -88,6 +89,7 @@ export class SongDetailsForApi {
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
 		this.canRemoveTagUsages = contract.canRemoveTagUsages;
 		this.commentCount = contract.commentCount;
+		this.commentsLocked = contract.commentsLocked;
 		this.createDate = contract.createDate;
 		this.cultureCodes = contract.cultureCodes;
 		this.deleted = contract.deleted;
@@ -216,6 +218,7 @@ export class SongDetailsForApi {
 }
 
 export class SongDetailsAjax {
+	readonly commentsLocked: boolean;
 	readonly id: number;
 	readonly latestComments: CommentContract[];
 	readonly linkedPages?: string[];
@@ -234,6 +237,7 @@ export class SongDetailsAjax {
 		preferredLyrics: LyricsForSongContract | undefined,
 		version: number,
 	) {
+		this.commentsLocked = model.commentsLocked;
 		this.id = model.id;
 		this.userRating = model.userRating;
 		this.latestComments = model.latestComments;

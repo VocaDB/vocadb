@@ -17,6 +17,7 @@ export interface SongListContract
 	eventDate?: string;
 	events?: ReleaseEventContract[];
 	featuredCategory: SongListFeaturedCategory;
+	commentsLocked?: boolean;
 	latestComments?: CommentContract[];
 	mainPicture?: EntryThumbContract;
 	status: EntryStatus;

@@ -177,11 +177,17 @@
     "ReadRecentComments": "Uusien kommenttien tarkastelu",
     "RemoveEditPermission": "Tietokannan muokkausoikeuksien poisto",
     "RemoveTagUsages": "Tunnisteiden poisto",
+    "ReportUser": "Report users",
     "RestoreRevisions": "Merkintöjen palauttaminen",
     "UploadMedia": "Oman median lataus",
     "ViewAuditLog": "Käyttölokin tarkastelu",
+    "ViewCoverArtImages": "View cover art images",
+    "ViewDisabledUsers": "View disabled users",
     "ViewHiddenRatings": "Piilotettujen arvosteluiden tarkastelu",
     "ViewHiddenRevisions": "Piilotettujen tarkistusten tarkastelu",
+    "ViewLyrics": "View lyrics",
+    "ViewOtherPVs": "View other PVs",
+    "ViewOldUsernames": "View old usernames",
     "ManageWebhooks": "Webhookien hallinta",
     "CreateDatabaseDump": "Tietokantadumpin luominen"
   },
@@ -269,6 +275,7 @@
     "None": "Käänteinen järjestys",
     "PublishDate": "Julkaisupäivämäärän mukaan",
     "RatingScore": "Arvosteluiden mukaan",
+    "SongType": "Song type",
     "TagUsageCount": "Tunnisteiden määrän mukaan"
   },
   "SongVoteRatingNames": {

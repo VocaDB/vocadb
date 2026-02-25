@@ -56,6 +56,9 @@ public sealed record SongDetailsForApiContract
 	public DateTime CreateDate { get; init; }
 
 	[DataMember]
+	public bool CommentsLocked { get; init; }
+
+	[DataMember]
 	public bool Deleted { get; init; }
 
 	[DataMember]
@@ -197,6 +200,7 @@ public sealed record SongDetailsForApiContract
 		CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 		CreateDate = song.CreateDate;
+		CommentsLocked = song.CommentsLocked;
 		Deleted = song.Deleted;
 		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 

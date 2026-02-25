@@ -264,7 +264,7 @@ public class UserController : ControllerBase
 		{
 			var host = WebHelper.GetRealHost(Request);
 			var culture = WebHelper.GetInterfaceCultureName(Request);
-			var result = Data.CheckAuthentication(model.UserName, model.Password, host, culture, true);
+			var result = await Data.CheckAuthentication(model.UserName, model.Password, host, culture, true);
 
 			if (!result.IsOk)
 			{

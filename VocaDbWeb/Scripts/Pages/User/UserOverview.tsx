@@ -563,12 +563,14 @@ const UserOverview = observer(
 						<EditableComments
 							editableCommentsStore={userDetailsStore.comments}
 							allowCreateComment={
-								!user.standalone && loginManager.canCreateComments
+								!user.standalone && loginManager.canCreateComments && (!userDetailsStore.comments.commentsLocked || loginManager.canLockComments)
 							}
 							well={false}
 							comments={userDetailsStore.comments.topComments}
 							newCommentRows={3}
 							pagination={false}
+							commentsLocked={userDetailsStore.comments.commentsLocked}
+							onToggleLock={userDetailsStore.comments.toggleCommentsLocked}
 						/>
 						{!userDetailsStore.comments.comments.length && (
 							<p>{t('ViewRes:EntryDetails.NoComments')}</p>
