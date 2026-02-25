@@ -50,7 +50,7 @@ public class EntryQueriesTests
 		var permissionContext = new FakePermissionContext();
 		var thumbPersister = new InMemoryImagePersister();
 
-		_queries = new EntryQueries(_repository, permissionContext, thumbPersister);
+		_queries = new EntryQueries(_repository, permissionContext, thumbPersister, new FakeObjectCache());
 
 		var group = CreateEntry.Artist(ArtistType.OtherGroup, name: "1640mP");
 		var artist = CreateEntry.Producer(name: "40mP");
