@@ -9,7 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "コメントを投稿する",
-    "NewComment": "常識のある発言を心がけ、スパムや軽率な発言は避けてください。VocaDB wiki のディスカッションガイドラインを参照してください。"
+    "LockComments": "Lock comments",
+    "NewComment": "常識のある発言を心がけ、スパムや軽率な発言は避けてください。VocaDB wiki のディスカッションガイドラインを参照してください。",
+    "UnlockComments": "Unlock comments",
+    "LockedBanner": "This comment section has been locked. Please discuss questions in the VocaDB forum or on Discord."
   },
   "EntryCreate": {
     "EnglishName": "英語名",

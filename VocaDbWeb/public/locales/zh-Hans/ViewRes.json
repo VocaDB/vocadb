@@ -9,7 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "发表评论",
-    "NewComment": "做文明人，避免刷屏和说闲话。参阅VocaDB中的讨论指南。"
+    "LockComments": "Lock comments",
+    "NewComment": "做文明人，避免刷屏和说闲话。参阅VocaDB中的讨论指南。",
+    "UnlockComments": "Unlock comments",
+    "LockedBanner": "This comment section has been locked. Please discuss questions in the VocaDB forum or on Discord."
   },
   "EntryCreate": {
     "EnglishName": "英文名",

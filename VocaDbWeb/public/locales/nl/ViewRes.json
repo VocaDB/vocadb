@@ -9,7 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "Voeg opmerking toe",
-    "NewComment": "Wees beschaafd, vermijd spam en opmerkingen die geen moeite kosten. Zie alle discussierichtlijnen op de VocaDB wiki."
+    "LockComments": "Vergrendel opmerkingen",
+    "NewComment": "Wees beschaafd, vermijd spam en opmerkingen die geen moeite kosten. Zie alle discussierichtlijnen op de VocaDB wiki.",
+    "UnlockComments": "Ontgrendel opmerkingen",
+    "LockedBanner": "Opmerkingen zijn vergrendeld. Gelieve vragen te bespreken in het VocaDB forum of op Discord."
   },
   "EntryCreate": {
     "EnglishName": "Naam in het Engels",
