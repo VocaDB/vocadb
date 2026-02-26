@@ -49,7 +49,7 @@ public class TagMap : ClassMap<Tag>
 
 		Component(m => m.Names, c =>
 		{
-			c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
+			c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(4096);
 			c.HasMany(m => m.Names).Table("TagNames").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
 			c.Component(m => m.SortNames, c2 =>
 			{
