@@ -19,6 +19,7 @@ import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
@@ -31,7 +32,6 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
-import { useVdb } from '@/VdbContext';
 import dayjs from '@/dayjs';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -140,7 +140,6 @@ const ArtistBasicInfo = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistBasicInfoProps): React.ReactElement => {
-		const vdb = useVdb();
 		const loginManager = useLoginManager();
 		const { getCodeDescription } = useCultureCodes();
 
@@ -150,6 +149,7 @@ const ArtistBasicInfo = observer(
 			'ViewRes.Song',
 			'VocaDb.Model.Resources',
 		]);
+		const { t: tBrand } = useBrandableTranslation();
 
 		React.useEffect(() => {
 			artistDetailsStore.loadHighcharts();
@@ -336,7 +336,7 @@ const ArtistBasicInfo = observer(
 
 							{artist.ownerUsers.length > 0 && (
 								<tr>
-									<td>{vdb.resources.artist.authoredBy}</td>
+									<td>{tBrand('ArtistRes.AuthoredBy')}</td>
 									<td>
 										{artist.ownerUsers.map((user) => (
 											<OwnedUser user={user} key={user.id} />

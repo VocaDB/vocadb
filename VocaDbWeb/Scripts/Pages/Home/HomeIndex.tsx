@@ -8,6 +8,7 @@ import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/C
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { userRepo } from '@/Repositories/UserRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient } from '@/Shared/HttpClient';
@@ -151,6 +152,7 @@ const HomeIndexLayout = ({
 	const vdb = useVdb();
 
 	const { t } = useTranslation(['ViewRes.Comment', 'ViewRes.Home']);
+	const { t: tBrand } = useBrandableTranslation();
 
 	return (
 		<Layout pageTitle={undefined} ready={true}>
@@ -225,8 +227,8 @@ const HomeIndexLayout = ({
 					);
 				})}
 			<h1 className="page-title home-title">
-				{vdb.resources.home.welcome}
-				<small>{vdb.resources.home.welcomeSubtitle}</small>
+				{tBrand('HomeRes.Welcome')}
+				<small>{tBrand('HomeRes.WelcomeSubtitle')}</small>
 			</h1>
 
 			{model.newSongs && (

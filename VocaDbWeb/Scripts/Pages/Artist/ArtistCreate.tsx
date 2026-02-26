@@ -10,6 +10,7 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { ImageHelper } from '@/Helpers/ImageHelper';
+import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -33,7 +34,6 @@ interface ArtistCreateLayoutProps {
 
 const ArtistCreateLayout = observer(
 	({ artistCreateStore }: ArtistCreateLayoutProps): React.ReactElement => {
-		const vdb = useVdb();
 		const loginManager = useLoginManager();
 
 		const { t, ready } = useTranslation([
@@ -41,6 +41,7 @@ const ArtistCreateLayout = observer(
 			'ViewRes',
 			'ViewRes.Artist',
 		]);
+		const { t: tBrand } = useBrandableTranslation();
 
 		const title = t('ViewRes.Artist:Create.AddArtist');
 
@@ -236,7 +237,7 @@ const ArtistCreateLayout = observer(
 							</div>
 
 							<div className="editor-label">
-								{vdb.resources.artist.newArtistExternalLink}
+								{tBrand('ArtistRes.NewArtistExternalLink')}
 							</div>
 							<div className="editor-field">
 								<table>

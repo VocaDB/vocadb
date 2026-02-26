@@ -1,4 +1,3 @@
-import { GlobalResources } from '@/Shared/GlobalResources';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
@@ -7,7 +6,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface VdbContextProps {
-	resources: GlobalResources;
 	values: GlobalValues;
 	refresh(): Promise<void>;
 }
@@ -43,14 +41,9 @@ export const VdbProvider = ({
 	const { i18n } = useTranslation();
 
 	const refresh = React.useCallback(async () => {
-		const [resources, values] = await Promise.all([
-			httpClient.get<GlobalResources>(
-				urlMapper.mapRelative('/api/globals/resources'),
-			),
-			httpClient.get<GlobalValues>(
-				urlMapper.mapRelative('/api/globals/values'),
-			),
-		]);
+		const values = await httpClient.get<GlobalValues>(
+			urlMapper.mapRelative('/api/globals/values'),
+		);
 
 		if (values.culture in locales) {
 			locales[values.culture]().then(() => dayjs.locale(values.culture));
@@ -58,7 +51,7 @@ export const VdbProvider = ({
 
 		i18n.changeLanguage(values.uiCulture);
 
-		setVdb({ resources, values, refresh });
+		setVdb({ values, refresh });
 	}, [i18n]);
 
 	React.useEffect(() => {

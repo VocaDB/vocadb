@@ -33,14 +33,6 @@ public class GlobalApiController : ApiController
 		_frontpageConfigService = frontpageConfigService;
 	}
 
-	[HttpGet("resources")]
-	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-	[ApiExplorerSettings(IgnoreApi = true)]
-	public GlobalResources GetResources()
-	{
-		return new GlobalResources(_brandableStrings);
-	}
-
 	[HttpGet("values")]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 	[ApiExplorerSettings(IgnoreApi = true)]
