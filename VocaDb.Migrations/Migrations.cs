@@ -7,26 +7,37 @@ namespace VocaDb.Migrations;
 [Migration(2026_02_23_0000)]
 public class ExpandAdditionalNamesString : Migration
 {
+	private static readonly string[] _tables =
+	[
+		TableNames.Artists,
+		TableNames.Albums,
+		TableNames.Songs,
+		TableNames.Tags,
+		TableNames.AlbumReleaseEvents,
+		TableNames.AlbumReleaseEventSeries,
+		TableNames.Venues,
+	];
+
 	public override void Up()
 	{
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Artists).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Albums).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Songs).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Tags).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEvents).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEventSeries).AsString(4096).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Venues).AsString(4096).NotNullable();
+		// SQL Server won't ALTER COLUMN when a DEFAULT constraint references it,
+		// so we drop the constraint first, alter, then re-add it.
+		foreach (var table in _tables)
+		{
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] DROP CONSTRAINT [DF_{table}_AdditionalNamesString]");
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] ALTER COLUMN [AdditionalNamesString] NVARCHAR(MAX) NOT NULL");
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] ADD CONSTRAINT [DF_{table}_AdditionalNamesString] DEFAULT (N'') FOR [AdditionalNamesString]");
+		}
 	}
 
 	public override void Down()
 	{
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Artists).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Albums).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Songs).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Tags).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEvents).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.AlbumReleaseEventSeries).AsString(1024).NotNullable();
-		Alter.Column("AdditionalNamesString").OnTable(TableNames.Venues).AsString(1024).NotNullable();
+		foreach (var table in _tables)
+		{
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] DROP CONSTRAINT [DF_{table}_AdditionalNamesString]");
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] ALTER COLUMN [AdditionalNamesString] NVARCHAR(1024) NOT NULL");
+			Execute.Sql($"ALTER TABLE [dbo].[{table}] ADD CONSTRAINT [DF_{table}_AdditionalNamesString] DEFAULT (N'') FOR [AdditionalNamesString]");
+		}
 	}
 }
 
