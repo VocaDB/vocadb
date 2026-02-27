@@ -40,7 +40,6 @@ import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { pvRepo } from '@/Repositories/PVRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -779,14 +778,12 @@ const EventEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							const pictureUpload = loginManager.canViewCoverArtImages
 								? pictureUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
 							const id = await releaseEventEditStore.submit(
-								requestToken,
 								pictureUpload,
 							);
 
@@ -914,7 +911,6 @@ const EventEdit = (): React.ReactElement => {
 					setModel({
 						releaseEventEditStore: new ReleaseEventEditStore(
 							vdb.values,
-							antiforgeryRepo,
 							eventRepo,
 							artistRepo,
 							pvRepo,
@@ -938,7 +934,6 @@ const EventEdit = (): React.ReactElement => {
 			setModel({
 				releaseEventEditStore: new ReleaseEventEditStore(
 					vdb.values,
-					antiforgeryRepo,
 					eventRepo,
 					artistRepo,
 					pvRepo,

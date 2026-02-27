@@ -8,7 +8,6 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -80,7 +79,6 @@ export class SongEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
@@ -95,9 +93,8 @@ export class SongEditStore {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				songRepo.delete(requestToken, {
+			(notes) =>
+				songRepo.delete({
 					id: contract.id,
 					notes: notes,
 				}),
@@ -437,11 +434,11 @@ export class SongEditStore {
 		this.originalVersion.id = song.id;
 	};
 
-	@action submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.songRepo.edit(requestToken, {
+			const id = await this.songRepo.edit({
 				artists: this.artistLinks.map((artistLink) => artistLink.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage,
 				deleted: false,

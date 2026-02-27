@@ -637,7 +637,6 @@ export class SongRepository
 	};
 
 	create = (
-		requestToken: string,
 		contract: CreateSongContract,
 	): Promise<number> => {
 		const formData = new FormData();
@@ -649,14 +648,12 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	edit = (
-		requestToken: string,
 		contract: SongForEditContract,
 	): Promise<number> => {
 		const formData = new FormData();
@@ -668,14 +665,12 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	merge = (
-		requestToken: string,
 		{ id, targetSongId }: { id: number; targetSongId: number },
 	): Promise<void> => {
 		return this.httpClient.post(
@@ -684,12 +679,7 @@ export class SongRepository
 					targetSongId: targetSongId,
 				})}`,
 			),
-			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			undefined
 		);
 	};
 
@@ -704,7 +694,6 @@ export class SongRepository
 	};
 
 	delete = (
-		requestToken: string,
 		{ id, notes }: { id: number; notes: string },
 	): Promise<void> => {
 		return this.httpClient.delete(
@@ -712,13 +701,11 @@ export class SongRepository
 				`/api/songs/${id}?${qs.stringify({
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -735,13 +722,11 @@ export class SongRepository
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 
 	revertToVersion = (
-		requestToken: string,
 		{
 			archivedVersionId,
 		}: {
@@ -752,8 +737,7 @@ export class SongRepository
 			this.urlMapper.mapRelative(
 				`/api/songs/versions/${archivedVersionId}/revert`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 

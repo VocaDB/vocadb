@@ -10,7 +10,6 @@ import { EntryType } from '@/Models/EntryType';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { OwnedArtistForUserEditRow } from '@/Pages/User/Partials/OwnedArtistForUserEditRow';
 import { PermissionEditRow } from '@/Pages/User/Partials/PermissionEditRow';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -99,9 +98,8 @@ const UserEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
-							const id = await userEditStore.submit(requestToken);
+							const id = await userEditStore.submit();
 
 							navigate(EntryUrlMapper.details(EntryType.User, id));
 						} catch (error: any) {

@@ -8,7 +8,6 @@ import { showErrorMessage } from '@/Components/ui';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { EntryType } from '@/Models/EntryType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumMergeStore } from '@/Stores/Album/AlbumMergeStore';
 import { useVdb } from '@/VdbContext';
@@ -74,10 +73,8 @@ const AlbumMergeLayout = observer(
 						if (!albumMergeStore.target.id) return;
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							await albumMergeStore.submit(
-								requestToken,
 								albumMergeStore.target.id,
 							);
 

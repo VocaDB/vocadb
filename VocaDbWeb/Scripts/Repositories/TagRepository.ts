@@ -253,7 +253,6 @@ export class TagRepository extends BaseRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: TagForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -268,31 +267,23 @@ export class TagRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	merge = (
-		requestToken: string,
 		{ id, targetTagId }: { id: number; targetTagId: number },
 	): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/tags/${id}/merge?${qs.stringify({ targetTagId: targetTagId })}`,
 			),
-			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			undefined
 		);
 	};
 
 	delete = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -306,13 +297,11 @@ export class TagRepository extends BaseRepository {
 					notes: notes,
 					hardDelete: hardDelete,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -329,8 +318,7 @@ export class TagRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 }

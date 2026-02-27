@@ -10,7 +10,6 @@ import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedT
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
@@ -101,9 +100,8 @@ const TagViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await tagRepo.updateVersionVisibility(requestToken, {
+											await tagRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
 											});
@@ -120,9 +118,8 @@ const TagViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await tagRepo.updateVersionVisibility(requestToken, {
+											await tagRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,
 											});

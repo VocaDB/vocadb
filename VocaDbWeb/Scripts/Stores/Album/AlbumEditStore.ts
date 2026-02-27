@@ -6,7 +6,6 @@ import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -143,7 +142,6 @@ export class AlbumEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly albumRepo: AlbumRepository,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
@@ -158,9 +156,8 @@ export class AlbumEditStore {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				albumRepo.delete(requestToken, {
+			(notes) =>
+				albumRepo.delete({
 					id: contract.id,
 					notes: notes,
 				}),
@@ -513,7 +510,6 @@ export class AlbumEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
 	): Promise<number> => {
@@ -521,7 +517,6 @@ export class AlbumEditStore {
 
 		try {
 			const id = await this.albumRepo.edit(
-				requestToken,
 				{
 					artistLinks: this.artistLinks.map((artist) => artist.toContract()),
 					defaultNameLanguage: this.defaultNameLanguage,

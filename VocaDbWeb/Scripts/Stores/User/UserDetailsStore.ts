@@ -6,7 +6,6 @@ import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { AdminRepository } from '@/Repositories/AdminRepository';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -135,7 +134,6 @@ export class UserDetailsStore {
 		private readonly userId: number,
 		private readonly lastLoginAddress: string,
 		canEditAllComments: boolean,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly userRepo: UserRepository,
 		private readonly adminRepo: AdminRepository,
 		tagRepo: TagRepository,
@@ -148,15 +146,13 @@ export class UserDetailsStore {
 		makeObservable(this);
 
 		this.limitedUserStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				userRepo.postStatusLimited(requestToken, { id: userId, notes: notes }),
+			(notes) =>
+				userRepo.postStatusLimited({ id: userId, notes: notes }),
 		);
 
 		this.reportUserStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				userRepo.postReport(requestToken, {
+			(notes) =>
+				userRepo.postReport({
 					id: userId,
 					notes: notes,
 				}),

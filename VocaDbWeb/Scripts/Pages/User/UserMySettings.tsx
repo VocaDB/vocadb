@@ -25,7 +25,6 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { PVService } from '@/Models/PVs/PVService';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { MySettingsStore } from '@/Stores/User/MySettingsStore';
@@ -786,13 +785,11 @@ const UserMySettingsLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							const pictureUpload =
 								pictureUploadRef.current.files?.item(0) ?? undefined;
 
 							const name = await mySettingsStore.submit(
-								requestToken,
 								pictureUpload,
 							);
 

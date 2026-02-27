@@ -3,7 +3,6 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { NameMatchMode } from '@/Models/NameMatchMode';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
@@ -24,16 +23,14 @@ export class ReleaseEventSeriesEditStore {
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly eventRepo: ReleaseEventRepository,
 		readonly contract: ReleaseEventSeriesForEditContract,
 	) {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.eventRepo.deleteSeries(requestToken, {
+			(notes) =>
+				this.eventRepo.deleteSeries({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: false,
@@ -41,9 +38,8 @@ export class ReleaseEventSeriesEditStore {
 		);
 
 		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.eventRepo.deleteSeries(requestToken, {
+			(notes) =>
+				this.eventRepo.deleteSeries({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: true,
@@ -76,14 +72,12 @@ export class ReleaseEventSeriesEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.eventRepo.editSeries(
-				requestToken,
 				{
 					category: this.category,
 					defaultNameLanguage: this.defaultNameLanguage,

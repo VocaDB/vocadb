@@ -108,14 +108,12 @@ export class MySettingsStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<string> => {
 		this.submitting = true;
 
 		try {
 			const name = await this.userRepo.updateMySettings(
-				requestToken,
 				{
 					aboutMe: this.aboutMe,
 					anonymousActivity: !this.showActivity,

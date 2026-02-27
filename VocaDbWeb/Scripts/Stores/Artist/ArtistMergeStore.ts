@@ -41,13 +41,12 @@ export class ArtistMergeStore {
 	}
 
 	@action submit = async (
-		requestToken: string,
 		targetArtistId: number,
 	): Promise<void> => {
 		try {
 			this.submitting = true;
 
-			await this.artistRepo.merge(requestToken, {
+			await this.artistRepo.merge({
 				id: this.artist.id,
 				targetArtistId: targetArtistId,
 			});

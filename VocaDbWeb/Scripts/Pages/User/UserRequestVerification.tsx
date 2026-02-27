@@ -6,7 +6,6 @@ import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import RequestVerificationStore from '@/Stores/User/RequestVerificationStore';
@@ -40,9 +39,8 @@ const UserRequestVerification = observer((): React.ReactElement => {
 							e.preventDefault();
 
 							try {
-								const requestToken = await antiforgeryRepo.getToken();
 
-								await requestVerificationStore.submit(requestToken);
+								await requestVerificationStore.submit();
 
 								showSuccessMessage('Request sent' /* LOC */);
 							} catch (error: any) {

@@ -850,7 +850,6 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	updateMySettings = (
-		requestToken: string,
 		contract: UpdateUserSettingsContract,
 		pictureUpload: File | undefined,
 	): Promise<string> => {
@@ -865,7 +864,6 @@ export class UserRepository implements ICommentRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -882,7 +880,6 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	create = (
-		requestToken: string,
 		{
 			email,
 			entryTime,
@@ -909,24 +906,20 @@ export class UserRepository implements ICommentRepository {
 				'g-recaptcha-response': recaptchaResponse,
 				password: password,
 				userName: userName,
-			},
-			{ headers: { requestVerificationToken: requestToken } },
+			}
 		);
 	};
 
 	edit = (
-		requestToken: string,
 		contract: UserForEditContract,
 	): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/users/${contract.id}`),
-			contract,
-			{ headers: { requestVerificationToken: requestToken } },
+			contract
 		);
 	};
 
 	login = (
-		requestToken: string,
 		{
 			keepLoggedIn,
 			password,
@@ -939,25 +932,18 @@ export class UserRepository implements ICommentRepository {
 	): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/login'),
-			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
-			{ headers: { requestVerificationToken: requestToken } },
+			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName }
 		);
 	};
 
-	logout = (requestToken: string): Promise<void> => {
+	logout = (): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/logout'),
-			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			undefined
 		);
 	};
 
 	postStatusLimited = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -968,24 +954,20 @@ export class UserRepository implements ICommentRepository {
 	): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/status-limited`),
-			{ reason: notes, createReport: true },
-			{ headers: { requestVerificationToken: requestToken } },
+			{ reason: notes, createReport: true }
 		);
 	};
 
 	postReport = (
-		requestToken: string,
 		{ id, notes }: { id: number; notes: string },
 	): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/reports`),
-			{ reason: notes, reportType: 'Spamming' },
-			{ headers: { requestVerificationToken: requestToken } },
+			{ reason: notes, reportType: 'Spamming' }
 		);
 	};
 
 	forgotPassword = (
-		requestToken: string,
 		{
 			email,
 			recaptchaResponse,
@@ -1002,8 +984,7 @@ export class UserRepository implements ICommentRepository {
 				email: email,
 				'g-recaptcha-response': recaptchaResponse,
 				username: username,
-			},
-			{ headers: { requestVerificationToken: requestToken } },
+			}
 		);
 	};
 }

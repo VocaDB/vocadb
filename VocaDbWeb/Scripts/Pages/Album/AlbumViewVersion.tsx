@@ -11,7 +11,6 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
 import { useLocationStateStore } from '@/route-sphere';
@@ -95,9 +94,8 @@ const AlbumViewVersionLayout = observer(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											const id = await albumRepo.revertToVersion(requestToken, {
+											const id = await albumRepo.revertToVersion({
 												archivedVersionId: contract.archivedVersion.id,
 											});
 
@@ -133,9 +131,8 @@ const AlbumViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await albumRepo.updateVersionVisibility(requestToken, {
+											await albumRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
 											});
@@ -152,9 +149,8 @@ const AlbumViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await albumRepo.updateVersionVisibility(requestToken, {
+											await albumRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,
 											});

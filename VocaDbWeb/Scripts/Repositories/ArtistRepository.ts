@@ -310,7 +310,6 @@ export class ArtistRepository
 	};
 
 	create = (
-		requestToken: string,
 		contract: CreateArtistContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -325,14 +324,12 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	edit = (
-		requestToken: string,
 		contract: ArtistForEditContract,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -350,14 +347,12 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	merge = (
-		requestToken: string,
 		{ id, targetArtistId }: { id: number; targetArtistId: number },
 	): Promise<void> => {
 		return this.httpClient.post(
@@ -366,17 +361,11 @@ export class ArtistRepository
 					targetArtistId: targetArtistId,
 				})}`,
 			),
-			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			undefined
 		);
 	};
 
 	requestVerification = (
-		requestToken: string,
 		{
 			artistId,
 			message,
@@ -395,17 +384,11 @@ export class ArtistRepository
 				message: message,
 				linkToProof: linkToProof,
 				privateMessage: privateMessage,
-			},
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			}
 		);
 	};
 
 	delete = (
-		requestToken: string,
 		{ id, notes }: { id: number; notes: string },
 	): Promise<void> => {
 		return this.httpClient.delete(
@@ -413,13 +396,11 @@ export class ArtistRepository
 				`/api/artists/${id}?${qs.stringify({
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -436,13 +417,11 @@ export class ArtistRepository
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 
 	revertToVersion = (
-		requestToken: string,
 		{
 			archivedVersionId,
 		}: {
@@ -453,8 +432,7 @@ export class ArtistRepository
 			this.urlMapper.mapRelative(
 				`/api/artists/versions/${archivedVersionId}/revert`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 }

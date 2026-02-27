@@ -10,7 +10,6 @@ import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/Arc
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedArtistStore } from '@/Stores/Artist/ArchivedArtistStore';
@@ -99,10 +98,8 @@ const ArtistViewVersionLayout = observer(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
 
 											const id = await artistRepo.revertToVersion(
-												requestToken,
 												{
 													archivedVersionId: contract.archivedVersion.id,
 												},
@@ -140,9 +137,8 @@ const ArtistViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await artistRepo.updateVersionVisibility(requestToken, {
+											await artistRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
 											});
@@ -159,9 +155,8 @@ const ArtistViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
 
-											await artistRepo.updateVersionVisibility(requestToken, {
+											await artistRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,
 											});

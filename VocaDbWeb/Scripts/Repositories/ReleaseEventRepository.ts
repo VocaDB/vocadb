@@ -67,7 +67,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	delete = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -84,13 +83,11 @@ export class ReleaseEventRepository extends BaseRepository {
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
 	deleteSeries = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -107,8 +104,7 @@ export class ReleaseEventRepository extends BaseRepository {
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
@@ -300,7 +296,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: ReleaseEventForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -315,7 +310,6 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -332,7 +326,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	editSeries = (
-		requestToken: string,
 		contract: ReleaseEventSeriesForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -347,7 +340,6 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -372,7 +364,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -389,13 +380,11 @@ export class ReleaseEventRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 
 	updateSeriesVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -410,8 +399,7 @@ export class ReleaseEventRepository extends BaseRepository {
 					{ hidden: hidden },
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 }

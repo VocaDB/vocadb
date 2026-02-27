@@ -20,7 +20,6 @@ import { SongHelper } from '@/Helpers/SongHelper';
 import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { useLoginManager } from '@/LoginManagerContext';
 import { SongType } from '@/Models/Songs/SongType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
@@ -72,9 +71,8 @@ const SongCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
-							const id = await songCreateStore.submit(requestToken);
+							const id = await songCreateStore.submit();
 
 							navigate(`/Song/Edit/${id}`);
 						} catch (error: any) {

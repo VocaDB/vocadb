@@ -15,13 +15,12 @@ export class UserCreateStore {
 	}
 
 	@action submit = async (
-		requestToken: string,
 		recaptchaResponse: string,
 	): Promise<void> => {
 		this.submitting = true;
 
 		try {
-			await userRepo.create(requestToken, {
+			await userRepo.create({
 				email: this.email,
 				entryTime: this.entryTime,
 				extra: this.extra,

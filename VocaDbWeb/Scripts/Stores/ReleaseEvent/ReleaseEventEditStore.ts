@@ -7,7 +7,6 @@ import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -70,7 +69,6 @@ export class ReleaseEventEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly eventRepo: ReleaseEventRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
@@ -83,9 +81,8 @@ export class ReleaseEventEditStore {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.eventRepo.delete(requestToken, {
+			(notes) =>
+				this.eventRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: false,
@@ -93,9 +90,8 @@ export class ReleaseEventEditStore {
 		);
 
 		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.eventRepo.delete(requestToken, {
+			(notes) =>
+				this.eventRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: true,
@@ -208,14 +204,12 @@ export class ReleaseEventEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.eventRepo.edit(
-				requestToken,
 				{
 					artists: this.artistLinkContracts,
 					category: this.category,

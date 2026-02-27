@@ -38,7 +38,6 @@ import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
@@ -817,7 +816,6 @@ const ArtistEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							const coverPicUpload = loginManager.canViewCoverArtImages
 								? coverPicUploadRef.current.files?.item(0) ?? undefined
@@ -832,7 +830,6 @@ const ArtistEditLayout = observer(
 								.map((file) => file as File);
 
 							const id = await artistEditStore.submit(
-								requestToken,
 								coverPicUpload,
 								pictureUpload,
 							);
@@ -926,7 +923,6 @@ const ArtistEdit = (): React.ReactElement => {
 				setModel({
 					artistEditStore: new ArtistEditStore(
 						vdb.values,
-						antiforgeryRepo,
 						artistRepo,
 						model,
 					),

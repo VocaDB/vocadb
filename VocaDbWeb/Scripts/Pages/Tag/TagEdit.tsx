@@ -35,7 +35,6 @@ import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { SongType } from '@/Models/Songs/SongType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagEditStore } from '@/Stores/Tag/TagEditStore';
@@ -226,14 +225,12 @@ const TagEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							const thumbPicUpload = loginManager.canViewCoverArtImages
 								? thumbPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
 							const id = await tagEditStore.submit(
-								requestToken,
 								thumbPicUpload,
 							);
 
@@ -566,7 +563,6 @@ const TagEdit = (): React.ReactElement => {
 			.then((model) =>
 				setModel({
 					tagEditStore: new TagEditStore(
-						antiforgeryRepo,
 						tagRepo,
 						model,
 						vdb.values,

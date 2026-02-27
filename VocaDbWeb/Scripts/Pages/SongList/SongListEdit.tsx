@@ -31,7 +31,6 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -679,14 +678,12 @@ const SongListEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 
 							const thumbPicUpload = loginManager.canViewCoverArtImages
 								? thumbPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
 							const id = await songListEditStore.submit(
-								requestToken,
 								thumbPicUpload,
 							);
 
@@ -791,7 +788,6 @@ const SongListEdit = (): React.ReactElement => {
 					setModel({
 						songListEditStore: new SongListEditStore(
 							vdb.values,
-							antiforgeryRepo,
 							songListRepo,
 							songRepo,
 							model,
@@ -810,7 +806,6 @@ const SongListEdit = (): React.ReactElement => {
 			setModel({
 				songListEditStore: new SongListEditStore(
 					vdb.values,
-					antiforgeryRepo,
 					songListRepo,
 					songRepo,
 					defaultModel,

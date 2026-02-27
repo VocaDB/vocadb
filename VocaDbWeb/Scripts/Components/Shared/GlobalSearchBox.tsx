@@ -13,7 +13,6 @@ import { ImageSize } from '@/Models/Images/ImageSize';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { entryRepo } from '@/Repositories/EntryRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -462,9 +461,8 @@ export const GlobalSearchBox = observer(
 								)}
 								<Dropdown.Item
 									onClick={async (): Promise<void> => {
-										const requestToken = await antiforgeryRepo.getToken();
 
-										await userRepo.logout(requestToken);
+										await userRepo.logout();
 
 										navigate('/');
 

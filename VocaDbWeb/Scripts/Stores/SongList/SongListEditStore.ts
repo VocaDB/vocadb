@@ -4,7 +4,6 @@ import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContr
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -76,7 +75,6 @@ export class SongListEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		readonly contract: SongListForEditContract,
@@ -84,9 +82,8 @@ export class SongListEditStore {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.songListRepo.delete(requestToken, {
+			(notes) =>
+				this.songListRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: false,
@@ -94,9 +91,8 @@ export class SongListEditStore {
 		);
 
 		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.songListRepo.delete(requestToken, {
+			(notes) =>
+				this.songListRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: true,
@@ -168,7 +164,6 @@ export class SongListEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
@@ -187,7 +182,6 @@ export class SongListEditStore {
 
 		try {
 			const id = await this.songListRepo.edit(
-				requestToken,
 				{
 					author: undefined!,
 					description: this.description,

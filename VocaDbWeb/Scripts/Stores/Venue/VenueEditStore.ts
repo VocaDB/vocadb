@@ -3,7 +3,6 @@ import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract
 import { EntryStatus } from '@/Models/EntryStatus';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { NameMatchMode } from '@/Models/NameMatchMode';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { VenueRepository } from '@/Repositories/VenueRepository';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
@@ -35,16 +34,14 @@ export class VenueEditStore {
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly venueRepo: VenueRepository,
 		readonly contract: VenueForEditContract,
 	) {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.venueRepo.delete(requestToken, {
+			(notes) =>
+				this.venueRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: false,
@@ -52,9 +49,8 @@ export class VenueEditStore {
 		);
 
 		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				this.venueRepo.delete(requestToken, {
+			(notes) =>
+				this.venueRepo.delete({
 					id: this.contract.id,
 					notes: notes,
 					hardDelete: true,
@@ -100,11 +96,11 @@ export class VenueEditStore {
 		});
 	};
 
-	@action submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.venueRepo.edit(requestToken, {
+			const id = await this.venueRepo.edit({
 				address: this.address,
 				addressCountryCode: this.addressCountryCode,
 				coordinates: this.coordinates,

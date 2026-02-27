@@ -410,7 +410,6 @@ export class AlbumRepository
 	};
 
 	create = (
-		requestToken: string,
 		contract: CreateAlbumContract,
 	): Promise<number> => {
 		const formData = new FormData();
@@ -422,14 +421,12 @@ export class AlbumRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	edit = (
-		requestToken: string,
 		contract: AlbumForEditContract,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -447,14 +444,12 @@ export class AlbumRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	merge = (
-		requestToken: string,
 		{ id, targetAlbumId }: { id: number; targetAlbumId: number },
 	): Promise<void> => {
 		return this.httpClient.post(
@@ -463,17 +458,11 @@ export class AlbumRepository
 					targetAlbumId: targetAlbumId,
 				})}`,
 			),
-			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
+			undefined
 		);
 	};
 
 	delete = (
-		requestToken: string,
 		{ id, notes }: { id: number; notes: string },
 	): Promise<void> => {
 		return this.httpClient.delete(
@@ -482,13 +471,11 @@ export class AlbumRepository
 					id: id,
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -505,13 +492,11 @@ export class AlbumRepository
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 
 	revertToVersion = (
-		requestToken: string,
 		{
 			archivedVersionId,
 		}: {
@@ -522,8 +507,7 @@ export class AlbumRepository
 			this.urlMapper.mapRelative(
 				`/api/albums/versions/${archivedVersionId}/revert`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 

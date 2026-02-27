@@ -43,7 +43,6 @@ export class SongListRepository {
 	) {}
 
 	delete = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -60,8 +59,7 @@ export class SongListRepository {
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
@@ -177,7 +175,6 @@ export class SongListRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: SongListForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -192,7 +189,6 @@ export class SongListRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);

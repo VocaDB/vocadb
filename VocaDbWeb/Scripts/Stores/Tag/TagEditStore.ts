@@ -3,7 +3,6 @@ import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
@@ -42,7 +41,6 @@ export class TagEditStore {
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly tagRepo: TagRepository,
 		readonly contract: TagForEditContract,
 		readonly values: GlobalValues
@@ -50,9 +48,8 @@ export class TagEditStore {
 		makeObservable(this);
 
 		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				tagRepo.delete(requestToken, {
+			(notes) =>
+				tagRepo.delete({
 					id: contract.id,
 					notes: notes,
 					hardDelete: false,
@@ -60,9 +57,8 @@ export class TagEditStore {
 		);
 
 		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				tagRepo.delete(requestToken, {
+			(notes) =>
+				tagRepo.delete({
 					id: contract.id,
 					notes: notes,
 					hardDelete: true,
@@ -121,14 +117,12 @@ export class TagEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.tagRepo.edit(
-				requestToken,
 				{
 					canDelete: false,
 					categoryName: this.categoryName,

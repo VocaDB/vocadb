@@ -42,7 +42,6 @@ export class VenueRepository extends BaseRepository {
 	};
 
 	delete = (
-		requestToken: string,
 		{
 			id,
 			notes,
@@ -59,8 +58,7 @@ export class VenueRepository extends BaseRepository {
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			),
-			{ headers: { requestVerificationToken: requestToken } },
+			)
 		);
 	};
 
@@ -128,18 +126,15 @@ export class VenueRepository extends BaseRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: VenueForEditContract,
 	): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/venues/${contract.id}`),
-			contract,
-			{ headers: { requestVerificationToken: requestToken } },
+			contract
 		);
 	};
 
 	updateVersionVisibility = (
-		requestToken: string,
 		{
 			archivedVersionId,
 			hidden,
@@ -156,8 +151,7 @@ export class VenueRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
+			undefined
 		);
 	};
 }
