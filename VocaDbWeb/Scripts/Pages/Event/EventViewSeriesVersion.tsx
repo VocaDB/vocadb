@@ -94,13 +94,10 @@ const EventSeriesViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-
-											await eventRepo.updateSeriesVersionVisibility(
-												{
-													archivedVersionId: contract.archivedVersion.id,
-													hidden: false,
-												},
-											);
+											await eventRepo.updateSeriesVersionVisibility({
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
 
 											window.location.reload();
 										}
@@ -114,13 +111,10 @@ const EventSeriesViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-
-											await eventRepo.updateSeriesVersionVisibility(
-												{
-													archivedVersionId: contract.archivedVersion.id,
-													hidden: true,
-												},
-											);
+											await eventRepo.updateSeriesVersionVisibility({
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
 
 											window.location.reload();
 										}

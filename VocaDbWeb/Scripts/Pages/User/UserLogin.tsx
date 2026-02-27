@@ -41,7 +41,6 @@ const UserLoginLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							await userLoginStore.submit();
 
 							// TODO: TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));

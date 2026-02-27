@@ -39,7 +39,6 @@ const UserRequestVerification = observer((): React.ReactElement => {
 							e.preventDefault();
 
 							try {
-
 								await requestVerificationStore.submit();
 
 								showSuccessMessage('Request sent' /* LOC */);

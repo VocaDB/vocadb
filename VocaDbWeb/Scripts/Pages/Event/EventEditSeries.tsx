@@ -198,7 +198,6 @@ const EventEditSeriesLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const pictureUpload = loginManager.canViewCoverArtImages
 								? pictureUploadRef.current.files?.item(0) ?? undefined
 								: undefined;

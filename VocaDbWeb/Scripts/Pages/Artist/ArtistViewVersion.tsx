@@ -98,12 +98,9 @@ const ArtistViewVersionLayout = observer(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-
-											const id = await artistRepo.revertToVersion(
-												{
-													archivedVersionId: contract.archivedVersion.id,
-												},
-											);
+											const id = await artistRepo.revertToVersion({
+												archivedVersionId: contract.archivedVersion.id,
+											});
 
 											navigate(`/Artist/Edit/${id}`);
 										}
@@ -137,7 +134,6 @@ const ArtistViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-
 											await artistRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
@@ -155,7 +151,6 @@ const ArtistViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-
 											await artistRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,

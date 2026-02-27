@@ -62,7 +62,6 @@ const AlbumCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const id = await albumCreateStore.submit();
 
 							navigate(`/Album/Edit/${id}`);

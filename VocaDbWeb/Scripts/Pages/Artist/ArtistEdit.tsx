@@ -816,7 +816,6 @@ const ArtistEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const coverPicUpload = loginManager.canViewCoverArtImages
 								? coverPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
@@ -921,11 +920,7 @@ const ArtistEdit = (): React.ReactElement => {
 			.getForEdit({ id: Number(id) })
 			.then((model) =>
 				setModel({
-					artistEditStore: new ArtistEditStore(
-						vdb.values,
-						artistRepo,
-						model,
-					),
+					artistEditStore: new ArtistEditStore(vdb.values, artistRepo, model),
 				}),
 			)
 			.catch((error) => {

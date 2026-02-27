@@ -272,24 +272,30 @@ export class TagRepository extends BaseRepository {
 		);
 	};
 
-	merge = (
-		{ id, targetTagId }: { id: number; targetTagId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetTagId,
+	}: {
+		id: number;
+		targetTagId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/tags/${id}/merge?${qs.stringify({ targetTagId: targetTagId })}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
-	delete = (
-		{
-			id,
-			notes,
-			hardDelete,
-		}: { id: number; notes: string; hardDelete: boolean },
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/tags/${id}?${qs.stringify({
@@ -297,19 +303,17 @@ export class TagRepository extends BaseRepository {
 					notes: notes,
 					hardDelete: hardDelete,
 				})}`,
-			)
+			),
 		);
 	};
 
-	updateVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/tags/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -318,7 +322,7 @@ export class TagRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 }

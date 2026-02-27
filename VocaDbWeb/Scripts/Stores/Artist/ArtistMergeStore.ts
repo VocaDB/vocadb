@@ -40,9 +40,7 @@ export class ArtistMergeStore {
 		);
 	}
 
-	@action submit = async (
-		targetArtistId: number,
-	): Promise<void> => {
+	@action submit = async (targetArtistId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 

@@ -103,7 +103,6 @@ const EventViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-
 											await eventRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
@@ -121,7 +120,6 @@ const EventViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-
 											await eventRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,

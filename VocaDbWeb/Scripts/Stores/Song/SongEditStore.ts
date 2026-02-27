@@ -92,12 +92,11 @@ export class SongEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				songRepo.delete({
-					id: contract.id,
-					notes: notes,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			songRepo.delete({
+				id: contract.id,
+				notes: notes,
+			}),
 		);
 
 		this.originalVersion = new BasicEntryLinkStore((entryId) =>
@@ -112,16 +111,16 @@ export class SongEditStore {
 		);
 
 		this.releaseEvents = contract.releaseEvents.map((e) => {
-			const store = new BasicEntryLinkStore<ReleaseEventContract>(
-				(entryId) => eventRepo.getOne({ id: entryId})
-			)
+			const store = new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
+				eventRepo.getOne({ id: entryId }),
+			);
 			store.id = e.id;
-				
+
 			return store;
-		})
+		});
 
 		if (this.releaseEvents.length === 0) {
-			this.addReleaseEvent()
+			this.addReleaseEvent();
 		}
 
 		this.albumEventId = contract.albumEventId;
@@ -287,7 +286,7 @@ export class SongEditStore {
 			this.names.originalName.value.trim(),
 			this.names.romajiName.value.trim(),
 			this.names.englishName.value.trim(),
-		].filter(name => name !== '');
+		].filter((name) => name !== '');
 
 		const uniqueNames = new Set(primaryNames);
 		return primaryNames.length > uniqueNames.size;
@@ -310,13 +309,14 @@ export class SongEditStore {
 
 	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvents
-			.map(e => e.entry)
-			.filter(e => e !== undefined && e.date !== undefined)
+			.map((e) => e.entry)
+			.filter((e) => e !== undefined && e.date !== undefined)
 			.sort(
 				(a, b) =>
 					(a!.date ? new Date(a!.date).getTime() : Infinity) -
 					(b!.date ? new Date(b!.date).getTime() : Infinity),
-			).map(e => dayjs.utc(e!.date))[0]
+			)
+			.map((e) => dayjs.utc(e!.date))[0];
 	}
 
 	@computed get firstPvDate(): Dayjs | undefined {
@@ -340,13 +340,13 @@ export class SongEditStore {
 			.head();
 	}
 
-	addReleaseEvent = (): void =>  {
+	addReleaseEvent = (): void => {
 		this.releaseEvents.push(
 			new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
 				this.eventRepo.getOne({ id: entryId }),
-			)
-		)
-	}
+			),
+		);
+	};
 
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -400,9 +400,10 @@ export class SongEditStore {
 	@action findOriginalSongSuggestions = async (): Promise<void> => {
 		this.originalVersionSuggestions = [];
 
-		const names = (this.names.getPrimaryNames().length
-			? this.names.getPrimaryNames()
-			: this.names.getAllNames()
+		const names = (
+			this.names.getPrimaryNames().length
+				? this.names.getPrimaryNames()
+				: this.names.getAllNames()
 		).map((n) => n.value);
 		const [all, originals] = await Promise.all([
 			this.songRepo.getByNames({
@@ -458,7 +459,9 @@ export class SongEditStore {
 					: undefined,
 				pvs: this.pvs.toContracts(),
 				releaseEvent: this.releaseEvent.entry,
-				releaseEvents: this.releaseEvents.map(e => e.entry).filter(e => e !== undefined) as ReleaseEventContract[],
+				releaseEvents: this.releaseEvents
+					.map((e) => e.entry)
+					.filter((e) => e !== undefined) as ReleaseEventContract[],
 				songType: this.songType,
 				status: this.status,
 				tags: this.tags,

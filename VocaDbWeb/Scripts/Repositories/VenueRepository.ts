@@ -41,24 +41,22 @@ export class VenueRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	delete = (
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/venues/${id}?${qs.stringify({
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
@@ -125,24 +123,20 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 
-	edit = (
-		contract: VenueForEditContract,
-	): Promise<number> => {
+	edit = (contract: VenueForEditContract): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/venues/${contract.id}`),
-			contract
+			contract,
 		);
 	};
 
-	updateVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/venues/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -151,7 +145,7 @@ export class VenueRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 }

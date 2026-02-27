@@ -47,9 +47,7 @@ const UserForgotPasswordLayout = observer(
 						try {
 							const recaptchaResponse = recaptchaRef.current.getValue() ?? '';
 
-							await userForgotPasswordStore.submit(
-								recaptchaResponse,
-							);
+							await userForgotPasswordStore.submit(recaptchaResponse);
 
 							navigate('/User/Login');
 						} catch (error: any) {

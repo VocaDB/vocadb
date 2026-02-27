@@ -71,7 +71,6 @@ const SongCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const id = await songCreateStore.submit();
 
 							navigate(`/Song/Edit/${id}`);

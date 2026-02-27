@@ -636,9 +636,7 @@ export class SongRepository
 		);
 	};
 
-	create = (
-		contract: CreateSongContract,
-	): Promise<number> => {
+	create = (contract: CreateSongContract): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -653,9 +651,7 @@ export class SongRepository
 		);
 	};
 
-	edit = (
-		contract: SongForEditContract,
-	): Promise<number> => {
+	edit = (contract: SongForEditContract): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -670,16 +666,20 @@ export class SongRepository
 		);
 	};
 
-	merge = (
-		{ id, targetSongId }: { id: number; targetSongId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetSongId,
+	}: {
+		id: number;
+		targetSongId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/songs/${id}/merge?${qs.stringify({
 					targetSongId: targetSongId,
 				})}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
@@ -693,27 +693,23 @@ export class SongRepository
 		);
 	};
 
-	delete = (
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	delete = ({ id, notes }: { id: number; notes: string }): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/songs/${id}?${qs.stringify({
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
-	updateVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/songs/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -722,22 +718,20 @@ export class SongRepository
 					},
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
-	revertToVersion = (
-		{
-			archivedVersionId,
-		}: {
-			archivedVersionId: number;
-		},
-	): Promise<number> => {
+	revertToVersion = ({
+		archivedVersionId,
+	}: {
+		archivedVersionId: number;
+	}): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(
 				`/api/songs/versions/${archivedVersionId}/revert`,
 			),
-			undefined
+			undefined,
 		);
 	};
 

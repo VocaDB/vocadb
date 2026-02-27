@@ -40,9 +40,7 @@ export class AlbumMergeStore {
 		);
 	}
 
-	@action submit = async (
-		targetAlbumId: number,
-	): Promise<void> => {
+	@action submit = async (targetAlbumId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 

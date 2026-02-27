@@ -94,7 +94,6 @@ const SongViewVersionLayout = observer(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-
 											const id = await songRepo.revertToVersion({
 												archivedVersionId: contract.archivedVersion.id,
 											});
@@ -131,7 +130,6 @@ const SongViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-
 											await songRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
@@ -149,7 +147,6 @@ const SongViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-
 											await songRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,

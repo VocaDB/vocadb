@@ -98,7 +98,6 @@ const UserEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const id = await userEditStore.submit();
 
 							navigate(EntryUrlMapper.details(EntryType.User, id));

@@ -42,30 +42,33 @@ export class SongListRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	delete = (
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/songLists/${id}?${qs.stringify({
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
-		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/', EntryType.SongList);
+		new EntryCommentRepository(
+			this.httpClient,
+			this.urlMapper,
+			'/songLists/',
+			EntryType.SongList,
+		);
 
 	getFeatured = ({
 		query,

@@ -78,11 +78,15 @@ export class MySettingsStore {
 		this.showActivity = !contract.anonymousActivity;
 		this.showChatbox = contract.showChatbox;
 		this.stylesheet = contract.stylesheet ?? '';
-		this.unreadNotificationsToKeep = contract.unreadNotificationsToKeep.toString();
+		this.unreadNotificationsToKeep =
+			contract.unreadNotificationsToKeep.toString();
 		this.username = contract.name;
 		this.webLinksStore = new WebLinksEditStore(contract.webLinks);
 
-		if (contract.knownLanguages.filter(lang => lang.cultureCode.length > 2).length > 0) {
+		if (
+			contract.knownLanguages.filter((lang) => lang.cultureCode.length > 2)
+				.length > 0
+		) {
 			this.extendLanguages = true;
 		}
 	}
@@ -107,9 +111,7 @@ export class MySettingsStore {
 		await this.userRepo.requestEmailVerification({});
 	};
 
-	@action submit = async (
-		pictureUpload: File | undefined,
-	): Promise<string> => {
+	@action submit = async (pictureUpload: File | undefined): Promise<string> => {
 		this.submitting = true;
 
 		try {

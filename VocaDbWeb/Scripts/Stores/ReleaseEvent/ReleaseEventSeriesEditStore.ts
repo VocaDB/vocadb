@@ -28,22 +28,20 @@ export class ReleaseEventSeriesEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				this.eventRepo.deleteSeries({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: false,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			this.eventRepo.deleteSeries({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: false,
+			}),
 		);
 
-		this.trashStore = new DeleteEntryStore(
-			(notes) =>
-				this.eventRepo.deleteSeries({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: true,
-				}),
+		this.trashStore = new DeleteEntryStore((notes) =>
+			this.eventRepo.deleteSeries({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: true,
+			}),
 		);
 
 		this.category = contract.category;
@@ -71,9 +69,7 @@ export class ReleaseEventSeriesEditStore {
 		});
 	};
 
-	@action submit = async (
-		pictureUpload: File | undefined,
-	): Promise<number> => {
+	@action submit = async (pictureUpload: File | undefined): Promise<number> => {
 		this.submitting = true;
 
 		try {

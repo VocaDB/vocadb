@@ -46,9 +46,7 @@ export class TagMergeStore {
 		return tag.id !== this.tag.id;
 	};
 
-	@action submit = async (
-		targetTagId: number,
-	): Promise<void> => {
+	@action submit = async (targetTagId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 

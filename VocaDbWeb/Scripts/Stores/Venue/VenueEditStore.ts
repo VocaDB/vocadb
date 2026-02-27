@@ -39,22 +39,20 @@ export class VenueEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				this.venueRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: false,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			this.venueRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: false,
+			}),
 		);
 
-		this.trashStore = new DeleteEntryStore(
-			(notes) =>
-				this.venueRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: true,
-				}),
+		this.trashStore = new DeleteEntryStore((notes) =>
+			this.venueRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: true,
+			}),
 		);
 
 		this.address = contract.address;

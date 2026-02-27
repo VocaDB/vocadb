@@ -678,14 +678,11 @@ const SongListEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const thumbPicUpload = loginManager.canViewCoverArtImages
 								? thumbPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
-							const id = await songListEditStore.submit(
-								thumbPicUpload,
-							);
+							const id = await songListEditStore.submit(thumbPicUpload);
 
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
 						} catch (error: any) {

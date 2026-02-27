@@ -85,9 +85,7 @@ export class ArtistCreateStore {
 		});
 	};
 
-	@action submit = async (
-		pictureUpload: File | undefined,
-	): Promise<number> => {
+	@action submit = async (pictureUpload: File | undefined): Promise<number> => {
 		this.submitting = true;
 
 		try {

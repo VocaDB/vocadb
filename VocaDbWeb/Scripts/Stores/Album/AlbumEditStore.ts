@@ -155,12 +155,11 @@ export class AlbumEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				albumRepo.delete({
-					id: contract.id,
-					notes: notes,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			albumRepo.delete({
+				id: contract.id,
+				notes: notes,
+			}),
 		);
 
 		this.releaseEvent = new BasicEntryLinkStore<ReleaseEventContract>(
@@ -168,16 +167,16 @@ export class AlbumEditStore {
 		);
 
 		this.releaseEvents = contract.originalRelease.releaseEvents.map((e) => {
-			const store = new BasicEntryLinkStore<ReleaseEventContract>(
-				(entryId) => eventRepo.getOne({ id: entryId})
-			)
+			const store = new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
+				eventRepo.getOne({ id: entryId }),
+			);
 			store.id = e.id;
-				
+
 			return store;
-		})
+		});
 
 		if (this.releaseEvents.length === 0) {
-			this.addReleaseEvent()
+			this.addReleaseEvent();
 		}
 
 		this.catalogNumber = contract.originalRelease.catNum;
@@ -302,13 +301,14 @@ export class AlbumEditStore {
 
 	@computed get eventDate(): Dayjs | undefined {
 		return this.releaseEvents
-			.map(e => e.entry)
-			.filter(e => e !== undefined && e.date !== undefined)
+			.map((e) => e.entry)
+			.filter((e) => e !== undefined && e.date !== undefined)
 			.sort(
 				(a, b) =>
 					(a!.date ? new Date(a!.date).getTime() : Infinity) -
 					(b!.date ? new Date(b!.date).getTime() : Infinity),
-			).map(e => dayjs.utc(e!.date))[0]
+			)
+			.map((e) => dayjs.utc(e!.date))[0];
 	}
 
 	@computed get releaseDate(): Dayjs | undefined {
@@ -324,14 +324,14 @@ export class AlbumEditStore {
 		this.releaseMonth = value ? value.month() + 1 : undefined;
 		this.releaseDay = value?.date();
 	}
-	
-	addReleaseEvent = (): void =>  {
+
+	addReleaseEvent = (): void => {
 		this.releaseEvents.push(
 			new BasicEntryLinkStore<ReleaseEventContract>((entryId) =>
 				this.eventRepo.getOne({ id: entryId }),
-			)
-		)
-	}
+			),
+		);
+	};
 
 	@action acceptTrackSelection = async (
 		songId?: number,
@@ -534,7 +534,9 @@ export class AlbumEditStore {
 							year: this.releaseYear,
 						},
 						releaseEvent: this.releaseEvent.entry,
-						releaseEvents: this.releaseEvents.map(e => e.entry).filter(e => e !== undefined) as ReleaseEventContract[]
+						releaseEvents: this.releaseEvents
+							.map((e) => e.entry)
+							.filter((e) => e !== undefined) as ReleaseEventContract[],
 					},
 					pictures: this.pictures.toContracts(),
 					pvs: this.pvs.toContracts(),

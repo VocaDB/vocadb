@@ -907,7 +907,6 @@ const SongEditLayout = observer(
 						}
 
 						try {
-
 							const id = await songEditStore.submit();
 
 							navigate(

@@ -40,9 +40,7 @@ export class SongMergeStore {
 		);
 	}
 
-	@action submit = async (
-		targetSongId: number,
-	): Promise<void> => {
+	@action submit = async (targetSongId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 

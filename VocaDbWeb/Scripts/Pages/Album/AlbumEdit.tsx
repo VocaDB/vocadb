@@ -1029,7 +1029,6 @@ const AlbumEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const coverPicUpload = loginManager.canViewCoverArtImages
 								? coverPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;

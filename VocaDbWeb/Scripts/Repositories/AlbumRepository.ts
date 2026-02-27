@@ -409,9 +409,7 @@ export class AlbumRepository
 		);
 	};
 
-	create = (
-		contract: CreateAlbumContract,
-	): Promise<number> => {
+	create = (contract: CreateAlbumContract): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -449,41 +447,41 @@ export class AlbumRepository
 		);
 	};
 
-	merge = (
-		{ id, targetAlbumId }: { id: number; targetAlbumId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetAlbumId,
+	}: {
+		id: number;
+		targetAlbumId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/albums/${id}/merge?${qs.stringify({
 					targetAlbumId: targetAlbumId,
 				})}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
-	delete = (
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	delete = ({ id, notes }: { id: number; notes: string }): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/albums/${id}?${qs.stringify({
 					id: id,
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
-	updateVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/albums/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -492,22 +490,20 @@ export class AlbumRepository
 					},
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
-	revertToVersion = (
-		{
-			archivedVersionId,
-		}: {
-			archivedVersionId: number;
-		},
-	): Promise<number> => {
+	revertToVersion = ({
+		archivedVersionId,
+	}: {
+		archivedVersionId: number;
+	}): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(
 				`/api/albums/versions/${archivedVersionId}/revert`,
 			),
-			undefined
+			undefined,
 		);
 	};
 

@@ -60,7 +60,7 @@ export const apiEndpointsForEntryType = {
 };
 
 const globalSearchBoxSource = (
-	entryType: typeof TopBarStore.entryTypes[number],
+	entryType: (typeof TopBarStore.entryTypes)[number],
 	query: string,
 ): Promise<string[]> => {
 	const apiEndpoint = apiEndpointsForEntryType[entryType];
@@ -322,7 +322,7 @@ export const GlobalSearchBox = observer(
 					onChange={(event): void => {
 						runInAction(() => {
 							topBarStore.entryType = event.target
-								.value as typeof TopBarStore.entryTypes[number];
+								.value as (typeof TopBarStore.entryTypes)[number];
 						});
 					}}
 				/>
@@ -461,7 +461,6 @@ export const GlobalSearchBox = observer(
 								)}
 								<Dropdown.Item
 									onClick={async (): Promise<void> => {
-
 										await userRepo.logout();
 
 										navigate('/');

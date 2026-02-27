@@ -785,13 +785,10 @@ const UserMySettingsLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const pictureUpload =
 								pictureUploadRef.current.files?.item(0) ?? undefined;
 
-							const name = await mySettingsStore.submit(
-								pictureUpload,
-							);
+							const name = await mySettingsStore.submit(pictureUpload);
 
 							navigate(EntryUrlMapper.details_user_byName(name));
 

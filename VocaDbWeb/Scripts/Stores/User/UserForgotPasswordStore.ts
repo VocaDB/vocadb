@@ -11,9 +11,7 @@ export class UserForgotPasswordStore {
 		makeObservable(this);
 	}
 
-	@action submit = async (
-		recaptchaResponse: string,
-	): Promise<void> => {
+	@action submit = async (recaptchaResponse: string): Promise<void> => {
 		this.submitting = true;
 
 		try {

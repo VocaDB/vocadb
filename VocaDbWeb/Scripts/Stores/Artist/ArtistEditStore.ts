@@ -77,12 +77,11 @@ export class ArtistEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				artistRepo.delete({
-					id: contract.id,
-					notes: notes,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			artistRepo.delete({
+				id: contract.id,
+				notes: notes,
+			}),
 		);
 
 		this.baseVoicebank = new BasicEntryLinkStore<ArtistContract>((entryId) =>

@@ -225,14 +225,11 @@ const TagEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const thumbPicUpload = loginManager.canViewCoverArtImages
 								? thumbPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
-							const id = await tagEditStore.submit(
-								thumbPicUpload,
-							);
+							const id = await tagEditStore.submit(thumbPicUpload);
 
 							navigate(EntryUrlMapper.details_tag(id));
 						} catch (error: any) {
@@ -562,11 +559,7 @@ const TagEdit = (): React.ReactElement => {
 			.getForEdit({ id: Number(id) })
 			.then((model) =>
 				setModel({
-					tagEditStore: new TagEditStore(
-						tagRepo,
-						model,
-						vdb.values,
-					),
+					tagEditStore: new TagEditStore(tagRepo, model, vdb.values),
 				}),
 			)
 			.catch((error) => {

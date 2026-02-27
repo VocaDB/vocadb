@@ -49,7 +49,8 @@ const validate = ajv.compile<UserSongListsRouteParams>(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements LocationStateStore<UserSongListsRouteParams> {
+	implements LocationStateStore<UserSongListsRouteParams>
+{
 	constructor(
 		values: GlobalValues,
 		private readonly userId: number,
@@ -145,9 +146,8 @@ export class UserDetailsStore {
 	) {
 		makeObservable(this);
 
-		this.limitedUserStore = new DeleteEntryStore(
-			(notes) =>
-				userRepo.postStatusLimited({ id: userId, notes: notes }),
+		this.limitedUserStore = new DeleteEntryStore((notes) =>
+			userRepo.postStatusLimited({ id: userId, notes: notes }),
 		);
 
 		this.reportUserStore = new DeleteEntryStore(

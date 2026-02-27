@@ -80,22 +80,20 @@ export class ReleaseEventEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				this.eventRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: false,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			this.eventRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: false,
+			}),
 		);
 
-		this.trashStore = new DeleteEntryStore(
-			(notes) =>
-				this.eventRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: true,
-				}),
+		this.trashStore = new DeleteEntryStore((notes) =>
+			this.eventRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: true,
+			}),
 		);
 
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
@@ -203,9 +201,7 @@ export class ReleaseEventEditStore {
 		pull(this.artistLinks, artist);
 	};
 
-	@action submit = async (
-		pictureUpload: File | undefined,
-	): Promise<number> => {
+	@action submit = async (pictureUpload: File | undefined): Promise<number> => {
 		this.submitting = true;
 
 		try {

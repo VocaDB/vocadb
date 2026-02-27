@@ -5,9 +5,7 @@ export class DeleteEntryStore {
 	@observable notes = '';
 
 	constructor(
-		private readonly deleteCallback: (
-			notes: string,
-		) => Promise<void>,
+		private readonly deleteCallback: (notes: string) => Promise<void>,
 		readonly notesRequired = false,
 	) {
 		makeObservable(this);

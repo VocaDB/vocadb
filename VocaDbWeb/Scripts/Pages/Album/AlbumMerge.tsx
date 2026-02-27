@@ -73,10 +73,7 @@ const AlbumMergeLayout = observer(
 						if (!albumMergeStore.target.id) return;
 
 						try {
-
-							await albumMergeStore.submit(
-								albumMergeStore.target.id,
-							);
+							await albumMergeStore.submit(albumMergeStore.target.id);
 
 							navigate(`/Album/Edit/${albumMergeStore.target.id}`);
 						} catch (error: any) {

@@ -81,22 +81,20 @@ export class SongListEditStore {
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			(notes) =>
-				this.songListRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: false,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			this.songListRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: false,
+			}),
 		);
 
-		this.trashStore = new DeleteEntryStore(
-			(notes) =>
-				this.songListRepo.delete({
-					id: this.contract.id,
-					notes: notes,
-					hardDelete: true,
-				}),
+		this.trashStore = new DeleteEntryStore((notes) =>
+			this.songListRepo.delete({
+				id: this.contract.id,
+				notes: notes,
+				hardDelete: true,
+			}),
 		);
 
 		this.songLinks = [];

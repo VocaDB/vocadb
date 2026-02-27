@@ -71,14 +71,11 @@ const ArtistCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const pictureUpload = loginManager.canViewCoverArtImages
 								? pictureUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
-							const id = await artistCreateStore.submit(
-								pictureUpload,
-							);
+							const id = await artistCreateStore.submit(pictureUpload);
 
 							navigate(`/Artist/Edit/${id}`);
 						} catch (error: any) {

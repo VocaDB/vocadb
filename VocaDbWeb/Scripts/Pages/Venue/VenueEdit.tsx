@@ -154,7 +154,6 @@ const VenueEditLayout = observer(
 						e.preventDefault();
 
 						try {
-
 							const id = await venueEditStore.submit();
 
 							navigate(EntryUrlMapper.details(EntryType.Venue, id));
@@ -398,10 +397,7 @@ const VenueEdit = (): React.ReactElement => {
 				.getForEdit({ id: Number(id) })
 				.then((model) =>
 					setModel({
-						venueEditStore: new VenueEditStore(
-							venueRepo,
-							model,
-						),
+						venueEditStore: new VenueEditStore(venueRepo, model),
 					}),
 				)
 				.catch((error) => {
@@ -414,10 +410,7 @@ const VenueEdit = (): React.ReactElement => {
 				});
 		} else {
 			setModel({
-				venueEditStore: new VenueEditStore(
-					venueRepo,
-					defaultModel,
-				),
+				venueEditStore: new VenueEditStore(venueRepo, defaultModel),
 			});
 		}
 	}, [id]);

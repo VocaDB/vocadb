@@ -73,9 +73,7 @@ const SongMergeLayout = observer(
 						try {
 							if (!songMergeStore.target.id) return;
 
-							await songMergeStore.submit(
-								songMergeStore.target.id,
-							);
+							await songMergeStore.submit(songMergeStore.target.id);
 
 							navigate(`/Song/Edit/${songMergeStore.target.id}`);
 						} catch (error: any) {

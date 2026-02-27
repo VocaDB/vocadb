@@ -66,45 +66,41 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	delete = (
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/${id}?${qs.stringify({
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
-	deleteSeries = (
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	deleteSeries = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/${id}?${qs.stringify({
 					hardDelete: hardDelete,
 					notes: notes,
 				})}`,
-			)
+			),
 		);
 	};
 
@@ -363,15 +359,13 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	updateVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -380,26 +374,24 @@ export class ReleaseEventRepository extends BaseRepository {
 					},
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 
-	updateSeriesVersionVisibility = (
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateSeriesVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/versions/${archivedVersionId}/update-visibility?${qs.stringify(
 					{ hidden: hidden },
 				)}`,
 			),
-			undefined
+			undefined,
 		);
 	};
 }

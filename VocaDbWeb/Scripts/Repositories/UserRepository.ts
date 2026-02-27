@@ -879,23 +879,21 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	create = (
-		{
-			email,
-			entryTime,
-			extra,
-			password,
-			recaptchaResponse,
-			userName,
-		}: {
-			email: string;
-			entryTime: Date;
-			extra: string;
-			password: string;
-			recaptchaResponse: string;
-			userName: string;
-		},
-	): Promise<void> => {
+	create = ({
+		email,
+		entryTime,
+		extra,
+		password,
+		recaptchaResponse,
+		userName,
+	}: {
+		email: string;
+		entryTime: Date;
+		extra: string;
+		password: string;
+		recaptchaResponse: string;
+		userName: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/register'),
 			{
@@ -906,85 +904,81 @@ export class UserRepository implements ICommentRepository {
 				'g-recaptcha-response': recaptchaResponse,
 				password: password,
 				userName: userName,
-			}
+			},
 		);
 	};
 
-	edit = (
-		contract: UserForEditContract,
-	): Promise<number> => {
+	edit = (contract: UserForEditContract): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/users/${contract.id}`),
-			contract
+			contract,
 		);
 	};
 
-	login = (
-		{
-			keepLoggedIn,
-			password,
-			userName,
-		}: {
-			keepLoggedIn: boolean;
-			password: string;
-			userName: string;
-		},
-	): Promise<void> => {
+	login = ({
+		keepLoggedIn,
+		password,
+		userName,
+	}: {
+		keepLoggedIn: boolean;
+		password: string;
+		userName: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/login'),
-			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName }
+			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
 		);
 	};
 
 	logout = (): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/logout'),
-			undefined
+			undefined,
 		);
 	};
 
-	postStatusLimited = (
-		{
-			id,
-			notes,
-		}: {
-			id: number;
-			notes: string;
-		},
-	): Promise<void> => {
+	postStatusLimited = ({
+		id,
+		notes,
+	}: {
+		id: number;
+		notes: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/status-limited`),
-			{ reason: notes, createReport: true }
+			{ reason: notes, createReport: true },
 		);
 	};
 
-	postReport = (
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	postReport = ({
+		id,
+		notes,
+	}: {
+		id: number;
+		notes: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/reports`),
-			{ reason: notes, reportType: 'Spamming' }
+			{ reason: notes, reportType: 'Spamming' },
 		);
 	};
 
-	forgotPassword = (
-		{
-			email,
-			recaptchaResponse,
-			username,
-		}: {
-			email: string;
-			recaptchaResponse: string;
-			username: string;
-		},
-	): Promise<void> => {
+	forgotPassword = ({
+		email,
+		recaptchaResponse,
+		username,
+	}: {
+		email: string;
+		recaptchaResponse: string;
+		username: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/forgot-password'),
 			{
 				email: email,
 				'g-recaptcha-response': recaptchaResponse,
 				username: username,
-			}
+			},
 		);
 	};
 }

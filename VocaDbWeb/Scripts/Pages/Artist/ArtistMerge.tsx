@@ -76,9 +76,7 @@ const ArtistMergeLayout = observer(
 						try {
 							if (!artistMergeStore.target.id) return;
 
-							await artistMergeStore.submit(
-								artistMergeStore.target.id,
-							);
+							await artistMergeStore.submit(artistMergeStore.target.id);
 
 							navigate(`/Artist/Edit/${artistMergeStore.target.id}`);
 						} catch (error: any) {
