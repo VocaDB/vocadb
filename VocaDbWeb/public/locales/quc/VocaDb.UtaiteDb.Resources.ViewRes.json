@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "crwdns16623:0crwdne16623:0",
     "RankingsTitle": "crwdns16625:0crwdne16625:0"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "crwdns16994:0crwdne16994:0"
   }
 }

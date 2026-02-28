@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
     "RankingsTitle": "UtaiteDB song rankings"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": ""
   }
 }

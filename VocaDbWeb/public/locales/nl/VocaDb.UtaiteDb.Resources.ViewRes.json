@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "Zorg ervoor dat het nummer dat je toevoegt nog niet eerder toegevoegd is. Je moet op zijn minst één naam en artiest toevoegen. Een link naar de originele video is zeer wenselijk.",
     "RankingsTitle": "UtaiteDB nummerranglijsten"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": ""
   }
 }

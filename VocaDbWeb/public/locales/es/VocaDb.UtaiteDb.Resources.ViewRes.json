@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "Asegúrese de que la canción que está a punto de enviar no se haya agregado antes. Debe añadir al menos un nombre y un artista. Es ideal añadir el enlace al PV original.",
     "RankingsTitle": "Ranking de canciones en UtaiteDB"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": ""
   }
 }
