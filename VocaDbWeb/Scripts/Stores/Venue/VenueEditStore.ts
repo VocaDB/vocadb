@@ -32,6 +32,7 @@ export class VenueEditStore {
 	@observable status = EntryStatus.Draft;
 	@observable submitting = false;
 	readonly trashStore: DeleteEntryStore;
+	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
@@ -115,6 +116,7 @@ export class VenueEditStore {
 				name: '',
 				names: this.names.toContracts(),
 				status: this.status,
+				updateNotes: this.updateNotes,
 				webLinks: this.webLinks.toContracts(),
 			});
 

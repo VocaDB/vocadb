@@ -299,10 +299,12 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 
 				ctx.Update(venue);
 
-				var archived = Archive(ctx, venue, diff, EntryEditEvent.Created, string.Empty);
+				var archived = Archive(ctx, venue, diff, EntryEditEvent.Created, contract.UpdateNotes);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Created, archived);
 
-				AuditLog($"created {_entryLinkFactory.CreateEntryLink(venue)}", ctx);
+				var logStr = $"created {_entryLinkFactory.CreateEntryLink(venue)}"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
+				AuditLog(logStr, ctx);
 			}
 			else
 			{
@@ -362,10 +364,12 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 
 				ctx.Update(venue);
 
-				var archived = Archive(ctx, venue, diff, EntryEditEvent.Updated, string.Empty);
+				var archived = Archive(ctx, venue, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Updated, archived);
 
-				AuditLog($"updated {_entryLinkFactory.CreateEntryLink(venue)}", ctx);
+				var logStr = $"updated {_entryLinkFactory.CreateEntryLink(venue)}"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
+				AuditLog(logStr, ctx);
 			}
 
 			return venue.Id;

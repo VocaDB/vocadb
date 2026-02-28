@@ -82,6 +82,9 @@ public sealed record ReleaseEventForEditForApiContract
 	public string? VenueName { get; init; }
 
 	[DataMember]
+	public string UpdateNotes { get; set; }
+
+	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
 	public ReleaseEventForEditForApiContract()
@@ -93,6 +96,7 @@ public sealed record ReleaseEventForEditForApiContract
 		Names = Array.Empty<LocalizedStringWithIdContract>();
 		PVs = Array.Empty<PVContract>();
 		SeriesSuffix = string.Empty;
+		UpdateNotes = string.Empty;
 		WebLinks = Array.Empty<WebLinkForApiContract>();
 	}
 
@@ -140,6 +144,7 @@ public sealed record ReleaseEventForEditForApiContract
 		Status = releaseEvent.Status;
 		Venue = ObjectHelper.Convert(releaseEvent.Venue, v => new VenueForApiContract(v, languagePreference, fields: VenueOptionalFields.None));
 		VenueName = releaseEvent.VenueName;
+		UpdateNotes = string.Empty;
 		WebLinks = releaseEvent.WebLinks
 			.Select(w => new WebLinkForApiContract(w))
 			.OrderBy(w => w.DescriptionOrUrl).
