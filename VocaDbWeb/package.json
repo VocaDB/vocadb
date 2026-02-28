@@ -60,7 +60,7 @@
 		"@restart/ui": "^0.2.6",
 		"ajv": "^8.12.0",
 		"ajv-formats": "^2.1.1",
-		"axios": "^1.6.0",
+		"axios": "^1.13.5",
 		"classnames": "^2.3.2",
 		"dayjs": "^1.11.8",
 		"decimal.js-light": "^2.5.1",
