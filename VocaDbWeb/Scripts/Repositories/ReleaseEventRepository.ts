@@ -66,18 +66,15 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	delete = (
-		requestToken: string,
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/${id}?${qs.stringify({
@@ -85,22 +82,18 @@ export class ReleaseEventRepository extends BaseRepository {
 					notes: notes,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	deleteSeries = (
-		requestToken: string,
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	deleteSeries = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/${id}?${qs.stringify({
@@ -108,7 +101,6 @@ export class ReleaseEventRepository extends BaseRepository {
 					notes: notes,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
@@ -300,7 +292,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: ReleaseEventForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -315,7 +306,6 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -332,7 +322,6 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	editSeries = (
-		requestToken: string,
 		contract: ReleaseEventSeriesForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -347,7 +336,6 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -371,16 +359,13 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	updateVersionVisibility = (
-		requestToken: string,
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -390,20 +375,16 @@ export class ReleaseEventRepository extends BaseRepository {
 				)}`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	updateSeriesVersionVisibility = (
-		requestToken: string,
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateSeriesVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -411,7 +392,6 @@ export class ReleaseEventRepository extends BaseRepository {
 				)}`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

@@ -14,7 +14,6 @@ import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
@@ -72,16 +71,11 @@ const ArtistCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
 							const pictureUpload = loginManager.canViewCoverArtImages
 								? pictureUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
-							const id = await artistCreateStore.submit(
-								requestToken,
-								pictureUpload,
-							);
+							const id = await artistCreateStore.submit(pictureUpload);
 
 							navigate(`/Artist/Edit/${id}`);
 						} catch (error: any) {

@@ -2,7 +2,6 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { UserLoginStore } from '@/Stores/User/UserLoginStore';
 import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
@@ -42,9 +41,7 @@ const UserLoginLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
-							await userLoginStore.submit(requestToken);
+							await userLoginStore.submit();
 
 							// TODO: TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
 

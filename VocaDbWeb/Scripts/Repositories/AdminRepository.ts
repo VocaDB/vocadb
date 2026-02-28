@@ -111,17 +111,9 @@ export class AdminRepository {
 		);
 	};
 
-	deleteEntryReport = (
-		requestToken: string,
-		{ id }: { id: number },
-	): Promise<void> => {
+	deleteEntryReport = ({ id }: { id: number }): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(`/api/admin/reports/${id}`),
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
@@ -144,9 +136,7 @@ export class AdminRepository {
 		);
 	};
 
-	saveFrontpageConfig = (
-		config: FrontpageConfigContract,
-	): Promise<void> => {
+	saveFrontpageConfig = (config: FrontpageConfigContract): Promise<void> => {
 		return this.httpClient.put<void>(
 			this.urlMapper.mapRelative('/api/admin/frontpage-config'),
 			config,

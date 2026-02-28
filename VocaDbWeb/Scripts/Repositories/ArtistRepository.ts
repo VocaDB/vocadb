@@ -47,7 +47,8 @@ export enum ArtistOptionalField {
 // Corresponds to the ArtistController class.
 export class ArtistRepository
 	extends BaseRepository
-	implements ICommentRepository {
+	implements ICommentRepository
+{
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 
@@ -310,7 +311,6 @@ export class ArtistRepository
 	};
 
 	create = (
-		requestToken: string,
 		contract: CreateArtistContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -325,14 +325,12 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	edit = (
-		requestToken: string,
 		contract: ArtistForEditContract,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -350,16 +348,18 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
-	merge = (
-		requestToken: string,
-		{ id, targetArtistId }: { id: number; targetArtistId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetArtistId,
+	}: {
+		id: number;
+		targetArtistId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/artists/${id}/merge?${qs.stringify({
@@ -367,28 +367,20 @@ export class ArtistRepository
 				})}`,
 			),
 			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
-	requestVerification = (
-		requestToken: string,
-		{
-			artistId,
-			message,
-			linkToProof,
-			privateMessage,
-		}: {
-			artistId: number;
-			message: string;
-			linkToProof: string;
-			privateMessage: boolean;
-		},
-	): Promise<void> => {
+	requestVerification = ({
+		artistId,
+		message,
+		linkToProof,
+		privateMessage,
+	}: {
+		artistId: number;
+		message: string;
+		linkToProof: string;
+		privateMessage: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(`/api/artists/${artistId}/verifications`),
 			{
@@ -396,38 +388,26 @@ export class ArtistRepository
 				linkToProof: linkToProof,
 				privateMessage: privateMessage,
 			},
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
-	delete = (
-		requestToken: string,
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	delete = ({ id, notes }: { id: number; notes: string }): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/artists/${id}?${qs.stringify({
 					notes: notes,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	updateVersionVisibility = (
-		requestToken: string,
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/artists/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -437,24 +417,19 @@ export class ArtistRepository
 				)}`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	revertToVersion = (
-		requestToken: string,
-		{
-			archivedVersionId,
-		}: {
-			archivedVersionId: number;
-		},
-	): Promise<number> => {
+	revertToVersion = ({
+		archivedVersionId,
+	}: {
+		archivedVersionId: number;
+	}): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(
 				`/api/artists/versions/${archivedVersionId}/revert`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

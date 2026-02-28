@@ -10,7 +10,6 @@ import { ArchivedVenueVersionDetailsContract } from '@/DataContracts/Venue/Archi
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
@@ -94,9 +93,7 @@ const VenueViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await venueRepo.updateVersionVisibility(requestToken, {
+											await venueRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
 											});
@@ -113,9 +110,7 @@ const VenueViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await venueRepo.updateVersionVisibility(requestToken, {
+											await venueRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,
 											});

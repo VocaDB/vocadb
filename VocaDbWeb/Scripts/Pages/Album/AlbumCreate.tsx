@@ -14,7 +14,6 @@ import { showErrorMessage } from '@/Components/ui';
 import { useBrandableTranslation } from '@/Hooks/useBrandableTranslation';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { AlbumCreateStore } from '@/Stores/Album/AlbumCreateStore';
 import { useVdb } from '@/VdbContext';
@@ -63,9 +62,7 @@ const AlbumCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
-							const id = await albumCreateStore.submit(requestToken);
+							const id = await albumCreateStore.submit();
 
 							navigate(`/Album/Edit/${id}`);
 						} catch (error: any) {

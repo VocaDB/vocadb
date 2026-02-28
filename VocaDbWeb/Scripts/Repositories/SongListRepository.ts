@@ -42,18 +42,15 @@ export class SongListRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	delete = (
-		requestToken: string,
-		{
-			id,
-			notes,
-			hardDelete,
-		}: {
-			id: number;
-			notes: string;
-			hardDelete: boolean;
-		},
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/songLists/${id}?${qs.stringify({
@@ -61,13 +58,17 @@ export class SongListRepository {
 					notes: notes,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
-		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/', EntryType.SongList);
+		new EntryCommentRepository(
+			this.httpClient,
+			this.urlMapper,
+			'/songLists/',
+			EntryType.SongList,
+		);
 
 	getFeatured = ({
 		query,
@@ -177,7 +178,6 @@ export class SongListRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: SongListForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -192,7 +192,6 @@ export class SongListRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);

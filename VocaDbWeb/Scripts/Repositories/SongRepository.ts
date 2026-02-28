@@ -636,10 +636,7 @@ export class SongRepository
 		);
 	};
 
-	create = (
-		requestToken: string,
-		contract: CreateSongContract,
-	): Promise<number> => {
+	create = (contract: CreateSongContract): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -649,16 +646,12 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
-	edit = (
-		requestToken: string,
-		contract: SongForEditContract,
-	): Promise<number> => {
+	edit = (contract: SongForEditContract): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -668,16 +661,18 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
-	merge = (
-		requestToken: string,
-		{ id, targetSongId }: { id: number; targetSongId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetSongId,
+	}: {
+		id: number;
+		targetSongId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/songs/${id}/merge?${qs.stringify({
@@ -685,11 +680,6 @@ export class SongRepository
 				})}`,
 			),
 			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
@@ -703,30 +693,23 @@ export class SongRepository
 		);
 	};
 
-	delete = (
-		requestToken: string,
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	delete = ({ id, notes }: { id: number; notes: string }): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/songs/${id}?${qs.stringify({
 					notes: notes,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	updateVersionVisibility = (
-		requestToken: string,
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/songs/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -736,24 +719,19 @@ export class SongRepository
 				)}`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	revertToVersion = (
-		requestToken: string,
-		{
-			archivedVersionId,
-		}: {
-			archivedVersionId: number;
-		},
-	): Promise<number> => {
+	revertToVersion = ({
+		archivedVersionId,
+	}: {
+		archivedVersionId: number;
+	}): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(
 				`/api/songs/versions/${archivedVersionId}/revert`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 

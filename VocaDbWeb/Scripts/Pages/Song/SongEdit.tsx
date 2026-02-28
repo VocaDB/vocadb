@@ -47,7 +47,6 @@ import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import ArtistForSongEdit from '@/Pages/Song/Partials/ArtistForSongEdit';
 import LyricsForSongEdit from '@/Pages/Song/Partials/LyricsForSongEdit';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { pvRepo } from '@/Repositories/PVRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -908,9 +907,7 @@ const SongEditLayout = observer(
 						}
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
-							const id = await songEditStore.submit(requestToken);
+							const id = await songEditStore.submit();
 
 							navigate(
 								`${EntryUrlMapper.details(EntryType.Song, id)}?${qs.stringify({
@@ -1042,7 +1039,6 @@ const SongEdit = (): React.ReactElement => {
 				setModel({
 					songEditStore: new SongEditStore(
 						vdb.values,
-						antiforgeryRepo,
 						songRepo,
 						artistRepo,
 						pvRepo,

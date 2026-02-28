@@ -850,7 +850,6 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	updateMySettings = (
-		requestToken: string,
 		contract: UpdateUserSettingsContract,
 		pictureUpload: File | undefined,
 	): Promise<string> => {
@@ -865,7 +864,6 @@ export class UserRepository implements ICommentRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -881,24 +879,21 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	create = (
-		requestToken: string,
-		{
-			email,
-			entryTime,
-			extra,
-			password,
-			recaptchaResponse,
-			userName,
-		}: {
-			email: string;
-			entryTime: Date;
-			extra: string;
-			password: string;
-			recaptchaResponse: string;
-			userName: string;
-		},
-	): Promise<void> => {
+	create = ({
+		email,
+		entryTime,
+		extra,
+		password,
+		recaptchaResponse,
+		userName,
+	}: {
+		email: string;
+		entryTime: Date;
+		extra: string;
+		password: string;
+		recaptchaResponse: string;
+		userName: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/register'),
 			{
@@ -910,92 +905,73 @@ export class UserRepository implements ICommentRepository {
 				password: password,
 				userName: userName,
 			},
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	edit = (
-		requestToken: string,
-		contract: UserForEditContract,
-	): Promise<number> => {
+	edit = (contract: UserForEditContract): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/users/${contract.id}`),
 			contract,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	login = (
-		requestToken: string,
-		{
-			keepLoggedIn,
-			password,
-			userName,
-		}: {
-			keepLoggedIn: boolean;
-			password: string;
-			userName: string;
-		},
-	): Promise<void> => {
+	login = ({
+		keepLoggedIn,
+		password,
+		userName,
+	}: {
+		keepLoggedIn: boolean;
+		password: string;
+		userName: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/login'),
 			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	logout = (requestToken: string): Promise<void> => {
+	logout = (): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/logout'),
 			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
-	postStatusLimited = (
-		requestToken: string,
-		{
-			id,
-			notes,
-		}: {
-			id: number;
-			notes: string;
-		},
-	): Promise<void> => {
+	postStatusLimited = ({
+		id,
+		notes,
+	}: {
+		id: number;
+		notes: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/status-limited`),
 			{ reason: notes, createReport: true },
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	postReport = (
-		requestToken: string,
-		{ id, notes }: { id: number; notes: string },
-	): Promise<void> => {
+	postReport = ({
+		id,
+		notes,
+	}: {
+		id: number;
+		notes: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/${id}/reports`),
 			{ reason: notes, reportType: 'Spamming' },
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	forgotPassword = (
-		requestToken: string,
-		{
-			email,
-			recaptchaResponse,
-			username,
-		}: {
-			email: string;
-			recaptchaResponse: string;
-			username: string;
-		},
-	): Promise<void> => {
+	forgotPassword = ({
+		email,
+		recaptchaResponse,
+		username,
+	}: {
+		email: string;
+		recaptchaResponse: string;
+		username: string;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/api/users/forgot-password'),
 			{
@@ -1003,7 +979,6 @@ export class UserRepository implements ICommentRepository {
 				'g-recaptcha-response': recaptchaResponse,
 				username: username,
 			},
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

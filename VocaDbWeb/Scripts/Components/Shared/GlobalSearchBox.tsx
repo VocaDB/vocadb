@@ -13,7 +13,6 @@ import { ImageSize } from '@/Models/Images/ImageSize';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { entryRepo } from '@/Repositories/EntryRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -61,7 +60,7 @@ export const apiEndpointsForEntryType = {
 };
 
 const globalSearchBoxSource = (
-	entryType: typeof TopBarStore.entryTypes[number],
+	entryType: (typeof TopBarStore.entryTypes)[number],
 	query: string,
 ): Promise<string[]> => {
 	const apiEndpoint = apiEndpointsForEntryType[entryType];
@@ -323,7 +322,7 @@ export const GlobalSearchBox = observer(
 					onChange={(event): void => {
 						runInAction(() => {
 							topBarStore.entryType = event.target
-								.value as typeof TopBarStore.entryTypes[number];
+								.value as (typeof TopBarStore.entryTypes)[number];
 						});
 					}}
 				/>
@@ -462,9 +461,7 @@ export const GlobalSearchBox = observer(
 								)}
 								<Dropdown.Item
 									onClick={async (): Promise<void> => {
-										const requestToken = await antiforgeryRepo.getToken();
-
-										await userRepo.logout(requestToken);
+										await userRepo.logout();
 
 										navigate('/');
 

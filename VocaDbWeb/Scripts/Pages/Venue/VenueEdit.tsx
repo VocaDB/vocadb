@@ -24,7 +24,6 @@ import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { VenueEditStore } from '@/Stores/Venue/VenueEditStore';
@@ -155,9 +154,7 @@ const VenueEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
-							const id = await venueEditStore.submit(requestToken);
+							const id = await venueEditStore.submit();
 
 							navigate(EntryUrlMapper.details(EntryType.Venue, id));
 						} catch (error: any) {
@@ -400,11 +397,7 @@ const VenueEdit = (): React.ReactElement => {
 				.getForEdit({ id: Number(id) })
 				.then((model) =>
 					setModel({
-						venueEditStore: new VenueEditStore(
-							antiforgeryRepo,
-							venueRepo,
-							model,
-						),
+						venueEditStore: new VenueEditStore(venueRepo, model),
 					}),
 				)
 				.catch((error) => {
@@ -417,11 +410,7 @@ const VenueEdit = (): React.ReactElement => {
 				});
 		} else {
 			setModel({
-				venueEditStore: new VenueEditStore(
-					antiforgeryRepo,
-					venueRepo,
-					defaultModel,
-				),
+				venueEditStore: new VenueEditStore(venueRepo, defaultModel),
 			});
 		}
 	}, [id]);
