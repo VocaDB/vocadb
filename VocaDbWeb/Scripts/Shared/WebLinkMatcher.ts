@@ -984,6 +984,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: '.atwiki.jp/nicothp/',
+			desc: 'Niconico Touhou Wiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
 			url: 'store-jp.nintendo.com',
 			desc: 'Nintendo eShop (JP)',
 			cat: WebLinkCategory.Commercial,
@@ -1351,6 +1356,11 @@ export class WebLinkMatcher {
 		{
 			url: '.atwiki.jp/toho/',
 			desc: 'Touhou Doujin CD Wiki',
+			cat: WebLinkCategory.Reference,
+		} /* TouhouDB */,
+		{
+			url: '.atwiki.jp/touhoukashi/',
+			desc: 'Touhou Doujin CD Lyrics Wiki',
 			cat: WebLinkCategory.Reference,
 		} /* TouhouDB */,
 		{
