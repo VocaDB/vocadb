@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "Varmista, ettei kappaletta löydy jo valmiiksi tietokannasta. Sinun täytyy antaa vähintään yksi nimi ja artisti. Linkittäminen alkuperäiseen videoon olisi hyvin suotavaa.",
     "RankingsTitle": "UtaiteDB kappalerankingit"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": ""
   }
 }
