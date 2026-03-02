@@ -1,7 +1,7 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "Producers en vocalisten geassocieerd met dit album.",
-    "NewAlbumInfo": "Let op: VocaDB is geen UtaiteDB. <strong>Het album moet ten minste één track met Vocaloid zang hebben om toegestaan te zijn op VocaDB (andere spraaksynthesizers zoals UTAU zijn ook toegestaan, maar covers door mensen gezongen niet.)</strong>. Onofficiële fan-made compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
+    "NewAlbumInfo": "Let op: VocaDB is geen UtaiteDB. <strong>Het album moet ten minste één track met Vocaloid zang hebben om toegestaan te zijn op VocaDB (andere spraaksynthesizers zoals UTAU zijn ook toegestaan, maar covers door mensen gezongen niet)</strong>. Onofficiële fan-made compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB account",
