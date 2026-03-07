@@ -7,7 +7,6 @@ import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryIn
 import { showErrorMessage } from '@/Components/ui';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagMergeStore } from '@/Stores/Tag/TagMergeStore';
@@ -74,9 +73,7 @@ const TagMergeLayout = observer(
 						try {
 							if (!tagMergeStore.target.id) return;
 
-							const requestToken = await antiforgeryRepo.getToken();
-
-							await tagMergeStore.submit(requestToken, tagMergeStore.target.id);
+							await tagMergeStore.submit(tagMergeStore.target.id);
 
 							navigate(`/Tag/Edit/${tagMergeStore.target.id}`);
 						} catch (error: any) {
