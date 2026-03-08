@@ -504,6 +504,7 @@ const ArtistsTabContent = observer(
 								<tr>
 									<th>{t('ViewRes.Song:Edit.ArArtist')}</th>
 									<th>{t('ViewRes.Song:Edit.ArSupport')}</th>
+									<th>{t('ViewRes.Song:Edit.ArExternal')}</th>
 									<th>{t('ViewRes.Song:Edit.ArRoles')}</th>
 									<th>{t('ViewRes.Song:Edit.ArActions')}</th>
 								</tr>

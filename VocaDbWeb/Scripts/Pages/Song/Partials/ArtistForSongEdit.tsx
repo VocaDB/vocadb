@@ -21,7 +21,7 @@ const ArtistForSongEdit = observer(
 	}: ArtistForSongEditProps): React.ReactElement => {
 		const vdb = useVdb();
 
-		const { t } = useTranslation(['ViewRes', 'ViewRes.Album']);
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Album', 'ViewRes.Song']);
 
 		return (
 			<tr>
@@ -64,6 +64,20 @@ const ArtistForSongEdit = observer(
 							}
 						/>
 						{t('ViewRes.Album:ArtistForAlbumEditRow.Support')}
+					</label>
+				</td>
+				<td>
+					<label className="checkbox inline">
+						<input
+							type="checkbox"
+							checked={artistForAlbumEditStore.isExternal}
+							onChange={(e): void =>
+								runInAction(() => {
+									artistForAlbumEditStore.isExternal = e.target.checked;
+								})
+							}
+						/>
+						{t('ViewRes.Song:Edit.ArExternal')}
 					</label>
 				</td>
 				<td>

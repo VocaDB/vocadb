@@ -14,6 +14,7 @@ export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
 	// Unique link Id.
 	readonly id: number;
 	isCustomName: boolean;
+	@observable isExternal: boolean;
 	@observable isSupport: boolean;
 	@observable name: string;
 	@observable nameDialogVisible = false;
@@ -25,6 +26,7 @@ export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
 		this.artist = data.artist!;
 		this.id = data.id!;
 		this.isCustomName = data.isCustomName!;
+		this.isExternal = data.isExternal ?? false;
 		this.isSupport = data.isSupport!;
 
 		this.name = data.name!;
@@ -55,6 +57,7 @@ export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
 			artist: this.artist,
 			id: this.id,
 			isCustomName: this.isCustomName,
+			isExternal: this.isExternal,
 			isSupport: this.isSupport,
 			name: this.name,
 			roles: this.roles,

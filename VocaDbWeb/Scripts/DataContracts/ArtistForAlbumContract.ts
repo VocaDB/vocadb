@@ -6,6 +6,7 @@ export interface ArtistForAlbumContract {
 	effectiveRoles?: string /* TODO: enum */;
 	id?: number;
 	isCustomName?: boolean;
+	isExternal?: boolean;
 	isSupport?: boolean;
 	name?: string;
 	roles: string;
