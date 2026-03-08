@@ -11,6 +11,7 @@ public class ArchivedArtistForSongContract : ObjectRefContract
 
 	public ArchivedArtistForSongContract(ArtistForSong entry)
 	{
+		IsExternal = entry.IsExternal;
 		IsSupport = entry.IsSupport;
 		Roles = entry.Roles;
 
@@ -24,6 +25,9 @@ public class ArchivedArtistForSongContract : ObjectRefContract
 			NameHint = entry.Name;
 		}
 	}
+
+	[DataMember]
+	public bool IsExternal { get; init; }
 
 	[DataMember]
 	public bool IsSupport { get; init; }

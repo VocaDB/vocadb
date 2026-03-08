@@ -830,6 +830,7 @@ public class Song :
 				if (!HasArtist(artist))
 				{
 					l = artist.AddSong(this, newEntry.IsSupport, newEntry.Roles);
+					l.IsExternal = newEntry.IsExternal;
 					l.Name = newEntry.IsCustomName ? newEntry.Name : null;
 					created.Add(l);
 				}
@@ -837,6 +838,7 @@ public class Song :
 			else
 			{
 				l = AddArtist(newEntry.Name, newEntry.IsSupport, newEntry.Roles);
+				l.IsExternal = newEntry.IsExternal;
 				created.Add(l);
 			}
 		}
@@ -848,6 +850,7 @@ public class Song :
 
 			if (!linkEntry.ContentEquals(newEntry))
 			{
+				linkEntry.IsExternal = newEntry.IsExternal;
 				linkEntry.IsSupport = newEntry.IsSupport;
 				linkEntry.Roles = newEntry.Roles;
 				linkEntry.Name = newEntry.IsCustomName ? newEntry.Name : null;

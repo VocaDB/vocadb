@@ -29,6 +29,7 @@ public static class TableNames
 	public const string ArchivedTagVersions = nameof(ArchivedTagVersions);
 	public const string ArchivedVenueVersions = nameof(ArchivedVenueVersions);
 	public const string ArtistComments = nameof(ArtistComments);
+	public const string ArtistsForSongs = nameof(ArtistsForSongs);
 	public const string ArtistNames = nameof(ArtistNames);
 	public const string Artists = nameof(Artists);
 	public const string ArtistTagUsages = nameof(ArtistTagUsages);

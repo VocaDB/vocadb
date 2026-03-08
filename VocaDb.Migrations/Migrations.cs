@@ -4,6 +4,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_03_08_0000)]
+public class AddIsExternalToArtistsForSongs : AutoReversingMigration
+{
+	public override void Up()
+	{
+		Create.Column("IsExternal")
+			.OnTable(TableNames.ArtistsForSongs)
+			.AsBoolean()
+			.NotNullable()
+			.WithDefaultValue(false);
+	}
+
+	public override void Down()
+	{
+	}
+}
+
 [Migration(2026_02_23_0000)]
 public class ExpandAdditionalNamesString : Migration
 {

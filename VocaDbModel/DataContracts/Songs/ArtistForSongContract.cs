@@ -22,6 +22,7 @@ public class ArtistForSongContract : IArtistLinkContract
 		EffectiveRoles = artistForSong.EffectiveRoles;
 		Id = artistForSong.Id;
 		IsCustomName = !string.IsNullOrEmpty(artistForSong.Name);
+		IsExternal = artistForSong.IsExternal;
 		IsSupport = artistForSong.IsSupport;
 		Name = Artist != null && !IsCustomName ? Artist.Name : artistForSong.Name;
 		Roles = artistForSong.Roles;
@@ -57,6 +58,9 @@ public class ArtistForSongContract : IArtistLinkContract
 
 	[DataMember]
 	public bool IsCustomName { get; init; }
+
+	[DataMember]
+	public bool IsExternal { get; init; }
 
 	[DataMember]
 	public bool IsSupport { get; init; }

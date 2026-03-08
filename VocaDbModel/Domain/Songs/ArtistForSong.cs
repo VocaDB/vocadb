@@ -13,6 +13,7 @@ public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, IS
 #nullable disable
 	public ArtistForSong()
 	{
+		IsExternal = false;
 		IsSupport = false;
 		Notes = string.Empty;
 	}
@@ -45,6 +46,8 @@ public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, IS
 	public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
 
 	public virtual int Id { get; set; }
+
+	public virtual bool IsExternal { get; set; }
 
 	public virtual bool IsSupport { get; set; }
 
@@ -89,7 +92,7 @@ public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, IS
 
 		var realNewName = contract.IsCustomName ? contract.Name : null;
 
-		return IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName;
+		return IsSupport == contract.IsSupport && IsExternal == contract.IsExternal && Roles == contract.Roles && Name == realNewName;
 	}
 
 	public virtual void Delete()
