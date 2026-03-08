@@ -15,10 +15,6 @@ public class AddIsExternalToArtistsForSongs : AutoReversingMigration
 			.NotNullable()
 			.WithDefaultValue(false);
 	}
-
-	public override void Down()
-	{
-	}
 }
 
 [Migration(2026_02_23_0000)]
