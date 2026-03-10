@@ -16,5 +16,6 @@ export interface VenueForEditContract {
 	name: string;
 	names: LocalizedStringWithIdContract[];
 	status: EntryStatus;
+	updateNotes: string;
 	webLinks: WebLinkContract[];
 }

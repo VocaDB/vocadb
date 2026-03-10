@@ -645,10 +645,12 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					}
 				}
 
-				var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
+				var archived = Archive(session, ev, diff, EntryEditEvent.Created, contract.UpdateNotes);
 				await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-				await session.AuditLogger.AuditLogAsync($"created {_entryLinkFactory.CreateEntryLink(ev)}");
+				var logStr = $"created {_entryLinkFactory.CreateEntryLink(ev)}"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
+				await session.AuditLogger.AuditLogAsync(logStr);
 
 				await _followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 			}
@@ -762,10 +764,11 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 				await session.UpdateAsync(ev);
 
-				var archived = Archive(session, ev, diff, EntryEditEvent.Updated, string.Empty);
+				var archived = Archive(session, ev, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 				await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-				var logStr = $"updated properties for {_entryLinkFactory.CreateEntryLink(ev)} ({diff.ChangedFieldsString})";
+				var logStr = $"updated properties for {_entryLinkFactory.CreateEntryLink(ev)} ({diff.ChangedFieldsString})"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
 				await session.AuditLogger.AuditLogAsync(logStr);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
@@ -853,9 +856,11 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 				session.Update(series);
 
-				Archive(session, series, diff, EntryEditEvent.Created, string.Empty);
+				Archive(session, series, diff, EntryEditEvent.Created, contract.UpdateNotes);
 
-				AuditLog($"created {_entryLinkFactory.CreateEntryLink(series)}", session);
+				var logStr = $"created {_entryLinkFactory.CreateEntryLink(series)}"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
+				AuditLog(logStr, session);
 			}
 			else
 			{
@@ -926,9 +931,11 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 					}
 				}
 
-				Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
+				Archive(session, series, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 
-				AuditLog($"updated {_entryLinkFactory.CreateEntryLink(series)}", session);
+				var logStr = $"updated {_entryLinkFactory.CreateEntryLink(series)}"
+					+ (contract.UpdateNotes != string.Empty ? " " + contract.UpdateNotes : string.Empty);
+				AuditLog(logStr, session);
 			}
 
 			return series.Id;

@@ -38,6 +38,9 @@ public sealed record ReleaseEventSeriesForEditForApiContract
 	public EntryStatus Status { get; init; }
 
 	[DataMember]
+	public string UpdateNotes { get; set; }
+
+	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
 	public ReleaseEventSeriesForEditForApiContract()
@@ -45,6 +48,7 @@ public sealed record ReleaseEventSeriesForEditForApiContract
 		Description = string.Empty;
 		Name = string.Empty;
 		Names = Array.Empty<LocalizedStringWithIdContract>();
+		UpdateNotes = string.Empty;
 		WebLinks = Array.Empty<WebLinkForApiContract>();
 	}
 
@@ -68,6 +72,7 @@ public sealed record ReleaseEventSeriesForEditForApiContract
 			.Select(n => new LocalizedStringWithIdContract(n))
 			.ToArray();
 		Status = series.Status;
+		UpdateNotes = string.Empty;
 		WebLinks = series.WebLinks
 			.Select(w => new WebLinkForApiContract(w))
 			.OrderBy(w => w.DescriptionOrUrl)

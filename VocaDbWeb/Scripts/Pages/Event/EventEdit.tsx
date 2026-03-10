@@ -829,6 +829,19 @@ const EventEditLayout = observer(
 						</JQueryUITab>
 					</JQueryUITabs>
 
+					<p>{t('ViewRes:EntryEdit.UpdateNotes')}</p>
+					<textarea
+						value={releaseEventEditStore.updateNotes}
+						onChange={(e): void =>
+							runInAction(() => {
+								releaseEventEditStore.updateNotes = e.target.value;
+							})
+						}
+						className="input-xxlarge"
+						rows={4}
+						maxLength={200}
+					/>
+
 					<br />
 					<SaveAndBackBtn
 						backAction={backAction}
@@ -875,6 +888,7 @@ const defaultModel: ReleaseEventForEditContract = {
 	seriesNumber: 0,
 	seriesSuffix: '',
 	status: EntryStatus.Draft,
+	updateNotes: '',
 	venueName: '',
 	webLinks: [],
 };

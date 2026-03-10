@@ -39,6 +39,9 @@ public sealed record VenueForEditForApiContract
 	public EntryStatus Status { get; init; }
 
 	[DataMember]
+	public string UpdateNotes { get; set; }
+
+	[DataMember]
 	public WebLinkForApiContract[] WebLinks { get; init; }
 
 	public VenueForEditForApiContract()
@@ -48,6 +51,7 @@ public sealed record VenueForEditForApiContract
 		Description = string.Empty;
 		Name = string.Empty;
 		Names = Array.Empty<LocalizedStringWithIdContract>();
+		UpdateNotes = string.Empty;
 		WebLinks = Array.Empty<WebLinkForApiContract>();
 	}
 
@@ -65,6 +69,7 @@ public sealed record VenueForEditForApiContract
 			.Select(n => new LocalizedStringWithIdContract(n))
 			.ToArray();
 		Status = venue.Status;
+		UpdateNotes = string.Empty;
 		WebLinks = venue.WebLinks.Links
 			.Select(w => new WebLinkForApiContract(w))
 			.OrderBy(w => w.DescriptionOrUrl)
