@@ -21,5 +21,8 @@
   "SongRes": {
     "NewSongInfo": "Bitte stelle sicher, dass deine Song-Einreichung bislang noch nicht existiert. Du musst mindestens einen Namen und einen Künstler nennen. Ein Link zum originalen PV ist sehr wünschenswert.",
     "RankingsTitle": "UtaiteDB Song-Rangliste"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": ""
   }
 }
