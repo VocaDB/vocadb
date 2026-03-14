@@ -214,7 +214,7 @@ interface TagSearchDropdownProps {
 
 export const TagSearchDropdown = observer(
 	({ tagSearchStore }: TagSearchDropdownProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes']);
+		const { t } = useTranslation(['Resources']);
 
 		return (
 			<div className="inline-block search-sort-menu">
