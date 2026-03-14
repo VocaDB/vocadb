@@ -4,6 +4,7 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { TagSortRule } from '@/Stores/Search/TagSearchStore';
 import { RatedSongForUserSortRule } from '@/Stores/User/RatedSongsSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -196,6 +197,46 @@ export const SongSearchDropdown = observer(
 								key={sortRule}
 							>
 								{t(`Resources:SongSortRuleNames.${sortRule}`)}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+			</div>
+		);
+	},
+);
+
+const tagSortRules = [TagSortRule.Name, TagSortRule.AdditionDate];
+
+interface TagSearchDropdownProps {
+	tagSearchStore: { sort: TagSortRule };
+}
+
+export const TagSearchDropdown = observer(
+	({ tagSearchStore }: TagSearchDropdownProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<div className="inline-block search-sort-menu">
+				{t('ViewRes:EntryIndex.SortBy')}{' '}
+				<Dropdown as={ButtonGroup}>
+					<Dropdown.Toggle>
+						<span>
+							{t(`Resources:TagSortRuleNames.${tagSearchStore.sort}`)}
+						</span>{' '}
+						<span className="caret" />
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{tagSortRules.map((sortRule) => (
+							<Dropdown.Item
+								onClick={(): void =>
+									runInAction(() => {
+										tagSearchStore.sort = sortRule;
+									})
+								}
+								key={sortRule}
+							>
+								{t(`Resources:TagSortRuleNames.${sortRule}`)}
 							</Dropdown.Item>
 						))}
 					</Dropdown.Menu>
