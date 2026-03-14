@@ -61,7 +61,7 @@ export const apiEndpointsForEntryType = {
 };
 
 const globalSearchBoxSource = (
-	entryType: typeof TopBarStore.entryTypes[number],
+	entryType: (typeof TopBarStore.entryTypes)[number],
 	query: string,
 ): Promise<string[]> => {
 	const apiEndpoint = apiEndpointsForEntryType[entryType];
@@ -248,6 +248,7 @@ export const GlobalSearchBox = observer(
 						name: filter,
 						lang: vdb.values.languagePreference,
 					});
+
 					navigate(EntryUrlMapper.details(EntryType.Tag, tag.id));
 				} catch {
 					navigate(
@@ -323,7 +324,7 @@ export const GlobalSearchBox = observer(
 					onChange={(event): void => {
 						runInAction(() => {
 							topBarStore.entryType = event.target
-								.value as typeof TopBarStore.entryTypes[number];
+								.value as (typeof TopBarStore.entryTypes)[number];
 						});
 					}}
 				/>

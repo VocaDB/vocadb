@@ -340,7 +340,7 @@ const entryTypes = [
 ] as const;
 
 const entryTypeTagTargetTypesMap: Record<
-	typeof entryTypes[number],
+	(typeof entryTypes)[number],
 	TagTargetTypes
 > = {
 	[EntryType.Album]: TagTargetTypes.Album,
@@ -830,7 +830,11 @@ const TagDetailsLayout = observer(
 						{tagDetailsStore.comments.comments.length > 0 ? (
 							<EditableComments
 								editableCommentsStore={tagDetailsStore.comments}
-								allowCreateComment={loginManager.canCreateComments && (!tagDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
+								allowCreateComment={
+									loginManager.canCreateComments &&
+									(!tagDetailsStore.comments.commentsLocked ||
+										loginManager.canLockComments)
+								}
 								well={false}
 								comments={tagDetailsStore.comments.topComments}
 								newCommentRows={3}
@@ -856,7 +860,11 @@ const TagDetailsLayout = observer(
 					>
 						<EditableComments
 							editableCommentsStore={tagDetailsStore.comments}
-							allowCreateComment={loginManager.canCreateComments && (!tagDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
+							allowCreateComment={
+								loginManager.canCreateComments &&
+								(!tagDetailsStore.comments.commentsLocked ||
+									loginManager.canLockComments)
+							}
 							well={false}
 							comments={tagDetailsStore.comments.pageOfComments}
 							commentsLocked={tagDetailsStore.comments.commentsLocked}
