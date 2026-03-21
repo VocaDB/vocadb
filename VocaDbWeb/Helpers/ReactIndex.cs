@@ -88,18 +88,6 @@ public class ReactIndex
 			content = content.Replace("<!--{incontextloc}", "")
 				.Replace("{incontextloc}-->", "");
 		}
-		
-		// TODO: Make this configurable
-		// Activates umami tracking
-		if (_env.IsProduction())
-		{
-			content = content.Replace("<!--{trackingcode}", "")
-				.Replace("{trackingcode}-->", "")
-				.Replace("{{dataWebsiteId}}",
-					_brandableStrings.SiteName == "VocaDB" ? "981e1817-1212-4ff5-ac3a-67fceaa9912d" :
-					_brandableStrings.SiteName == "UtaiteDB" ? "9ee1b267-bdbe-4949-b5cb-ca4e112adc8c" :
-					"57cf43f5-3fbd-4ac1-9c7b-0e95bc8a098c");
-		}
 
 		var preInd = content.IndexOf("</head>", StringComparison.Ordinal);
 
