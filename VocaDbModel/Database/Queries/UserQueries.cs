@@ -663,10 +663,12 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			var duplicateUsers = await ctx.Query<User>()
 				.Where(u => u.Active && u.Id != user.Id
 					&& u.Options.LastLoginAddress == hostname
-					&& u.LastLogin >= cutoff)
+					&& u.LastLogin >= cutoff
+					&& u.GroupId != UserGroupId.Admin
+					&& u.GroupId != UserGroupId.Moderator)
 				.VdbToListAsync();
 
-			if (duplicateUsers.Any())
+			if (duplicateUsers.Any() && user.GroupId != UserGroupId.Admin && user.GroupId != UserGroupId.Moderator)
 			{
 				var names = string.Join(", ", duplicateUsers.Select(u => u.Name));
 				await _discordWebhookNotifier.SendMessageAsync(
