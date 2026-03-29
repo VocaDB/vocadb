@@ -297,6 +297,11 @@
     "Targets": "Targets",
     "WebLinks": "外部リンク"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "プライベートメッセージの通知なし",
     "PrivateMessagesFromAdmins": "管理者からのプライベートメッセージ",
