@@ -297,6 +297,11 @@
     "Targets": "Targets",
     "WebLinks": "External links"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "Нет личных сообщений",
     "PrivateMessagesFromAdmins": "Личные собщения от администраторов",
