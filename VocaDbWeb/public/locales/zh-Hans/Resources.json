@@ -297,6 +297,11 @@
     "Targets": "目标",
     "WebLinks": "外部链接"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "无私信",
     "PrivateMessagesFromAdmins": "来自管理员的私信",
