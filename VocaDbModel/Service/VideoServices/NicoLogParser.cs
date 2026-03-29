@@ -1,10 +1,10 @@
 using System.Globalization;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using NLog;
-using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.Service.VideoServices;
 
@@ -19,10 +19,12 @@ public static class NicoLogHelper
 
 	private static async Task<HtmlDocument?> GetVideoHtmlPage(string videoId)
 	{
-		var url = $"https://dream-traveler.fly.dev/nicolog?id={videoId}";
+		var url = $"https://nicolog.jp/watch/{videoId}";
 
 		using var client = new HttpClient();
 		client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
+		client.DefaultRequestVersion = HttpVersion.Version20;
+		client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
 		HttpResponseMessage response;
 
 		try
