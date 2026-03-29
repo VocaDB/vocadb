@@ -3,7 +3,6 @@ import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
@@ -36,37 +35,32 @@ export class TagEditStore {
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	@observable targets: TagTargetTypes;
-	@observable newTargets: string[]
+	@observable newTargets: string[];
 	readonly trashStore: DeleteEntryStore;
 	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly tagRepo: TagRepository,
 		readonly contract: TagForEditContract,
-		readonly values: GlobalValues
+		readonly values: GlobalValues,
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				tagRepo.delete(requestToken, {
-					id: contract.id,
-					notes: notes,
-					hardDelete: false,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			tagRepo.delete({
+				id: contract.id,
+				notes: notes,
+				hardDelete: false,
+			}),
 		);
 
-		this.trashStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				tagRepo.delete(requestToken, {
-					id: contract.id,
-					notes: notes,
-					hardDelete: true,
-				}),
+		this.trashStore = new DeleteEntryStore((notes) =>
+			tagRepo.delete({
+				id: contract.id,
+				notes: notes,
+				hardDelete: true,
+			}),
 		);
 
 		this.parent = new BasicEntryLinkStore<TagBaseContract>((entryId) =>
@@ -101,7 +95,9 @@ export class TagEditStore {
 	}
 
 	@computed get hasValidationErrors(): boolean {
-		return this.validationError_needDescription || this.validationError_needCategory;
+		return (
+			this.validationError_needDescription || this.validationError_needCategory
+		);
 	}
 
 	@action addRelatedTag = (tag: TagBaseContract): number => {
@@ -121,14 +117,12 @@ export class TagEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.tagRepo.edit(
-				requestToken,
 				{
 					canDelete: false,
 					categoryName: this.categoryName,
@@ -145,7 +139,7 @@ export class TagEditStore {
 					targets: this.targets,
 					updateNotes: this.updateNotes,
 					webLinks: this.webLinks.items,
-					newTargets: this.newTargets
+					newTargets: this.newTargets,
 				},
 				thumbPicUpload,
 			);
@@ -176,48 +170,60 @@ export class TagEditStore {
 	};
 
 	hasTagTarget = (target: string): boolean => {
-		return this.newTargets.includes("all") || this.newTargets.includes(target) || this.newTargets.includes(target.split(':')[0])
-	}
+		return (
+			this.newTargets.includes('all') ||
+			this.newTargets.includes(target) ||
+			this.newTargets.includes(target.split(':')[0])
+		);
+	};
 
 	@action toggleTarget = (target: string): void => {
 		const tagTargetTypes = {
-			'song': this.values.songTypes,
-			'artist': this.values.artistTypes.filter(a=> !ArtistHelper.isVoiceSynthesizerType(a)),
-			'album': this.values.albumTypes,
-			'releaseevent': this.values.eventTypes,
-			'voicesynthesizer': this.values.artistTypes.filter(ArtistHelper.isVoiceSynthesizerType)
-		}
+			song: this.values.songTypes,
+			artist: this.values.artistTypes.filter(
+				(a) => !ArtistHelper.isVoiceSynthesizerType(a),
+			),
+			album: this.values.albumTypes,
+			releaseevent: this.values.eventTypes,
+			voicesynthesizer: this.values.artistTypes.filter(
+				ArtistHelper.isVoiceSynthesizerType,
+			),
+		};
 
 		// Replace all entry types with lowercase versions
 		Object.keys(tagTargetTypes).forEach((key) => {
 			// @ts-ignore
-			tagTargetTypes[key] = tagTargetTypes[key].map(t => t.toLowerCase())
-		})
+			tagTargetTypes[key] = tagTargetTypes[key].map((t) => t.toLowerCase());
+		});
 
-		const [tagType, _] = target.split(':')
-		const allIndex = this.newTargets.indexOf("all")
-		let tagTypeIndex = this.newTargets.indexOf(tagType)
-		let toggledTargetIndex = this.newTargets.indexOf(target)
+		const [tagType, _] = target.split(':');
+		const allIndex = this.newTargets.indexOf('all');
+		let tagTypeIndex = this.newTargets.indexOf(tagType);
+		let toggledTargetIndex = this.newTargets.indexOf(target);
 
 		if (toggledTargetIndex === -1 && tagTypeIndex === -1 && allIndex === -1) {
-			// Add toggled target to tag targets 
-			this.newTargets.push(target)
+			// Add toggled target to tag targets
+			this.newTargets.push(target);
 		} else {
 			if (allIndex !== -1) {
-				this.newTargets = Object.keys(tagTargetTypes)
+				this.newTargets = Object.keys(tagTargetTypes);
 				// Recalculate tagTypeIndex to trigger next if clause
-				tagTypeIndex = this.newTargets.indexOf(tagType)
-				toggledTargetIndex = this.newTargets.indexOf(target)
+				tagTypeIndex = this.newTargets.indexOf(tagType);
+				toggledTargetIndex = this.newTargets.indexOf(target);
 			}
 			if (toggledTargetIndex !== -1) {
 				// Remove toggled target from tag targets
-				this.newTargets.splice(toggledTargetIndex, 1)
-				tagTypeIndex = this.newTargets.indexOf(tagType)
+				this.newTargets.splice(toggledTargetIndex, 1);
+				tagTypeIndex = this.newTargets.indexOf(tagType);
 			}
 			if (tagTypeIndex !== -1) {
 				// Remove entry type from tag targets, add all other entry subtypes to tag targets
-				this.newTargets.splice(tagTypeIndex, 1)
-				this.newTargets.push(...tagTargetTypes[tagType as keyof typeof tagTargetTypes].map(t => [tagType, t].join(":")).filter(t => t !== target))
+				this.newTargets.splice(tagTypeIndex, 1);
+				this.newTargets.push(
+					...tagTargetTypes[tagType as keyof typeof tagTargetTypes]
+						.map((t) => [tagType, t].join(':'))
+						.filter((t) => t !== target),
+				);
 			}
 		}
 
@@ -234,7 +240,7 @@ export class TagEditStore {
 		if (Object.keys(tagTargetTypes).every(t => this.newTargets.includes(t))) {
 			this.newTargets = ['all']
 		}
-	} 
+	}
 
 	setTargetType = (target: TagTargetTypes, flag: boolean): void => {
 		const hasFlag = (t: TagTargetTypes): boolean => (this.targets & t) === t;
