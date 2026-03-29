@@ -297,6 +297,11 @@
     "Targets": "대상",
     "WebLinks": "외부 링크"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "비공개 메세지 없음",
     "PrivateMessagesFromAdmins": "관리자로부터의 비공개 메세지",
