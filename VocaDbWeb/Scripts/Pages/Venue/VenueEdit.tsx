@@ -348,6 +348,19 @@ const VenueEditLayout = observer(
 						/>
 					</div>
 
+					<p>{t('ViewRes:EntryEdit.UpdateNotes')}</p>
+					<textarea
+						value={venueEditStore.updateNotes}
+						onChange={(e): void =>
+							runInAction(() => {
+								venueEditStore.updateNotes = e.target.value;
+							})
+						}
+						className="input-xxlarge"
+						rows={4}
+						maxLength={200}
+					/>
+
 					<br />
 					<SaveAndBackBtn
 						backAction={backAction}
@@ -384,6 +397,7 @@ const defaultModel: VenueForEditContract = {
 	name: '',
 	names: [],
 	status: EntryStatus.Draft,
+	updateNotes: '',
 	webLinks: [],
 };
 

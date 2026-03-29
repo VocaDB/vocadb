@@ -21,6 +21,7 @@ export class ReleaseEventSeriesEditStore {
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	readonly trashStore: DeleteEntryStore;
+	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
@@ -93,6 +94,7 @@ export class ReleaseEventSeriesEditStore {
 					name: '',
 					names: this.names.toContracts(),
 					status: this.status,
+					updateNotes: this.updateNotes,
 					webLinks: this.webLinks.items,
 				},
 				pictureUpload,
