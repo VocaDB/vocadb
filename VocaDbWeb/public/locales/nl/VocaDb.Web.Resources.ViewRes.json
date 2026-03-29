@@ -1,22 +1,18 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "Producers en vocalisten geassocieerd met dit album.",
-    "NewAlbumInfo": "Let op: VocaDB is geen UtaiteDB. <strong>Het album moet ten minste één track met Vocaloid zang hebben om toegestaan te zijn op VocaDB (andere spraaksynthesizers zoals UTAU zijn ook toegestaan, maar covers door mensen gezongen niet)</strong>. Onofficiële fan-made compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
+    "NewAlbumInfo": "Let op: VocaDB is geen UtaiteDB. Het album moet ten minste één track met Vocaloid zang hebben om toegestaan te zijn op VocaDB (andere spraaksynthesizers zoals UTAU zijn ook toegestaan, maar covers door mensen gezongen niet). Onofficiële fan-made compilaties (bootlegs) zijn ook niet toegestaan. Voor meer informatie, zie de Hulp/Richtlijnen."
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB account",
     "NewArtistExternalLink": "Externe link (naar de website van de artiest, Hatsune Miku wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB is een Vocaloid muziekdatabase met vertaalde artiesten, albums en nummers.",
     "Welcome": "Welkom bij de Vocaloid Database!",
     "WelcomeSubtitle": "De database voor Vocaloid, UTAU en andere zangsynthese, met artiesten, discografie, promotievideo's en meer, onderhouden door de gemeenschap."
   },
   "LayoutRes": {
-    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
-    "PaypalDonateTitle": "VocaDB is een non-profit project. Al het geld zal worden gebruikt voor verdere ontwikkeling van de website, hostingkosten en softwarelicenties.",
-    "SiteName": "VocaDB",
-    "SiteTitle": "Vocaloid database"
+    "PaypalDonateTitle": "VocaDB is een non-profit project. Al het geld zal worden gebruikt voor verdere ontwikkeling van de website, hostingkosten en softwarelicenties."
   },
   "SongRes": {
     "NewSongInfo": "Zorg ervoor dat het nummer dat je gaat indienen nog niet eerder is toegevoegd. Je moet ten minste één naam en artiest invoeren. Link naar de originele video is zeer wenselijk.\n\nHoud er rekening mee dat een liedje zonder Vocaloid alleen is toegestaan als het op een album samen met Vocaloid nummers uitgebracht is, of als er meerdere Vocaloid covers van dat nummer zijn. UTAU en andere stemsynthesizers zijn ook toegestaan, maar door een mens gezongen covers niet.",
