@@ -680,6 +680,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'oc',
+		{
+			languages: ['Occitan'],
+			nativeName: 'occitan',
+		},
+	],
+	[
 		'ori',
 		{
 			languages: ['Odia', 'Oriya'],
