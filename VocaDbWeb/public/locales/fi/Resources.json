@@ -297,6 +297,11 @@
     "Targets": "Kohteet",
     "WebLinks": "Ulkoiset linkit"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "Ei yksityisviestejä",
     "PrivateMessagesFromAdmins": "Yksityisviestit ylläpidolta",

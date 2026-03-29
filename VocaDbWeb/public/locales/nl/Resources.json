@@ -297,6 +297,11 @@
     "Targets": "Doelen",
     "WebLinks": "Externe links"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "Geen privéberichten",
     "PrivateMessagesFromAdmins": "Privéberichten van beheerders",
