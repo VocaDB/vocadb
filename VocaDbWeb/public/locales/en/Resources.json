@@ -297,6 +297,11 @@
     "Targets": "Targets",
     "WebLinks": "External links"
   },
+  "TagSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Name": "Name",
+    "None": "Nothing"
+  },
   "UserEmailOptionsNames": {
     "NoEmail": "No private messages",
     "PrivateMessagesFromAdmins": "Private messages from admins",

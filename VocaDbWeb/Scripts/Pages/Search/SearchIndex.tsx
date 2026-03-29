@@ -7,6 +7,7 @@ import {
 	ArtistSearchDropdown,
 	EventSearchDropdown,
 	SongSearchDropdown,
+	TagSearchDropdown
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
@@ -154,6 +155,11 @@ const SearchIndex = observer(
 						{searchStore.showSongSearch && (
 							<SongSearchDropdown
 								songSearchStore={searchStore.songSearchStore}
+							/>
+						)}
+						{searchStore.showTagSearch && (
+							<TagSearchDropdown
+								tagSearchStore={searchStore.tagSearchStore}
 							/>
 						)}
 						{searchStore.showEventSearch && (
