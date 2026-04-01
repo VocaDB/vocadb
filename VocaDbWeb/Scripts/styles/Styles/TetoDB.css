@@ -255,3 +255,33 @@ div.songListItem {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@btn-bggradientbegin', endColorstr='@btn-bggradientend', GradientType=0);
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
+
+.btn-info:visited,
+.rightFrame .btn-info:visited,
+.rightFrame .btn-primary:visited,
+.btn-info:hover,
+.rightFrame .btn-info:hover,
+.rightFrame .btn-primary:hover,
+.btn-info:focus,
+.rightFrame .btn-info:focus,
+.rightFrame .btn-primary:focus,
+.btn-info:active,
+.rightFrame .btn-info:active,
+.rightFrame .btn-primary:active,
+.btn-info.active,
+.rightFrame .btn-info.active,
+.rightFrame .btn-primary.active,
+.btn-info.disabled,
+.rightFrame .btn-info.disabled,
+.rightFrame .btn-primary.disabled,
+.btn-info[disabled],
+.rightFrame .btn-info[disabled],
+.rightFrame .btn-primary[disabled] {
+	color: #ffffff;
+	background-color: #ff0045;
+	*background-color: #b662ad;
+}
+
+.btn-group.open .btn-info.dropdown-toggle {
+	background-color: #ff3e5e;
+}
