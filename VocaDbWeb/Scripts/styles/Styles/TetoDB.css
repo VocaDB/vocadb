@@ -4,7 +4,11 @@ body {
 
 /* Layout */
 
-table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
+table.properties tr,
+.rightFrame,
+.recentAlbums,
+.recentSongs,
+.alignTop {
 	vertical-align: top;
 }
 
@@ -43,7 +47,7 @@ table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
 }
 
 .rightFrame a:hover {
-	color: #A02832 !important;	
+	color: #A02832 !important;
 }
 
 .rightFrame a.btn-danger {
@@ -59,7 +63,7 @@ table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
 }
 
 /* Menu */
-.menu > .well {
+.menu>.well {
 	/*background-color: #CDECF4;
 	opacity: 0.95;*/
 	background-color: rgb(255, 239, 242);
@@ -103,10 +107,10 @@ table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
 /* Links */
 
 button.textLink {
-	background:none;
-	border:none; 
-	padding:0!important;
-	border-bottom:1px solid #444;	
+	background: none;
+	border: none;
+	padding: 0 !important;
+	border-bottom: 1px solid #444;
 }
 
 .textLink {
@@ -129,17 +133,19 @@ button.textLink {
 	border-style: solid;
 }
 
-.textLink:hover, .iconLink:hover {
-	border-color: #ddd; 
-	border-right-color: #aaa; 
+.textLink:hover,
+.iconLink:hover {
+	border-color: #ddd;
+	border-right-color: #aaa;
 	border-bottom-color: #aaa;
 }
 
-input + .textLink {
+input+.textLink {
 	margin-left: 3px;
 }
 
-.iconLink, .tooltipIcon {
+.iconLink,
+.tooltipIcon {
 	float: left;
 	width: 24px;
 	height: 24px;
@@ -172,12 +178,8 @@ h2.pageTitle {
 	margin-bottom: 10px;
 }
 
-.globalSearchBox {
-	margin: 10px;
-}
-
 div.activityEntry p {
-	margin: 4px;	
+	margin: 4px;
 }
 
 /* Lists */
@@ -194,10 +196,10 @@ div.songListItem {
 
 /* Bootstrap-specific */
 .navbar .nav-radio {
-	color: #FF282F;	
+	color: #FF282F;
 }
 
-.navbar div.brand a:visited {	
+.navbar div.brand a:visited {
 	color: #D32127;
 }
 
@@ -207,33 +209,49 @@ div.songListItem {
 }
 
 .navbar-search .search-query::-webkit-input-placeholder {
-    color: #D1A5A7;
+	color: #D1A5A7;
 }
 
 .navbar-search .search-query:-moz-placeholder {
-    color: #D1A5A7;
+	color: #D1A5A7;
 }
 
 .navbar-inner {
 	background-color: #210101;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#350202), to(#210101));	
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#350202), to(#210101));
 	background-image: -webkit-linear-gradient(top, #350202, #210101);
 	background-image: -o-linear-gradient(top, #350202, #210101);
-	background-image: -moz-linear-gradient(center top , #350202, #210101);
+	background-image: -moz-linear-gradient(center top, #350202, #210101);
 	background-image: linear-gradient(top, #350202, #210101);
 }
 
-.dropdown-menu li > a:hover {
+.dropdown-menu li>a:hover {
 	color: white !important;
 }
 
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover,
-.nav-pills > .active > a:focus {
+.nav-pills>.active>a,
+.nav-pills>.active>a:hover,
+.nav-pills>.active>a:focus {
 	color: #ffffff;
 	background-color: #F2D7D7;
 }
 
-.rightFrame a.btn.btn-info, .rightFrame a.btn.btn-inverse {
+.rightFrame a.btn.btn-info,
+.rightFrame a.btn.btn-inverse {
 	color: white !important;
+}
+
+.btn-info,
+.rightFrame .btn-info,
+.rightFrame .btn-primary {
+	background-color: #ff0045;
+	color: white;
+	*background-color: #ff0045;
+	background-image: -o-linear-gradient(top, #ff0045 #ff3e5e);
+	background-image: linear-gradient(to bottom, #ff0045, #ff3e5e);
+	background-repeat: repeat-x;
+	border-color: #ff0045 #ff0045 #ff0045;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@btn-bggradientbegin', endColorstr='@btn-bggradientend', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }

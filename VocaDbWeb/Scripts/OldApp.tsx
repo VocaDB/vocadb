@@ -45,20 +45,7 @@ const AppContainer = (): React.ReactElement => {
 				<AboutDisclaimer />
 			</div>
 			<React.Suspense fallback={null}>
-				{vdb.values.loggedUser?.stylesheet && (
-					<>
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('darkangel') && <DarkAngel />}
-
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('tetodb') && <TetoDB />}
-						{vdb.values.loggedUser?.stylesheet
-							.toLowerCase()
-							.startsWith('pride') && <Pride />}
-					</>
-				)}
+				<TetoDB />
 				{/* TODO: Make this properly configurable */}
 				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
 				{vdb.values.siteName.toLowerCase().includes('touhou') && <TouhouDB />}
