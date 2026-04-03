@@ -9,7 +9,6 @@ import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/Relea
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
@@ -95,15 +94,10 @@ const EventSeriesViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await eventRepo.updateSeriesVersionVisibility(
-												requestToken,
-												{
-													archivedVersionId: contract.archivedVersion.id,
-													hidden: false,
-												},
-											);
+											await eventRepo.updateSeriesVersionVisibility({
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: false,
+											});
 
 											window.location.reload();
 										}
@@ -117,15 +111,10 @@ const EventSeriesViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await eventRepo.updateSeriesVersionVisibility(
-												requestToken,
-												{
-													archivedVersionId: contract.archivedVersion.id,
-													hidden: true,
-												},
-											);
+											await eventRepo.updateSeriesVersionVisibility({
+												archivedVersionId: contract.archivedVersion.id,
+												hidden: true,
+											});
 
 											window.location.reload();
 										}

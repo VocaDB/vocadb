@@ -10,7 +10,6 @@ import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/Archive
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedSongStore } from '@/Stores/Song/ArchivedSongStore';
@@ -95,9 +94,7 @@ const SongViewVersionLayout = observer(
 												t('ViewRes:ViewVersion.ConfirmRevertToVersion'),
 											)
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											const id = await songRepo.revertToVersion(requestToken, {
+											const id = await songRepo.revertToVersion({
 												archivedVersionId: contract.archivedVersion.id,
 											});
 
@@ -133,9 +130,7 @@ const SongViewVersionLayout = observer(
 										if (
 											window.confirm(t('ViewRes:ViewVersion.ConfirmUnhide'))
 										) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await songRepo.updateVersionVisibility(requestToken, {
+											await songRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: false,
 											});
@@ -152,9 +147,7 @@ const SongViewVersionLayout = observer(
 									as="a"
 									onClick={async (e): Promise<void> => {
 										if (window.confirm(t('ViewRes:ViewVersion.ConfirmHide'))) {
-											const requestToken = await antiforgeryRepo.getToken();
-
-											await songRepo.updateVersionVisibility(requestToken, {
+											await songRepo.updateVersionVisibility({
 												archivedVersionId: contract.archivedVersion.id,
 												hidden: true,
 											});

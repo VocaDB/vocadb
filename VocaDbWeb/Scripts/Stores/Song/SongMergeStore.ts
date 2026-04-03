@@ -40,14 +40,11 @@ export class SongMergeStore {
 		);
 	}
 
-	@action submit = async (
-		requestToken: string,
-		targetSongId: number,
-	): Promise<void> => {
+	@action submit = async (targetSongId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 
-			await this.songRepo.merge(requestToken, {
+			await this.songRepo.merge({
 				id: this.song.id,
 				targetSongId: targetSongId,
 			});

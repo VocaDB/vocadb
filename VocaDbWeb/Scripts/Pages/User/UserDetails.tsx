@@ -11,7 +11,6 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import { adminRepo } from '@/Repositories/AdminRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { songRepo } from '@/Repositories/SongRepository';
@@ -359,7 +358,6 @@ const UserDetails = (): React.ReactElement => {
 						user.id,
 						user.lastLoginAddress,
 						loginManager.canDeleteComments,
-						antiforgeryRepo,
 						userRepo,
 						adminRepo,
 						tagRepo,

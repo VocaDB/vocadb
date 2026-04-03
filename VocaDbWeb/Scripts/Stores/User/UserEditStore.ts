@@ -78,11 +78,11 @@ export class UserEditStore {
 		pull(this.ownedArtists, ownedArtist);
 	};
 
-	@action submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (): Promise<number> => {
 		try {
 			this.submitting = true;
 
-			const id = await this.userRepo.edit(requestToken, {
+			const id = await this.userRepo.edit({
 				active: this.active,
 				additionalPermissions: this.permissions
 					.filter((permission) => permission.hasFlag)
