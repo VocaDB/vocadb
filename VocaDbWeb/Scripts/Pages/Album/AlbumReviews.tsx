@@ -110,7 +110,9 @@ const AlbumReview = observer(
 								))}
 						</span>
 					) : (
-						<span style={{ fontStyle: 'italic' }}>no rating given</span>
+						<p style={{ fontStyle: 'italic', marginBottom: 0 }}>
+							{t('ViewRes.Album:Details.ReviewNoRating')}
+						</p>
 					)}
 
 					{albumDetailsStore.reviewsStore.editReviewStore === review ? (
