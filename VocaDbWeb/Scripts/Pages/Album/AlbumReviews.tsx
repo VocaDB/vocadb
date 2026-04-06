@@ -91,6 +91,7 @@ const AlbumReview = observer(
 					<h3 className="media-heading">
 						<NameLinkKnockout user={review.user} />
 					</h3>
+					
 					{reviewStars > 0 ? (
 						<span>
 							{albumDetailsStore.reviewsStore
