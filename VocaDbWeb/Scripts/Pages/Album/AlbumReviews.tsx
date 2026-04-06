@@ -30,6 +30,9 @@ interface AlbumReviewProps {
 const AlbumReview = observer(
 	({ albumDetailsStore, review }: AlbumReviewProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+		const reviewStars = albumDetailsStore.reviewsStore.getRatingForUser(
+			review.user.id,
+		);
 
 		const mutedUsers = useMutedUsers();
 		if (mutedUsers.includes(review.user.id)) return <></>;
@@ -88,26 +91,27 @@ const AlbumReview = observer(
 					<h3 className="media-heading">
 						<NameLinkKnockout user={review.user} />
 					</h3>
-
-					<span>
-						{albumDetailsStore.reviewsStore
-							.ratingStars(
-								albumDetailsStore.reviewsStore.getRatingForUser(review.user.id),
-							)
-							.map((ratingStar, index) => (
-								<React.Fragment key={index}>
-									{index > 0 && ' '}
-									{/* eslint-disable-next-line jsx-a11y/alt-text */}
-									<img
-										src={
-											ratingStar.enabled
-												? '/Content/star.png'
-												: '/Content/star_disabled.png'
-										}
-									/>
-								</React.Fragment>
-							))}
-					</span>
+					{reviewStars > 0 ? (
+						<span>
+							{albumDetailsStore.reviewsStore
+								.ratingStars(reviewStars)
+								.map((ratingStar, index) => (
+									<React.Fragment key={index}>
+										{index > 0 && ' '}
+										{/* eslint-disable-next-line jsx-a11y/alt-text */}
+										<img
+											src={
+												ratingStar.enabled
+													? '/Content/star.png'
+													: '/Content/star_disabled.png'
+											}
+										/>
+									</React.Fragment>
+								))}
+						</span>
+					) : (
+						<span style={{ fontStyle: 'italic' }}>no rating given</span>
+					)}
 
 					{albumDetailsStore.reviewsStore.editReviewStore === review ? (
 						<form
