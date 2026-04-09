@@ -10,19 +10,19 @@
   "HomeRes": {
     "SiteDescription": "TouhouDB é uma base de dados de música de Touhou com artistas, álbuns, e músicas traduzidas.",
     "Welcome": "Bem-vindo(a) para a base de dados de músicas de Touhou!",
-    "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
+    "WelcomeSubtitle": "O banco de dados colaborativo para músicas de Touhou, com artistas, discografias, PVs e mais."
   },
   "LayoutRes": {
     "Keywords": "Touhou",
     "PaypalDonateTitle": "",
     "SiteName": "TouhouDB",
-    "SiteTitle": "Touhou Music Database"
+    "SiteTitle": "Banco de dados de Música do Touhou"
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
+    "NewSongInfo": "Por favor, tenha certeza de que a música que você esta prestes a enviar não tenha sido adicionada antes. Você precisa colocar pelo menos um nome e artista. Link para o PV original é bem desejado.",
     "RankingsTitle": "Ranking de músicas TouhouDB"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Touhou music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your TouhouDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\tSe você é um produtor, ilustrador, animador ou qualquer outro criador de conteúdo trabalhando com músicas, ou vídeos de Touhou,\n\t\t\tou um representativo de um círculo, você pode usar este documento para pedir que sua conta seja verificada pela staff do site.\n\t\t\tDepois da verificação, o nome de sua conta será mostrada na sua página(s) de artista(s) e vice-versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tVocê precisa ter algum tipo de prova de que você realmente é o(a) dono(a) legitimo daquela entrada, senão seu pedido provavelmente vai ser rejeitado.\n\t\t\t</strong>\n\t\t\tPor exemplo, postar no seu Twitter ou blog e colocando um link à sua conta do TouhouDB é uma forma aceitável de provar que você é aquele(a) que se diz ser.\n\t\t\t<strong>\n\t\t\t\tVocê também deve ter ao menos uma ou duas entradas de músicas aceitadas e finalizadas (Seja ela de Vocaloid, UTAU, ou outro sintetizador vocal) - você pode enviar elas você mesmo(a) caso outras pessoas ainda não fizeram.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tDepois da verificação, você é capaz de aprovar sua entrada de artista, limitando quem pode edita-lá.\n\t\t\tNo momento, apenas a entrada de artista em si pode ser \"protegida\" desse jeito - músicas e álbuns não são afetados.\n\t\t</p>\n\t\t<p>\n\t\t\tPor favor, entenda que a gente tem o direito de recusar seu pedido. Motivos podem incluir qualquer um mencionado acima.\n\t\t\tA não ser que o motivo de declínio do pedido seja óbvio, a gente tentará entrar em contato com você, pedindo para que corrija os erros para que o pedido seja aprovado.\n\t\t</p>"
   }
 }
