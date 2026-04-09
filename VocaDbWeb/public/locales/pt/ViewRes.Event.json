@@ -1,18 +1,18 @@
 {
   "Details": {
-    "Albums": "Albums",
-    "Attending": "Attending",
-    "Category": "Category",
+    "Albums": "Álbuns",
+    "Attending": "Participantes",
+    "Category": "Categoria",
     "Event": "Evento",
     "OccurrenceDate": "Data de ocorrência",
     "PVs": "PVs",
-    "RemoveAttendance": "Remove from my events",
+    "RemoveAttendance": "Remover dos meus eventos",
     "Series": "Série",
     "SongList": "Setlist",
-    "Songs": "Songs",
-    "UserAttending": "I'm attending",
-    "UserInterested": "I'm interested",
-    "Venue": "Venue"
+    "Songs": "Músicas",
+    "UserAttending": "Eu vou participar",
+    "UserInterested": "Tenho interesse",
+    "Venue": "Sede"
   },
   "EventsBySeries": {
     "CreateEvent": "Criar evento",
@@ -29,7 +29,7 @@
     "FindEvent": "Encontrar evento",
     "Number": "número",
     "Series": "Série",
-    "UngroupedEventNamed": "Evento não-agrupado de nome:",
+    "UngroupedEventNamed": "Evento não agrupado de nome:",
     "YouMayAddTheEvent": "Pode adicionar este evento à base de dados."
   }
 }
