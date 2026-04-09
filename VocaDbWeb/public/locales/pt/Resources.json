@@ -219,8 +219,8 @@
     "SeriesSuffix": "Sufixo de série",
     "SongList": "Setlist",
     "Status": "Estado",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
+    "Venue": "Sede",
+    "VenueName": "Nome da sede",
     "WebLinks": "Links externos"
   },
   "SongArchiveReasonNames": {
@@ -316,7 +316,7 @@
     "Trusted": "Utilizador de confiança"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
+    "Address": "Endereço",
     "AddressCountryCode": "País/Região",
     "Coordinates": "Coordenadas",
     "Description": "Descrição",
