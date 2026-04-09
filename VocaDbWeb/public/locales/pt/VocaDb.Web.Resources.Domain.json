@@ -4,7 +4,7 @@
     "Duplicate": "Página duplicada",
     "Inappropriate": "Conteúdo inapropriado",
     "InvalidInfo": "Informação em falta ou inválida",
-    "InvalidTag": "Uso de tag inválido",
+    "InvalidTag": "Uso de tag inválida",
     "MaliciousIP": "IP malicioso",
     "Other": "Outros (especificar nas notas)",
     "OwnershipClaim": "Reclamar uma página como sua",
@@ -28,7 +28,7 @@
   },
   "WebhookEventNames": {
     "DuplicateAccount": "Alerta de conta duplicada",
-    "EntryReport": "Entry report",
+    "EntryReport": "Denuncia de entradas",
     "User": "Utilizador"
   }
 }
