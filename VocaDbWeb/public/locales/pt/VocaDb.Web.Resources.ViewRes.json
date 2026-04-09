@@ -1,18 +1,18 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not). Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Produtores e vocalistas associados a este álbum.",
+    "NewAlbumInfo": "Lembre-se que o VocaDB não é o UtaiteDB. O álbum precisa de ter pelo menos uma música com vocais de Vocaloid para ser submetido no VocaDB (outros sintetizadores de voz como o UTAU também são permitidos, mas covers cantados por humanos não). Compilação feitas por fãs (bootlegs) também não são permitidas. Para mais informações, leia Ajuda/Guias."
   },
   "ArtistRes": {
-    "AuthoredBy": "VocaDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
+    "AuthoredBy": "Conta VocaDB",
+    "NewArtistExternalLink": "Link externo (para o site do artista, Hatsune Miku wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "Welcome": "Welcome to the Vocaloid Database!",
+    "Welcome": "Bem-vindo à Vocaloid Database!",
     "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
   },
   "LayoutRes": {
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses."
+    "PaypalDonateTitle": "O VocaDB é um projeto sem fins lucrativos. Todos os fundos doados serão utilizados para desenvolver o site, suportá-lo e obter as licenças necessárias."
   },
   "SongRes": {
     "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
