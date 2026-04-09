@@ -1,43 +1,43 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
-    "Default": "Default",
+    "Dancer": "Dançarino",
+    "Default": "Padrão",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
+    "Instrumentalist": "Instrumentalista",
+    "Organizer": "Organizador",
+    "Other": "Outro",
     "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Promoter": "Promotor",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "Vocalist": "Vocalista",
+    "VoiceManipulator": "Manipulador de voz"
   },
   "EventCategoryNames": {
     "AlbumRelease": "Album release fair",
     "Anniversary": "Character anniversary",
-    "Club": "Club",
-    "Concert": "Concert",
-    "Contest": "Contest",
+    "Club": "Clube",
+    "Concert": "Concerto",
+    "Contest": "Concurso",
     "Festival": "Festival",
-    "Convention": "Convention",
-    "Other": "Other",
-    "Unspecified": "Unspecified"
+    "Convention": "Convenção",
+    "Other": "Outro",
+    "Unspecified": "Não especificado"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "Data de adição",
+    "Date": "Data",
+    "Name": "Nome",
+    "SeriesName": "Série",
+    "VenueName": "Sede"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
+    "Category": "Categoria",
+    "Description": "Descrição",
+    "Name": "Nome",
+    "Names": "Nomes",
     "OriginalName": "Default name language",
-    "Picture": "Main picture",
+    "Picture": "Foto principal",
     "Status": "Status",
-    "WebLinks": "External links"
+    "WebLinks": "Links externos"
   }
 }
