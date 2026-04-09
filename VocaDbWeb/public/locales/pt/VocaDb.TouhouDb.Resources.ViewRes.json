@@ -1,15 +1,15 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Artists associated with this album.",
-    "NewAlbumInfo": "The album needs to have at least one track related to Touhou to be allowed on TouhouDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Artistas associados a este álbum.",
+    "NewAlbumInfo": "O álbum tem que ter pelo menos uma faixa relacionada ao Touhou para ser permitido no TouhouDB. Compilações feita por fãs não oficiais (piratas) também não são permitidos. Para mais informações, veja a Ajuda/Diretrizes."
   },
   "ArtistRes": {
-    "AuthoredBy": "TouhouDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Touhou Wiki, NND MyList etc.)"
+    "AuthoredBy": "Conta do TouhouDB",
+    "NewArtistExternalLink": "Link externo (para o site de um artista, Touhou Wiki, NND MyList, etc.)"
   },
   "HomeRes": {
-    "SiteDescription": "TouhouDB is a Touhou music database with translated artists, albums and songs.",
-    "Welcome": "Welcome to Touhou music database!",
+    "SiteDescription": "TouhouDB é uma base de dados de música de Touhou com artistas, álbuns, e músicas traduzidas.",
+    "Welcome": "Bem-vindo(a) para a base de dados de músicas de Touhou!",
     "WelcomeSubtitle": "The collaborative database for Touhou music, with artists, discography, PVs and more."
   },
   "LayoutRes": {
