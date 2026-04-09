@@ -1,10 +1,10 @@
 {
   "ArtistForAlbumEditRow": {
     "Customize": "Personalizar",
-    "Support": "Apoiar"
+    "Support": "Apoio"
   },
   "Create": {
-    "AlbumInfo2": "Por favor verifique que a página que vai adicionar ainda não existe. Precisa de especificar pelo menos um nome e artista.",
+    "AlbumInfo2": "Por favor, verifique que a página que vai adicionar ainda não existe. Precisa de especificar pelo menos um nome e artista.",
     "ArtistsInfo": "Artistas (é preciso pelo menos 1)",
     "DiscType": "Tipo de disco",
     "NeedArtist": "Precisa de pelo menos um arista.",
@@ -23,7 +23,7 @@
     "MediaType": "Tipo de media",
     "MyRating": "Classificação",
     "NoTracklist": "Nenhuma tracklist disponível. Utilizadores registados podem-na adicionar.",
-    "Other": "Other",
+    "Other": "Outro",
     "OtherArtists": "Outros artistas",
     "Producers": "Protudores",
     "PVs": "Publicidade / crossfades",
@@ -53,19 +53,19 @@
     "ReleaseDateIsInTheNearFuture": "(Brevemente)",
     "ReleaseDateIsInThePast": "(Publicado)",
     "TotalLength": "duração completa {{0}}",
-    "HiddenCollections": "+ {{0}} hidden",
-    "Illustrators": "Illustrators",
+    "HiddenCollections": "+ {{0}} escondido",
+    "Illustrators": "Ilustradores",
     "ReviewAlreadySubmitted": "You have already submitted a review in this language. Multiple reviews in the same language are not allowed.",
-    "ReviewLanguage": "Language",
-    "ReviewPost": "Post",
-    "ReviewPreview": "Preview",
-    "ReviewText": "Review (minimum 50 characters)",
-    "ReviewTitle": "Title (optional)",
-    "ReviewWrite": "Write review",
+    "ReviewLanguage": "Linguagem",
+    "ReviewPost": "Postar",
+    "ReviewPreview": "Pré-visualizar",
+    "ReviewText": "Resenha (mínimo 50 caracteres)",
+    "ReviewTitle": "Título (opcional)",
+    "ReviewWrite": "Escrever resenha",
     "ReviewLoginToReview": "Log in to post a review",
     "LatestReview": "Latest review",
     "ReviewsTab": "Reviews",
-    "ViewAllReviews": "View all reviews ({{0}})"
+    "ViewAllReviews": "Ver todas as resenhas ({{0}})"
   },
   "Edit": {
     "AddNew": "Adicionar música",
@@ -111,15 +111,15 @@
     "TrackPropertiesTitle": "Propriedades da música",
     "ArtistsForSong": "Artistas para a música {{0}}",
     "BaDiscTypeExplanation": "Se não tiver a certeza que tipo é, tente saber como é que os artistas descrevem o seu próprio álbum. Pode encontrar mais informações na Wikipedia, MusicBrainz e Discogs, por exemplo.",
-    "BaBarcode": "Barcode",
+    "BaBarcode": "Código de barra",
     "DiAddRow": "Add row",
     "DiAudio": "Audio",
-    "DiName": "Name",
+    "DiName": "Nome",
     "DiNote": "If the album contains multiple discs you may define extra properties for those discs here.\n\t\t\t\tYou may specify disc name and type. Name is optional - if not specified, the default \"Disc #\" will be used, where \"#\" is the disc number.",
-    "DiscsTab": "Discs",
-    "DiType": "Type",
-    "DiVideo": "Video",
-    "TrNextDisc": "Next disc"
+    "DiscsTab": "Discos",
+    "DiType": "Tipo",
+    "DiVideo": "Vídeo",
+    "TrNextDisc": "Próximo disco"
   },
   "TopRated": {
     "Average": "média",
