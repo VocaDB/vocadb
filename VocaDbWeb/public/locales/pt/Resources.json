@@ -85,7 +85,7 @@
     "Composer": "Compositor",
     "Default": "Predefinição",
     "Distributor": "Distribuidor",
-    "Encoder": "Encoder",
+    "Encoder": "Codificador",
     "Illustrator": "Ilustrador",
     "Instrumentalist": "Instrumentalista",
     "Lyricist": "Letrista",
@@ -93,7 +93,7 @@
     "Mixer": "Misturador",
     "Other": "Outros",
     "Publisher": "Editora",
-    "RecordingEngineer": "Recording engineer",
+    "RecordingEngineer": "Engenheiro de gravação",
     "VocalDataProvider": "Provedor da data vocal",
     "Vocalist": "Vocalista",
     "VoiceManipulator": "Editor da voz"
@@ -150,7 +150,7 @@
   "PermissionTokenNames": {
     "AccessManageMenu": "Menu de chave de acesso",
     "Admin": "Tarefas de administrador da base de dados",
-    "AddRawFileMedia": "Add raw media",
+    "AddRawFileMedia": "Adicionar mídia bruta",
     "ApplyAnyTag": "Adicionar qualquer tag para a entrada",
     "ApproveEntries": "Páginas aprovadas.",
     "BulkDeletePVs": "Apagar PVs em massa",
@@ -180,17 +180,17 @@
     "RemoveTagUsages": "Apagar tags",
     "ReportUser": "Denunciar utilizadores",
     "RestoreRevisions": "Restaurar revisões",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Carregar mídia própria",
     "ViewAuditLog": "Ver registo de eventos",
-    "ViewCoverArtImages": "View cover art images",
+    "ViewCoverArtImages": "Ver imagem da arte da capa",
     "ViewDisabledUsers": "Ver utilizadores desativados",
     "ViewHiddenRatings": "Ver avaliações escondidas",
     "ViewHiddenRevisions": "Ver revisões escondidas",
     "ViewLyrics": "Ver letras",
     "ViewOtherPVs": "Ver outros PVs",
-    "ViewOldUsernames": "View old usernames",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ViewOldUsernames": "Ver nomes de utilizador antigos",
+    "ManageWebhooks": "Gerenciar webhooks",
+    "CreateDatabaseDump": "Criar um despejo de banco de dados"
   },
   "PVTypeDescriptions": {
     "Original": "Original (oficial/upload autorizado)",
@@ -260,7 +260,7 @@
     "Name": "Nome",
     "Songs": "Músicas",
     "Status": "Estado",
-    "Thumbnail": "Thumbnail"
+    "Thumbnail": "Miniatura"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Setlists de concertos",
@@ -277,7 +277,7 @@
     "PublishDate": "Data de publicação",
     "RatingScore": "Pontuação de classificação",
     "SongType": "Tipo de música",
-    "TagUsageCount": "Tag usage count"
+    "TagUsageCount": "Contagem de uso da tag"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorito",
