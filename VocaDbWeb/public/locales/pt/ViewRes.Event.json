@@ -17,10 +17,10 @@
   "EventsBySeries": {
     "CreateEvent": "Criar evento",
     "CreateSeries": "Criar uma série",
-    "CreateVenue": "Create venue",
+    "CreateVenue": "Criar sede",
     "ViewByDate": "Por data",
     "ViewBySeries": "Por série",
-    "ViewByVenue": "All by venue",
+    "ViewByVenue": "Tudo por sede",
     "ViewList": "Lista"
   },
   "Find": {
