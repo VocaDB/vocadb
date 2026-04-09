@@ -1,9 +1,9 @@
 {
   "SongTypeNames": {
-    "Arrangement": "Arrangement",
+    "Arrangement": "Arranjo",
     "Cover": "Cover",
     "DramaPV": "Drama",
-    "Illustration": "Illustration",
+    "Illustration": "Ilustração",
     "Instrumental": "Instrumental",
     "Live": "Gravação ao vivo",
     "Mashup": "Mashup",
@@ -11,9 +11,9 @@
     "Original": "Música original",
     "Other": "Outro",
     "Remaster": "Remaster",
-    "Remix": "Remix",
+    "Remix": "Remistura",
     "Unspecified": "Não especificado",
-    "Rearrangement": "Rearrangement",
-    "ShortVersion": "Short version"
+    "Rearrangement": "Rearranjo",
+    "ShortVersion": "Versão curta"
   }
 }
