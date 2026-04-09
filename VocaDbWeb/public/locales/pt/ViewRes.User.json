@@ -13,7 +13,7 @@
     "Captcha": "CAPTCHA",
     "CaptchaInvalid": "CAPTCHA inválido.",
     "DoRegister": "Registo",
-    "DuplicateUserWarning": "Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.",
+    "DuplicateUserWarning": "Por favor saiba que fazer múltiplas contas para impulsionar avaliações é proibido e vai resultar na terminação da conta. Caso esqueça sua senha, reseta-a ou entre em contato com um membro da staff.",
     "Email": "Endereço de email (obrigatório)",
     "EmailIsRequired": "Endereço de email é obrigatório.",
     "EmailNote": "O seu email não será mostrado a outros utilizadores. Certifique-se de inserir um endereço válido. Precisará dele se esquecer a sua senha. Para uma foto de perfil é necessário um endereço de email associado ao Gravatar. O endereço de email pode ser alterado mais tarde.",
@@ -52,7 +52,7 @@
     "FollowedArtistsTab": "Artistas seguidos",
     "ImportSongList": "Importar do YouTube ou NicoNico",
     "Interested": "Interessado",
-    "KnownLanguagesMessage": "Please let us know which languages you are familiar with. You can enter this information under <a>\"My settings\", \"Profile\"</a>, \"Languages I know\". We can use this information to determine how to contact you when needed.",
+    "KnownLanguagesMessage": "Por favor, deixe-nos saber quais línguas você esta familiarizado. Você pode colocar essa informação em <a>\"Minhas configurações\", \"Perfil\"</a>, \"Línguas que conheço\". Nós podemos usar essa informação para determinar como entrar em contato com você quando necessário",
     "LanguagesIKnow": "Línguas que falo",
     "LastLogin": "Último acesso",
     "Level": "Nível",
@@ -84,12 +84,12 @@
     "VerifiedAccount": "Artista verificado",
     "VerifiedEmail": "Email verificado",
     "VerifiedOwner": "Dono verificado",
-    "Veteran": "{{0}} veteran",
+    "Veteran": "{{0}} veterano",
     "VisibleOnlyToMe": "Visível apenas para mim e a administração."
   },
   "EntryEdits": {
     "EntryType": "Tipo",
-    "OnlyAdditions": "Only additions"
+    "OnlyAdditions": "Apenas adições"
   },
   "FavoriteSongs": {
     "GroupByRating": "Agrupar por classificação"
@@ -105,8 +105,8 @@
     "UsernameIsRequired": "Utilizador é obrigatório"
   },
   "Index": {
-    "Group": "Group",
-    "KnowsLanguage": "Knows language",
+    "Group": "Grupo",
+    "KnowsLanguage": "Sabe a linguagem",
     "ShowDisabledUsers": "Mostrar contas bloqueadas",
     "VerifiedArtists": "Contas de artistas"
   },
