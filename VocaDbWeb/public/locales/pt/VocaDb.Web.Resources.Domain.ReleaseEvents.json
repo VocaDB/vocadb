@@ -6,7 +6,7 @@
     "Instrumentalist": "Instrumentalista",
     "Organizer": "Organizador",
     "Other": "Outro",
-    "OtherPerformer": "Other performer",
+    "OtherPerformer": "Outro performador",
     "Promoter": "Promotor",
     "VJ": "VJ",
     "Vocalist": "Vocalista",
@@ -14,7 +14,7 @@
   },
   "EventCategoryNames": {
     "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
+    "Anniversary": "Aniversário de personagem",
     "Club": "Clube",
     "Concert": "Concerto",
     "Contest": "Concurso",
@@ -35,9 +35,9 @@
     "Description": "Descrição",
     "Name": "Nome",
     "Names": "Nomes",
-    "OriginalName": "Default name language",
+    "OriginalName": "Linguagem do nome padrão",
     "Picture": "Foto principal",
-    "Status": "Status",
+    "Status": "Estado",
     "WebLinks": "Links externos"
   }
 }
