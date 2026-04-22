@@ -71,7 +71,7 @@
 		"http-status-codes": "^2.2.0",
 		"i18next": "^22.5.1",
 		"i18next-chained-backend": "^4.2.0",
-		"i18next-http-backend": "^2.2.1",
+		"i18next-http-backend": "^3.0.5",
 		"i18next-localstorage-backend": "^4.1.1",
 		"jquery": "^2.2.1",
 		"jquery-ui": "^1.10.4",
