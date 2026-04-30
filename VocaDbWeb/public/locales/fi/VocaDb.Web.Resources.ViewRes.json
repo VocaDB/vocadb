@@ -4,11 +4,11 @@
     "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not). Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
   },
   "ArtistRes": {
-    "AuthoredBy": "VocaDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
+    "AuthoredBy": "VocaDB-käyttäjä",
+    "NewArtistExternalLink": "Ulkoinen linkki (esim. artistin verkkosivulle, Hatsune Miku wikiin tai Niconicon MyListiin)"
   },
   "HomeRes": {
-    "Welcome": "Welcome to the Vocaloid Database!",
+    "Welcome": "Tervetuloa Vocaloid-tietokantaan!",
     "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
   },
   "LayoutRes": {
