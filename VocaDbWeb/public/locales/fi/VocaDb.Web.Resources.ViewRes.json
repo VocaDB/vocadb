@@ -1,7 +1,7 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not). Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Albumiin liittyvät tuottajat ja laulajat.",
+    "NewAlbumInfo": "Huomaa, että VocaDB ei ole UtaiteDB. Jokaisella albumilla tulee olla vähintään yksi kappale, jonka laulu on tuotettu äänisyntetisaattorilla, kuten Vocaloidilla tai UTAU:lla. Epävirallisia fanien tekemiä kokoelma-albumeita (bootlegejä) ei tule lisätä tietokantaan. Lisätietoa aiheesta löydät VocaDB Wikistä."
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB-käyttäjä",
@@ -9,16 +9,16 @@
   },
   "HomeRes": {
     "Welcome": "Tervetuloa Vocaloid-tietokantaan!",
-    "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
+    "WelcomeSubtitle": "Yhteistyöhön perustuva tietokanta, joka käsittelee Vocaloid-, UTAU- ja muilla äänisyntetisaattoreilla tuotettua musiikkia, artisteja, diskografiaa, videoita ja muuta."
   },
   "LayoutRes": {
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses."
+    "PaypalDonateTitle": "VocaDB on voittoa tavoittelematon projekti. Kaikki saadut rahat käytetään sivuston kehittämiseen, sivuston ylläpidon kustannuksiin ja ohjelmistolisensseihin."
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
-    "RankingsTitle": "VocaDB song rankings"
+    "NewSongInfo": "Varmistathan, ettei kappaletta löydy jo valmiiksi tietokannasta. Sinun tulee antaa kappaleelle vähintään yksi nimi ja artisti. Linkki alkuperäiseen videoon olisi hyvä lisätä.\n\nHuomaathan, että kappaleet, joilla ei esiinny äänisyntetisaattoreilla tuotettua laulua, ovat sallittuja vain silloin, kun ne ovat julkaistu äänisyntetisaattoreilla tuotettua laulua sisältävien kappaleiden kanssa samoilla albumeilla tai kappaleista on olemassa useita äänisyntetisaattoreilla tuotettua laulua sisältäviä covereita.",
+    "RankingsTitle": "VocaDB kappalerankingit"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\r\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,\r\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\r\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\t<strong>\r\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\r\n\t\t\t</strong>\r\n\t\t\tFor example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.\r\n\t\t\t<strong>\r\n\t\t\t\tYou should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.\r\n\t\t\t</strong>\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\r\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\r\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\r\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\tJos olet tuottaja, kuvittaja, animoija, tuotat muuta Vocaloid-musiikkiin tai -videoihin liittyvää sisältöä tai \n\t\t\tedustat doujin-piiriä, voit käyttää tätä lomaketta pyytääksesi käyttäjätilisi vahvistusta sivuston ylläpidolta.\n\t\t\tVahvistuksen jälkeen käyttäjänimesi tulee näkymään sinuun liitetyn artistin merkinnän sivulla ja toisinpäin.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tSinun tulee antaa jonkinlainen todiste siitä, että olet merkinnän oikeutettu omistaja. Muuten pyyntösi tullaan todennäköisesti hylkäämään.\n\t\t\t</strong>\n\t\t\tEsimerkiksi VocaDB-käyttäjätiliisi linkitetyn Twitter- tai blogipostauksen jättäminen on hyväksyttävä tapa todistaa tilinsä kuuluvan kyseiselle artistille.\n\t\t\t<strong>\n\t\t\t\tSinulla tulee olla lisäksi vähintään yksi tai kaksi valmista ja viimeisteltyä äänisyntetisaattorilla tuotettua laulua sisältävää kappalemerkintää sivustolla. Voit luoda ne itse, jos muut eivät ole näin jo tehneet.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tVahvistuksen jälkeen sinun on mahdollista hyväksyä omaan artistiisi liittyvä merkintä, millä voit rajoittaa \n\t\t\tmuiden mahdollisuutta muokata merkintää. Tällä hetkellä ainoastaan artistimerkintä on mahdollista\n\t\t\t\"suojata\" tällä tavalla. Kappaleiden ja albumien \"suojaaminen\" tällä tavalla ei siis onnistu.\n\t\t</p>\n\t\t<p>\n\t\t\tOtathan huomioon, että meillä on oikeus olla myös hyväksymättä pyyntöäsi. Voimme hylätä pyyntösi, jos jokin yllä mainituista kohdista ei toteudu.\n\t\t\tEllei syy pyynnön hylkäämiselle ole ilmeinen, tulemme ottamaan sinuun yhteyttä pyytääksemme sinua korjaamaan virheet pyynnön hyväksymiseksi.\n\t\t</p>"
   }
 }
