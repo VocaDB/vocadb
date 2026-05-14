@@ -567,7 +567,7 @@ public class UserController : ControllerBase
 	}
 
 	[HttpPost]
-	public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
+	public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, double rating)
 	{
 		Data.UpdateAlbumForUser(LoggedUserId, albumid, collectionStatus, mediaType, rating);
 	}
