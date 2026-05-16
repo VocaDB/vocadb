@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "Kirjaudu sisään lähettääksesi arvostelun",
     "LatestReview": "Uusin arvostelu",
     "ReviewsTab": "Arvostelut",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "Näytä kaikki arvostelut ({{0}})"
   },
   "Edit": {
