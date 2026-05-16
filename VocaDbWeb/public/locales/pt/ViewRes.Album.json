@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "Conecte-se para postar uma resenha",
     "LatestReview": "Última resenha",
     "ReviewsTab": "Resenhas",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "Ver todas as resenhas ({{0}})"
   },
   "Edit": {
