@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "ログインしてレビューを投稿する",
     "LatestReview": "最新のレビュー",
     "ReviewsTab": "レビュー",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "View all reviews ({{0}})"
   },
   "Edit": {
