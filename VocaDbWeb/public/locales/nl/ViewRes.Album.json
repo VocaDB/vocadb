@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "Log in om een beoordeling te plaatsen",
     "LatestReview": "Nieuwste beoordeling",
     "ReviewsTab": "Beoordelingen",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "Bekijk alle beoordelingen ({{0}})"
   },
   "Edit": {
