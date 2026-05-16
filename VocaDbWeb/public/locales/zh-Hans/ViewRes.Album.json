@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "登录以发表评论",
     "LatestReview": "最新评论",
     "ReviewsTab": "评论",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "查看所有评论 ({{0}})"
   },
   "Edit": {
