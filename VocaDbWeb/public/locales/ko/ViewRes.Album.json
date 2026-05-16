@@ -65,6 +65,7 @@
     "ReviewLoginToReview": "Log in to post a review",
     "LatestReview": "최근 리뷰",
     "ReviewsTab": "후기",
+    "ReviewNoRating": "No rating given",
     "ViewAllReviews": "모든 리뷰 보기 ({{0}})"
   },
   "Edit": {
