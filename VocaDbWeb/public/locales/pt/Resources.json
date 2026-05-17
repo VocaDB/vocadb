@@ -1,10 +1,10 @@
 {
   "ActivityEntrySortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Antigo",
+    "CreateDateDescending": "Recente"
   },
   "AlbumArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Auto-importado",
+    "AutoImportedFromMikuDb": "Importado automaticamente",
     "Created": "Criado",
     "Deleted": "Apagado",
     "Merged": "Fundido de outra página",
@@ -20,7 +20,7 @@
     "Wishlisted": "Lista de desejos"
   },
   "AlbumDiscMediaTypeNames": {
-    "Audio": "Audio",
+    "Audio": "Áudio",
     "Video": "Vídeo"
   },
   "AlbumEditableFieldNames": {
@@ -74,7 +74,7 @@
     "OriginalName": "Nome original",
     "Picture": "Foto principal",
     "Pictures": "Fotos",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Data de lançamento do voicebank",
     "Status": "Estado",
     "WebLinks": "Links externos"
   },
@@ -85,16 +85,16 @@
     "Composer": "Compositor",
     "Default": "Predefinição",
     "Distributor": "Distribuidor",
-    "Encoder": "Encoder",
+    "Encoder": "Codificador",
     "Illustrator": "Ilustrador",
     "Instrumentalist": "Instrumentalista",
-    "Lyricist": "Letra",
+    "Lyricist": "Letrista",
     "Mastering": "Masterização",
     "Mixer": "Misturador",
     "Other": "Outros",
     "Publisher": "Editora",
-    "RecordingEngineer": "Recording engineer",
-    "VocalDataProvider": "Vocal data provider",
+    "RecordingEngineer": "Engenheiro de gravação",
+    "VocalDataProvider": "Provedor da data vocal",
     "Vocalist": "Vocalista",
     "VoiceManipulator": "Editor da voz"
   },
@@ -103,13 +103,13 @@
     "AdditionDateAsc": "Data de adição (ascendente)",
     "FollowerCount": "Número de seguidores",
     "Name": "Nome",
-    "ReleaseDate": "Voicebank release date",
+    "ReleaseDate": "Data de lançamento do voicebank",
     "SongCount": "Número de músicas",
     "SongRating": "Classificação total da música"
   },
   "CommentSortRuleNames": {
-    "CreateDate": "Oldest",
-    "CreateDateDescending": "Newest"
+    "CreateDate": "Antigo",
+    "CreateDateDescending": "Recente"
   },
   "CommonMessages": {
     "EntryDeleted": "Esta página foi apagada. Ainda está acessível temporariamente, mas não aparecerá em nenhuma lista.",
@@ -117,7 +117,7 @@
     "EntryStatusExplanation": "Draft = a página não tem informações cruciais. Significa que devem ser adicionadas mais informações assim que possível.<br />\nAcabado = a página tem todas as informações cruciais, mas ainda não foi aprovada por um utilizador de confiança.<br />\nAprovado = a página foi aprovada foi um utilizador de confiança. Estas páginas só podem ser editadas por esses utilizadores.",
     "Locked": "Esta página está trancada, ou seja, só a administração a pode editar.",
     "NameLanguageHelp": "Escolha o idioma deste nome. \"Original\" é o nome na língua não inglesa, por exemplo, Japonês.\nSe a língua original é Inglês, não introduza um nome em língua \"Original\".",
-    "RevisionHidden": "This page revision has been hidden."
+    "RevisionHidden": "A revisão dessa página foi escondida."
   },
   "ContentLanguageSelectionNames": {
     "Default": "Original",
@@ -137,21 +137,21 @@
   },
   "EntryEditEventNames": {
     "Created": "Criado",
-    "Deleted": "Deleted",
-    "Restored": "Restored",
+    "Deleted": "Deletado",
+    "Restored": "Restaurado",
     "Updated": "Atualizado"
   },
   "EntryStatusNames": {
     "Approved": "Aprovado",
-    "Draft": "Draft",
+    "Draft": "Rascunho",
     "Finished": "Acabado",
     "Locked": "Trancado"
   },
   "PermissionTokenNames": {
     "AccessManageMenu": "Menu de chave de acesso",
     "Admin": "Tarefas de administrador da base de dados",
-    "AddRawFileMedia": "Add raw media",
-    "ApplyAnyTag": "Add any tag to entry",
+    "AddRawFileMedia": "Adicionar mídia bruta",
+    "ApplyAnyTag": "Adicionar qualquer tag para a entrada",
     "ApproveEntries": "Páginas aprovadas.",
     "BulkDeletePVs": "Apagar PVs em massa",
     "CreateComments": "Criar comentários",
@@ -159,12 +159,12 @@
     "DeleteEntries": "Apagar páginas",
     "DesignatedStaff": "Membro da administração designado",
     "DisableUsers": "Bloquear utilizadores",
-    "EditAllSongLists": "Edit all song lists",
+    "EditAllSongLists": "Editar todas as listas de músicas",
     "EditFeaturedLists": "Gerir lista de músicas destacadas",
     "EditNews": "Gerir notícias",
     "EditProfile": "Editar perfil pessoal",
-    "EditTags": "Edit tags",
-    "LockComments": "Lock comments",
+    "EditTags": "Editar tags",
+    "LockComments": "Bloquear comentários",
     "LockEntries": "Trancar páginas",
     "ManageDatabase": "Gerir base de dados",
     "ManageEntryReports": "Gerir páginas denunciadas",
@@ -176,21 +176,21 @@
     "MoveToTrash": "Mandar para o lixo",
     "Nothing": "Nada",
     "ReadRecentComments": "Ler comentários recentes",
-    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveEditPermission": "Remover a permissão de editar a base de dados",
     "RemoveTagUsages": "Apagar tags",
-    "ReportUser": "Report users",
+    "ReportUser": "Denunciar utilizadores",
     "RestoreRevisions": "Restaurar revisões",
-    "UploadMedia": "Upload own media",
+    "UploadMedia": "Carregar mídia própria",
     "ViewAuditLog": "Ver registo de eventos",
-    "ViewCoverArtImages": "View cover art images",
-    "ViewDisabledUsers": "View disabled users",
-    "ViewHiddenRatings": "View hidden ratings",
-    "ViewHiddenRevisions": "View hidden revisions",
-    "ViewLyrics": "View lyrics",
-    "ViewOtherPVs": "View other PVs",
-    "ViewOldUsernames": "View old usernames",
-    "ManageWebhooks": "Manage webhooks",
-    "CreateDatabaseDump": "Create database dump"
+    "ViewCoverArtImages": "Ver imagem da arte da capa",
+    "ViewDisabledUsers": "Ver utilizadores desativados",
+    "ViewHiddenRatings": "Ver avaliações escondidas",
+    "ViewHiddenRevisions": "Ver revisões escondidas",
+    "ViewLyrics": "Ver letras",
+    "ViewOtherPVs": "Ver outros PVs",
+    "ViewOldUsernames": "Ver nomes de utilizador antigos",
+    "ManageWebhooks": "Gerenciar webhooks",
+    "CreateDatabaseDump": "Criar um despejo de banco de dados"
   },
   "PVTypeDescriptions": {
     "Original": "Original (oficial/upload autorizado)",
@@ -206,22 +206,22 @@
     "RatingDate": "Data de classificação"
   },
   "ReleaseEventEditableFieldNames": {
-    "Artists": "Artists",
-    "Category": "Category",
+    "Artists": "Artistas",
+    "Category": "Categoria",
     "Date": "Data",
     "Description": "Descrição",
-    "MainPicture": "Main picture",
-    "Names": "Names",
-    "OriginalName": "Default name language",
+    "MainPicture": "Foto principal",
+    "Names": "Nomes",
+    "OriginalName": "Língua do nome padrão",
     "PVs": "PVs",
     "Series": "Series",
     "SeriesNumber": "Número de série",
     "SeriesSuffix": "Sufixo de série",
     "SongList": "Setlist",
-    "Status": "Status",
-    "Venue": "Venue",
-    "VenueName": "Venue name",
-    "WebLinks": "External links"
+    "Status": "Estado",
+    "Venue": "Sede",
+    "VenueName": "Nome da sede",
+    "WebLinks": "Links externos"
   },
   "SongArchiveReasonNames": {
     "AutoImportedFromMikuDb": "Auto-importado",
@@ -244,14 +244,14 @@
     "OriginalName": "Nome original",
     "OriginalVersion": "Versão original",
     "PublishDate": "Data de publicação",
-    "PVs": "PVs",
+    "PVs": "PV",
     "SongType": "Tipo de música",
     "Status": "Estado",
     "WebLinks": "Links externos",
-    "ReleaseEvent": "Release event",
-    "ReleaseEvents": "Release events",
+    "ReleaseEvent": "Evento de lançamento ",
+    "ReleaseEvents": "Eventos de lançamento",
     "Bpm": "BPM",
-    "CultureCodes": "Languages"
+    "CultureCodes": "Línguas"
   },
   "SongListEditableFieldNames": {
     "Description": "Descrição",
@@ -260,7 +260,7 @@
     "Name": "Nome",
     "Songs": "Músicas",
     "Status": "Estado",
-    "Thumbnail": "Thumbnail"
+    "Thumbnail": "Miniatura"
   },
   "SongListFeaturedCategoryNames": {
     "Concerts": "Setlists de concertos",
@@ -276,8 +276,8 @@
     "None": "Nada",
     "PublishDate": "Data de publicação",
     "RatingScore": "Pontuação de classificação",
-    "SongType": "Song type",
-    "TagUsageCount": "Tag usage count"
+    "SongType": "Tipo de música",
+    "TagUsageCount": "Contagem de uso da tag"
   },
   "SongVoteRatingNames": {
     "Favorite": "Favorito",
@@ -287,20 +287,20 @@
     "AliasedTo": "Renomeado para",
     "CategoryName": "Categoria",
     "Description": "Descrição",
-    "HideFromSuggestions": "Hide from suggestions",
+    "HideFromSuggestions": "Esconder de sugestões",
     "Names": "Nomes",
     "OriginalName": "Língua do nome",
     "Parent": "Principal",
     "Picture": "Foto",
     "RelatedTags": "Tags relacionadas",
     "Status": "Estado",
-    "Targets": "Targets",
+    "Targets": "Alvos",
     "WebLinks": "Links externos"
   },
   "TagSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Name": "Name",
-    "None": "Nothing"
+    "AdditionDate": "Data de adição",
+    "Name": "Nome",
+    "None": "Nada"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Sem mensagens privadas",
@@ -316,14 +316,14 @@
     "Trusted": "Utilizador de confiança"
   },
   "VenueEditableFieldNames": {
-    "Address": "Address",
-    "AddressCountryCode": "Country/Region",
-    "Coordinates": "Coordinates",
-    "Description": "Description",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Address": "Endereço",
+    "AddressCountryCode": "País/Região",
+    "Coordinates": "Coordenadas",
+    "Description": "Descrição",
+    "Names": "Nomes",
+    "OriginalName": "Língua padrão do nome",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
   },
   "WebLinkCategoryNames": {
     "Commercial": "Comercial",

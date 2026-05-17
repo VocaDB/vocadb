@@ -10,15 +10,15 @@
 		"UnspecifiedNames": "O álbum precisa de um nome primário."
 	},
 	"ArtistCategoriesNames": {
-		"Animator": "Animator",
-		"Band": "Band",
-		"Circle": "Circle",
-		"Illustrator": "Illustrator",
-		"Label": "Label",
-		"Other": "Other",
-		"Producer": "Producer",
-		"Subject": "Subject",
-		"Vocalist": "Vocalist"
+		"Animator": "Animador",
+		"Band": "Banda",
+		"Circle": "Círculo",
+		"Illustrator": "Ilustrador(a)",
+		"Label": "Gravadora",
+		"Other": "Outro",
+		"Producer": "Produtor(a)",
+		"Subject": "Sujeito",
+		"Vocalist": "Vocalista"
 	},
 	"ArtistTypeNames": {
 		"Circle": "Círculo",
@@ -37,8 +37,8 @@
 		"Band": "Banda",
 		"Utaite": "Utaite",
 		"CeVIO": "CeVIO",
-		"Vocalist": "Vocalist",
-		"Character": "Character",
+		"Vocalist": "Vocalista",
+		"Character": "Personagem",
 		"SynthesizerV": "Synthesizer V",
 		"NEUTRINO": "NEUTRINO",
 		"VoiSona": "VoiSona",
@@ -47,14 +47,14 @@
 		"VOICEVOX": "VOICEVOX",
 		"ACEVirtualSinger": "ACE Virtual Singer",
 		"AIVOICE": "A.I.VOICE",
-		"CoverArtist": "Cover artist",
-		"Instrumentalist": "Instrumentalist",
+		"CoverArtist": "Artista de cover",
+		"Instrumentalist": "Instrumentista",
 		"Designer": "Designer"
 	},
 	"ArtistValidationErrors": {
 		"NeedReferences": "O artista precisa de uma descrição OU pelo menos um link externo de referência.",
 		"NeedType": "O tipo de artista precisa de ser especificado.",
-		"UnnecessaryPName": "There is no need to add artist name both with and without the P suffix.",
+		"UnnecessaryPName": "Não há motivos para adicionar o nome do(a) artista tanto com ou sem o sufixo -P",
 		"UnspecifiedNames": "O artista precisa de um nome primário."
 	},
 	"ExtSites": {
@@ -69,9 +69,9 @@
 		"NeedReferences": "A música precisa de notas, PVs ou links de referência.",
 		"NeedType": "O tipo de música precisa de ser especificado.",
 		"NonInstrumentalSongNeedsVocalists": "Esta música não tem vocalistas. ",
-		"NeedToSpecifyNames": "Names should not be duplicated to fill a specific name field. Only add the name for the language that it actually represents.",
-		"RedundantEvent": "The same release event does not need to be specified for both the song and album.",
-		"RedundantRoles": "Producer's roles do not need to be specified when that producer is the only one.",
+		"NeedToSpecifyNames": "Nomes não devem ser duplicados para preencher um campo específico do nome. Apenas adicione o nome para a língua em que ela realmente representa.",
+		"RedundantEvent": "O mesmo evento de lançamento não precisa ser especificado para ambas a música e álbum.",
+		"RedundantRoles": "O papel do(a) produtor(a) não precisa ser especificado quando aquele(a) produtor(a) é o(a) único(a).",
 		"UnspecifiedNames": "A música precisa de um nome primário."
 	}
 }

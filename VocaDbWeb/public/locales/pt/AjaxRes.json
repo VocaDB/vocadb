@@ -4,26 +4,26 @@
     "AddToTracks": "Adicionar às músicas",
     "RemoveFromTracks": "Apagar das minhas músicas",
     "AddNewSong": "Adicionar nova música chamada '{{0}}'",
-    "Download": "Download"
+    "Download": "Baixar"
   },
   "EntryIndex": {
-    "DraftsOnlyFilter": "Estado do draft",
+    "DraftsOnlyFilter": "estado de rascunho",
     "ExactTitleFilter": "título exato '{{0}}",
-    "FilterPre": "Filtrando",
+    "FilterPre": "Filtrando por",
     "StartsWithTitleFilter": "começando com o título '{{0}}'",
     "TitleFilter": "título '{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Adicionar artista chamado '{{0}}'",
+    "AddExtraArtist": "Adicionar artista chamado '{0}'",
     "ReportSent": "Denúncia feita. Obrigado!",
-    "Save": "Gravar",
+    "Save": "Salvar",
     "ThanksForRating": "Obrigado por classificar!",
-    "UnableToSendReport": "Unable to send report."
+    "UnableToSendReport": "Não foi possível enviar a denúncia."
   },
   "Song": {
     "AddedToList": "Adicionado à lista.",
-    "ArtistFilter": "artist '{{0}}'",
-    "OnlyWithPVsFilter": "Só PVs",
+    "ArtistFilter": "artista '{{0}}'",
+    "OnlyWithPVsFilter": "PVs apenas",
     "SinceFilter": "mais recente que {{0}}",
     "SongTypeFilter": "tipo de música '{{0}}'",
     "ThanksForRating": "Obrigado por classificar!"

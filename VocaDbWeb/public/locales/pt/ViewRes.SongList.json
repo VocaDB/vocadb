@@ -3,17 +3,17 @@
     "Date": "Data: {{0}}.",
     "DefaultSortRule": "Predefinição",
     "Details": "Detalhes",
-    "Events": "Events",
+    "Events": "Eventos",
     "Export": "Exportar",
     "Playlist": "Playlist",
-    "Preview": "Previsualização",
+    "Preview": "Prévia",
     "ShowTags": "Mostrar tags",
     "SongList": "Lista de músicas",
     "Songs": "música(s)"
   },
   "Edit": {
-    "AddSong": "Add song",
-    "ConfirmDelete": "De certeza que quer apagar esta lista?",
+    "AddSong": "Adicionar música",
+    "ConfirmDelete": "Tem certeza que quer apagar esta lista?",
     "CreateTitle": "Criar uma lista de músicas",
     "Description": "Descrição",
     "EditTitle": "Editar lista - {{0}}",
@@ -21,12 +21,12 @@
     "EventDateHelp": "Se esta lista pertence a um evento (como concertos ou classificações), a data do evento pode ser introduzida aqui.",
     "FeaturedCategory": "Categoria destacada",
     "Name": "Nome",
-    "RemoveFromList": "Remove from list",
+    "RemoveFromList": "Eliminar da lista",
     "Status": "Estado da página",
     "TabProperties": "Propriedades",
     "TabSongs": "Músicas",
     "Thumbnail": "Thumbnail",
-    "UnableToSave": "Unable to save list"
+    "UnableToSave": "Erro ao salvar a lista"
   },
   "Featured": {
     "Import": "Importar do YouTube ou NicoNico",

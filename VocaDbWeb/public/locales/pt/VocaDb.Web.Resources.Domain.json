@@ -1,34 +1,34 @@
 {
   "EntryReportTypeNames": {
     "BrokenPV": "PV não disponível",
-    "Duplicate": "Página duplicada.",
+    "Duplicate": "Página duplicada",
     "Inappropriate": "Conteúdo inapropriado",
-    "InvalidInfo": "Informação em falta ou inválida.",
-    "InvalidTag": "Invalid tag usage",
-    "MaliciousIP": "IP suspeito",
+    "InvalidInfo": "Informação em falta ou inválida",
+    "InvalidTag": "Uso de tag inválida",
+    "MaliciousIP": "IP malicioso",
     "Other": "Outros (especificar nas notas)",
     "OwnershipClaim": "Reclamar uma página como sua",
-    "RemovePermissions": "Restricted editing",
-    "Spamming": "Spamming"
+    "RemovePermissions": "Edição restrita",
+    "Spamming": "Envio de spam"
   },
   "EntryTypeNames": {
     "Album": "Álbum",
     "Artist": "Artista",
-    "DiscussionTopic": "Topic",
+    "DiscussionTopic": "Tópico",
     "PV": "PV",
     "ReleaseEvent": "Evento",
-    "ReleaseEventSeries": "Event series",
+    "ReleaseEventSeries": "Série de eventos",
     "Song": "Música",
     "SongList": "Lista de músicas",
     "Tag": "Tag",
     "Undefined": "Tudo",
     "User": "Utilizador",
-    "Venue": "Venue",
-    "VoiceSynthesizer": "Voice Synthesizer"
+    "Venue": "Sede",
+    "VoiceSynthesizer": "Sintetizador de voz"
   },
   "WebhookEventNames": {
-    "DuplicateAccount": "Duplicate account alert",
-    "EntryReport": "Entry report",
-    "User": "User"
+    "DuplicateAccount": "Alerta de conta duplicada",
+    "EntryReport": "Denuncia de entradas",
+    "User": "Utilizador"
   }
 }

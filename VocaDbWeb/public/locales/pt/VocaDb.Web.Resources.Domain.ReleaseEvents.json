@@ -1,43 +1,43 @@
 {
   "ArtistEventRoleNames": {
-    "Dancer": "Dancer",
-    "Default": "Default",
+    "Dancer": "Dançarino",
+    "Default": "Padrão",
     "DJ": "DJ",
-    "Instrumentalist": "Instrumentalist",
-    "Organizer": "Organizer",
-    "Other": "Other",
-    "OtherPerformer": "Other performer",
-    "Promoter": "Promoter",
+    "Instrumentalist": "Instrumentista",
+    "Organizer": "Organizador",
+    "Other": "Outro",
+    "OtherPerformer": "Outro performador",
+    "Promoter": "Promotor",
     "VJ": "VJ",
-    "Vocalist": "Vocalist",
-    "VoiceManipulator": "Voice manipulator"
+    "Vocalist": "Vocalista",
+    "VoiceManipulator": "Manipulador de voz"
   },
   "EventCategoryNames": {
     "AlbumRelease": "Album release fair",
-    "Anniversary": "Character anniversary",
-    "Club": "Club",
-    "Concert": "Concert",
-    "Contest": "Contest",
+    "Anniversary": "Aniversário de personagem",
+    "Club": "Clube",
+    "Concert": "Concerto",
+    "Contest": "Concurso",
     "Festival": "Festival",
-    "Convention": "Convention",
-    "Other": "Other",
-    "Unspecified": "Unspecified"
+    "Convention": "Convenção",
+    "Other": "Outro",
+    "Unspecified": "Não especificado"
   },
   "EventSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Date": "Date",
-    "Name": "Name",
-    "SeriesName": "Series",
-    "VenueName": "Venue"
+    "AdditionDate": "Data de adição",
+    "Date": "Data",
+    "Name": "Nome",
+    "SeriesName": "Série",
+    "VenueName": "Sede"
   },
   "ReleaseEventSeriesEditableFieldNames": {
-    "Category": "Category",
-    "Description": "Description",
-    "Name": "Name",
-    "Names": "Names",
-    "OriginalName": "Default name language",
-    "Picture": "Main picture",
-    "Status": "Status",
-    "WebLinks": "External links"
+    "Category": "Categoria",
+    "Description": "Descrição",
+    "Name": "Nome",
+    "Names": "Nomes",
+    "OriginalName": "Linguagem do nome padrão",
+    "Picture": "Foto principal",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
   }
 }

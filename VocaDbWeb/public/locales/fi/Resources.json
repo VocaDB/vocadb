@@ -164,7 +164,7 @@
     "EditNews": "Uutisten hallinta",
     "EditProfile": "Oman profiilin hallinta",
     "EditTags": "Tunnisteiden muokkaus",
-    "LockComments": "Lock comments",
+    "LockComments": "Kommenttien lukitseminen",
     "LockEntries": "Merkintöjen lukitseminen",
     "ManageDatabase": "Tietokannan muokkaus",
     "ManageEntryReports": "Raporttien hallinta",
@@ -178,17 +178,17 @@
     "ReadRecentComments": "Uusien kommenttien tarkastelu",
     "RemoveEditPermission": "Tietokannan muokkausoikeuksien poisto",
     "RemoveTagUsages": "Tunnisteiden poisto",
-    "ReportUser": "Report users",
+    "ReportUser": "Käyttäjien raportointi",
     "RestoreRevisions": "Merkintöjen palauttaminen",
     "UploadMedia": "Oman median lataus",
     "ViewAuditLog": "Käyttölokin tarkastelu",
-    "ViewCoverArtImages": "View cover art images",
-    "ViewDisabledUsers": "View disabled users",
+    "ViewCoverArtImages": "Kansikuvien tarkastelu",
+    "ViewDisabledUsers": "Käytöstä poistettujen tunnusten tarkastelu",
     "ViewHiddenRatings": "Piilotettujen arvosteluiden tarkastelu",
     "ViewHiddenRevisions": "Piilotettujen tarkistusten tarkastelu",
-    "ViewLyrics": "View lyrics",
-    "ViewOtherPVs": "View other PVs",
-    "ViewOldUsernames": "View old usernames",
+    "ViewLyrics": "Sanoitusten tarkastelu",
+    "ViewOtherPVs": "Muun median tarkastelu",
+    "ViewOldUsernames": "Vanhojen käyttäjänimien tarkastelu",
     "ManageWebhooks": "Webhookien hallinta",
     "CreateDatabaseDump": "Tietokantadumpin luominen"
   },
@@ -276,7 +276,7 @@
     "None": "Käänteinen järjestys",
     "PublishDate": "Julkaisupäivämäärän mukaan",
     "RatingScore": "Arvosteluiden mukaan",
-    "SongType": "Song type",
+    "SongType": "Kappaleen tyyppi",
     "TagUsageCount": "Tunnisteiden määrän mukaan"
   },
   "SongVoteRatingNames": {
@@ -298,9 +298,9 @@
     "WebLinks": "Ulkoiset linkit"
   },
   "TagSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Name": "Name",
-    "None": "Nothing"
+    "AdditionDate": "Lisäyspäivämäärä",
+    "Name": "Nimi",
+    "None": "Ei mitään"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Ei yksityisviestejä",

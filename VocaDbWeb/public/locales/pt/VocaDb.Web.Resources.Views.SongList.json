@@ -14,13 +14,13 @@
     "Process": "Proceder",
     "SongMissing": "EM FALTA",
     "SongsInList": "Músicas na lista",
-    "SongsMissingError": "Algumas destas músicas não estão no VocaDB ainda. Precisa de adicionar todas as música para as incluir na lista.",
+    "SongsMissingError": "Algumas destas músicas não estão no VocaDB ainda. Precisa de adicionar todas as músicas para as incluir na lista.",
     "Submit": "Submeter",
     "Title": "Criar lista de músicas a partir de uma NicoNico MyList ou YouTube playlist",
     "TotalSongs": "Todas as músicas",
     "UnableToParse": "Erro em mostrar a lista",
     "UrlDescription": "Pode ser qualquer NicoNico MyList, por exemplo http://www.nicovideo.jp/mylist/1234567, ou YouTube playlist, por exemplo https://www.youtube.com/playlist?list=MIKUMIKU3939",
-    "UrlLabel": "Playlist/Mylist URL",
+    "UrlLabel": "URL da Playlist/Mylist",
     "VocaDbEntry": "Página de música no VocaDB"
   },
   "SongListSortRuleNames": {

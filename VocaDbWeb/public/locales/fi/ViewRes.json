@@ -9,10 +9,10 @@
   },
   "DiscussionContent": {
     "AddComment": "Lisää kommentti",
-    "LockComments": "Lock comments",
+    "LockComments": "Lukitse kommentit",
     "NewComment": "Olethan asiallinen, vältä roskapostausta ja low effort -kommentteja. Tarkemman ohjeistuksen löydät VocaDB Wikistä.",
-    "UnlockComments": "Unlock comments",
-    "LockedBanner": "This comment section has been locked. Please discuss questions in the VocaDB forum or on Discord."
+    "UnlockComments": "Poista kommenttien lukitus",
+    "LockedBanner": "Tämä kommenttikenttä on lukittu. Voit keskustella aiheesta lisää VocaDB:n Keskustelut-osiossa tai Discord-palvelimella."
   },
   "EntryCreate": {
     "EnglishName": "Nimi englanniksi",

@@ -1,24 +1,24 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not). Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumArtistDesc": "Produtores e vocalistas associados a este álbum.",
+    "NewAlbumInfo": "Lembre-se que o VocaDB não é o UtaiteDB. O álbum precisa de ter pelo menos uma música com vocais de Vocaloid para ser submetido no VocaDB (outros sintetizadores de voz como o UTAU também são permitidos, mas covers cantados por humanos não). Compilações não oficiais feitas por fãs (piratas) também não são permitidas. Para mais informações, leia Ajuda/Guias."
   },
   "ArtistRes": {
-    "AuthoredBy": "VocaDB account",
-    "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
+    "AuthoredBy": "Conta VocaDB",
+    "NewArtistExternalLink": "Link externo (para o site do artista, Hatsune Miku wiki, NND MyList etc.)"
   },
   "HomeRes": {
-    "Welcome": "Welcome to the Vocaloid Database!",
-    "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
+    "Welcome": "Bem-vindo à Vocaloid Database!",
+    "WelcomeSubtitle": "A base de dados colaborativa para Vocaloid, UTAU e outros sintetizadores de canto, com artistas, discografias, PVs e mais."
   },
   "LayoutRes": {
-    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses."
+    "PaypalDonateTitle": "O VocaDB é um projeto sem fins lucrativos. Todos os fundos doados serão utilizados para desenvolver o site, suportá-lo e obter as licenças necessárias."
   },
   "SongRes": {
-    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
-    "RankingsTitle": "VocaDB song rankings"
+    "NewSongInfo": "Por favor, tenha certeza de que a música que você esta prestes a enviar não tenha sido adicionada antes. Você precisa colocar pelo menos um nome e artista. Link para o PV original é muito desejado.\n\nPor favor, note que uma música sem vocais de Vocaloid só são permitidos se é lançado em um álbum junto com músicas Vocaloid, ou que tenha multiplas covers de Vocaloid desta música. UTAU e outros sintetizadores de vozes também são permitidos, mas covers cantado por humanos não são.",
+    "RankingsTitle": "Ranking de músicas VocaDB"
   },
   "UserRes": {
-    "RequestVerificationInfo": "<p>\r\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,\r\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\r\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\t<strong>\r\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\r\n\t\t\t</strong>\r\n\t\t\tFor example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.\r\n\t\t\t<strong>\r\n\t\t\t\tYou should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.\r\n\t\t\t</strong>\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\r\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\r\n\t\t</p>\r\n\t\t<p>\r\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\r\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\r\n\t\t</p>"
+    "RequestVerificationInfo": "<p>\n\t\t\tSe você é um produtor, ilustrador, animador ou qualquer outro criador de conteúdo trabalhando com músicas, ou vídeos de Vocaloid\n\t\t\tou um representativo de um círculo, você pode usar este documento para pedir que sua conta seja verificada pela staff do site.\n\t\t\tDepois da verificação, o nome de sua conta será mostrada na sua página(s) de artista(s) e vice-versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tVocê precisa ter algum tipo de prova de que você realmente é o(a) dono(a) legitimo daquela entrada, senão seu pedido provavelmente vai ser rejeitado.\n\t\t\t</strong>\n\t\t\tPor exemplo, postar no seu Twitter ou blog e colocando um link à sua conta do VocaDB é uma forma aceitável de provar que você é aquele(a) que se diz ser.\n\t\t\t<strong>\n\t\t\t\tVocê também deve ter ao menos uma ou duas entradas de músicas aceitadas e finalizadas (Seja ela de Vocaloid, UTAU, ou outro sintetizador vocal) - você pode enviar elas você mesmo(a) caso outras pessoas ainda não fizeram.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tDepois da verificação, você é capaz de aprovar sua entrada de artista, limitando quem pode edita-lá.\n\t\t\tNo momento, apenas a entrada de artista em si pode ser \"protegida\" desse jeito - músicas e álbuns não são afetados.\n\t\t</p>\n\t\t<p>\n\t\t\tPor favor, entenda que a gente tem o direito de recusar seu pedido. Motivos podem incluir qualquer um mencionado acima.\n\t\t\tA não ser que o motivo de declínio do pedido seja óbvio, a gente tentará entrar em contato com você, pedindo para que corrija os erros para que o pedido seja aprovado.\n\t\t</p>"
   }
 }

@@ -1,16 +1,16 @@
 {
   "Details": {
-    "Address": "Address",
-    "Aliases": "Aliases",
-    "Country": "Country/Region",
-    "Venue": "Venue"
+    "Address": "Endereço",
+    "Aliases": "Pseudónimos",
+    "Country": "País/Região",
+    "Venue": "Sede"
   },
   "Edit": {
-    "Address": "Address",
-    "Coordinates": "Coordinates",
-    "Country": "Country/Region",
+    "Address": "Endereço",
+    "Coordinates": "Coordenadas",
+    "Country": "País/Região",
     "Latitude": "Latitude",
-    "Location": "Location",
+    "Location": "Localização",
     "Longitude": "Longitude"
   }
 }

@@ -29,16 +29,16 @@
     "ShowingItemsOf": "Mostrando {{0}} iténs de {{1}}",
     "TagUsages": "Utilizações",
     "ChildTags": "Incluir child tags",
-    "VoicebankReleaseDate": "Released:",
-    "IncludeGroupMembers": "Include group members",
-    "OnlyMyEvents": "Only my events",
-    "EventCategory": "Category",
-    "ReleaseEvent": "Release event",
-    "Today": "Today",
-    "ParentVersion": "Parent version",
+    "VoicebankReleaseDate": "Lançado:",
+    "IncludeGroupMembers": "Incluir membros de grupo",
+    "OnlyMyEvents": "Apenas meus eventos",
+    "EventCategory": "Categoria ",
+    "ReleaseEvent": "Evento de lançamento ",
+    "Today": "Hoje",
+    "ParentVersion": "Versão parente",
     "Bpm": "BPM",
-    "Duration": "Duration",
-    "Language": "Language",
-    "PVService": "PV service"
+    "Duration": "Duração",
+    "Language": "Linguagem",
+    "PVService": "Serviço do PV"
   }
 }
