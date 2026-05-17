@@ -406,6 +406,8 @@ public class AlbumApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateAlbumForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+
 		if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
 			ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
 

@@ -612,6 +612,8 @@ public class SongApiController : ApiController
 		[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateSongForApiContract contract
 	)
 	{
+		_rateLimitService.RegisterEdit(_userPermissionContext);
+
 		if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
 			ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
 
