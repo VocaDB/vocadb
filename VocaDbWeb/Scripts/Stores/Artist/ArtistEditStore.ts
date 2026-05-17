@@ -6,7 +6,6 @@ import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
@@ -73,19 +72,16 @@ export class ArtistEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
-		antiforgeryRepo: AntiforgeryRepository,
 		private readonly artistRepo: ArtistRepository,
 		readonly contract: ArtistForEditContract,
 	) {
 		makeObservable(this);
 
-		this.deleteStore = new DeleteEntryStore(
-			antiforgeryRepo,
-			(requestToken, notes) =>
-				artistRepo.delete(requestToken, {
-					id: contract.id,
-					notes: notes,
-				}),
+		this.deleteStore = new DeleteEntryStore((notes) =>
+			artistRepo.delete({
+				id: contract.id,
+				notes: notes,
+			}),
 		);
 
 		this.baseVoicebank = new BasicEntryLinkStore<ArtistContract>((entryId) =>
@@ -247,7 +243,6 @@ export class ArtistEditStore {
 	};
 
 	@action submit = async (
-		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
 	): Promise<number> => {
@@ -255,7 +250,6 @@ export class ArtistEditStore {
 
 		try {
 			const id = await this.artistRepo.edit(
-				requestToken,
 				{
 					artistType: this.artistType,
 					associatedArtists: this.associatedArtists.map((a) => a.toContract()),

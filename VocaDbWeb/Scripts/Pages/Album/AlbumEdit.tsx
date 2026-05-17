@@ -46,7 +46,6 @@ import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
 import SongInAlbumEdit from '@/Pages/Album/Partials/SongInAlbumEdit';
 import TrackProperties from '@/Pages/Album/Partials/TrackProperties';
 import { albumRepo } from '@/Repositories/AlbumRepository';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { pvRepo } from '@/Repositories/PVRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -1030,8 +1029,6 @@ const AlbumEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
 							const coverPicUpload = loginManager.canViewCoverArtImages
 								? coverPicUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
@@ -1045,7 +1042,6 @@ const AlbumEditLayout = observer(
 								.map((file) => file as File);
 
 							const id = await albumEditStore.submit(
-								requestToken,
 								coverPicUpload,
 								pictureUpload,
 							);
@@ -1232,7 +1228,6 @@ const AlbumEdit = (): React.ReactElement => {
 				setModel({
 					albumEditStore: new AlbumEditStore(
 						vdb.values,
-						antiforgeryRepo,
 						albumRepo,
 						songRepo,
 						artistRepo,

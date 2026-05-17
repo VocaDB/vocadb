@@ -40,14 +40,11 @@ export class AlbumMergeStore {
 		);
 	}
 
-	@action submit = async (
-		requestToken: string,
-		targetAlbumId: number,
-	): Promise<void> => {
+	@action submit = async (targetAlbumId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 
-			await this.albumRepo.merge(requestToken, {
+			await this.albumRepo.merge({
 				id: this.album.id,
 				targetAlbumId: targetAlbumId,
 			});

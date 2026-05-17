@@ -14,14 +14,11 @@ export class UserCreateStore {
 		makeObservable(this);
 	}
 
-	@action submit = async (
-		requestToken: string,
-		recaptchaResponse: string,
-	): Promise<void> => {
+	@action submit = async (recaptchaResponse: string): Promise<void> => {
 		this.submitting = true;
 
 		try {
-			await userRepo.create(requestToken, {
+			await userRepo.create({
 				email: this.email,
 				entryTime: this.entryTime,
 				extra: this.extra,

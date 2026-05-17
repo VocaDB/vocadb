@@ -29,7 +29,6 @@ import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ReleaseEventSeriesEditStore } from '@/Stores/ReleaseEvent/ReleaseEventSeriesEditStore';
@@ -199,14 +198,11 @@ const EventEditSeriesLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
-
 							const pictureUpload = loginManager.canViewCoverArtImages
 								? pictureUploadRef.current.files?.item(0) ?? undefined
 								: undefined;
 
 							const id = await releaseEventSeriesEditStore.submit(
-								requestToken,
 								pictureUpload,
 							);
 
@@ -499,7 +495,6 @@ const EventEditSeries = (): React.ReactElement => {
 				.then((model) =>
 					setModel({
 						releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
-							antiforgeryRepo,
 							eventRepo,
 							model,
 						),
@@ -516,7 +511,6 @@ const EventEditSeries = (): React.ReactElement => {
 		} else {
 			setModel({
 				releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
-					antiforgeryRepo,
 					eventRepo,
 					defaultModel,
 				),

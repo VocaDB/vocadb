@@ -32,13 +32,13 @@ export default class RequestVerificationStore {
 		});
 	};
 
-	@action submit = async (requestToken: string): Promise<void> => {
+	@action submit = async (): Promise<void> => {
 		if (!this.selectedArtist) return;
 
 		try {
 			this.submitting = true;
 
-			await this.artistRepo.requestVerification(requestToken, {
+			await this.artistRepo.requestVerification({
 				artistId: this.selectedArtist.id,
 				message: this.message,
 				linkToProof: this.linkToProof,

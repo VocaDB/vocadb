@@ -253,7 +253,6 @@ export class TagRepository extends BaseRepository {
 	};
 
 	edit = (
-		requestToken: string,
 		contract: TagForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -268,37 +267,35 @@ export class TagRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
-	merge = (
-		requestToken: string,
-		{ id, targetTagId }: { id: number; targetTagId: number },
-	): Promise<void> => {
+	merge = ({
+		id,
+		targetTagId,
+	}: {
+		id: number;
+		targetTagId: number;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/tags/${id}/merge?${qs.stringify({ targetTagId: targetTagId })}`,
 			),
 			undefined,
-			{
-				headers: {
-					requestVerificationToken: requestToken,
-				},
-			},
 		);
 	};
 
-	delete = (
-		requestToken: string,
-		{
-			id,
-			notes,
-			hardDelete,
-		}: { id: number; notes: string; hardDelete: boolean },
-	): Promise<void> => {
+	delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete(
 			this.urlMapper.mapRelative(
 				`/api/tags/${id}?${qs.stringify({
@@ -307,20 +304,16 @@ export class TagRepository extends BaseRepository {
 					hardDelete: hardDelete,
 				})}`,
 			),
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 
-	updateVersionVisibility = (
-		requestToken: string,
-		{
-			archivedVersionId,
-			hidden,
-		}: {
-			archivedVersionId: number;
-			hidden: boolean;
-		},
-	): Promise<void> => {
+	updateVersionVisibility = ({
+		archivedVersionId,
+		hidden,
+	}: {
+		archivedVersionId: number;
+		hidden: boolean;
+	}): Promise<void> => {
 		return this.httpClient.post(
 			this.urlMapper.mapRelative(
 				`/api/tags/versions/${archivedVersionId}/update-visibility?${qs.stringify(
@@ -330,7 +323,6 @@ export class TagRepository extends BaseRepository {
 				)}`,
 			),
 			undefined,
-			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

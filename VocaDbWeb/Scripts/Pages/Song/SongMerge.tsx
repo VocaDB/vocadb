@@ -7,7 +7,6 @@ import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryIn
 import { showErrorMessage } from '@/Components/ui';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongMergeStore } from '@/Stores/Song/SongMergeStore';
@@ -74,12 +73,7 @@ const SongMergeLayout = observer(
 						try {
 							if (!songMergeStore.target.id) return;
 
-							const requestToken = await antiforgeryRepo.getToken();
-
-							await songMergeStore.submit(
-								requestToken,
-								songMergeStore.target.id,
-							);
+							await songMergeStore.submit(songMergeStore.target.id);
 
 							navigate(`/Song/Edit/${songMergeStore.target.id}`);
 						} catch (error: any) {

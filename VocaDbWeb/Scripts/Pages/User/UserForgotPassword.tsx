@@ -2,7 +2,6 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { UserForgotPasswordStore } from '@/Stores/User/UserForgotPasswordStore';
 import { useVdb } from '@/VdbContext';
@@ -46,13 +45,9 @@ const UserForgotPasswordLayout = observer(
 						e.preventDefault();
 
 						try {
-							const requestToken = await antiforgeryRepo.getToken();
 							const recaptchaResponse = recaptchaRef.current.getValue() ?? '';
 
-							await userForgotPasswordStore.submit(
-								requestToken,
-								recaptchaResponse,
-							);
+							await userForgotPasswordStore.submit(recaptchaResponse);
 
 							navigate('/User/Login');
 						} catch (error: any) {

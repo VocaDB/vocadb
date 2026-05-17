@@ -46,14 +46,11 @@ export class TagMergeStore {
 		return tag.id !== this.tag.id;
 	};
 
-	@action submit = async (
-		requestToken: string,
-		targetTagId: number,
-	): Promise<void> => {
+	@action submit = async (targetTagId: number): Promise<void> => {
 		try {
 			this.submitting = true;
 
-			await this.tagRepo.merge(requestToken, {
+			await this.tagRepo.merge({
 				id: this.tag.id,
 				targetTagId: targetTagId,
 			});

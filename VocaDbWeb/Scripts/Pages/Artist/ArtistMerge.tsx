@@ -7,7 +7,6 @@ import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryIn
 import { showErrorMessage } from '@/Components/ui';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryType } from '@/Models/EntryType';
-import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArtistMergeStore } from '@/Stores/Artist/ArtistMergeStore';
@@ -77,12 +76,7 @@ const ArtistMergeLayout = observer(
 						try {
 							if (!artistMergeStore.target.id) return;
 
-							const requestToken = await antiforgeryRepo.getToken();
-
-							await artistMergeStore.submit(
-								requestToken,
-								artistMergeStore.target.id,
-							);
+							await artistMergeStore.submit(artistMergeStore.target.id);
 
 							navigate(`/Artist/Edit/${artistMergeStore.target.id}`);
 						} catch (error: any) {
