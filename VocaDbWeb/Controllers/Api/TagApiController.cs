@@ -318,6 +318,8 @@ public class TagApiController : ApiController
 	[Authorize]
 	public async Task<ActionResult<TagBaseContract>> PostNewTag(string name)
 	{
+		_rateLimitService.RegisterEdit(_permissionContext);
+
 		try
 		{
 			return await _queries.Create(name);
