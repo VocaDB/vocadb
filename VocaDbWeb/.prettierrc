@@ -6,5 +6,6 @@
 	"trailingComma": "all",
 	"endOfLine": "auto",
 	"importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
-	"importOrderSeparation": true
+	"importOrderSeparation": true,
+	"parser": "typescript"
 }

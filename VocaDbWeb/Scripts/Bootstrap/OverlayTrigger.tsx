@@ -39,9 +39,10 @@ export interface OverlayTriggerProps
 	onHide?: never;
 }
 
-function normalizeDelay(
-	delay?: OverlayDelay,
-): { show?: number; hide?: number } {
+function normalizeDelay(delay?: OverlayDelay): {
+	show?: number;
+	hide?: number;
+} {
 	return delay && typeof delay === 'object'
 		? delay
 		: {

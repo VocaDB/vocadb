@@ -563,7 +563,10 @@ const UserOverview = observer(
 						<EditableComments
 							editableCommentsStore={userDetailsStore.comments}
 							allowCreateComment={
-								!user.standalone && loginManager.canCreateComments && (!userDetailsStore.comments.commentsLocked || loginManager.canLockComments)
+								!user.standalone &&
+								loginManager.canCreateComments &&
+								(!userDetailsStore.comments.commentsLocked ||
+									loginManager.canLockComments)
 							}
 							well={false}
 							comments={userDetailsStore.comments.topComments}

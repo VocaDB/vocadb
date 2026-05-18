@@ -79,7 +79,8 @@ export const EnglishTranslatedString = observer(
 						<SafeAnchor
 							onClick={(): void =>
 								runInAction(() => {
-									englishTranslatedStringStore.showTranslatedDescription = false;
+									englishTranslatedStringStore.showTranslatedDescription =
+										false;
 								})
 							}
 							href="#"

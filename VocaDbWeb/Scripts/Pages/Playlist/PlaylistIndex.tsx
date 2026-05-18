@@ -69,64 +69,65 @@ const ImportPlaylistDialog = ({
 	const [loading, setLoading] = React.useState(false);
 
 	const playQueue = usePlayQueue();
-	const handleClickAddToPlayQueue = React.useCallback(async (): Promise<void> => {
-		setLoading(true);
+	const handleClickAddToPlayQueue =
+		React.useCallback(async (): Promise<void> => {
+			setLoading(true);
 
-		const songs = useApi
-			? await Promise.all(pvs.map(getByPV))
-			: pvs.map((pv) => ({ pv: pv, song: undefined }));
+			const songs = useApi
+				? await Promise.all(pvs.map(getByPV))
+				: pvs.map((pv) => ({ pv: pv, song: undefined }));
 
-		setLoading(false);
+			setLoading(false);
 
-		const items = songs.map(({ pv, song }) => {
-			const pvId = pv.pvId;
-			return song
-				? new PlayQueueItem(
-						{
-							entryType: EntryType.Song,
-							id: song.id,
-							name: song.name,
-							status: song.status,
-							additionalNames: song.additionalNames,
-							urlThumb: song.mainPicture?.urlThumb ?? '',
-							pvs: song.pvs ?? [],
-							artistIds:
-								song.artists
-									?.filter(({ artist }) => artist !== undefined)
-									.map((artist) => artist.artist!.id) ?? [],
-							tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
-							artistString: song.artistString,
-							songType: song.songType,
-						},
-						song.pvs!.find((pv) => pv.pvId === pvId)!.id,
-				  )
-				: new PlayQueueItem(
-						{
-							entryType: EntryType.PV,
-							id: 0,
-							name: pv.pvId,
-							status: EntryStatus.Finished,
-							additionalNames: '',
-							urlThumb: '',
-							pvs: [
-								{
-									service: pv.service,
-									id: 0,
-									pvId: pv.pvId,
-									pvType: PVType.Other,
-								},
-							],
-							artistIds: [],
-							tagIds: [],
-						},
-						0 /* HACK */,
-				  );
-		});
+			const items = songs.map(({ pv, song }) => {
+				const pvId = pv.pvId;
+				return song
+					? new PlayQueueItem(
+							{
+								entryType: EntryType.Song,
+								id: song.id,
+								name: song.name,
+								status: song.status,
+								additionalNames: song.additionalNames,
+								urlThumb: song.mainPicture?.urlThumb ?? '',
+								pvs: song.pvs ?? [],
+								artistIds:
+									song.artists
+										?.filter(({ artist }) => artist !== undefined)
+										.map((artist) => artist.artist!.id) ?? [],
+								tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
+								artistString: song.artistString,
+								songType: song.songType,
+							},
+							song.pvs!.find((pv) => pv.pvId === pvId)!.id,
+					  )
+					: new PlayQueueItem(
+							{
+								entryType: EntryType.PV,
+								id: 0,
+								name: pv.pvId,
+								status: EntryStatus.Finished,
+								additionalNames: '',
+								urlThumb: '',
+								pvs: [
+									{
+										service: pv.service,
+										id: 0,
+										pvId: pv.pvId,
+										pvType: PVType.Other,
+									},
+								],
+								artistIds: [],
+								tagIds: [],
+							},
+							0 /* HACK */,
+					  );
+			});
 
-		playQueue.addToPlayQueue(items);
+			playQueue.addToPlayQueue(items);
 
-		onClose();
-	}, [playQueue, pvs, useApi, onClose]);
+			onClose();
+		}, [playQueue, pvs, useApi, onClose]);
 
 	return (
 		<JQueryUIDialog
@@ -268,36 +269,34 @@ const SkipListEdit = observer(
 	},
 );
 
-const PlaylistTableHeader = observer(
-	(): React.ReactElement => {
-		const { playQueue } = useVdbPlayer();
+const PlaylistTableHeader = observer((): React.ReactElement => {
+	const { playQueue } = useVdbPlayer();
 
-		return (
-			<thead>
-				<tr>
-					<th>
-						<input
-							type="checkbox"
-							checked={playQueue.allItemsSelected}
-							onChange={(e): void =>
-								runInAction(() => {
-									playQueue.allItemsSelected = e.target.checked;
-								})
-							}
-						/>
-					</th>
-					<th colSpan={2}>
-						{
-							playQueue.selectedItems.length > 0
-								? `${playQueue.selectedItems.length} item(s) selected` /* LOC */
-								: 'Name' /* LOC */
+	return (
+		<thead>
+			<tr>
+				<th>
+					<input
+						type="checkbox"
+						checked={playQueue.allItemsSelected}
+						onChange={(e): void =>
+							runInAction(() => {
+								playQueue.allItemsSelected = e.target.checked;
+							})
 						}
-					</th>
-				</tr>
-			</thead>
-		);
-	},
-);
+					/>
+				</th>
+				<th colSpan={2}>
+					{
+						playQueue.selectedItems.length > 0
+							? `${playQueue.selectedItems.length} item(s) selected` /* LOC */
+							: 'Name' /* LOC */
+					}
+				</th>
+			</tr>
+		</thead>
+	);
+});
 
 interface PlaylistTableRowDropdownProps {
 	item: PlayQueueItem;
@@ -450,148 +449,142 @@ const PlaylistTableRow = observer(
 	},
 );
 
-const PlaylistTableBody = observer(
-	(): React.ReactElement => {
-		const { playQueue } = useVdbPlayer();
+const PlaylistTableBody = observer((): React.ReactElement => {
+	const { playQueue } = useVdbPlayer();
 
-		return (
-			<ReactSortable
-				tag="tbody"
-				list={playQueue.items}
-				setList={(items): void =>
-					runInAction(() => {
-						playQueue.items = items;
-					})
-				}
-			>
-				{playQueue.items.map((item) => (
-					<PlaylistTableRow item={item} key={item.id} />
-				))}
-			</ReactSortable>
-		);
-	},
-);
+	return (
+		<ReactSortable
+			tag="tbody"
+			list={playQueue.items}
+			setList={(items): void =>
+				runInAction(() => {
+					playQueue.items = items;
+				})
+			}
+		>
+			{playQueue.items.map((item) => (
+				<PlaylistTableRow item={item} key={item.id} />
+			))}
+		</ReactSortable>
+	);
+});
 
-const PlaylistTable = observer(
-	(): React.ReactElement => {
-		return (
-			<table
-				className="table"
-				css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
-			>
-				<PlaylistTableHeader />
-				<PlaylistTableBody />
-			</table>
-		);
-	},
-);
+const PlaylistTable = observer((): React.ReactElement => {
+	return (
+		<table
+			className="table"
+			css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
+		>
+			<PlaylistTableHeader />
+			<PlaylistTableBody />
+		</table>
+	);
+});
 
-const PlaylistIndex = observer(
-	(): React.ReactElement => {
-		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Search']);
+const PlaylistIndex = observer((): React.ReactElement => {
+	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
-		const title = t('ViewRes.Search:Index.Playlist');
+	const title = t('ViewRes.Search:Index.Playlist');
 
-		const { playQueue } = useVdbPlayer();
+	const { playQueue } = useVdbPlayer();
 
-		const handleClickAddToNewSongList = React.useCallback(() => {
-			// TODO: Implement.
-		}, []);
+	const handleClickAddToNewSongList = React.useCallback(() => {
+		// TODO: Implement.
+	}, []);
 
-		const [skipListDialogOpen, setSkipListDialogOpen] = React.useState(false);
+	const [skipListDialogOpen, setSkipListDialogOpen] = React.useState(false);
 
-		return (
-			<Layout
-				pageTitle={title}
-				ready={ready}
-				toolbar={
-					<>
-						{playQueue.currentItem && (
-							<div id="pvPlayer" className="song-pv-player">
-								<EmbedPVPreview
-									entry={playQueue.currentItem.entry}
-									pv={playQueue.currentItem.pv}
-									allowInline
-								/>
-							</div>
-						)}
-						<div css={{ display: 'flex' }}>
-							<div>
-								<JQueryUIButton
-									as={SafeAnchor}
-									onClick={playQueue.playSelectedItemsNext}
-									icons={{ primary: 'ui-icon-play' }}
-									disabled={playQueue.selectedItems.length === 0}
-								>
-									Play next{/* LOC */}
-								</JQueryUIButton>{' '}
-								<JQueryUIButton
-									as={SafeAnchor}
-									onClick={playQueue.addSelectedItemsToPlayQueue}
-									icons={{ primary: 'ui-icon-plus' }}
-									disabled={playQueue.selectedItems.length === 0}
-								>
-									Add to play queue{/* LOC */}
-								</JQueryUIButton>{' '}
-								<JQueryUIButton
-									as={SafeAnchor}
-									onClick={handleClickAddToNewSongList}
-									icons={{ primary: 'ui-icon-plus' }}
-									disabled={true}
-									title="Coming soon!" /* TODO: Remove. */
-								>
-									Add to new song list{/* LOC */}
-								</JQueryUIButton>{' '}
-								<JQueryUIButton
-									as={SafeAnchor}
-									onClick={playQueue.removeSelectedItemsFromPlayQueue}
-									icons={{ primary: ' ui-icon-close' }}
-									disabled={playQueue.selectedItems.length === 0}
-								>
-									Remove{/* LOC */}
-								</JQueryUIButton>{' '}
-								<JQueryUIButton
-									as={SafeAnchor}
-									onClick={playQueue.clear}
-									icons={{ primary: 'ui-icon-trash' }}
-									disabled={playQueue.isEmpty}
-								>
-									Clear{/* LOC */}
-								</JQueryUIButton>
-							</div>
-							<div css={{ flexGrow: 1 }} />
-							<div>
-								<JQueryUIButton
-									as={SafeAnchor}
-									href="#"
-									onClick={(): void => setSkipListDialogOpen(true)}
-								>
-									Edit skip list{/* LOC */}
-								</JQueryUIButton>
-							</div>
+	return (
+		<Layout
+			pageTitle={title}
+			ready={ready}
+			toolbar={
+				<>
+					{playQueue.currentItem && (
+						<div id="pvPlayer" className="song-pv-player">
+							<EmbedPVPreview
+								entry={playQueue.currentItem.entry}
+								pv={playQueue.currentItem.pv}
+								allowInline
+							/>
 						</div>
-					</>
-				}
-			>
-				{!playQueue.isEmpty && <PlaylistTable />}
+					)}
+					<div css={{ display: 'flex' }}>
+						<div>
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={playQueue.playSelectedItemsNext}
+								icons={{ primary: 'ui-icon-play' }}
+								disabled={playQueue.selectedItems.length === 0}
+							>
+								Play next{/* LOC */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={playQueue.addSelectedItemsToPlayQueue}
+								icons={{ primary: 'ui-icon-plus' }}
+								disabled={playQueue.selectedItems.length === 0}
+							>
+								Add to play queue{/* LOC */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={handleClickAddToNewSongList}
+								icons={{ primary: 'ui-icon-plus' }}
+								disabled={true}
+								title="Coming soon!" /* TODO: Remove. */
+							>
+								Add to new song list{/* LOC */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={playQueue.removeSelectedItemsFromPlayQueue}
+								icons={{ primary: ' ui-icon-close' }}
+								disabled={playQueue.selectedItems.length === 0}
+							>
+								Remove{/* LOC */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={playQueue.clear}
+								icons={{ primary: 'ui-icon-trash' }}
+								disabled={playQueue.isEmpty}
+							>
+								Clear{/* LOC */}
+							</JQueryUIButton>
+						</div>
+						<div css={{ flexGrow: 1 }} />
+						<div>
+							<JQueryUIButton
+								as={SafeAnchor}
+								href="#"
+								onClick={(): void => setSkipListDialogOpen(true)}
+							>
+								Edit skip list{/* LOC */}
+							</JQueryUIButton>
+						</div>
+					</div>
+				</>
+			}
+		>
+			{!playQueue.isEmpty && <PlaylistTable />}
 
-				{playQueue.hasMoreItems && (
-					<h3>
-						<SafeAnchor onClick={playQueue.loadMore}>
-							{t('ViewRes:Shared.ShowMore')}
-						</SafeAnchor>
-					</h3>
-				)}
+			{playQueue.hasMoreItems && (
+				<h3>
+					<SafeAnchor onClick={playQueue.loadMore}>
+						{t('ViewRes:Shared.ShowMore')}
+					</SafeAnchor>
+				</h3>
+			)}
 
-				<SkipListEdit
-					open={skipListDialogOpen}
-					onClose={(): void => setSkipListDialogOpen(false)}
-				/>
+			<SkipListEdit
+				open={skipListDialogOpen}
+				onClose={(): void => setSkipListDialogOpen(false)}
+			/>
 
-				<ImportPlaylist />
-			</Layout>
-		);
-	},
-);
+			<ImportPlaylist />
+		</Layout>
+	);
+});
 
 export default PlaylistIndex;

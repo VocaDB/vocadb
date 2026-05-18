@@ -198,82 +198,80 @@ const AuditLogFilters = observer(
 	},
 );
 
-const AdminViewAuditLog = observer(
-	(): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes']);
+const AdminViewAuditLog = observer((): React.ReactElement => {
+	const { t } = useTranslation(['ViewRes']);
 
-		const title = 'View audit log'; /* LOC */
+	const title = 'View audit log'; /* LOC */
 
-		useLocationStateStore(viewAuditLogStore);
+	useLocationStateStore(viewAuditLogStore);
 
-		return (
-			<Layout
-				pageTitle={title}
-				ready={true}
-				title={title}
-				parents={
-					<>
-						<Breadcrumb.Item
-							linkAs={Link}
-							linkProps={{
-								to: '/Admin',
-							}}
-						>
-							Manage{/* LOC */}
-						</Breadcrumb.Item>
-					</>
-				}
-			>
-				<Alert variant="info">
-					<Button
-						onClick={viewAuditLogStore.toggleFilter}
-						className={classNames(
-							viewAuditLogStore.filterVisible && 'active',
-							'dropdown-toggle',
-						)}
+	return (
+		<Layout
+			pageTitle={title}
+			ready={true}
+			title={title}
+			parents={
+				<>
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{
+							to: '/Admin',
+						}}
 					>
-						<i className="icon-filter" /> {t('ViewRes:Shared.Filter')}
-					</Button>
-
-					{viewAuditLogStore.filterVisible && (
-						<AuditLogFilters viewAuditLogStore={viewAuditLogStore} />
+						Manage{/* LOC */}
+					</Breadcrumb.Item>
+				</>
+			}
+		>
+			<Alert variant="info">
+				<Button
+					onClick={viewAuditLogStore.toggleFilter}
+					className={classNames(
+						viewAuditLogStore.filterVisible && 'active',
+						'dropdown-toggle',
 					)}
-				</Alert>
+				>
+					<i className="icon-filter" /> {t('ViewRes:Shared.Filter')}
+				</Button>
 
-				<div>
-					<table className="table">
-						<thead>
-							<tr>
-								<th>Time{/* LOC */}</th>
-								<th>User{/* LOC */}</th>
-								<th>Action{/* LOC */}</th>
+				{viewAuditLogStore.filterVisible && (
+					<AuditLogFilters viewAuditLogStore={viewAuditLogStore} />
+				)}
+			</Alert>
+
+			<div>
+				<table className="table">
+					<thead>
+						<tr>
+							<th>Time{/* LOC */}</th>
+							<th>User{/* LOC */}</th>
+							<th>Action{/* LOC */}</th>
+						</tr>
+					</thead>
+					<tbody id="logEntries">
+						{viewAuditLogStore.items.map((logEntry, index) => (
+							<tr key={index}>
+								<td>{dayjs(logEntry.time).format('L LT')}</td>
+								<td>
+									<UserLinkOrName
+										user={logEntry.user}
+										name={logEntry.agentName}
+									/>
+								</td>
+								<td>
+									<Markdown>{logEntry.action}</Markdown>
+								</td>
 							</tr>
-						</thead>
-						<tbody id="logEntries">
-							{viewAuditLogStore.items.map((logEntry, index) => (
-								<tr key={index}>
-									<td>{dayjs(logEntry.time).format('L LT')}</td>
-									<td>
-										<UserLinkOrName
-											user={logEntry.user}
-											name={logEntry.agentName}
-										/>
-									</td>
-									<td>
-										<Markdown>{logEntry.action}</Markdown>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+						))}
+					</tbody>
+				</table>
+			</div>
 
-				<SafeAnchor id="loadMoreLink" onClick={viewAuditLogStore.loadMore}>
-					Load more{/* LOC */}
-				</SafeAnchor>
-			</Layout>
-		);
-	},
-);
+			<SafeAnchor id="loadMoreLink" onClick={viewAuditLogStore.loadMore}>
+				Load more{/* LOC */}
+			</SafeAnchor>
+		</Layout>
+	);
+});
 
 export default AdminViewAuditLog;

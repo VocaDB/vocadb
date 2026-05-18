@@ -9,21 +9,19 @@ interface PVInfoProps {
 	pv: ArchivedPVContract;
 }
 
-export const PVInfo = React.memo(
-	({ pv }: PVInfoProps): React.ReactElement => {
-		return (
-			<>
-				{pv.service}:{' '}
-				<a
-					href={VideoServiceHelper.getUrlById(pv as PVContract)}
-					/* TODO: target="_blank" */
-				>
-					{pv.pvId}
-				</a>{' '}
-				by {pv.author} ({DateTimeHelper.formatFromSeconds(pv.length)})
-				{pv.publishDate && <> at {dayjs(pv.publishDate).format('l')}</>}
-				{pv.disabled && <> (unavailable)</>}
-			</>
-		);
-	},
-);
+export const PVInfo = React.memo(({ pv }: PVInfoProps): React.ReactElement => {
+	return (
+		<>
+			{pv.service}:{' '}
+			<a
+				href={VideoServiceHelper.getUrlById(pv as PVContract)}
+				/* TODO: target="_blank" */
+			>
+				{pv.pvId}
+			</a>{' '}
+			by {pv.author} ({DateTimeHelper.formatFromSeconds(pv.length)})
+			{pv.publishDate && <> at {dayjs(pv.publishDate).format('l')}</>}
+			{pv.disabled && <> (unavailable)</>}
+		</>
+	);
+});

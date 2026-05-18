@@ -132,55 +132,53 @@ const CommentSearchList = observer(
 	},
 );
 
-const CommentIndex = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
-		const loginManager = useLoginManager();
+const CommentIndex = observer((): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
-		const [commentListStore] = React.useState(
-			() => new CommentListStore(vdb.values, httpClient, urlMapper, userRepo),
-		);
+	const [commentListStore] = React.useState(
+		() => new CommentListStore(vdb.values, httpClient, urlMapper, userRepo),
+	);
 
-		const { t, ready } = useTranslation([
-			'ViewRes.Comment',
-			'VocaDb.Web.Resources.Views.ActivityEntry',
-		]);
+	const { t, ready } = useTranslation([
+		'ViewRes.Comment',
+		'VocaDb.Web.Resources.Views.ActivityEntry',
+	]);
 
-		const title = t('ViewRes.Comment:Index.RecentComments');
+	const title = t('ViewRes.Comment:Index.RecentComments');
 
-		useLocationStateStore(commentListStore);
+	useLocationStateStore(commentListStore);
 
-		return (
-			<Layout pageTitle={title} ready={ready} title={title}>
-				<ul className="nav nav-pills">
+	return (
+		<Layout pageTitle={title} ready={ready} title={title}>
+			<ul className="nav nav-pills">
+				<li>
+					<Link to="/ActivityEntry">All activity{/* LOC */}</Link>
+				</li>
+				{loginManager.isLoggedIn && (
 					<li>
-						<Link to="/ActivityEntry">All activity{/* LOC */}</Link>
+						<Link to="/ActivityEntry/FollowedArtistActivity">
+							Only followed artists
+						</Link>
 					</li>
-					{loginManager.isLoggedIn && (
-						<li>
-							<Link to="/ActivityEntry/FollowedArtistActivity">
-								Only followed artists
-							</Link>
-						</li>
-					)}
-					<li className="active">
-						<Link to="/Comment">Comments{/* LOC */}</Link>
-					</li>
-				</ul>
+				)}
+				<li className="active">
+					<Link to="/Comment">Comments{/* LOC */}</Link>
+				</li>
+			</ul>
 
-				<CommentsFilters commentListStore={commentListStore} />
+			<CommentsFilters commentListStore={commentListStore} />
 
-				<CommentSearchList commentListStore={commentListStore} />
+			<CommentSearchList commentListStore={commentListStore} />
 
-				<hr />
-				<h3>
-					<SafeAnchor onClick={commentListStore.loadMore}>
-						{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.ViewMore')}
-					</SafeAnchor>
-				</h3>
-			</Layout>
-		);
-	},
-);
+			<hr />
+			<h3>
+				<SafeAnchor onClick={commentListStore.loadMore}>
+					{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.ViewMore')}
+				</SafeAnchor>
+			</h3>
+		</Layout>
+	);
+});
 
 export default CommentIndex;

@@ -11,7 +11,9 @@ export const AboutDisclaimer = React.memo((): React.ReactElement => {
 	return (
 		<span className="about-disclaimer">
 			<a href={backgroundCredit.artistUrl}>
-				{t('ViewRes:Layout.BackgroundCredit', { 0: backgroundCredit.artistName })}
+				{t('ViewRes:Layout.BackgroundCredit', {
+					0: backgroundCredit.artistName,
+				})}
 			</a>
 			{' | '}
 			<a href="https://github.com/VocaDB/vocadb/">

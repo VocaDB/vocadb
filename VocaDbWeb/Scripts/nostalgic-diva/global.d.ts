@@ -430,16 +430,10 @@ declare namespace Vimeo {
 		off(event: string, callback?: EventCallback): void;
 		loadVideo(
 			id: number,
-		): VimeoPromise<
-			number,
-			TypeError | PasswordError | PrivacyError | Error
-		>;
+		): VimeoPromise<number, TypeError | PasswordError | PrivacyError | Error>;
 		loadVideo(
 			url: string,
-		): VimeoPromise<
-			string,
-			TypeError | PasswordError | PrivacyError | Error
-		>;
+		): VimeoPromise<string, TypeError | PasswordError | PrivacyError | Error>;
 		loadVideo(
 			options: Options,
 		): VimeoPromise<
@@ -484,9 +478,7 @@ declare namespace Vimeo {
 		getCuePoints(): VimeoPromise<VimeoCuePoint[], UnsupportedError | Error>;
 		getBuffered(): VimeoPromise<VimeoTimeRange[], Error>;
 		getCurrentTime(): VimeoPromise<number, Error>;
-		setCurrentTime(
-			seconds: number,
-		): VimeoPromise<number, RangeError | Error>;
+		setCurrentTime(seconds: number): VimeoPromise<number, RangeError | Error>;
 		getDuration(): VimeoPromise<number, Error>;
 		getEnded(): VimeoPromise<boolean, Error>;
 		getLoop(): VimeoPromise<boolean, Error>;

@@ -4,7 +4,12 @@ import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTo
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
-import { HeaderNames, httpClient, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class DiscussionRepository implements ICommentRepository {

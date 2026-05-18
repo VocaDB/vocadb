@@ -15,25 +15,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-const ViewFolderTableHeader = React.memo(
-	(): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Discussion']);
+const ViewFolderTableHeader = React.memo((): React.ReactElement => {
+	const { t } = useTranslation(['ViewRes.Discussion']);
 
-		return (
-			<thead>
-				<tr>
-					<th>{t('ViewRes.Discussion:Index.Topic')}</th>
-					<th>{t('ViewRes.Discussion:Index.Author')}</th>
-					<th className="hidden-phone">
-						{t('ViewRes.Discussion:Index.Comments')}
-					</th>
-					<th>{t('ViewRes.Discussion:Index.Created')}</th>
-					<th>{t('ViewRes.Discussion:Index.LastComment')}</th>
-				</tr>
-			</thead>
-		);
-	},
-);
+	return (
+		<thead>
+			<tr>
+				<th>{t('ViewRes.Discussion:Index.Topic')}</th>
+				<th>{t('ViewRes.Discussion:Index.Author')}</th>
+				<th className="hidden-phone">
+					{t('ViewRes.Discussion:Index.Comments')}
+				</th>
+				<th>{t('ViewRes.Discussion:Index.Created')}</th>
+				<th>{t('ViewRes.Discussion:Index.LastComment')}</th>
+			</tr>
+		</thead>
+	);
+});
 
 interface ViewFolderTableRowProps {
 	topic: DiscussionTopicContract;

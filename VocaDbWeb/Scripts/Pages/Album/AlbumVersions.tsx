@@ -66,9 +66,8 @@ const AlbumVersionsLayout = ({
 const AlbumVersions = (): React.ReactElement => {
 	const { id } = useParams();
 
-	const [model, setModel] = React.useState<
-		EntryWithArchivedVersionsContract<AlbumForApiContract>
-	>();
+	const [model, setModel] =
+		React.useState<EntryWithArchivedVersionsContract<AlbumForApiContract>>();
 
 	React.useEffect(() => {
 		albumRepo

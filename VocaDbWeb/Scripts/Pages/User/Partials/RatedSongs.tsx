@@ -41,7 +41,8 @@ const RatedSongs = observer(
 						<Button
 							onClick={(): void =>
 								runInAction(() => {
-									ratedSongsStore.groupByRating = !ratedSongsStore.groupByRating;
+									ratedSongsStore.groupByRating =
+										!ratedSongsStore.groupByRating;
 								})
 							}
 							className={classNames(ratedSongsStore.groupByRating && 'active')}

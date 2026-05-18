@@ -66,9 +66,8 @@ const VenueVersionsLayout = ({
 const VenueVersions = (): React.ReactElement => {
 	const { id } = useParams();
 
-	const [model, setModel] = React.useState<
-		EntryWithArchivedVersionsContract<VenueForApiContract>
-	>();
+	const [model, setModel] =
+		React.useState<EntryWithArchivedVersionsContract<VenueForApiContract>>();
 
 	React.useEffect(() => {
 		venueRepo

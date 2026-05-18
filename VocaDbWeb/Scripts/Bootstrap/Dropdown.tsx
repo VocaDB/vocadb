@@ -54,74 +54,72 @@ export interface DropdownProps
 	onSelect?: SelectCallback;
 }
 
-const Dropdown: BsPrefixRefForwardingComponent<
-	'div',
-	DropdownProps
-> = React.forwardRef<HTMLElement, DropdownProps>((pProps, ref) => {
-	const {
-		bsPrefix,
-		drop,
-		show,
-		className,
-		onSelect,
-		onToggle,
-		// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-		as: Component = 'div',
-		...props
-	} = useUncontrolled(pProps, { show: 'onToggle' });
+const Dropdown: BsPrefixRefForwardingComponent<'div', DropdownProps> =
+	React.forwardRef<HTMLElement, DropdownProps>((pProps, ref) => {
+		const {
+			bsPrefix,
+			drop,
+			show,
+			className,
+			onSelect,
+			onToggle,
+			// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+			as: Component = 'div',
+			...props
+		} = useUncontrolled(pProps, { show: 'onToggle' });
 
-	const onSelectCtx = useContext(SelectableContext);
-	const prefix = useBootstrapPrefix(bsPrefix, 'dropdown');
+		const onSelectCtx = useContext(SelectableContext);
+		const prefix = useBootstrapPrefix(bsPrefix, 'dropdown');
 
-	const handleToggle = useEventCallback(
-		(nextShow, event, source = event.type) => {
-			if (
-				event.currentTarget === document &&
-				(source !== 'keydown' || event.key === 'Escape')
-			)
-				source = 'rootClose';
-			onToggle?.(nextShow, event, { source });
-		},
-	);
+		const handleToggle = useEventCallback(
+			(nextShow, event, source = event.type) => {
+				if (
+					event.currentTarget === document &&
+					(source !== 'keydown' || event.key === 'Escape')
+				)
+					source = 'rootClose';
+				onToggle?.(nextShow, event, { source });
+			},
+		);
 
-	const handleSelect = useEventCallback((key, event) => {
-		onSelectCtx?.(key, event);
-		onSelect?.(key, event);
-		handleToggle(false, event, 'select');
+		const handleSelect = useEventCallback((key, event) => {
+			onSelectCtx?.(key, event);
+			onSelect?.(key, event);
+			handleToggle(false, event, 'select');
+		});
+
+		// TODO RTL: Flip directions based on RTL setting.
+		let direction: DropDirection = drop as DropDirection;
+		if (drop === 'start') {
+			direction = 'left';
+		} else if (drop === 'end') {
+			direction = 'right';
+		}
+
+		return (
+			<SelectableContext.Provider value={handleSelect}>
+				<BaseDropdown
+					drop={direction}
+					show={show}
+					onToggle={handleToggle}
+					itemSelector={`.${prefix}-item:not(.disabled):not(:disabled)`}
+				>
+					<Component
+						{...props}
+						ref={ref}
+						className={classNames(
+							className,
+							show && 'open',
+							(!drop || drop === 'down') && prefix,
+							drop === 'up' && 'dropup',
+							drop === 'end' && 'dropend',
+							drop === 'start' && 'dropstart',
+						)}
+					/>
+				</BaseDropdown>
+			</SelectableContext.Provider>
+		);
 	});
-
-	// TODO RTL: Flip directions based on RTL setting.
-	let direction: DropDirection = drop as DropDirection;
-	if (drop === 'start') {
-		direction = 'left';
-	} else if (drop === 'end') {
-		direction = 'right';
-	}
-
-	return (
-		<SelectableContext.Provider value={handleSelect}>
-			<BaseDropdown
-				drop={direction}
-				show={show}
-				onToggle={handleToggle}
-				itemSelector={`.${prefix}-item:not(.disabled):not(:disabled)`}
-			>
-				<Component
-					{...props}
-					ref={ref}
-					className={classNames(
-						className,
-						show && 'open',
-						(!drop || drop === 'down') && prefix,
-						drop === 'up' && 'dropup',
-						drop === 'end' && 'dropend',
-						drop === 'start' && 'dropstart',
-					)}
-				/>
-			</BaseDropdown>
-		</SelectableContext.Provider>
-	);
-});
 
 export default Object.assign(Dropdown, {
 	Toggle: DropdownToggle,

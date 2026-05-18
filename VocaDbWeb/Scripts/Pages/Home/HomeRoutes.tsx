@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import ErrorIndex from '../Error/ErrorIndex';
 
 const HomeIndex = React.lazy(() => import('./HomeIndex'));

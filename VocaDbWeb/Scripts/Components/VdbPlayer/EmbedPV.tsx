@@ -99,9 +99,8 @@ export const EmbedPV = React.memo(
 
 		const { service, pvId } = pv;
 
-		const { accepted, handleLoadVideo, handleDoNotAskAgain } = useAcceptCookies(
-			service,
-		);
+		const { accepted, handleLoadVideo, handleDoNotAskAgain } =
+			useAcceptCookies(service);
 
 		if (
 			!accepted &&

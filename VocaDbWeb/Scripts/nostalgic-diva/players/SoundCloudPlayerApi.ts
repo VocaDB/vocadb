@@ -27,24 +27,19 @@ export class SoundCloudPlayerApi extends PlayerApiImpl<HTMLIFrameElement> {
 	attach(id: string): Promise<void> {
 		return new Promise((resolve, reject /* TODO: reject */) => {
 			this.player.bind(SC.Widget.Events.READY, () => {
-				this.player.bind(
-					SC.Widget.Events.PLAY_PROGRESS,
-					async (event) => {
-						const duration = await this.getDurationCore();
+				this.player.bind(SC.Widget.Events.PLAY_PROGRESS, async (event) => {
+					const duration = await this.getDurationCore();
 
-						this.options?.onTimeUpdate?.({
-							duration: duration / 1000,
-							percent: event.currentPosition / duration,
-							seconds: event.currentPosition / 1000,
-						});
-					},
-				);
+					this.options?.onTimeUpdate?.({
+						duration: duration / 1000,
+						percent: event.currentPosition / duration,
+						seconds: event.currentPosition / 1000,
+					});
+				});
 				this.player.bind(SC.Widget.Events.ERROR, (event) =>
 					this.options?.onError?.(event),
 				);
-				this.player.bind(SC.Widget.Events.PLAY, () =>
-					this.options?.onPlay?.(),
-				);
+				this.player.bind(SC.Widget.Events.PLAY, () => this.options?.onPlay?.());
 				this.player.bind(SC.Widget.Events.PAUSE, () =>
 					this.options?.onPause?.(),
 				);

@@ -73,132 +73,130 @@ const SocialLink = React.memo(
 	),
 );
 
-export const LeftMenu = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
+export const LeftMenu = observer((): React.ReactElement => {
+	const vdb = useVdb();
 
-		const { t } = useTranslation(['ViewRes']);
+	const { t } = useTranslation(['ViewRes']);
 
-		const vdbPlayer = useVdbPlayer();
+	const vdbPlayer = useVdbPlayer();
 
-		return (
-			<div
-				className="menu"
-				css={{
-					minWidth: 240,
-					flex: '0 1 0',
-					overflowY: 'auto',
-					position: 'sticky',
-					maxHeight: vdbPlayer.bottomBarEnabled
-						? `calc(100vh - ${
-								40 +
-								((vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
-									bottomBarHeight)
-						  }px)`
-						: 'calc(100vh - 40px)',
-					top: 40,
-				}}
-			>
-				<div className="well">
-					<Link to="/">
-						<img
-							src={vdb.values.bannerUrl ?? '/Content/vocaDB-title.png'}
-							className="site-logo"
-							alt={vdb.values.siteName}
-							title={vdb.values.siteName}
-						/>
-					</Link>
-					<p className="slogan">{vdb.values.slogan}</p>
-				</div>
-
-				<div className="well sidebar-nav">
-					<MainNavigationItems />
-					{vdb.values.loggedUser && (
-						<>
-							<br />
-							<p className="user">
-								{t('ViewRes:Layout.Welcome')}{' '}
-								<Link
-									to={EntryUrlMapper.details_user_byName(
-										vdb.values.loggedUser.name,
-									)}
-								>
-									{vdb.values.loggedUser.name}
-								</Link>
-							</p>
-						</>
-					)}
-				</div>
-
-				<div className="well">
-					{vdb.values.appLinks && vdb.values.appLinks.length > 0 && (
-						<div id="appLinks">
-							{vdb.values.appLinks.map((link, i) => (
-								<React.Fragment key={i}>
-									{i > 0 && ' '}
-									<SmallBanner
-										title={link.title}
-										url={link.url}
-										img={link.bannerImg}
-									/>
-								</React.Fragment>
-							))}
-							<br />
-						</div>
-					)}
-
-					<h4>{t('ViewRes:Layout.SocialSites')}</h4>
-					<div id="socialSites">
-						{vdb.values.socialLinks &&
-							vdb.values.socialLinks.map((link, i) => (
-								<React.Fragment key={i}>
-									{i > 0 && ' '}
-									<SocialLink
-										title={link.title}
-										url={link.url}
-										img={link.bannerImg}
-									/>
-								</React.Fragment>
-							))}
-					</div>
-
-					<br />
-					<h4>{t('ViewRes:Layout.RelatedSites')}</h4>
-					<ul id="banners">
-						{vdb.values.bigBanners &&
-							vdb.values.bigBanners.map((link, i) => (
-								<React.Fragment key={i}>
-									{i > 0 && ' '}
-									<Banner
-										title={link.title}
-										url={link.url}
-										img={link.bannerImg}
-									/>
-								</React.Fragment>
-							))}
-					</ul>
-					<div id="banners-small">
-						{vdb.values.smallBanners &&
-							vdb.values.smallBanners.map((link, i) => (
-								<React.Fragment key={i}>
-									{i > 0 && ' '}
-									<SmallBanner
-										title={link.title}
-										url={link.url}
-										img={link.bannerImg}
-									/>
-								</React.Fragment>
-							))}
-					</div>
-					{vdb.values.patreonLink && (
-						<>
-							<hr />
-							<PatreonLink />
-						</>
-					)}
-					{/* TODO: PaypalDonateButton */}
-				</div>
+	return (
+		<div
+			className="menu"
+			css={{
+				minWidth: 240,
+				flex: '0 1 0',
+				overflowY: 'auto',
+				position: 'sticky',
+				maxHeight: vdbPlayer.bottomBarEnabled
+					? `calc(100vh - ${
+							40 +
+							((vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
+								bottomBarHeight)
+					  }px)`
+					: 'calc(100vh - 40px)',
+				top: 40,
+			}}
+		>
+			<div className="well">
+				<Link to="/">
+					<img
+						src={vdb.values.bannerUrl ?? '/Content/vocaDB-title.png'}
+						className="site-logo"
+						alt={vdb.values.siteName}
+						title={vdb.values.siteName}
+					/>
+				</Link>
+				<p className="slogan">{vdb.values.slogan}</p>
 			</div>
-		);
-	},
-);
+
+			<div className="well sidebar-nav">
+				<MainNavigationItems />
+				{vdb.values.loggedUser && (
+					<>
+						<br />
+						<p className="user">
+							{t('ViewRes:Layout.Welcome')}{' '}
+							<Link
+								to={EntryUrlMapper.details_user_byName(
+									vdb.values.loggedUser.name,
+								)}
+							>
+								{vdb.values.loggedUser.name}
+							</Link>
+						</p>
+					</>
+				)}
+			</div>
+
+			<div className="well">
+				{vdb.values.appLinks && vdb.values.appLinks.length > 0 && (
+					<div id="appLinks">
+						{vdb.values.appLinks.map((link, i) => (
+							<React.Fragment key={i}>
+								{i > 0 && ' '}
+								<SmallBanner
+									title={link.title}
+									url={link.url}
+									img={link.bannerImg}
+								/>
+							</React.Fragment>
+						))}
+						<br />
+					</div>
+				)}
+
+				<h4>{t('ViewRes:Layout.SocialSites')}</h4>
+				<div id="socialSites">
+					{vdb.values.socialLinks &&
+						vdb.values.socialLinks.map((link, i) => (
+							<React.Fragment key={i}>
+								{i > 0 && ' '}
+								<SocialLink
+									title={link.title}
+									url={link.url}
+									img={link.bannerImg}
+								/>
+							</React.Fragment>
+						))}
+				</div>
+
+				<br />
+				<h4>{t('ViewRes:Layout.RelatedSites')}</h4>
+				<ul id="banners">
+					{vdb.values.bigBanners &&
+						vdb.values.bigBanners.map((link, i) => (
+							<React.Fragment key={i}>
+								{i > 0 && ' '}
+								<Banner
+									title={link.title}
+									url={link.url}
+									img={link.bannerImg}
+								/>
+							</React.Fragment>
+						))}
+				</ul>
+				<div id="banners-small">
+					{vdb.values.smallBanners &&
+						vdb.values.smallBanners.map((link, i) => (
+							<React.Fragment key={i}>
+								{i > 0 && ' '}
+								<SmallBanner
+									title={link.title}
+									url={link.url}
+									img={link.bannerImg}
+								/>
+							</React.Fragment>
+						))}
+				</div>
+				{vdb.values.patreonLink && (
+					<>
+						<hr />
+						<PatreonLink />
+					</>
+				)}
+				{/* TODO: PaypalDonateButton */}
+			</div>
+		</div>
+	);
+});

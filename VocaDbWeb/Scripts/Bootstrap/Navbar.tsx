@@ -24,70 +24,68 @@ export interface NavbarProps
 	expanded?: boolean;
 }
 
-const NavbarOuter: BsPrefixRefForwardingComponent<
-	'nav',
-	NavbarProps
-> = React.forwardRef<HTMLElement, NavbarProps>((props, ref) => {
-	const {
-		bsPrefix: initialBsPrefix,
-		expand,
-		fixed,
-		className,
-		as: Component = 'nav',
-		expanded,
-		onToggle,
-		collapseOnSelect = false,
-		...controlledProps
-	} = useUncontrolled(props, {
-		expanded: 'onToggle',
+const NavbarOuter: BsPrefixRefForwardingComponent<'nav', NavbarProps> =
+	React.forwardRef<HTMLElement, NavbarProps>((props, ref) => {
+		const {
+			bsPrefix: initialBsPrefix,
+			expand,
+			fixed,
+			className,
+			as: Component = 'nav',
+			expanded,
+			onToggle,
+			collapseOnSelect = false,
+			...controlledProps
+		} = useUncontrolled(props, {
+			expanded: 'onToggle',
+		});
+
+		const bsPrefix = useBootstrapPrefix(initialBsPrefix, 'navbar');
+
+		const handleCollapse = React.useCallback<SelectCallback>(
+			(...args) => {
+				if (collapseOnSelect && expanded) {
+					onToggle?.(false);
+				}
+			},
+			[collapseOnSelect, expanded, onToggle],
+		);
+
+		// will result in some false positives but that seems better
+		// than false negatives. strict `undefined` check allows explicit
+		// "nulling" of the role if the user really doesn't want one
+		if (controlledProps.role === undefined && Component !== 'nav') {
+			controlledProps.role = 'navigation';
+		}
+		let expandClass = `${bsPrefix}-expand`;
+		if (typeof expand === 'string') expandClass = `${expandClass}-${expand}`;
+
+		const navbarContext = useMemo<NavbarContextType>(
+			() => ({
+				onToggle: (): void => onToggle?.(!expanded),
+				bsPrefix,
+				expanded: !!expanded,
+			}),
+			[bsPrefix, expanded, onToggle],
+		);
+
+		return (
+			<NavbarContext.Provider value={navbarContext}>
+				<SelectableContext.Provider value={handleCollapse}>
+					<Component
+						ref={ref}
+						{...controlledProps}
+						className={classNames(
+							className,
+							bsPrefix,
+							expand && expandClass,
+							fixed && `navbar-fixed-${fixed}`,
+						)}
+					/>
+				</SelectableContext.Provider>
+			</NavbarContext.Provider>
+		);
 	});
-
-	const bsPrefix = useBootstrapPrefix(initialBsPrefix, 'navbar');
-
-	const handleCollapse = React.useCallback<SelectCallback>(
-		(...args) => {
-			if (collapseOnSelect && expanded) {
-				onToggle?.(false);
-			}
-		},
-		[collapseOnSelect, expanded, onToggle],
-	);
-
-	// will result in some false positives but that seems better
-	// than false negatives. strict `undefined` check allows explicit
-	// "nulling" of the role if the user really doesn't want one
-	if (controlledProps.role === undefined && Component !== 'nav') {
-		controlledProps.role = 'navigation';
-	}
-	let expandClass = `${bsPrefix}-expand`;
-	if (typeof expand === 'string') expandClass = `${expandClass}-${expand}`;
-
-	const navbarContext = useMemo<NavbarContextType>(
-		() => ({
-			onToggle: (): void => onToggle?.(!expanded),
-			bsPrefix,
-			expanded: !!expanded,
-		}),
-		[bsPrefix, expanded, onToggle],
-	);
-
-	return (
-		<NavbarContext.Provider value={navbarContext}>
-			<SelectableContext.Provider value={handleCollapse}>
-				<Component
-					ref={ref}
-					{...controlledProps}
-					className={classNames(
-						className,
-						bsPrefix,
-						expand && expandClass,
-						fixed && `navbar-fixed-${fixed}`,
-					)}
-				/>
-			</SelectableContext.Provider>
-		</NavbarContext.Provider>
-	);
-});
 
 const Navbar = ({
 	children,

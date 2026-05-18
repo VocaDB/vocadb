@@ -23,7 +23,7 @@ export interface BsPrefixProps<As extends React.ElementType = React.ElementType>
 
 export interface BsPrefixRefForwardingComponent<
 	TInitial extends React.ElementType,
-	P = unknown
+	P = unknown,
 > {
 	<As extends React.ElementType = TInitial>(
 		props: React.PropsWithChildren<ReplaceProps<As, BsPrefixProps<As> & P>>,

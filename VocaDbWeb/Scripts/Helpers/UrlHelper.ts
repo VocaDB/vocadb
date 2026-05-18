@@ -36,11 +36,7 @@ export class AffiliateLinkGenerator {
 		return this.addOrReplaceParam(url, '(\\d+)', 'affiliate_id', this.paAffId);
 	};
 
-	constructor({
-		playAsiaAffiliateId,
-	}: {
-		playAsiaAffiliateId: string;
-	}) {
+	constructor({ playAsiaAffiliateId }: { playAsiaAffiliateId: string }) {
 		this.paAffId = playAsiaAffiliateId;
 	}
 

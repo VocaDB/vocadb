@@ -202,183 +202,178 @@ const MessageFolderTabContent = observer(
 	},
 );
 
-const UserMessages = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
+const UserMessages = observer((): React.ReactElement => {
+	const vdb = useVdb();
 
-		const [userMessagesStore] = React.useState(
-			() =>
-				new UserMessagesStore(
-					vdb.values,
-					userRepo,
-					vdb.values.loggedUserId,
-					UserInboxType.Received,
-				),
-		);
+	const [userMessagesStore] = React.useState(
+		() =>
+			new UserMessagesStore(
+				vdb.values,
+				userRepo,
+				vdb.values.loggedUserId,
+				UserInboxType.Received,
+			),
+	);
 
-		const { t, ready } = useTranslation(['ViewRes.User']);
+	const { t, ready } = useTranslation(['ViewRes.User']);
 
-		const title = t('ViewRes.User:Messages.Messages');
+	const title = t('ViewRes.User:Messages.Messages');
 
-		const [searchParams] = useSearchParams();
-		const messageId = searchParams.get('messageId');
-		const inbox = searchParams.get('inbox');
-		const receiverName = searchParams.get('receiverName');
+	const [searchParams] = useSearchParams();
+	const messageId = searchParams.get('messageId');
+	const inbox = searchParams.get('inbox');
+	const receiverName = searchParams.get('receiverName');
 
-		React.useEffect(() => {
-			if (!messageId) return;
+	React.useEffect(() => {
+		if (!messageId) return;
 
-			const isNotification = inbox === 'Notifications';
-			const userMessageFolderStore = isNotification
-				? userMessagesStore.notifications
-				: userMessagesStore.receivedMessages;
+		const isNotification = inbox === 'Notifications';
+		const userMessageFolderStore = isNotification
+			? userMessagesStore.notifications
+			: userMessagesStore.receivedMessages;
 
-			userMessageFolderStore.init().then(() => {
-				userMessagesStore.selectMessageById(
-					Number(messageId),
-					userMessageFolderStore,
-				);
-			});
-		}, [userMessagesStore, messageId, inbox]);
-
-		React.useEffect(() => {
-			if (!receiverName) return;
-
-			userMessagesStore.selectTab('composeTab');
-			userRepo.getOneByName({ username: receiverName }).then((result) =>
-				runInAction(() => {
-					userMessagesStore.newMessageStore.receiver.id = result?.id;
-				}),
+		userMessageFolderStore.init().then(() => {
+			userMessagesStore.selectMessageById(
+				Number(messageId),
+				userMessageFolderStore,
 			);
-		}, [userMessagesStore, receiverName]);
+		});
+	}, [userMessagesStore, messageId, inbox]);
 
-		return (
-			<Layout
-				pageTitle={title}
-				ready={ready}
-				title={title}
-				parents={
-					<>
-						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>
-							{t('ViewRes:Shared.Users')}
-						</Breadcrumb.Item>
-						<Breadcrumb.Item
-							linkAs={Link}
-							linkProps={{
-								to: EntryUrlMapper.details_user_byName(
-									vdb.values.loggedUser?.name,
-								),
-							}}
-						>
-							{vdb.values.loggedUser?.name}
-						</Breadcrumb.Item>
-					</>
-				}
-			>
-				{userMessagesStore.selectedMessage && (
-					<div id="viewMessage">
-						<UserMessageKnockout
-							userMessagesStore={userMessagesStore}
-							userMessageStore={userMessagesStore.selectedMessage}
-						/>
-					</div>
-				)}
+	React.useEffect(() => {
+		if (!receiverName) return;
 
-				<JQueryUITabs
-					activeKey={userMessagesStore.tabName}
-					onSelect={(eventKey): void => {
-						const tabName = eventKey as typeof userMessagesStore.tabName;
-						userMessagesStore.selectTab(tabName);
-
-						const inboxes = {
-							receivedTab: userMessagesStore.receivedMessages,
-							sentTab: userMessagesStore.sentMessages,
-							notificationsTab: userMessagesStore.notifications,
-							composeTab: undefined,
-						};
-						inboxes[tabName]?.init();
-					}}
-				>
-					<JQueryUITab
-						eventKey="receivedTab"
-						title={
-							<>
-								{t('ViewRes.User:Messages.Received')}
-								{!!userMessagesStore.receivedMessages.unread &&
-									userMessagesStore.receivedMessages.unread > 0 && (
-										<>
-											{' '}
-											<span className="badge badge-small badge-important">
-												{userMessagesStore.receivedMessages.unread}
-											</span>
-										</>
-									)}
-							</>
-						}
-					>
-						<MessageFolderTabContent
-							id="receivedTabContent"
-							userMessagesStore={userMessagesStore}
-							userMessageFolderStore={userMessagesStore.receivedMessages}
-							colFrom={true}
-							colTo={false}
-							showUnread={true}
-							allowDelete={false}
-						/>
-					</JQueryUITab>
-					<JQueryUITab
-						eventKey="sentTab"
-						title={t('ViewRes.User:Messages.Sent')}
-					>
-						<MessageFolderTabContent
-							id="sentTabContent"
-							userMessagesStore={userMessagesStore}
-							userMessageFolderStore={userMessagesStore.sentMessages}
-							colFrom={false}
-							colTo={true}
-							showUnread={false}
-							allowDelete={false}
-						/>
-					</JQueryUITab>
-					<JQueryUITab
-						eventKey="notificationsTab"
-						title={
-							<>
-								{t('ViewRes.User:Messages.Notifications')}
-								{!!userMessagesStore.notifications.unread &&
-									userMessagesStore.notifications.unread > 0 && (
-										<>
-											{' '}
-											<span className="badge badge-small badge-important">
-												{userMessagesStore.notifications.unread}
-											</span>
-										</>
-									)}
-							</>
-						}
-					>
-						<MessageFolderTabContent
-							id="notificationsTabContent"
-							userMessagesStore={userMessagesStore}
-							userMessageFolderStore={userMessagesStore.notifications}
-							colFrom={false}
-							colTo={false}
-							showUnread={true}
-							allowDelete={true}
-						/>
-					</JQueryUITab>
-					<JQueryUITab
-						eventKey="composeTab"
-						title={t('ViewRes.User:Messages.Compose')}
-					>
-						<div id="composeTab">
-							<ComposeMessage userMessagesStore={userMessagesStore} />
-						</div>
-					</JQueryUITab>
-				</JQueryUITabs>
-			</Layout>
+		userMessagesStore.selectTab('composeTab');
+		userRepo.getOneByName({ username: receiverName }).then((result) =>
+			runInAction(() => {
+				userMessagesStore.newMessageStore.receiver.id = result?.id;
+			}),
 		);
-	},
-);
+	}, [userMessagesStore, receiverName]);
+
+	return (
+		<Layout
+			pageTitle={title}
+			ready={ready}
+			title={title}
+			parents={
+				<>
+					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>
+						{t('ViewRes:Shared.Users')}
+					</Breadcrumb.Item>
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{
+							to: EntryUrlMapper.details_user_byName(
+								vdb.values.loggedUser?.name,
+							),
+						}}
+					>
+						{vdb.values.loggedUser?.name}
+					</Breadcrumb.Item>
+				</>
+			}
+		>
+			{userMessagesStore.selectedMessage && (
+				<div id="viewMessage">
+					<UserMessageKnockout
+						userMessagesStore={userMessagesStore}
+						userMessageStore={userMessagesStore.selectedMessage}
+					/>
+				</div>
+			)}
+
+			<JQueryUITabs
+				activeKey={userMessagesStore.tabName}
+				onSelect={(eventKey): void => {
+					const tabName = eventKey as typeof userMessagesStore.tabName;
+					userMessagesStore.selectTab(tabName);
+
+					const inboxes = {
+						receivedTab: userMessagesStore.receivedMessages,
+						sentTab: userMessagesStore.sentMessages,
+						notificationsTab: userMessagesStore.notifications,
+						composeTab: undefined,
+					};
+					inboxes[tabName]?.init();
+				}}
+			>
+				<JQueryUITab
+					eventKey="receivedTab"
+					title={
+						<>
+							{t('ViewRes.User:Messages.Received')}
+							{!!userMessagesStore.receivedMessages.unread &&
+								userMessagesStore.receivedMessages.unread > 0 && (
+									<>
+										{' '}
+										<span className="badge badge-small badge-important">
+											{userMessagesStore.receivedMessages.unread}
+										</span>
+									</>
+								)}
+						</>
+					}
+				>
+					<MessageFolderTabContent
+						id="receivedTabContent"
+						userMessagesStore={userMessagesStore}
+						userMessageFolderStore={userMessagesStore.receivedMessages}
+						colFrom={true}
+						colTo={false}
+						showUnread={true}
+						allowDelete={false}
+					/>
+				</JQueryUITab>
+				<JQueryUITab eventKey="sentTab" title={t('ViewRes.User:Messages.Sent')}>
+					<MessageFolderTabContent
+						id="sentTabContent"
+						userMessagesStore={userMessagesStore}
+						userMessageFolderStore={userMessagesStore.sentMessages}
+						colFrom={false}
+						colTo={true}
+						showUnread={false}
+						allowDelete={false}
+					/>
+				</JQueryUITab>
+				<JQueryUITab
+					eventKey="notificationsTab"
+					title={
+						<>
+							{t('ViewRes.User:Messages.Notifications')}
+							{!!userMessagesStore.notifications.unread &&
+								userMessagesStore.notifications.unread > 0 && (
+									<>
+										{' '}
+										<span className="badge badge-small badge-important">
+											{userMessagesStore.notifications.unread}
+										</span>
+									</>
+								)}
+						</>
+					}
+				>
+					<MessageFolderTabContent
+						id="notificationsTabContent"
+						userMessagesStore={userMessagesStore}
+						userMessageFolderStore={userMessagesStore.notifications}
+						colFrom={false}
+						colTo={false}
+						showUnread={true}
+						allowDelete={true}
+					/>
+				</JQueryUITab>
+				<JQueryUITab
+					eventKey="composeTab"
+					title={t('ViewRes.User:Messages.Compose')}
+				>
+					<div id="composeTab">
+						<ComposeMessage userMessagesStore={userMessagesStore} />
+					</div>
+				</JQueryUITab>
+			</JQueryUITabs>
+		</Layout>
+	);
+});
 
 export default UserMessages;

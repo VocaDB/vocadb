@@ -8,7 +8,8 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class CommentRepository
 	extends BaseRepository
-	implements ICommentRepository {
+	implements ICommentRepository
+{
 	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

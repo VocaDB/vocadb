@@ -71,7 +71,10 @@ const TagIndexLayout = observer(
 								<span
 									className="tag"
 									style={{
-										fontSize: `${getFontSizePercent(tag.usageCount, avgUsageCount)}%`,
+										fontSize: `${getFontSizePercent(
+											tag.usageCount,
+											avgUsageCount,
+										)}%`,
 									}}
 									key={tag.id}
 								>
@@ -80,15 +83,19 @@ const TagIndexLayout = observer(
 										title={tag.additionalNames}
 										style={{
 											fontSize: '',
-											background: tag.name === 'LGBTQ+' ? 'linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)' : undefined,
-											WebkitBackgroundClip: tag.name === 'LGBTQ+' ? 'text' : undefined,
-											WebkitTextFillColor: tag.name === 'LGBTQ+' ? 'transparent' : undefined,
+											background:
+												tag.name === 'LGBTQ+'
+													? 'linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet)'
+													: undefined,
+											WebkitBackgroundClip:
+												tag.name === 'LGBTQ+' ? 'text' : undefined,
+											WebkitTextFillColor:
+												tag.name === 'LGBTQ+' ? 'transparent' : undefined,
 										}}
 									>
 										{tag.name}
 									</Link>
 								</span>
-
 							</React.Fragment>
 						))}
 					</div>

@@ -601,7 +601,11 @@ const EventDetailsLayout = observer(
 				</h3>
 				<EditableComments
 					editableCommentsStore={releaseEventDetailsStore.comments}
-					allowCreateComment={loginManager.canCreateComments && (!releaseEventDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
+					allowCreateComment={
+						loginManager.canCreateComments &&
+						(!releaseEventDetailsStore.comments.commentsLocked ||
+							loginManager.canLockComments)
+					}
 					well={false}
 					comments={releaseEventDetailsStore.comments.pageOfComments}
 					commentsLocked={releaseEventDetailsStore.comments.commentsLocked}

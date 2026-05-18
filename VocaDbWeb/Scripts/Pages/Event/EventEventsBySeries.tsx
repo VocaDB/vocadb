@@ -162,9 +162,8 @@ const EventEventsBySeriesLayout = ({
 };
 
 const EventEventsBySeries = (): React.ReactElement => {
-	const [model, setModel] = React.useState<
-		ReleaseEventSeriesWithEventsContract[]
-	>();
+	const [model, setModel] =
+		React.useState<ReleaseEventSeriesWithEventsContract[]>();
 
 	React.useEffect(() => {
 		eventRepo.getBySeries().then((model) => setModel(model));

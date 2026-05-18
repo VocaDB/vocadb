@@ -7,9 +7,7 @@ import { useStateHandler } from './useStateHandler';
 export const useLocalStorageStateDeserializer = (key: string): (() => any) => {
 	return React.useCallback(() => {
 		try {
-			return JSON.parse(
-				window.localStorage.getItem(key) ?? JSON.stringify({}),
-			);
+			return JSON.parse(window.localStorage.getItem(key) ?? JSON.stringify({}));
 		} catch (error) {
 			console.error(error);
 			return {};

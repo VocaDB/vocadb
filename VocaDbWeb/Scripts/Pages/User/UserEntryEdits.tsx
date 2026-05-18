@@ -73,7 +73,8 @@ const UserEntryEditsLayout = observer(
 								value={activityEntryListStore.sort}
 								onChange={(value): void =>
 									runInAction(() => {
-										activityEntryListStore.sort = value as ActivityEntrySortRule;
+										activityEntryListStore.sort =
+											value as ActivityEntrySortRule;
 									})
 								}
 							/>

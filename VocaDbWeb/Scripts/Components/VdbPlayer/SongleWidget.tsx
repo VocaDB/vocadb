@@ -133,155 +133,110 @@ const RepeatRect = ({
 	);
 };
 
-export const SongleIcon = React.memo(
-	(): React.ReactElement => {
-		return (
-			<img src="/Content/songle.png" alt="Songle" width={16} height={16} />
-		);
-	},
-);
+export const SongleIcon = React.memo((): React.ReactElement => {
+	return <img src="/Content/songle.png" alt="Songle" width={16} height={16} />;
+});
 
-export const SongleWidget = observer(
-	(): React.ReactElement => {
-		const { playQueue } = useVdbPlayer();
+export const SongleWidget = observer((): React.ReactElement => {
+	const { playQueue } = useVdbPlayer();
 
-		const [song, setSong] = React.useState<SongleSong & SongleChorus>();
+	const [song, setSong] = React.useState<SongleSong & SongleChorus>();
 
-		const pv = React.useMemo(() => {
-			const currentItem = playQueue.currentItem;
-			// Prefer NND, and then YouTube.
-			const pv = currentItem
-				? currentItem.entry.pvs.find(
-						(pv) => pv.service === PVService.NicoNicoDouga,
-				  ) ??
-				  currentItem.entry.pvs.find(
-						(pv) => pv.service === PVService.Youtube,
-				  ) ??
-				  currentItem.pv
-				: undefined;
-			return pv;
-		}, [playQueue.currentItem]);
+	const pv = React.useMemo(() => {
+		const currentItem = playQueue.currentItem;
+		// Prefer NND, and then YouTube.
+		const pv = currentItem
+			? currentItem.entry.pvs.find(
+					(pv) => pv.service === PVService.NicoNicoDouga,
+			  ) ??
+			  currentItem.entry.pvs.find((pv) => pv.service === PVService.Youtube) ??
+			  currentItem.pv
+			: undefined;
+		return pv;
+	}, [playQueue.currentItem]);
 
-		const load = React.useCallback(async (pv: PVContract): Promise<void> => {
-			const url = VideoServiceHelper.getUrlById(pv);
-			const [song, chorus] = await Promise.all([
-				httpClient.get<SongleSong>(
-					`https://widget.songle.jp/api/v1/song.json?url=${url}`,
-				),
-				httpClient.get<SongleChorus>(
-					`https://widget.songle.jp/api/v1/song/chorus.json?url=${url}`,
-				),
-			]);
-			setSong({ ...chorus, ...song });
-		}, []);
+	const load = React.useCallback(async (pv: PVContract): Promise<void> => {
+		const url = VideoServiceHelper.getUrlById(pv);
+		const [song, chorus] = await Promise.all([
+			httpClient.get<SongleSong>(
+				`https://widget.songle.jp/api/v1/song.json?url=${url}`,
+			),
+			httpClient.get<SongleChorus>(
+				`https://widget.songle.jp/api/v1/song/chorus.json?url=${url}`,
+			),
+		]);
+		setSong({ ...chorus, ...song });
+	}, []);
 
-		React.useEffect(() => {
-			setSong(undefined);
+	React.useEffect(() => {
+		setSong(undefined);
 
-			if (!pv) return;
+		if (!pv) return;
 
-			const timeoutId = setTimeout(() => load(pv), 1000);
+		const timeoutId = setTimeout(() => load(pv), 1000);
 
-			return (): void => clearTimeout(timeoutId);
-		}, [pv, load]);
+		return (): void => clearTimeout(timeoutId);
+	}, [pv, load]);
 
-		return (
+	return (
+		<div
+			css={{
+				display: 'flex',
+				flexDirection: 'column',
+				backgroundColor: 'rgb(32, 32, 32)',
+				height: songleWidgetHeight - (paddingTop + paddingBottom),
+				paddingTop: paddingTop,
+				paddingBottom: paddingBottom,
+			}}
+		>
+			<div css={{ flexGrow: 1 }}>
+				<svg
+					width="100%"
+					height={(seekBarHeight + seekBarSpace) * 6}
+					css={{ display: 'block' }}
+				>
+					<g>
+						{song?.repeatSegments.map((segment) => (
+							<React.Fragment key={segment.index}>
+								<SeekBar
+									y={segment.index * (seekBarHeight + seekBarSpace)}
+									height={seekBarHeight}
+								/>
+								{segment.repeats.map((repeat) => (
+									<RepeatRect
+										song={song}
+										segment={segment}
+										repeat={repeat}
+										key={repeat.index}
+									/>
+								))}
+							</React.Fragment>
+						))}
+					</g>
+				</svg>
+			</div>
 			<div
 				css={{
 					display: 'flex',
-					flexDirection: 'column',
-					backgroundColor: 'rgb(32, 32, 32)',
-					height: songleWidgetHeight - (paddingTop + paddingBottom),
-					paddingTop: paddingTop,
-					paddingBottom: paddingBottom,
+					height: '100%',
+					paddingLeft: 12,
+					paddingRight: 12,
 				}}
 			>
-				<div css={{ flexGrow: 1 }}>
-					<svg
-						width="100%"
-						height={(seekBarHeight + seekBarSpace) * 6}
-						css={{ display: 'block' }}
-					>
-						<g>
-							{song?.repeatSegments.map((segment) => (
-								<React.Fragment key={segment.index}>
-									<SeekBar
-										y={segment.index * (seekBarHeight + seekBarSpace)}
-										height={seekBarHeight}
-									/>
-									{segment.repeats.map((repeat) => (
-										<RepeatRect
-											song={song}
-											segment={segment}
-											repeat={repeat}
-											key={repeat.index}
-										/>
-									))}
-								</React.Fragment>
-							))}
-						</g>
-					</svg>
-				</div>
 				<div
 					css={{
 						display: 'flex',
+						justifyContent: 'flex-start',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
 						height: '100%',
-						paddingLeft: 12,
-						paddingRight: 12,
 					}}
 				>
-					<div
-						css={{
-							display: 'flex',
-							justifyContent: 'flex-start',
-							alignItems: 'center',
-							width: 'calc(100% / 3)',
-							height: '100%',
-						}}
-					>
-						{pv && (
-							<a
-								href={`https://songle.jp/songs/${encodeURIComponent(
-									VideoServiceHelper.getUrlById(pv).replace('https://', ''),
-								)}`}
-								target="_blank"
-								rel="noreferrer"
-								css={css`
-									color: white;
-									&:hover {
-										color: white;
-									}
-									&:visited {
-										color: white;
-									}
-									font-weight: bold;
-								`}
-							>
-								<i className="icon-pencil icon-white" /> Edit on Songle
-								{/* LOC */}
-							</a>
-						)}
-					</div>
-					<div
-						css={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							width: 'calc(100% / 3)',
-							height: '100%',
-						}}
-					/>
-					<div
-						css={{
-							display: 'flex',
-							justifyContent: 'flex-end',
-							alignItems: 'center',
-							width: 'calc(100% / 3)',
-							height: '100%',
-						}}
-					>
+					{pv && (
 						<a
-							href="https://api.songle.jp/"
+							href={`https://songle.jp/songs/${encodeURIComponent(
+								VideoServiceHelper.getUrlById(pv).replace('https://', ''),
+							)}`}
 							target="_blank"
 							rel="noreferrer"
 							css={css`
@@ -295,11 +250,48 @@ export const SongleWidget = observer(
 								font-weight: bold;
 							`}
 						>
-							<SongleIcon /> By Songle API{/* LOC */}
+							<i className="icon-pencil icon-white" /> Edit on Songle
+							{/* LOC */}
 						</a>
-					</div>
+					)}
+				</div>
+				<div
+					css={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
+						height: '100%',
+					}}
+				/>
+				<div
+					css={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
+						height: '100%',
+					}}
+				>
+					<a
+						href="https://api.songle.jp/"
+						target="_blank"
+						rel="noreferrer"
+						css={css`
+							color: white;
+							&:hover {
+								color: white;
+							}
+							&:visited {
+								color: white;
+							}
+							font-weight: bold;
+						`}
+					>
+						<SongleIcon /> By Songle API{/* LOC */}
+					</a>
 				</div>
 			</div>
-		);
-	},
-);
+		</div>
+	);
+});

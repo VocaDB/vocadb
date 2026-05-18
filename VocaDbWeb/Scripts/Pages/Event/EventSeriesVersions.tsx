@@ -69,9 +69,10 @@ const EventSeriesVersionsLayout = ({
 const EventSeriesVersions = (): React.ReactElement => {
 	const { id } = useParams();
 
-	const [model, setModel] = React.useState<
-		EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
-	>();
+	const [model, setModel] =
+		React.useState<
+			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
+		>();
 
 	React.useEffect(() => {
 		eventRepo

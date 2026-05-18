@@ -11,7 +11,8 @@ import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueSongContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 
 export class PlayQueueRepositoryForSongListAdapter
-	implements PlayQueueRepository<SongListGetSongsQueryParams> {
+	implements PlayQueueRepository<SongListGetSongsQueryParams>
+{
 	constructor(private readonly songListRepo: SongListRepository) {}
 
 	getSongs = async ({

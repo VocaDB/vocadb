@@ -46,8 +46,7 @@ export class NiconicoPlayerApi extends PlayerApiImpl<HTMLIFrameElement> {
 				this.logger.log(
 					LogLevel.Debug,
 					`player status changed: ${
-						PlayerStatus[data.data.playerStatus] ??
-						data.data.playerStatus
+						PlayerStatus[data.data.playerStatus] ?? data.data.playerStatus
 					}`,
 				);
 				break;
@@ -56,8 +55,7 @@ export class NiconicoPlayerApi extends PlayerApiImpl<HTMLIFrameElement> {
 				this.logger.log(
 					LogLevel.Debug,
 					`status changed: ${
-						PlayerStatus[data.data.playerStatus] ??
-						data.data.playerStatus
+						PlayerStatus[data.data.playerStatus] ?? data.data.playerStatus
 					}`,
 				);
 
@@ -90,8 +88,7 @@ export class NiconicoPlayerApi extends PlayerApiImpl<HTMLIFrameElement> {
 				this.options?.onTimeUpdate?.({
 					duration: this.duration,
 					percent:
-						this.currentTime !== undefined &&
-						this.duration !== undefined
+						this.currentTime !== undefined && this.duration !== undefined
 							? this.currentTime / this.duration
 							: undefined,
 					seconds: this.currentTime,

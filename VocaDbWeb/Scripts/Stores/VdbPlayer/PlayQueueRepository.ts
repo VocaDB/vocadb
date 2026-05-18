@@ -79,7 +79,7 @@ export enum PlayQueueRepositoryType {
 }
 
 export abstract class PlayQueueRepository<
-	TQueryParams extends PlayQueueRepositoryQueryParams
+	TQueryParams extends PlayQueueRepositoryQueryParams,
 > {
 	static readonly albumOptionalFields = [
 		AlbumOptionalField.AdditionalNames,

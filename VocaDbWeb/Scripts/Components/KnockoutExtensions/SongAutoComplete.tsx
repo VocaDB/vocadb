@@ -64,11 +64,8 @@ export const SongAutoComplete = ({
 					termParamName: 'query',
 					onQuery: (searchQueryParams: SongQueryParams, term: string) => {
 						// Increase the number of results for wildcard queries
-						searchQueryParams.maxResults = SearchTextQueryHelper.isWildcardQuery(
-							term,
-						)
-							? 30
-							: 15;
+						searchQueryParams.maxResults =
+							SearchTextQueryHelper.isWildcardQuery(term) ? 30 : 15;
 					},
 				} as EntryAutoCompleteParams<SongContract>
 			}

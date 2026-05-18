@@ -27,7 +27,11 @@ const AlbumDiscussion = observer(
 			>
 				<EditableComments
 					editableCommentsStore={albumDetailsStore.comments}
-					allowCreateComment={loginManager.canCreateComments && (!albumDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
+					allowCreateComment={
+						loginManager.canCreateComments &&
+						(!albumDetailsStore.comments.commentsLocked ||
+							loginManager.canLockComments)
+					}
 					well={false}
 					comments={albumDetailsStore.comments.pageOfComments}
 					commentsLocked={albumDetailsStore.comments.commentsLocked}

@@ -30,7 +30,11 @@ const ArtistDiscussion = observer(
 			>
 				<EditableComments
 					editableCommentsStore={artistDetailsStore.comments}
-					allowCreateComment={loginManager.canCreateComments && (!artistDetailsStore.comments.commentsLocked || loginManager.canLockComments)}
+					allowCreateComment={
+						loginManager.canCreateComments &&
+						(!artistDetailsStore.comments.commentsLocked ||
+							loginManager.canLockComments)
+					}
 					well={false}
 					comments={artistDetailsStore.comments.pageOfComments}
 					commentsLocked={artistDetailsStore.comments.commentsLocked}

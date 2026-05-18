@@ -20,71 +20,69 @@ export interface DropdownMenuProps
 	rootCloseEvent?: 'click' | 'mousedown';
 }
 
-const DropdownMenu: BsPrefixRefForwardingComponent<
-	'ul',
-	DropdownMenuProps
-> = React.forwardRef<HTMLElement, DropdownMenuProps>(
-	(
-		{
-			bsPrefix,
-			className,
-			align,
-			rootCloseEvent,
-			show: showProps,
-			// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-			as: Component = 'ul',
-			...props
-		},
-		ref,
-	) => {
-		let alignRight = false;
-		const prefix = useBootstrapPrefix(bsPrefix, 'dropdown-menu');
+const DropdownMenu: BsPrefixRefForwardingComponent<'ul', DropdownMenuProps> =
+	React.forwardRef<HTMLElement, DropdownMenuProps>(
+		(
+			{
+				bsPrefix,
+				className,
+				align,
+				rootCloseEvent,
+				show: showProps,
+				// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+				as: Component = 'ul',
+				...props
+			},
+			ref,
+		) => {
+			let alignRight = false;
+			const prefix = useBootstrapPrefix(bsPrefix, 'dropdown-menu');
 
-		const alignClasses: string[] = [];
-		if (align) {
-			if (typeof align === 'object') {
-				const keys = Object.keys(align);
+			const alignClasses: string[] = [];
+			if (align) {
+				if (typeof align === 'object') {
+					const keys = Object.keys(align);
 
-				warning(
-					keys.length === 1,
-					'There should only be 1 breakpoint when passing an object to `align`',
-				);
+					warning(
+						keys.length === 1,
+						'There should only be 1 breakpoint when passing an object to `align`',
+					);
 
-				if (keys.length) {
-					const brkPoint = keys[0];
-					const direction: AlignDirection = (align as any)[brkPoint];
+					if (keys.length) {
+						const brkPoint = keys[0];
+						const direction: AlignDirection = (align as any)[brkPoint];
 
-					// .dropdown-menu-end is required for responsively aligning
-					// left in addition to align left classes.
-					// Reuse alignRight to toggle the class below.
-					alignRight = direction === 'start';
-					alignClasses.push(`${prefix}-${brkPoint}-${direction}`);
+						// .dropdown-menu-end is required for responsively aligning
+						// left in addition to align left classes.
+						// Reuse alignRight to toggle the class below.
+						alignRight = direction === 'start';
+						alignClasses.push(`${prefix}-${brkPoint}-${direction}`);
+					}
+				} else if (align === 'end') {
+					alignRight = true;
 				}
-			} else if (align === 'end') {
-				alignRight = true;
 			}
-		}
 
-		const [menuProps, { show, alignEnd }] = useDropdownMenu({
-			rootCloseEvent,
-			show: showProps,
-			alignEnd: alignRight,
-		});
+			const [menuProps, { show, alignEnd }] = useDropdownMenu({
+				rootCloseEvent,
+				show: showProps,
+				alignEnd: alignRight,
+			});
 
-		return (
-			<Component
-				{...props}
-				{...menuProps}
-				// Bootstrap css requires this data attrib to style responsive menus.
-				className={classNames(
-					className,
-					prefix,
-					show && 'show',
-					alignEnd && `${prefix}-end`,
-				)}
-			/>
-		);
-	},
-);
+			return (
+				<Component
+					{...props}
+					{...menuProps}
+					// Bootstrap css requires this data attrib to style responsive menus.
+					className={classNames(
+						className,
+						prefix,
+						show && 'show',
+						alignEnd && `${prefix}-end`,
+					)}
+				/>
+			);
+		},
+	);
 
 export default DropdownMenu;

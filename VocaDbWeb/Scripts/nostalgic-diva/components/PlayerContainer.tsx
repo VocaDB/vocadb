@@ -71,9 +71,7 @@ export const PlayerContainer = <
 
 		if (playerApiRef) playerApiRef.current = playerApi;
 
-		playerApi
-			.attach(videoIdRef.current)
-			.then(() => setPlayerApi(playerApi));
+		playerApi.attach(videoIdRef.current).then(() => setPlayerApi(playerApi));
 
 		return (): void => {
 			if (playerApiRef) {

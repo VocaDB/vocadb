@@ -3,10 +3,9 @@ import { useLoginManager } from '@/LoginManagerContext';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { discussionRepo } from '@/Repositories/DiscussionRepository';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
+import '@/styles/Styles/discussions.less';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
-import '@/styles/Styles/discussions.less';
 
 const DiscussionFolders = React.lazy(() => import('./DiscussionFolders'));
 const DiscussionIndex = React.lazy(() => import('./DiscussionIndex'));

@@ -35,7 +35,8 @@ const validate = ajv.compile<ArtistAlbumsRouteParams>(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements LocationStateStore<ArtistAlbumsRouteParams> {
+	implements LocationStateStore<ArtistAlbumsRouteParams>
+{
 	constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),

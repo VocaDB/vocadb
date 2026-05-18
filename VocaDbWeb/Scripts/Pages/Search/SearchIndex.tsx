@@ -7,7 +7,7 @@ import {
 	ArtistSearchDropdown,
 	EventSearchDropdown,
 	SongSearchDropdown,
-	TagSearchDropdown
+	TagSearchDropdown,
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
@@ -73,420 +73,414 @@ const SearchCategory = observer(
 	},
 );
 
-const SearchIndex = observer(
-	(): React.ReactElement => {
-		const vdb = useVdb();
+const SearchIndex = observer((): React.ReactElement => {
+	const vdb = useVdb();
 
-		const [searchStore] = React.useState(
-			() =>
-				new SearchStore(
-					vdb.values,
-					urlMapper,
-					entryRepo,
-					artistRepo,
-					albumRepo,
-					songRepo,
-					eventRepo,
-					tagRepo,
-					userRepo,
-				),
-		);
+	const [searchStore] = React.useState(
+		() =>
+			new SearchStore(
+				vdb.values,
+				urlMapper,
+				entryRepo,
+				artistRepo,
+				albumRepo,
+				songRepo,
+				eventRepo,
+				tagRepo,
+				userRepo,
+			),
+	);
 
-		const { t } = useTranslation([
-			'ViewRes',
-			'ViewRes.Search',
-			'VocaDb.Web.Resources.Domain',
-		]);
+	const { t } = useTranslation([
+		'ViewRes',
+		'ViewRes.Search',
+		'VocaDb.Web.Resources.Domain',
+	]);
 
-		useLocationStateStore(searchStore);
+	useLocationStateStore(searchStore);
 
-		const { playQueue } = useVdbPlayer();
+	const { playQueue } = useVdbPlayer();
 
-		return (
-			<Layout pageTitle={undefined} ready={true}>
-				<ul className="nav nav-pills">
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.Anything}
-						title={t('VocaDb.Web.Resources.Domain:EntryTypeNames.Undefined')}
-					/>
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.Artist}
-						title={t('ViewRes:Shared.Artists')}
-					/>
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.Album}
-						title={t('ViewRes:Shared.Albums')}
-					/>
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.Song}
-						title={t('ViewRes:Shared.Songs')}
-					/>
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.ReleaseEvent}
-						title={t('ViewRes:Shared.ReleaseEvents')}
-					/>
-					<SearchCategory
-						searchStore={searchStore}
-						entryType={SearchType.Tag}
-						title={t('ViewRes:Shared.Tags')}
-					/>
-				</ul>
+	return (
+		<Layout pageTitle={undefined} ready={true}>
+			<ul className="nav nav-pills">
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.Anything}
+					title={t('VocaDb.Web.Resources.Domain:EntryTypeNames.Undefined')}
+				/>
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.Artist}
+					title={t('ViewRes:Shared.Artists')}
+				/>
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.Album}
+					title={t('ViewRes:Shared.Albums')}
+				/>
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.Song}
+					title={t('ViewRes:Shared.Songs')}
+				/>
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.ReleaseEvent}
+					title={t('ViewRes:Shared.ReleaseEvents')}
+				/>
+				<SearchCategory
+					searchStore={searchStore}
+					entryType={SearchType.Tag}
+					title={t('ViewRes:Shared.Tags')}
+				/>
+			</ul>
 
-				<div
-					id="anythingSearchTab"
-					className="form-horizontal well well-transparent"
-				>
-					<div className="pull-right">
-						{searchStore.showArtistSearch && (
-							<ArtistSearchDropdown
-								artistSearchStore={searchStore.artistSearchStore}
-							/>
-						)}
-						{searchStore.showAlbumSearch && (
-							<AlbumSearchDropdown
-								albumSearchStore={searchStore.albumSearchStore}
-							/>
-						)}
-						{searchStore.showSongSearch && (
-							<SongSearchDropdown
-								songSearchStore={searchStore.songSearchStore}
-							/>
-						)}
-						{searchStore.showTagSearch && (
-							<TagSearchDropdown
-								tagSearchStore={searchStore.tagSearchStore}
-							/>
-						)}
-						{searchStore.showEventSearch && (
-							<EventSearchDropdown
-								eventSearchStore={searchStore.eventSearchStore}
-							/>
-						)}
+			<div
+				id="anythingSearchTab"
+				className="form-horizontal well well-transparent"
+			>
+				<div className="pull-right">
+					{searchStore.showArtistSearch && (
+						<ArtistSearchDropdown
+							artistSearchStore={searchStore.artistSearchStore}
+						/>
+					)}
+					{searchStore.showAlbumSearch && (
+						<AlbumSearchDropdown
+							albumSearchStore={searchStore.albumSearchStore}
+						/>
+					)}
+					{searchStore.showSongSearch && (
+						<SongSearchDropdown songSearchStore={searchStore.songSearchStore} />
+					)}
+					{searchStore.showTagSearch && (
+						<TagSearchDropdown tagSearchStore={searchStore.tagSearchStore} />
+					)}
+					{searchStore.showEventSearch && (
+						<EventSearchDropdown
+							eventSearchStore={searchStore.eventSearchStore}
+						/>
+					)}
 
-						{searchStore.showAlbumSearch && (
-							<>
-								{' '}
-								<div className="inline-block">
-									<ButtonGroup>
-										<Button
-											className={classNames(
-												searchStore.albumSearchStore.viewMode === 'Details' &&
-													'active',
-												'btn-nomargin',
-											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Details';
-												})
-											}
-											href="#"
-											title={t('ViewRes.Search:Index.AlbumDetails')}
-										>
-											<i className="icon-list" />
-										</Button>
-										<Button
-											className={classNames(
-												searchStore.albumSearchStore.viewMode === 'Tiles' &&
-													'active',
-												'btn-nomargin',
-											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Tiles';
-												})
-											}
-											href="#"
-											title={t('ViewRes.Search:Index.AlbumTiles')}
-										>
-											<i className="icon-th" />
-										</Button>
-									</ButtonGroup>
-								</div>
-							</>
-						)}
-
-						{searchStore.showSongSearch && (
-							<>
-								{' '}
-								<div className="inline-block">
-									<ButtonGroup>
-										<Button
-											onClick={async (): Promise<void> => {
-												await playQueue.startAutoplay(
-													new AutoplayContext(
-														PlayQueueRepositoryType.Songs,
-														searchStore.songSearchStore.queryParams,
-														false,
-													),
-												);
-											}}
-											title="Play" /* LOC */
-											className="btn-nomargin"
-										>
-											<i className="icon-play noMargin" /> Play
-											{/* LOC */}
-										</Button>
-									</ButtonGroup>
-									<ButtonGroup>
-										<Button
-											onClick={async (): Promise<void> => {
-												await playQueue.startAutoplay(
-													new AutoplayContext(
-														PlayQueueRepositoryType.Songs,
-														searchStore.songSearchStore.queryParams,
-														true,
-													),
-												);
-											}}
-											title="Shuffle and play" /* LOC */
-											className="btn-nomargin"
-										>
-											<i className="icon icon-random" /> Shuffle and play
-											{/* LOC */}
-										</Button>
-									</ButtonGroup>
-								</div>
-							</>
-						)}
-
-						{searchStore.showTagFilter && (
-							<>
-								{' '}
-								<div className="inline-block">
+					{searchStore.showAlbumSearch && (
+						<>
+							{' '}
+							<div className="inline-block">
+								<ButtonGroup>
 									<Button
 										className={classNames(
-											searchStore.showTags && 'active',
+											searchStore.albumSearchStore.viewMode === 'Details' &&
+												'active',
 											'btn-nomargin',
 										)}
 										onClick={(): void =>
 											runInAction(() => {
-												searchStore.showTags = !searchStore.showTags;
+												searchStore.albumSearchStore.viewMode = 'Details';
 											})
 										}
-										title={t('ViewRes.Search:Index.ShowTags')}
+										href="#"
+										title={t('ViewRes.Search:Index.AlbumDetails')}
 									>
-										<i className="icon-tags" />
+										<i className="icon-list" />
 									</Button>
-								</div>
-							</>
-						)}
-					</div>
+									<Button
+										className={classNames(
+											searchStore.albumSearchStore.viewMode === 'Tiles' &&
+												'active',
+											'btn-nomargin',
+										)}
+										onClick={(): void =>
+											runInAction(() => {
+												searchStore.albumSearchStore.viewMode = 'Tiles';
+											})
+										}
+										href="#"
+										title={t('ViewRes.Search:Index.AlbumTiles')}
+									>
+										<i className="icon-th" />
+									</Button>
+								</ButtonGroup>
+							</div>
+						</>
+					)}
 
-					<div className="control-label">
-						<i className="icon-search" />
-					</div>
-					<div className="control-group">
-						<div className="controls">
-							<div className="input-append">
-								<DebounceInput
-									type="text"
-									value={searchStore.searchTerm}
-									onChange={(e): void =>
+					{searchStore.showSongSearch && (
+						<>
+							{' '}
+							<div className="inline-block">
+								<ButtonGroup>
+									<Button
+										onClick={async (): Promise<void> => {
+											await playQueue.startAutoplay(
+												new AutoplayContext(
+													PlayQueueRepositoryType.Songs,
+													searchStore.songSearchStore.queryParams,
+													false,
+												),
+											);
+										}}
+										title="Play" /* LOC */
+										className="btn-nomargin"
+									>
+										<i className="icon-play noMargin" /> Play
+										{/* LOC */}
+									</Button>
+								</ButtonGroup>
+								<ButtonGroup>
+									<Button
+										onClick={async (): Promise<void> => {
+											await playQueue.startAutoplay(
+												new AutoplayContext(
+													PlayQueueRepositoryType.Songs,
+													searchStore.songSearchStore.queryParams,
+													true,
+												),
+											);
+										}}
+										title="Shuffle and play" /* LOC */
+										className="btn-nomargin"
+									>
+										<i className="icon icon-random" /> Shuffle and play
+										{/* LOC */}
+									</Button>
+								</ButtonGroup>
+							</div>
+						</>
+					)}
+
+					{searchStore.showTagFilter && (
+						<>
+							{' '}
+							<div className="inline-block">
+								<Button
+									className={classNames(
+										searchStore.showTags && 'active',
+										'btn-nomargin',
+									)}
+									onClick={(): void =>
 										runInAction(() => {
-											searchStore.searchTerm = e.target.value;
+											searchStore.showTags = !searchStore.showTags;
 										})
 									}
-									className="input-xlarge"
-									placeholder={t('ViewRes.Search:Index.TypeSomething')}
-									debounceTimeout={300}
-								/>
-								{searchStore.searchTerm && (
-									<Button
-										variant="danger"
-										onClick={(e): void =>
-											runInAction(() => {
-												searchStore.searchTerm = '';
-											})
-										}
-									>
-										{t('ViewRes:Shared.Clear')}
-									</Button>
-								)}
-								&nbsp;
-							</div>{' '}
-							<Button
-								onClick={(): void =>
+									title={t('ViewRes.Search:Index.ShowTags')}
+								>
+									<i className="icon-tags" />
+								</Button>
+							</div>
+						</>
+					)}
+				</div>
+
+				<div className="control-label">
+					<i className="icon-search" />
+				</div>
+				<div className="control-group">
+					<div className="controls">
+						<div className="input-append">
+							<DebounceInput
+								type="text"
+								value={searchStore.searchTerm}
+								onChange={(e): void =>
 									runInAction(() => {
-										searchStore.showAdvancedFilters = !searchStore.showAdvancedFilters;
+										searchStore.searchTerm = e.target.value;
 									})
 								}
-								className={classNames(
-									searchStore.showAdvancedFilters && 'active',
-								)}
-							>
-								{t('ViewRes.Search:Index.MoreFilters')}{' '}
-								<span className="caret" />
-							</Button>
-						</div>
+								className="input-xlarge"
+								placeholder={t('ViewRes.Search:Index.TypeSomething')}
+								debounceTimeout={300}
+							/>
+							{searchStore.searchTerm && (
+								<Button
+									variant="danger"
+									onClick={(e): void =>
+										runInAction(() => {
+											searchStore.searchTerm = '';
+										})
+									}
+								>
+									{t('ViewRes:Shared.Clear')}
+								</Button>
+							)}
+							&nbsp;
+						</div>{' '}
+						<Button
+							onClick={(): void =>
+								runInAction(() => {
+									searchStore.showAdvancedFilters =
+										!searchStore.showAdvancedFilters;
+								})
+							}
+							className={classNames(
+								searchStore.showAdvancedFilters && 'active',
+							)}
+						>
+							{t('ViewRes.Search:Index.MoreFilters')} <span className="caret" />
+						</Button>
 					</div>
+				</div>
 
-					{searchStore.showAdvancedFilters && (
-						<div>
-							{/* Tag filtering with top genres */}
-							{searchStore.showTagFilter && (
-								<div className="control-group">
-									<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
-									<div className="controls">
-										<TagFilters
-											tagFilters={searchStore.tagFilters}
-											genreTags={searchStore.genreTags}
-										/>
-									</div>
-								</div>
-							)}
-
-							{searchStore.showArtistSearch && (
-								<ArtistSearchOptions
-									artistSearchStore={searchStore.artistSearchStore}
-								/>
-							)}
-							{searchStore.showAlbumSearch && (
-								<AlbumSearchOptions
-									albumSearchStore={searchStore.albumSearchStore}
-								/>
-							)}
-							{searchStore.showSongSearch && (
-								<SongSearchOptions
-									songSearchStore={searchStore.songSearchStore}
-								/>
-							)}
-							{searchStore.showEventSearch && (
-								<EventSearchOptions
-									eventSearchStore={searchStore.eventSearchStore}
-								/>
-							)}
-							{searchStore.showTagSearch && (
-								<TagSearchOptions tagSearchStore={searchStore.tagSearchStore} />
-							)}
-
-							{/* Checkboxes */}
+				{searchStore.showAdvancedFilters && (
+					<div>
+						{/* Tag filtering with top genres */}
+						{searchStore.showTagFilter && (
 							<div className="control-group">
+								<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 								<div className="controls">
-									{searchStore.showArtistSearch && (
-										<div>
-											{vdb.values.isLoggedIn && (
-												<label className="checkbox">
-													<input
-														type="checkbox"
-														checked={
-															searchStore.artistSearchStore.onlyFollowedByMe
-														}
-														onChange={(e): void =>
-															runInAction(() => {
-																searchStore.artistSearchStore.onlyFollowedByMe =
-																	e.target.checked;
-															})
-														}
-													/>
-													{t('ViewRes.Search:Index.OnlyMyFollowedArtists')}
-												</label>
-											)}
-										</div>
-									)}
+									<TagFilters
+										tagFilters={searchStore.tagFilters}
+										genreTags={searchStore.genreTags}
+									/>
+								</div>
+							</div>
+						)}
 
-									{searchStore.showSongSearch && (
-										<div>
+						{searchStore.showArtistSearch && (
+							<ArtistSearchOptions
+								artistSearchStore={searchStore.artistSearchStore}
+							/>
+						)}
+						{searchStore.showAlbumSearch && (
+							<AlbumSearchOptions
+								albumSearchStore={searchStore.albumSearchStore}
+							/>
+						)}
+						{searchStore.showSongSearch && (
+							<SongSearchOptions
+								songSearchStore={searchStore.songSearchStore}
+							/>
+						)}
+						{searchStore.showEventSearch && (
+							<EventSearchOptions
+								eventSearchStore={searchStore.eventSearchStore}
+							/>
+						)}
+						{searchStore.showTagSearch && (
+							<TagSearchOptions tagSearchStore={searchStore.tagSearchStore} />
+						)}
+
+						{/* Checkboxes */}
+						<div className="control-group">
+							<div className="controls">
+								{searchStore.showArtistSearch && (
+									<div>
+										{vdb.values.isLoggedIn && (
 											<label className="checkbox">
 												<input
 													type="checkbox"
-													checked={searchStore.songSearchStore.pvsOnly}
+													checked={
+														searchStore.artistSearchStore.onlyFollowedByMe
+													}
 													onChange={(e): void =>
 														runInAction(() => {
-															searchStore.songSearchStore.pvsOnly =
+															searchStore.artistSearchStore.onlyFollowedByMe =
 																e.target.checked;
 														})
 													}
 												/>
-												{t('ViewRes.Search:Index.OnlyWithPVs')}
+												{t('ViewRes.Search:Index.OnlyMyFollowedArtists')}
 											</label>
+										)}
+									</div>
+								)}
 
-											{vdb.values.isLoggedIn && (
-												<label className="checkbox">
-													<input
-														type="checkbox"
-														checked={searchStore.songSearchStore.onlyRatedSongs}
-														onChange={(e): void =>
-															runInAction(() => {
-																searchStore.songSearchStore.onlyRatedSongs =
-																	e.target.checked;
-															})
-														}
-													/>
-													{t('ViewRes.Search:Index.InMyCollection')}
-												</label>
-											)}
-										</div>
-									)}
-
-									{searchStore.showEventSearch && (
-										<div>
-											{vdb.values.isLoggedIn && (
-												<label className="checkbox">
-													<input
-														type="checkbox"
-														checked={searchStore.eventSearchStore.onlyMyEvents}
-														onChange={(e): void =>
-															runInAction(() => {
-																searchStore.eventSearchStore.onlyMyEvents =
-																	e.target.checked;
-															})
-														}
-													/>
-													{t('ViewRes.Search:Index.OnlyMyEvents')}
-												</label>
-											)}
-										</div>
-									)}
-
-									{searchStore.showDraftsFilter && (
+								{searchStore.showSongSearch && (
+									<div>
 										<label className="checkbox">
 											<input
 												type="checkbox"
-												checked={searchStore.draftsOnly}
+												checked={searchStore.songSearchStore.pvsOnly}
 												onChange={(e): void =>
 													runInAction(() => {
-														searchStore.draftsOnly = e.target.checked;
+														searchStore.songSearchStore.pvsOnly =
+															e.target.checked;
 													})
 												}
 											/>
-											{t('ViewRes:EntryIndex.OnlyDrafts')}
+											{t('ViewRes.Search:Index.OnlyWithPVs')}
 										</label>
-									)}
-								</div>
+
+										{vdb.values.isLoggedIn && (
+											<label className="checkbox">
+												<input
+													type="checkbox"
+													checked={searchStore.songSearchStore.onlyRatedSongs}
+													onChange={(e): void =>
+														runInAction(() => {
+															searchStore.songSearchStore.onlyRatedSongs =
+																e.target.checked;
+														})
+													}
+												/>
+												{t('ViewRes.Search:Index.InMyCollection')}
+											</label>
+										)}
+									</div>
+								)}
+
+								{searchStore.showEventSearch && (
+									<div>
+										{vdb.values.isLoggedIn && (
+											<label className="checkbox">
+												<input
+													type="checkbox"
+													checked={searchStore.eventSearchStore.onlyMyEvents}
+													onChange={(e): void =>
+														runInAction(() => {
+															searchStore.eventSearchStore.onlyMyEvents =
+																e.target.checked;
+														})
+													}
+												/>
+												{t('ViewRes.Search:Index.OnlyMyEvents')}
+											</label>
+										)}
+									</div>
+								)}
+
+								{searchStore.showDraftsFilter && (
+									<label className="checkbox">
+										<input
+											type="checkbox"
+											checked={searchStore.draftsOnly}
+											onChange={(e): void =>
+												runInAction(() => {
+													searchStore.draftsOnly = e.target.checked;
+												})
+											}
+										/>
+										{t('ViewRes:EntryIndex.OnlyDrafts')}
+									</label>
+								)}
 							</div>
 						</div>
-					)}
-				</div>
+					</div>
+				)}
+			</div>
 
-				{searchStore.showAnythingSearch && (
-					<AnythingSearchList
-						searchStore={searchStore}
-						anythingSearchStore={searchStore.anythingSearchStore}
-					/>
-				)}
-				{searchStore.showArtistSearch && (
-					<ArtistSearchList artistSearchStore={searchStore.artistSearchStore} />
-				)}
-				{searchStore.showAlbumSearch && (
-					<AlbumSearchList albumSearchStore={searchStore.albumSearchStore} />
-				)}
-				{searchStore.showSongSearch && (
-					<SongSearchList songSearchStore={searchStore.songSearchStore} />
-				)}
-				{searchStore.showEventSearch && (
-					<EventSearchList eventSearchStore={searchStore.eventSearchStore} />
-				)}
-				{searchStore.showTagSearch && (
-					<TagSearchList tagSearchStore={searchStore.tagSearchStore} />
-				)}
-			</Layout>
-		);
-	},
-);
+			{searchStore.showAnythingSearch && (
+				<AnythingSearchList
+					searchStore={searchStore}
+					anythingSearchStore={searchStore.anythingSearchStore}
+				/>
+			)}
+			{searchStore.showArtistSearch && (
+				<ArtistSearchList artistSearchStore={searchStore.artistSearchStore} />
+			)}
+			{searchStore.showAlbumSearch && (
+				<AlbumSearchList albumSearchStore={searchStore.albumSearchStore} />
+			)}
+			{searchStore.showSongSearch && (
+				<SongSearchList songSearchStore={searchStore.songSearchStore} />
+			)}
+			{searchStore.showEventSearch && (
+				<EventSearchList eventSearchStore={searchStore.eventSearchStore} />
+			)}
+			{searchStore.showTagSearch && (
+				<TagSearchList tagSearchStore={searchStore.tagSearchStore} />
+			)}
+		</Layout>
+	);
+});
 
 export default SearchIndex;

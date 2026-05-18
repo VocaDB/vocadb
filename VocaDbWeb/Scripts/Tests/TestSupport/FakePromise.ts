@@ -6,5 +6,5 @@ export class FakePromise<T> {
 	};
 
 	static resolve = <T>(value: T): Promise<T> =>
-		(new FakePromise<T>(value) as unknown) as Promise<T>;
+		new FakePromise<T>(value) as unknown as Promise<T>;
 }

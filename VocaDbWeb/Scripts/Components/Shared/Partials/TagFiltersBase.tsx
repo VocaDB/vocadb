@@ -31,9 +31,7 @@ export const TagFiltersBase = observer(
 									readOnly
 									value={tag.name ?? ''}
 								/>
-								<Button
-									onClick={(): any => tagFilters.toggleTagExcluded(tag)}
-								>
+								<Button onClick={(): any => tagFilters.toggleTagExcluded(tag)}>
 									{tag.excluded ? 'Exclude' : 'Include'}
 								</Button>
 								<Button

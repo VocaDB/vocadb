@@ -52,4 +52,3 @@ export function getBackgroundCredit(values: GlobalValues): BackgroundCredit {
 
 	return defaultCredit;
 }
-

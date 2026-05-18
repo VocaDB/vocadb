@@ -29,22 +29,20 @@ const propTypes = {
 	as: PropTypes.elementType,
 };
 
-const NavbarBrand: BsPrefixRefForwardingComponent<
-	'a',
-	NavbarBrandProps
-> = React.forwardRef<HTMLElement, NavbarBrandProps>(
-	({ bsPrefix, className, as, ...props }, ref) => {
-		bsPrefix = useBootstrapPrefix(bsPrefix, 'brand hidden-phone');
+const NavbarBrand: BsPrefixRefForwardingComponent<'a', NavbarBrandProps> =
+	React.forwardRef<HTMLElement, NavbarBrandProps>(
+		({ bsPrefix, className, as, ...props }, ref) => {
+			bsPrefix = useBootstrapPrefix(bsPrefix, 'brand hidden-phone');
 
-		const Component = as || (props.href ? 'a' : 'span');
+			const Component = as || (props.href ? 'a' : 'span');
 
-		return (
-			<div className={classNames(bsPrefix)}>
-				<Component {...props} ref={ref} className={classNames(className)} />
-			</div>
-		);
-	},
-);
+			return (
+				<div className={classNames(bsPrefix)}>
+					<Component {...props} ref={ref} className={classNames(className)} />
+				</div>
+			);
+		},
+	);
 
 NavbarBrand.displayName = 'NavbarBrand';
 NavbarBrand.propTypes = propTypes;

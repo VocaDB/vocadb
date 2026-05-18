@@ -14,40 +14,38 @@ export interface ButtonGroupProps
 	vertical?: boolean;
 }
 
-const ButtonGroup: BsPrefixRefForwardingComponent<
-	'div',
-	ButtonGroupProps
-> = React.forwardRef(
-	(
-		{
-			bsPrefix,
-			size,
-			vertical,
-			className,
-			// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-			as: Component = 'div',
-			...rest
-		}: ButtonGroupProps,
-		ref,
-	) => {
-		const prefix = useBootstrapPrefix(bsPrefix, 'btn-group');
-		let baseClass = prefix;
+const ButtonGroup: BsPrefixRefForwardingComponent<'div', ButtonGroupProps> =
+	React.forwardRef(
+		(
+			{
+				bsPrefix,
+				size,
+				vertical,
+				className,
+				// Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+				as: Component = 'div',
+				...rest
+			}: ButtonGroupProps,
+			ref,
+		) => {
+			const prefix = useBootstrapPrefix(bsPrefix, 'btn-group');
+			let baseClass = prefix;
 
-		if (vertical) baseClass = `${prefix}-vertical`;
+			if (vertical) baseClass = `${prefix}-vertical`;
 
-		return (
-			<Component
-				{...rest}
-				ref={ref}
-				className={classNames(
-					className,
-					baseClass,
-					size && `${prefix}-${size}`,
-				)}
-			/>
-		);
-	},
-);
+			return (
+				<Component
+					{...rest}
+					ref={ref}
+					className={classNames(
+						className,
+						baseClass,
+						size && `${prefix}-${size}`,
+					)}
+				/>
+			);
+		},
+	);
 
 ButtonGroup.displayName = 'ButtonGroup';
 

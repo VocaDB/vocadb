@@ -66,9 +66,8 @@ const SongVersionsLayout = ({
 const SongVersions = (): React.ReactElement => {
 	const { id } = useParams();
 
-	const [model, setModel] = React.useState<
-		EntryWithArchivedVersionsContract<SongApiContract>
-	>();
+	const [model, setModel] =
+		React.useState<EntryWithArchivedVersionsContract<SongApiContract>>();
 
 	React.useEffect(() => {
 		songRepo

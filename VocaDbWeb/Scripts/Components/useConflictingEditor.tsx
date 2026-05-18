@@ -9,10 +9,8 @@ export const useConflictingEditor = (
 ): EntryEditDataContract | undefined => {
 	const { id } = useParams();
 
-	const [
-		conflictingEditor,
-		setConflictingEditor,
-	] = React.useState<EntryEditDataContract>();
+	const [conflictingEditor, setConflictingEditor] =
+		React.useState<EntryEditDataContract>();
 
 	React.useEffect(() => {
 		if (!id) return;

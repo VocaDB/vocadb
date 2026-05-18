@@ -66,9 +66,8 @@ const TagVersionsLayout = ({
 const TagVersions = (): React.ReactElement => {
 	const { id } = useParams();
 
-	const [model, setModel] = React.useState<
-		EntryWithArchivedVersionsContract<TagApiContract>
-	>();
+	const [model, setModel] =
+		React.useState<EntryWithArchivedVersionsContract<TagApiContract>>();
 
 	React.useEffect(() => {
 		tagRepo

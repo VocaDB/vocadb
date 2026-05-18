@@ -17,7 +17,7 @@ table.properties tr,
 	opacity: 0.95;*/
 	background-color: rgb(255, 245, 245);
 	background-color: rgba(255, 245, 245, 0.85);
-	border: solid #FFE0E0 2px;
+	border: solid #ffe0e0 2px;
 	margin-bottom: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
@@ -31,7 +31,7 @@ table.properties tr,
 
 /* TODO: replace colors with defaults or edit bootstrap.css */
 .rightFrame a {
-	color: #89222B !important;
+	color: #89222b !important;
 	margin-bottom: 5px;
 	margin-left: 0px;
 	margin-right: 0px;
@@ -43,11 +43,11 @@ table.properties tr,
 }
 
 .rightFrame a:visited {
-	color: #89222B !important;
+	color: #89222b !important;
 }
 
 .rightFrame a:hover {
-	color: #A02832 !important;
+	color: #a02832 !important;
 }
 
 .rightFrame a.btn-danger {
@@ -63,31 +63,31 @@ table.properties tr,
 }
 
 /* Menu */
-.menu>.well {
+.menu > .well {
 	/*background-color: #CDECF4;
 	opacity: 0.95;*/
 	background-color: rgb(255, 239, 242);
-	background-color: rgba(255, 239, 242, 0.90);
-	border: solid #FFAFBB 2px;
+	background-color: rgba(255, 239, 242, 0.9);
+	border: solid #ffafbb 2px;
 }
 
 .menu a {
 	text-decoration: none;
-	color: #89222B;
+	color: #89222b;
 }
 
 .menu a:hover {
-	color: #A02832 !important;
+	color: #a02832 !important;
 	text-decoration: underline;
 }
 
 .menu a:visited {
-	color: #89222B;
+	color: #89222b;
 }
 
 .user a {
 	text-decoration: none;
-	color: #89222B;
+	color: #89222b;
 	border-bottom-color: #333333;
 	border-bottom-style: dashed;
 	border-bottom-width: 1px;
@@ -101,7 +101,7 @@ table.properties tr,
 }
 
 .user a:visited {
-	color: #89222B;
+	color: #89222b;
 }
 
 /* Links */
@@ -140,7 +140,7 @@ button.textLink {
 	border-bottom-color: #aaa;
 }
 
-input+.textLink {
+input + .textLink {
 	margin-left: 3px;
 }
 
@@ -193,47 +193,52 @@ div.songListItem {
 	min-height: 70px;
 }
 
-
 /* Bootstrap-specific */
 .navbar .nav-radio {
-	color: #FF282F;
+	color: #ff282f;
 }
 
 .navbar div.brand a:visited {
-	color: #D32127;
+	color: #d32127;
 }
 
 .navbar-search .search-query {
-	background-color: #7F1419;
-	color: -webkit-input-placeholder(#D1A5A7)
+	background-color: #7f1419;
+	color: -webkit-input-placeholder(#d1a5a7);
 }
 
 .navbar-search .search-query::-webkit-input-placeholder {
-	color: #D1A5A7;
+	color: #d1a5a7;
 }
 
 .navbar-search .search-query:-moz-placeholder {
-	color: #D1A5A7;
+	color: #d1a5a7;
 }
 
 .navbar-inner {
 	background-color: #210101;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#350202), to(#210101));
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(#350202),
+		to(#210101)
+	);
 	background-image: -webkit-linear-gradient(top, #350202, #210101);
 	background-image: -o-linear-gradient(top, #350202, #210101);
 	background-image: -moz-linear-gradient(center top, #350202, #210101);
 	background-image: linear-gradient(top, #350202, #210101);
 }
 
-.dropdown-menu li>a:hover {
+.dropdown-menu li > a:hover {
 	color: white !important;
 }
 
-.nav-pills>.active>a,
-.nav-pills>.active>a:hover,
-.nav-pills>.active>a:focus {
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
 	color: #ffffff;
-	background-color: #F2D7D7;
+	background-color: #f2d7d7;
 }
 
 .rightFrame a.btn.btn-info,

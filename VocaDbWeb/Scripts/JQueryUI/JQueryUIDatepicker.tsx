@@ -19,9 +19,10 @@ const JQueryUIDatepicker = React.forwardRef<
 		() => el.current,
 	);
 
-	const options = React.useMemo(() => ({ dateFormat: dateFormat }), [
-		dateFormat,
-	]);
+	const options = React.useMemo(
+		() => ({ dateFormat: dateFormat }),
+		[dateFormat],
+	);
 
 	React.useLayoutEffect(() => {
 		const $el = $(el.current);
