@@ -1,3 +1,4 @@
+import { Star, starFill } from '@/Components/Shared/Partials/Shared/Stars';
 import { range } from 'lodash-es';
 import React from 'react';
 
@@ -13,19 +14,11 @@ export const StarsMeta = React.memo(
 				{range(1, max + 1).map((i) => (
 					<React.Fragment key={i}>
 						{i > 0 && ' '}
-						{current >= i ? (
-							<img
-								className="rating"
-								src="/Content/star.png"
-								alt={`${current}`}
-							/>
-						) : (
-							<img
-								className="rating"
-								src="/Content/star_disabled.png"
-								alt={`${current}`}
-							/>
-						)}
+						<Star
+							className="rating"
+							fill={starFill(current, i)}
+							alt={`${current}`}
+						/>
 					</React.Fragment>
 				))}
 			</>
