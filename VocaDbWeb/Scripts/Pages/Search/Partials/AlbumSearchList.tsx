@@ -3,6 +3,7 @@ import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { AlbumThumbItem } from '@/Components/Shared/Partials/Shared/AlbumThumbItem';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { Stars } from '@/Components/Shared/Partials/Shared/Stars';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
@@ -214,21 +215,7 @@ const AlbumSearchList = observer(
 									</td>
 									<td style={{ width: '150px' }}>
 										<span title={`${album.ratingAverage}`}>
-											{albumSearchStore
-												.ratingStars?.(album)
-												.map((ratingStar, index) => (
-													<React.Fragment key={index}>
-														{index > 0 && ' '}
-														{/* eslint-disable-next-line jsx-a11y/alt-text */}
-														<img
-															src={
-																ratingStar.enabled
-																	? '/Content/star.png'
-																	: '/Content/star_disabled.png'
-															}
-														/>
-													</React.Fragment>
-												))}
+											{<Stars current={album.ratingAverage} max={5} />}
 										</span>
 										<br />
 										<span>{album.ratingCount}</span>{' '}

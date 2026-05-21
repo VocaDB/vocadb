@@ -7,8 +7,8 @@ import {
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
+import { RatingPicker } from '@/Components/Shared/Partials/Shared/RatingPicker';
 import $ from 'jquery';
-import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -101,15 +101,15 @@ const EditCollectionDialog = observer(
 				</select>
 				<div>
 					{t('ViewRes.Album:Details.MyRating')}
-					<JqxRating
+					<br />
+					<RatingPicker
 						value={albumDetailsStore.editCollectionDialog.collectionRating}
-						onChange={(e: any): void =>
+						onChange={(value): void => {
 							runInAction(() => {
-								albumDetailsStore.editCollectionDialog.collectionRating =
-									e.value;
-							})
-						}
-					/>{' '}
+								albumDetailsStore.editCollectionDialog.collectionRating = value;
+							});
+						}}
+					/>
 					&nbsp;{' '}
 					<SafeAnchor
 						href="#"
