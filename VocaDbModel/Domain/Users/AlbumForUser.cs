@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Users;
 
 public class AlbumForUser : IAlbumLink, IEntryWithIntId
 {
-	public const int NotRated = 0;
+	public const double NotRated = 0.0;
 
 	private Album _album;
 	private User _user;
@@ -18,7 +18,7 @@ public class AlbumForUser : IAlbumLink, IEntryWithIntId
 		PurchaseStatus = PurchaseStatus.Owned;
 	}
 
-	public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, int rating)
+	public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, double rating)
 		: this()
 	{
 		User = user;
@@ -47,7 +47,7 @@ public class AlbumForUser : IAlbumLink, IEntryWithIntId
 	/// <summary>
 	/// Rating score, 0-5 (0 = no rating).
 	/// </summary>
-	public virtual int Rating { get; set; }
+	public virtual double Rating { get; set; }
 
 	public virtual User User
 	{

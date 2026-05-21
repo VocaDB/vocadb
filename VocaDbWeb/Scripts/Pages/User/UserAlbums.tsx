@@ -9,6 +9,7 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { TagLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
 import { AlbumAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { Stars } from '@/Components/Shared/Partials/Shared/Stars';
 import { MediaType } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
@@ -464,21 +465,7 @@ const AlbumCollection = observer(
 										)}
 										<td>
 											<span title={`${albumForUser.rating}`}>
-												{albumCollectionStore
-													.ratingStars(albumForUser.rating)
-													.map((ratingStar, index) => (
-														<React.Fragment key={index}>
-															{index > 0 && ' '}
-															{/* eslint-disable-next-line jsx-a11y/alt-text */}
-															<img
-																src={
-																	ratingStar.enabled
-																		? '/Content/star.png'
-																		: '/Content/star_disabled.png'
-																}
-															/>
-														</React.Fragment>
-													))}
+												<Stars current={albumForUser.rating} max={5} />
 											</span>
 										</td>
 									</tr>

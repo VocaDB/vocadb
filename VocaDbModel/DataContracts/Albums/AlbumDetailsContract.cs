@@ -141,7 +141,7 @@ public class SharedAlbumStatsContract
 	public AlbumReviewContract LatestReview { get; init; }
 
 	[DataMember]
-	public int LatestReviewRatingScore { get; init; }
+	public double LatestReviewRatingScore { get; init; }
 
 	[DataMember]
 	public int OwnedCount { get; init; }

@@ -131,7 +131,7 @@ public class AlbumDetails : IEntryImageInformation
 
 	public ArtistForAlbumContract[] Circles { get; set; }
 
-	public int CollectionRating { get; set; }
+	public double CollectionRating { get; set; }
 
 	public int CommentCount { get; set; }
 
@@ -167,7 +167,7 @@ public class AlbumDetails : IEntryImageInformation
 
 	public AlbumReviewContract LatestReview { get; set; }
 
-	public int LatestReviewRatingScore { get; set; }
+	public double LatestReviewRatingScore { get; set; }
 
 	public AlbumContract MergedTo { get; set; }
 

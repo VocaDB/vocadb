@@ -402,7 +402,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 		return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(hours: 1), async () =>
 		{
 			var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
-			var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
+			var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, double>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
 			var songLists = await GetTopUsagesAndCountAsync<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 			var songs = await GetTopUsagesAndCountAsync<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm));
 			var eventSeries = await GetTopUsagesAndCountAsync<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
@@ -720,7 +720,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			}
 
 			diff.Description.Set(target.Description.CopyIfEmpty(source.Description));
-			
+
 			// Targets
 			if (!target.NewTargets.SequenceEqual(source.NewTargets))
 			{
@@ -917,9 +917,9 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 				diff.HideFromSuggestions.Set();
 
-			if (!tag.NewTargets.SequenceEqual(contract.NewTargets)) 
+			if (!tag.NewTargets.SequenceEqual(contract.NewTargets))
 				diff.Targets.Set();
-			
+
 			if (tag.Targets != (TagTargetTypes)contract.Targets)
 				diff.Targets.Set();
 
