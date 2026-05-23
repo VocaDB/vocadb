@@ -10,6 +10,7 @@ namespace VocaDb.NicoApi {
 		private static readonly RegexLinkMatcher[] matchers = new[] {
 			new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/([a-z]{2}\d{2,10})"),
 			new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/(\d{6,12})"),
+			new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/shorts/(ss\d{2,10})"),
 			new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/([a-z]{2}\d{2,10})"),
 			new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/(\d{4,12})")
 		};
