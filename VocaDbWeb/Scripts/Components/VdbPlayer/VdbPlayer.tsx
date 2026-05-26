@@ -653,6 +653,14 @@ export const VdbPlayer = observer((): React.ReactElement => {
 		);
 	}, [diva, playQueue]);
 
+	React.useEffect(() => {
+		if (playQueue.isEmpty) {
+			vdbPlayer.hideBottomBar();
+		} else {
+			vdbPlayer.showBottomBar();
+		}
+	}, [playQueue.isEmpty, vdbPlayer]);
+
 	return (
 		<>
 			{!playQueue.isEmpty && <MiniPlayer />}
