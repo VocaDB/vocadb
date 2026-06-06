@@ -164,7 +164,6 @@ public sealed class DatabaseDumper
 		public ArchivedSongContractWithTags(Song song)
 			: base(song, new SongDiff())
 		{
-			Lyrics = null;
 			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
