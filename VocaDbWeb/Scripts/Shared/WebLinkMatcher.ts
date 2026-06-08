@@ -1918,7 +1918,6 @@ export class WebLinkMatcher {
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
-
 		{
 			url: 'cocolog-nifty.com',
 			desc: 'Blog',
@@ -2112,6 +2111,21 @@ export class WebLinkMatcher {
 		{
 			url: 'bandlab.com',
 			desc: 'BandLab',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sekaipedia.org',
+			desc: 'Sekaipedia',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'threads.com/',
+			desc: 'Threads',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'vgen.co/',
+			desc: 'VGen',
 			cat: WebLinkCategory.Official,
 		},
 	];
