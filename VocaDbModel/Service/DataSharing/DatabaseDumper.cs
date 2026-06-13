@@ -21,22 +21,20 @@ namespace VocaDb.Model.Service.DataSharing;
 
 public interface IPackageCreator
 {
-	void Dump<T>(T[] contract, int id, string folder);
+	void Dump<T>(IEnumerable<T> contracts, int id, string folder);
 }
 
 public sealed class JsonPackageCreator : IPackageCreator
 {
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 	private readonly Package _package;
-	private readonly Action _cleanup;
 
-	public JsonPackageCreator(Package package, Action cleanup)
+	public JsonPackageCreator(Package package)
 	{
 		_package = package;
-		_cleanup = cleanup;
 	}
 
-	public void Dump<T>(T[] contract, int id, string folder)
+	public void Dump<T>(IEnumerable<T> contracts, int id, string folder)
 	{
 		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.json", UriKind.Relative));
 
@@ -48,48 +46,53 @@ public sealed class JsonPackageCreator : IPackageCreator
 
 		var packagePart = _package.CreatePart(partUri, MediaTypeNames.Application.Json, CompressionOption.Normal);
 
-		var data = JsonHelper.Serialize(contract);
+		var data = JsonHelper.Serialize(contracts);
 
 		using var stream = packagePart.GetStream();
 		using var writer = new StreamWriter(stream);
 		writer.Write(data);
-
-		// Cleanup
-		_cleanup();
-		GC.Collect();
 	}
 }
 
 public sealed class DatabaseDumper
 {
+	private delegate TContract Factory<TEntry, TContract>(TEntry entry, bool nonFree);
+
 	private sealed class Loader
 	{
 		private const int MaxEntries = 1000;
-		private readonly IPackageCreator _packageCreator;
 		private readonly ISession _session;
+		private readonly IPackageCreator _packageCreator;
+		private readonly IPackageCreator _nonFreePackageCreator;
 
-		public Loader(ISession session, IPackageCreator packageCreator)
+		public Loader(ISession session, IPackageCreator packageCreator, IPackageCreator nonFreePackageCreator)
 		{
 			_session = session;
 			_packageCreator = packageCreator;
+			_nonFreePackageCreator = nonFreePackageCreator;
 		}
 
-		private void DumpChunked<TEntry, TContract>(int[] ids, string folder, Func<TEntry, TContract> fac)
+		private void DumpChunked<TEntry, TContract>(int[] ids, string folder, Factory<TEntry, TContract> fac)
 			where TEntry : class, IEntryWithIntId
 			where TContract : class/* TODO: , IEntryContract */
 		{
 			var idChunks = ids.Chunk(MaxEntries);
 			foreach (var (chunk, index) in idChunks.Select((chunk, index) => (chunk, index)))
 			{
-				var contracts = _session.Query<TEntry>()
+				var entities = _session.Query<TEntry>()
 					.Where(entry => chunk.Contains(entry.Id))
-					.Select(fac)
 					.ToArray();
-				_packageCreator.Dump(contracts, MaxEntries * index, folder);
+
+				_packageCreator.Dump(entities.Select(x => fac(x, false)), MaxEntries * index, folder);
+				_nonFreePackageCreator.Dump(entities.Select(x => fac(x, true)), MaxEntries * index, folder);
+
+				// Cleanup
+				_session.Clear();
+				GC.Collect();
 			}
 		}
 
-		public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac)
+		public void Dump<TEntry, TContract>(string folder, Factory<TEntry, TContract> fac)
 			where TEntry : class, IEntryWithIntId
 			where TContract : class/* TODO: , IEntryContract */
 		{
@@ -98,7 +101,7 @@ public sealed class DatabaseDumper
 			DumpChunked(ids, folder, fac);
 		}
 
-		public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac)
+		public void DumpSkipDeleted<TEntry, TContract>(string folder, Factory<TEntry, TContract> fac)
 			where TEntry : class, IDeletableEntry
 			where TContract : class/* TODO: , IEntryContract */
 		{
@@ -160,9 +163,14 @@ public sealed class DatabaseDumper
 		[DataMember]
 		public ArchivedTagUsageContract[] Tags { get; init; }
 
-		public ArchivedSongContractWithTags(Song song)
+		public ArchivedSongContractWithTags(Song song, bool includeLyrics)
 			: base(song, new SongDiff())
 		{
+			if (!includeLyrics)
+			{
+				Lyrics = null;
+			}
+
 			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -195,16 +203,21 @@ public sealed class DatabaseDumper
 		}
 	}
 
-	public void Create(string path, ISession session)
+	public void Create(string path, string nonFreePath, ISession session)
 	{
 		using var package = Package.Open(path, FileMode.Create);
-		var packageCreator = new JsonPackageCreator(package, session.Clear);
-		var loader = new Loader(session, packageCreator);
-		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContractWithTags(a));
-		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContractWithTags(a));
-		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContractWithTags(a));
-		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContractWithTags(a));
-		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContractWithTags(a));
-		loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
+		var packageCreator = new JsonPackageCreator(package);
+
+		using var nonFreePackage = Package.Open(nonFreePath, FileMode.Create);
+		var nonFreePackageCreator = new JsonPackageCreator(nonFreePackage);
+
+		var loader = new Loader(session, packageCreator, nonFreePackageCreator);
+
+		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", (a, _) => new ArchivedArtistContractWithTags(a));
+		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", (a, _) => new ArchivedAlbumContractWithTags(a));
+		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", (s, nonFree) => new ArchivedSongContractWithTags(s, includeLyrics: nonFree));
+		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", (es, _) => new ArchivedEventSeriesContractWithTags(es));
+		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", (e, _) => new ArchivedEventContractWithTags(e));
+		loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", (t, _) => new ArchivedTagContract(t, new TagDiff()));
 	}
 }
