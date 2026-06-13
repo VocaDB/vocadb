@@ -150,7 +150,6 @@ public sealed class DatabaseDumper
 		{
 			MainPictureMime = null;
 			Pictures = null;
-			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = album.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -164,7 +163,6 @@ public sealed class DatabaseDumper
 		public ArchivedSongContractWithTags(Song song)
 			: base(song, new SongDiff())
 		{
-			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -193,7 +191,6 @@ public sealed class DatabaseDumper
 			: base(releaseEvent, new ReleaseEventDiff())
 		{
 			MainPictureMime = null;
-			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
 			Tags = releaseEvent.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
