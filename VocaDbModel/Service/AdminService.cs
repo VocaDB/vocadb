@@ -186,9 +186,15 @@ public class AdminService : ServiceBase
 		{
 			AuditLog("creating JSON dump", session);
 
+			if (AppConfig.DbDumpFolder is null)
+			{
+				throw new Exception("AppConfig.DbDumpFolder is null.");
+			}
+
 			var dumper = new DatabaseDumper();
 			var path = Path.Combine(AppConfig.DbDumpFolder, "dump.zip");
-			dumper.Create(path, session);
+			var nonFreePath = Path.Combine(AppConfig.DbDumpFolder, "dump-nonfree.zip");
+			dumper.Create(path, nonFreePath, session);
 		});
 	}
 
