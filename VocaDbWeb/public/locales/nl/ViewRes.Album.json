@@ -5,7 +5,7 @@
   },
   "Create": {
     "AlbumInfo2": "Zorg ervoor dat de bijdrage die je toevoegt nog niet eerder toegevoegd is. Je moet op zijn minst één naam en artiest toevoegen.",
-    "ArtistsInfo": "Artiesten (minstens één verplicht)",
+    "ArtistsInfo": "Artiesten (minstens 1 verplicht)",
     "DiscType": "Schijftype",
     "NeedArtist": "Minstens één artiest verplicht.",
     "SubmitAlbum": "Voeg een nieuw album toe",
@@ -65,7 +65,7 @@
     "ReviewLoginToReview": "Log in om een beoordeling te plaatsen",
     "LatestReview": "Nieuwste beoordeling",
     "ReviewsTab": "Beoordelingen",
-    "ReviewNoRating": "No rating given",
+    "ReviewNoRating": "Geen beoordeling gegeven",
     "ViewAllReviews": "Bekijk alle beoordelingen ({{0}})"
   },
   "Edit": {
