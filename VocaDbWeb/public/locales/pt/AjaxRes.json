@@ -21,9 +21,9 @@
     "UnableToSendReport": "Não foi possível enviar a denúncia."
   },
   "Song": {
-    "AddedToList": "Adicionado à lista.",
+    "AddedToList": "Adicionado à lista",
     "ArtistFilter": "artista '{{0}}'",
-    "OnlyWithPVsFilter": "PVs apenas",
+    "OnlyWithPVsFilter": "Apenas PVs",
     "SinceFilter": "mais recente que {{0}}",
     "SongTypeFilter": "tipo de música '{{0}}'",
     "ThanksForRating": "Obrigado por classificar!"

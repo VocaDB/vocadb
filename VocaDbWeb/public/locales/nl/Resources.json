@@ -298,9 +298,9 @@
     "WebLinks": "Externe links"
   },
   "TagSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Name": "Name",
-    "None": "Nothing"
+    "AdditionDate": "Toevoegingsdatum",
+    "Name": "Naam",
+    "None": "Geen"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Geen privéberichten",
