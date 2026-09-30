@@ -39,7 +39,6 @@ interface IAlbumSearchStore {
 	loading: boolean;
 	page: AlbumContract[];
 	paging: ServerSidePagingStore;
-	ratingStars?: (album: AlbumContract) => { enabled: boolean }[];
 	selectTag?: (tag: TagBaseContract) => void;
 	showTags: boolean;
 	sort: AlbumSortRule;
