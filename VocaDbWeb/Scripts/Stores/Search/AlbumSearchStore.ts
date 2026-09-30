@@ -124,15 +124,6 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
-		if (!album) return [];
-
-		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
-			enabled: Math.round(album.ratingAverage) >= rating,
-		}));
-		return ratings;
-	};
-
 	@computed.struct get locationState(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,

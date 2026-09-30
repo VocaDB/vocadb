@@ -39,7 +39,6 @@ interface IAlbumSearchStore {
 	loading: boolean;
 	page: AlbumContract[];
 	paging: ServerSidePagingStore;
-	ratingStars?: (album: AlbumContract) => { enabled: boolean }[];
 	selectTag?: (tag: TagBaseContract) => void;
 	showTags: boolean;
 	sort: AlbumSortRule;
@@ -215,7 +214,7 @@ const AlbumSearchList = observer(
 									</td>
 									<td style={{ width: '150px' }}>
 										<span title={`${album.ratingAverage}`}>
-											{<Stars current={album.ratingAverage} max={5} />}
+											<Stars current={album.ratingAverage} max={5} />
 										</span>
 										<br />
 										<span>{album.ratingCount}</span>{' '}

@@ -1,4 +1,5 @@
-import { GenerateStars } from '@/Components/Shared/Partials/Shared/Stars';
+import { Star, starFill } from '@/Components/Shared/Partials/Shared/Stars';
+import { range } from 'lodash-es';
 import React from 'react';
 
 interface StarsMetaProps {
@@ -8,6 +9,19 @@ interface StarsMetaProps {
 
 export const StarsMeta = React.memo(
 	({ current, max }: StarsMetaProps): React.ReactElement => {
-		return <GenerateStars current={current} max={max} meta={true} />;
+		return (
+			<>
+				{range(1, max + 1).map((i) => (
+					<React.Fragment key={i}>
+						{i > 0 && ' '}
+						<Star
+							className="rating"
+							fill={starFill(current, i)}
+							alt={`${current}`}
+						/>
+					</React.Fragment>
+				))}
+			</>
+		);
 	},
 );
