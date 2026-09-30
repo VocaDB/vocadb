@@ -124,7 +124,10 @@ const EditCollectionDialog = observer(
 				<div>
 					{t('ViewRes.Album:Details.MyRating')}
 					<JqxRating
+						css={{ '& .jqx-rating-image': { maxWidth: 'none' } }}
 						precision={0.5}
+						itemWidth={24}
+						itemHeight={24}
 						value={albumDetailsStore.editCollectionDialog.collectionRating}
 						onChange={(e: any): void =>
 							runInAction(() => {
