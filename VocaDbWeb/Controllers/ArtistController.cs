@@ -144,9 +144,7 @@ public class ArtistController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
-		var artist = _queries.GetPictureThumb(id, ImageSize.Original);
-
-		return Picture(artist);
+		return RedirectToPicture(_queries.GetPictureUrl(id, ImageSize.Original));
 	}
 
 	public ActionResult PictureThumb(int id = InvalidId)
@@ -159,8 +157,7 @@ public class ArtistController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
-		var artist = _queries.GetPictureThumb(id);
-		return Picture(artist);
+		return RedirectToPicture(_queries.GetPictureUrl(id, ImageSize.Thumb));
 	}
 
 	[Authorize]

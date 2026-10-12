@@ -555,7 +555,8 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			var album = ctx.Load(albumId);
 
 			// If there is no picture, return empty.
-			if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime))
+			// Check the MIME type only: album.CoverPictureData would lazy-load the cover blob from the database.
+			if (string.IsNullOrEmpty(album.CoverPictureMime))
 				return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference);
 
 			// Try to read thumbnail from file system.
@@ -570,6 +571,24 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 			return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference);
 		});
 	}
+
+#nullable enable
+	/// <summary>
+	/// Gets the absolute URL of the album's cover picture on the static image host.
+	/// </summary>
+	/// <returns>Absolute URL, or null if the album has no cover picture.</returns>
+	public VocaDbUrl? GetCoverPictureUrl(int albumId, ImageSize size)
+	{
+		return _repository.HandleQuery(ctx =>
+		{
+			var thumb = ctx.Load(albumId).Thumb;
+
+			return thumb is not null && _imagePersister.HasImage(thumb, size)
+				? _imagePersister.GetUrl(thumb, size).ToAbsolute()
+				: null;
+		});
+	}
+#nullable disable
 
 	public AlbumForEditForApiContract GetForEdit(int id)
 	{

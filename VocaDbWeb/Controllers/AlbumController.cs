@@ -209,9 +209,7 @@ public class AlbumController : ControllerBase
 		if (id == InvalidId)
 			return NotFound();
 
-		var album = _queries.GetCoverPictureThumb(id, ImageSize.Original);
-
-		return Picture(album);
+		return RedirectToPicture(_queries.GetCoverPictureUrl(id, ImageSize.Original));
 	}
 
 	public ActionResult CoverPictureThumb(int id = InvalidId)
@@ -224,8 +222,7 @@ public class AlbumController : ControllerBase
 		if (id == InvalidId)
 			return NotFound();
 
-		var data = _queries.GetCoverPictureThumb(id);
-		return Picture(data);
+		return RedirectToPicture(_queries.GetCoverPictureUrl(id, ImageSize.Thumb));
 	}
 
 #nullable enable
