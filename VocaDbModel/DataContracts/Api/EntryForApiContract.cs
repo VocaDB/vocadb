@@ -77,7 +77,8 @@ public class EntryForApiContract : IEntryWithIntId
 		CreateDate = artist.CreateDate;
 		Status = artist.Status;
 
-		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null)
+		// Check the MIME type, not artist.Picture: the latter lazy-loads the picture blob from the database.
+		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime))
 		{
 			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
 				? EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister)
@@ -115,7 +116,8 @@ public class EntryForApiContract : IEntryWithIntId
 		DiscType = album.DiscType;
 		Status = album.Status;
 
-		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null)
+		// Check the MIME type, not album.CoverPictureData: the latter lazy-loads the cover blob from the database.
+		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime))
 		{
 			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
 				? new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister)

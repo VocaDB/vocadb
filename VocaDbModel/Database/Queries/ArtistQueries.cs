@@ -509,7 +509,8 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 		{
 			var artist = ctx.Load(artistId);
 
-			if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime))
+			// Check the MIME type only: artist.Picture would lazy-load the picture blob from the database.
+			if (string.IsNullOrEmpty(artist.PictureMime))
 				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
 			var data = artist.Thumb;
@@ -523,6 +524,24 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 			return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 		});
 	}
+
+#nullable enable
+	/// <summary>
+	/// Gets the absolute URL of the artist's main picture on the static image host.
+	/// </summary>
+	/// <returns>Absolute URL, or null if the artist has no picture.</returns>
+	public VocaDbUrl? GetPictureUrl(int artistId, ImageSize size)
+	{
+		return _repository.HandleQuery(ctx =>
+		{
+			var thumb = ctx.Load(artistId).Thumb;
+
+			return thumb is not null && _imagePersister.HasImage(thumb, size)
+				? _imagePersister.GetUrl(thumb, size).ToAbsolute()
+				: null;
+		});
+	}
+#nullable disable
 
 	public TagUsageForApiContract[] GetTagSuggestions(int artistId)
 	{

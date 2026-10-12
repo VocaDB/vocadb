@@ -99,6 +99,22 @@ public class ControllerBase : Controller
 		return Picture(contract.Picture, contract.Name);
 	}
 
+#nullable enable
+	/// <summary>
+	/// Redirects to an entry picture on the static image host instead of proxying its bytes.
+	/// </summary>
+	/// <param name="pictureUrl">Absolute picture URL, or null if the entry has no picture.</param>
+	protected ActionResult RedirectToPicture(VocaDbUrl? pictureUrl)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.ViewCoverArtImages);
+
+		if (pictureUrl is null || pictureUrl.IsEmpty)
+			return File("~/Content/unknown.png", "image/png");
+
+		return Redirect(pictureUrl.Url);
+	}
+#nullable disable
+
 	protected void CheckConcurrentEdit(EntryType entryType, int id)
 	{
 		Login.Manager.VerifyLogin();
