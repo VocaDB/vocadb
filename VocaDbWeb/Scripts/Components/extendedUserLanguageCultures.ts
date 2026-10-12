@@ -458,6 +458,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'ie',
+		{
+			languages: ['Interlingue', 'Occidental'],
+			nativeName: 'Occidental',
+		},
+	],
+	[
 		'pes',
 		{
 			languages: [
@@ -533,6 +540,13 @@ const rawLangs: RawLangs = [
 		},
 	],
 	[
+		'avk',
+		{
+			languages: ['Kotava'],
+			nativeName: 'Kotava',
+		},
+	],
+	[
 		'la',
 		{
 			languages: ['Latin'],
@@ -558,6 +572,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Lingala', 'Ngala'],
 			nativeName: 'Lingála',
+		},
+	],
+	[
+		'qlp',
+		{
+			languages: ['Lidepla', 'Lingwa de Planeta'],
+			nativeName: 'Lingwa de Planeta',
 		},
 	],
 	[
@@ -1051,6 +1072,13 @@ const rawLangs: RawLangs = [
 		{
 			languages: ['Vietnamese'],
 			nativeName: 'tiếng Việt',
+		},
+	],
+	[
+		'vo',
+		{
+			languages: ['Volap\u00FCk'],
+			nativeName: 'Volapük',
 		},
 	],
 	[
