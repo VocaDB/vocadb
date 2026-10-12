@@ -2,6 +2,6 @@
   "Edit": {
     "RelatedTags": "Etiquetas relacionadas",
     "ValidationNeedDescription": "La etiqueta debería tener una descripción",
-    "ValidationNeedCategory": "Tag category is required"
+    "ValidationNeedCategory": "La categoría de etiqueta es obligatoria"
   }
 }
