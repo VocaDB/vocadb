@@ -15,7 +15,7 @@ public class VideoService : IVideoService
 			parser: new NicoParser(),
 			linkMatchers: new[]
 			{
-				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/([a-z]{2}\d{2,10})"),
+				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/(?:watch|shorts)/([a-z]{2}\d{2,10})"),
 				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/(\d{6,12})"),
 				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/([a-z]{2}\d{2,10})"),
 				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/(\d{4,12})")
