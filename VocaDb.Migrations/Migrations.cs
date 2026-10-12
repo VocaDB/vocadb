@@ -4,6 +4,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_10_12_0000)]
+public class ExtendPVForSongName : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForSongs).AsString(1000).NotNullable();
+	}
+
+	public override void Down()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForSongs).AsString(200).NotNullable();
+	}
+}
+
 [Migration(2026_02_23_0000)]
 public class ExpandAdditionalNamesString : Migration
 {
