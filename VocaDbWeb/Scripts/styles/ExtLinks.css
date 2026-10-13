@@ -92,7 +92,8 @@ a.extLink[href*='://music.amazon.co.jp/']
 	background-image: url('/Content/ExtIcons/amazonmp3.png');
 }
 
-a.extLink[href*='://ameblo.jp/']
+a.extLink[href*='://ameblo.jp/'],
+a.extLink[href*='://ameba.jp/']
 {
 	background-image: url('/Content/ExtIcons/ameblo.png');
 }
@@ -166,7 +167,9 @@ a.extLink[href*='bsky.app/'] {
 	background-image: url('/Content/ExtIcons/bluesky.png');
 }
 
-a.extLink[href*='booth.pm/'] {
+a.extLink[href*='booth.pm/'],
+a.extLink[href*='.booth.pm']
+{
 	background-image: url('/Content/ExtIcons/booth.png');
 }
 
@@ -174,7 +177,9 @@ a.extLink[href*='bowlroll.net/'] {
 	background-image: url('/Content/ExtIcons/bowlroll.png');
 }
 
-a.extLink[href*='carrd.co/'] {
+a.extLink[href*='carrd.co/'],
+a.extLink[href*='.carrd.co']
+{
 	background-image: url('/Content/ExtIcons/carrd.png');
 }
 
@@ -424,6 +429,11 @@ a.extLink[href*='.lofter.com/'] {
 	background-image: url('/Content/ExtIcons/lofter.png');
 }
 
+a.extLink[href*='://lyricstranslate.com/']
+{
+	background-image: url('/Content/ExtIcons/lyricstranslate.png');
+}
+
 a.extLink[href*='://www.metal-archives.com/']
 {
 	background-image: url('/Content/ExtIcons/ma.png');
@@ -489,6 +499,11 @@ a.extLink[href*='://www.musixmatch.com/']
 	background-image: url('/Content/ExtIcons/musixmatch.png');
 }
 
+a.extLink[href*='://myanimelist.net/']
+{
+	background-image: url('/Content/ExtIcons/myanimelist.png');
+}
+
 a.extLink[href*='://mysound.jp/']
 {
 	background-image: url('/Content/ExtIcons/mysound.png');
@@ -519,6 +534,11 @@ a.extLink[href*='://nex-tone.link/']
 a.extLink[href*='://chokuhan.nicovideo.jp/']
 {
 	background-image: url('/Content/ExtIcons/nicochokuhan.png');
+}
+
+a.extLink[href*='://www.nicolog.jp/']
+{
+	background-image: url('/Content/ExtIcons/nicolog.png');
 }
 
 a.extLink[href*='://commons.nicovideo.jp/']
@@ -556,6 +576,11 @@ a.extLink[href*='otakurepublic.com/'] {
 a.extLink[href*='://ototoy.jp/']
 {
 	background-image: url('/Content/ExtIcons/ototoy.png');
+}
+
+a.extLink[href*='://www.patreon.com/']
+{
+	background-image: url('/Content/ExtIcons/patreon.png');
 }
 
 a.extLink[href*='peing.net/'] {
@@ -639,6 +664,11 @@ a.extLink[href*='://seiga.nicovideo.jp/']
 	background-image: url('/Content/ExtIcons/seiga.png');
 }
 
+a.extLink[href*='://www.sekaipedia.org/wiki/']
+{
+	background-image: url('/Content/ExtIcons/sekaipedia.png');
+}
+
 a.extLink[href*='://skeb.jp/']
 {
 	background-image: url('/Content/ExtIcons/skeb.png');
@@ -676,6 +706,11 @@ a.extLink[href*='://thwiki.cc/'],
 a.extLink[href*='://thbwiki.cc/']
 {
 	background-image: url('/Content/ExtIcons/THBWiki.png');
+}
+
+a.extLink[href*='://www.threads.com/']
+{
+	background-image: url('/Content/ExtIcons/threads.png');
 }
 
 a.extLink[href*='://www.lagoa.jp/']
@@ -765,6 +800,27 @@ a.extLink[href*='://utaite.fandom.com/wiki/']
 	background-image: url('/Content/ExtIcons/utaitewikia.png');
 }
 
+a.extLink[href*='://www.uta-net.com/']
+{
+	background-image: url('/Content/ExtIcons/utanet.png');
+}
+
+a.extLink[href*='://utau.fandom.com/wiki/'],
+a.extLink[href*='://utau.wikia.com/wiki/']
+{
+	background-image: url('/Content/ExtIcons/utauwiki.png');
+}
+
+a.extLink[href*='://utau.wikidot.com/']
+{
+	background-image: url('/Content/ExtIcons/utauwiki2.png');
+}
+
+a.extLink[href*='://vgen.co/']
+{
+	background-image: url('/Content/ExtIcons/vgen.png');
+}
+
 a.extLink[href*='://vgmdb.net/']
 {
 	background-image: url('/Content/ExtIcons/vgmdb.png');
@@ -800,6 +856,11 @@ a.extLink[href*='://www.vocallective.net/']
 	background-image: url('/Content/ExtIcons/vocallective.png');
 }
 
+a.extlink[href*='://vocaloidlyrics.miraheze.org/wiki/']
+{
+	background-image: url('/Content/ExtIcons/vocaloidlyricswiki.png');
+}
+
 a.extLink[href*='://www.vocaloid.com/']
 {
 	background-image: url('/Content/ExtIcons/vocaloidshop.png');
@@ -810,7 +871,8 @@ a.extLink[href*='://shop.vocaloidstore.com/']
 	background-image: url('/Content/ExtIcons/vocastore.png');
 }
 
-a.extLink[href*='://vocaloid.fandom.com/wiki/']
+a.extLink[href*='://vocaloid.fandom.com/wiki/'],
+a.extLink[href*='://vocaloid.wikia.com/wiki/']
 {
 	background-image: url('/Content/ExtIcons/vocawiki.png');
 }
