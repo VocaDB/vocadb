@@ -517,7 +517,7 @@ public class User :
 	/// <param name="mediaType">Media type.</param>
 	/// <param name="rating">Rating.</param>
 	/// <returns>Album link. Cannot be null.</returns>
-	public virtual AlbumForUser AddAlbum(Album album, PurchaseStatus status, MediaType mediaType, int rating)
+	public virtual AlbumForUser AddAlbum(Album album, PurchaseStatus status, MediaType mediaType, double rating)
 	{
 		ParamIs.NotNull(() => album);
 

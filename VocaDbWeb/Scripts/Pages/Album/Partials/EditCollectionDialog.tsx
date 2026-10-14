@@ -8,11 +8,33 @@ import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import $ from 'jquery';
-import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
+import JqxRating, {
+	jqx,
+} from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+// jqxRating measures clicks as pageX minus position().left (relative to offsetParent), so
+// half-star precision breaks inside dialogs. Use the page-relative offset() instead.
+jqx._jqxRating.prototype._getRating = function (
+	this: any,
+	image: HTMLElement,
+	pageX: number,
+): number {
+	let rating = this._getImageIndex(image);
+	if (this.precision < 1) {
+		const itemWidth = parseInt(this._itemWidth);
+		const step = itemWidth * this.precision;
+		const x = pageX - $(image).offset()!.left;
+		let width = 0;
+		while (width < x) width += step;
+		if (width > itemWidth - step) width = itemWidth;
+		rating -= 1 - width / $(image).width()!;
+	}
+	return rating;
+};
 
 interface EditCollectionDialogProps {
 	albumDetailsStore: AlbumDetailsStore;
@@ -102,6 +124,10 @@ const EditCollectionDialog = observer(
 				<div>
 					{t('ViewRes.Album:Details.MyRating')}
 					<JqxRating
+						css={{ '& .jqx-rating-image': { maxWidth: 'none' } }}
+						precision={0.5}
+						itemWidth={24}
+						itemHeight={24}
 						value={albumDetailsStore.editCollectionDialog.collectionRating}
 						onChange={(e: any): void =>
 							runInAction(() => {

@@ -1903,7 +1903,7 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		int albumId,
 		PurchaseStatus status,
 		MediaType mediaType,
-		int rating
+		double rating
 	)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.EditProfile);

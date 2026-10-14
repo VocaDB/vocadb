@@ -217,13 +217,6 @@ export class AlbumReviewsStore {
 			.take(1)[0];
 	};
 
-	ratingStars = (userRating: number): { enabled: boolean }[] => {
-		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
-			enabled: Math.round(userRating) >= rating,
-		}));
-		return ratings;
-	};
-
 	@action saveEditedReview = (): void => {
 		if (!this.editReviewStore) return;
 
