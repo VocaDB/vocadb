@@ -71,13 +71,14 @@ public class SearchController : ControllerBase
 		{
 			case EntryType.Undefined:
 				{
-					var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 1, true, EntrySortRule.Name,
+					// Two results without a total count are enough to tell whether there is exactly one match
+					var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 2, false, EntrySortRule.Name,
 						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default,
 						searchTags: true, searchEvents: true);
 
-					if (result.TotalCount == 1)
+					if (result.Items.Length == 1)
 					{
-						var item = result.Items.First();
+						var item = result.Items[0];
 						var entryId = item.Id;
 
 						switch (item.EntryType)

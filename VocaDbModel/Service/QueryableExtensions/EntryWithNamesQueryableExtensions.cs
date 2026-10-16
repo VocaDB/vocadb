@@ -51,9 +51,13 @@ public static class EntryWithNamesQueryableExtensions
 	public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery>? names)
 		where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId
 	{
-		names ??= Array.Empty<SearchTextQuery>();
+		var list = names?.ToArray() ?? Array.Empty<SearchTextQuery>();
 
-		var predicate = names.Aggregate(PredicateBuilder.False<TEntry>(), (nameExp, name) => nameExp.Or(WhereHasNameExpression<TEntry, TName>(name)));
+		if (list.Length == 0)
+			return query.Where(PredicateBuilder.False<TEntry>());
+
+		// Seed with the first name instead of PredicateBuilder.False
+		var predicate = list.Skip(1).Aggregate(WhereHasNameExpression<TEntry, TName>(list[0]), (nameExp, name) => nameExp.Or(WhereHasNameExpression<TEntry, TName>(name)));
 		return query.Where(predicate);
 	}
 

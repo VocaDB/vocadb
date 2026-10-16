@@ -47,7 +47,6 @@ public class SongDetailsContract
 		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 		CreateDate = song.CreateDate;
 		Deleted = song.Deleted;
-		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 		LyricsFromParents = userContext.HasPermission(PermissionToken.ViewLyrics)
 			? song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray()
 			: Array.Empty<LyricsForSongContract>();
@@ -135,7 +134,7 @@ public class SongDetailsContract
 	public CommentForApiContract[] LatestComments { get; set; }
 
 	[DataMember]
-	public int LikeCount { get; init; }
+	public int LikeCount { get; set; }
 
 	[DataMember]
 	public int ListCount { get; set; }

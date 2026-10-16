@@ -29,24 +29,47 @@ public class ArtistRelationsQuery
 	private readonly ContentLanguagePreference _languagePreference;
 	private readonly IUserPermissionContext _permissionContext;
 
-	private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist)
+	private int[] GetLatestAlbumIds(IDatabaseContext session, Artist artist)
 	{
 		var id = artist.Id;
 
-		var queryWithoutMain = session.Query<ArtistForAlbum>()
-			.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport);
+		var cacheKey = $"{nameof(ArtistRelationsQuery)}.{nameof(GetLatestAlbumIds)}.{id}";
 
-		var query = queryWithoutMain
-			.WhereHasArtistParticipationStatus(artist, ArtistAlbumParticipationStatus.OnlyMainAlbums);
+		return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), () =>
+		{
+			var queryWithoutMain = session.Query<ArtistForAlbum>()
+				.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport);
 
-		var count = query.Count();
+			var query = queryWithoutMain
+				.WhereHasArtistParticipationStatus(artist, ArtistAlbumParticipationStatus.OnlyMainAlbums);
 
-		query = count >= 4 ? query : queryWithoutMain;
+			var count = query.Count();
 
-		return query
-			.Select(s => s.Album)
-			.OrderByReleaseDate(SortDirection.Descending)
-			.Take(6).ToArray()
+			query = count >= 4 ? query : queryWithoutMain;
+
+			return query
+				.Select(s => s.Album)
+				.OrderByReleaseDate(SortDirection.Descending)
+				.Select(s => s.Id)
+				.Take(6)
+				.ToArray();
+		}, allowCaching: ids => ids.Length >= 6);
+	}
+
+	private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist)
+	{
+		return LoadAlbums(session, GetLatestAlbumIds(session, artist));
+	}
+
+	/// <summary>
+	/// Loads albums by Id, preserving the order of <paramref name="ids"/>.
+	/// </summary>
+	private AlbumForApiContract[] LoadAlbums(IDatabaseContext session, int[] ids)
+	{
+		return session
+			.LoadMultiple<Album>(ids)
+			.ToArray()
+			.OrderBy(a => Array.IndexOf(ids, a.Id))
 			.Select(s => new AlbumForApiContract(s, _languagePreference, _permissionContext, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 			.ToArray();
 	}
@@ -76,28 +99,31 @@ public class ArtistRelationsQuery
 		});
 	}
 
-	private AlbumForApiContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds)
+	private int[] GetTopAlbumIds(IDatabaseContext session, Artist artist, int[] latestAlbumIds)
 	{
 		var id = artist.Id;
 
-		var queryWithoutMain = session.Query<ArtistForAlbum>()
-			.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport
-				&& s.Album.RatingAverageInt > 0 && !latestAlbumIds.Contains(s.Album.Id));
+		var cacheKey = $"{nameof(ArtistRelationsQuery)}.{nameof(GetTopAlbumIds)}.{id}";
 
-		/*var query = queryWithoutMain
-			.WhereHasArtistParticipationStatus(artist, ArtistAlbumParticipationStatus.OnlyMainAlbums);
+		return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
+		{
+			var queryWithoutMain = session.Query<ArtistForAlbum>()
+				.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport
+					&& s.Album.RatingAverageInt > 0 && !latestAlbumIds.Contains(s.Album.Id));
 
-		var count = query.Count();
+			return queryWithoutMain
+				.Select(s => s.Album)
+				.OrderByDescending(s => s.RatingAverageInt)
+				.ThenByDescending(s => s.RatingCount)
+				.Select(s => s.Id)
+				.Take(6)
+				.ToArray();
+		});
+	}
 
-		query = count >= 6 ? query : queryWithoutMain;*/
-
-		return queryWithoutMain
-			.Select(s => s.Album)
-			.OrderByDescending(s => s.RatingAverageInt)
-			.ThenByDescending(s => s.RatingCount)
-			.Take(6).ToArray()
-			.Select(s => new AlbumForApiContract(s, _languagePreference, _permissionContext, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
-			.ToArray();
+	private AlbumForApiContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds)
+	{
+		return LoadAlbums(session, GetTopAlbumIds(session, artist, latestAlbumIds));
 	}
 
 	private int[] GetLatestSongIds(IDatabaseContext ctx, Artist artist)
@@ -242,18 +268,34 @@ public class ArtistRelationsQuery
 
 	public TopStatContract<string>[] GetTopLanguages(Artist artist)
 	{
-		return artist.AllSongs
-			.Where(a => !a.Song.Deleted)
-			.SelectMany(a =>
-			{
-				if (a.Song.CultureCodes.Count > 0) return a.Song.CultureCodes;
-				return a.Song.Lyrics.Where(l => l.TranslationType == TranslationType.Original).SelectMany(l => l.CultureCodes);
-			})
-			.GroupBy(c => c)
+		var id = artist.Id;
+
+		// Song languages
+		var songLanguages = _ctx.Query<Song>()
+			.Where(s => !s.Deleted && s.AllArtists.Any(a => a.Artist.Id == id))
+			.SelectMany(s => s.CultureCodes)
+			.GroupBy(c => c.CultureCode)
+			.Select(g => new { CultureCode = g.Key, Count = g.Count() })
+			.ToArray();
+
+		// Languages of the original lyrics, for songs without song languages
+		var lyricsLanguages = _ctx.Query<LyricsForSong>()
+			.Where(l => l.TranslationType == TranslationType.Original
+				&& !l.Song.Deleted
+				&& !l.Song.CultureCodes.Any()
+				&& l.Song.AllArtists.Any(a => a.Artist.Id == id))
+			.SelectMany(l => l.CultureCodes)
+			.GroupBy(c => c.CultureCode)
+			.Select(g => new { CultureCode = g.Key, Count = g.Count() })
+			.ToArray();
+
+		return songLanguages
+			.Concat(lyricsLanguages)
+			.GroupBy(c => c.CultureCode, StringComparer.InvariantCultureIgnoreCase)
 			.Select(l => new TopStatContract<string>
 			{
-				Data = l.Key.CultureCode,
-				Count = l.Count()
+				Data = l.Key,
+				Count = l.Sum(c => c.Count)
 			})
 			.OrderByDescending(l => l.Count)
 			.ToArray();
