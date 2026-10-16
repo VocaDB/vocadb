@@ -546,6 +546,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				.OrderByDescending(c => c.Created).Take(3).ToArray()
 				.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 			contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
+			contract.LikeCount = session.Query<FavoriteSongForUser>().Count(f => f.Song.Id == songId && f.Rating == SongVoteRating.Like);
 			contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 			contract.Suggestions = GetSongSuggestions(session, song)
 				.Select(s => new SongForApiContract(s, lang, PermissionContext, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
@@ -621,6 +622,8 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 			contract.CommentCount = Comments(session).GetCount(songId);
 			contract.LatestComments = Comments(session).GetList(entryId: songId, count: 3);
 			contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
+			// Counted in SQL: song.UserFavorites would load every rating (and batch-load those of other songs)
+			contract.LikeCount = session.Query<FavoriteSongForUser>().Count(f => f.Song.Id == songId && f.Rating == SongVoteRating.Like);
 			contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 
 			contract.Suggestions = GetSongSuggestions(session, song)

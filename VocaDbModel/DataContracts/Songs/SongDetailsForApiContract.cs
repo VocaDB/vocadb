@@ -68,7 +68,7 @@ public sealed record SongDetailsForApiContract
 	public CommentForApiContract[] LatestComments { get; set; } = default!;
 
 	[DataMember]
-	public int LikeCount { get; init; }
+	public int LikeCount { get; set; }
 
 	[DataMember]
 	public int ListCount { get; set; }
@@ -202,7 +202,6 @@ public sealed record SongDetailsForApiContract
 		CreateDate = song.CreateDate;
 		CommentsLocked = song.CommentsLocked;
 		Deleted = song.Deleted;
-		LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 
 		LyricsFromParents = userContext.HasPermission(PermissionToken.ViewLyrics)
 			? song.GetLyricsFromParents(specialTags, entryTypeTags)
