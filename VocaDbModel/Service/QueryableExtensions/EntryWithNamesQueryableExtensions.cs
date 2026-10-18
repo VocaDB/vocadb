@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
@@ -68,13 +69,14 @@ public static class EntryWithNamesQueryableExtensions
 				return m => m.Names.Names.Any(n => n.Value == nameFilter);
 
 			case NameMatchMode.Partial:
-				return m => m.Names.Names.Any(n => n.Value.Contains(nameFilter));
+				var searchFilter = NameSearchHelper.NormalizeTerm(nameFilter);
+				return m => m.Names.Names.Any(n => n.SearchValue.Contains(searchFilter));
 
 			case NameMatchMode.StartsWith:
 				return m => m.Names.Names.Any(n => n.Value.StartsWith(nameFilter));
 
 			case NameMatchMode.Words:
-				var predicate = textQuery.Words.Aggregate(PredicateBuilder.True<TEntry>(), (nameExp, name) => nameExp.And(q => q.Names.Names.Any(n => n.Value.Contains(name))));
+				var predicate = textQuery.Words.Select(NameSearchHelper.NormalizeTerm).Distinct().Aggregate(PredicateBuilder.True<TEntry>(), (nameExp, name) => nameExp.And(q => q.Names.Names.Any(n => n.SearchValue.Contains(name))));
 				return predicate;
 		}
 

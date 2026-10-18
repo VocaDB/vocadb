@@ -1,4 +1,5 @@
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtensions;
@@ -8,7 +9,7 @@ public static class LocalizedStringQueryableExtensions
 	public const int MaxSearchWords = 10;
 
 	public static IQueryable<T> WhereEntryNameIs<T>(this IQueryable<T> query, SearchTextQuery textQuery)
-		where T : LocalizedString
+		where T : LocalizedStringWithId
 	{
 		if (textQuery.IsEmpty)
 			return query;
@@ -21,7 +22,8 @@ public static class LocalizedStringQueryableExtensions
 				return query.Where(m => m.Value == nameFilter);
 
 			case NameMatchMode.Partial:
-				return query.Where(m => m.Value.Contains(nameFilter));
+				var searchFilter = NameSearchHelper.NormalizeTerm(nameFilter);
+				return query.Where(m => m.SearchValue.Contains(searchFilter));
 
 			case NameMatchMode.StartsWith:
 				return query.Where(m => m.Value.StartsWith(nameFilter));
@@ -31,8 +33,8 @@ public static class LocalizedStringQueryableExtensions
 
 				foreach (var word in words.Take(MaxSearchWords))
 				{
-					var temp = word;
-					query = query.Where(q => q.Value.Contains(temp));
+					var temp = NameSearchHelper.NormalizeTerm(word);
+					query = query.Where(q => q.SearchValue.Contains(temp));
 				}
 
 				return query;
