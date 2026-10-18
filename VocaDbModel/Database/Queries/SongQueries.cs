@@ -866,9 +866,13 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				query = query.OrderByDescending(s => s.RatingScore);
 			}
 
-			var songs = await query
+			var ids = (await query
+				.Select(s => s.Id)
 				.Take(maxResults)
-				.VdbToListAsync();
+				.VdbToListAsync()).ToArray();
+
+			var songs = CollectionHelper.SortByIds(
+				await ctx.LoadMultiple<Song>(ids).VdbToListAsync(), ids);
 
 			var contracts = songs
 				.Select(s => new SongForApiContract(s, null, languagePreference, PermissionContext, fields))

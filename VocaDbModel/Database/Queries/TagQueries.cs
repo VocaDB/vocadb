@@ -110,10 +110,14 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 		try
 		{
-			topUsages = await q
+			var ids = (await q
 				.OrderByTagUsage<TEntry, TUsage>(tagId)
+				.Select(entry => entry.Id)
 				.Take(maxCount)
-				.VdbToListAsync();
+				.VdbToListAsync()).ToArray();
+
+			topUsages = CollectionHelper.SortByIds(
+				await ctx.LoadMultiple<TEntry>(ids).VdbToListAsync(), ids);
 
 			usageCount = await q.VdbCountAsync();
 		}

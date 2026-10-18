@@ -112,17 +112,18 @@ public class RelatedSongsQuery
 				.Select(t => t.Tag.Id)
 				.ToArray();
 
-			var songsWithTags =
+			var songIds =
 				_ctx.Query().Where(s =>
 					s.Id != songId
 					&& !loadedSongs.Contains(s.Id)
 					&& !s.Deleted
 					&& s.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
 				.OrderBy(SongSortRule.RatingScore)
+				.Select(s => s.Id)
 				.Take(count)
 				.ToArray();
 
-			songs.TagMatches = songsWithTags;
+			songs.TagMatches = CollectionHelper.SortByIds(_ctx.LoadMultiple<Song>(songIds).ToArray(), songIds);
 		}
 
 		return songs;
