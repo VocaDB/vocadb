@@ -4,4 +4,5 @@
 	url = https://github.com/VocaDB/ExtIcons.git
 [submodule "vocadb-loc"]
 	path = vocadb-loc
+	branch = main
 	url = https://github.com/VocaDB/vocadb-loc
