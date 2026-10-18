@@ -62,6 +62,7 @@ public class VenueNameMap : ClassMap<VenueName>
 
 		Map(m => m.Language).Not.Nullable();
 		Map(m => m.Value).Length(255).Not.Nullable();
+		Map(m => m.SearchValue).Length(255);
 		References(m => m.Entry).Column("[Venue]").Not.Nullable();
 	}
 }

@@ -78,6 +78,7 @@ public class EventNameMap : ClassMap<EventName>
 
 		Map(m => m.Language).Not.Nullable();
 		Map(m => m.Value).Length(255).Not.Nullable().Unique();
+		Map(m => m.SearchValue).Length(255);
 		References(m => m.Entry).Column("[Event]").Not.Nullable();
 	}
 }

@@ -1,8 +1,149 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
 using FluentMigrator;
 
 namespace VocaDb.Migrations;
+
+/// <summary>
+/// Second step of <see cref="AddSearchValueToNames"/>: run it after the version that sets SearchValue is deployed.
+/// Fills SearchValue for the names that the previous version added or renamed in between.
+/// </summary>
+[Migration(2026_10_18_0001, TransactionBehavior.None)]
+public class UpdateSearchValuesAfterDeploy : Migration
+{
+	public override void Up()
+	{
+		foreach (var (table, _) in AddSearchValueToNames.Tables)
+			Execute.WithConnection((connection, transaction) => AddSearchValueToNames.FillSearchValues(connection, transaction, table));
+	}
+
+	public override void Down()
+	{
+	}
+}
+
+/// Runs without a transaction, so that it can run while the previous version of the site is up
+[Migration(2026_10_18_0000, TransactionBehavior.None)]
+public class AddSearchValueToNames : Migration
+{
+	private const string SearchValueType = "nvarchar(255) collate Latin1_General_100_BIN2";
+	private const int BatchSize = 1000;
+
+	internal static readonly (string Table, string EntryColumn)[] Tables =
+	[
+		(TableNames.SongNames, "Song"),
+		(TableNames.ArtistNames, "Artist"),
+		(TableNames.AlbumNames, "Album"),
+		(TableNames.TagNames, "Tag"),
+		(TableNames.EventNames, "Event"),
+		(TableNames.EventSeriesNames, "Series"),
+		("VenueNames", "Venue"),
+	];
+
+	/// <summary>
+	/// Same as NameSearchHelper.Normalize in VocaDbModel
+	/// </summary>
+	private static string Normalize(string value)
+	{
+		string normalized;
+		try
+		{
+			normalized = value.Normalize(NormalizationForm.FormKC);
+		}
+		catch (ArgumentException)
+		{
+			normalized = value;
+		}
+
+		var chars = normalized.ToUpperInvariant().ToCharArray();
+
+		for (var i = 0; i < chars.Length; i++)
+		{
+			var c = chars[i];
+			if ((c >= '\u3041' && c <= '\u3096') || c == '\u309D' || c == '\u309E')
+				chars[i] = (char)(c + 0x60);
+		}
+
+		return chars.Length > 255 ? new string(chars, 0, 255) : new string(chars);
+	}
+
+	private static void AddParameter(IDbCommand command, string name, DbType type, object value, int size = 0)
+	{
+		var parameter = command.CreateParameter();
+		parameter.ParameterName = name;
+		parameter.DbType = type;
+		parameter.Size = size;
+		parameter.Value = value;
+		command.Parameters.Add(parameter);
+	}
+
+	internal static void FillSearchValues(IDbConnection connection, IDbTransaction? transaction, string table)
+	{
+		var names = new List<(int Id, string SearchValue)>();
+
+		using (var command = connection.CreateCommand())
+		{
+			command.Transaction = transaction;
+			command.CommandText = $"SELECT Id, Value, SearchValue FROM {table} ORDER BY Id";
+
+			using var reader = command.ExecuteReader();
+			while (reader.Read())
+			{
+				var searchValue = Normalize(reader.GetString(1));
+				if (reader.IsDBNull(2) || reader.GetString(2) != searchValue)
+					names.Add((reader.GetInt32(0), searchValue));
+			}
+		}
+
+		for (var start = 0; start < names.Count; start += BatchSize)
+		{
+			using var command = connection.CreateCommand();
+			command.Transaction = transaction;
+			command.CommandTimeout = 0;
+
+			var batch = names.GetRange(start, Math.Min(BatchSize, names.Count - start));
+			for (var i = 0; i < batch.Count; i++)
+			{
+				AddParameter(command, $"@i{i}", DbType.Int32, batch[i].Id);
+				AddParameter(command, $"@v{i}", DbType.String, batch[i].SearchValue, 255);
+			}
+
+			var values = string.Join(", ", batch.Select((_, i) => $"(@i{i}, @v{i})"));
+			command.CommandText = $"UPDATE n SET SearchValue = v.SearchValue FROM {table} n JOIN (VALUES {values}) v(Id, SearchValue) ON n.Id = v.Id";
+			command.ExecuteNonQuery();
+		}
+	}
+
+	public override void Up()
+	{
+		foreach (var (table, entryColumn) in Tables)
+		{
+			if (!Schema.Table(table).Column("SearchValue").Exists())
+				Create.Column("SearchValue").OnTable(table).AsCustom(SearchValueType).Nullable();
+
+			Execute.WithConnection((connection, transaction) => FillSearchValues(connection, transaction, table));
+
+			if (!Schema.Table(table).Index($"IX_{table}_SearchValue").Exists())
+				Execute.Sql($"CREATE INDEX IX_{table}_SearchValue ON {table} ({entryColumn}) INCLUDE (SearchValue)");
+		}
+
+		Execute.Sql($"CREATE INDEX IX_SongNames_Value ON {TableNames.SongNames} (Value) INCLUDE (Song, SearchValue) WITH (DROP_EXISTING = ON)");
+	}
+
+	public override void Down()
+	{
+		Execute.Sql($"CREATE INDEX IX_SongNames_Value ON {TableNames.SongNames} (Value) INCLUDE (Song) WITH (DROP_EXISTING = ON)");
+
+		foreach (var (table, _) in Tables)
+		{
+			Delete.Index($"IX_{table}_SearchValue").OnTable(table);
+			Delete.Column("SearchValue").FromTable(table);
+		}
+	}
+}
 
 [Migration(2026_02_23_0000)]
 public class ExpandAdditionalNamesString : Migration
