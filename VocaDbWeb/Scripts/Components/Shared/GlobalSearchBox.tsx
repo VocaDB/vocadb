@@ -123,6 +123,7 @@ export const GlobalSearchBox = observer(
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
 					lang: vdb.values.languagePreference,
 					query: filter,
+					sort: 'None',
 				});
 
 				if (items.length === 1) {

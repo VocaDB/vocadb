@@ -72,7 +72,7 @@ public class SearchController : ControllerBase
 			case EntryType.Undefined:
 				{
 					// Two results without a total count are enough to tell whether there is exactly one match
-					var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 2, false, EntrySortRule.Name,
+					var result = _entryQueries.GetList(filter, null, null, false, null, null, 0, 2, false, EntrySortRule.None,
 						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default,
 						searchTags: true, searchEvents: true);
 
