@@ -36,6 +36,7 @@ export class EntryRepository {
 		childTags,
 		fields,
 		status,
+		sort,
 	}: {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
@@ -44,6 +45,7 @@ export class EntryRepository {
 		childTags?: boolean;
 		fields?: EntryOptionalField[];
 		status?: string;
+		sort?: string;
 	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
 		var data = {
@@ -57,6 +59,7 @@ export class EntryRepository {
 			tagId: tags,
 			childTags: childTags,
 			status: status,
+			sort: sort,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<EntryContract>>(
