@@ -7,6 +7,22 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_10_19_0001)]
+public class ExtendPVForAlbumAndEventNames : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForAlbums).AsString(1000).NotNullable();
+		Alter.Column("Name").OnTable(TableNames.PVsForEvents).AsString(1000).NotNullable();
+	}
+
+	public override void Down()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForAlbums).AsString(200).NotNullable();
+		Alter.Column("Name").OnTable(TableNames.PVsForEvents).AsString(200).NotNullable();
+	}
+}
+
 [Migration(2026_10_19_0000)]
 public class ExtendPVForSongName : Migration
 {
