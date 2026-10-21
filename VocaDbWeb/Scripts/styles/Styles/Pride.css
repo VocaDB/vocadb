@@ -1,9 +1,30 @@
 body {
 	font-size: 80%;
 	font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
-	background: url(/miku-pride-v3.webp) top left no-repeat fixed #001155;
+	background: url(//static.vocadb.net/img/bg/pride-1920.jpg) top left no-repeat
+		fixed #001155;
+	background-image: image-set(
+		url(//static.vocadb.net/img/bg/pride-1920.avif) type('image/avif') 1x,
+		url(//static.vocadb.net/img/bg/pride-full.avif) type('image/avif') 2x,
+		url(//static.vocadb.net/img/bg/pride-1920.webp) type('image/webp') 1x,
+		url(//static.vocadb.net/img/bg/pride-full.webp) type('image/webp') 2x,
+		url(//static.vocadb.net/img/bg/pride-1920.jpg) type('image/jpeg') 1x,
+		url(//static.vocadb.net/img/bg/pride-full.jpg) type('image/jpeg') 2x
+	);
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	-webkit-background-size: cover;
 	background-size: cover;
+}
+
+/* Portrait viewports show only the left edge: see Backgrounds.less. */
+@media (max-aspect-ratio: 9/16) {
+	body {
+		background-image: url(//static.vocadb.net/img/bg/pride-portrait.jpg);
+		background-image: image-set(
+			url(//static.vocadb.net/img/bg/pride-portrait.avif) type('image/avif'),
+			url(//static.vocadb.net/img/bg/pride-portrait.webp) type('image/webp'),
+			url(//static.vocadb.net/img/bg/pride-portrait.jpg) type('image/jpeg')
+		);
+	}
 }

@@ -1,11 +1,17 @@
+@import (reference) './Backgrounds.less';
+
 @light-green: rgb(150, 220, 220);
 @medium-green: #64b7b7;
 
 body {
 	color: rgb(150, 220, 220);
-	background: url(https://static.vocadb.net/img/darkangel.png) top center
-		no-repeat fixed;
+	background: top center no-repeat fixed;
 	background-color: black;
+	.bg-image('darkangel'; 'full');
+
+	@media (max-width: 720px) {
+		.bg-image('darkangel'; 'narrow');
+	}
 }
 
 .rightFrame {

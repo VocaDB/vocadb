@@ -15,7 +15,6 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
-const TouhouDB = React.lazy(() => import('./styles/touhoudb'));
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
 const Pride = React.lazy(() => import('./styles/pride'));
@@ -59,7 +58,6 @@ const AppContainer = (): React.ReactElement => {
 				)}
 				{/* TODO: Make this properly configurable */}
 				{vdb.values.siteName.toLowerCase().includes('utaite') && <UtaiteDB />}
-				{vdb.values.siteName.toLowerCase().includes('touhou') && <TouhouDB />}
 			</React.Suspense>
 		</Container>
 	);
