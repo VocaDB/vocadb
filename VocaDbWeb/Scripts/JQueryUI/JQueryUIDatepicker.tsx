@@ -1,6 +1,6 @@
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import $ from 'jquery';
-import 'jquery-ui';
+import 'jquery-ui/datepicker';
 import React, { useImperativeHandle } from 'react';
 
 type JQueryUIDatepickerProps = {
