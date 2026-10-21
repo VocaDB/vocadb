@@ -12,7 +12,6 @@
 	},
 	"devDependencies": {
 		"@babel/preset-react": "^7.22.3",
-		"@grafana/faro-rollup-plugin": "^0.1.1",
 		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
 		"@types/classnames": "^2.3.1",
 		"@types/jest": "^29.5.2",
@@ -56,8 +55,6 @@
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
 		"@fluentui/react-icons": "^2.0.203",
-		"@grafana/faro-react": "^1.11.0",
-		"@grafana/faro-web-tracing": "^1.11.0",
 		"@restart/ui": "^0.2.6",
 		"ajv": "^8.12.0",
 		"ajv-formats": "^2.1.1",

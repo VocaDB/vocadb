@@ -15,8 +15,6 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
-import './performance-tracing';
-
 const TouhouDB = React.lazy(() => import('./styles/touhoudb'));
 const UtaiteDB = React.lazy(() => import('./styles/utaiteDb'));
 const TetoDB = React.lazy(() => import('./styles/tetoDb'));
