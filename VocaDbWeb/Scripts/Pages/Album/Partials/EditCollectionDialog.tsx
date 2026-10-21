@@ -1,4 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { Stars } from '@/Components/Shared/Partials/Shared/Stars';
 import { showSuccessMessage } from '@/Components/ui';
 import {
 	MediaType,
@@ -8,7 +9,6 @@ import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import $ from 'jquery';
-import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -100,13 +100,13 @@ const EditCollectionDialog = observer(
 					))}
 				</select>
 				<div>
-					{t('ViewRes.Album:Details.MyRating')}
-					<JqxRating
-						value={albumDetailsStore.editCollectionDialog.collectionRating}
-						onChange={(e: any): void =>
+					{t('ViewRes.Album:Details.MyRating')}{' '}
+					<Stars
+						current={albumDetailsStore.editCollectionDialog.collectionRating}
+						max={5}
+						onChange={(value): void =>
 							runInAction(() => {
-								albumDetailsStore.editCollectionDialog.collectionRating =
-									e.value;
+								albumDetailsStore.editCollectionDialog.collectionRating = value;
 							})
 						}
 					/>{' '}
