@@ -1,12 +1,9 @@
-import faroUploader from '@grafana/faro-rollup-plugin';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-	const env = loadEnv(mode, process.cwd());
-	const VITE_FARO_API_KEY = `${env.VITE_FARO_API_KEY ?? ''}`;
+export default defineConfig(() => {
 	const betaMode = process.env.mode === 'beta';
 	console.log('Using https://beta.vocadb.net/ :', betaMode);
 
@@ -24,16 +21,6 @@ export default defineConfig(({ mode }) => {
 			react({
 				// https://dev.to/ajitsinghkamal/using-emotionjs-with-vite-2ndj#comment-1nif3
 				jsxImportSource: '@emotion/react',
-			}),
-			faroUploader({
-				appName: 'vocadb_frontend',
-				endpoint: 'https://faro-api-prod-eu-west-2.grafana.net/faro/api/v1',
-				appId: 'vocadb_frontend',
-				stackId: '1088236',
-				// instructions on how to obtain your API key are in the documentation
-				// https://grafana.com/docs/grafana-cloud/monitor-applications/frontend-observability/sourcemap-upload-plugins/#obtain-an-api-key
-				apiKey: VITE_FARO_API_KEY,
-				gzipContents: true,
 			}),
 		],
 		server: {
