@@ -1,5 +1,11 @@
 body {
-	background: url(../Content/teto.jpg) top center no-repeat fixed;
+	background: url(//static.vocadb.net/img/bg/tetodb-full.jpg) top center no-repeat
+		fixed;
+	background-image: image-set(
+		url(//static.vocadb.net/img/bg/tetodb-full.avif) type('image/avif'),
+		url(//static.vocadb.net/img/bg/tetodb-full.webp) type('image/webp'),
+		url(//static.vocadb.net/img/bg/tetodb-full.jpg) type('image/jpeg')
+	);
 }
 
 /* Layout */

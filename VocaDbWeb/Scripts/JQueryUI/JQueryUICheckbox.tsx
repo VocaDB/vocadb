@@ -1,6 +1,6 @@
 import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import $ from 'jquery';
-import 'jquery-ui';
+import 'jquery-ui/button';
 import React, { useImperativeHandle } from 'react';
 
 type JQueryUICheckboxProps = {} & JQueryUI.ButtonOptions &

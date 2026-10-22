@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-site="{{siteName}}">
 	<head>
 		<!--{incontextloc} <script type="text/javascript">
 			var _jipt = [];
@@ -16,8 +16,12 @@
 		<meta name="keywords" content="{{keywords}}" />
 		<meta name="og:image" content="{{ogImage}}" />
 		<link rel="shortcut icon" href="{{favicon}}" type="image/x-icon" />
-		<!-- TODO: Remove. -->
-		<link rel="stylesheet" href="/Scripts/jqwidgets27/styles/jqx.base.css" />
+		<link
+			rel="preload"
+			href="/api/globals/values"
+			as="fetch"
+			crossorigin="anonymous"
+		/>
 		<link
 			rel="search"
 			type="application/opensearchdescription+xml"

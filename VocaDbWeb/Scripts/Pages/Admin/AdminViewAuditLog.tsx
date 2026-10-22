@@ -14,7 +14,7 @@ import dayjs from '@/dayjs';
 import { useLocationStateStore } from '@/route-sphere';
 import classNames from 'classnames';
 import $ from 'jquery';
-import 'jquery-ui';
+import 'jquery-ui/autocomplete';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

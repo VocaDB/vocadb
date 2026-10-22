@@ -1,6 +1,5 @@
-import { FaroRoutes } from '@grafana/faro-react';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import ActivateNewFrontend from './ActivateNewFrontend';
 
@@ -47,7 +46,7 @@ const RewindRoutes = React.lazy(() => import('@/Pages/Rewind/RewindRoutes'));
 
 const AppRoutes = (): React.ReactElement => {
 	return (
-		<FaroRoutes>
+		<Routes>
 			<Route path="ActivityEntry/*" element={<ActivityEntryRoutes />} />
 			<Route path="Admin/*" element={<AdminRoutes />} />
 			<Route path="Album/*" element={<AlbumRoutes />} />
@@ -79,7 +78,7 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="rewind/*" element={<RewindRoutes />} />
 
 			<Route path="*" element={<HomeRoutes />} />
-		</FaroRoutes>
+		</Routes>
 	);
 };
 

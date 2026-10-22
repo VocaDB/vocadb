@@ -1,0 +1,52 @@
+// Variants:
+// * full: the whole picture. With 1920 (2x: full) for pictures much wider than a 1x screen.
+// * portrait: for background-size: cover anchored top left.
+// * narrow: the middle 720 px of a picture shown at its natural size, centred.
+
+@bg-base: '//static.vocadb.net/img/bg';
+@bg-portrait: ~'(max-aspect-ratio: 9/16)';
+
+.bg-image(@name; @variant) {
+	background-image: url('@{bg-base}/@{name}-@{variant}.jpg');
+	background-image: image-set(
+		url('@{bg-base}/@{name}-@{variant}.avif') type('image/avif'),
+		url('@{bg-base}/@{name}-@{variant}.webp') type('image/webp'),
+		url('@{bg-base}/@{name}-@{variant}.jpg') type('image/jpeg')
+	);
+}
+
+.bg-image-hidpi(@name) {
+	background-image: url('@{bg-base}/@{name}-1920.jpg');
+	background-image: image-set(
+		url('@{bg-base}/@{name}-1920.avif') type('image/avif') 1x,
+		url('@{bg-base}/@{name}-full.avif') type('image/avif') 2x,
+		url('@{bg-base}/@{name}-1920.webp') type('image/webp') 1x,
+		url('@{bg-base}/@{name}-full.webp') type('image/webp') 2x,
+		url('@{bg-base}/@{name}-1920.jpg') type('image/jpeg') 1x,
+		url('@{bg-base}/@{name}-full.jpg') type('image/jpeg') 2x
+	);
+}
+
+body {
+	.bg-image('vocadb'; 'full');
+
+	@media @bg-portrait {
+		.bg-image('vocadb'; 'portrait');
+	}
+}
+
+html[data-site*='touhou' i] body {
+	.bg-image('touhoudb'; 'full');
+
+	@media @bg-portrait {
+		.bg-image('touhoudb'; 'portrait');
+	}
+}
+
+html[data-site*='utaite' i] body {
+	.bg-image-hidpi('utaitedb');
+
+	@media @bg-portrait {
+		.bg-image('utaitedb'; 'portrait');
+	}
+}

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import 'jquery-ui';
+import 'jquery-ui/autocomplete';
 import React, { useImperativeHandle } from 'react';
 
 type JQueryUIAutocompleteProps = {
