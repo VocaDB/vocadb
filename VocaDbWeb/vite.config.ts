@@ -2,6 +2,8 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
+import { locales } from './vite.locales';
+
 // https://vitejs.dev/config/
 export default defineConfig(() => {
 	const betaMode = process.env.mode === 'beta';
@@ -22,6 +24,7 @@ export default defineConfig(() => {
 				// https://dev.to/ajitsinghkamal/using-emotionjs-with-vite-2ndj#comment-1nif3
 				jsxImportSource: '@emotion/react',
 			}),
+			locales(resolve(__dirname, './public/locales')),
 		],
 		server: {
 			proxy: {
