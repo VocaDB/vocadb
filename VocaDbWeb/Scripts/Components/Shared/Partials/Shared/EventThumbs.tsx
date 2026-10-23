@@ -50,6 +50,8 @@ export const EventThumbs = ({
 							title={event.additionalNames}
 						>
 							<img
+								loading="lazy"
+								decoding="async"
 								className="media-object"
 								src={UrlHelper.getSmallestThumb(event.mainPicture, imageSize)}
 								alt="Thumb" /* LOC */

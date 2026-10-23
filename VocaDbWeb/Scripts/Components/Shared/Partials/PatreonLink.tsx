@@ -14,6 +14,8 @@ export const PatreonLink = React.memo((): React.ReactElement => {
 
 			<a href={vdb.values.patreonLink} target="_blank" rel="noreferrer">
 				<img
+					loading="lazy"
+					decoding="async"
 					src={'/Content/patreon.png'}
 					alt="Support on Patreon"
 					title="Support on Patreon"

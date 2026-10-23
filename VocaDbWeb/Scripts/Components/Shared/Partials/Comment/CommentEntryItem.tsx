@@ -26,6 +26,8 @@ export const CommentEntryItem = React.memo(
 						title={entry.additionalNames}
 					>
 						<img
+							loading="lazy"
+							decoding="async"
 							src={thumbUrl}
 							alt="thumb" /* LOC */
 							className="coverPicThumb"

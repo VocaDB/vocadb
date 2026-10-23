@@ -108,6 +108,8 @@ const SongSearchListTableRow = observer(
 						>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
+								loading="lazy"
+								decoding="async"
 								src={song.mainPicture.urlThumb}
 								title="Cover picture" /* LOC */
 								className="coverPicThumb img-rounded"

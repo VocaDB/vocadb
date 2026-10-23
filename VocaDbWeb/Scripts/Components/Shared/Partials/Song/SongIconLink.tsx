@@ -19,6 +19,8 @@ export const SongIconLink = React.memo(
 				})}`}
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					src={UrlHelper.upgradeToHttps(song.mainPicture?.urlThumb)}
 					alt="Cover" /* LOC */
 					className="coverPicThumb"

@@ -13,11 +13,23 @@ export const PictureRow = React.memo(
 			<tr>
 				<td>{name}</td>
 				<td colSpan={compareToUrl !== undefined ? 1 : 2}>
-					<img src={url} alt={name} className="coverPic" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src={url}
+						alt={name}
+						className="coverPic"
+					/>
 				</td>
 				{compareToUrl !== undefined && (
 					<td>
-						<img src={compareToUrl} alt={name} className="coverPic" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src={compareToUrl}
+							alt={name}
+							className="coverPic"
+						/>
 					</td>
 				)}
 			</tr>

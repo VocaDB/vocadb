@@ -144,6 +144,8 @@ const EventSearchList = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
+												loading="lazy"
+												decoding="async"
 												src={event.mainPicture.urlSmallThumb}
 												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"

@@ -456,6 +456,8 @@ const TagDetailsLayout = observer(
 								)}
 							>
 								<img
+									loading="lazy"
+									decoding="async"
 									className="media-object"
 									src={UrlHelper.getSmallestThumb(
 										tag.mainPicture,

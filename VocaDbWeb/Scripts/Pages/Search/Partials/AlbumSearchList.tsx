@@ -140,6 +140,8 @@ const AlbumSearchList = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
+												loading="lazy"
+												decoding="async"
 												src={
 													album.mainPicture?.urlTinyThumb ??
 													'/Content/unknown.png'
@@ -221,6 +223,8 @@ const AlbumSearchList = observer(
 														{index > 0 && ' '}
 														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img
+															loading="lazy"
+															decoding="async"
 															src={
 																ratingStar.enabled
 																	? '/Content/star.png'

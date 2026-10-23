@@ -34,6 +34,8 @@ export const PersonalDescriptionMedia = observer(
 							className="pull-left"
 						>
 							<img
+								loading="lazy"
+								decoding="async"
 								className="coverPicThumb"
 								alt="Thumb" /* LOC */
 								src={personalDescription.author.entry.mainPicture.urlSmallThumb}

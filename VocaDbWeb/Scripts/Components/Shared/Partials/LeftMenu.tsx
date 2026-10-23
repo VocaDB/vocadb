@@ -27,7 +27,13 @@ const BannerLink = React.memo(
 					functions.trackOutboundLink(e.nativeEvent);
 				}}
 			>
-				<img src={`/Content/banners/${img}`} alt={title} title={title} />
+				<img
+					loading="lazy"
+					decoding="async"
+					src={`/Content/banners/${img}`}
+					alt={title}
+					title={title}
+				/>
 			</a>
 		);
 	},

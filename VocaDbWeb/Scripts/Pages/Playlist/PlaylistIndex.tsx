@@ -385,6 +385,8 @@ const PlaylistTableRow = observer(
 						>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
+								loading="lazy"
+								decoding="async"
 								src={item.entry.urlThumb}
 								title="Cover picture" /* LOC */
 								className="coverPicThumb img-rounded"

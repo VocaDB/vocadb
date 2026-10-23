@@ -79,6 +79,8 @@ const ArtistSearchList = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
+												loading="lazy"
+												decoding="async"
 												src={artist.mainPicture.urlTinyThumb}
 												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"
