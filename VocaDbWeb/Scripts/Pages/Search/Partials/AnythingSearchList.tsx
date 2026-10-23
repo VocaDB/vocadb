@@ -104,6 +104,8 @@ const AnythingSearchList = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
+												loading="lazy"
+												decoding="async"
 												src={entry.mainPicture.urlTinyThumb}
 												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"

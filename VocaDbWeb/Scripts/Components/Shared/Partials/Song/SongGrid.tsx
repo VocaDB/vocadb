@@ -15,6 +15,8 @@ const SongIconLink = ({ song }: SongIconLinkProps): React.ReactElement => {
 	return song.mainPicture && song.mainPicture.urlThumb ? (
 		<Link to={EntryUrlMapper.details_song(song)}>
 			<img
+				loading="lazy"
+				decoding="async"
 				src={UrlHelper.upgradeToHttps(song.mainPicture.urlThumb)}
 				alt="Cover" /* LOC */
 				className="coverPicThumb"

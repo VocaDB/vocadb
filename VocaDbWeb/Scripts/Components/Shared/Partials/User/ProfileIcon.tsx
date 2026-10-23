@@ -16,6 +16,8 @@ export const ProfileIcon = React.memo(
 				}}
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					src={url}
 					alt="Icon" /* LOC */
 					style={{ width: size, height: size, objectFit: 'cover' }}

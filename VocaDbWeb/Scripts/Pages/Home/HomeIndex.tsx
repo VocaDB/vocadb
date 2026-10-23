@@ -96,6 +96,9 @@ const PVPlayer = observer(
 													/>
 													{song.mainPicture && song.mainPicture.urlThumb && (
 														<img
+															// The first page is visible right away.
+															loading={index === 0 ? 'eager' : 'lazy'}
+															decoding="async"
 															src={UrlHelper.upgradeToHttps(
 																song.mainPicture.urlThumb,
 															)}
@@ -190,6 +193,8 @@ const HomeIndexLayout = ({
 									}}
 								>
 									<img
+										loading="lazy"
+										decoding="async"
 										src={functions.mergeUrls(
 											vdb.values.staticContentHost,
 											banner.imageUrl,

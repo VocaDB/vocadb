@@ -49,7 +49,12 @@ const AdminPVsByAuthor = (): React.ReactElement => {
 							<tr>
 								<td>
 									<a href={pv.url}>
-										<img src={pv.thumbUrl} alt={pv.name} />
+										<img
+											loading="lazy"
+											decoding="async"
+											src={pv.thumbUrl}
+											alt={pv.name}
+										/>
 									</a>
 								</td>
 								<td>

@@ -41,6 +41,8 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 								css={{ display: 'block', width: '100%', height: '100%' }}
 							>
 								<img
+									loading="lazy"
+									decoding="async"
 									src={thumbUrl}
 									alt="Preview" /* LOC */
 									className="coverPic"
@@ -52,6 +54,8 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 								css={{ display: 'block', width: '100%', height: '100%' }}
 							>
 								<img
+									loading="lazy"
+									decoding="async"
 									src={thumbUrl}
 									alt="Preview" /* LOC */
 									className="coverPic"

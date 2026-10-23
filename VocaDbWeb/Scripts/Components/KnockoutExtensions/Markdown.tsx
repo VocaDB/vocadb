@@ -18,6 +18,10 @@ export const Markdown = ({ children }: MarkdownProps): React.ReactElement => {
 						{...props}
 					/>
 				),
+				// User content, often below the fold.
+				img: ({ node, ...props }): React.ReactElement => (
+					<img loading="lazy" decoding="async" {...props} />
+				),
 			}}
 		>
 			{children}

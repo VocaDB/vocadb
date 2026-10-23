@@ -16,6 +16,8 @@ export const AlbumIconLink = ({
 	return (
 		<Link to={EntryUrlMapper.details(EntryType.Album, album.id)}>
 			<img
+				loading="lazy"
+				decoding="async"
 				src={UrlHelper.imageThumb(album.mainPicture, ImageSize.TinyThumb)}
 				alt="Cover" /* LOC */
 				className="coverPicThumb"

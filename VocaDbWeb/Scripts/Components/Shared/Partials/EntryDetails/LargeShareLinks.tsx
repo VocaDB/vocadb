@@ -19,6 +19,8 @@ export const LargeShareLinks = ({
 				rel="noreferrer"
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					alt="Share on Facebook" /* LOC */
 					src="/Content/ExtIcons/facebook32.png"
 					style={{ border: 0, height: '32px', width: '32px', margin: '0 1px' }}
@@ -32,6 +34,8 @@ export const LargeShareLinks = ({
 				title="Reddit!"
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					alt="Reddit!"
 					src="/Content/ExtIcons/reddit32.png"
 					style={{ border: 0, height: '32px', width: '32px', margin: '0 1px' }}
@@ -45,6 +49,8 @@ export const LargeShareLinks = ({
 				title="Share on Twitter" /* LOC */
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					alt="Twitter"
 					src="/Content/ExtIcons/twitter32.png"
 					style={{
@@ -70,6 +76,8 @@ export const LargeShareLinks = ({
 				title="Share on Google+" /* LOC */
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					alt="Google+"
 					src="https://www.gstatic.com/images/icons/gplus-32.png"
 					style={{ border: 0, height: '32px', width: '32px', margin: '0 1px' }}

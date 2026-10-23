@@ -217,6 +217,8 @@ const UserSearchListTableRow = observer(
 						<Link to={EntryUrlMapper.details_user_byName(user.name)}>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
+								loading="lazy"
+								decoding="async"
 								src={user.mainPicture.urlThumb}
 								title="Picture"
 								className="img-rounded"

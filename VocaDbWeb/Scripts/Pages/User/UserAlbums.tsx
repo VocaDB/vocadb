@@ -390,6 +390,8 @@ const AlbumCollection = observer(
 													>
 														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img
+															loading="lazy"
+															decoding="async"
 															src={albumForUser.album.mainPicture.urlTinyThumb}
 															title="Cover picture" /* LOC */
 															className="coverPicThumb img-rounded"
@@ -471,6 +473,8 @@ const AlbumCollection = observer(
 															{index > 0 && ' '}
 															{/* eslint-disable-next-line jsx-a11y/alt-text */}
 															<img
+																loading="lazy"
+																decoding="async"
 																src={
 																	ratingStar.enabled
 																		? '/Content/star.png'

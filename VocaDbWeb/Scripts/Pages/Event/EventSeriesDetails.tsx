@@ -117,6 +117,8 @@ const EventSeriesDetailsLayout = ({
 						href={UrlHelper.imageThumb(series.mainPicture, ImageSize.Original)}
 					>
 						<img
+							loading="lazy"
+							decoding="async"
 							className="media-object"
 							src={UrlHelper.imageThumb(
 								series.mainPicture,

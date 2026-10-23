@@ -32,6 +32,8 @@ export const EventSeriesThumbs = ({
 							title={event.additionalNames}
 						>
 							<img
+								loading="lazy"
+								decoding="async"
 								className="media-object"
 								src={UrlHelper.imageThumb(
 									event.mainPicture,

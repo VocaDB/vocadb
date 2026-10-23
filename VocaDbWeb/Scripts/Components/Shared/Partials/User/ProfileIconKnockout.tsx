@@ -16,6 +16,8 @@ export const ProfileIconKnockout = React.memo(
 				}}
 			>
 				<img
+					loading="lazy"
+					decoding="async"
 					src={icon ?? '/Content/unknown.png'}
 					alt="User avatar"
 					style={{ width: size, height: size, objectFit: 'cover' }}

@@ -14,6 +14,7 @@ export const EmbedOpenStreetMap = React.memo(
 				<iframe
 					width="425"
 					height="350"
+					loading="lazy"
 					frameBorder="0"
 					scrolling="no"
 					marginHeight={0}

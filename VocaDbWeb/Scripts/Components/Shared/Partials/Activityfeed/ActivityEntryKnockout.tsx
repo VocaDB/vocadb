@@ -166,6 +166,8 @@ export const ActivityEntryKnockout = observer(
 								title={entry.entry.additionalNames}
 							>
 								<img
+									loading="lazy"
+									decoding="async"
 									src={
 										entry.entry.mainPicture.urlTinyThumb ||
 										entry.entry.mainPicture.urlSmallThumb

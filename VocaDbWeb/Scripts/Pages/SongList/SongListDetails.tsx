@@ -81,6 +81,8 @@ const SongListDetailsTableRow = observer(
 						>
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
+								loading="lazy"
+								decoding="async"
 								src={item.song.mainPicture.urlThumb}
 								title="Cover picture" /* LOC */
 								className="coverPicThumb img-rounded"
@@ -345,6 +347,8 @@ const SongListDetailsLayout = observer(
 					{smallThumbUrl && (
 						<a className="pull-left" href={thumbUrl}>
 							<img
+								loading="lazy"
+								decoding="async"
 								className="media-object"
 								src={smallThumbUrl}
 								alt="Thumb" /* LOC */

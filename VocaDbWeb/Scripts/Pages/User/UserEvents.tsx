@@ -86,6 +86,8 @@ const Events = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
+												loading="lazy"
+												decoding="async"
 												alt="Picture" /* LOC */
 												src={event.mainPicture.urlTinyThumb}
 											/>
