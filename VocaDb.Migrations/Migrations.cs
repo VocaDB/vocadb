@@ -7,6 +7,36 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_10_19_0001)]
+public class ExtendPVForAlbumAndEventNames : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForAlbums).AsString(1000).NotNullable();
+		Alter.Column("Name").OnTable(TableNames.PVsForEvents).AsString(1000).NotNullable();
+	}
+
+	public override void Down()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForAlbums).AsString(200).NotNullable();
+		Alter.Column("Name").OnTable(TableNames.PVsForEvents).AsString(200).NotNullable();
+	}
+}
+
+[Migration(2026_10_19_0000)]
+public class ExtendPVForSongName : Migration
+{
+	public override void Up()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForSongs).AsString(1000).NotNullable();
+	}
+
+	public override void Down()
+	{
+		Alter.Column("Name").OnTable(TableNames.PVsForSongs).AsString(200).NotNullable();
+	}
+}
+
 /// <summary>
 /// Second step of <see cref="AddSearchValueToNames"/>: run it after the version that sets SearchValue is deployed.
 /// Fills SearchValue for the names that the previous version added or renamed in between.
