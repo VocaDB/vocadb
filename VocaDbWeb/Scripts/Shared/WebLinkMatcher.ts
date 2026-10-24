@@ -2128,6 +2128,101 @@ export class WebLinkMatcher {
 			desc: 'VGen',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'acggoods.com/',
+			desc: 'ACGGOODS',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'piku.page/',
+			desc: 'Piku Page',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'fanloid.fandom.com/wiki/',
+			desc: 'Fanloid Wiki',
+			cat: WebLinkCategory.Reference,
+		},	
+		{	
+			url: 'www.wikidata.org/wiki/',
+			desc: 'Wikidata',
+			cat: WebLinkCategory.Reference,
+		},
+		{	
+			url: 'xfolio.jp/',
+			desc: 'Xfolio',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'lnk.bio/',
+			desc: 'Lnk.Bio',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'www.wattpad.com/',
+			desc: 'Wattpad',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'www.fiverr.com/',
+			desc: 'Fiverr',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'profu.link/',
+			desc: 'Profu.link',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'cluster.mu/',
+			desc: 'Cluster',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'hub.vroid.com/',
+			desc: 'VRoid Hub',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'www.foriio.com/',
+			desc: 'foriio',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'www.mixcloud.com/',
+			desc: 'Mixcloud',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'www.etsy.com/',
+			desc: 'Etsy',
+			cat: WebLinkCategory.Commercial,
+		},
+		{	
+			url: 'pinterest.com/',
+			desc: 'Pinterest',
+			cat: WebLinkCategory.Official,
+		},
+		{	
+			url: 'nozomi.la/',
+			desc: 'Nozomi.la',
+			cat: WebLinkCategory.Reference,
+		},
+		{	
+			url: 'danbooru.donmai.us/',
+			desc: 'Danbooru',
+			cat: WebLinkCategory.Reference,
+		},
+		{	
+			url: 'utaudb.cc/',
+			desc: 'UtauDB',
+			cat: WebLinkCategory.Reference,
+		},
+		{	
+			url: 'li.sten.to/',
+			desc: 'ListenTo',
+			cat: WebLinkCategory.Commercial,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
