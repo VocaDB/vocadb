@@ -30,7 +30,7 @@ const themeCredits: Record<string, BackgroundCredit> = {
 
 const defaultCredit: BackgroundCredit = {
 	artistName: 'みゆ',
-	artistUrl: 'https://piapro.jp/t/nire',
+	artistUrl: 'https://web.archive.org/web/20190410191107/https://piapro.jp/t/nire',
 };
 
 export function getBackgroundCredit(values: GlobalValues): BackgroundCredit {
