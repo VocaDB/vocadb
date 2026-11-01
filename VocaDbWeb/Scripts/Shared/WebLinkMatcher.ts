@@ -534,6 +534,11 @@ export class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'hamp.ai/',
+			desc: 'Hamp',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'vocaloid.blog120.fc2.com',
 			desc: 'Hatsune Miku Miku',
 			cat: WebLinkCategory.Reference,
@@ -1522,6 +1527,11 @@ export class WebLinkMatcher {
 			url: '://vk.com/',
 			desc: 'VK',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'vndb.org/',
+			desc: 'VNDB',
+			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'vocadb.net/',
