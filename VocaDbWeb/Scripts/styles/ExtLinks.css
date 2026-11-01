@@ -322,6 +322,10 @@ a.extLink[href*='://www.grep-shop.com/']
 	background-image: url('/Content/ExtIcons/grepshop.png');
 }
 
+a.extLink[href*='hamp.ai/'] {
+	background-image: url('/Content/ExtIcons/hamp.png');
+}
+
 a.extLink[href*='hatenadiary.org/'] {
 	background-image: url('/Content/ExtIcons/hatena_diary.png');
 }
@@ -783,6 +787,11 @@ a.extLink[href*='://vimeo.com/']
 a.extLink[href*='://vk.com/']
 {
 	background-image: url('/Content/ExtIcons/vk.png');
+}
+
+a.extLink[href*='vndb.org/']
+{
+	background-image: url('/Content/ExtIcons/vndb.png');
 }
 
 a.extLink[href*='://www.vocaloidotaku.net/']
