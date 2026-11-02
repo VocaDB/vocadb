@@ -26,7 +26,12 @@ export const Star = ({
 						overflow: 'hidden',
 					}}
 				>
-					<img src="/Content/star.png" alt="" style={{ maxWidth: 'none' }} />
+					<img
+						className={className}
+						src="/Content/star.png"
+						alt=""
+						style={{ maxWidth: 'none' }}
+					/>
 				</span>
 			)}
 		</span>
@@ -37,7 +42,10 @@ export const starFill = (current: number, i: number): number =>
 	Math.max(0, Math.min(1, current - i + 1));
 
 // Left half of star `i` selects i - 0.5, right half selects i.
-const valueAt = (e: React.MouseEvent<HTMLElement>, i: number): number => {
+export const valueAt = (
+	e: React.MouseEvent<HTMLElement>,
+	i: number,
+): number => {
 	const { left, width } = e.currentTarget.getBoundingClientRect();
 	return e.clientX - left < width / 2 ? i - 0.5 : i;
 };
@@ -55,15 +63,15 @@ export const Stars = React.memo(
 		if (!onChange) {
 			return (
 				<>
-					{range(1, max + 1).map((i) => (
-						<React.Fragment key={i}>
-							{i > 0 && ' '}
-							<Star
-								fill={starFill(current, i)}
-								alt={starFill(current, i) > 0 ? '*' : ''}
-							/>
-						</React.Fragment>
-					))}
+					{range(1, max + 1).map((i) => {
+						const fill = starFill(current, i);
+						return (
+							<React.Fragment key={i}>
+								{i > 0 && ' '}
+								<Star fill={fill} alt={fill > 0 ? '*' : ''} />
+							</React.Fragment>
+						);
+					})}
 				</>
 			);
 		}

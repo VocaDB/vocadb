@@ -21,7 +21,7 @@ public class ChangeRatingColumnsToDecimal : Migration
 
 	public override void Down()
 	{
-		// Revert to previous integer columns
+		// Revert to previous integer columns. Fractional ratings (e.g. 2.5) lose their decimal part.
 		Alter.Column("Rating").OnTable(TableNames.AlbumsForUsers).AsInt32().NotNullable().WithDefaultValue(0);
 		Alter.Column("RatingTotal").OnTable(TableNames.Albums).AsInt32().NotNullable().WithDefaultValue(0);
 	}

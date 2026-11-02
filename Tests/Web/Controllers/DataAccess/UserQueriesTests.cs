@@ -684,6 +684,33 @@ public class UserQueriesTests
 	}
 
 	[TestMethod]
+	public void UpdateAlbumForUser_HalfStarRating()
+	{
+		var album = _repository.Save(CreateEntry.Album());
+		_data.UpdateAlbumForUser(_userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 2.5);
+		_data.UpdateAlbumForUser(_userWithoutEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 4);
+
+		_userWithEmail.Albums.First(a => a.Album == album).Rating.Should().Be(2.5, "Rating");
+		album.RatingCount.Should().Be(2, "RatingCount");
+		album.RatingTotal.Should().Be(6.5, "RatingTotal");
+		album.RatingAverageInt.Should().Be(325, "RatingAverageInt");
+	}
+
+	[DataRow(-1)]
+	[DataRow(5.5)]
+	[DataRow(2.37)]
+	[DataRow(double.NaN)]
+	[TestMethod]
+	public void UpdateAlbumForUser_InvalidRating(double rating)
+	{
+		var album = _repository.Save(CreateEntry.Album());
+
+		Invoking(() => _data.UpdateAlbumForUser(_userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, rating))
+			.Should().Throw<ArgumentOutOfRangeException>();
+		_repository.List<AlbumForUser>().Count.Should().Be(0, "Number of album links in the repo");
+	}
+
+	[TestMethod]
 	public void UpdateEventForUser()
 	{
 		var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("Miku land"));
