@@ -19,7 +19,7 @@
     "TagCategory": "Categoría",
     "TagInformation": "Información de la etiqueta",
     "Times": "veces",
-    "TotalScore": "puntuación total",
+    "TotalScore": "de puntuación total",
     "TypeSomething": "Escriba algo...",
     "IncludeDerivedVoicebanks": "Incluir bancos de voz derivados",
     "MinScore": "Puntuación mínima",
@@ -39,6 +39,6 @@
     "Bpm": "PPM",
     "Duration": "Duración",
     "Language": "Idioma",
-    "PVService": "PV service"
+    "PVService": "Plataforma"
   }
 }
