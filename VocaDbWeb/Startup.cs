@@ -284,8 +284,6 @@ public class Startup
 			app.UseHttpsRedirection();
 		}
 
-		app.UseStaticFiles();
-
 		// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
 		app.UseSwagger();
 		app.UseSwaggerUI(c =>
@@ -295,7 +293,24 @@ public class Startup
 
 		app.UseForwardedHeaders();
 
+		app.Use((context, next) =>
+		{
+			if (context.Request.Path.StartsWithSegments("/assets"))
+			{
+				context.Response.OnStarting(() =>
+				{
+					if (context.Response.StatusCode is StatusCodes.Status200OK or StatusCodes.Status304NotModified)
+						context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
+					return Task.CompletedTask;
+				});
+			}
+			return next(context);
+		});
+
 		app.UseRouting();
+
+		// Files not in the build-time static assets manifest like robots.txt
+		app.UseStaticFiles();
 
 		app.UseRequestLocalization(options =>
 		{
@@ -346,6 +361,8 @@ public class Startup
 
 		app.UseEndpoints(endpoints =>
 		{
+			endpoints.MapStaticAssets().ShortCircuit();
+
 			const string Numeric = "[0-9]+";
 
 			// Ignored files

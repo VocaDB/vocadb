@@ -8,6 +8,7 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseImageSharp>true</UseImageSharp>
+    <StaticWebAssetEndpointExclusionPattern>$(StaticWebAssetEndpointExclusionPattern);Content/**;Scripts/**;images/**;locales/**;*.webp;*.jpg;*.html;*.xml;*.br;*.gz</StaticWebAssetEndpointExclusionPattern>
   </PropertyGroup>
 
   <ItemGroup>
