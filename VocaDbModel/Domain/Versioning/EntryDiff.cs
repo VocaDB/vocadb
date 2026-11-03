@@ -56,8 +56,8 @@ public abstract class EntryDiff<T> : IEntryDiff where T : struct, Enum
 			var fieldNames = value.Split(',');
 			foreach (var name in fieldNames)
 			{
-				if (Enum.TryParse(name, out T field))
-					SetChanged(field);
+				if (Enum.TryParse(name, out T changedField))
+					SetChanged(changedField);
 			}
 		}
 	}
