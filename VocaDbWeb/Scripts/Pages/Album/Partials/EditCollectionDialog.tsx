@@ -6,9 +6,8 @@ import {
 	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { urlMapper } from '@/Shared/UrlMapper';
+import { userRepo } from '@/Repositories/UserRepository';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
-import $ from 'jquery';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -35,7 +34,7 @@ const EditCollectionDialog = observer(
 								albumDetailsStore.editCollectionDialog.dialogVisible = false;
 							});
 
-							await $.post(urlMapper.mapRelative('/User/UpdateAlbumForUser'), {
+							await userRepo.updateAlbumForUser({
 								albumId: albumDetailsStore.editCollectionDialog.albumId,
 								collectionStatus:
 									albumDetailsStore.editCollectionDialog.albumPurchaseStatus,

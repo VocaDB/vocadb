@@ -724,7 +724,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			}
 
 			diff.Description.Set(target.Description.CopyIfEmpty(source.Description));
-
+			
 			// Targets
 			if (!target.NewTargets.SequenceEqual(source.NewTargets))
 			{
@@ -921,9 +921,9 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 			if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 				diff.HideFromSuggestions.Set();
 
-			if (!tag.NewTargets.SequenceEqual(contract.NewTargets))
+			if (!tag.NewTargets.SequenceEqual(contract.NewTargets)) 
 				diff.Targets.Set();
-
+			
 			if (tag.Targets != (TagTargetTypes)contract.Targets)
 				diff.Targets.Set();
 
