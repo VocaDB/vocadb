@@ -12,8 +12,6 @@ public interface IEntryWithReadOnlyIntId : IDatabaseObject
 public interface IEntryWithIntId : IEntryWithReadOnlyIntId
 {
 	new int Id { get; set; }
-
-	int IEntryWithReadOnlyIntId.Id => Id;
 }
 
 /// <summary>

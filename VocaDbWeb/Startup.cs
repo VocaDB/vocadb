@@ -5,8 +5,6 @@ using Autofac;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -153,8 +151,8 @@ public class Startup
 		{
 			options.ForwardedForHeaderName = "CF-Connecting-IP";
 			options.ForwardedHeaders = ForwardedHeaders.All;
-			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.Any, 0));
-			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.IPv6Any, 0));
+			options.KnownIPNetworks.Add(new System.Net.IPNetwork(IPAddress.Any, 0));
+			options.KnownIPNetworks.Add(new System.Net.IPNetwork(IPAddress.IPv6Any, 0));
 		});
 	}
 
@@ -169,8 +167,6 @@ public class Startup
 		//builder.RegisterModule(new AutofacWebTypesModule());
 
 		builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-		builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
-		builder.Register(x => new UrlHelperFactory().GetUrlHelper(x.Resolve<IActionContextAccessor>().ActionContext));
 
 		// TODO: re-enable cache
 		builder.Register(x => DatabaseConfiguration.BuildSessionFactory(useSysCache: false)).SingleInstance();

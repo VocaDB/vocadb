@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Model</RootNamespace>
     <AssemblyName>VocaDb.Model</AssemblyName>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -44,30 +44,30 @@
     <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
     <PackageReference Include="AWSSDK.S3" Version="4.0.7.9" />
     <PackageReference Include="Discord.Net.Webhook" Version="3.8.1" />
-    <PackageReference Include="FluentNHibernate" Version="3.1.0" />
+    <PackageReference Include="FluentNHibernate" Version="3.5.0" />
     <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageReference Include="HtmlSanitizer" Version="7.1.542" />
-    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
+    <PackageReference Include="Iesi.Collections" Version="4.1.1" />
     <PackageReference Include="IvanAkcheurov.NTextCat.Lib" Version="0.2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="10.0.14" />
     <PackageReference Include="Microsoft.Bcl.Immutable" Version="1.0.34" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.14" />
     <PackageReference Include="Microsoft.ML" Version="1.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="NHibernate" Version="5.3.13" />
+    <PackageReference Include="NHibernate" Version="5.7.1" />
     <PackageReference Include="NHibernate.Caches.SysCache2" Version="5.8.0" />
     <PackageReference Include="NLog" Version="5.0.4" />
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.14" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.14" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-    <PackageReference Include="System.IO.Packaging" Version="6.0.1" />
-    <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
+    <PackageReference Include="System.IO.Packaging" Version="10.0.14" />
+    <PackageReference Include="System.Runtime.Caching" Version="10.0.14" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
     <ProjectReference Include="..\Libs\BandcampMetadataExtractor\VocaDb.BandcampMetadataExtractor\VocaDb.BandcampMetadataExtractor.csproj" />
     <ProjectReference Include="..\Libs\nicovideo-apiclient-dotnet\NicoApiClient\NicoApiClient.csproj" />

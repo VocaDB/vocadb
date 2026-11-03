@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 
@@ -6,30 +5,29 @@ namespace VocaDb.Web.Code;
 
 public class DynamicImageUrlFactory : IDynamicImageUrlFactory
 {
-	public DynamicImageUrlFactory(Lazy<IUrlHelper> urlHelper)
+	public DynamicImageUrlFactory(LinkGenerator linkGenerator)
 	{
-		_urlHelperAccessor = urlHelper;
+		_linkGenerator = linkGenerator;
 	}
 
-	private readonly Lazy<IUrlHelper> _urlHelperAccessor;
+	private readonly LinkGenerator _linkGenerator;
 
 	public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size)
 	{
-		var urlHelper = _urlHelperAccessor.Value;
 		string? dynamicUrl = null;
 		if (imageInfo.EntryType == EntryType.Album)
 		{
 			if (size == ImageSize.Original)
-				dynamicUrl = urlHelper.Action("CoverPicture", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
+				dynamicUrl = _linkGenerator.GetPathByAction("CoverPicture", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
 			else
-				dynamicUrl = urlHelper.Action("CoverPictureThumb", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
+				dynamicUrl = _linkGenerator.GetPathByAction("CoverPictureThumb", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
 		}
 		else if (imageInfo.EntryType == EntryType.Artist)
 		{
 			if (size == ImageSize.Original)
-				dynamicUrl = urlHelper.Action("Picture", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
+				dynamicUrl = _linkGenerator.GetPathByAction("Picture", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
 			else
-				dynamicUrl = urlHelper.Action("PictureThumb", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
+				dynamicUrl = _linkGenerator.GetPathByAction("PictureThumb", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
 		}
 
 		return !string.IsNullOrEmpty(dynamicUrl) ? new VocaDbUrl(dynamicUrl, UrlDomain.Main, System.UriKind.Relative) : VocaDbUrl.Empty;
