@@ -4,7 +4,7 @@
     "CreateDateDescending": "Más reciente"
   },
   "AlbumArchiveReasonNames": {
-    "AutoImportedFromMikuDb": "Importado automaticamente",
+    "AutoImportedFromMikuDb": "Importado automáticamente",
     "Created": "Creado",
     "Deleted": "Eliminado",
     "Merged": "Fusionado a partir de otra entrada",
@@ -27,7 +27,7 @@
     "Artists": "Artistas",
     "Cover": "Portada",
     "Description": "Descripción",
-    "DiscType": "Tipo de album",
+    "DiscType": "Tipo de álbum",
     "Names": "Nombres",
     "Nothing": "Nada",
     "OriginalName": "Nombre original",
@@ -48,7 +48,7 @@
   },
   "AlbumSortRuleNames": {
     "AdditionDate": "Fecha de adición",
-    "CollectionCount": "Conteo de colección",
+    "CollectionCount": "Tamaño de la colección",
     "Name": "Nombre",
     "RatingAverage": "Valoración media",
     "RatingTotal": "Puntuación total",
@@ -93,7 +93,7 @@
     "Mixer": "Mezclador",
     "Other": "Otro",
     "Publisher": "Publicador",
-    "RecordingEngineer": "Recording engineer",
+    "RecordingEngineer": "Ingeniero de grabación",
     "VocalDataProvider": "Proveedor de datos vocales",
     "Vocalist": "Vocalista",
     "VoiceManipulator": "Manipulador de voz"
@@ -164,7 +164,7 @@
     "EditNews": "Gestionar noticias",
     "EditProfile": "Editar perfil personal",
     "EditTags": "Editar etiquetas",
-    "LockComments": "Lock comments",
+    "LockComments": "Bloquear comentarios",
     "LockEntries": "Cerrar entradas",
     "ManageDatabase": "Gestionar base de datos",
     "ManageEntryReports": "Gestionar avisos",
@@ -178,17 +178,17 @@
     "ReadRecentComments": "Leer comentarios recientes",
     "RemoveEditPermission": "Eliminar permisos de edición de la base de datos",
     "RemoveTagUsages": "Remover usos de etiqueta",
-    "ReportUser": "Report users",
+    "ReportUser": "Denunciar usuarios",
     "RestoreRevisions": "Restaurar revisiones",
     "UploadMedia": "Subir tu propia información",
     "ViewAuditLog": "Ver registro de eventos",
-    "ViewCoverArtImages": "View cover art images",
-    "ViewDisabledUsers": "View disabled users",
+    "ViewCoverArtImages": "Ver imágenes de portada",
+    "ViewDisabledUsers": "Ver usuarios inhabilitados",
     "ViewHiddenRatings": "Ver valoraciones ocultas",
     "ViewHiddenRevisions": "Ver revisiones ocultas",
-    "ViewLyrics": "View lyrics",
-    "ViewOtherPVs": "View other PVs",
-    "ViewOldUsernames": "View old usernames",
+    "ViewLyrics": "Ver letra",
+    "ViewOtherPVs": "Ver otros PV",
+    "ViewOldUsernames": "Ver nombres de usuario previos",
     "ManageWebhooks": "Gestionar los 'webhook'",
     "CreateDatabaseDump": "Volcar base de datos"
   },
@@ -276,7 +276,7 @@
     "None": "Nada",
     "PublishDate": "Fecha de publicación",
     "RatingScore": "Puntuación",
-    "SongType": "Song type",
+    "SongType": "Tipo de canción",
     "TagUsageCount": "Número de etiquetas usadas"
   },
   "SongVoteRatingNames": {
@@ -298,9 +298,9 @@
     "WebLinks": "Links externos"
   },
   "TagSortRuleNames": {
-    "AdditionDate": "Addition date",
-    "Name": "Name",
-    "None": "Nothing"
+    "AdditionDate": "Fecha en que fue agregado",
+    "Name": "Nombre",
+    "None": "Nada"
   },
   "UserEmailOptionsNames": {
     "NoEmail": "Sin mensajes privados",
