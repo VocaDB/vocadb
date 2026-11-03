@@ -7,6 +7,30 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations;
 
+[Migration(2026_11_02_0000)]
+public class ChangeRatingColumnsToDecimal : Migration
+{
+	public override void Up()
+	{
+		// Per-user rating: allow one decimal place (e.g. 0.5)
+		Delete.DefaultConstraint().OnTable(TableNames.AlbumsForUsers).OnColumn("Rating");
+		Alter.Column("Rating").OnTable(TableNames.AlbumsForUsers).AsDecimal(3, 1).NotNullable().WithDefaultValue(0.0m);
+
+		// Album aggregate total: allow one decimal place and larger range for totals
+		Delete.DefaultConstraint().OnTable(TableNames.Albums).OnColumn("RatingTotal");
+		Alter.Column("RatingTotal").OnTable(TableNames.Albums).AsDecimal(9, 1).NotNullable().WithDefaultValue(0.0m);
+	}
+
+	public override void Down()
+	{
+		// Revert to previous integer columns. Fractional ratings (e.g. 2.5) lose their decimal part.
+		Delete.DefaultConstraint().OnTable(TableNames.AlbumsForUsers).OnColumn("Rating");
+		Alter.Column("Rating").OnTable(TableNames.AlbumsForUsers).AsInt32().NotNullable().WithDefaultValue(0);
+		Delete.DefaultConstraint().OnTable(TableNames.Albums).OnColumn("RatingTotal");
+		Alter.Column("RatingTotal").OnTable(TableNames.Albums).AsInt32().NotNullable().WithDefaultValue(0);
+	}
+}
+
 /// <summary>
 /// Second step of <see cref="AddSearchValueToNames"/>: run it after the version that sets SearchValue is deployed.
 /// Fills SearchValue for the names that the previous version added or renamed in between.

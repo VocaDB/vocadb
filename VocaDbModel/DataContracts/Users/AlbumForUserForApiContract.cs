@@ -27,7 +27,7 @@ public class AlbumForUserForApiContract
 		Album = albumForUser != null
 			? new AlbumForApiContract(albumForUser.Album, null, languagePreference, permissionContext, thumbPersister, fields, SongOptionalFields.None)
 			: null;
-		Rating = albumForUser?.Rating ?? 0;
+		Rating = albumForUser?.Rating ?? 0.0;
 
 		if (shouldShowCollectionStatus)
 		{
@@ -61,7 +61,7 @@ public class AlbumForUserForApiContract
 	/// Given rating, generally from 0 to 5.
 	/// </summary>
 	[DataMember]
-	public int Rating { get; init; }
+	public double Rating { get; init; }
 
 	[DataMember]
 	public UserForApiContract User { get; init; }

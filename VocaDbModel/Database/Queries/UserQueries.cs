@@ -1903,10 +1903,14 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		int albumId,
 		PurchaseStatus status,
 		MediaType mediaType,
-		int rating
+		double rating
 	)
 	{
 		PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+		// Ratings are 0 (not rated) to 5 in steps of 0.5.
+		if (rating < 0 || rating > 5 || rating * 2 != Math.Floor(rating * 2))
+			throw new ArgumentOutOfRangeException(nameof(rating), rating, "Rating must be between 0 and 5 in steps of 0.5");
 
 		_repository.HandleTransaction(session =>
 		{

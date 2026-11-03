@@ -54,7 +54,7 @@ public class AlbumForUserContract
 	public PurchaseStatus PurchaseStatus { get; init; }
 
 	[DataMember]
-	public int Rating { get; init; }
+	public double Rating { get; init; }
 
 	// Note: only needed for album collection. True if public collection or viewer is the user himself.
 	public bool ShouldShowCollectionStatus { get; init; }
