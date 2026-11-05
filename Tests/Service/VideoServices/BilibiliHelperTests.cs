@@ -17,6 +17,8 @@ namespace VocaDb.Tests.Service.VideoServices
 			_videoService.GetIdByUrl("https://www.bilibili.com/video/av692583033").Should().Be("692583033");
 			_videoService.GetIdByUrl("https://bilibili.com/video/BV1KQ4y1i7b6").Should().Be("BV1KQ4y1i7b6");
 			_videoService.GetIdByUrl("https://www.bilibili.com/video/BV1KQ4y1i7b6").Should().Be("BV1KQ4y1i7b6");
+			_videoService.GetIdByUrl("https://bilibili.com/en/video/BV1KQ4y1i7b6").Should().Be("BV1KQ4y1i7b6");
+			_videoService.GetIdByUrl("https://www.bilibili.com/en/video/BV1KQ4y1i7b6").Should().Be("BV1KQ4y1i7b6");
 			_videoService.GetIdByUrl("https://acg.tv/av692583033").Should().Be("692583033");
 			_videoService.GetIdByUrl("https://www.acg.tv/av692583033").Should().Be("692583033");
 			_videoService.GetIdByUrl("https://bilibili.kankanews.com/video/av692583033").Should().Be("692583033");
