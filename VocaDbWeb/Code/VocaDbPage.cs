@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
@@ -26,8 +25,6 @@ public abstract class VocaDbPage<TModel> : RazorPage<TModel>
 
 	public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
-	private IUrlHelper Url => Context.RequestServices.GetRequiredService<IUrlHelper>();
-
 	/// <summary>
 	/// Relative path to application root.
 	/// 
@@ -35,7 +32,7 @@ public abstract class VocaDbPage<TModel> : RazorPage<TModel>
 	/// If the application is installed in the root folder, for example http://vocadb.net/, this will be just "/".
 	/// For http://server.com/vocadb/ this would be "/vocadb/".
 	/// </summary>
-	public string? RootPath => Url.Content("~/");
+	public string RootPath => Context.Request.PathBase + "/";
 
 	public string DecimalDot(double val)
 	{
@@ -84,9 +81,7 @@ public abstract class VocaDbPage : RazorPage
 
 	public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
-	private IUrlHelper Url => Context.RequestServices.GetRequiredService<IUrlHelper>();
-
-	public string? RootPath => Url.Content("~/");
+	public string RootPath => Context.Request.PathBase + "/";
 
 	public string ToJS(bool val)
 	{

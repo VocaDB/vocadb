@@ -5,8 +5,6 @@ using Autofac;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -153,8 +151,8 @@ public class Startup
 		{
 			options.ForwardedForHeaderName = "CF-Connecting-IP";
 			options.ForwardedHeaders = ForwardedHeaders.All;
-			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.Any, 0));
-			options.KnownNetworks.Add(new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.IPv6Any, 0));
+			options.KnownIPNetworks.Add(new System.Net.IPNetwork(IPAddress.Any, 0));
+			options.KnownIPNetworks.Add(new System.Net.IPNetwork(IPAddress.IPv6Any, 0));
 		});
 	}
 
@@ -169,8 +167,6 @@ public class Startup
 		//builder.RegisterModule(new AutofacWebTypesModule());
 
 		builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-		builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().SingleInstance();
-		builder.Register(x => new UrlHelperFactory().GetUrlHelper(x.Resolve<IActionContextAccessor>().ActionContext));
 
 		// TODO: re-enable cache
 		builder.Register(x => DatabaseConfiguration.BuildSessionFactory(useSysCache: false)).SingleInstance();
@@ -288,8 +284,6 @@ public class Startup
 			app.UseHttpsRedirection();
 		}
 
-		app.UseStaticFiles();
-
 		// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
 		app.UseSwagger();
 		app.UseSwaggerUI(c =>
@@ -299,7 +293,24 @@ public class Startup
 
 		app.UseForwardedHeaders();
 
+		app.Use((context, next) =>
+		{
+			if (context.Request.Path.StartsWithSegments("/assets"))
+			{
+				context.Response.OnStarting(() =>
+				{
+					if (context.Response.StatusCode is StatusCodes.Status200OK or StatusCodes.Status304NotModified)
+						context.Response.Headers.CacheControl = "public, max-age=31536000, immutable";
+					return Task.CompletedTask;
+				});
+			}
+			return next(context);
+		});
+
 		app.UseRouting();
+
+		// Files not in the build-time static assets manifest like robots.txt
+		app.UseStaticFiles();
 
 		app.UseRequestLocalization(options =>
 		{
@@ -350,6 +361,8 @@ public class Startup
 
 		app.UseEndpoints(endpoints =>
 		{
+			endpoints.MapStaticAssets().ShortCircuit();
+
 			const string Numeric = "[0-9]+";
 
 			// Ignored files
