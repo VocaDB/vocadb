@@ -1,2 +1,1 @@
-vdb = {};
-vdb.values = vdb.values || {};
+globalThis.vdb = { values: {} };
