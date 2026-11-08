@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
 using HtmlAgilityPack;
@@ -12,7 +13,12 @@ namespace VocaDb.Model.Service.VideoServices;
 
 public class VideoServiceBilibili : VideoService
 {
+	private const long BvAdd = 8728348608;
+	private const string BvTable = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
+	private const long BvXor = 177451812;
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private static readonly int[] s_bvPositions = { 9, 8, 1, 6, 2, 4 };
+	private static readonly long[] s_bvPowers = { 1, 58, 3364, 195112, 11316496, 656356768 };
 
 	public static readonly RegexLinkMatcher[] Matchers =
 		{
@@ -34,6 +40,25 @@ public class VideoServiceBilibili : VideoService
 
 		if (string.IsNullOrEmpty(id))
 			return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher, "No matcher");
+
+		if (!getTitle)
+		{
+			string? aidId = null;
+
+			if (id.StartsWith("BV", StringComparison.Ordinal))
+			{
+				aidId = GetAidByBvId(id);
+			}
+			else if (long.TryParse(id, NumberStyles.None, CultureInfo.InvariantCulture, out var aidNumber))
+			{
+				aidId = aidNumber.ToString(CultureInfo.InvariantCulture);
+			}
+
+			if (aidId == null)
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.OtherError, "Invalid Bilibili ID");
+
+			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aidId, VideoTitleParseResult.Empty);
+		}
 
 		var requestUrl = "https://api.bilibili.com/x/web-interface/view?" + (id.StartsWith("BV") ? $"bvid={id}" : $"aid={id}");
 
@@ -63,11 +88,6 @@ public class VideoServiceBilibili : VideoService
 		var bvid = response.Data.Bvid;
 		var cid = response.Data.Cid;
 
-		if (!getTitle)
-		{
-			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(), VideoTitleParseResult.Empty);
-		}
-
 		if (string.IsNullOrEmpty(response.Data.Title))
 			return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
 
@@ -87,6 +107,29 @@ public class VideoServiceBilibili : VideoService
 
 		return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(),
 			VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata, description: description));
+	}
+
+	private static string? GetAidByBvId(string bvId)
+	{
+		if (bvId.Length != 12)
+			return null;
+
+		var sum = 0L;
+
+		for (var i = 0; i < s_bvPositions.Length; i++)
+		{
+			var index = BvTable.IndexOf(bvId[2 + s_bvPositions[i]]);
+
+			if (index < 0)
+				return null;
+
+			sum += index * s_bvPowers[i];
+		}
+
+		if (sum < BvAdd)
+			return null;
+
+		return ((sum - BvAdd) ^ BvXor).ToString(CultureInfo.InvariantCulture);
 	}
 
 	public override IEnumerable<string> GetUserProfileUrls(string authorId)
