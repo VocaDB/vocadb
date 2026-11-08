@@ -1,5 +1,7 @@
 #nullable disable
 
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
@@ -47,6 +49,27 @@ public class SongSearchTests
 	private PartialFindResult<Song> CallFind()
 	{
 		return _songSearch.Find(_queryParams);
+	}
+
+	[TestMethod]
+	[DataRow("av10000000000", "10000000000")]
+	[DataRow("BV16t4Y1u78R", "10000000000")]
+	[DataRow("av111298867365120", "111298867365120")]
+	[DataRow("BV1L9Uoa9EUx", "111298867365120")]
+	public void Find_BilibiliUrl(string videoId, string aid)
+	{
+		var song = CreateEntry.Song(name: "Bilibili song");
+		song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.Bilibili, PVId = aid }));
+		var other = CreateEntry.Song(name: "Other song");
+		other.PVs.Add(new PVForSong(other, new PVContract { Service = PVService.Bilibili, PVId = "7852516352" }));
+		var repo = new FakeSongRepository();
+		repo.Save(song, other);
+		_songSearch = new Model.Service.Search.SongSearch.SongSearch(repo.CreateContext(),
+			Model.Domain.Globalization.ContentLanguagePreference.Default,
+			new EntryUrlParser("https://test.vocadb.net"));
+		_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("https://www.bilibili.com/video/" + videoId) } };
+
+		AssertResults(CallFind(), "Bilibili song");
 	}
 
 	[TestMethod]

@@ -13,12 +13,10 @@ namespace VocaDb.Model.Service.VideoServices;
 
 public class VideoServiceBilibili : VideoService
 {
-	private const long BvAdd = 8728348608;
-	private const string BvTable = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
-	private const long BvXor = 177451812;
+	private const long BvAidLimit = 1L << 51;
+	private const string BvTable = "FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf";
+	private const long BvXor = 23442827791579;
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-	private static readonly int[] s_bvPositions = { 9, 8, 1, 6, 2, 4 };
-	private static readonly long[] s_bvPowers = { 1, 58, 3364, 195112, 11316496, 656356768 };
 
 	public static readonly RegexLinkMatcher[] Matchers =
 		{
@@ -49,7 +47,8 @@ public class VideoServiceBilibili : VideoService
 			{
 				aidId = GetAidByBvId(id);
 			}
-			else if (long.TryParse(id, NumberStyles.None, CultureInfo.InvariantCulture, out var aidNumber))
+			else if (long.TryParse(id, NumberStyles.None, CultureInfo.InvariantCulture, out var aidNumber)
+				&& aidNumber > 0 && aidNumber < BvAidLimit)
 			{
 				aidId = aidNumber.ToString(CultureInfo.InvariantCulture);
 			}
@@ -111,25 +110,29 @@ public class VideoServiceBilibili : VideoService
 
 	private static string? GetAidByBvId(string bvId)
 	{
-		if (bvId.Length != 12)
+		if (bvId.Length != 12 || !bvId.StartsWith("BV1", StringComparison.Ordinal))
 			return null;
 
+		var characters = bvId.ToCharArray();
+		(characters[3], characters[9]) = (characters[9], characters[3]);
+		(characters[4], characters[7]) = (characters[7], characters[4]);
 		var sum = 0L;
 
-		for (var i = 0; i < s_bvPositions.Length; i++)
+		for (var i = 3; i < characters.Length; i++)
 		{
-			var index = BvTable.IndexOf(bvId[2 + s_bvPositions[i]]);
+			var index = BvTable.IndexOf(characters[i]);
 
 			if (index < 0)
 				return null;
 
-			sum += index * s_bvPowers[i];
+			sum = sum * 58 + index;
 		}
 
-		if (sum < BvAdd)
+		if (sum < BvAidLimit || sum >= BvAidLimit * 2)
 			return null;
 
-		return ((sum - BvAdd) ^ BvXor).ToString(CultureInfo.InvariantCulture);
+		var aid = (sum & (BvAidLimit - 1)) ^ BvXor;
+		return aid > 0 ? aid.ToString(CultureInfo.InvariantCulture) : null;
 	}
 
 	public override IEnumerable<string> GetUserProfileUrls(string authorId)

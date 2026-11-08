@@ -1,8 +1,10 @@
 #nullable disable
 
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
@@ -64,6 +66,23 @@ public class AlbumSearchTests
 		_queryParams = new AlbumQueryParams();
 
 		_search = new Model.Service.Search.AlbumSearch.AlbumSearch(_querySource, ContentLanguagePreference.Default, new EntryUrlParser());
+	}
+
+	[TestMethod]
+	[DataRow("av10000000000", "10000000000")]
+	[DataRow("BV16t4Y1u78R", "10000000000")]
+	[DataRow("av111298867365120", "111298867365120")]
+	[DataRow("BV1L9Uoa9EUx", "111298867365120")]
+	public void Find_BilibiliUrl(string videoId, string aid)
+	{
+		_album.PVs.Add(new PVForAlbum(_album, new PVContract { Service = PVService.Bilibili, PVId = aid }));
+		_albumWithArtist.PVs.Add(new PVForAlbum(_albumWithArtist, new PVContract { Service = PVService.Bilibili, PVId = "7852516352" }));
+		_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("https://www.bilibili.com/video/" + videoId) } };
+
+		var result = Find();
+
+		result.TotalCount.Should().Be(1);
+		result.Items.Should().Equal(_album);
 	}
 
 	/// <summary>
