@@ -44,12 +44,13 @@ export class DateTimeHelper {
 
 	static convertToUtc(localDate: Date | undefined): Date | null {
 		if (localDate === null || localDate === undefined) return null;
-		return dayjs
-			.utc()
-			.year(localDate.getFullYear())
-			.month(localDate.getMonth())
-			.date(localDate.getDate())
-			.toDate();
+		const date = new Date(0);
+		date.setUTCFullYear(
+			localDate.getFullYear(),
+			localDate.getMonth(),
+			localDate.getDate(),
+		);
+		return date;
 	}
 
 	// Formats seconds as minutes and seconds, for example 12:34
