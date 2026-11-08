@@ -74,9 +74,9 @@ public class XmlHelperTests
 		var name = "Miku Miku!";
 		var album = new ArchivedAlbumContract { Description = name + '\x02' };
 
-		album.Description.IsNormalized().Should().BeTrue();
+		var res = SerializeToObjectAndBack(album);
 
-		Invoking(() => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+		res.Description.Should().Be(name, "invalid character is removed");
 	}
 
 	[TestMethod]
@@ -85,8 +85,29 @@ public class XmlHelperTests
 		var name = "Miku Miku!";
 		var album = new ArchivedAlbumContract { Description = $"\x01{name}\x02" };
 
-		album.Description.IsNormalized().Should().BeTrue();
+		var res = SerializeToObjectAndBack(album);
 
-		Invoking(() => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+		res.Description.Should().Be(name, "invalid characters are removed");
+	}
+
+	[TestMethod]
+	public void SerializeToXml_AllForbiddenChars()
+	{
+		var album = new ArchivedAlbumContract { Description = "Miku\x00\x01\x08\x0B\x0C\x0E\x1FMiku" };
+
+		var res = SerializeToObjectAndBack(album);
+
+		res.Description.Should().Be("MikuMiku", "all invalid characters are removed");
+	}
+
+	[TestMethod]
+	public void SerializeToXml_ValidWhitespace()
+	{
+		var description = "Miku\tMiku\nMiku\rMiku";
+		var album = new ArchivedAlbumContract { Description = description };
+
+		var res = SerializeToObjectAndBack(album);
+
+		res.Description.Should().Be(description, "valid whitespace is preserved");
 	}
 }

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Globalization;
 
@@ -29,7 +30,7 @@ public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
 		set
 		{
 			ParamIs.NotNull(() => value);
-			_val = value;
+			_val = StringHelper.RemoveInvalidXmlChars(value);
 		}
 	}
 

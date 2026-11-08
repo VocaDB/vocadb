@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.PVs;
@@ -51,14 +52,14 @@ public class PV : IEquatable<PV>, IEditablePV
 		set
 		{
 			ParamIs.NotNull(() => value);
-			_author = value;
+			_author = StringHelper.RemoveInvalidXmlChars(value);
 		}
 	}
 
 	public virtual string? Description
 	{
 		get => _description;
-		set => _description = value;
+		set => _description = value != null ? StringHelper.RemoveInvalidXmlChars(value) : null;
 	}
 
 	public virtual bool Disabled
@@ -82,7 +83,7 @@ public class PV : IEquatable<PV>, IEditablePV
 		set
 		{
 			ParamIs.NotNull(() => value);
-			_name = value;
+			_name = StringHelper.RemoveInvalidXmlChars(value);
 		}
 	}
 

@@ -1,3 +1,4 @@
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -69,8 +70,10 @@ public static class XmlHelper
 		XDocument doc;
 
 		using (var writer = new StringWriter())
+		using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings { CheckCharacters = false, NewLineHandling = NewLineHandling.Entitize }))
 		{
-			serializer.Serialize(writer, obj);
+			serializer.Serialize(xmlWriter, obj);
+			xmlWriter.Flush();
 			var str = StringHelper.CleanInvalidXmlChars(writer.ToString());
 			doc = XDocument.Parse(str);
 		}
