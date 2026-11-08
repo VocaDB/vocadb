@@ -191,6 +191,11 @@ public class Album :
 	/// </summary>
 	public virtual string? CoverPictureMime { get; set; }
 
+	/// <summary>
+	/// Version that introduced the cover picture, part of its image key. Null if the picture has no revision key.
+	/// </summary>
+	public virtual int? CoverPictureRevision { get; set; }
+
 	public virtual DateTime CreateDate { get; set; }
 
 	public virtual string DefaultName => TranslatedName.Default;

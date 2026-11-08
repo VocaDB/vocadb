@@ -286,6 +286,11 @@ public class Artist :
 
 	public virtual string? PictureMime { get; set; }
 
+	/// <summary>
+	/// Version that introduced the main picture, part of its image key. Null if the picture has no revision key.
+	/// </summary>
+	public virtual int? PictureRevision { get; set; }
+
 	public virtual EntryPictureFileManager<ArtistPictureFile> Pictures
 	{
 		get => _pictureManager;

@@ -14,6 +14,7 @@ public class AlbumMap : ClassMap<Album>
 		Id(m => m.Id);
 
 		Map(m => m.CoverPictureMime).Length(32).Nullable();
+		Map(m => m.CoverPictureRevision).Nullable();
 		Map(m => m.CreateDate).Not.Nullable();
 		Map(m => m.Deleted).Not.Nullable();
 		Map(m => m.DiscType).Column("[Type]").Not.Nullable();
@@ -125,6 +126,7 @@ public class ArchivedAlbumVersionMap : ClassMap<ArchivedAlbumVersion>
 
 		Map(m => m.AgentName).Not.Nullable();
 		Map(m => m.CoverPictureMime).Length(32).Nullable();
+		Map(m => m.CoverPictureRevision).Nullable();
 		Map(m => m.Created).Not.Nullable();
 		Map(m => m.Data).Not.Nullable();
 		Map(m => m.Hidden).Not.Nullable();

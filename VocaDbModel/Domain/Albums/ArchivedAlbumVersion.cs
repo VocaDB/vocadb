@@ -68,6 +68,7 @@ public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersio
 		{
 			CoverPicture = album.CoverPictureData;
 			CoverPictureMime = album.CoverPictureMime;
+			CoverPictureRevision = album.CoverPictureRevision;
 		}
 	}
 
@@ -90,6 +91,11 @@ public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersio
 #nullable enable
 
 	public virtual string? CoverPictureMime { get; set; }
+
+	/// <summary>
+	/// Revision of the cover picture. Null if the picture is only stored in <see cref="CoverPicture"/>.
+	/// </summary>
+	public virtual int? CoverPictureRevision { get; set; }
 
 	public virtual AlbumDiff Diff
 	{

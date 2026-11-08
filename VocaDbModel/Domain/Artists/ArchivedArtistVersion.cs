@@ -47,6 +47,7 @@ public class ArchivedArtistVersion : ArchivedObjectVersion, IArchivedObjectVersi
 		{
 			Picture = artist.Picture;
 			PictureMime = artist.PictureMime;
+			PictureRevision = artist.PictureRevision;
 		}
 	}
 
@@ -79,6 +80,11 @@ public class ArchivedArtistVersion : ArchivedObjectVersion, IArchivedObjectVersi
 #nullable enable
 
 	public virtual string? PictureMime { get; set; }
+
+	/// <summary>
+	/// Revision of the picture. Null if the picture is only stored in <see cref="Picture"/>.
+	/// </summary>
+	public virtual int? PictureRevision { get; set; }
 
 	public virtual ArtistArchiveReason Reason { get; set; }
 
