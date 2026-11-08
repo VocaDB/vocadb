@@ -112,9 +112,12 @@ public class ArtistQueriesTests
 	[DataRow(true)]
 	public async Task EditApi_ControlOnlyName_ReturnsValidationError(bool isAlias)
 	{
-		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext);
+		var existing = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext);
 		var invalid = new LocalizedStringWithIdContract { Value = "\u0008", Language = ContentLanguageSelection.Japanese };
-		contract.Names = isAlias ? contract.Names.Append(invalid).ToArray() : new[] { invalid };
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext)
+		{
+			Names = isAlias ? existing.Names.Append(invalid).ToArray() : new[] { invalid }
+		};
 
 		var result = await CallArtistApi(controller => controller.Edit(contract));
 
