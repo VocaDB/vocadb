@@ -91,6 +91,7 @@ describe.each([PVService.Youtube, PVService.LocalFile])(
 				'not-a-date',
 				'2024-02-30',
 				'2023-02-29',
+				'2100-02-29',
 				'2024-13-01',
 				'2024-00-10',
 				'2024-01-00',
@@ -116,6 +117,7 @@ describe.each([PVService.Youtube, PVService.LocalFile])(
 
 test.each([
 	'2024-02-29',
+	'2000-02-29',
 	'2024-02-29T00:00:00',
 	'2024-02-29T12:34:56Z',
 	'2024-02-29T12:34:56.1234567',
@@ -123,6 +125,8 @@ test.each([
 	'2024-02-29T12:34:56+09:00',
 	'2024-02-29T12:34:56-06:00',
 	'2024-03-01T00:00:00+14:00',
+	'2024-03-10T02:30:00Z',
+	'2024-03-10T02:30:00+09:00',
 ])('preserves valid date and timezone formatting for %s', (publishDate) => {
 	const row = render(createStore([contract({ publishDate })]));
 	expect(row.cells[4].textContent).toBe(dayjs(publishDate).format('l'));
@@ -130,7 +134,7 @@ test.each([
 
 test.each([
 	['en', '2/29/2024'],
-	['ja', '2024/2/29'],
+	['ja', '2024/02/29'],
 	['de', '29.2.2024'],
 ])('uses the %s locale', (locale, expected) => {
 	dayjs.locale(locale);

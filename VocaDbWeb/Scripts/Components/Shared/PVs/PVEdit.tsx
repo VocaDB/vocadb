@@ -4,12 +4,14 @@ import { PVType } from '@/Models/PVs/PVType';
 import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import dayjs from '@/dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
+import UTC from 'dayjs/plugin/utc';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 dayjs.extend(CustomParseFormat);
+dayjs.extend(UTC);
 
 const parsePublishDate = (value?: string): dayjs.Dayjs | undefined => {
 	if (!value) return undefined;
@@ -21,7 +23,7 @@ const parsePublishDate = (value?: string): dayjs.Dayjs | undefined => {
 	const format = localDateTime.includes('T')
 		? 'YYYY-MM-DDTHH:mm:ss'
 		: 'YYYY-MM-DD';
-	const parsed = dayjs(localDateTime, format, true);
+	const parsed = dayjs.utc(localDateTime, format, true);
 	if (!parsed.isValid()) return undefined;
 
 	if (value === localDateTime) return parsed;
