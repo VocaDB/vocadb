@@ -50,7 +50,7 @@ export const PVEdit = observer(
 				<td>{pvEditStore.lengthFormatted}</td>
 				{pvListEditStore.showPublishDates && (
 					<td>
-						{pvListEditStore.showPublishDates && (
+						{contract.publishDate && dayjs(contract.publishDate).isValid() && (
 							<>{dayjs(contract.publishDate).format('l')}</>
 						)}
 					</td>
