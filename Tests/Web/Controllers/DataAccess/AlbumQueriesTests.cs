@@ -428,6 +428,50 @@ public class AlbumQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Revert_PictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _album.ArchivedVersionsManager.GetLatestVersion();
+		var oldBytes = _imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original);
+		await CallUpdate(ResourceHelper.TestImage2);
+		oldVer.CoverPicture = null;
+		_imagePersister.Remove(CoverImage(oldVer.Version), ImageSize.Thumb);
+
+		var result = _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Album>(result.Id);
+		entryFromRepo.CoverPictureRevision.Should().Be(oldVer.Version, "Picture revision was restored");
+		entryFromRepo.CoverPictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "Picture MIME was restored");
+		_imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original).Should().Equal(oldBytes, "Original is unchanged");
+		_imagePersister.Exists(CoverImage(oldVer.Version), ImageSize.Thumb).Should().BeTrue("Missing thumbnail was generated");
+
+		var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+		lastVersion.Reason.Should().Be(AlbumArchiveReason.Reverted, "Last version archive reason");
+		lastVersion.Diff.Cover.IsChanged.Should().BeTrue("Picture was changed");
+		lastVersion.CoverPictureRevision.Should().Be(oldVer.Version, "Reverted version points to the restored revision");
+	}
+
+	[TestMethod]
+	public async Task Revert_NoPictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _album.ArchivedVersionsManager.GetLatestVersion();
+		oldVer.CoverPictureRevision = null;
+		foreach (var size in s_allSizes)
+			_imagePersister.Remove(CoverImage(oldVer.Version), size);
+		await CallUpdate(ResourceHelper.TestImage2);
+
+		var result = _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Album>(result.Id);
+		entryFromRepo.CoverPictureRevision.Should().Be(oldVer.Version, "Picture revision is the restored version");
+		oldVer.CoverPictureRevision.Should().Be(oldVer.Version, "Restored version points to the uploaded picture");
+		_imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original).Should().Equal(oldVer.CoverPicture.Bytes, "Original was uploaded from the database");
+		foreach (var size in s_allSizes)
+			_imagePersister.Exists(CoverImage(oldVer.Version), size).Should().BeTrue($"{size} was written");
+	}
+
+	[TestMethod]
 	public async Task Update_Picture_Revision()
 	{
 		var version = _album.Version;

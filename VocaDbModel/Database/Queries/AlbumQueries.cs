@@ -856,19 +856,20 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				{
 					album.CoverPictureData = versionWithPic.CoverPicture;
 					album.CoverPictureMime = versionWithPic.CoverPictureMime;
-
-					if (versionWithPic.CoverPicture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
-						var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
-					}
+					album.CoverPictureRevision = new ImageThumbGenerator(_imagePersister).RestoreMainPicture(
+						album,
+						versionWithPic.CoverPictureMime,
+						versionWithPic.CoverPictureRevision,
+						versionWithPic.Version,
+						() => versionWithPic.CoverPicture?.Bytes
+					);
+					versionWithPic.CoverPictureRevision ??= album.CoverPictureRevision;
 				}
 				else
 				{
 					album.CoverPictureData = null;
 					album.CoverPictureMime = null;
+					album.CoverPictureRevision = null;
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.

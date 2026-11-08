@@ -639,19 +639,20 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				{
 					artist.Picture = versionWithPic.Picture;
 					artist.PictureMime = versionWithPic.PictureMime;
-
-					if (versionWithPic.Picture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
-						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
-					}
+					artist.PictureRevision = new ImageThumbGenerator(_imagePersister).RestoreMainPicture(
+						artist,
+						versionWithPic.PictureMime,
+						versionWithPic.PictureRevision,
+						versionWithPic.Version,
+						() => versionWithPic.Picture?.Bytes
+					);
+					versionWithPic.PictureRevision ??= artist.PictureRevision;
 				}
 				else
 				{
 					artist.Picture = null;
 					artist.PictureMime = null;
+					artist.PictureRevision = null;
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.

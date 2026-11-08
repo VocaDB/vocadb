@@ -395,6 +395,24 @@ public class ArtistQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Revert_PictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _artist.ArchivedVersionsManager.GetLatestVersion();
+		await CallUpdate(ResourceHelper.TestImage2, "image/png");
+		oldVer.Picture = null;
+
+		var result = await _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Artist>(result.Id);
+		entryFromRepo.PictureRevision.Should().Be(oldVer.Version, "Picture revision was restored");
+		entryFromRepo.PictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "Picture MIME was restored");
+		var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+		lastVersion.Diff.Picture.IsChanged.Should().BeTrue("Picture was changed");
+		lastVersion.PictureRevision.Should().Be(oldVer.Version, "Reverted version points to the restored revision");
+	}
+
+	[TestMethod]
 	public async Task Revert_NotAllowed()
 	{
 		// Regular users can't revert
