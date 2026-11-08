@@ -38,9 +38,10 @@ public class EntryQueriesTests
 		int start = 0, int maxResults = 10, bool getTotalCount = true,
 		NameMatchMode nameMatchMode = NameMatchMode.Words,
 		EntryOptionalFields fields = EntryOptionalFields.None,
-		ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		ContentLanguagePreference lang = ContentLanguagePreference.Default,
+		bool childTags = false)
 	{
-		return _queries.GetList(query, tag, null, false, status, null, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
+		return _queries.GetList(query, tag, null, childTags, status, null, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
 	}
 
 	[TestInitialize]
@@ -111,6 +112,23 @@ public class EntryQueriesTests
 
 		result.TotalCount.Should().Be(1, "TotalCount");
 		AssertHasEntry(result, "40mP", EntryType.Artist);
+	}
+
+	[TestMethod]
+	public void List_FilterByTag_IncludesArtistOfMappedType()
+	{
+		var aceTag = CreateEntry.Tag("ACE虚拟歌姬", id: 8863);
+		var aceArtist = CreateEntry.Artist(ArtistType.ACEVirtualSinger, name: "Seto Asayuki");
+
+		_repository.Save(aceTag);
+		_repository.Save(aceArtist);
+		_repository.Add(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Artist, ArtistType.ACEVirtualSinger), aceTag));
+
+		var result = CallGetList(tag: new[] { aceTag.Id });
+
+		result.TotalCount.Should().Be(1, "TotalCount includes the artist of the mapped type");
+		result.Items.Length.Should().Be(result.TotalCount, "List length matches TotalCount");
+		AssertHasEntry(result, "Seto Asayuki", EntryType.Artist);
 	}
 
 	/// <summary>

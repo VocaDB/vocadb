@@ -113,4 +113,27 @@ public class ArtistSearchTests
 
 		result.Items.Should().ContainSingle().Which.Id.Should().Be(aceArtist.Id);
 	}
+
+	[TestMethod]
+	public void Find_ByTagId_WithChildTags_IncludesArtistOfMappedType()
+	{
+		var tag = CreateEntry.Tag("ACE虚拟歌姬", id: 8863);
+		var childTag = CreateEntry.Tag("ACE virtual singer child tag", id: 8864);
+		childTag.Parent = tag;
+		tag.AllChildren.Add(childTag);
+		_db.Add(tag, childTag);
+		_db.Add(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Artist, ArtistType.ACEVirtualSinger), tag));
+
+		var aceArtist = CreateEntry.Artist(ArtistType.ACEVirtualSinger, name: "Seto Asayuki");
+		_db.Save(aceArtist);
+		_db.SaveNames(aceArtist);
+
+		var result = _artistSearch.Find(new ArtistQueryParams
+		{
+			TagIds = new[] { tag.Id },
+			ChildTags = true
+		});
+
+		result.Items.Should().ContainSingle().Which.Id.Should().Be(aceArtist.Id);
+	}
 }

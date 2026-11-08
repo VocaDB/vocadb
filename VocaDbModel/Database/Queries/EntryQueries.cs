@@ -54,11 +54,12 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 		return _repository.HandleQuery(ctx =>
 		{
 			// Get all applicable names per entry type
-			var artistQuery = ctx.OfType<Artist>().Query()
+			var artistContext = ctx.OfType<Artist>();
+			var artistQuery = artistContext.Query()
 				.WhereEntryTypeIsIncluded(entryTypes, EntryType.Artist)
 				.WhereNotDeleted()
 				.WhereHasName_Canonized(artistTextQuery)
-				.WhereHasTags(tagIds, childTags)
+				.WhereHasTagsOrTypes(tagIds, childTags, artistContext)
 				.WhereHasTags(tags)
 				.WhereStatusIs(status);
 

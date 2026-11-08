@@ -3,6 +3,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
@@ -205,10 +206,21 @@ public static class ArtistQueryableExtensions
 
 		return tagIds.Aggregate(query, (q, tagId) =>
 		{
-			if (childTags)
-				return q.WhereHasTag<Artist, ArtistTagUsage>(tagId, childTags: true);
+			var expandedTagIds = childTags
+				? context.Query<Tag>()
+					.Where(tag => tag.Id == tagId
+						|| (tag.Parent != null && tag.Parent.Id == tagId)
+						|| (tag.Parent != null && tag.Parent.Parent != null && tag.Parent.Parent.Id == tagId)
+						|| (tag.Parent != null && tag.Parent.Parent != null && tag.Parent.Parent.Parent != null && tag.Parent.Parent.Parent.Id == tagId))
+					.Select(tag => tag.Id)
+					.ToArray()
+				: new[] { tagId };
 
-			var entryTypeAndTag = EntryTypeAndTagCollection<ArtistType>.Create(EntryType.Artist, tagId, context, allowAllTags: true);
+			if (!expandedTagIds.Any())
+				expandedTagIds = new[] { tagId };
+
+			var entryTypeAndTag = EntryTypeAndTagCollection<ArtistType>.Create(
+				EntryType.Artist, Array.Empty<ArtistType>(), expandedTagIds, context, allowAllTags: true);
 
 			return q.WhereHasTypeOrTag(entryTypeAndTag);
 		});
