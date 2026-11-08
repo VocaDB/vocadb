@@ -14,11 +14,13 @@ import { Root, createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
 jest.mock('react-i18next', () => ({
-	useTranslation: () => ({ t: (key: string) => key }),
+	useTranslation: (): { t: (key: string) => string } => ({
+		t: (key: string): string => key,
+	}),
 }));
 jest.mock('@/JQueryUI/JQueryUIDialog', () => ({
 	__esModule: true,
-	default: () => null,
+	default: (): null => null,
 }));
 
 let table: HTMLTableElement;
