@@ -17,17 +17,22 @@ const parsePublishDate = (value?: string): dayjs.Dayjs | undefined => {
 	if (!value) return undefined;
 
 	// Validate the source calendar/time before applying its timezone offset.
-	const localDateTime = value
-		.replace(/(?:Z|[+-]\d{2}:\d{2})$/, '')
+	let localDateTime = value
+		.replace(/(?:Z|[+-]\d{2}:?\d{2})$/, '')
 		.replace(/(:\d{2})\.\d+$/, '$1');
+	if (localDateTime.includes(' ')) {
+		localDateTime = localDateTime.replace(' ', 'T');
+	}
+	if (/T\d{2}:\d{2}$/.test(localDateTime)) {
+		localDateTime += ':00';
+	}
 	const format = localDateTime.includes('T')
 		? 'YYYY-MM-DDTHH:mm:ss'
 		: 'YYYY-MM-DD';
 	const parsed = dayjs.utc(localDateTime, format, true);
 	if (!parsed.isValid()) return undefined;
 
-	if (value === localDateTime) return parsed;
-	const date = dayjs(value);
+	const date = dayjs(value.replace(' ', 'T'));
 	return date.isValid() ? date : undefined;
 };
 
