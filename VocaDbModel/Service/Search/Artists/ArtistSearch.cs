@@ -31,7 +31,7 @@ public class ArtistSearch
 			.WhereStatusIs(queryParams.Common.EntryStatus)
 			.WhereHasExternalLinkUrl(parsedQuery.ExternalLinkUrl)
 			.WhereHasType(queryParams.ArtistTypes)
-			.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
+			.WhereHasTagsOrTypes(queryParams.TagIds, queryParams.ChildTags, _context)
 			.WhereHasTags(queryParams.Tags)
 			.WhereIdIs(parsedQuery.Id)
 			.WhereIsFollowedByUser(queryParams.UserFollowerId)

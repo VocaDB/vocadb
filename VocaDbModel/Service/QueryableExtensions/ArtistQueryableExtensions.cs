@@ -1,3 +1,4 @@
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
@@ -183,6 +184,34 @@ public static class ArtistQueryableExtensions
 			return query;
 
 		return query.Where(m => artistTypes.Contains(m.ArtistType));
+	}
+
+	public static IQueryable<Artist> WhereHasTypeOrTag(this IQueryable<Artist> query, EntryTypeAndTagCollection<ArtistType>? entryTypeAndTagCollection)
+	{
+		if (entryTypeAndTagCollection == null || entryTypeAndTagCollection.IsEmpty)
+			return query;
+
+		if (!entryTypeAndTagCollection.SubTypes.Any())
+			return query.Where(artist => artist.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
+
+		return query.Where(artist => entryTypeAndTagCollection.SubTypes.Contains(artist.ArtistType)
+			|| artist.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
+	}
+
+	public static IQueryable<Artist> WhereHasTagsOrTypes(this IQueryable<Artist> query, int[]? tagIds, bool childTags, IDatabaseContext context)
+	{
+		if (tagIds == null || !tagIds.Any())
+			return query;
+
+		return tagIds.Aggregate(query, (q, tagId) =>
+		{
+			if (childTags)
+				return q.WhereHasTag<Artist, ArtistTagUsage>(tagId, childTags: true);
+
+			var entryTypeAndTag = EntryTypeAndTagCollection<ArtistType>.Create(EntryType.Artist, tagId, context, allowAllTags: true);
+
+			return q.WhereHasTypeOrTag(entryTypeAndTag);
+		});
 	}
 
 	public static IQueryable<Artist> WhereIdIs(this IQueryable<Artist> query, int id)

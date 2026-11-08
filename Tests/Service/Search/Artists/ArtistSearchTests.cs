@@ -1,8 +1,10 @@
 #nullable disable
 
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Tests.TestData;
@@ -92,5 +94,23 @@ public class ArtistSearchTests
 
 		result.Items.Length.Should().Be(1, "Got 1 result");
 		result.Items[0].DefaultName.Should().Be("Uji", "Result as expected");
+	}
+
+	[TestMethod]
+	public void Find_ByTagId_IncludesArtistOfMappedType()
+	{
+		var tag = CreateEntry.Tag("ACE虚拟歌姬", id: 8863);
+		_db.Add(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Artist, ArtistType.ACEVirtualSinger), tag));
+
+		var aceArtist = CreateEntry.Artist(ArtistType.ACEVirtualSinger, name: "Seto Asayuki");
+		_db.Save(aceArtist);
+		_db.SaveNames(aceArtist);
+
+		var result = _artistSearch.Find(new ArtistQueryParams
+		{
+			TagIds = new[] { tag.Id }
+		});
+
+		result.Items.Should().ContainSingle().Which.Id.Should().Be(aceArtist.Id);
 	}
 }

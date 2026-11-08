@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -139,6 +140,26 @@ public class TagQueriesTests
 		AssertContainsEvent(result, standaloneEvent);
 		AssertContainsEvent(result, recentSeriesEvent);
 		result.Stats.EventSeries.Any(e => e.Id == eventSeries.Id).Should().BeTrue("Contains " + eventSeries);
+	}
+
+	[TestMethod]
+	public async Task GetDetails_ArtistCount_IncludesArtistOfMappedType()
+	{
+		var aceTag = CreateAndSaveTag("ACE虚拟歌姬");
+		_repository.Add(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Artist, ArtistType.ACEVirtualSinger), aceTag));
+
+		var aceArtist = CreateEntry.Artist(ArtistType.ACEVirtualSinger, name: "Seto Asayuki");
+		_repository.Save(aceArtist);
+		_repository.SaveNames(aceArtist);
+
+		var otherArtist = CreateEntry.Artist(ArtistType.UTAU, name: "Other voicebank");
+		_repository.Save(otherArtist);
+		_repository.SaveNames(otherArtist);
+
+		var result = await _queries.GetDetailsAsync(aceTag.Id);
+
+		result.Stats.ArtistCount.Should().Be(1, "Artist count includes the artist of the mapped type");
+		result.Stats.Artists.Should().ContainSingle().Which.Id.Should().Be(aceArtist.Id, "Artist of the mapped type is included");
 	}
 
 	[TestMethod]
