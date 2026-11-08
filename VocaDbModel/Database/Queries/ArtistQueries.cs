@@ -544,6 +544,24 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				: null;
 		});
 	}
+
+	/// <summary>
+	/// Absolute URL of the picture of an archived version. Null if the picture has no revision.
+	/// </summary>
+	public VocaDbUrl? GetArchivedPictureUrl(int archivedVersionId)
+	{
+		return HandleQuery(ctx =>
+		{
+			var archivedVersion = ctx.Load<ArchivedArtistVersion>(archivedVersionId);
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
+
+			if (versionWithPic?.PictureRevision is null || string.IsNullOrEmpty(versionWithPic.PictureMime))
+				return null;
+
+			var image = new EntryThumbMain(archivedVersion.Artist, versionWithPic.PictureMime, versionWithPic.PictureRevision);
+			return _imagePersister.GetUrl(image, ImageSize.Original).ToAbsolute();
+		});
+	}
 #nullable disable
 
 	public TagUsageForApiContract[] GetTagSuggestions(int artistId)

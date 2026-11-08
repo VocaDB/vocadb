@@ -52,6 +52,12 @@ public class ArtistController : ControllerBase
 			return NotFound();
 		}
 
+		var url = _queries.GetArchivedPictureUrl(id);
+
+		if (url is not null)
+			return RedirectToPicture(url);
+
+		// No revision yet: the picture is only in the database.
 		var contract = Service.GetArchivedArtistPicture(id);
 
 		return Picture(contract);

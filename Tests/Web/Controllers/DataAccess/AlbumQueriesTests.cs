@@ -472,6 +472,28 @@ public class AlbumQueriesTests
 	}
 
 	[TestMethod]
+	public async Task GetArchivedCoverPictureUrl()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _album.ArchivedVersionsManager.GetLatestVersion();
+
+		var result = _queries.GetArchivedCoverPictureUrl(version.Id);
+
+		result.Should().NotBeNull("URL");
+		result.Url.Should().Be(_imagePersister.GetUrl(CoverImage(version.Version), ImageSize.Original).Url, "URL of the revision");
+	}
+
+	[TestMethod]
+	public async Task GetArchivedCoverPictureUrl_NoRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _album.ArchivedVersionsManager.GetLatestVersion();
+		version.CoverPictureRevision = null;
+
+		_queries.GetArchivedCoverPictureUrl(version.Id).Should().BeNull("No URL");
+	}
+
+	[TestMethod]
 	public async Task Update_Picture_Revision()
 	{
 		var version = _album.Version;

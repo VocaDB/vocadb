@@ -80,6 +80,12 @@ public class AlbumController : ControllerBase
 		if (id == InvalidId)
 			return NoId();
 
+		var url = _queries.GetArchivedCoverPictureUrl(id);
+
+		if (url is not null)
+			return RedirectToPicture(url);
+
+		// No revision yet: the picture is only in the database.
 		var contract = Service.GetArchivedAlbumPicture(id);
 
 		return Picture(contract);

@@ -588,6 +588,24 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				: null;
 		});
 	}
+
+	/// <summary>
+	/// Absolute URL of the cover picture of an archived version. Null if the picture has no revision.
+	/// </summary>
+	public VocaDbUrl? GetArchivedCoverPictureUrl(int archivedVersionId)
+	{
+		return HandleQuery(ctx =>
+		{
+			var archivedVersion = ctx.Load<ArchivedAlbumVersion>(archivedVersionId);
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
+
+			if (versionWithPic?.CoverPictureRevision is null || string.IsNullOrEmpty(versionWithPic.CoverPictureMime))
+				return null;
+
+			var image = new EntryThumbMain(archivedVersion.Album, versionWithPic.CoverPictureMime, versionWithPic.CoverPictureRevision);
+			return _imagePersister.GetUrl(image, ImageSize.Original).ToAbsolute();
+		});
+	}
 #nullable disable
 
 	public AlbumForEditForApiContract GetForEdit(int id)

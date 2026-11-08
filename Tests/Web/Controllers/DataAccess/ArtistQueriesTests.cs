@@ -413,6 +413,18 @@ public class ArtistQueriesTests
 	}
 
 	[TestMethod]
+	public async Task GetArchivedPictureUrl()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _artist.ArchivedVersionsManager.GetLatestVersion();
+
+		var result = _queries.GetArchivedPictureUrl(version.Id);
+
+		result.Should().NotBeNull("URL");
+		result.Url.Should().Be(_imagePersister.GetUrl(new EntryThumbMain(_artist, MediaTypeNames.Image.Jpeg, version.PictureRevision), ImageSize.Original).Url, "URL of the revision");
+	}
+
+	[TestMethod]
 	public async Task Revert_NotAllowed()
 	{
 		// Regular users can't revert
