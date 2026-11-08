@@ -82,7 +82,7 @@ public class ArtistQueriesTests
 
 		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = names }));
 
-		var response = result.Result.Should().BeOfType<ObjectResult>().Which;
+		var response = result.Result.Should().BeOfType<BadRequestObjectResult>().Which;
 		response.StatusCode.Should().Be(400);
 		response.Value.Should().BeOfType<ValidationProblemDetails>().Which.Errors.Should().ContainKey("Names");
 	}
@@ -104,7 +104,7 @@ public class ArtistQueriesTests
 	{
 		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = Array.Empty<LocalizedStringContract>() }));
 
-		result.Result.Should().BeOfType<ObjectResult>().Which.StatusCode.Should().Be(400);
+		result.Result.Should().BeOfType<BadRequestObjectResult>().Which.StatusCode.Should().Be(400);
 	}
 
 	[DataTestMethod]
@@ -121,7 +121,7 @@ public class ArtistQueriesTests
 
 		var result = await CallArtistApi(controller => controller.Edit(contract));
 
-		var response = result.Result.Should().BeOfType<ObjectResult>().Which;
+		var response = result.Result.Should().BeOfType<BadRequestObjectResult>().Which;
 		response.StatusCode.Should().Be(400);
 		response.Value.Should().BeOfType<ValidationProblemDetails>().Which.Errors.Should().ContainKey("Names");
 	}
