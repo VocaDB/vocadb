@@ -393,6 +393,18 @@ const SongListDetailsLayout = observer(
 								>
 									{t('ViewRes:EntryDetails.EditTags')}
 								</JQueryUIButton>
+								{songList.canRemoveTagUsages && (
+									<>
+										{' '}
+										<JQueryUIButton
+											as={Link}
+											to={`/SongList/ManageTagUsages/${songList.id}`}
+											icons={{ primary: 'ui-icon-wrench' }}
+										>
+											{t('ViewRes:EntryDetails.ManageTags')}
+										</JQueryUIButton>
+									</>
+								)}
 							</div>
 						</div>
 

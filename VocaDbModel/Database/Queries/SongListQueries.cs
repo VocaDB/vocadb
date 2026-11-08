@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -239,6 +240,23 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 			{
 				LatestComments = Comments(ctx).GetList(listId, 3)
 			};
+		});
+	}
+
+	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int songListId)
+	{
+		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+
+		return HandleQuery(session =>
+		{
+			var songList = session.Load(songListId);
+			return new EntryWithTagUsagesForApiContract(
+				songList,
+				songList.Tags.ActiveUsages,
+				LanguagePreference,
+				PermissionContext,
+				_userIconFactory
+			);
 		});
 	}
 

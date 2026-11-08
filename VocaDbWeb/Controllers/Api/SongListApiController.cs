@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
@@ -308,6 +309,12 @@ public class SongListApiController : ApiController
 	[HttpGet("{id:int}/details")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public SongListForApiContract GetDetails(int id) => _queries.GetDetails(id);
+
+	[HttpGet("{id:int}/tagUsages")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public EntryWithTagUsagesForApiContract GetTagUsages(int id) =>
+		_queries.GetEntryWithTagUsages(id);
 
 	[HttpGet("{id:int}/versions")]
 	[ApiExplorerSettings(IgnoreApi = true)]

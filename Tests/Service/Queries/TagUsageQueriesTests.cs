@@ -226,6 +226,22 @@ public class TagUsageQueriesTests
 	}
 
 	[TestMethod]
+	public async Task RemoveSongListTagUsage()
+	{
+		var tag = _repository.Save(CreateEntry.Tag("rock"));
+		var tag2 = _repository.Save(CreateEntry.Tag("metal"));
+		var list = _repository.Save(new SongList("Mikulist", _user));
+		await AddSongListTags(list.Id, Contract(tag.Id), Contract(tag2.Id));
+		var usage = _repository.Save(list.Tags.Usages.First(u => u.Tag.Id == tag.Id));
+
+		_queries.RemoveTagUsage<SongListTagUsage, SongList>(usage.Id, _repository.OfType<User>());
+
+		list.Tags.Usages.Count.Should().Be(1, "Number of tag usages for entry");
+		tag.UsageCount.Should().Be(0, "Number of usages for tag");
+		list.Tags.HasTag(tag).Should().BeFalse("Tag was removed from entry");
+	}
+
+	[TestMethod]
 	public async Task AddTag_SendNotifications()
 	{
 		var followingUser = _repository.Save(CreateEntry.User(name: "Rin"));

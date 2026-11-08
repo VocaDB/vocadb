@@ -3,7 +3,6 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { TagUsageWithVotesForApiContract } from '@/DataContracts/Tag/TagUsageWithVotesForApiContract';
 import { EntryType } from '@/Models/EntryType';
 import { userRepo } from '@/Repositories/UserRepository';
-import { useVdb } from '@/VdbContext';
 import dayjs from '@/dayjs';
 import React from 'react';
 
@@ -24,7 +23,6 @@ export const TagUsagesManageTable = React.memo(
 		setTagUsages,
 		canRemove,
 	}: TagUsagesManageTableProps): React.ReactElement => {
-		const vdb = useVdb();
 		const deleteTagUsage = (tagUsageId: number): void => {
 			userRepo
 				.deleteTag({
@@ -70,10 +68,12 @@ export const TagUsagesManageTable = React.memo(
 									</td>
 									<td>{dayjs(tagUsage.date).format('lll')}</td>
 									<td>
-										<SafeAnchor
-											onClick={(): void => deleteTagUsage(tagUsage.id)}
-											className="removeLink textLink"
-										/>
+										{canRemove && (
+											<SafeAnchor
+												onClick={(): void => deleteTagUsage(tagUsage.id)}
+												className="removeLink textLink"
+											/>
+										)}
 									</td>
 								</tr>
 							))}

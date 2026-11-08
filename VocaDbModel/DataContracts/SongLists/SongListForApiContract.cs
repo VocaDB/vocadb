@@ -33,6 +33,7 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 		ParamIs.NotNull(() => list);
 
 		Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
+		CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(permissionContext, list);
 		CommentsLocked = list.CommentsLocked;
 		Deleted = list.Deleted;
 		EventDate = list.EventDate;
@@ -73,6 +74,9 @@ public class SongListForApiContract : SongListBaseContract, ISongList
 
 	[DataMember]
 	public UserForApiContract Author { get; init; }
+
+	[DataMember]
+	public bool CanRemoveTagUsages { get; init; }
 
 	[DataMember]
 	public bool CommentsLocked { get; init; }

@@ -1,3 +1,4 @@
+import { EntryWithTagUsagesForApiContract } from '@/DataContracts/Base/EntryWithTagUsagesForApiContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
@@ -160,6 +161,16 @@ export class SongListRepository {
 	getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
 		return this.httpClient.get<SongListContract>(
 			this.urlMapper.mapRelative(`/api/songLists/${id}/details`),
+		);
+	};
+
+	getTagUsages = ({
+		songListId,
+	}: {
+		songListId: number;
+	}): Promise<EntryWithTagUsagesForApiContract> => {
+		return this.httpClient.get<EntryWithTagUsagesForApiContract>(
+			this.urlMapper.mapRelative(`/api/songLists/${songListId}/tagUsages`),
 		);
 	};
 

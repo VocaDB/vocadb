@@ -1467,6 +1467,11 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
 	}
 
+	public void DeleteSongListTag(long tagUsageId)
+	{
+		new TagUsageQueries(PermissionContext).RemoveTagUsage<SongListTagUsage, SongList>(tagUsageId, _repository);
+	}
+
 	public UserForApiContract GetUser(int id, UserOptionalFields fields)
 	{
 		return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), _userIconFactory, fields));

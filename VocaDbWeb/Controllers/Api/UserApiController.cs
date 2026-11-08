@@ -654,6 +654,15 @@ public class UserApiController : ApiController
 		_queries.DeleteEventTag(tagUsageId);
 		return NoContent();
 	}
+
+	[HttpDelete("current/songListTags/{tagUsageId:long}")]
+	[Authorize]
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public ActionResult RemoveSongListTagUsage(long tagUsageId)
+	{
+		_queries.DeleteSongListTag(tagUsageId);
+		return NoContent();
+	}
 	/// <summary>
 	/// Add or update collection status, media type and rating for a specific album, for the currently logged in user.
 	/// </summary>

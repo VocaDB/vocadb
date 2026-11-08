@@ -12,6 +12,7 @@ export interface SongListContract
 	extends SongListBaseContract,
 		EntryWithTagUsagesContract {
 	author: UserBaseContract;
+	canRemoveTagUsages?: boolean;
 	deleted?: boolean;
 	description: string;
 	eventDate?: string;

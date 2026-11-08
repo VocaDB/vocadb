@@ -3,6 +3,7 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
@@ -41,6 +42,15 @@ public class EntryPermissionManagerTests
 		_user.GroupId = userGroup;
 
 		var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_user), _artist);
+		result.Should().Be(expected, "result");
+	}
+
+	private void TestCanRemoveSongListTagUsages(bool expected, EntryStatus entryStatus, UserGroupId userGroup)
+	{
+		var user = CreateEntry.User(group: userGroup);
+		var songList = new SongList("Mikulist", user) { Status = entryStatus };
+
+		var result = EntryPermissionManager.CanRemoveTagUsages(new FakePermissionContext(user), songList);
 		result.Should().Be(expected, "result");
 	}
 
@@ -136,6 +146,46 @@ public class EntryPermissionManagerTests
 		var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_verifiedUser), _verifiedArtist);
 
 		result.Should().BeTrue("result");
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_RegularUser()
+	{
+		TestCanRemoveSongListTagUsages(false, EntryStatus.Finished, UserGroupId.Regular);
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_TrustedUser()
+	{
+		TestCanRemoveSongListTagUsages(true, EntryStatus.Finished, UserGroupId.Trusted);
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_TrustedUser_LockedSongList()
+	{
+		TestCanRemoveSongListTagUsages(false, EntryStatus.Locked, UserGroupId.Trusted);
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_Moderator_LockedSongList()
+	{
+		TestCanRemoveSongListTagUsages(true, EntryStatus.Locked, UserGroupId.Moderator);
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_Admin_LockedSongList()
+	{
+		TestCanRemoveSongListTagUsages(true, EntryStatus.Locked, UserGroupId.Admin);
+	}
+
+	[TestMethod]
+	public void CanRemoveSongListTagUsages_AnonymousUser()
+	{
+		var songList = new SongList("Mikulist", CreateEntry.User());
+
+		var result = EntryPermissionManager.CanRemoveTagUsages(new FakePermissionContext(), songList);
+
+		result.Should().BeFalse("result");
 	}
 
 	[TestMethod]

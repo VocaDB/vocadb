@@ -12,10 +12,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Security;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess;
@@ -82,6 +84,59 @@ public class SongListQueriesTests
 		songList.AllSongs.Count.Should().Be(2, "Number of songs");
 		songList.AllSongs[0].Song.DefaultName.Should().Be("Project Diva desu.", "First song as expected");
 		songList.AllSongs[1].Song.DefaultName.Should().Be("World is Mine", "Second song as expected");
+	}
+
+	[TestMethod]
+	public void CanRemoveTagUsagesInDetailsContract()
+	{
+		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList));
+
+		var regularContract = new SongListForApiContract(
+			songList,
+			ContentLanguagePreference.Default,
+			_permissionContext,
+			new FakeUserIconFactory(),
+			_imagePersister,
+			SongListOptionalFields.None
+		);
+
+		var moderator = CreateEntry.User(group: UserGroupId.Moderator);
+		var moderatorContract = new SongListForApiContract(
+			songList,
+			ContentLanguagePreference.Default,
+			new FakePermissionContext(moderator),
+			new FakeUserIconFactory(),
+			_imagePersister,
+			SongListOptionalFields.None
+		);
+
+		regularContract.CanRemoveTagUsages.Should().BeFalse("Regular user cannot remove tag usages");
+		moderatorContract.CanRemoveTagUsages.Should().BeTrue("Moderator can remove tag usages");
+	}
+
+	[TestMethod]
+	public void GetEntryWithTagUsages()
+	{
+		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList));
+		var tag = new Tag("rock");
+		var usage = new SongListTagUsage(songList, tag);
+		songList.Tags.Usages.Add(usage);
+		usage.CreateVote(_userWithSongList);
+		tag.UsageCount = 1;
+
+		var moderator = CreateEntry.User(group: UserGroupId.Moderator);
+		var permissionContext = new FakePermissionContext(moderator);
+		var queries = new SongListQueries(_repository, permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory());
+
+		var result = queries.GetEntryWithTagUsages(songList.Id);
+
+		result.Id.Should().Be(songList.Id, "Song list Id");
+		result.DefaultName.Should().Be("Mikulist", "Song list name");
+		result.CanRemoveTagUsages.Should().BeTrue("Moderator can remove tag usages");
+		result.TagUsages.Length.Should().Be(1, "Number of tag usages");
+		result.TagUsages[0].Tag.Name.Should().Be("rock", "Tag name");
+		result.TagUsages[0].Count.Should().Be(1, "Vote count");
+		result.TagUsages[0].Votes.Length.Should().Be(1, "Number of votes");
 	}
 
 	[TestMethod]

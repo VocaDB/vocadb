@@ -82,6 +82,16 @@ public class SongListController : ControllerBase
 	{
 		return ReactIndex.File(PageProperties);
 	}
+
+	[Authorize]
+	public ActionResult ManageTagUsages(int id)
+	{
+		var songList = _queries.GetEntryWithTagUsages(id);
+
+		PageProperties.Title = "Manage tag usages - " + songList.DefaultName;
+
+		return ReactIndex.File(PageProperties);
+	}
 #nullable disable
 
 	public ActionResult Export(int id)
