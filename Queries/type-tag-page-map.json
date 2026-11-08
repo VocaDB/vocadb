@@ -1,0 +1,475 @@
+{
+  "Unknown": {
+    "label": "Not specified",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": null,
+    "decision": "remove",
+    "reason": "Placeholder type; it should not link to a tag page."
+  },
+  "Circle": {
+    "label": "Circle",
+    "currentTagPage": {
+      "id": 2762,
+      "name": "circle",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/2762/circle"
+    },
+    "tagPage": {
+      "id": 2762,
+      "name": "circle",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/2762/circle"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Label": {
+    "label": "Label",
+    "currentTagPage": {
+      "id": 7386,
+      "name": "label",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7386/label"
+    },
+    "tagPage": {
+      "id": 7386,
+      "name": "label",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7386/label"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Producer": {
+    "label": "Music producer",
+    "currentTagPage": {
+      "id": 300,
+      "name": "music producer",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/300/music-producer"
+    },
+    "tagPage": {
+      "id": 300,
+      "name": "music producer",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/300/music-producer"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Animator": {
+    "label": "Animation producer",
+    "currentTagPage": {
+      "id": 20,
+      "name": "animator",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/20/animator"
+    },
+    "tagPage": {
+      "id": 20,
+      "name": "animator",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/20/animator"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Illustrator": {
+    "label": "Illustrator",
+    "currentTagPage": {
+      "id": 204,
+      "name": "illustrator",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/204/illustrator"
+    },
+    "tagPage": {
+      "id": 204,
+      "name": "illustrator",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/204/illustrator"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Lyricist": {
+    "label": "Lyricist",
+    "currentTagPage": {
+      "id": 246,
+      "name": "lyricist",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/246/lyricist"
+    },
+    "tagPage": {
+      "id": 246,
+      "name": "lyricist",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/246/lyricist"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Vocaloid": {
+    "label": "Vocaloid",
+    "currentTagPage": {
+      "id": 4857,
+      "name": "VOCALOID",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/4857/vocaloid"
+    },
+    "tagPage": {
+      "id": 4857,
+      "name": "VOCALOID",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/4857/vocaloid"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "UTAU": {
+    "label": "UTAU",
+    "currentTagPage": {
+      "id": 447,
+      "name": "UTAU",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/447/utau"
+    },
+    "tagPage": {
+      "id": 447,
+      "name": "UTAU",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/447/utau"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "CeVIO": {
+    "label": "CeVIO",
+    "currentTagPage": {
+      "id": 2838,
+      "name": "CeVIO",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/2838/cevio"
+    },
+    "tagPage": {
+      "id": 2838,
+      "name": "CeVIO",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/2838/cevio"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "OtherVoiceSynthesizer": {
+    "label": "Other voice synthesizer",
+    "currentTagPage": {
+      "id": 6109,
+      "name": "other vocal synthesis engine",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/6109/other-vocal-synthesis-engine"
+    },
+    "tagPage": {
+      "id": 6109,
+      "name": "other vocal synthesis engine",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/6109/other-vocal-synthesis-engine"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "OtherVocalist": {
+    "label": "Other vocalist",
+    "currentTagPage": {
+      "id": 7376,
+      "name": "other vocalist",
+      "category": "Vocalists",
+      "url": "https://vocadb.net/T/7376/other-vocalist"
+    },
+    "tagPage": {
+      "id": 7376,
+      "name": "other vocalist",
+      "category": "Vocalists",
+      "url": "https://vocadb.net/T/7376/other-vocalist"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "OtherGroup": {
+    "label": "Other group",
+    "currentTagPage": {
+      "id": 10140,
+      "name": "other group",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/10140/other-group"
+    },
+    "tagPage": {
+      "id": 10140,
+      "name": "other group",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/10140/other-group"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "OtherIndividual": {
+    "label": "Other individual",
+    "currentTagPage": {
+      "id": 10141,
+      "name": "other individual",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/10141/other-individual"
+    },
+    "tagPage": {
+      "id": 10141,
+      "name": "other individual",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/10141/other-individual"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Utaite": {
+    "label": "Utaite",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": {
+      "id": 446,
+      "name": "歌い手",
+      "category": "Vocalists",
+      "url": "https://vocadb.net/T/446/utaite"
+    },
+    "decision": "add",
+    "reason": "No exact mapping; currently falls back to the generic 'artists' tag. A dedicated '歌い手' tag already exists."
+  },
+  "Band": {
+    "label": "Band/unit",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": null,
+    "decision": "review",
+    "reason": "No exact mapping and no dedicated band tag found; currently falls back to the generic 'artists' tag. Needs a decision."
+  },
+  "Vocalist": {
+    "label": "Vocalist",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": null,
+    "decision": "review",
+    "reason": "No exact mapping and no dedicated vocalist tag found; currently falls back to the generic 'artists' tag. Needs a decision."
+  },
+  "Character": {
+    "label": "Character",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": null,
+    "decision": "review",
+    "reason": "No exact mapping and no dedicated character tag found; currently falls back to the generic 'artists' tag. Needs a decision."
+  },
+  "SynthesizerV": {
+    "label": "Synthesizer V",
+    "currentTagPage": {
+      "id": 6745,
+      "name": "Synthesizer V",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/6745/synthesizer-v"
+    },
+    "tagPage": {
+      "id": 6745,
+      "name": "Synthesizer V",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/6745/synthesizer-v"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "CoverArtist": {
+    "label": "Cover artist",
+    "currentTagPage": {
+      "id": 7368,
+      "name": "cover artist",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7368/cover-artist"
+    },
+    "tagPage": {
+      "id": 7368,
+      "name": "cover artist",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7368/cover-artist"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "NEUTRINO": {
+    "label": "NEUTRINO",
+    "currentTagPage": {
+      "id": 7430,
+      "name": "NEUTRINO",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7430/neutrino"
+    },
+    "tagPage": {
+      "id": 7430,
+      "name": "NEUTRINO",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7430/neutrino"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "VoiSona": {
+    "label": "VoiSona",
+    "currentTagPage": {
+      "id": 8754,
+      "name": "VoiSona",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8754/voisona"
+    },
+    "tagPage": {
+      "id": 8754,
+      "name": "VoiSona",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8754/voisona"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "NewType": {
+    "label": "New Type",
+    "currentTagPage": {
+      "id": 7361,
+      "name": "New Type",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7361/new-type"
+    },
+    "tagPage": {
+      "id": 7361,
+      "name": "New Type",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7361/new-type"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Voiceroid": {
+    "label": "Voiceroid",
+    "currentTagPage": {
+      "id": 486,
+      "name": "VOICEROID",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/486/voiceroid"
+    },
+    "tagPage": {
+      "id": 486,
+      "name": "VOICEROID",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/486/voiceroid"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "Instrumentalist": {
+    "label": "Instrumentalist",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": {
+      "id": 6566,
+      "name": "instrumentalist",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/6566/instrumentalist"
+    },
+    "decision": "add",
+    "reason": "No exact mapping; currently falls back to the generic 'artists' tag. A dedicated 'instrumentalist' tag already exists but has no usages yet."
+  },
+  "Designer": {
+    "label": "Designer",
+    "currentTagPage": {
+      "id": 7372,
+      "name": "artists",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/7372/artists"
+    },
+    "tagPage": {
+      "id": 6350,
+      "name": "designer",
+      "category": "Jobs",
+      "url": "https://vocadb.net/T/6350/designer"
+    },
+    "decision": "add",
+    "reason": "No exact mapping; currently falls back to the generic 'artists' tag. A dedicated 'designer' tag already exists."
+  },
+  "VOICEVOX": {
+    "label": "VOICEVOX",
+    "currentTagPage": {
+      "id": 8533,
+      "name": "VOICEVOX",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8533/voicevox"
+    },
+    "tagPage": {
+      "id": 8533,
+      "name": "VOICEVOX",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8533/voicevox"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "ACEVirtualSinger": {
+    "label": "ACE Virtual Singer",
+    "currentTagPage": {
+      "id": 8863,
+      "name": "ACE虚拟歌姬",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8863/ace-virtual-singer"
+    },
+    "tagPage": {
+      "id": 8863,
+      "name": "ACE虚拟歌姬",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/8863/ace-virtual-singer"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  },
+  "AIVOICE": {
+    "label": "A.I.VOICE",
+    "currentTagPage": {
+      "id": 7776,
+      "name": "A.I.VOICE",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7776/aivoice"
+    },
+    "tagPage": {
+      "id": 7776,
+      "name": "A.I.VOICE",
+      "category": "Synthesizer engines",
+      "url": "https://vocadb.net/T/7776/aivoice"
+    },
+    "decision": "keep",
+    "reason": "Exact mapping already exists."
+  }
+}
