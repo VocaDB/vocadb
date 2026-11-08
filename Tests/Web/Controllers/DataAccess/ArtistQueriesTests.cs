@@ -82,9 +82,9 @@ public class ArtistQueriesTests
 
 		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = names }));
 
-		var response = result.Result.Should().BeOfType<ObjectResult>().Subject;
+		var response = result.Result.Should().BeOfType<ObjectResult>().Which;
 		response.StatusCode.Should().Be(400);
-		response.Value.Should().BeOfType<ValidationProblemDetails>().Subject.Errors.Should().ContainKey("Names");
+		response.Value.Should().BeOfType<ValidationProblemDetails>().Which.Errors.Should().ContainKey("Names");
 	}
 
 	[TestMethod]
@@ -104,7 +104,7 @@ public class ArtistQueriesTests
 	{
 		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = Array.Empty<LocalizedStringContract>() }));
 
-		result.Result.Should().BeOfType<ObjectResult>().Subject.StatusCode.Should().Be(400);
+		result.Result.Should().BeOfType<ObjectResult>().Which.StatusCode.Should().Be(400);
 	}
 
 	[DataTestMethod]
@@ -118,9 +118,9 @@ public class ArtistQueriesTests
 
 		var result = await CallArtistApi(controller => controller.Edit(contract));
 
-		var response = result.Result.Should().BeOfType<ObjectResult>().Subject;
+		var response = result.Result.Should().BeOfType<ObjectResult>().Which;
 		response.StatusCode.Should().Be(400);
-		response.Value.Should().BeOfType<ValidationProblemDetails>().Subject.Errors.Should().ContainKey("Names");
+		response.Value.Should().BeOfType<ValidationProblemDetails>().Which.Errors.Should().ContainKey("Names");
 	}
 
 	[TestMethod]

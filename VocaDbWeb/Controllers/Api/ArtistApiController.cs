@@ -302,7 +302,7 @@ public class ArtistApiController : ApiController
 			if (name is null)
 				return false;
 
-			name.Value = StringHelper.RemoveInvalidXmlChars(name.Value);
+			name.Value = VocaDb.Model.Helpers.StringHelper.RemoveInvalidXmlChars(name.Value);
 
 			if (string.IsNullOrEmpty(name.Value))
 				return false;
