@@ -77,36 +77,42 @@ const render = (store: PVListEditStore): HTMLTableRowElement => {
 	return body.rows[0];
 };
 
-describe.each([PVService.Youtube, PVService.LocalFile])('%s publish dates', (service) => {
-	test.each([
-		['omitted', {}],
-		['undefined', { publishDate: undefined }],
-		['null', { publishDate: null as unknown as string }],
-		...[
-			'',
-			' ',
-			'Invalid Date',
-			'not-a-date',
-			'2024-02-30',
-			'2023-02-29',
-			'2024-13-01',
-			'2024-00-10',
-			'2024-01-00',
-			'2024-01-32',
-			'2024-02-29T25:00:00',
-			'2024-02-29T12:60:00',
-			'2024-02-29T12:00:60',
-			'2024-02-29T12:00:00+25:00',
-			'2024-02-30T12:00:00.1234567Z',
-		].map((publishDate) => [publishDate, { publishDate }]),
-	] as [string, Partial<PVContract>][])('leaves %s blank and keeps the table aligned', (_, date) => {
-		const row = render(createStore([contract({ ...date, service })]));
-		expect(row.cells).toHaveLength(9);
-		expect(row.cells[4].textContent).toBe('');
-		expect(row.cells[3].textContent).toBe('2:03');
-		expect(row.textContent).not.toContain('Invalid Date');
-	});
-});
+describe.each([PVService.Youtube, PVService.LocalFile])(
+	'%s publish dates',
+	(service) => {
+		test.each([
+			['omitted', {}],
+			['undefined', { publishDate: undefined }],
+			['null', { publishDate: null as unknown as string }],
+			...[
+				'',
+				' ',
+				'Invalid Date',
+				'not-a-date',
+				'2024-02-30',
+				'2023-02-29',
+				'2024-13-01',
+				'2024-00-10',
+				'2024-01-00',
+				'2024-01-32',
+				'2024-02-29T25:00:00',
+				'2024-02-29T12:60:00',
+				'2024-02-29T12:00:60',
+				'2024-02-29T12:00:00+25:00',
+				'2024-02-30T12:00:00.1234567Z',
+			].map((publishDate) => [publishDate, { publishDate }]),
+		] as [string, Partial<PVContract>][])(
+			'leaves %s blank and keeps the table aligned',
+			(_, date) => {
+				const row = render(createStore([contract({ ...date, service })]));
+				expect(row.cells).toHaveLength(9);
+				expect(row.cells[4].textContent).toBe('');
+				expect(row.cells[3].textContent).toBe('2:03');
+				expect(row.textContent).not.toContain('Invalid Date');
+			},
+		);
+	},
+);
 
 test.each([
 	'2024-02-29',
@@ -132,11 +138,16 @@ test.each([
 	expect(row.cells[4].textContent).toBe(expected);
 });
 
-test.each([undefined, 'not-a-date', '2024-02-29'])('omits the date column when disabled (%s)', (publishDate) => {
-	const row = render(createStore([contract({ publishDate, author: 'Test author' })], false));
-	expect(row.cells).toHaveLength(8);
-	expect(row.cells[4].textContent).toBe('Test author');
-});
+test.each([undefined, 'not-a-date', '2024-02-29'])(
+	'omits the date column when disabled (%s)',
+	(publishDate) => {
+		const row = render(
+			createStore([contract({ publishDate, author: 'Test author' })], false),
+		);
+		expect(row.cells).toHaveLength(8);
+		expect(row.cells[4].textContent).toBe('Test author');
+	},
+);
 
 test('keeps the event table aligned without the disabled-PV column', () => {
 	const row = render(createStore([contract()], true, false));
@@ -150,26 +161,38 @@ test('does not substitute the current date when metadata is missing', () => {
 	expect(row.cells[4].textContent).toBe('');
 });
 
-test.each([undefined, null])('preserves a missing LocalFile date through save and reload (%s)', (publishDate) => {
-	const original = contract({ service: PVService.LocalFile, publishDate: publishDate as unknown as string });
-	const saved = createStore([original]).toContracts();
-	expect(saved[0].publishDate).toBe(publishDate);
-	const reloaded = createStore(JSON.parse(JSON.stringify(saved)));
-	expect(render(reloaded).cells[4].textContent).toBe('');
-});
+test.each([undefined, null])(
+	'preserves a missing LocalFile date through save and reload (%s)',
+	(publishDate) => {
+		const original = contract({
+			service: PVService.LocalFile,
+			publishDate: publishDate as unknown as string,
+		});
+		const saved = createStore([original]).toContracts();
+		expect(saved[0].publishDate).toBe(publishDate);
+		const reloaded = createStore(JSON.parse(JSON.stringify(saved)));
+		expect(render(reloaded).cells[4].textContent).toBe('');
+	},
+);
 
 test('renders a newly uploaded MP3 and its saved/reloaded contract without a date', async () => {
 	const uploaded = contract({ service: PVService.LocalFile });
-	const ajax = jest.spyOn($, 'ajax').mockImplementation((options: string | JQueryAjaxSettings) => {
-		const settings = options as JQueryAjaxSettings;
-		settings.success?.(uploaded, 'success', {} as JQueryXHR);
-		return $.Deferred().resolve(uploaded).promise() as JQueryXHR;
-	});
+	const ajax = jest
+		.spyOn($, 'ajax')
+		.mockImplementation((options: string | JQueryAjaxSettings) => {
+			const settings = options as JQueryAjaxSettings;
+			settings.success?.(uploaded, 'success', {} as JQueryXHR);
+			return $.Deferred().resolve(uploaded).promise() as JQueryXHR;
+		});
 	const store = createStore([]);
 	await act(async () => {
-		await store.uploadMedia(new File(['mp3'], 'test.mp3', { type: 'audio/mpeg' }));
+		await store.uploadMedia(
+			new File(['mp3'], 'test.mp3', { type: 'audio/mpeg' }),
+		);
 	});
-	expect(ajax).toHaveBeenCalledWith(expect.objectContaining({ url: '/Song/PostMedia/', type: 'POST' }));
+	expect(ajax).toHaveBeenCalledWith(
+		expect.objectContaining({ url: '/Song/PostMedia/', type: 'POST' }),
+	);
 	expect(render(store).cells[4].textContent).toBe('');
 	const reloaded = createStore(JSON.parse(JSON.stringify(store.toContracts())));
 	expect(render(reloaded).cells[4].textContent).toBe('');
@@ -184,6 +207,9 @@ test('renders newly fetched YouTube metadata with no publish date', async () => 
 		store.add();
 		await Promise.resolve();
 	});
-	expect(getPVByUrl).toHaveBeenCalledWith({ pvUrl: 'https://www.youtube.com/watch?v=test', type: PVType.Original });
+	expect(getPVByUrl).toHaveBeenCalledWith({
+		pvUrl: 'https://www.youtube.com/watch?v=test',
+		type: PVType.Original,
+	});
 	expect(render(store).cells[4].textContent).toBe('');
 });

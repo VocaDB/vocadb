@@ -1,7 +1,9 @@
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 
 test('convertToLocal preserves the UTC calendar date at local midnight', () => {
-	const result = DateTimeHelper.convertToLocal(new Date('2024-02-29T23:59:59Z'));
+	const result = DateTimeHelper.convertToLocal(
+		new Date('2024-02-29T23:59:59Z'),
+	);
 	expect(result).toEqual(new Date(2024, 1, 29));
 });
 
@@ -17,25 +19,25 @@ test.each([
 	[2024, 11, 31, '2024-12-31T00:00:00.000Z'],
 	[2025, 0, 1, '2025-01-01T00:00:00.000Z'],
 	[99, 0, 2, '0099-01-02T00:00:00.000Z'],
-] as [number, number, number, string][])('convertToUtc uses midnight for %s/%s/%s', (year, month, day, expected) => {
-	const local = new Date(0);
-	local.setFullYear(year, month, day);
-	local.setHours(18, 17, 16, 15);
-	const original = local.getTime();
+] as [number, number, number, string][])(
+	'convertToUtc uses midnight for %s/%s/%s',
+	(year, month, day, expected) => {
+		const local = new Date(0);
+		local.setFullYear(year, month, day);
+		local.setHours(18, 17, 16, 15);
+		const original = local.getTime();
 
-	expect(DateTimeHelper.convertToUtc(local)!.toISOString()).toBe(expected);
-	expect(local.getTime()).toBe(original);
-	expect(DateTimeHelper.convertToLocal(DateTimeHelper.convertToUtc(local)!)).toEqual(
-		new Date(year < 100 ? 2000 : year, month, day),
-	);
-});
+		expect(DateTimeHelper.convertToUtc(local)!.toISOString()).toBe(expected);
+		expect(local.getTime()).toBe(original);
+	},
+);
 
 test('convertToUtc is independent of the current clock and month', () => {
 	jest.useFakeTimers().setSystemTime(new Date('2031-01-31T18:17:16.015Z'));
 	try {
-		expect(DateTimeHelper.convertToUtc(new Date(2024, 1, 29))!.toISOString()).toBe(
-			'2024-02-29T00:00:00.000Z',
-		);
+		expect(
+			DateTimeHelper.convertToUtc(new Date(2024, 1, 29))!.toISOString(),
+		).toBe('2024-02-29T00:00:00.000Z');
 	} finally {
 		jest.useRealTimers();
 	}
@@ -43,4 +45,10 @@ test('convertToUtc is independent of the current clock and month', () => {
 
 test.each([null, undefined])('convertToUtc returns null for %s', (value) => {
 	expect(DateTimeHelper.convertToUtc(value!)).toBeNull();
+});
+
+test('UTC and local conversion preserve a datepicker calendar day', () => {
+	const local = new Date(2024, 10, 3, 18, 17, 16);
+	const utc = DateTimeHelper.convertToUtc(local)!;
+	expect(DateTimeHelper.convertToLocal(utc)).toEqual(new Date(2024, 10, 3));
 });

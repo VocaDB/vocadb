@@ -8,13 +8,11 @@ import { compilerOptions } from './tsconfig.json';
 const config: Config.InitialOptions = {
 	testRegex: 'Scripts/Tests/.*\\.test\\.tsx?$',
 	transform: {
-		'^.+\\.tsx?$': [
+		'^.+\\.[tj]sx?$': [
 			'ts-jest',
-			{ tsconfig: { esModuleInterop: true, module: 'CommonJS' } },
-		],
-		'node_modules/lodash-es/.+\\.js$': [
-			'ts-jest',
-			{ tsconfig: { allowJs: true, module: 'CommonJS' } },
+			{
+				tsconfig: { esModuleInterop: true, allowJs: true, module: 'CommonJS' },
+			},
 		],
 	},
 	transformIgnorePatterns: ['node_modules/(?!lodash-es/)'],

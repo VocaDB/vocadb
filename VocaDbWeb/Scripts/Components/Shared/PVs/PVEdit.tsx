@@ -73,9 +73,7 @@ export const PVEdit = observer(
 				</td>
 				<td>{pvEditStore.lengthFormatted}</td>
 				{pvListEditStore.showPublishDates && (
-					<td>
-						{publishDate?.format('l')}
-					</td>
+					<td>{publishDate?.format('l')}</td>
 				)}
 				<td>
 					{contract.author && pvListEditStore.canBulkDeletePVs ? (
