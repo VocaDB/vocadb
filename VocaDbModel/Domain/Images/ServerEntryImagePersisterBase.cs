@@ -24,6 +24,8 @@ public abstract class ServerEntryImagePersisterBase : IEntryImagePersister
 		return File.Exists(GetPath(picture, size));
 	}
 
+	public bool Exists(IEntryImageInformation picture, ImageSize size) => HasImage(picture, size);
+
 	public abstract string GetPath(IEntryImageInformation picture, ImageSize size);
 
 	public void Write(IEntryImageInformation picture, ImageSize size, Stream file)

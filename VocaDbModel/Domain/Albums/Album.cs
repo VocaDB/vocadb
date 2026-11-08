@@ -406,7 +406,7 @@ public class Album :
 
 	ITagManager IEntryWithTags.Tags => Tags;
 
-	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(CoverPictureMime) ? new EntryThumbMain(this, CoverPictureMime) : null;
+	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(CoverPictureMime) ? new EntryThumbMain(this, CoverPictureMime, CoverPictureRevision) : null;
 
 	public virtual IList<AlbumForUser> UserCollections
 	{

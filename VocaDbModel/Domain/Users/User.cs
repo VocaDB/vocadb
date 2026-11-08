@@ -508,6 +508,7 @@ public class User :
 	int IEntryImageInformation.Version => 0;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 
 	/// <summary>
 	/// Add album to user collection.

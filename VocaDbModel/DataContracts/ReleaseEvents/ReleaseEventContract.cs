@@ -21,6 +21,7 @@ public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntr
 	EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 #nullable disable
 
 	public ReleaseEventContract()

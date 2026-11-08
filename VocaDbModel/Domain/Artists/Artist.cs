@@ -323,7 +323,7 @@ public class Artist :
 
 	ITagManager IEntryWithTags.Tags => Tags;
 
-	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(PictureMime) ? new EntryThumbMain(this, PictureMime) : null;
+	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(PictureMime) ? new EntryThumbMain(this, PictureMime, PictureRevision) : null;
 
 	/// <summary>
 	/// List of users who follow this artist. Cannot be null.

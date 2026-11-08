@@ -17,11 +17,12 @@ public class EntryThumb : IEntryImageInformation
 
 	public EntryThumb() { }
 
-	public EntryThumb(IEntryBase entry, string mime, ImagePurpose purpose)
+	public EntryThumb(IEntryBase entry, string mime, ImagePurpose purpose, int? revision = null)
 	{
 		Entry = entry;
 		Mime = mime;
 		Purpose = purpose;
+		Revision = revision;
 	}
 
 	public IEntryBase Entry
@@ -42,6 +43,8 @@ public class EntryThumb : IEntryImageInformation
 
 	public ImagePurpose Purpose { get; set; }
 
+	public int? Revision { get; set; }
+
 #nullable enable
 	public override string ToString()
 	{
@@ -59,6 +62,6 @@ public class EntryThumbMain : EntryThumb
 		Purpose = ImagePurpose.Main;
 	}
 
-	public EntryThumbMain(IEntryBase entry, string mime)
-		: base(entry, mime, ImagePurpose.Main) { }
+	public EntryThumbMain(IEntryBase entry, string mime, int? revision = null)
+		: base(entry, mime, ImagePurpose.Main, revision) { }
 }

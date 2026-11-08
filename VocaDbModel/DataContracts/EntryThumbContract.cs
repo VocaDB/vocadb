@@ -23,6 +23,7 @@ public class EntryThumbContract : IEntryImageInformation
 		Mime = entryThumb.Mime;
 		_purpose = entryThumb.Purpose;
 		Version = entryThumb.Version;
+		Revision = entryThumb.Revision;
 	}
 
 	[DataMember]
@@ -37,4 +38,6 @@ public class EntryThumbContract : IEntryImageInformation
 
 	[DataMember]
 	public int Version { get; init; }
+
+	public int? Revision { get; init; }
 }

@@ -33,6 +33,15 @@ public interface IEntryImagePersister : IEntryImageUrlFactory
 	/// <param name="size">Image size.</param>
 	/// <param name="image">Image object. Cannot be null.</param>
 	void Write(IEntryImageInformation picture, ImageSize size, Image image);
+
+	/// <summary>
+	/// Checks whether the image file exists in the store.
+	/// Unlike <see cref="IEntryImageUrlFactory.HasImage"/>, this queries the store.
+	/// </summary>
+	/// <param name="picture">Image information. Cannot be null.</param>
+	/// <param name="size">Image size.</param>
+	/// <returns>True if the file exists.</returns>
+	bool Exists(IEntryImageInformation picture, ImageSize size);
 }
 
 public static class EntryImagePersisterExtensions

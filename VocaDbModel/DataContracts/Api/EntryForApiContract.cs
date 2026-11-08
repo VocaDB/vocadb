@@ -81,7 +81,7 @@ public class EntryForApiContract : IEntryWithIntId
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime))
 		{
 			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister)
+				? EntryThumbForApiContract.Create(artist.Thumb, thumbPersister)
 				: null;
 		}
 
@@ -120,7 +120,7 @@ public class EntryForApiContract : IEntryWithIntId
 		if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime))
 		{
 			MainPicture = permissionContext.HasPermission(PermissionToken.ViewCoverArtImages)
-				? new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister)
+				? EntryThumbForApiContract.Create(album.Thumb, thumbPersister)
 				: null;
 		}
 
