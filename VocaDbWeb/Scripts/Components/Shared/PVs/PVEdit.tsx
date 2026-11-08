@@ -3,10 +3,31 @@ import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import dayjs from '@/dayjs';
+import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+dayjs.extend(CustomParseFormat);
+
+const parsePublishDate = (value?: string): dayjs.Dayjs | undefined => {
+	if (!value) return undefined;
+
+	// Validate the source calendar/time before applying its timezone offset.
+	const localDateTime = value
+		.replace(/(?:Z|[+-]\d{2}:\d{2})$/, '')
+		.replace(/(:\d{2})\.\d+$/, '$1');
+	const format = localDateTime.includes('T')
+		? 'YYYY-MM-DDTHH:mm:ss'
+		: 'YYYY-MM-DD';
+	const parsed = dayjs(localDateTime, format, true);
+	if (!parsed.isValid()) return undefined;
+
+	if (value === localDateTime) return parsed;
+	const date = dayjs(value);
+	return date.isValid() ? date : undefined;
+};
 
 interface PVEditProps {
 	pvListEditStore: PVListEditStore;
@@ -18,6 +39,9 @@ export const PVEdit = observer(
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		const { contract } = pvEditStore;
+		const publishDate = pvListEditStore.showPublishDates
+			? parsePublishDate(contract.publishDate)
+			: undefined;
 
 		const [showDescription, setShowDescription] = React.useState(false);
 
@@ -50,9 +74,7 @@ export const PVEdit = observer(
 				<td>{pvEditStore.lengthFormatted}</td>
 				{pvListEditStore.showPublishDates && (
 					<td>
-						{contract.publishDate && dayjs(contract.publishDate).isValid() && (
-							<>{dayjs(contract.publishDate).format('l')}</>
-						)}
+						{publishDate?.format('l')}
 					</td>
 				)}
 				<td>
