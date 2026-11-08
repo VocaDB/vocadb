@@ -292,6 +292,25 @@ public class ArtistApiController : ApiController
 	public ArchivedArtistVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
 		_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
+	private static bool CleanNames(LocalizedStringContract[]? names)
+	{
+		if (names is null || names.Length == 0)
+			return false;
+
+		foreach (var name in names)
+		{
+			if (name is null)
+				return false;
+
+			name.Value = StringHelper.RemoveInvalidXmlChars(name.Value);
+
+			if (string.IsNullOrEmpty(name.Value))
+				return false;
+		}
+
+		return true;
+	}
+
 	[HttpPost("")]
 	[Authorize]
 	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
@@ -303,7 +322,7 @@ public class ArtistApiController : ApiController
 	{
 		_rateLimitService.RegisterEdit(_permissionContext);
 
-		if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+		if (!CleanNames(contract.Names) || contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
 			ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
 
 		if (string.IsNullOrWhiteSpace(contract.Description) && string.IsNullOrWhiteSpace(contract.WebLink?.Url))
@@ -372,7 +391,7 @@ public class ArtistApiController : ApiController
 		}
 
 		// Note: name is allowed to be whitespace, but not empty.
-		if (contract.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
+		if (!CleanNames(contract.Names))
 		{
 			ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
 		}

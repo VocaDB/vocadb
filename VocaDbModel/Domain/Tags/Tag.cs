@@ -304,6 +304,7 @@ public class Tag :
 		ParamIs.NotNull(() => localizedString);
 
 		var name = new TagName(this, localizedString);
+		ParamIs.NotNullOrEmpty(name.Value, nameof(localizedString));
 		Names.Add(name);
 
 		return name;

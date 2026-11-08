@@ -32,6 +32,9 @@ public static class StringHelper
 
 	private static bool IsValidXmlChar(int codePoint)
 	{
+		if (codePoint < 0)
+			return false;
+
 		return codePoint <= 0xFFFF
 			? XmlConvert.IsXmlChar((char)codePoint)
 			: codePoint <= 0x10FFFF;

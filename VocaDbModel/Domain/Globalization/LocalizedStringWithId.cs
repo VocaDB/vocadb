@@ -19,7 +19,7 @@ public class LocalizedStringWithId : LocalizedString, IEntryWithIntId
 		set
 		{
 			base.Value = value;
-			SearchValue = NameSearchHelper.Normalize(value);
+			SearchValue = NameSearchHelper.Normalize(base.Value);
 		}
 	}
 

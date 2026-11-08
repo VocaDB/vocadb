@@ -109,6 +109,27 @@ public class TagQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Create_CleansNameBeforeDuplicateCheck()
+	{
+		await Awaiting(() => _queries.Create("Appearance\u000B Miku")).Should().ThrowAsync<DuplicateTagNameException>();
+	}
+
+	[TestMethod]
+	public async Task Create_ControlOnlyNameRejected()
+	{
+		await Awaiting(() => _queries.Create("\u0008")).Should().ThrowAsync<ArgumentException>();
+	}
+
+	[TestMethod]
+	public async Task Create_RemovesInvalidXmlChars()
+	{
+		var result = await _queries.Create("Api\u0008miku");
+
+		result.Name.Should().Be("Apimiku");
+		_repository.Load(result.Id).Names.Names.Single().SearchValue.Should().Be("APIMIKU");
+	}
+
+	[TestMethod]
 	public async Task GetDetails_RecentEvents()
 	{
 		void AssertContainsEvent(TagDetailsForApiContract details, ReleaseEvent releaseEvent)
@@ -425,6 +446,56 @@ public class TagQueriesTests
 		};
 
 		Invoking(() => _queries.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
+	}
+
+	[TestMethod]
+	public void Update_Name_DuplicateAfterCleaning()
+	{
+		var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null)
+		{
+			Names = new[]
+			{
+				new LocalizedStringWithIdContract { Value = "FooBar", Language = ContentLanguageSelection.English },
+				new LocalizedStringWithIdContract { Value = "Foo\u000BBar", Language = ContentLanguageSelection.Romaji },
+			},
+		};
+
+		Invoking(() => _queries.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
+
+		_tag.DefaultName.Should().Be("Appearance Miku");
+	}
+
+	[TestMethod]
+	public void Update_Name_DuplicateWithAnotherTagAfterCleaning()
+	{
+		var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
+		updated.Names[0].Value = "M\u000BMD";
+
+		Invoking(() => _queries.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
+	}
+
+	[TestMethod]
+	public void Update_Name_ControlOnlyRejected()
+	{
+		var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
+		updated.Names[0].Value = "\u0008";
+
+		Invoking(() => _queries.Update(updated, null)).Should().Throw<ArgumentException>();
+
+		_tag.DefaultName.Should().Be("Appearance Miku");
+	}
+
+	[TestMethod]
+	public void Update_Name_CleanedNameIsUnchanged()
+	{
+		var existing = _tag.Names.Names.Single();
+		var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
+		updated.Names[0].Value = "Appearance\u0008 Miku";
+
+		_queries.Update(updated, null);
+
+		_tag.Names.Names.Should().ContainSingle().Which.Should().BeSameAs(existing);
+		GetArchivedVersion(_tag)!.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Nothing);
 	}
 
 	[TestMethod]

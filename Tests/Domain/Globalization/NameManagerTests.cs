@@ -136,6 +136,106 @@ public class NameManagerTests
 	}
 
 	[TestMethod]
+	public void Sync_Updated_CleansNameAndSearchValue()
+	{
+		var existing = AddName("Miku");
+		var contract = new LocalizedStringWithIdContract(existing)
+		{
+			Value = "Miku\u0008Miku",
+			Language = ContentLanguageSelection.Japanese,
+		};
+
+		var result = _nameManager.Sync(new[] { contract }, _nameFactory);
+
+		result.Edited.Should().ContainSingle().Which.Should().BeSameAs(existing);
+		existing.Value.Should().Be("MikuMiku");
+		existing.SearchValue.Should().Be("MIKUMIKU");
+		existing.Id.Should().Be(contract.Id);
+		existing.Language.Should().Be(ContentLanguageSelection.Japanese);
+		contract.Value.Should().Be("Miku\u0008Miku");
+	}
+
+	[DataTestMethod]
+	[DataRow(false)]
+	[DataRow(true)]
+	public void Sync_CleanedNameIsUnchanged(bool immutable)
+	{
+		var existing = AddName("MikuMiku");
+		var contract = new LocalizedStringWithIdContract(existing) { Value = "Miku\u0008Miku" };
+
+		var result = _nameManager.Sync(new[] { contract }, _nameFactory, immutable: immutable);
+
+		result.Changed.Should().BeFalse();
+		_nameManager.Names.Should().ContainSingle().Which.Should().BeSameAs(existing);
+	}
+
+	[DataTestMethod]
+	[DataRow(false)]
+	[DataRow(true)]
+	public void Sync_ControlOnlyNameRejectedBeforeChanges(bool updateExisting)
+	{
+		var existing = AddName("Miku");
+		var contract = new LocalizedStringWithIdContract
+		{
+			Id = updateExisting ? existing.Id : 0,
+			Value = "\u0008",
+			Language = ContentLanguageSelection.English,
+		};
+
+		Invoking(() => _nameManager.Sync(new[] { contract }, _nameFactory)).Should().Throw<ArgumentException>();
+
+		_nameManager.Names.Should().ContainSingle().Which.Should().BeSameAs(existing);
+		existing.Value.Should().Be("Miku");
+	}
+
+	[TestMethod]
+	public void SyncByContent_CleanedNameIsUnchanged()
+	{
+		var existing = AddName("MikuMiku");
+		var contract = Contract("Miku\u0008Miku", ContentLanguageSelection.English);
+
+		var result = _nameManager.SyncByContent(new[] { contract }, _nameFactory);
+
+		result.Changed.Should().BeFalse();
+		_nameManager.Names.Should().ContainSingle().Which.Should().BeSameAs(existing);
+	}
+
+	[TestMethod]
+	public void SyncByContent_ControlOnlyNameRejectedBeforeChanges()
+	{
+		var existing = AddName("Miku");
+		var contract = Contract("\u0008", ContentLanguageSelection.English);
+
+		Invoking(() => _nameManager.SyncByContent(new[] { contract }, _nameFactory)).Should().Throw<ArgumentException>();
+
+		_nameManager.Names.Should().ContainSingle().Which.Should().BeSameAs(existing);
+	}
+
+	[TestMethod]
+	public void Init_ControlOnlyNameRejectedBeforeChanges()
+	{
+		var contracts = new[]
+		{
+			Contract("Miku", ContentLanguageSelection.English),
+			Contract("\u0008", ContentLanguageSelection.Japanese),
+		};
+
+		Invoking(() => _nameManager.Init(contracts, _nameFactory)).Should().Throw<ArgumentException>();
+
+		_nameManager.Names.Should().BeEmpty();
+	}
+
+	[TestMethod]
+	public void Sync_KeepsWhitespaceName()
+	{
+		var contract = Contract("\t\n\r", ContentLanguageSelection.English);
+
+		_nameManager.Sync(new[] { contract }, _nameFactory);
+
+		_nameManager.Names.Should().ContainSingle().Which.Value.Should().Be("\t\n\r");
+	}
+
+	[TestMethod]
 	public void UpdateSortNames_NoNames()
 	{
 		_nameManager.UpdateSortNames();

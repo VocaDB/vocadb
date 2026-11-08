@@ -217,6 +217,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 	/// <exception cref="DuplicateTagNameException">If a tag with the specified name already exists.</exception>
 	public async Task<TagBaseContract> Create(string name)
 	{
+		name = StringHelper.RemoveInvalidXmlChars(name);
 		ParamIs.NotNullOrWhiteSpace(() => name);
 
 		PermissionContext.VerifyManageDatabase();
@@ -853,6 +854,16 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 	{
 		ParamIs.NotNull(() => tag);
 		ParamIs.NotNull(() => names);
+
+		names = names.Select(n => new LocalizedStringWithIdContract
+		{
+			Id = n.Id,
+			Language = n.Language,
+			Value = StringHelper.RemoveInvalidXmlChars(n.Value),
+		}).ToArray();
+
+		foreach (var name in names)
+			ParamIs.NotNullOrEmpty(name.Value, nameof(names));
 
 		var nameValues = names.Select(n => n.Value).ToArray();
 

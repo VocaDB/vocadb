@@ -496,6 +496,7 @@ public class Album :
 		ParamIs.NotNullOrEmpty(() => val);
 
 		var name = new AlbumName(this, new LocalizedString(val, language));
+		ParamIs.NotNullOrEmpty(name.Value, nameof(val));
 		Names.Add(name);
 
 		return name;

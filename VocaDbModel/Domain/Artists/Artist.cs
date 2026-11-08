@@ -435,6 +435,7 @@ public class Artist :
 		ParamIs.NotNullOrEmpty(() => val);
 
 		var name = new ArtistName(this, new LocalizedString(val, language));
+		ParamIs.NotNullOrEmpty(name.Value, nameof(val));
 		Names.Add(name);
 
 		return name;

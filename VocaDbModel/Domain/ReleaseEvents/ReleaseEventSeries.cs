@@ -161,6 +161,7 @@ public class ReleaseEventSeries :
 		ParamIs.NotNull(() => localizedString);
 
 		var name = new EventSeriesName(this, localizedString);
+		ParamIs.NotNullOrEmpty(name.Value, nameof(localizedString));
 		Names.Add(name);
 
 		return name;

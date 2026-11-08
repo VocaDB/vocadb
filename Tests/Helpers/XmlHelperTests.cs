@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Helpers;
@@ -93,11 +94,89 @@ public class XmlHelperTests
 	[TestMethod]
 	public void SerializeToXml_AllForbiddenChars()
 	{
-		var album = new ArchivedAlbumContract { Description = "Miku\x00\x01\x08\x0B\x0C\x0E\x1FMiku" };
+		var forbidden = new string(Enumerable.Range(0, 0x20)
+			.Where(c => c is not (0x9 or 0xA or 0xD))
+			.Select(c => (char)c)
+			.ToArray());
+		var album = new ArchivedAlbumContract { Description = $"Miku{forbidden}\uFFFE\uFFFFMiku" };
 
 		var res = SerializeToObjectAndBack(album);
 
 		res.Description.Should().Be("MikuMiku", "all invalid characters are removed");
+	}
+
+	[TestMethod]
+	public void SerializeToXml_AllC0Characters()
+	{
+		for (var codePoint = 0; codePoint < 0x20; codePoint++)
+		{
+			var description = $"a{(char)codePoint}b";
+			var album = new ArchivedAlbumContract { Description = description };
+
+			var result = SerializeToObjectAndBack(album);
+
+			result.Description.Should().Be(codePoint is 0x9 or 0xA or 0xD ? description : "ab", "U+{0:X4}", codePoint);
+		}
+	}
+
+	[TestMethod]
+	public void SerializeToXml_KeepsC1Characters()
+	{
+		var description = new string(Enumerable.Range(0x7F, 0x21).Select(c => (char)c).ToArray());
+		var album = new ArchivedAlbumContract { Description = description };
+
+		var result = SerializeToObjectAndBack(album);
+
+		result.Description.Should().Be(description);
+	}
+
+	[DataTestMethod]
+	[DataRow(0x10000)]
+	[DataRow(0x1F600)]
+	[DataRow(0x20000)]
+	[DataRow(0x10FFFF)]
+	public void SerializeToXml_KeepsSupplementaryUnicode(int codePoint)
+	{
+		var description = $"a{char.ConvertFromUtf32(codePoint)}b";
+		var album = new ArchivedAlbumContract { Description = description };
+
+		var result = SerializeToObjectAndBack(album);
+
+		result.Description.Should().Be(description);
+	}
+
+	[TestMethod]
+	public void SerializeToXml_KeepsLiteralCharacterReferences()
+	{
+		var description = "&#x8; &#xFFFF0009; &#8;";
+		var album = new ArchivedAlbumContract { Description = description };
+
+		var result = SerializeToObjectAndBack(album);
+
+		result.Description.Should().Be(description);
+	}
+
+	[TestMethod]
+	public void SerializeToXml_CleanedMalformedUnicode()
+	{
+		var text = new EnglishTranslatedString("a\uD800b\u0008\U0001F600", "c\uDC00d\U00020000");
+
+		var result = SerializeToObjectAndBack(text);
+
+		result.Original.Should().Be("ab\U0001F600");
+		result.English.Should().Be("cd\U00020000");
+	}
+
+	[TestMethod]
+	public void SerializeToXml_RejectsRawMalformedSurrogates()
+	{
+		foreach (var invalid in new[] { "\uD800", "\uDC00", "\uD800\u0008\uDC00", "\uDC00\uD800" })
+		{
+			var album = new ArchivedAlbumContract { Description = $"a{invalid}b" };
+
+			Invoking(() => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>()
+				.WithInnerException<ArgumentException>();
+		}
 	}
 
 	[TestMethod]

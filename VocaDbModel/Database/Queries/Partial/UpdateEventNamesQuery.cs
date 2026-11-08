@@ -124,7 +124,13 @@ public class UpdateEventNamesQuery
 		IEnumerable<ILocalizedString> nameContracts
 	)
 	{
-		var names = GetNames(ctx, seriesLink, customName, seriesNumber, seriesSuffix, nameContracts).ToArray();
+		var names = GetNames(ctx, seriesLink, customName, seriesNumber, seriesSuffix, nameContracts)
+			.Select(n => new LocalizedString(n.Value, n.Language))
+			.ToArray();
+
+		foreach (var name in names)
+			ParamIs.NotNullOrEmpty(name.Value, nameof(nameContracts));
+
 		var namesValues = names.Select(n => n.Value).ToArray();
 
 		CheckDuplicateName(ctx, namesValues, ev.Id);

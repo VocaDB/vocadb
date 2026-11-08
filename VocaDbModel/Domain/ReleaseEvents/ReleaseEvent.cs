@@ -327,6 +327,7 @@ public class ReleaseEvent :
 		ParamIs.NotNull(() => localizedString);
 
 		var name = new EventName(this, localizedString);
+		ParamIs.NotNullOrEmpty(name.Value, nameof(localizedString));
 		Names.Add(name);
 
 		return name;

@@ -294,6 +294,73 @@ public class EventQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Update_Name_DuplicateAfterCleaning()
+	{
+		var contract = new ReleaseEventForEditForApiContract
+		{
+			Description = string.Empty,
+			Names = new[]
+			{
+				new LocalizedStringWithIdContract { Value = "FooBar", Language = ContentLanguageSelection.English },
+				new LocalizedStringWithIdContract { Value = "Foo\u000BBar", Language = ContentLanguageSelection.Romaji },
+			},
+		};
+
+		await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<DuplicateEventNameException>();
+	}
+
+	[TestMethod]
+	public async Task Update_Name_DuplicateWithAnotherEventAfterCleaning()
+	{
+		var contract = new ReleaseEventForEditForApiContract
+		{
+			Description = string.Empty,
+			Names = new[] { new LocalizedStringWithIdContract { Value = "M3\u000B 2013 Spring" } },
+		};
+
+		await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<DuplicateEventNameException>();
+	}
+
+	[TestMethod]
+	public async Task Update_InheritedName_DuplicateAfterCleaning()
+	{
+		var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null)
+		{
+			Id = 0,
+			SeriesSuffix = "Spr\u000Bing",
+		};
+
+		await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<DuplicateEventNameException>();
+	}
+
+	[TestMethod]
+	public async Task Update_Name_ControlOnlyRejected()
+	{
+		var contract = Contract(_existingEvent);
+		contract.CustomName = true;
+		contract.Names[0].Value = "\u0008";
+
+		await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<ArgumentException>();
+
+		_existingEvent.DefaultName.Should().Be("M3 2013 Spring");
+	}
+
+	[TestMethod]
+	public async Task Create_Name_RemovesInvalidXmlChars()
+	{
+		var contract = new ReleaseEventForEditForApiContract
+		{
+			Description = string.Empty,
+			Names = new[] { new LocalizedStringWithIdContract { Value = "Foo\u000BBar", Language = ContentLanguageSelection.English } },
+		};
+
+		var result = await CallUpdate(contract);
+
+		result.DefaultName.Should().Be("FooBar");
+		result.Names.Names.Single().SearchValue.Should().Be("FOOBAR");
+	}
+
+	[TestMethod]
 	public async Task Update_ChangeToSeriesEvent()
 	{
 		var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("M3 39"));

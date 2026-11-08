@@ -133,6 +133,7 @@ public class Venue :
 		ParamIs.NotNull(() => localizedString);
 
 		var name = new VenueName(this, localizedString);
+		ParamIs.NotNullOrEmpty(name.Value, nameof(localizedString));
 		Names.Add(name);
 
 		return name;

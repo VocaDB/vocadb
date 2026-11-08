@@ -2,6 +2,11 @@
 
 using System.Net.Mime;
 using System.Runtime.Caching;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
+using VocaDb.Web.Controllers.Api;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
@@ -53,6 +58,94 @@ public class ArtistQueriesTests
 			contract.Id = await _queries.Update(contract, new EntryPictureFileContract(stream, mime, (int)stream.Length, ImagePurpose.Main), _permissionContext);
 		}
 		return contract;
+	}
+
+	private async Task<ActionResult<int>> CallArtistApi(Func<ArtistApiController, Task<ActionResult<int>>> action)
+	{
+		using var services = new ServiceCollection().AddLogging().AddControllers().Services.BuildServiceProvider();
+		var controller = new ArtistApiController(_queries, null!, null!, MemoryCache.Default, _permissionContext, new EditRateLimitService())
+		{
+			ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext { RequestServices = services } }
+		};
+		controller.Request.Form = new FormCollection(new Dictionary<string, StringValues>());
+
+		return await action(controller);
+	}
+
+	[DataTestMethod]
+	[DataRow(false)]
+	[DataRow(true)]
+	public async Task CreateApi_ControlOnlyName_ReturnsValidationError(bool isAlias)
+	{
+		var invalid = new LocalizedStringContract("\u0008", ContentLanguageSelection.Japanese);
+		var names = isAlias ? _newArtistContract.Names.Append(invalid).ToArray() : new[] { invalid };
+
+		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = names }));
+
+		var response = result.Result.Should().BeOfType<ObjectResult>().Subject;
+		response.StatusCode.Should().Be(400);
+		response.Value.Should().BeOfType<ValidationProblemDetails>().Subject.Errors.Should().ContainKey("Names");
+	}
+
+	[TestMethod]
+	public async Task CreateApi_NameWithControlCharacter_IsCleanedBeforeSaving()
+	{
+		var name = new LocalizedStringContract("《\u0008》", ContentLanguageSelection.Japanese);
+
+		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = new[] { name } }));
+
+		result.Result.Should().BeNull();
+		result.Value.Should().BeGreaterThan(0);
+		name.Value.Should().Be("《》");
+	}
+
+	[TestMethod]
+	public async Task CreateApi_EmptyNames_ReturnsValidationError()
+	{
+		var result = await CallArtistApi(controller => controller.Create(_newArtistContract with { Names = Array.Empty<LocalizedStringContract>() }));
+
+		result.Result.Should().BeOfType<ObjectResult>().Subject.StatusCode.Should().Be(400);
+	}
+
+	[DataTestMethod]
+	[DataRow(false)]
+	[DataRow(true)]
+	public async Task EditApi_ControlOnlyName_ReturnsValidationError(bool isAlias)
+	{
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext);
+		var invalid = new LocalizedStringWithIdContract { Value = "\u0008", Language = ContentLanguageSelection.Japanese };
+		contract.Names = isAlias ? contract.Names.Append(invalid).ToArray() : new[] { invalid };
+
+		var result = await CallArtistApi(controller => controller.Edit(contract));
+
+		var response = result.Result.Should().BeOfType<ObjectResult>().Subject;
+		response.StatusCode.Should().Be(400);
+		response.Value.Should().BeOfType<ValidationProblemDetails>().Subject.Errors.Should().ContainKey("Names");
+	}
+
+	[TestMethod]
+	public async Task EditApi_NameWithControlCharacter_IsCleanedBeforeSaving()
+	{
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext);
+		contract.Names[0].Value = "《\u0008》";
+
+		var result = await CallArtistApi(controller => controller.Edit(contract));
+
+		result.Result.Should().BeNull();
+		contract.Names[0].Value.Should().Be("《》");
+		_artist.DefaultName.Should().Be("《》");
+	}
+
+	[TestMethod]
+	public async Task EditApi_WhitespaceName_RemainsSupported()
+	{
+		var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, _imagePersister, _permissionContext);
+		contract.Names[0].Value = "   ";
+
+		var result = await CallArtistApi(controller => controller.Edit(contract));
+
+		result.Result.Should().BeNull();
+		_artist.DefaultName.Should().Be("   ");
 	}
 
 	[TestInitialize]

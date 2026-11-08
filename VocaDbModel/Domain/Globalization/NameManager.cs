@@ -211,6 +211,15 @@ public class NameManager<T> : INameManager<T>, IEnumerable<T> where T : Localize
 		ParamIs.NotNull(() => names);
 		ParamIs.NotNull(() => nameFactory);
 
+		names = names.Select(n => new LocalizedStringContract
+		{
+			Language = n.Language,
+			Value = StringHelper.RemoveInvalidXmlChars(n.Value),
+		}).ToArray();
+
+		foreach (var name in names)
+			ParamIs.NotNullOrEmpty(name.Value, nameof(names));
+
 		foreach (var name in names)
 			nameFactory.CreateName(name.Value, name.Language);
 
@@ -249,6 +258,16 @@ public class NameManager<T> : INameManager<T>, IEnumerable<T> where T : Localize
 	{
 		ParamIs.NotNull(() => newNames);
 		ParamIs.NotNull(() => nameFactory);
+
+		newNames = newNames.Select(n => new LocalizedStringWithIdContract
+		{
+			Id = n.Id,
+			Language = n.Language,
+			Value = StringHelper.RemoveInvalidXmlChars(n.Value),
+		}).ToArray();
+
+		foreach (var name in newNames)
+			ParamIs.NotNullOrEmpty(name.Value, nameof(newNames));
 
 		var diff = CollectionHelper.Diff(Names, newNames, (n1, n2) => n1.Id == n2.Id && (!immutable || n1.ContentEquals(n2)));
 		var created = new List<T>();
@@ -290,6 +309,11 @@ public class NameManager<T> : INameManager<T>, IEnumerable<T> where T : Localize
 	{
 		ParamIs.NotNull(() => newNames);
 		ParamIs.NotNull(() => nameFactory);
+
+		newNames = newNames.Select(n => new LocalizedString(n.Value, n.Language)).ToArray();
+
+		foreach (var name in newNames)
+			ParamIs.NotNullOrEmpty(name.Value, nameof(newNames));
 
 		var diff = CollectionHelper.Diff(Names, newNames, (n1, n2) => n1.ContentEquals(n2));
 		var created = new List<T>();

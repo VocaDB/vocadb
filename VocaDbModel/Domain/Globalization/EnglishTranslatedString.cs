@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Globalization;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Globalization;
 
@@ -29,7 +30,7 @@ public class EnglishTranslatedString
 		set
 		{
 			ParamIs.NotNull(() => value);
-			_english = value;
+			_english = StringHelper.RemoveInvalidXmlChars(value);
 		}
 	}
 
@@ -49,7 +50,7 @@ public class EnglishTranslatedString
 		set
 		{
 			ParamIs.NotNull(() => value);
-			_original = value;
+			_original = StringHelper.RemoveInvalidXmlChars(value);
 		}
 	}
 
@@ -58,7 +59,7 @@ public class EnglishTranslatedString
 		ParamIs.NotNull(() => contract);
 
 		var changed = false;
-		var newOriginal = contract.Original.Trim();
+		var newOriginal = StringHelper.RemoveInvalidXmlChars(contract.Original).Trim();
 
 		if (Original != newOriginal)
 		{
@@ -66,7 +67,7 @@ public class EnglishTranslatedString
 			changed = true;
 		}
 
-		var newEnglish = contract.English.Trim();
+		var newEnglish = StringHelper.RemoveInvalidXmlChars(contract.English).Trim();
 
 		if (English != newEnglish)
 		{
