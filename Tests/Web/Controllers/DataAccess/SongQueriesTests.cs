@@ -755,6 +755,18 @@ public class SongQueriesTests
 	}
 
 	[TestMethod]
+	public void Merge_LockedForUpdate_LowerIdFirst()
+	{
+		var song2 = new Song();
+		_repository.Save(song2);
+		song2.Id.Should().BeGreaterThan(_song.Id, "Precondition");
+
+		_queries.Merge(song2.Id, _song.Id);
+
+		_repository.LockedForUpdate.Should().Equal(new[] { $"Song:{_song.Id}", $"Song:{song2.Id}" }, "Lock order");
+	}
+
+	[TestMethod]
 	public void Merge_WithArtists()
 	{
 		_song.GetArtistLink(_producer).Roles = ArtistRoles.Instrumentalist;
@@ -825,6 +837,7 @@ public class SongQueriesTests
 		var songFromRepo = _repository.Load(contract.Id);
 		songFromRepo.DefaultName.Should().Be("Replaced name");
 		songFromRepo.Version.Should().Be(1, "Version");
+		_repository.LockedForUpdate.Should().Equal(new[] { $"Song:{_song.Id}" }, "Song was loaded for update");
 		songFromRepo.AllArtists.Count.Should().Be(2, "Number of artists");
 		songFromRepo.AllAlbums.Count.Should().Be(0, "No albums");
 

@@ -277,7 +277,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var tag = LoadTagById(ctx, id);
+			var tag = ctx.LoadForUpdate(id);
 
 			_permissionContext.VerifyEntryDelete(tag);
 
@@ -709,8 +709,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var source = ctx.Load(sourceId);
-			var target = ctx.Load(targetId);
+			var (source, target) = ctx.LoadForUpdate(sourceId, targetId);
 			var diff = new TagDiff(false);
 			diff.Names.Set();
 
@@ -838,7 +837,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 		HandleTransaction(session =>
 		{
-			var tag = session.Load<Tag>(tagId);
+			var tag = session.LoadForUpdate<Tag>(tagId);
 
 			tag.Deleted = false;
 
@@ -907,7 +906,7 @@ public class TagQueries : QueriesBase<ITagRepository, Tag>
 
 		return _repository.HandleTransaction(ctx =>
 		{
-			var tag = LoadTagById(ctx, contract.Id);
+			var tag = ctx.LoadForUpdate(contract.Id);
 
 			_permissionContext.VerifyEntryEdit(tag);
 

@@ -90,7 +90,7 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var entry = ctx.Load(id);
+			var entry = ctx.LoadForUpdate(id);
 
 			PermissionContext.VerifyEntryDelete(entry);
 
@@ -246,7 +246,7 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 
 		HandleTransaction(ctx =>
 		{
-			var venue = ctx.Load<Venue>(id);
+			var venue = ctx.LoadForUpdate<Venue>(id);
 
 			venue.Deleted = false;
 
@@ -308,7 +308,7 @@ public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 			}
 			else
 			{
-				venue = ctx.Load<Venue>(contract.Id);
+				venue = ctx.LoadForUpdate<Venue>(contract.Id);
 				_permissionContext.VerifyEntryEdit(venue);
 				var diff = new VenueDiff(DoSnapshot(venue, ctx));
 

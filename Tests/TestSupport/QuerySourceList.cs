@@ -21,6 +21,7 @@ public class QuerySourceList : IDatabaseContext
 	}
 
 	public int AbortedTransactionCount { get; private set; }
+	public List<string> LockedForUpdate { get; } = new();
 	public int CommittedTransactionCount { get; private set; }
 
 	public void Add<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject

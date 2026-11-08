@@ -34,6 +34,7 @@ public class FakeRepository<T> : IRepository<T>
 	}
 
 	public int AbortedTransactionCount => _querySource.AbortedTransactionCount;
+	public IReadOnlyList<string> LockedForUpdate => _querySource.LockedForUpdate;
 	public int CommittedTransactionCount => _querySource.CommittedTransactionCount;
 
 	/// <summary>
@@ -275,6 +276,15 @@ public class ListDatabaseContext<T> : IDatabaseContext<T>
 	}
 
 	public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
+
+	public T LoadForUpdate(object id)
+	{
+		var entity = Load(id);
+		_querySource.LockedForUpdate.Add($"{typeof(T).Name}:{id}");
+		return entity;
+	}
+
+	public Task<T> LoadForUpdateAsync(object id) => Task.FromResult(LoadForUpdate(id));
 
 	public virtual IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject
 		=> new ListDatabaseContext<T2>(_querySource);

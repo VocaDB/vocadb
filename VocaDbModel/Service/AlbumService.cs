@@ -269,7 +269,7 @@ public class AlbumService : ServiceBase
 
 		HandleTransaction(session =>
 		{
-			var album = session.Load<Album>(albumId);
+			var album = session.LoadForUpdate<Album>(albumId);
 
 			album.Deleted = false;
 

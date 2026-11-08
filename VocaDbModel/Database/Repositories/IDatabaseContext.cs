@@ -69,6 +69,16 @@ public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T>
 	Task<T> LoadAsync(object id);
 
 	/// <summary>
+	/// Loads an entity that is about to be changed and locks its row until the transaction ends,
+	/// so that concurrent edits of the same entity can't archive the same version.
+	/// </summary>
+	/// <param name="id">Entity Id.</param>
+	/// <returns>The entity with its current state. Cannot be null.</returns>
+	T LoadForUpdate(object id);
+
+	Task<T> LoadForUpdateAsync(object id);
+
+	/// <summary>
 	/// LINQ query against the repository.
 	/// </summary>
 	/// <returns>Queryable interface. Cannot be null.</returns>

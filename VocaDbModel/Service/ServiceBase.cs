@@ -4,6 +4,7 @@ using System.Data;
 using System.Runtime.Serialization;
 using NHibernate;
 using NLog;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -365,7 +366,7 @@ public abstract class ServiceBase
 
 		HandleTransaction(session =>
 		{
-			var entity = session.Load<TEntity>(id);
+			var entity = session.LoadForUpdate<TEntity>(id);
 
 			if (!skipLog)
 				AuditLog("updating " + entity, session);

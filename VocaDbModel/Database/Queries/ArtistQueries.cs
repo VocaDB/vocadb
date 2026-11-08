@@ -629,7 +629,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 			}
 
-			var artist = archivedVersion.Artist;
+			var artist = await session.LoadForUpdateAsync(archivedVersion.Artist.Id);
 
 			session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);
 
@@ -721,7 +721,7 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 
 		return await _repository.HandleTransactionAsync(async ctx =>
 		{
-			var artist = await ctx.LoadAsync(properties.Id);
+			var artist = await ctx.LoadForUpdateAsync(properties.Id);
 
 			VerifyEntryEdit(artist);
 
