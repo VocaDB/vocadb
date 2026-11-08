@@ -1047,9 +1047,12 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					album.CoverPictureData = new PictureData(parsed);
 					album.CoverPictureMime = parsed.Mime;
+					// The version that is archived below
+					album.CoverPictureRevision = album.Version;
 
 					pictureData.Id = album.Id;
 					pictureData.EntryType = EntryType.Album;
+					pictureData.Revision = album.CoverPictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 

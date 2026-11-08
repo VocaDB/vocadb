@@ -251,9 +251,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					artist.Picture = new PictureData(parsed);
 					artist.PictureMime = parsed.Mime;
+					// The version that is archived below
+					artist.PictureRevision = artist.Version;
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
+					pictureData.Revision = artist.PictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
@@ -731,9 +734,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					artist.Picture = new PictureData(parsed);
 					artist.PictureMime = parsed.Mime;
+					// The version that is archived below
+					artist.PictureRevision = artist.Version;
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
+					pictureData.Revision = artist.PictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
