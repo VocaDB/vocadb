@@ -16,7 +16,6 @@ dayjs.extend(UTC);
 const parsePublishDate = (value?: string): dayjs.Dayjs | undefined => {
 	if (!value) return undefined;
 
-	// Validate the source calendar/time before applying its timezone offset.
 	let localDateTime = value
 		.replace(/(?:Z|[+-]\d{2}:?\d{2})$/, '')
 		.replace(/(:\d{2})\.\d+$/, '$1');
