@@ -53,6 +53,7 @@ const ArtistManageTagUsages = (): React.ReactElement => {
 		>
 			<TagUsagesManageTable
 				entryType={EntryType.Artist}
+				entryId={artist.id}
 				tagUsages={artist.tagUsages}
 				setTagUsages={(tagUsages): void =>
 					setArtist({

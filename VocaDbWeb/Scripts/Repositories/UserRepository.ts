@@ -816,6 +816,25 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
+	deleteTagKeepalive = ({
+		entryType,
+		tagUsageId,
+	}: {
+		entryType: EntryType;
+		tagUsageId: number;
+	}): void => {
+		void fetch(
+			this.urlMapper.mapRelative(
+				`/api/users/current/${entryType}Tags/${tagUsageId}`,
+			),
+			{
+				method: 'DELETE',
+				credentials: 'include',
+				keepalive: true,
+			},
+		).catch(() => {});
+	};
+
 	// Updates user setting.
 	// userId: user ID.
 	// settingName: name of the setting to be updated, for example 'showChatBox'.

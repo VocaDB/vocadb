@@ -51,6 +51,7 @@ const SongManageTagUsages = (): React.ReactElement => {
 		>
 			<TagUsagesManageTable
 				entryType={EntryType.Song}
+				entryId={song.id}
 				tagUsages={song.tagUsages}
 				setTagUsages={(tagUsages): void =>
 					setSong({

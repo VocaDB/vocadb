@@ -245,11 +245,11 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 
 	public EntryWithTagUsagesForApiContract GetEntryWithTagUsages(int songListId)
 	{
-		PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
-
 		return HandleQuery(session =>
 		{
 			var songList = session.Load(songListId);
+			EntryPermissionManager.VerifyAccess(PermissionContext, songList, EntryPermissionManager.CanRemoveTagUsages);
+
 			return new EntryWithTagUsagesForApiContract(
 				songList,
 				songList.Tags.ActiveUsages,

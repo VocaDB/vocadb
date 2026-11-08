@@ -53,6 +53,7 @@ const EventManageTagUsages = (): React.ReactElement => {
 		>
 			<TagUsagesManageTable
 				entryType={EntryType.ReleaseEvent}
+				entryId={event.id}
 				tagUsages={event.tagUsages}
 				setTagUsages={(tagUsages): void =>
 					setEvent({

@@ -1,4 +1,5 @@
 import Alert from '@/Bootstrap/Alert';
+import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { TagUsageWithVotesForApiContract } from '@/DataContracts/Tag/TagUsageWithVotesForApiContract';
 import { EntryType } from '@/Models/EntryType';
@@ -9,8 +10,17 @@ import React from 'react';
 import { UserIconLink_UserForApiContract } from '../User/UserIconLink_UserForApiContract';
 import { TagLink } from './TagLink';
 
+const undoTimeoutMs = 8000;
+
+interface PendingDeletion {
+	entryId: number;
+	index: number;
+	tagUsage: TagUsageWithVotesForApiContract;
+}
+
 interface TagUsagesManageTableProps {
 	entryType: EntryType;
+	entryId: number;
 	tagUsages: TagUsageWithVotesForApiContract[];
 	setTagUsages: (arg0: TagUsageWithVotesForApiContract[]) => void;
 	canRemove: boolean;
@@ -19,25 +29,155 @@ interface TagUsagesManageTableProps {
 export const TagUsagesManageTable = React.memo(
 	({
 		entryType,
+		entryId,
 		tagUsages,
 		setTagUsages,
 		canRemove,
 	}: TagUsagesManageTableProps): React.ReactElement => {
-		const deleteTagUsage = (tagUsageId: number): void => {
+		const [pendingDeletion, setPendingDeletion] =
+			React.useState<PendingDeletion | null>(null);
+		const pendingDeletionRef = React.useRef<PendingDeletion | null>(null);
+		const entryIdRef = React.useRef(entryId);
+		entryIdRef.current = entryId;
+		const tagUsagesRef = React.useRef(tagUsages);
+		tagUsagesRef.current = tagUsages;
+		const setTagUsagesRef = React.useRef(setTagUsages);
+		setTagUsagesRef.current = setTagUsages;
+
+		const activePending =
+			pendingDeletion?.entryId === entryId ? pendingDeletion : null;
+
+		const restoreTagUsage = React.useCallback(
+			(pending: PendingDeletion): void => {
+				if (pending.entryId !== entryIdRef.current) return;
+
+				const current = tagUsagesRef.current;
+
+				if (current.some((t) => t.id === pending.tagUsage.id)) return;
+
+				const next = [...current];
+				next.splice(Math.min(pending.index, next.length), 0, pending.tagUsage);
+				setTagUsagesRef.current(next);
+			},
+			[],
+		);
+
+		React.useEffect(() => {
+			const pending = pendingDeletionRef.current;
+
+			if (!pending || pending.entryId === entryId) return;
+
+			pendingDeletionRef.current = null;
+			setPendingDeletion(null);
 			userRepo
 				.deleteTag({
 					entryType,
-					tagUsageId,
+					tagUsageId: pending.tagUsage.id,
 				})
-				.then(() => setTagUsages(tagUsages.filter((t) => t.id !== tagUsageId)));
+				.catch(() => {});
+		}, [entryId, entryType]);
+
+		React.useEffect(() => {
+			if (!activePending) return;
+
+			const timeoutId = window.setTimeout(() => {
+				if (pendingDeletionRef.current !== activePending) return;
+
+				pendingDeletionRef.current = null;
+				setPendingDeletion(null);
+				userRepo
+					.deleteTag({
+						entryType,
+						tagUsageId: activePending.tagUsage.id,
+					})
+					.catch(() => restoreTagUsage(activePending));
+			}, undoTimeoutMs);
+
+			return () => window.clearTimeout(timeoutId);
+		}, [activePending, entryType, restoreTagUsage]);
+
+		React.useEffect(() => {
+			const handlePageHide = (): void => {
+				const pending = pendingDeletionRef.current;
+
+				if (!pending) return;
+
+				pendingDeletionRef.current = null;
+				setPendingDeletion(null);
+				userRepo.deleteTagKeepalive({
+					entryType,
+					tagUsageId: pending.tagUsage.id,
+				});
+			};
+
+			window.addEventListener('pagehide', handlePageHide);
+
+			return () => {
+				window.removeEventListener('pagehide', handlePageHide);
+
+				const pending = pendingDeletionRef.current;
+
+				if (!pending) return;
+
+				pendingDeletionRef.current = null;
+				userRepo
+					.deleteTag({
+						entryType,
+						tagUsageId: pending.tagUsage.id,
+					})
+					.catch(() => {});
+			};
+		}, [entryType]);
+
+		const deleteTagUsage = (
+			tagUsage: TagUsageWithVotesForApiContract,
+			index: number,
+		): void => {
+			const previous = pendingDeletionRef.current;
+
+			if (previous) {
+				pendingDeletionRef.current = null;
+				userRepo
+					.deleteTag({
+						entryType,
+						tagUsageId: previous.tagUsage.id,
+					})
+					.catch(() => restoreTagUsage(previous));
+			}
+
+			const nextDeletion = { entryId, index, tagUsage };
+			pendingDeletionRef.current = nextDeletion;
+			setTagUsages(tagUsagesRef.current.filter((t) => t.id !== tagUsage.id));
+			setPendingDeletion(nextDeletion);
+		};
+
+		const undoDeletion = (): void => {
+			const pending = pendingDeletionRef.current;
+
+			if (!pending || pending.entryId !== entryId) return;
+
+			pendingDeletionRef.current = null;
+			const current = tagUsagesRef.current;
+
+			if (!current.some((t) => t.id === pending.tagUsage.id)) {
+				const next = [...current];
+				next.splice(Math.min(pending.index, next.length), 0, pending.tagUsage);
+				setTagUsagesRef.current(next);
+			}
+
+			setPendingDeletion(null);
 		};
 
 		return (
 			<>
-				<Alert>
-					You can use this to deassociate tags that are no longer valid for this
-					entry. Be careful, this cannot be undone.{/* LOCALIZE */}
-				</Alert>
+				{activePending && (
+					<Alert variant="info">
+						Tag &quot;{activePending.tagUsage.tag.name}&quot; removed.{' '}
+						<Button variant="link" onClick={undoDeletion}>
+							Undo
+						</Button>
+					</Alert>
+				)}
 
 				{tagUsages.length > 0 ? (
 					<table>
@@ -70,7 +210,7 @@ export const TagUsagesManageTable = React.memo(
 									<td>
 										{canRemove && (
 											<SafeAnchor
-												onClick={(): void => deleteTagUsage(tagUsage.id)}
+												onClick={(): void => deleteTagUsage(tagUsage, index)}
 												className="removeLink textLink"
 											/>
 										)}

@@ -45,13 +45,44 @@ public class EntryPermissionManagerTests
 		result.Should().Be(expected, "result");
 	}
 
-	private void TestCanRemoveSongListTagUsages(bool expected, EntryStatus entryStatus, UserGroupId userGroup)
+	private void TestSongListTagPermissions(
+		bool canEditTags,
+		bool canRemoveTagUsages,
+		EntryStatus entryStatus,
+		UserGroupId userGroup,
+		bool isOwner,
+		bool isFeatured = false,
+		bool lockdown = false)
 	{
-		var user = CreateEntry.User(group: userGroup);
-		var songList = new SongList("Mikulist", user) { Status = entryStatus };
+		var owner = CreateEntry.User(id: 1);
+		var user = isOwner ? owner : CreateEntry.User(id: 2, group: userGroup);
 
-		var result = EntryPermissionManager.CanRemoveTagUsages(new FakePermissionContext(user), songList);
-		result.Should().Be(expected, "result");
+		if (isOwner)
+			owner.GroupId = userGroup;
+
+		var songList = new SongList("Mikulist", owner)
+		{
+			Status = entryStatus,
+			FeaturedCategory = isFeatured ? SongListFeaturedCategory.Other : SongListFeaturedCategory.Nothing
+		};
+		var permissionContext = new FakePermissionContext(user);
+
+		if (lockdown)
+			permissionContext.LoggedUser.EffectivePermissions.Remove(PermissionToken.ManageDatabase);
+
+		var canEdit = true;
+
+		try
+		{
+			EntryPermissionManager.VerifyEditTagsForEntry(permissionContext, songList);
+		}
+		catch (NotAllowedException)
+		{
+			canEdit = false;
+		}
+
+		canEdit.Should().Be(canEditTags, "can edit tags");
+		EntryPermissionManager.CanRemoveTagUsages(permissionContext, songList).Should().Be(canRemoveTagUsages, "can remove tag usages");
 	}
 
 	[TestInitialize]
@@ -149,37 +180,73 @@ public class EntryPermissionManagerTests
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_RegularUser()
+	public void SongListTagPermissions_Owner()
 	{
-		TestCanRemoveSongListTagUsages(false, EntryStatus.Finished, UserGroupId.Regular);
+		TestSongListTagPermissions(true, true, EntryStatus.Finished, UserGroupId.Regular, isOwner: true);
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_TrustedUser()
+	public void SongListTagPermissions_OtherRegularUser()
 	{
-		TestCanRemoveSongListTagUsages(true, EntryStatus.Finished, UserGroupId.Trusted);
+		TestSongListTagPermissions(false, false, EntryStatus.Finished, UserGroupId.Regular, isOwner: false);
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_TrustedUser_LockedSongList()
+	public void SongListTagPermissions_OtherTrustedUser()
 	{
-		TestCanRemoveSongListTagUsages(false, EntryStatus.Locked, UserGroupId.Trusted);
+		TestSongListTagPermissions(false, false, EntryStatus.Finished, UserGroupId.Trusted, isOwner: false);
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_Moderator_LockedSongList()
+	public void SongListTagPermissions_Moderator()
 	{
-		TestCanRemoveSongListTagUsages(true, EntryStatus.Locked, UserGroupId.Moderator);
+		TestSongListTagPermissions(true, true, EntryStatus.Finished, UserGroupId.Moderator, isOwner: false);
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_Admin_LockedSongList()
+	public void SongListTagPermissions_Admin()
 	{
-		TestCanRemoveSongListTagUsages(true, EntryStatus.Locked, UserGroupId.Admin);
+		TestSongListTagPermissions(true, true, EntryStatus.Finished, UserGroupId.Admin, isOwner: false);
 	}
 
 	[TestMethod]
-	public void CanRemoveSongListTagUsages_AnonymousUser()
+	public void SongListTagPermissions_Owner_Lockdown()
+	{
+		TestSongListTagPermissions(false, false, EntryStatus.Finished, UserGroupId.Regular, isOwner: true, lockdown: true);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_Moderator_Lockdown()
+	{
+		TestSongListTagPermissions(false, false, EntryStatus.Finished, UserGroupId.Moderator, isOwner: false, lockdown: true);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_OtherRegularUser_FeaturedList()
+	{
+		TestSongListTagPermissions(true, false, EntryStatus.Finished, UserGroupId.Regular, isOwner: false, isFeatured: true);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_Owner_LockedSongList()
+	{
+		TestSongListTagPermissions(false, false, EntryStatus.Locked, UserGroupId.Regular, isOwner: true);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_TrustedUser_LockedSongList()
+	{
+		TestSongListTagPermissions(false, false, EntryStatus.Locked, UserGroupId.Trusted, isOwner: false);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_Moderator_LockedSongList()
+	{
+		TestSongListTagPermissions(true, true, EntryStatus.Locked, UserGroupId.Moderator, isOwner: false);
+	}
+
+	[TestMethod]
+	public void SongListTagPermissions_AnonymousUser()
 	{
 		var songList = new SongList("Mikulist", CreateEntry.User());
 

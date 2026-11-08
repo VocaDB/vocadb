@@ -91,7 +91,7 @@ public class SongListQueriesTests
 	{
 		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList));
 
-		var regularContract = new SongListForApiContract(
+		var ownerContract = new SongListForApiContract(
 			songList,
 			ContentLanguagePreference.Default,
 			_permissionContext,
@@ -100,7 +100,17 @@ public class SongListQueriesTests
 			SongListOptionalFields.None
 		);
 
-		var moderator = CreateEntry.User(group: UserGroupId.Moderator);
+		var otherUser = CreateEntry.User(id: 2);
+		var otherContract = new SongListForApiContract(
+			songList,
+			ContentLanguagePreference.Default,
+			new FakePermissionContext(otherUser),
+			new FakeUserIconFactory(),
+			_imagePersister,
+			SongListOptionalFields.None
+		);
+
+		var moderator = CreateEntry.User(id: 3, group: UserGroupId.Moderator);
 		var moderatorContract = new SongListForApiContract(
 			songList,
 			ContentLanguagePreference.Default,
@@ -110,7 +120,8 @@ public class SongListQueriesTests
 			SongListOptionalFields.None
 		);
 
-		regularContract.CanRemoveTagUsages.Should().BeFalse("Regular user cannot remove tag usages");
+		ownerContract.CanRemoveTagUsages.Should().BeTrue("Owner can remove tag usages");
+		otherContract.CanRemoveTagUsages.Should().BeFalse("Other regular user cannot remove tag usages");
 		moderatorContract.CanRemoveTagUsages.Should().BeTrue("Moderator can remove tag usages");
 	}
 
@@ -137,6 +148,34 @@ public class SongListQueriesTests
 		result.TagUsages[0].Tag.Name.Should().Be("rock", "Tag name");
 		result.TagUsages[0].Count.Should().Be(1, "Vote count");
 		result.TagUsages[0].Votes.Length.Should().Be(1, "Number of votes");
+	}
+
+	[TestMethod]
+	public void GetEntryWithTagUsages_Owner()
+	{
+		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList));
+
+		var result = _queries.GetEntryWithTagUsages(songList.Id);
+
+		result.CanRemoveTagUsages.Should().BeTrue("Owner can manage tag usages");
+	}
+
+	[TestMethod]
+	public void GetEntryWithTagUsages_OtherRegularUser()
+	{
+		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList));
+		var otherUser = CreateEntry.User(id: 2);
+		var queries = new SongListQueries(_repository, new FakePermissionContext(otherUser), new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory());
+
+		Invoking(() => queries.GetEntryWithTagUsages(songList.Id)).Should().Throw<NotAllowedException>();
+	}
+
+	[TestMethod]
+	public void GetEntryWithTagUsages_Owner_LockedSongList()
+	{
+		var songList = _repository.Save(new SongList("Mikulist", _userWithSongList) { Status = EntryStatus.Locked });
+
+		Invoking(() => _queries.GetEntryWithTagUsages(songList.Id)).Should().Throw<NotAllowedException>();
 	}
 
 	[TestMethod]

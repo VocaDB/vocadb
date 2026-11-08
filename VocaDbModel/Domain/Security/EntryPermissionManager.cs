@@ -223,8 +223,25 @@ public static class EntryPermissionManager
 		return permissionContext.HasPermission(PermissionToken.EditFeaturedLists);
 	}
 
+	private static bool CanEditSongListTags(IUserPermissionContext permissionContext, SongList songList)
+	{
+		if (!permissionContext.HasPermission(PermissionToken.ManageDatabase))
+			return false;
+
+		if (songList.FeaturedList)
+			return CanEdit(permissionContext, songList);
+
+		if (!CanEditSongList(permissionContext, songList))
+			return false;
+
+		return songList.Status != EntryStatus.Locked || permissionContext.HasPermission(PermissionToken.LockEntries);
+	}
+
 	private static bool CanEditTagsForEntry(IUserPermissionContext permissionContext, IEntryWithStatus entry) =>
-		permissionContext.HasPermission(PermissionToken.EditTags) && CanEdit(permissionContext, entry);
+		permissionContext.HasPermission(PermissionToken.EditTags) &&
+		(entry is SongList songList
+			? CanEditSongListTags(permissionContext, songList)
+			: CanEdit(permissionContext, entry));
 
 	public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryWithStatus entry)
 	{
@@ -235,6 +252,9 @@ public static class EntryPermissionManager
 			return false;
 
 		if (permissionContext.HasPermission(PermissionToken.RemoveTagUsages))
+			return true;
+
+		if (entry is SongList songList && songList.Author.IsTheSameUser(permissionContext.LoggedUser))
 			return true;
 
 		return IsVerifiedFor(permissionContext, entry);

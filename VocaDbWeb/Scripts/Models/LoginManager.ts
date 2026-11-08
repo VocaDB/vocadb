@@ -338,6 +338,21 @@ export class LoginManager {
 	};
 
 	canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {
-		return this.canEditTags && this.canEdit(entry);
+		if (!this.canEditTags) return false;
+
+		if (entry.entryType === EntryType.SongList) {
+			if (!this.canManageDatabase) return false;
+
+			const songList = entry as unknown as SongListContract;
+
+			if (songList.featuredCategory !== 'Nothing') return this.canEdit(entry);
+
+			return (
+				this.canEditSongList(songList) &&
+				(entry.status !== EntryStatus.Locked || this.canLockEntries)
+			);
+		}
+
+		return this.canEdit(entry);
 	};
 }

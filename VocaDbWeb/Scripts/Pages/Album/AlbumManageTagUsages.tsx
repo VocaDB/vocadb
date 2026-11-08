@@ -53,6 +53,7 @@ const AlbumManageTagUsages = (): React.ReactElement => {
 		>
 			<TagUsagesManageTable
 				entryType={EntryType.Album}
+				entryId={album.id}
 				tagUsages={album.tagUsages}
 				setTagUsages={(tagUsages): void =>
 					setAlbum({
