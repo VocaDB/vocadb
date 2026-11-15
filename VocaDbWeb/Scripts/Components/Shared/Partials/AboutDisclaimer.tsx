@@ -20,11 +20,11 @@ export const AboutDisclaimer = React.memo((): React.ReactElement => {
 				{t('ViewRes:Layout.OtherCredit')}
 			</a>
 			{' | '}
-			<a href="https://wiki.vocadb.net/wiki/29/license">
+			<a href="https://wiki.vocadb.net/docs/license">
 				{t('ViewRes:Layout.License')}
 			</a>
 			{' | '}
-			<a href="https://wiki.vocadb.net/wiki/50/privacy-and-cookie-policy">
+			<a href="https://wiki.vocadb.net/docs/privacy-and-cookie-policy">
 				{t('ViewRes:Layout.PrivacyPolicy')}
 			</a>
 		</span>
