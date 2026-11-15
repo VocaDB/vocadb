@@ -16,6 +16,11 @@ namespace VocaDb.Model.Domain.Images
     {
         private const int MaxRetries = 2;
 
+        /// <summary>
+        /// Revision keys are written once and never overwritten (see <see cref="IEntryImageInformation.Revision"/>).
+        /// </summary>
+        private const string ImmutableCacheControl = "public, max-age=31536000, immutable";
+
         private readonly string _awsAccessKey;
         private readonly string _awsSecretKey;
         private readonly string _awsBucketName;
@@ -33,7 +38,8 @@ namespace VocaDb.Model.Domain.Images
 
         private string GetKey(IEntryImageInformation picture, ImageSize size)
         {
-            return $"img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+            var name = picture.Revision is int revision ? $"{picture.Id}-{revision}" : $"{picture.Id}";
+            return $"img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{name}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
         }
 
         public S3EntryImagePersister()
@@ -119,6 +125,9 @@ namespace VocaDb.Model.Domain.Images
                         DisableDefaultChecksumValidation = true
                     };
 
+                    if (picture.Revision is not null)
+                        request.Headers.CacheControl = ImmutableCacheControl;
+
                     _s3Client.PutObjectAsync(request).GetAwaiter().GetResult();
                     return;
                 }
@@ -189,12 +198,14 @@ namespace VocaDb.Model.Domain.Images
             public ImagePurpose Purpose => _original.Purpose;
             public string Mime => _mime;
             public int Version => _original.Version;
+            public int? Revision => _original.Revision;
         }
 
         public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
         {
             var key = GetKey(picture, size);
-            var url = (picture.Version > 0)
+            // Revision keys are immutable, so they need no version for cache busting.
+            var url = (picture.Version > 0 && picture.Revision is null)
                 ? $"{key}?v={picture.Version}"
                 : key;
 
@@ -204,6 +215,21 @@ namespace VocaDb.Model.Domain.Images
         public bool HasImage(IEntryImageInformation picture, ImageSize size)
         {
             return IsSupported(picture, size) && picture.ShouldExist();
+        }
+
+        public bool Exists(IEntryImageInformation picture, ImageSize size)
+        {
+            if (_s3Client == null) return false;
+
+            try
+            {
+                _s3Client.GetObjectMetadataAsync(_awsBucketName, GetKey(picture, size)).GetAwaiter().GetResult();
+                return true;
+            }
+            catch (AmazonS3Exception ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return false;
+            }
         }
 
         public bool IsSupported(IEntryImageInformation picture, ImageSize size) =>

@@ -38,6 +38,7 @@ public class ReleaseEvent :
 	INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 
 	private IList<Album> _albums = new List<Album>();
 	private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> _archivedVersions = new();

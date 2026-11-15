@@ -18,6 +18,7 @@ public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 	EntryType IEntryImageInformation.EntryType => EntryType.Artist;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => PictureRevision;
 
 #nullable disable
 	public ArtistContract() { }
@@ -33,6 +34,7 @@ public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 		Id = artist.Id;
 		Name = artist.TranslatedName[preference];
 		PictureMime = artist.PictureMime;
+		PictureRevision = artist.PictureRevision;
 		ReleaseDate = artist.ReleaseDate.DateTime;
 		Status = artist.Status;
 		Version = artist.Version;
@@ -48,6 +50,7 @@ public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 		Id = artist.Id;
 		Name = artist.Names.SortNames[preference];
 		PictureMime = artist.PictureMime;
+		PictureRevision = artist.PictureRevision;
 		ReleaseDate = artist.ReleaseDate;
 		Status = artist.Status;
 		Version = artist.Version;
@@ -71,6 +74,11 @@ public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 
 	[DataMember]
 	public string? PictureMime { get; set; }
+
+	/// <summary>
+	/// Used for the image URL, not serialized.
+	/// </summary>
+	public int? PictureRevision { get; set; }
 
 	[DataMember]
 	public DateTime? ReleaseDate { get; init; }

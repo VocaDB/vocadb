@@ -56,6 +56,11 @@ public class EntryPictureFileContract : IEntryPictureFile
 
 	public ImagePurpose Purpose { get; set; }
 
+	/// <summary>
+	/// Revision key to upload a main picture to. Null for additional pictures.
+	/// </summary>
+	public int? Revision { get; set; }
+
 	[DataMember]
 	public string ThumbUrl { get; init; }
 

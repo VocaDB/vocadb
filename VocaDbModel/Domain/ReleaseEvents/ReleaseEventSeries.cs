@@ -26,6 +26,7 @@ public class ReleaseEventSeries :
 	string IEntryBase.DefaultName => TranslatedName.Default;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 	INameManager IEntryWithNames.Names => Names;
 	INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 

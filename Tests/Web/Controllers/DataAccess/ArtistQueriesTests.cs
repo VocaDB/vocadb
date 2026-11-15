@@ -367,6 +367,64 @@ public class ArtistQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Create_Picture_Revision()
+	{
+		using var stream = ResourceHelper.TestImage();
+		_newArtistContract.PictureData = new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, (int)stream.Length, ImagePurpose.Main);
+
+		var result = await _queries.Create(_newArtistContract);
+
+		var artist = _repository.Load(result.Id);
+		artist.PictureRevision.Should().Be(0, "Picture revision is the first version");
+		artist.ArchivedVersionsManager.GetLatestVersion().PictureRevision.Should().Be(0, "Archived picture revision");
+		_imagePersister.Exists(new EntryThumbMain(artist, MediaTypeNames.Image.Jpeg, 0), ImageSize.Original).Should().BeTrue("Picture was written to the revision");
+		_imagePersister.Exists(new EntryThumbMain(artist, MediaTypeNames.Image.Jpeg), ImageSize.Original).Should().BeFalse("Old key was not written");
+	}
+
+	[TestMethod]
+	public async Task Update_Picture_Revision()
+	{
+		var version = _artist.Version;
+
+		await CallUpdate(ResourceHelper.TestImage());
+
+		_artist.PictureRevision.Should().Be(version, "Picture revision is the version that is archived");
+		_artist.ArchivedVersionsManager.GetLatestVersion().PictureRevision.Should().Be(version, "Archived picture revision");
+		_imagePersister.Exists(_artist.Thumb, ImageSize.Original).Should().BeTrue("Picture was written to the revision");
+		_imagePersister.Exists(new EntryThumbMain(_artist, MediaTypeNames.Image.Jpeg), ImageSize.Original).Should().BeFalse("Old key was not written");
+	}
+
+	[TestMethod]
+	public async Task Revert_PictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _artist.ArchivedVersionsManager.GetLatestVersion();
+		await CallUpdate(ResourceHelper.TestImage2, "image/png");
+		oldVer.Picture = null;
+
+		var result = await _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Artist>(result.Id);
+		entryFromRepo.PictureRevision.Should().Be(oldVer.Version, "Picture revision was restored");
+		entryFromRepo.PictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "Picture MIME was restored");
+		var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+		lastVersion.Diff.Picture.IsChanged.Should().BeTrue("Picture was changed");
+		lastVersion.PictureRevision.Should().Be(oldVer.Version, "Reverted version points to the restored revision");
+	}
+
+	[TestMethod]
+	public async Task GetArchivedPictureUrl()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _artist.ArchivedVersionsManager.GetLatestVersion();
+
+		var result = _queries.GetArchivedPictureUrl(version.Id);
+
+		result.Should().NotBeNull("URL");
+		result.Url.Should().Be(_imagePersister.GetUrl(new EntryThumbMain(_artist, MediaTypeNames.Image.Jpeg, version.PictureRevision), ImageSize.Original).Url, "URL of the revision");
+	}
+
+	[TestMethod]
 	public async Task Revert_NotAllowed()
 	{
 		// Regular users can't revert

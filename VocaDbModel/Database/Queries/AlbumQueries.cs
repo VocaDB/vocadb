@@ -588,6 +588,24 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				: null;
 		});
 	}
+
+	/// <summary>
+	/// Absolute URL of the cover picture of an archived version. Null if the picture has no revision.
+	/// </summary>
+	public VocaDbUrl? GetArchivedCoverPictureUrl(int archivedVersionId)
+	{
+		return HandleQuery(ctx =>
+		{
+			var archivedVersion = ctx.Load<ArchivedAlbumVersion>(archivedVersionId);
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
+
+			if (versionWithPic?.CoverPictureRevision is null || string.IsNullOrEmpty(versionWithPic.CoverPictureMime))
+				return null;
+
+			var image = new EntryThumbMain(archivedVersion.Album, versionWithPic.CoverPictureMime, versionWithPic.CoverPictureRevision);
+			return _imagePersister.GetUrl(image, ImageSize.Original).ToAbsolute();
+		});
+	}
 #nullable disable
 
 	public AlbumForEditForApiContract GetForEdit(int id)
@@ -856,19 +874,20 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				{
 					album.CoverPictureData = versionWithPic.CoverPicture;
 					album.CoverPictureMime = versionWithPic.CoverPictureMime;
-
-					if (versionWithPic.CoverPicture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
-						var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
-					}
+					album.CoverPictureRevision = new ImageThumbGenerator(_imagePersister).RestoreMainPicture(
+						album,
+						versionWithPic.CoverPictureMime,
+						versionWithPic.CoverPictureRevision,
+						versionWithPic.Version,
+						() => versionWithPic.CoverPicture?.Bytes
+					);
+					versionWithPic.CoverPictureRevision ??= album.CoverPictureRevision;
 				}
 				else
 				{
 					album.CoverPictureData = null;
 					album.CoverPictureMime = null;
+					album.CoverPictureRevision = null;
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
@@ -1047,9 +1066,12 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					album.CoverPictureData = new PictureData(parsed);
 					album.CoverPictureMime = parsed.Mime;
+					// The version that is archived below
+					album.CoverPictureRevision = album.Version;
 
 					pictureData.Id = album.Id;
 					pictureData.EntryType = EntryType.Album;
+					pictureData.Revision = album.CoverPictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 

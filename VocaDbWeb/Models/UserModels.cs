@@ -247,6 +247,7 @@ public class MySettingsModel : IEntryImageInformation
 	EntryType IEntryImageInformation.EntryType => EntryType.User;
 	string? IEntryImageInformation.Mime => PictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 	int IEntryImageInformation.Version => 0;
 #nullable disable
 

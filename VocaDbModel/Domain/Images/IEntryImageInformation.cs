@@ -40,6 +40,11 @@ public interface IEntryImageInformation
 	/// If the image does not support versioning this will always be 0.
 	/// </summary>
 	int Version { get; }
+
+	/// <summary>
+	/// Entry version that introduced the image. If set, the image is stored under an immutable key that includes it.
+	/// </summary>
+	int? Revision { get; }
 }
 
 public static class EntryImageInformationExtensions

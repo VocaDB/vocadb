@@ -20,15 +20,20 @@ public class ServerEntryThumbPersister : ServerEntryImagePersisterBase, IEntryTh
 		_ => throw new NotSupportedException(),
 	};
 
-	private static string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0)
-		? $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}?v={picture.Version}"
-		: $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+	private static string GetFileName(IEntryImageInformation picture) => picture.Revision is int revision
+		? $"{picture.Id}-{revision}{ImageHelper.GetExtensionFromMime(picture.Mime)}"
+		: $"{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+
+	// Revision file names are never overwritten, so they don't need the version for caching.
+	private static string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0 && picture.Revision is null)
+		? $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{GetFileName(picture)}?v={picture.Version}"
+		: $"/img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{GetFileName(picture)}";
 
 	public override string GetPath(IEntryImageInformation picture, ImageSize size)
 	{
 		if (string.IsNullOrEmpty(_staticRoot))
 			return string.Empty;
-		var relative = $@"img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+		var relative = $@"img/{picture.EntryType.ToString()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{GetFileName(picture)}";
 		return Path.Combine(_staticRoot, relative);
 	}
 

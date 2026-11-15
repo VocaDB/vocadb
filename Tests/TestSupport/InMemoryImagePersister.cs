@@ -19,7 +19,8 @@ public class InMemoryImagePersisterStore
 	public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 	{
 		// For testing it's really doesn't matter if it's absolute or relative, it just needs to be unique.
-		return new VocaDbUrl($"https://static.vocadb.net/img/{picture.EntryType}/{picture.Id}/{size}", UrlDomain.Main, System.UriKind.Absolute);
+		var name = picture.Revision is int revision ? $"{picture.Id}-{revision}" : $"{picture.Id}";
+		return new VocaDbUrl($"https://static.vocadb.net/img/{picture.EntryType}/{name}/{size}", UrlDomain.Main, System.UriKind.Absolute);
 	}
 
 	public Stream GetReadStream(IEntryImageInformation picture, ImageSize size)
@@ -30,6 +31,11 @@ public class InMemoryImagePersisterStore
 	public bool HasImage(IEntryImageInformation picture, ImageSize size)
 	{
 		return _images.ContainsKey(GetUrl(picture, size).Url);
+	}
+
+	public void Remove(IEntryImageInformation picture, ImageSize size)
+	{
+		_images.Remove(GetUrl(picture, size).Url);
 	}
 
 	public void Write(IEntryImageInformation picture, ImageSize size, Stream stream)
@@ -68,6 +74,10 @@ public abstract class InMemoryImagePersisterBase : IEntryImagePersister
 	public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => _store.GetUrl(picture, size);
 
 	public bool HasImage(IEntryImageInformation picture, ImageSize size) => _store.HasImage(picture, size);
+
+	public bool Exists(IEntryImageInformation picture, ImageSize size) => _store.HasImage(picture, size);
+
+	public void Remove(IEntryImageInformation picture, ImageSize size) => _store.Remove(picture, size);
 
 	public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
 }

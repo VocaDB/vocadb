@@ -286,6 +286,11 @@ public class Artist :
 
 	public virtual string? PictureMime { get; set; }
 
+	/// <summary>
+	/// Version that introduced the main picture, part of its image key. Null if the picture has no revision key.
+	/// </summary>
+	public virtual int? PictureRevision { get; set; }
+
 	public virtual EntryPictureFileManager<ArtistPictureFile> Pictures
 	{
 		get => _pictureManager;
@@ -318,7 +323,7 @@ public class Artist :
 
 	ITagManager IEntryWithTags.Tags => Tags;
 
-	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(PictureMime) ? new EntryThumbMain(this, PictureMime) : null;
+	public virtual EntryThumbMain? Thumb => !string.IsNullOrEmpty(PictureMime) ? new EntryThumbMain(this, PictureMime, PictureRevision) : null;
 
 	/// <summary>
 	/// List of users who follow this artist. Cannot be null.
