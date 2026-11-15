@@ -10,7 +10,7 @@ export const StarsMetaSpan = React.memo(
 	({ current, max }: StarsMetaSpanProps): React.ReactElement => {
 		return (
 			<span title={`${Math.round(current * 100) / 100}`}>
-				<StarsMeta current={Math.round(current)} max={max} />
+				<StarsMeta current={current} max={max} />
 			</span>
 		);
 	},

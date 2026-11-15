@@ -5,6 +5,7 @@ import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNotice';
+import { Stars } from '@/Components/Shared/Partials/Shared/Stars';
 import { IconAndLinkKnockout } from '@/Components/Shared/Partials/User/IconAndLinkKnockout';
 import { NameLinkKnockout } from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
@@ -93,23 +94,7 @@ const AlbumReview = observer(
 					</h3>
 
 					{reviewStars > 0 ? (
-						<span>
-							{albumDetailsStore.reviewsStore
-								.ratingStars(reviewStars)
-								.map((ratingStar, index) => (
-									<React.Fragment key={index}>
-										{index > 0 && ' '}
-										{/* eslint-disable-next-line jsx-a11y/alt-text */}
-										<img
-											src={
-												ratingStar.enabled
-													? '/Content/star.png'
-													: '/Content/star_disabled.png'
-											}
-										/>
-									</React.Fragment>
-								))}
-						</span>
+						<Stars current={reviewStars} max={5} />
 					) : (
 						<p style={{ fontStyle: 'italic', marginBottom: 0 }}>
 							{t('ViewRes.Album:Details.ReviewNoRating')}
