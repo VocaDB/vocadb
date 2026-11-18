@@ -167,7 +167,7 @@ export const PVContent = observer(
 					to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}
 					style={{ color: 'white' }}
 				>
-					<i className="icon icon-info-sign" />{' '}
+					<i className="icon icon-info-sign icon-white" />{' '}
 					{t('ViewRes.Home:Index.ViewSongInfo')}
 				</Button>
 			</>

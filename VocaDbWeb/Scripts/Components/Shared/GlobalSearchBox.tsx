@@ -378,7 +378,7 @@ export const GlobalSearchBox = observer(
 						variant="info"
 						title={t('ViewRes:Shared.Search')}
 					>
-						<i className="icon-search"></i>
+						<i className="icon-search icon-white"></i>
 					</Button>
 				</div>{' '}
 				<ButtonGroup className="navbar-languageBar">
@@ -393,7 +393,7 @@ export const GlobalSearchBox = observer(
 						href="#"
 						className="navbar-languageBtn"
 					>
-						<i className="icon-user"></i>{' '}
+						<i className="icon-user icon-white"></i>{' '}
 						<span className="visible-desktop">
 							{t('ViewRes:Layout.Account')}
 						</span>
@@ -508,7 +508,7 @@ export const GlobalSearchBox = observer(
 								href="#"
 								className="navbar-languageBtn"
 							>
-								<i className="icon-envelope"></i>
+								<i className="icon-envelope icon-white"></i>
 								{vdb.values.loggedUser.unreadMessagesCount > 0 && (
 									<>
 										{' '}
