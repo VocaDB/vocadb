@@ -277,6 +277,18 @@ ul.nav.nav-pills {
 	background-image: linear-gradient(to bottom, #20809d, #1a6880);
 }
 
+// Hover shifts the gradient up to show the color underneath, so match the gradient stop
+// Before: #ffffff on #2f96b4 (3.4)
+// After: #ffffff on #1a6880 (6.2)
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+	background-color: #1a6880;
+}
+
 // Before: #ffffff on #ee5f5b, gradient top (3.2); fallback #da4f49 (4.0)
 // After: #ffffff on #c9302c, gradient top (5.3); fallback #c3332e (5.4)
 .btn-danger {
