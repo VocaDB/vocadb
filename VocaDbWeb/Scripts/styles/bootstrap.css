@@ -665,12 +665,16 @@ cite {
 }
 
 .muted {
-	color: #999999;
+	/* Before: #999999 on #c5d4d9, content panel over a black image (1.8) */
+	/* After: #595959 on #c5d4d9 (4.6) */
+	color: #595959;
 }
 
 a.muted:hover,
 a.muted:focus {
-	color: #808080;
+	/* Before: #808080 on #c5d4d9, content panel over a black image (2.5) */
+	/* After: #404040 on #c5d4d9 (6.8) */
+	color: #404040;
 }
 
 .text-warning {
@@ -742,7 +746,9 @@ h5 small,
 h6 small {
 	font-weight: normal;
 	line-height: 1;
-	color: #999999;
+	/* Before: #999999 on #c5d4d9, content panel over a black image (1.8) */
+	/* After: #595959 on #c5d4d9 (4.6) */
+	color: #595959;
 }
 
 h4,
@@ -3926,7 +3932,9 @@ input[type='submit'].btn.btn-mini {
 
 .alert,
 .alert h4 {
-	color: #997843;
+	/* Before: #997843 on #fcf8e3 (3.8) */
+	/* After: #8b6d3d on #fcf8e3 (4.5) */
+	color: #8b6d3d;
 }
 
 .alert h4 {
@@ -3941,13 +3949,17 @@ input[type='submit'].btn.btn-mini {
 }
 
 .alert-success {
-	color: #468847;
+	/* Before: #468847 on #dff0d8 (3.6) */
+	/* After: #3d773e on #dff0d8 (4.5) */
+	color: #3d773e;
 	background-color: #dff0d8;
 	border-color: #d6e9c6;
 }
 
 .alert-success h4 {
-	color: #468847;
+	/* Before: #468847 on #dff0d8 (3.6) */
+	/* After: #3d773e on #dff0d8 (4.5) */
+	color: #3d773e;
 }
 
 .alert-danger,
@@ -5709,7 +5721,9 @@ a.thumbnail:focus {
 .badge {
 	display: inline-block;
 	padding: 2px 4px;
-	font-size: 11.844px;
+	/* Before: 11.844px */
+	/* After: 12px */
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 14px;
 	color: #ffffff;
