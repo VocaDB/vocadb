@@ -48,7 +48,7 @@ export const ShowRandomPageButton = React.memo(
 				onClick={handleClick}
 				title="Show random page" /* LOC */
 			>
-				<i className="icon-random" />
+				<i className="icon-random icon-white" />
 			</Button>
 		);
 	},

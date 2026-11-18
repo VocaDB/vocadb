@@ -115,3 +115,33 @@ input[type='color'],
 img[title='GitHub'] {
 	filter: invert(1);
 }
+
+// Before: rgb(89, 89, 89) (base) on rgb(0, 42, 42) / rgb(38, 81, 81), panel over a black / white image (2.1 / 1.2)
+// After: rgb(153, 153, 153) on rgb(0, 42, 42) / rgb(38, 81, 81) (5.4 / 3.0)
+.muted,
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.rightFrame .muted,
+.rightFrame a.muted,
+.rightFrame a.muted:visited {
+	color: rgb(153, 153, 153);
+}
+
+// Before: rgb(150, 220, 220) on the base pill, rgb(217, 217, 217) over a black image (1.0)
+// After: rgb(150, 220, 220) on rgb(0, 50, 50) (9.0)
+.about-disclaimer {
+	background-color: rgb(0, 50, 50);
+
+	a,
+	a:link,
+	a:hover,
+	a:visited {
+		// Before: rgb(45, 78, 224) on rgb(217, 217, 217), base pill over a black image (4.5)
+		// After: rgb(100, 180, 250) on rgb(0, 50, 50) (6.2)
+		color: rgb(100, 180, 250);
+	}
+}
