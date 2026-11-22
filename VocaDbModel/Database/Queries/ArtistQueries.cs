@@ -251,9 +251,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					artist.Picture = new PictureData(parsed);
 					artist.PictureMime = parsed.Mime;
+					// The version that is archived below
+					artist.PictureRevision = artist.Version;
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
+					pictureData.Revision = artist.PictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 
@@ -541,6 +544,24 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				: null;
 		});
 	}
+
+	/// <summary>
+	/// Absolute URL of the picture of an archived version. Null if the picture has no revision.
+	/// </summary>
+	public VocaDbUrl? GetArchivedPictureUrl(int archivedVersionId)
+	{
+		return HandleQuery(ctx =>
+		{
+			var archivedVersion = ctx.Load<ArchivedArtistVersion>(archivedVersionId);
+			var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
+
+			if (versionWithPic?.PictureRevision is null || string.IsNullOrEmpty(versionWithPic.PictureMime))
+				return null;
+
+			var image = new EntryThumbMain(archivedVersion.Artist, versionWithPic.PictureMime, versionWithPic.PictureRevision);
+			return _imagePersister.GetUrl(image, ImageSize.Original).ToAbsolute();
+		});
+	}
 #nullable disable
 
 	public TagUsageForApiContract[] GetTagSuggestions(int artistId)
@@ -636,19 +657,20 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 				{
 					artist.Picture = versionWithPic.Picture;
 					artist.PictureMime = versionWithPic.PictureMime;
-
-					if (versionWithPic.Picture != null)
-					{
-						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
-						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.All);
-					}
+					artist.PictureRevision = new ImageThumbGenerator(_imagePersister).RestoreMainPicture(
+						artist,
+						versionWithPic.PictureMime,
+						versionWithPic.PictureRevision,
+						versionWithPic.Version,
+						() => versionWithPic.Picture?.Bytes
+					);
+					versionWithPic.PictureRevision ??= artist.PictureRevision;
 				}
 				else
 				{
 					artist.Picture = null;
 					artist.PictureMime = null;
+					artist.PictureRevision = null;
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
@@ -731,9 +753,12 @@ public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					artist.Picture = new PictureData(parsed);
 					artist.PictureMime = parsed.Mime;
+					// The version that is archived below
+					artist.PictureRevision = artist.Version;
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
+					pictureData.Revision = artist.PictureRevision;
 					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.All);
 

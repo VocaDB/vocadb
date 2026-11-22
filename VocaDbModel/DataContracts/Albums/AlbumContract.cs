@@ -25,6 +25,7 @@ public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntry
 	EntryType IEntryImageInformation.EntryType => EntryType.Album;
 	string? IEntryImageInformation.Mime => CoverPictureMime;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => CoverPictureRevision;
 #nullable disable
 
 	public AlbumContract() { }
@@ -41,6 +42,7 @@ public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntry
 		AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 		ArtistString = album.ArtistString.GetBestMatch(languagePreference);
 		CoverPictureMime = album.CoverPictureMime;
+		CoverPictureRevision = album.CoverPictureRevision;
 		CreateDate = album.CreateDate;
 		Deleted = album.Deleted;
 		DiscType = album.DiscType;
@@ -71,6 +73,11 @@ public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntry
 
 	[DataMember]
 	public string CoverPictureMime { get; init; }
+
+	/// <summary>
+	/// Used for the image URL, not serialized.
+	/// </summary>
+	public int? CoverPictureRevision { get; init; }
 
 	[DataMember]
 	public DateTime CreateDate { get; init; }

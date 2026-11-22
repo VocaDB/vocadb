@@ -85,8 +85,12 @@ public class AlbumQueriesTests
 	{
 		var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 		using var stream = image;
-		return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
+		return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, (int)stream.Length, ImagePurpose.Main));
 	}
+
+	private EntryThumbMain CoverImage(int? revision) => new(_album, MediaTypeNames.Image.Jpeg, revision);
+
+	private static readonly ImageSize[] s_allSizes = { ImageSize.Original, ImageSize.Thumb, ImageSize.SmallThumb, ImageSize.TinyThumb };
 
 	private void Save<T>(params T[] entity) where T : class, IDatabaseObject
 	{
@@ -421,6 +425,102 @@ public class AlbumQueriesTests
 		lastVersion.Version.Should().Be(2, "Last version number");
 		lastVersion.Reason.Should().Be(AlbumArchiveReason.Reverted, "Last version archive reason");
 		lastVersion.Diff.Cover.IsChanged.Should().BeTrue("Picture was changed");
+	}
+
+	[TestMethod]
+	public async Task Revert_PictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _album.ArchivedVersionsManager.GetLatestVersion();
+		var oldBytes = _imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original);
+		await CallUpdate(ResourceHelper.TestImage2);
+		oldVer.CoverPicture = null;
+		_imagePersister.Remove(CoverImage(oldVer.Version), ImageSize.Thumb);
+
+		var result = _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Album>(result.Id);
+		entryFromRepo.CoverPictureRevision.Should().Be(oldVer.Version, "Picture revision was restored");
+		entryFromRepo.CoverPictureMime.Should().Be(MediaTypeNames.Image.Jpeg, "Picture MIME was restored");
+		_imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original).Should().Equal(oldBytes, "Original is unchanged");
+		_imagePersister.Exists(CoverImage(oldVer.Version), ImageSize.Thumb).Should().BeTrue("Missing thumbnail was generated");
+
+		var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+		lastVersion.Reason.Should().Be(AlbumArchiveReason.Reverted, "Last version archive reason");
+		lastVersion.Diff.Cover.IsChanged.Should().BeTrue("Picture was changed");
+		lastVersion.CoverPictureRevision.Should().Be(oldVer.Version, "Reverted version points to the restored revision");
+	}
+
+	[TestMethod]
+	public async Task Revert_NoPictureRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var oldVer = _album.ArchivedVersionsManager.GetLatestVersion();
+		oldVer.CoverPictureRevision = null;
+		foreach (var size in s_allSizes)
+			_imagePersister.Remove(CoverImage(oldVer.Version), size);
+		await CallUpdate(ResourceHelper.TestImage2);
+
+		var result = _queries.RevertToVersion(oldVer.Id);
+
+		var entryFromRepo = _repository.Load<Album>(result.Id);
+		entryFromRepo.CoverPictureRevision.Should().Be(oldVer.Version, "Picture revision is the restored version");
+		oldVer.CoverPictureRevision.Should().Be(oldVer.Version, "Restored version points to the uploaded picture");
+		_imagePersister.ReadBytes(CoverImage(oldVer.Version), ImageSize.Original).Should().Equal(oldVer.CoverPicture.Bytes, "Original was uploaded from the database");
+		foreach (var size in s_allSizes)
+			_imagePersister.Exists(CoverImage(oldVer.Version), size).Should().BeTrue($"{size} was written");
+	}
+
+	[TestMethod]
+	public async Task GetArchivedCoverPictureUrl()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _album.ArchivedVersionsManager.GetLatestVersion();
+
+		var result = _queries.GetArchivedCoverPictureUrl(version.Id);
+
+		result.Should().NotBeNull("URL");
+		result.Url.Should().Be(_imagePersister.GetUrl(CoverImage(version.Version), ImageSize.Original).Url, "URL of the revision");
+	}
+
+	[TestMethod]
+	public async Task GetArchivedCoverPictureUrl_NoRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var version = _album.ArchivedVersionsManager.GetLatestVersion();
+		version.CoverPictureRevision = null;
+
+		_queries.GetArchivedCoverPictureUrl(version.Id).Should().BeNull("No URL");
+	}
+
+	[TestMethod]
+	public async Task Update_Picture_Revision()
+	{
+		var version = _album.Version;
+
+		await CallUpdate(ResourceHelper.TestImage());
+
+		_album.CoverPictureRevision.Should().Be(version, "Picture revision is the version that is archived");
+		var archived = _album.ArchivedVersionsManager.GetLatestVersion();
+		archived.Version.Should().Be(version, "Archived version");
+		archived.CoverPictureRevision.Should().Be(version, "Archived picture revision");
+		foreach (var size in s_allSizes)
+			_imagePersister.Exists(CoverImage(version), size).Should().BeTrue($"{size} was written to the revision");
+		_imagePersister.Exists(CoverImage(null), ImageSize.Original).Should().BeFalse("Old key was not written");
+	}
+
+	[TestMethod]
+	public async Task Update_Picture_NewRevision()
+	{
+		await CallUpdate(ResourceHelper.TestImage());
+		var firstRevision = _album.CoverPictureRevision;
+		var firstBytes = _imagePersister.ReadBytes(CoverImage(firstRevision), ImageSize.Original);
+
+		await CallUpdate(ResourceHelper.TestImage2);
+
+		_album.CoverPictureRevision.Should().Be(firstRevision + 1, "New revision");
+		_imagePersister.ReadBytes(CoverImage(firstRevision), ImageSize.Original).Should().Equal(firstBytes, "Earlier revision was not overwritten");
+		_imagePersister.ReadBytes(CoverImage(firstRevision + 1), ImageSize.Original).Should().NotEqual(firstBytes, "New revision has the new picture");
 	}
 
 	[TestMethod]

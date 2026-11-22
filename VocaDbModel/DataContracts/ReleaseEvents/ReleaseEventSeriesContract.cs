@@ -18,6 +18,7 @@ public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntI
 #nullable enable
 	EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
 	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+	int? IEntryImageInformation.Revision => null;
 	string? IEntryImageInformation.Mime => PictureMime;
 #nullable disable
 

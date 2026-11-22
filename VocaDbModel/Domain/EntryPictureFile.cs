@@ -22,6 +22,9 @@ public abstract class EntryPictureFile : IEntryPictureFile
 	// Not versioned.
 	int IEntryImageInformation.Version => 0;
 
+	// Picture files have immutable keys already (the picture Id).
+	int? IEntryImageInformation.Revision => null;
+
 	private User _author;
 	private string _mime;
 	private string _name;

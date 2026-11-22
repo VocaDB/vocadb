@@ -90,7 +90,7 @@ public class AdminService : ServiceBase
 
 				foreach (var artist in artists)
 				{
-					var data = new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main);
+					var data = new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main, artist.PictureRevision);
 
 					if (artist.Picture.Bytes == null || imagePersister.HasImage(data, ImageSize.Thumb))
 						continue;

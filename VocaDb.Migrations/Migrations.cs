@@ -8,6 +8,21 @@ using FluentMigrator;
 namespace VocaDb.Migrations;
 
 /// <summary>
+/// Revision of artist and album main pictures, part of the image key ({id}-{revision}).
+/// </summary>
+[Migration(2026_10_24_0000)]
+public class AddPictureRevisions : AutoReversingMigration
+{
+	public override void Up()
+	{
+		Create.Column("PictureRevision").OnTable(TableNames.Artists).AsInt32().Nullable();
+		Create.Column("CoverPictureRevision").OnTable(TableNames.Albums).AsInt32().Nullable();
+		Create.Column("PictureRevision").OnTable(TableNames.ArchivedArtistVersions).AsInt32().Nullable();
+		Create.Column("CoverPictureRevision").OnTable(TableNames.ArchivedAlbumVersions).AsInt32().Nullable();
+	}
+}
+
+/// <summary>
 /// Second step of <see cref="AddSearchValueToNames"/>: run it after the version that sets SearchValue is deployed.
 /// Fills SearchValue for the names that the previous version added or renamed in between.
 /// </summary>

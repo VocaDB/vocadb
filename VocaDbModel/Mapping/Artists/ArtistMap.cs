@@ -16,6 +16,7 @@ public class ArtistMap : ClassMap<Artist>
 		Map(m => m.CreateDate).Not.Nullable();
 		Map(m => m.Deleted).Not.Nullable();
 		Map(m => m.PictureMime).Length(32).Nullable();
+		Map(m => m.PictureRevision).Nullable();
 		Map(m => m.Status).Not.Nullable();
 		Map(m => m.CommentsLocked).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
@@ -108,6 +109,7 @@ public class ArchivedArtistVersionMap : ClassMap<ArchivedArtistVersion>
 		Map(m => m.Hidden).Not.Nullable();
 		Map(m => m.Notes).Length(200).Not.Nullable();
 		Map(m => m.PictureMime).Length(32).Nullable();
+		Map(m => m.PictureRevision).Nullable();
 		Map(m => m.Reason).Length(30).Not.Nullable();
 		Map(m => m.Status).Not.Nullable();
 		Map(m => m.Version).Not.Nullable();
