@@ -524,6 +524,16 @@ public class AlbumQueriesTests
 	}
 
 	[TestMethod]
+	public async Task Update_LockedForUpdate()
+	{
+		var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
+
+		await CallUpdate(contract);
+
+		_repository.LockedForUpdate.Should().Equal(new[] { "Album:39" }, "Album was loaded for update");
+	}
+
+	[TestMethod]
 	public async Task Update_Names()
 	{
 		var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);

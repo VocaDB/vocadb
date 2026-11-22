@@ -159,7 +159,7 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var entry = ctx.Load(listId);
+			var entry = ctx.LoadForUpdate(listId);
 
 			PermissionContext.VerifyEntryDelete(entry);
 
@@ -324,7 +324,7 @@ public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 			}
 			else
 			{
-				list = ctx.Load(contract.Id);
+				list = ctx.LoadForUpdate(contract.Id);
 				var diff = new SongListDiff();
 
 				EntryPermissionManager.VerifyEdit(PermissionContext, list);

@@ -205,8 +205,7 @@ public class ArtistService : ServiceBase
 
 		HandleTransaction(session =>
 		{
-			var source = session.Load<Artist>(sourceId);
-			var target = session.Load<Artist>(targetId);
+			var (source, target) = session.LoadForUpdate<Artist>(sourceId, targetId);
 
 			AuditLog($"Merging {EntryLinkFactory.CreateEntryLink(source)} to {EntryLinkFactory.CreateEntryLink(target)}", session);
 
@@ -302,7 +301,7 @@ public class ArtistService : ServiceBase
 
 		HandleTransaction(session =>
 		{
-			var artist = session.Load<Artist>(artistId);
+			var artist = session.LoadForUpdate<Artist>(artistId);
 
 			NHibernateUtil.Initialize(artist.Picture);
 			artist.Deleted = false;

@@ -339,7 +339,7 @@ public class SongService : ServiceBase
 
 		HandleTransaction(session =>
 		{
-			var song = session.Load<Song>(songId);
+			var song = session.LoadForUpdate<Song>(songId);
 
 			song.Deleted = false;
 

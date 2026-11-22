@@ -13,6 +13,21 @@ namespace VocaDb.Model.Database.Repositories;
 /// </summary>
 public static class IDatabaseContextExtensions
 {
+	/// <summary>
+	/// Loads two entities for update, lower id first to avoid deadlocks.
+	/// </summary>
+	public static (T First, T Second) LoadForUpdate<T>(this IDatabaseContext<T> ctx, int firstId, int secondId)
+	{
+		if (firstId <= secondId)
+		{
+			var first = ctx.LoadForUpdate(firstId);
+			return (first, ctx.LoadForUpdate(secondId));
+		}
+
+		var second = ctx.LoadForUpdate(secondId);
+		return (ctx.LoadForUpdate(firstId), second);
+	}
+
 	public static AgentLoginData CreateAgentLoginData<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
 	{
 		if (user != null)
@@ -93,6 +108,12 @@ public static class IDatabaseContextExtensions
 
 	public static Task<T2> LoadAsync<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
 		=> ctx.OfType<T2>().LoadAsync(id);
+
+	public static T2 LoadForUpdate<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().LoadForUpdate(id);
+
+	public static Task<T2> LoadForUpdateAsync<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
+		=> ctx.OfType<T2>().LoadForUpdateAsync(id);
 
 	public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) where T2 : class, IDatabaseObject
 		=> ctx.OfType<T2>().Load(id);

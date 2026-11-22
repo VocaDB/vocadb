@@ -714,8 +714,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 		_repository.HandleTransaction(session =>
 		{
-			var source = session.Load(sourceId);
-			var target = session.Load(targetId);
+			var (source, target) = session.LoadForUpdate(sourceId, targetId);
 
 			session.AuditLogger.AuditLog($"Merging {EntryLinkFactory.CreateEntryLink(source)} to {EntryLinkFactory.CreateEntryLink(target)}");
 
@@ -852,7 +851,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 			}
 
-			var album = archivedVersion.Album;
+			var album = session.LoadForUpdate(archivedVersion.Album.Id);
 
 			session.AuditLogger.SysLog("reverting " + album + " to version " + archivedVersion.Version);
 
@@ -997,7 +996,7 @@ public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 
 		return await _repository.HandleTransactionAsync(async session =>
 		{
-			var album = await session.LoadAsync(properties.Id);
+			var album = await session.LoadForUpdateAsync(properties.Id);
 
 			VerifyEntryEdit(album);
 

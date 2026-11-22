@@ -1041,8 +1041,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var source = ctx.Load(sourceId);
-			var target = ctx.Load(targetId);
+			var (source, target) = ctx.LoadForUpdate(sourceId, targetId);
 
 			ctx.AuditLogger.AuditLog($"Merging {_entryLinkFactory.CreateEntryLink(source)} to {_entryLinkFactory.CreateEntryLink(target)}");
 
@@ -1206,7 +1205,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 			}
 
-			var song = archivedVersion.Song;
+			var song = session.LoadForUpdate(archivedVersion.Song.Id);
 
 			session.AuditLogger.SysLog("reverting " + song + " to version " + archivedVersion.Version);
 
@@ -1352,7 +1351,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 
 		return await _repository.HandleTransactionAsync(async ctx =>
 		{
-			var song = await ctx.LoadAsync(properties.Id);
+			var song = await ctx.LoadForUpdateAsync(properties.Id);
 
 			VerifyEntryEdit(song);
 
@@ -1541,7 +1540,7 @@ public class SongQueries : QueriesBase<ISongRepository, Song>
 	{
 		await HandleTransaction(async ctx =>
 		{
-			var song = await ctx.LoadAsync(id);
+			var song = await ctx.LoadForUpdateAsync(id);
 
 			EntryPermissionManager.VerifyEdit(PermissionContext, song);
 

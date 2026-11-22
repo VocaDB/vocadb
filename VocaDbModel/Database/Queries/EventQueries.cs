@@ -119,7 +119,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var entry = ctx.Load(eventId);
+			var entry = ctx.LoadForUpdate(eventId);
 
 			PermissionContext.VerifyEntryDelete(entry);
 
@@ -138,7 +138,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 		_repository.HandleTransaction(ctx =>
 		{
-			var entry = ctx.Load<ReleaseEventSeries>(id);
+			var entry = ctx.LoadForUpdate<ReleaseEventSeries>(id);
 
 			PermissionContext.VerifyEntryDelete(entry);
 
@@ -508,7 +508,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 		HandleTransaction(ctx =>
 		{
-			var ev = ctx.Load<ReleaseEvent>(eventId);
+			var ev = ctx.LoadForUpdate<ReleaseEvent>(eventId);
 
 			ev.Deleted = false;
 
@@ -526,7 +526,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 
 		HandleTransaction(ctx =>
 		{
-			var ev = ctx.Load<ReleaseEventSeries>(eventId);
+			var ev = ctx.LoadForUpdate<ReleaseEventSeries>(eventId);
 
 			ev.Deleted = false;
 
@@ -656,7 +656,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 			}
 			else
 			{
-				ev = await session.LoadAsync(contract.Id);
+				ev = await session.LoadForUpdateAsync(contract.Id);
 				_permissionContext.VerifyEntryEdit(ev);
 
 				var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
@@ -864,7 +864,7 @@ public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
 			}
 			else
 			{
-				series = session.Load<ReleaseEventSeries>(contract.Id);
+				series = session.LoadForUpdate<ReleaseEventSeries>(contract.Id);
 				_permissionContext.VerifyEntryEdit(series);
 				var diff = new ReleaseEventSeriesDiff(DoSnapshot(series, session));
 

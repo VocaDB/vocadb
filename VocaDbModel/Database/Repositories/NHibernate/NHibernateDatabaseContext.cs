@@ -52,6 +52,10 @@ public class NHibernateDatabaseContext<T> : NHibernateDatabaseContext, IDatabase
 
 	public Task<T> LoadAsync(object id) => Session.LoadAsync<T>(id);
 
+	public T LoadForUpdate(object id) => Session.LoadForUpdate<T>(id);
+
+	public Task<T> LoadForUpdateAsync(object id) => Session.LoadForUpdateAsync<T>(id);
+
 	public IQueryable<T> Query() => Session.Query<T>();
 
 	public T Save(T obj)
