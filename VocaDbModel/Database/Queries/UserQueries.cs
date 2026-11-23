@@ -1285,17 +1285,16 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 			genresDict.Add(parentTag.Value, count);
 	}
 
-	public Tuple<string, int>[] GetRatingsByGenre(int userId, string tagCategory = TagCommonCategoryNames.Genres, int? releaseYear = null)
+	public Tuple<string, int>[] GetRatingsByGenre(int userId)
 	{
 		return _repository.HandleQuery(ctx =>
 		{
-			var genreQuery = ctx
+			var genres = ctx
 				.OfType<SongTagUsage>()
 				.Query()
-				.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId && (releaseYear == null || f.Date.Year == releaseYear)) && u.Tag.CategoryName == tagCategory);
-
-			// NH doesn't support ? operator, instead casting ID to nullable works
-			var genres = genreQuery.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
+				.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
+				// NH doesn't support ? operator, instead casting ID to nullable works
+				.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 				.Select(g => new
 				{
 					TagId = g.Key.TagId,
@@ -2284,117 +2283,6 @@ public class UserQueries : QueriesBase<IUserRepository, User>
 		return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference, PermissionContext));
 	}
 
-	public UserRewindForApiContract GetRewindStats(int id)
-	{
-		return HandleQuery(ctx =>
-		{
-			var year = 2024;
-
-			var dayWithMostSongHits = ctx.OfType<SongHit>().Query()
-				.Where(h => h.Date.Year == year && h.Agent == id)
-				.GroupBy(h => h.Date.Date)
-				.OrderByDescending(grouping => grouping.Count())
-				.Select(h => new SongHitOnDay
-				{
-					Date = h.Key.Date,
-					Count = h.Count()
-				})
-				.ToArray();
-
-			var favoriteSongs = ctx.OfType<Song>().Query()
-				.Where(s => s.UserFavorites.Any(u => u.User.Id == id))
-				.Take(20)
-				.Select(s => new SongForApiContract(s, _permissionContext.LanguagePreference, _permissionContext, SongOptionalFields.PVs))
-				.ToArray();
-
-			var favoriteGenreTags = GetRatingsByGenre(id, TagCommonCategoryNames.Genres, year);
-
-			var favoriteSubjectiveTags = GetRatingsByGenre(id, "Subjective", year);
-
-			var followedArtists = ctx.OfType<Artist>().Query()
-				.Where(a => a.Users.Any(u => u.User.Id == id))
-				.Select(a => a.Id)
-				.ToArray();
-
-			var favoriteArtists = ctx.OfType<ArtistForSong>().Query()
-				.Where(s => s.Artist != null && s.Song.UserFavorites.Any(u => u.User.Id == id && u.Date.Year == year))
-				.GroupBy(s => new { ArtistId = s.Artist!.Id, ArtistType = s.Artist!.ArtistType })
-				.OrderByDescending(c => c.Count())
-				.Select(g => g.Key)
-				.Take(100)
-				.ToArray();
-
-			var favoriteVoicebankIds = favoriteArtists.Where(a =>
-					ArtistHelper.VoiceSynthesizerTypes.Contains(a.ArtistType) || a.ArtistType == ArtistType.Utaite ||
-					a.ArtistType == ArtistType.Character)
-				.Select(a => a.ArtistId)
-				.Take(5);
-
-			var favoriteVoicebanks = ctx.OfType<Artist>().Query()
-				.Where(id => favoriteVoicebankIds.Contains(id.Id))
-				.Select(a => new ArtistForApiContract(a, _permissionContext.LanguagePreference, _permissionContext, _entryImagePersister, ArtistOptionalFields.MainPicture | ArtistOptionalFields.Names))
-				.ToArray();
-
-			var favoriteProducerIds = favoriteArtists.Where(a => a.ArtistType == ArtistType.Producer).Select(a => a.ArtistId).Take(5);
-
-			var favoriteProducers = ctx.OfType<Artist>().Query()
-				.Where(id => favoriteProducerIds.Contains(id.Id))
-				.Select(a => new ArtistForApiContract(a, _permissionContext.LanguagePreference, _permissionContext, _entryImagePersister, ArtistOptionalFields.MainPicture | ArtistOptionalFields.Names))
-				.ToArray();
-
-			var popularSongsKey = $"Rewind.PopularSongs";
-
-			var popularSongs = _cache.GetOrInsert(popularSongsKey, CachePolicy.Never(), () =>
-			{
-				return ctx.OfType<Song>().Query()
-					.Where(s => s.PublishDate.DateTime.HasValue && s.PublishDate.DateTime.Value.Year == year)
-					.OrderByDescending(s => s.RatingScore)
-					.Take(5)
-					.Select(s => new SongForApiContract(s, _permissionContext.LanguagePreference, _permissionContext,
-						SongOptionalFields.PVs))
-					.ToArray();
-			});
-
-			var allEditorsKey = $"Rewind.AllEditors";
-
-			var allEditors = _cache.GetOrInsert(allEditorsKey, CachePolicy.Never(), () =>
-			{
-				return ctx.OfType<ActivityEntry>().Query()
-					.Where(a => a.CreateDate.Year == year)
-					.GroupBy(a => a.Author.Id)
-					.Select(g => new
-					{
-						UserId = g.Key,
-						EditsCount = g.Count()
-					})
-					.OrderByDescending(x => x.EditsCount)
-					.ToList();
-			});
-
-			double percentage = 0;
-			var userRank = allEditors.FindIndex(x => x.UserId == id) + 1;
-
-			if (userRank > 0)
-			{
-				percentage = (double)userRank / allEditors.Count() * 100;
-			}
-
-			return new UserRewindForApiContract()
-			{
-				AccountName = _permissionContext.Name,
-				UserRankPercentage = percentage,
-				UserRank = userRank,
-				SongHitsOnDays = dayWithMostSongHits,
-				FavoriteSongs = favoriteSongs,
-				PopularSongs = popularSongs,
-				FavoriteGenreTags = favoriteGenreTags,
-				FavoriteSubjectiveTags = favoriteSubjectiveTags,
-				FavoriteVoicebanks = favoriteVoicebanks,
-				FavoriteProducers = favoriteProducers,
-				FollowedArtists = followedArtists
-			};
-		});
-	}
 #nullable disable
 }
 

@@ -42,7 +42,6 @@ const SongListDetails = React.lazy(
 const TagDetails = React.lazy(() => import('@/Pages/Tag/TagDetails'));
 const UserDetails = React.lazy(() => import('@/Pages/User/UserDetails'));
 
-const RewindRoutes = React.lazy(() => import('@/Pages/Rewind/RewindRoutes'));
 
 const AppRoutes = (): React.ReactElement => {
 	return (
@@ -75,7 +74,6 @@ const AppRoutes = (): React.ReactElement => {
 
 			<Route path="/beta" element={<ActivateNewFrontend />} />
 
-			<Route path="rewind/*" element={<RewindRoutes />} />
 
 			<Route path="*" element={<HomeRoutes />} />
 		</Routes>

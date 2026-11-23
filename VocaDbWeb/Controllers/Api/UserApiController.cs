@@ -1236,20 +1236,5 @@ public class UserApiController : ApiController
 		}
 	}
 
-	[HttpGet("rewind")]
-	[OriginHeaderCheck]
-	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult<UserRewindForApiContract> Rewind(int? userId)
-	{
-		userId ??= _permissionContext.LoggedUserId;
-
-		if (userId != _permissionContext.LoggedUserId &&
-		    !_permissionContext.HasPermission(PermissionToken.DesignatedStaff))
-		{
-			return Unauthorized();
-		}
-		
-		return _queries.GetRewindStats(userId.Value);
-	}
 #nullable disable
 }
