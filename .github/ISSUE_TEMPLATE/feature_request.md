@@ -4,6 +4,7 @@ about: Suggest an idea for this project
 title: "[Feature request] "
 labels: ''
 assignees: ''
+type: Feature request
 
 ---
 
