@@ -63,8 +63,11 @@ body .ui-widget {
 	padding-right: 8px;
 }
 
+// Before: #0088cc on #133d4c (2.9)
+// After: #00aaff on #133d4c (4.5)
+.navbar div.brand a,
 .navbar div.brand a:visited {
-	color: #08c;
+	color: #00aaff;
 }
 
 .navbar-search {
@@ -248,4 +251,47 @@ ul.nav.nav-pills {
 
 .btn:focus {
 	outline: none;
+}
+
+// Bootstrap 2 repeats button backgrounds with vendor prefixes, preferring to patch here
+
+// Before: #ffffff on #0088cc (3.8)
+// After: #ffffff on #007cba (4.5)
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
+	background-color: #007cba;
+}
+
+// Before: #ffffff on #0088cc, gradient top (3.8); fallback #006dcc (5.1)
+// After: #ffffff on #007cba, gradient top (4.5); fallback #0062c4 (5.9)
+.btn-primary {
+	background-color: #0062c4;
+	background-image: linear-gradient(to bottom, #007cba, #0044cc);
+}
+
+// Before: #ffffff on #5bc0de, gradient top (2.0); fallback #49afcd (2.5)
+// After: #ffffff on #20809d, gradient top (4.5); fallback #1d7590 (5.2)
+.btn-info {
+	background-color: #1d7590;
+	background-image: linear-gradient(to bottom, #20809d, #1a6880);
+}
+
+// Hover shifts the gradient up to show the color underneath, so match the gradient stop
+// Before: #ffffff on #2f96b4 (3.4)
+// After: #ffffff on #1a6880 (6.2)
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+	background-color: #1a6880;
+}
+
+// Before: #ffffff on #ee5f5b, gradient top (3.2); fallback #da4f49 (4.0)
+// After: #ffffff on #c9302c, gradient top (5.3); fallback #c3332e (5.4)
+.btn-danger {
+	background-color: #c3332e;
+	background-image: linear-gradient(to bottom, #c9302c, #bd362f);
 }

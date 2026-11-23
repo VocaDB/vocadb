@@ -50,7 +50,9 @@ small.extraInfo {
 }
 
 .slogan {
-	font-size: x-small;
+	/* Before: x-small (10px) */
+	/* After: small (13px) */
+	font-size: small;
 	margin-bottom: 0;
 	text-align: right;
 }
@@ -297,17 +299,29 @@ ul {
 
 .menu a {
 	text-decoration: none;
-	color: #21758a;
+	/* Before: #21758a on #b7c9cf, sidebar over a black image (3.0) */
+	/* After: #195969 on #b7c9cf (4.5) */
+	color: #195969;
+}
+
+.menu small {
+	/* Before: 85% of 12.8px (10.88px) */
+	/* After: inherit (12.8px) */
+	font-size: inherit;
 }
 
 .menu a:hover,
 .menu a:hover:visited {
-	color: #2f8897;
+	/* Before: #2f8897 on #b7c9cf (2.4) */
+	/* After: #195969 on #b7c9cf (4.5) */
+	color: #195969;
 	text-decoration: underline;
 }
 
 .menu a:visited {
-	color: #1c5d74;
+	/* Before: #1c5d74 on #b7c9cf (4.2) */
+	/* After: #1b596f on #b7c9cf (4.5) */
+	color: #1b596f;
 }
 
 #appLinks img {
@@ -379,28 +393,43 @@ span.tag {
 }
 
 .about-disclaimer {
-	font-size: 0.7rem;
+	/* Before: 0.7rem (11.2px) */
+	/* After: 0.75rem (12px) */
+	font-size: 0.75rem;
 	margin: 5px;
 	float: right;
+	/* Before: no background; #333333 text on #000000, bare image at worst (1.6) */
+	/* After: white pill; #333333 text on #d9d9d9, pill over a black image (8.9) */
+	background-color: rgba(255, 255, 255, 0.85);
+	padding: 0 4px;
+	border-radius: 3px;
 }
 
 .about-disclaimer a {
-	color: #99a9f0;
+	/* Before: #99a9f0 on #ffffff, bare image at worst (2.2) */
+	/* After: #2d4ee0 on #d9d9d9, pill over a black image (4.5) */
+	color: #2d4ee0;
 	text-decoration: none;
 }
 
 .about-disclaimer a:link {
-	color: #99a9f0;
+	/* Before: #99a9f0 on #ffffff, bare image at worst (2.2) */
+	/* After: #2d4ee0 on #d9d9d9, pill over a black image (4.5) */
+	color: #2d4ee0;
 	text-decoration: none;
 }
 
 .about-disclaimer a:hover {
-	color: #99a9f0;
+	/* Before: #99a9f0 on #ffffff, bare image at worst (2.2) */
+	/* After: #2d4ee0 on #d9d9d9, pill over a black image (4.5) */
+	color: #2d4ee0;
 	text-decoration: none;
 }
 
 .about-disclaimer a:visited {
-	color: #99a9f0;
+	/* Before: #99a9f0 on #ffffff, bare image at worst (2.2) */
+	/* After: #2d4ee0 on #d9d9d9, pill over a black image (4.5) */
+	color: #2d4ee0;
 	text-decoration: none;
 }
 
@@ -551,7 +580,9 @@ div.disabled > a:visited {
 .rightFrame .muted,
 .rightFrame a.muted,
 .rightFrame a.muted:visited {
-	color: gray;
+	/* Before: #808080 on #c5d4d9, content panel over a black image (2.5) */
+	/* After: #595959 on #c5d4d9 (4.6) */
+	color: #595959;
 }
 
 /* Lists */
