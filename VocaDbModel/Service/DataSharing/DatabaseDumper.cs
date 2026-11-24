@@ -150,7 +150,7 @@ public sealed class DatabaseDumper
 		{
 			MainPictureMime = null;
 			Pictures = null;
-			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
+			PVs = PVs?.ToArray();
 			Tags = album.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
@@ -165,7 +165,7 @@ public sealed class DatabaseDumper
 			: base(song, new SongDiff())
 		{
 			Lyrics = null;
-			PVs = PVs?.Where(pv => pv.PVType == Domain.PVs.PVType.Original).ToArray();
+			PVs = PVs?.ToArray();
 			Tags = song.Tags.Usages.Select(tagUsage => new ArchivedTagUsageContract(tagUsage)).ToArray();
 		}
 	}
