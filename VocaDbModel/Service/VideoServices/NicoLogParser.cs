@@ -79,7 +79,7 @@ public static class NicoLogHelper
 		var uploadDate = DateTime.ParseExact(replace, "yyyy.M.d H:mm:ss", CultureInfo.InvariantCulture);
 		var lengthSeconds = (int)TimeSpan.ParseExact(metaTable.SelectSingleNode("//dd[4]").InnerText, "h\\:mm\\:ss", CultureInfo.InvariantCulture).TotalSeconds;
 		var author = Regex.Replace(metaTable.SelectSingleNode("//dd[5]").InnerText, @"(\s\(ID:\d+\))", "");
-		var authorId = metaTable.SelectSingleNode("//dd[5]/a").GetAttributeValue("href", "").Split('/')[1];
+		var authorId = metaTable.SelectSingleNode("//dd[5]/a").GetAttributeValue("href", "").Split('/')[2];
 		var thumbUrl = doc?.DocumentNode.SelectSingleNode("//img[@class='center-block img-thumbnail']").GetAttributeValue("src", "");
 
 		var result = VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl,
