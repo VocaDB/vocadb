@@ -376,7 +376,7 @@ public class Album :
 
 	public virtual int RatingCount { get; set; }
 
-	public virtual int RatingTotal { get; set; }
+	public virtual double RatingTotal { get; set; }
 
 	public virtual IList<AlbumReview> AllReviews
 	{
@@ -948,7 +948,7 @@ public class Album :
 	{
 		RatingCount = UserCollections.Where(a => a.Rating != AlbumForUser.NotRated).Count();
 		RatingTotal = UserCollections.Sum(a => a.Rating);
-		RatingAverageInt = RatingCount > 0 ? (RatingTotal * 100 / RatingCount) : 0;
+		RatingAverageInt = RatingCount > 0 ? (int)(RatingTotal * 100 / RatingCount) : 0;
 	}
 
 	public virtual Object TagSubtype()

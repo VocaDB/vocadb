@@ -9,6 +9,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import {
 	AlbumForUserForApiContract,
 	MediaType,
+	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
 import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
@@ -634,6 +635,26 @@ export class UserRepository implements ICommentRepository {
 				[HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
 			},
 		});
+	};
+
+	// Rating is sent in the query string so it's parsed with invariant culture.
+	updateAlbumForUser = ({
+		albumId,
+		collectionStatus,
+		mediaType,
+		rating,
+	}: {
+		albumId: number;
+		collectionStatus: PurchaseStatus;
+		mediaType: MediaType;
+		rating: number;
+	}): Promise<void> => {
+		const query = AjaxHelper.stringify({ collectionStatus, mediaType, rating });
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(
+				`/api/users/current/albums/${albumId}?${query}`,
+			),
+		);
 	};
 
 	updateAlbumTags = ({

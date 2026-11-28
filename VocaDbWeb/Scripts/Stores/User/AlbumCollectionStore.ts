@@ -132,13 +132,6 @@ export class AlbumCollectionStore
 		);
 	}
 
-	ratingStars = (userRating: number): { enabled: boolean }[] => {
-		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
-			enabled: Math.round(userRating) >= rating,
-		}));
-		return ratings;
-	};
-
 	@action updateResults = async (
 		clearResults: boolean = true,
 	): Promise<void> => {

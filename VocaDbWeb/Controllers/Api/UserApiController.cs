@@ -668,7 +668,7 @@ public class UserApiController : ApiController
 	/// </remarks>
 	[HttpPost("current/albums/{albumId:int}")]
 	[Authorize]
-	public string PostAlbumStatus(int albumId, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
+	public string PostAlbumStatus(int albumId, PurchaseStatus collectionStatus, MediaType mediaType, double rating)
 	{
 		_queries.UpdateAlbumForUser(_permissionContext.LoggedUserId, albumId, collectionStatus, mediaType, rating);
 		return "OK";

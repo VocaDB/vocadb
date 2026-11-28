@@ -567,12 +567,6 @@ public class UserController : ControllerBase
 	}
 
 	[HttpPost]
-	public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
-	{
-		Data.UpdateAlbumForUser(LoggedUserId, albumid, collectionStatus, mediaType, rating);
-	}
-
-	[HttpPost]
 	public void UpdateArtistSubscription(int artistId, bool? emailNotifications, bool? siteNotifications)
 	{
 		Data.UpdateArtistSubscriptionForCurrentUser(artistId, emailNotifications, siteNotifications);
